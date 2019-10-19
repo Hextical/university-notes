@@ -1,7 +1,7 @@
 \section{2019-10-01}
 Let $A\in M_{m\times n}(\mathbb{R}), \mathbf{b}\in\mathbb{R}^m, \mathbf{c}\in\mathbb{R}^n$.
 Consider (P)
-\[\max \mathbf{c}^T\mathbf{x}\]
+\[\max \mathbf{c}^\top \mathbf{x}\]
 subject to
 \begin{align*}
     A\mathbf{x}=\mathbf{b}\\
@@ -11,28 +11,28 @@ Suppose we are given
 $\mathbf{\tilde{x}}\in\mathbb{R}^n$ such that, $A\mathbf{\tilde{x}}=\mathbf{b}$,
 $\mathbf{\tilde{x}}\ge\mathbf{0}$
 and
-$\mathbf{y}\in\mathbb{R}^m$ such that $A^T\mathbf{y}\ge\mathbf{c}$,
-$\mathbf{y}^T\mathbf{b}=\mathbf{c}^T\mathbf{\bar{x}}$ with objective function
-value $=\mathbf{c}^T\mathbf{\bar{x}}$.
+$\mathbf{y}\in\mathbb{R}^m$ such that $A^\top \mathbf{y}\ge\mathbf{c}$,
+$\mathbf{y}^\top \mathbf{b}=\mathbf{c}^\top \mathbf{\bar{x}}$ with objective function
+value $=\mathbf{c}^\top \mathbf{\bar{x}}$.
 
 
-Computing $\mathbf{c}^T\mathbf{\bar{x}}$ we get
+Computing $\mathbf{c}^\top \mathbf{\bar{x}}$ we get
 \begin{align*}
-    \mathbf{c}^T\mathbf{\bar{x}}&=\mathbf{y}^T\mathbf{b}\\
-    &=\mathbf{y}^T(A\mathbf{\tilde{x}})\\
+    \mathbf{c}^\top \mathbf{\bar{x}}&=\mathbf{y}^\top \mathbf{b}\\
+    &=\mathbf{y}^\top (A\mathbf{\tilde{x}})\\
     &=
-    \underbrace{(\mathbf{y}^TA)}_{\ge \mathbf{c}^T}
+    \underbrace{(\mathbf{y}^\top A)}_{\ge \mathbf{c}^\top }
     \underbrace{\mathbf{\tilde{x}}}_{\ge \mathbf{0}}\\
-    &\ge \mathbf{c}^T\mathbf{\tilde{x}}
+    &\ge \mathbf{c}^\top \mathbf{\tilde{x}}
 \end{align*}
 Since $\mathbf{\bar{x}}$ achieves the objective value of 
-$\mathbf{c}^T\mathbf{\bar{x}}$ and for every feasible solution the objective
-value is at most $\mathbf{c}^T\mathbf{\bar{x}}$, $\mathbf{\bar{x}}$ is an
+$\mathbf{c}^\top \mathbf{\bar{x}}$ and for every feasible solution the objective
+value is at most $\mathbf{c}^\top \mathbf{\bar{x}}$, $\mathbf{\bar{x}}$ is an
 optimal solution of (P).
 
 \subsection{Definition (Canonical form)}
 Consider the following LP in SEF: (P)
-\[\max \mathbf{c}^T \mathbf{x}+\bar{z}\]
+\[\max \mathbf{c}^\top  \mathbf{x}+\bar{z}\]
 subject to
 \begin{align*}
     A\mathbf{x}=\mathbf{b}\\
@@ -63,39 +63,35 @@ Since $B$ is a basis of $A$, $A_B$ is non-singular,
     &\iff
     \mathbf{x_B}=A_B^{-1}\mathbf{b}-(A_B^{-1} A_N\mathbf{x_N})
 \end{align*}
-Consider (C2). For any $\mathbf{y}:=\begin{bmatrix}
-    y_1\\
-    \vdots\\
-    y_m
-\end{bmatrix}$
+Consider (C2). For any $\mathbf{y}:=(y_1,\dots, y_m)^\top$
 the equation
-\[\mathbf{y}^TA\mathbf{x}=\mathbf{y}^T\mathbf{b}\]
+\[\mathbf{y}^\top A\mathbf{x}=\mathbf{y}^\top \mathbf{b}\]
 can be written as
-\[0=\mathbf{y}^T\mathbf{b}-\mathbf{y}^TA\mathbf{x}\]
+\[0=\mathbf{y}^\top \mathbf{b}-\mathbf{y}^\top A\mathbf{x}\]
 Since  this  equation  holds  for  every  feasible  solution,  we  can  add  this 
 constraint to the objective function of (Q). The objective function is now
-\[\max \mathbf{c}^T \mathbf{x}+\bar{z}+\mathbf{y}^T\mathbf{b}-\mathbf{y}^TA\mathbf{x}
+\[\max \mathbf{c}^\top  \mathbf{x}+\bar{z}+\mathbf{y}^\top \mathbf{b}-\mathbf{y}^\top A\mathbf{x}
 \implies
-\max (\mathbf{c}^T-\mathbf{y}^TA)\mathbf{x}+\mathbf{y}^T\mathbf{b}+\bar{z}\]
-Let $\mathbf{\bar{c}}^T:=\mathbf{c}^T-\mathbf{y}^TA$. For (C2) to be satisfied we need
-$\mathbf{\bar{c_B}}=\mathbf{0}$. We need to choose $\mathbf{y}$ accordingly, such as
-\[\mathbf{\bar{c_B}}^T=\mathbf{c_B}^T-\mathbf{y}^TA_B=\mathbf{0}^T\]
+\max (\mathbf{c}^\top -\mathbf{y}^\top A)\mathbf{x}+\mathbf{y}^\top \mathbf{b}+\bar{z}\]
+Let $\mathbf{\bar{c}}^\top :=\mathbf{c}^\top -\mathbf{y}^\top A$. For (C2) to be satisfied we need
+$\mathbf{\bar{c_B}}=\mathbf{0}$, so we need to choose $\mathbf{y}$ accordingly, such as
+\[\mathbf{\bar{c_B}}^\top =\mathbf{c_B}^\top -\mathbf{y}^\top A_B=\mathbf{0}^\top \]
 equivalently,
-\[\mathbf{y}^TA_B=\mathbf{c_B}^T
+\[\mathbf{y}^\top A_B=\mathbf{c_B}^\top 
 \implies
-A_B^T\mathbf{y}=\mathbf{c_B}
+A_B^\top \mathbf{y}=\mathbf{c_B}
 \implies
-\mathbf{y}^T=\mathbf{c_B}A_B^{-1}\]
+\mathbf{y}^\top =\mathbf{c_B}A_B^{-1}\]
 We have shown the following:
 
 \subsection{Proposition (Canonical Form)}
-\[\max (\mathbf{c}^T-\mathbf{y}^TA)\mathbf{x}+\mathbf{y}^T\mathbf{b}+\bar{z}\]
+\[\max (\mathbf{c}^\top -\mathbf{y}^\top A)\mathbf{x}+\mathbf{y}^\top \mathbf{b}+\bar{z}\]
 subject to
 \begin{align*}
     A_B^{-1}A\mathbf{x}=A_B^{-1}\mathbf{b}\\
     \mathbf{x}\ge 0
 \end{align*}
-where $\mathbf{y}^T=\mathbf{c_B}A_B^{-1}$, is an equivalent LP in canonical form for the 
+where $\mathbf{y}^\top =\mathbf{c_B}A_B^{-1}$, is an equivalent LP in canonical form for the 
 basis $B$ of $A$.
 
 
@@ -105,7 +101,7 @@ The canonical form is useful because it:
     \item gives us easy ways to move in the feasible region to improve the current basic
     feasible solution
     \item gives us a way to obtain optimality certificates if
-    $\mathbf{c_N}^T-\mathbf{c_B}^TA_B^{-1}A_N\le \mathbf{0}^T$
+    $\mathbf{c_N}^\top -\mathbf{c_B}^\top A_B^{-1}A_N\le \mathbf{0}^\top $
 \end{itemize}
 
 \subsection{Example (Canonical Form)}
@@ -130,16 +126,10 @@ subject to
 \end{align*}
 
 
-Note that $B:=\{1,2,5\}$ is a basis of $A$, so the basic solution determined by $B$ is
-\[\mathbf{\bar{x}}=
-    \begin{bmatrix}
-        4\\
-        2\\
-        0\\
-        0\\
-        6\\
-    \end{bmatrix}
-\]
+Note that $B:=\{1,2,5\}$ is a basis of $A$, so the basic solution corresponding to the
+basis is
+$\mathbf{\bar{x}}:=(4,2,0,0,6)^\top$.
+
 $c_3=-4$, increasing the value of $x_3$ from $0$ will decrease the objective value by $-4$ units\\
 $c_4=1$, we want to increase the value of $x_4$, so
 \[
@@ -165,4 +155,3 @@ $c_4=1$, we want to increase the value of $x_4$, so
 Let $t$ denote the maximum value we can assign to $x_4$ and stay feasible.\\
 So,
 $t=\min\{\nicefrac{4}{1},\_,\nicefrac{6}{2}\}=3$
-

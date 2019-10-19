@@ -34,51 +34,47 @@ subject to
     \end{bmatrix}}_{\mathbf{b}}\\
     &\mathbf{x}\ge \mathbf{0}
 \end{align*}
-Let $\mathbf{y}:=
-\begin{bmatrix}
-    1\\
-    -2
-\end{bmatrix}$
+Let $\mathbf{y}:=(1,-2)^\top$
 and consider the facts
 \begin{align*}
     &A\mathbf{x}=\mathbf{b}\\
-    &\implies \mathbf{y}^TA\mathbf{x}=\mathbf{y}^T\mathbf{b}\\
+    &\implies \mathbf{y}^\top A\mathbf{x}=\mathbf{y}^\top \mathbf{b}\\
     &\implies \underbrace{\begin{bmatrix}
         1 & 0 & 3 & 1 & 1
-    \end{bmatrix}}_{\ge \mathbf{0}^T}
+    \end{bmatrix}}_{\ge \mathbf{0}^\top }
     \underbrace{\mathbf{x}}_{\ge \mathbf{0}}=\underbrace{6-8}_{< 0}=-2
 \end{align*}
 Therefore, $\nexists$ any solution to $A\mathbf{x}=\mathbf{b}$, $\mathbf{x}\ge 0$.
 Thus, the LP is infeasible.
 
 \subsection{Proposition (Infeasibility)}
-Let $A\in M_{m\times n}(R), \mathbf{b}\in\mathbb{R}^m$. Suppose
+If
 $\exists \mathbf{y}\in\mathbb{R}^m$ such that
 \begin{enumerate}
-    \item $\mathbf{y}^TA\ge\mathbf{0}^T$
-    \item $\mathbf{y}^T\mathbf{b}<0$
+    \item $\mathbf{y}^\top A\ge\mathbf{0}^\top $
+    \item $\mathbf{y}^\top \mathbf{b}<0$
 \end{enumerate}
 For every $\mathbf{c}\in\mathbb{R}^n$, the LP
-\[\max \{\mathbf{c}^T\mathbf{x} \mid A\mathbf{x}=\mathbf{b}\text{, }
+\[\max \{\mathbf{c}^\top \mathbf{x} \mid A\mathbf{x}=\mathbf{b}\text{, }
 \mathbf{x}\ge\mathbf{0}\}\]
 is infeasible. In particular, we call a vector $\mathbf{y}$ a \emph{certificate of infeasibility}.
 
 \begin{proof}
-    Let $A\in M_{m\times n}(R), \mathbf{b}\in\mathbb{R}^m$ and suppose
-$\exists \mathbf{y}\in\mathbb{R}^m$ such that
+    Suppose $\exists \mathbf{y}\in\mathbb{R}^m$ such that
 \begin{enumerate}
-    \item $\mathbf{y}^TA\ge\mathbf{0}^T$
-    \item $\mathbf{y}^T\mathbf{b}<0$
+    \item $\mathbf{y}^\top A\ge\mathbf{0}^\top $
+    \item $\mathbf{y}^\top \mathbf{b}<0$
 \end{enumerate}
 Suppose for a contradiction that $\exists\mathbf{\bar{x}}\in\mathbb{R}^n$ 
+(there is a feasible solution)
 such that
 \[A\mathbf{\bar{x}}=\mathbf{b} \text{, }\mathbf{\bar{x}}\ge \mathbf{0}\]
 \[
     A\mathbf{\bar{x}}=\mathbf{b}
     \implies
-    \underbrace{\mathbf{y}^TA}_{\ge\mathbf{0}^T}
+    \underbrace{\mathbf{y}^\top A}_{\ge\mathbf{0}^\top }
     \underbrace{\mathbf{\bar{x}}}_{\ge\mathbf{0}}
-    =\underbrace{\mathbf{y}^T\mathbf{b}}_{\nless 0}
+    =\underbrace{\mathbf{y}^\top \mathbf{b}}_{\nless 0}
 \]
 a contradiction to 2.
 \end{proof}
@@ -174,16 +170,16 @@ t
 Therefore the LP is unbounded.
 
 \subsection{Proposition (Unboundedness)}
-Suppose $\exists \mathbf{\bar{x}}\in\mathbb{R}^n$ such that
+If $\exists \mathbf{\bar{x}}\in\mathbb{R}^n$ such that
 \[A\mathbf{\bar{x}}=\mathbf{b}, \mathbf{x}\ge \mathbf{0}.\]
 and $\exists\mathbf{d}\in\mathbb{R}^n$ such that
 \begin{enumerate}
     \item $A\mathbf{d}=\mathbf{0}$
     \item $\mathbf{d}\ge \mathbf{0}$
-    \item $\mathbf{c}^T\mathbf{d}>0$
+    \item $\mathbf{c}^\top \mathbf{d}>0$
 \end{enumerate}
 For every $\mathbf{c}\in\mathbb{R}^n$, the LP
-\[\max \{\mathbf{c}^T\mathbf{x} \mid A\mathbf{x}=\mathbf{b}\text{, }
+\[\max \{\mathbf{c}^\top \mathbf{x} \mid A\mathbf{x}=\mathbf{b}\text{, }
 \mathbf{x}\ge\mathbf{0}\}\]
 is unbounded. In particular, we call a pair of vectors $\mathbf{\bar{x}}$, $\mathbf{d}$ a
 \emph{certificate of unboundedness}.
@@ -197,8 +193,8 @@ Then,
 t\underbrace{(A\mathbf{d})}_{\mathbf{0}}=\mathbf{b}\]
 Therefore $\tilde{\mathbf{x}}$ is a feasible solution of the LP, $t\ge 0$.
 The objective value of the function is
-\[\mathbf{c}^T\tilde{\mathbf{x}}=\mathbf{c}^T\bar{\mathbf{x}}+t
-\underbrace{(\mathbf{c}^T\mathbf{d})}_{>\mathbf{0}}\rightarrow +\infty\text{ as }t\rightarrow+\infty\]
+\[\mathbf{c}^\top \tilde{\mathbf{x}}=\mathbf{c}^\top \bar{\mathbf{x}}+t
+\underbrace{(\mathbf{c}^\top \mathbf{d})}_{>\mathbf{0}}\rightarrow +\infty\text{ as }t\rightarrow+\infty\]
 Therefore, the LP is unbounded.
 \end{proof}
 \begin{remark}
@@ -213,36 +209,26 @@ subject to
     x_1+3x_2+x_4=1200\\
     \mathbf{x}\ge \mathbf{0}
 \end{align*}
-Consider
-\[\bar{\mathbf{x}}:=
-\begin{bmatrix}
-    720\\
-    160\\
-    0\\
-    0
-\end{bmatrix}\]
-\[\mathbf{y}:=
-\begin{bmatrix}
-    3\\
-    4
-\end{bmatrix}
-\]
-$A\bar{\mathbf{x}}=\mathbf{b}$, $\bar{\mathbf{x}}\ge \mathbf{0}$. So $\bar{\mathbf{x}}$ is a feasible solution.
+Consider $\bar{\mathbf{x}}:=(720,160,0,0)^\top$ and $\mathbf{y}:=(3,4)^\top$.
+
+Note that
+$A\bar{\mathbf{x}}=\mathbf{b}$, with $\bar{\mathbf{x}}\ge \mathbf{0}$, 
+so $\bar{\mathbf{x}}$ is a feasible solution.
 
 
-Also, $\mathbf{c}^T\mathbf{x}=7200+2400=9600$.
+Also, $\mathbf{c}^\top \mathbf{x}=7200+2400=9600$.
 Every feasible solution satisfies
 \begin{align*}
     &A\mathbf{x}=\mathbf{b}\\
-    &\implies \mathbf{y}^TA\mathbf{x}=\mathbf{y}^T\mathbf{b}
+    &\implies \mathbf{y}^\top A\mathbf{x}=\mathbf{y}^\top \mathbf{b}
 \end{align*}
-\[\mathbf{y}^TA=
+\[\mathbf{y}^\top A=
 \begin{bmatrix}
     10 & 15 & 3 & 4
 \end{bmatrix}
 \ge
 \begin{bmatrix}
     10 & 15 & 0 & 0
-\end{bmatrix}=\mathbf{c}^T\]
-\[\mathbf{y}^Tb=3\times 1600+4\times 1200=9600=\mathbf{c}^T\mathbf{x}\]
+\end{bmatrix}=\mathbf{c}^\top \]
+\[\mathbf{y}^\top b=3\times 1600+4\times 1200=9600=\mathbf{c}^\top \mathbf{x}\]
 Therefore $\bar{\mathbf{x}}$ is an optimal solution.
