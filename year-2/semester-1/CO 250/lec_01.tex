@@ -1,0 +1,91 @@
+\section{2019-09-05}
+\subsection{Example (Manufacturing Tables and Chairs)}
+Process: raw materials $\rightarrow$ machine $\rightarrow$ labour $\rightarrow$ final products
+
+Rules:
+\begin{itemize}
+    \item Company has 30 workers and 40 machines available 40hrs/week.
+    \item Manufacturing a table requires 2 machine-hours and 1 labour-hour.
+    \item Manufacturing a chair requires 1 machine-hours and 3 labour-hours.
+    \item Each manufacturer table yields \$10 of profit and each manufacturer chair yields \$15 of profit.
+\end{itemize}
+
+Goal: The company wants to prepare a weekly production plan which maximizes
+total profit.
+
+Variables:
+\begin{itemize}
+    \item $x_1:=$ the number of tables manufactured per week
+    \item $x_2:=$ the number of chairs manufactured per week
+\end{itemize}
+
+The total profit per week can be modelled by $10x_1 + 15x_2$.
+
+Constraints:
+\begin{itemize}
+    \item Machine-hours used per week $\le$  machine-hours available per week which
+can be modelled by $2x_1 + x_2 \le  40 \times 40 = 1600$
+    \item Labour-hours used per week $\le$ labour-hours available per week which can
+    be modelled by $x_1 + 3x_2 \le 30 \times 40 = 1200$
+\end{itemize}
+
+We can then create a linear programming (LP) model.
+\[\max 10x_1 + 15x_2\]
+subject to
+\begin{align*}
+    2x_1 + x_2 \le 1600\\
+    x_1 + 3x_2 \le 1200\\
+    x_1, x_2 \ge 0
+\end{align*}
+
+\subsection{Example (A General Production Planning Problem)}
+There are resources $I:=\{1,\dots,m\}$ and products $J:=\{1,\dots,n\}$. 
+There are $b_i$ units of resource
+$i$ available per week $\forall i\in I$. One unit of product $j$ yields $c_j$ of profit for
+$\forall j\in J$. Manufacturing one unit of product $j$ requires $a_{ij}$ units of resource $i$.
+We want to maximize the total profit of this manufacturing process.
+$x_j :=$ amount of product $j$ manufactured per week. (LP)
+\[\max c_1x_1 + \dots + c_nx_n = \sum\limits_{j=1}^n c_jx_j\]
+subject to
+\begin{align*}
+    \sum\limits_{j=1}^n a_{ij}x_{ij}\le b_i \qquad\qquad\forall i\in\{1,\dots,m\}\\
+    x_{j}\ge 0 \qquad\qquad\forall j\in\{1,\dots,n\}
+\end{align*}
+
+\begin{remark}
+    If $\mathbf{x},\mathbf{y}\in\mathbb{R}^n$ and $\mathbf{x}\le \mathbf{y}$, then
+    $x_1\le y_1, \dots x_n, \le y_n$.
+\end{remark}
+
+\begin{remark}
+\[
+\mathbf{c}:=\left[\begin{array}{c}{c_{1}} \\ {\vdots} \\ {c_{n}}\end{array}\right],
+\mathbf{x}:=\left[\begin{array}{c}{x_{1}} \\ {\vdots} \\ {x_{n}}\end{array}\right],
+A:=\left[\begin{array}{cccc}
+    {a_{11}} & \cdots & {a_{1 n}} \\
+    \vdots & & \vdots \\
+     {a_{m 1}} & \cdots & {a_{m n}}
+    \end{array}\right],
+\mathbf{b}:=\left[\begin{array}{c}{b_{1}} \\ {\vdots} \\ {b_{n}}\end{array}\right]
+\]
+Given $A,\mathbf{b},\mathbf{c}$ with $\mathbf{x}\in\mathbb{R}^n$ as the variable vector, we realize that
+$\mathbf{c}^T \mathbf{x}=\sum\limits_{j=1}^n c_jx_j$ is exactly the model that we wanted to maximize
+in 1.2 such that it satisfies $A\mathbf{x}\le \mathbf{b}$, with $\mathbf{x}\ge \mathbf{0}$.
+\end{remark}
+
+\subsection{Definition (Affine Function)}
+Let $f:\mathbb{R}^n\rightarrow\mathbb{R}$. $f$ is an \emph{affine function} if
+$f(x)=a^Tx+\beta$ for some $a\in\mathbb{R}^n$, and $\beta\in\mathbb{R}$.
+
+\subsection{Definition (Linear Function)}
+Let $f:\mathbb{R}^n\rightarrow\mathbb{R}$. $f$ is a \emph{linear function} if
+$f$ is an affine function such that $\beta=0$.
+
+\subsection{Definition (Linear Constraint)}
+A \emph{linear constraint} is one of
+\begin{align*}
+    f(x)\le g(x)\\
+    f(x)=g(x)\\
+    f(x)\ge g(x)
+\end{align*}
+where $f$ and $g$ are affine functions.

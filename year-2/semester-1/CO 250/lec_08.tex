@@ -1,0 +1,168 @@
+\section{2019-10-01}
+Let $A\in M_{m\times n}(\mathbb{R}), \mathbf{b}\in\mathbb{R}^m, \mathbf{c}\in\mathbb{R}^n$.
+Consider (P)
+\[\max \mathbf{c}^T\mathbf{x}\]
+subject to
+\begin{align*}
+    A\mathbf{x}=\mathbf{b}\\
+    \mathbf{x}\ge\mathbf{0}
+\end{align*}
+Suppose we are given
+$\mathbf{\tilde{x}}\in\mathbb{R}^n$ such that, $A\mathbf{\tilde{x}}=\mathbf{b}$,
+$\mathbf{\tilde{x}}\ge\mathbf{0}$
+and
+$\mathbf{y}\in\mathbb{R}^m$ such that $A^T\mathbf{y}\ge\mathbf{c}$,
+$\mathbf{y}^T\mathbf{b}=\mathbf{c}^T\mathbf{\bar{x}}$ with objective function
+value $=\mathbf{c}^T\mathbf{\bar{x}}$.
+
+
+Computing $\mathbf{c}^T\mathbf{\bar{x}}$ we get
+\begin{align*}
+    \mathbf{c}^T\mathbf{\bar{x}}&=\mathbf{y}^T\mathbf{b}\\
+    &=\mathbf{y}^T(A\mathbf{\tilde{x}})\\
+    &=
+    \underbrace{(\mathbf{y}^TA)}_{\ge \mathbf{c}^T}
+    \underbrace{\mathbf{\tilde{x}}}_{\ge \mathbf{0}}\\
+    &\ge \mathbf{c}^T\mathbf{\tilde{x}}
+\end{align*}
+Since $\mathbf{\bar{x}}$ achieves the objective value of 
+$\mathbf{c}^T\mathbf{\bar{x}}$ and for every feasible solution the objective
+value is at most $\mathbf{c}^T\mathbf{\bar{x}}$, $\mathbf{\bar{x}}$ is an
+optimal solution of (P).
+
+\subsection{Definition (Canonical form)}
+Consider the following LP in SEF: (P)
+\[\max \mathbf{c}^T \mathbf{x}+\bar{z}\]
+subject to
+\begin{align*}
+    A\mathbf{x}=\mathbf{b}\\
+    \mathbf{x}\ge \mathbf{0}
+\end{align*}
+We say (P) is in \emph{canonical form} for a basis $B$ of $A$ if
+\begin{enumerate}[(C1)]
+    \item $A_B$ is an identity matrix
+    \item $\mathbf{c_B}=\mathbf{0}$
+\end{enumerate}
+Now,
+\begin{align*}
+    A\mathbf{x}
+    &=\sum_{j = 1}^{n}\mathbf{a_j}x_j\\
+    &=\sum_{j\in B}^{n}\mathbf{a_j}x_j+\sum_{j\in N}^{n}\mathbf{a_j}x_j\\
+    &=A_B \mathbf{x_B}+A_N \mathbf{x_N}
+\end{align*}
+Since $B$ is a basis of $A$, $A_B$ is non-singular,
+\begin{align*}
+    &A\mathbf{x}=\mathbf{b}\\
+    &\iff
+    A_B^{-1}A\mathbf{x}=A_B^{-1}\mathbf{b}\\
+    &\iff
+    A_B^{-1}(A_B\mathbf{x_B}+A_N\mathbf{x_N})=A_B^{-1}\mathbf{b}\\
+    &\iff
+    (\underbrace{A_B^{-1} A_B}_{I}\mathbf{x_B})+
+    (A_B^{-1} A_N\mathbf{x_N})=A_B^{-1}\mathbf{b}\\
+    &\iff
+    \mathbf{x_B}=A_B^{-1}\mathbf{b}-(A_B^{-1} A_N\mathbf{x_N})
+\end{align*}
+Consider (C2). For any $\mathbf{y}:=\begin{bmatrix}
+    y_1\\
+    \vdots\\
+    y_m
+\end{bmatrix}$
+the equation
+\[\mathbf{y}^TA\mathbf{x}=\mathbf{y}^T\mathbf{b}\]
+can be written as
+\[0=\mathbf{y}^T\mathbf{b}-\mathbf{y}^TA\mathbf{x}\]
+Since  this  equation  holds  for  every  feasible  solution,  we  can  add  this 
+constraint to the objective function of (Q). The objective function is now
+\[\max \mathbf{c}^T \mathbf{x}+\bar{z}+\mathbf{y}^T\mathbf{b}-\mathbf{y}^TA\mathbf{x}
+\implies
+\max (\mathbf{c}^T-\mathbf{y}^TA)\mathbf{x}+\mathbf{y}^T\mathbf{b}+\bar{z}\]
+Let $\mathbf{\bar{c}}^T:=\mathbf{c}^T-\mathbf{y}^TA$. For (C2) to be satisfied we need
+$\mathbf{\bar{c_B}}=\mathbf{0}$. We need to choose $\mathbf{y}$ accordingly, such as
+\[\mathbf{\bar{c_B}}^T=\mathbf{c_B}^T-\mathbf{y}^TA_B=\mathbf{0}^T\]
+equivalently,
+\[\mathbf{y}^TA_B=\mathbf{c_B}^T
+\implies
+A_B^T\mathbf{y}=\mathbf{c_B}
+\implies
+\mathbf{y}^T=\mathbf{c_B}A_B^{-1}\]
+We have shown the following:
+
+\subsection{Proposition (Canonical Form)}
+\[\max (\mathbf{c}^T-\mathbf{y}^TA)\mathbf{x}+\mathbf{y}^T\mathbf{b}+\bar{z}\]
+subject to
+\begin{align*}
+    A_B^{-1}A\mathbf{x}=A_B^{-1}\mathbf{b}\\
+    \mathbf{x}\ge 0
+\end{align*}
+where $\mathbf{y}^T=\mathbf{c_B}A_B^{-1}$, is an equivalent LP in canonical form for the 
+basis $B$ of $A$.
+
+
+The canonical form is useful because it:
+\begin{itemize}
+    \item allows us to simply read a basic solution
+    \item gives us easy ways to move in the feasible region to improve the current basic
+    feasible solution
+    \item gives us a way to obtain optimality certificates if
+    $\mathbf{c_N}^T-\mathbf{c_B}^TA_B^{-1}A_N\le \mathbf{0}^T$
+\end{itemize}
+
+\subsection{Example (Canonical Form)}
+(P)
+\[\max \begin{bmatrix}
+    0 & 0 & -4 & 1 & 0
+\end{bmatrix}\mathbf{x}\]
+subject to
+\begin{align*}
+    \begin{bmatrix}
+        1 & 0 & -1 & 1 & 0\\
+        0 & 1 & 2 & -1 & 0\\
+        0 & 0 & -3 & 2 & 1
+    \end{bmatrix}\mathbf{x}
+    =
+    \begin{bmatrix}
+        4\\
+        2\\
+        6
+    \end{bmatrix}\\
+    \mathbf{x}\ge \mathbf{0}
+\end{align*}
+
+
+Note that $B:=\{1,2,5\}$ is a basis of $A$, so the basic solution determined by $B$ is
+\[\mathbf{\bar{x}}=
+    \begin{bmatrix}
+        4\\
+        2\\
+        0\\
+        0\\
+        6\\
+    \end{bmatrix}
+\]
+$c_3=-4$, increasing the value of $x_3$ from $0$ will decrease the objective value by $-4$ units\\
+$c_4=1$, we want to increase the value of $x_4$, so
+\[
+    \begin{bmatrix}
+        x_1\\
+        x_2\\
+        x_5
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        4\\
+        2\\
+        6
+    \end{bmatrix}
+    -x_4
+    \begin{bmatrix}
+        1\\
+        -1\\
+        2
+    \end{bmatrix}
+    \ge 0
+\]
+Let $t$ denote the maximum value we can assign to $x_4$ and stay feasible.\\
+So,
+$t=\min\{\nicefrac{4}{1},\_,\nicefrac{6}{2}\}=3$
+

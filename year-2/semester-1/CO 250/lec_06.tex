@@ -1,0 +1,248 @@
+\section{2019-09-24}
+\subsection{Solving LP Problems}
+Let $x_1,\dots,x_n$ be all the variables in an optimization problem. Then
+assignment of values to all variables such that all constraints are satisfied,
+gives a \emph{feasible solution}. An optimization problem is called \emph{feasible}
+if it has at least one feasible solution, otherwise it is called \emph{infeasible}.
+
+\subsection{Example (Infeasible LP)}
+(LP)
+\[\max x_1+2x_2+3x_3+4x_4+5x_5\]
+subject to
+\begin{align*}
+    &
+    \begin{matrix}
+    1\\
+    -2
+    \end{matrix}
+    \underbrace{
+        \begin{bmatrix}
+        -3 & 2 & 7 & 1 & -7 \\
+        -2 & 1 & 2 & 0 & -4
+        \end{bmatrix}}_{A}
+    \underbrace{\begin{bmatrix}
+        x_1\\
+        x_2\\
+        x_3\\
+        x_4\\
+        x_5
+    \end{bmatrix}}_{\mathbf{x}}
+    =
+    \underbrace{\begin{bmatrix}
+        6\\
+        4
+    \end{bmatrix}}_{\mathbf{b}}\\
+    &\mathbf{x}\ge \mathbf{0}
+\end{align*}
+Let $\mathbf{y}:=
+\begin{bmatrix}
+    1\\
+    -2
+\end{bmatrix}$
+and consider the facts
+\begin{align*}
+    &A\mathbf{x}=\mathbf{b}\\
+    &\implies \mathbf{y}^TA\mathbf{x}=\mathbf{y}^T\mathbf{b}\\
+    &\implies \underbrace{\begin{bmatrix}
+        1 & 0 & 3 & 1 & 1
+    \end{bmatrix}}_{\ge \mathbf{0}^T}
+    \underbrace{\mathbf{x}}_{\ge \mathbf{0}}=\underbrace{6-8}_{< 0}=-2
+\end{align*}
+Therefore, $\nexists$ any solution to $A\mathbf{x}=\mathbf{b}$, $\mathbf{x}\ge 0$.
+Thus, the LP is infeasible.
+
+\subsection{Proposition (Infeasibility)}
+Let $A\in M_{m\times n}(R), \mathbf{b}\in\mathbb{R}^m$. Suppose
+$\exists \mathbf{y}\in\mathbb{R}^m$ such that
+\begin{enumerate}
+    \item $\mathbf{y}^TA\ge\mathbf{0}^T$
+    \item $\mathbf{y}^T\mathbf{b}<0$
+\end{enumerate}
+For every $\mathbf{c}\in\mathbb{R}^n$, the LP
+\[\max \{\mathbf{c}^T\mathbf{x} \mid A\mathbf{x}=\mathbf{b}\text{, }
+\mathbf{x}\ge\mathbf{0}\}\]
+is infeasible. In particular, we call a vector $\mathbf{y}$ a \emph{certificate of infeasibility}.
+
+\begin{proof}
+    Let $A\in M_{m\times n}(R), \mathbf{b}\in\mathbb{R}^m$ and suppose
+$\exists \mathbf{y}\in\mathbb{R}^m$ such that
+\begin{enumerate}
+    \item $\mathbf{y}^TA\ge\mathbf{0}^T$
+    \item $\mathbf{y}^T\mathbf{b}<0$
+\end{enumerate}
+Suppose for a contradiction that $\exists\mathbf{\bar{x}}\in\mathbb{R}^n$ 
+such that
+\[A\mathbf{\bar{x}}=\mathbf{b} \text{, }\mathbf{\bar{x}}\ge \mathbf{0}\]
+\[
+    A\mathbf{\bar{x}}=\mathbf{b}
+    \implies
+    \underbrace{\mathbf{y}^TA}_{\ge\mathbf{0}^T}
+    \underbrace{\mathbf{\bar{x}}}_{\ge\mathbf{0}}
+    =\underbrace{\mathbf{y}^T\mathbf{b}}_{\nless 0}
+\]
+a contradiction to 2.
+\end{proof}
+
+An optimization problem is called unbounded if $\forall M\in\mathbb{R}$, there
+exists a feasible solution of the optimization problem with the objective 
+value strictly better than $M$.
+\subsection{Example (Unbounded LP)}
+\[\max 
+\begin{bmatrix}
+    -1 & 3 & 0 & 0 & 1
+\end{bmatrix}\mathbf{x}\]
+subject to
+\begin{align*}
+    &\begin{bmatrix}
+        -1 & 3 & -1 & 1 & 0\\
+        -2 & 4 & 1 & 0 & 1
+    \end{bmatrix}
+    \mathbf{x}
+    =
+    \begin{bmatrix}
+        2\\
+        1
+    \end{bmatrix}\\
+    &\mathbf{x}\ge \mathbf{0}
+\end{align*}
+Consider
+\[\mathbf{\tilde{x}}:=
+\underbrace{\begin{bmatrix}
+    0\\
+    0\\
+    0\\
+    2\\
+    1  
+\end{bmatrix}}_{\mathbf{x}}
++
+t
+\underbrace{\begin{bmatrix}
+    1\\
+    0\\
+    0\\
+    1\\
+    2
+\end{bmatrix}}_{\mathbf{d}} \text{, } t\ge 0
+\]
+
+\[
+    A\mathbf{x}=
+    \begin{bmatrix}
+        2\\
+        1
+    \end{bmatrix}, \bar{\mathbf{x}}\ge \mathbf{0}.\text{Therefore $\bar{\mathbf{x}}$ is a feasible solution.}
+\]
+\[
+    A\mathbf{d}=\begin{bmatrix}
+        0\\
+        0
+    \end{bmatrix}, \mathbf{d}\ge \mathbf{0}.\\
+\]
+
+\[A\tilde{\mathbf{x}}=A(\bar{\mathbf{x}}+t\mathbf{d})=A\bar{\mathbf{x}}+t(A\mathbf{d})=
+\begin{bmatrix}
+    2\\
+    1
+\end{bmatrix}\]
+\[\tilde{\mathbf{x}}=\bar{\mathbf{x}}+t\mathbf{d}\]
+Therefore, $\tilde{\mathbf{x}}$ is a feasible solution $\forall t\ge 0$.
+
+
+\textbf{Objective function value of $\tilde{\mathbf{x}}$:}
+\[
+\begin{bmatrix}
+    -1 & 3 & 0 & 0 & 1
+\end{bmatrix}
+\left(\begin{bmatrix}
+    0\\
+    0\\
+    0\\
+    2\\
+    1  
+\end{bmatrix}
++
+t
+\begin{bmatrix}
+    1\\
+    0\\
+    0\\
+    1\\
+    2
+\end{bmatrix}\right)
+=
+1+t(-1+2)=1+t\rightarrow+\infty \text{ as }t\rightarrow+\infty\]
+Therefore the LP is unbounded.
+
+\subsection{Proposition (Unboundedness)}
+Suppose $\exists \mathbf{\bar{x}}\in\mathbb{R}^n$ such that
+\[A\mathbf{\bar{x}}=\mathbf{b}, \mathbf{x}\ge \mathbf{0}.\]
+and $\exists\mathbf{d}\in\mathbb{R}^n$ such that
+\begin{enumerate}
+    \item $A\mathbf{d}=\mathbf{0}$
+    \item $\mathbf{d}\ge \mathbf{0}$
+    \item $\mathbf{c}^T\mathbf{d}>0$
+\end{enumerate}
+For every $\mathbf{c}\in\mathbb{R}^n$, the LP
+\[\max \{\mathbf{c}^T\mathbf{x} \mid A\mathbf{x}=\mathbf{b}\text{, }
+\mathbf{x}\ge\mathbf{0}\}\]
+is unbounded. In particular, we call a pair of vectors $\mathbf{\bar{x}}$, $\mathbf{d}$ a
+\emph{certificate of unboundedness}.
+
+\begin{proof}
+    Suppose there exists such $\mathbf{d}$. Consider
+    \[\tilde{\mathbf{x}}=\bar{\mathbf{x}}+t\mathbf{d}, t\ge 0\]
+Then,
+\[A\tilde{\mathbf{x}}=
+\underbrace{A\bar{\mathbf{x}}}_{\mathbf{b}}+
+t\underbrace{(A\mathbf{d})}_{\mathbf{0}}=\mathbf{b}\]
+Therefore $\tilde{\mathbf{x}}$ is a feasible solution of the LP, $t\ge 0$.
+The objective value of the function is
+\[\mathbf{c}^T\tilde{\mathbf{x}}=\mathbf{c}^T\bar{\mathbf{x}}+t
+\underbrace{(\mathbf{c}^T\mathbf{d})}_{>\mathbf{0}}\rightarrow +\infty\text{ as }t\rightarrow+\infty\]
+Therefore, the LP is unbounded.
+\end{proof}
+\begin{remark}
+    If the LP is $\min$, then flip the equality for 3.
+\end{remark}
+
+\subsection{Example (Optimal LP)}
+\[\max 10x_1+15x_2\]
+subject to
+\begin{align*}
+    2x_1+x_2+x_3=1600\\
+    x_1+3x_2+x_4=1200\\
+    \mathbf{x}\ge \mathbf{0}
+\end{align*}
+Consider
+\[\bar{\mathbf{x}}:=
+\begin{bmatrix}
+    720\\
+    160\\
+    0\\
+    0
+\end{bmatrix}\]
+\[\mathbf{y}:=
+\begin{bmatrix}
+    3\\
+    4
+\end{bmatrix}
+\]
+$A\bar{\mathbf{x}}=\mathbf{b}$, $\bar{\mathbf{x}}\ge \mathbf{0}$. So $\bar{\mathbf{x}}$ is a feasible solution.
+
+
+Also, $\mathbf{c}^T\mathbf{x}=7200+2400=9600$.
+Every feasible solution satisfies
+\begin{align*}
+    &A\mathbf{x}=\mathbf{b}\\
+    &\implies \mathbf{y}^TA\mathbf{x}=\mathbf{y}^T\mathbf{b}
+\end{align*}
+\[\mathbf{y}^TA=
+\begin{bmatrix}
+    10 & 15 & 3 & 4
+\end{bmatrix}
+\ge
+\begin{bmatrix}
+    10 & 15 & 0 & 0
+\end{bmatrix}=\mathbf{c}^T\]
+\[\mathbf{y}^Tb=3\times 1600+4\times 1200=9600=\mathbf{c}^T\mathbf{x}\]
+Therefore $\bar{\mathbf{x}}$ is an optimal solution.

@@ -1,0 +1,139 @@
+\section{2019-09-17}
+\subsection{Example (Minimum-Cost Perfect Matching Problem)}
+Given an undirected graph $G=(V,E)$, and $w_e\in\mathbb{R}$, for every $e\in E$, 
+we want to find a perfect matching in G with minimum total cost. The cost of
+matching $M$ is $\sum\limits_{e\in M}w_e$. For each $v\in V$, $\delta(v):=$
+the set of edges incident to $v$. $G:=$
+\[
+    \begin{tikzpicture}
+        \tikzstyle{LabelStyle}=[fill=white,sloped]
+        \Vertex[x=0,y=4]{1}
+        \Vertex[x=0,y=2]{2}
+        \Vertex[x=0,y=0]{3}
+        \Vertex[x=3,y=0]{6}
+        \Vertex[x=3,y=2]{5}
+        \Vertex[x=3,y=4]{4}
+        \Edge(1)(4)
+        \Edge(1)(5)
+        \Edge(1)(6)
+        \Edge(2)(4)
+        \Edge(2)(5)
+        \Edge(2)(6)
+        \Edge(3)(4)
+        \Edge(3)(5)
+        \Edge(3)(6)
+    \end{tikzpicture}
+\]
+$\delta(1)=\{14,15,16\}$\\
+$\delta(5)=\{15,25,35\}$\\
+$x_e:=\begin{cases}
+    1 \text{ , if $e$ is chosen in the matching}\\
+    0 \text{ , otherwise}
+\end{cases}
+$\\
+(IP)
+\[\min \sum\limits_{e\in E}w_ex_e\]
+subject to
+\begin{align*}
+    \sum\limits_{e\in E}x_e=1 \qquad \forall v\in V\\
+    x_e\in\{0,1\} \qquad \forall e\in E\\
+\end{align*}
+A graph $G=(V,E)$ is \emph{bipartite} if there exists a partition $V_1,V_2$
+of $V$ ($V_1\cup V_2=V$ and $V_1\cap V_2=\emptyset$) such that
+\[E\subseteq\{uv\mid u\in V_1, v\in V_2\}\]
+
+Assignment problems are a special case of minimum cost perfect matching problems
+in bipartite graphs.
+\begin{remark}
+    A graph is \emph{bipartite} $\iff$ it does not contain an odd cycle.
+\end{remark}
+Given a situation where we have binary-valued variables 
+\[x_j:=
+    \begin{cases}
+        1 \text{, option $j$ is chosen}\\
+        0 \text{, otherwise}
+    \end{cases}
+    \forall j\in\{1,\dots,n\}
+\]
+We solve how to formulate in an IP in the following conditions:
+\begin{itemize}
+    \item at most $k$ options are chosen: $\sum\limits_{j=1}^n x_j\le k$
+    \item at least $k$ options are chosen: $\sum\limits_{j=1}^n x_j\ge k$
+    \item exactly $k$ options are chosen: $\sum\limits_{j=1}^n x_j=k$
+\end{itemize}
+We can also formulate many classes of the "OR" type constraint in IP problems.
+
+\subsection{Example (Refer to 1.1)}
+(IP)
+\[\max 10x_1 + 15x_2\]
+subject to
+\begin{align*}
+    2x_1 + x_2 \le 1600\\
+    x_1 + 3x_2 \le 1200\\
+    x_1, x_2 \ge 0
+\end{align*}
+Suppose C\&O is required to produce at least 10 tables per week or at least 80
+chairs per week, or possibly both. $x_1\ge 10$ or $x_2\ge 80$ or both. We
+introduce a new binary-valued variable $z\in\{0,1\}$.
+\[
+    z:=
+    \begin{cases}
+        1 \text{, if } x_1\ge 10\\
+        0 \text{, if } x_2\ge 80
+    \end{cases}
+\]
+\[
+   \{(x_1\ge 10 \text{ OR } x_2\ge 80) \text{ AND } 
+   (x_1\ge 0 \text{ OR } x_2\ge 0)\}
+    \iff
+    \left\{\begin{array}{r}
+        x_1\ge 10z\\
+        x_2\ge 80(1-z)\\
+        z\in\{0,1\}\\
+        x_1,x_2\ge 0
+    \end{array}\right\}
+\]
+\begin{remark}
+    \emph{Possibly both} means that you can choose either one of these
+    conditions in the first OR above and it will be correct.
+\end{remark}
+
+Now, suppose C\&O has a new condition every week. We must manufacture either
+exactly 3 chairs for every table or exactly 8 chairs for every table. Show
+how to incorporate this in an IP formulation
+\[
+    \{x_2=3x_1 \text{ OR } x_2=8x_1\}
+    \iff
+    \{(x_2\le 3x_1 \text{ AND } x_2\ge3x_1) \text{ OR }
+    (x_2\le 8x_1 \text{ AND } x_2\ge8x_1)\}
+\]
+Introduce a new binary-valued variable $z\in\{0,1\}$.
+\[
+    z:=
+    \begin{cases}
+        1 \text{, if } x_2=3x_1\\
+        0 \text{, if } x_2=8x_1
+    \end{cases}
+\]
+Existing constraints:
+\[
+    \left\{\begin{array}{r}
+    2x_1 + x_2 \le 1600\\
+    x_1 + 3x_2 \le 1200\\
+    x_1, x_2 \ge 0
+    \end{array}\right\}
+    \begin{array}{r}
+        \implies x_1\in[0,800]\\
+        \implies x_2\in[0,500]\\
+        \\
+    \end{array}
+\]
+So,
+\begin{align*}
+    x_2&\le 3x_1+400(1-z)\\
+    x_2&\ge 3x_1-2400(1-z)\\
+    x_2&\le 8x_1+400z\\
+    x_2&\ge 8x_1-6400z\\
+    &z\in\{0,1\}
+\end{align*}
+

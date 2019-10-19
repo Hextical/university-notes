@@ -1,0 +1,90 @@
+\section{2019-09-19}
+\subsection{Non-linear Optimization Problems}
+\[\min f(x)\]
+subject to
+
+\begin{align*}
+    g_1(x)&\le 0\\
+    g_2(x)&\le 0\\
+    &\vdots\\
+    g_m(x)&\le 0
+\end{align*}
+where
+$f:\mathbb{R}^n\rightarrow \mathbb{R}$, 
+$g_i:\mathbb{R}^n\rightarrow\mathbb{R}$, $\forall i\in\{1,\dots,m\}$.
+
+Every LP problem is a very special case of a NLP problem. IP problems can
+also be formulated as NLP problems.
+\subsection{Example (Formulating LP problems as NLP problems)}
+\begin{align*}
+    x_i\in\mathbb{Z}&\iff \sin(\pi x_i)=0\\
+    &\iff [\sin(\pi x_i)]^2\le 0
+\end{align*}
+NLP problems have huge modelling power, as a result, one must understand the
+structure of the underlying problem and construct "good" NLP models that are
+amendable to analysis and solution techniques.
+
+\subsection{Example (Portfolio Optimization)}
+There are $n$ stocks $1,\dots,n$ to invest in. We have a budget of $B$ dollars.
+We have an expected return (for \$1 investment at the end of our planning
+horizon) of $\mu_1,\dots,\mu_n$. We are also given 
+$V\in M_{n\times n}(\mathbb{R})$, a variance coefficient matrix so that if
+we invest in $x_1,\dots,x_n$ dollars in $n$ stocks, $1,\dots,n$ respectively,
+then the expected risk of such an investment is given by 
+$\mathbf{x}^T V\mathbf{x}$.
+\[\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{n}V_{ij}x_ix_j\]
+$x_j:=$ amount of investment in stock $j$ in dollars.
+
+Suppose we are also given a goal $G$ (a dollar amount we want as the value
+of our portfolio at the end of the planning horizon).
+
+\textbf{Data}
+\begin{itemize}
+    \item Budget (\$) $\rightarrow$ B
+    \item Goal (\$) $\rightarrow$ G
+    \item Expected return $\rightarrow$
+    $\begin{bmatrix}
+        \mu_1\\
+        \vdots\\
+        \mu_n
+    \end{bmatrix}$
+    \item Variance-covariance matrix $\rightarrow$ 
+    $V\in M_{n\times n}(\mathbb{R})$
+\end{itemize}
+We want to minimize the risk of our portfolio while satisfying the budget and
+the goal constraints. (NLP)
+\[\min \mathbf{x}^T V\mathbf{x}\]
+subject to
+\begin{align*}
+    \sum_{j = 1}^{n}x_j\ge B\\
+    \sum_{j = 1}^{n}\mu_jx_j\le G\\
+    \mathbf{x}\ge \mathbf{0}
+\end{align*}
+There are many variants of such models and extensions. For example, instead
+of a goal $G$, we may given an upper bound on the risk, say 
+$R\in\mathbb{R}_{>0}$. (NLP)
+\[\max \sum_{j = 1}^{n}\mu_jx_j\]
+subject to
+\begin{align*}
+    \sum_{j = 1}^{n}x_j\ge B\\
+    \mathbf{x}^T V\mathbf{x}\le R\\
+    \mathbf{x}\ge \mathbf{0}
+\end{align*}
+We can handle many more variants and extensions. Suppose investing in stock
+$j$ below $l_j$ dollars is not allowed. For diversity of our portfolio, we
+want to invest in at least 20 stocks, and for the sake of simplicity we want
+to invest in at most 150 stocks. We introduce a binary-valued variable $z_j$.
+\[z_j:=
+\begin{cases}
+    1 \text{, if we invest in stock $j$}\\
+    0 \text{, otherwise}
+\end{cases}
+\forall j\in\{1,\dots,n\}\\
+\]
+Add these constraints:
+\begin{align*}
+    &l_jz_j\le x_j\le Bz_j\qquad \forall j\in\{1,\dots,n\}\\
+    &20\le \sum_{j = 1}^{n}z_j\le 150\\
+    &z_j\in\{0,1\}
+\end{align*}
+
