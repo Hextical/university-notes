@@ -1,9 +1,13 @@
 \section{2019-09-24}
-\subsection{Solving LP Problems}
-Let $x_1,\dots,x_n$ be all the variables in an optimization problem. Then
-assignment of values to all variables such that all constraints are satisfied,
-gives a \emph{feasible solution}. An optimization problem is called \emph{feasible}
-if it has at least one feasible solution, otherwise it is called \emph{infeasible}.
+\begin{defbox}
+    \subsection{Feasible and Infeasible Solutions}
+    Consider an LP with variables $x_1,\dots,x_n$.  Then the
+    assignment of values to all variables such that all constraints are satisfied,
+    gives a \emph{feasible solution}.
+
+    An optimization problem is called \emph{feasible} if it has at least one feasible
+    solution, otherwise it is called \emph{infeasible}.
+\end{defbox}
 
 \subsection{Example (Infeasible LP)}
 (LP)
@@ -44,27 +48,26 @@ and consider the facts
     \end{bmatrix}}_{\ge \mathbf{0}^\top }
     \underbrace{\mathbf{x}}_{\ge \mathbf{0}}=\underbrace{6-8}_{< 0}=-2
 \end{align*}
-Therefore, $\nexists$ any solution to $A\mathbf{x}=\mathbf{b}$, $\mathbf{x}\ge 0$.
-Thus, the LP is infeasible.
+Therefore, since $\nexists$ any solution to $A\mathbf{x}=\mathbf{b}$, $\mathbf{x}\ge 0$
+the LP is infeasible.
 
-\subsection{Proposition (Infeasibility)}
-If
-$\exists \mathbf{y}\in\mathbb{R}^m$ such that
-\begin{enumerate}
-    \item $\mathbf{y}^\top A\ge\mathbf{0}^\top $
-    \item $\mathbf{y}^\top \mathbf{b}<0$
-\end{enumerate}
-For every $\mathbf{c}\in\mathbb{R}^n$, the LP
-\[\max \{\mathbf{c}^\top \mathbf{x} \mid A\mathbf{x}=\mathbf{b}\text{, }
-\mathbf{x}\ge\mathbf{0}\}\]
-is infeasible. In particular, we call a vector $\mathbf{y}$ a \emph{certificate of infeasibility}.
+
+\begin{thmbox}
+    \subsection{Proposition (Infeasibility)}
+    If
+    $\exists \mathbf{y}\in\mathbb{R}^m$ such that
+    \begin{enumerate}[(1)]
+        \item $\mathbf{y}^\top A\ge\mathbf{0}^\top $
+        \item $\mathbf{y}^\top \mathbf{b}<0$
+    \end{enumerate}
+    For every $\mathbf{c}\in\mathbb{R}^n$, the LP
+    \[\max \{\mathbf{c}^\top \mathbf{x} \mid A\mathbf{x}=\mathbf{b}\text{, }
+    \mathbf{x}\ge\mathbf{0}\}\]
+    is infeasible. In particular, we call a vector $\mathbf{y}$ a \emph{certificate of infeasibility}.
+\end{thmbox}
 
 \begin{proof}
-    Suppose $\exists \mathbf{y}\in\mathbb{R}^m$ such that
-\begin{enumerate}
-    \item $\mathbf{y}^\top A\ge\mathbf{0}^\top $
-    \item $\mathbf{y}^\top \mathbf{b}<0$
-\end{enumerate}
+Suppose there exists such a $ \mathbf{y} $.
 Suppose for a contradiction that $\exists\mathbf{\bar{x}}\in\mathbb{R}^n$ 
 (there is a feasible solution)
 such that
@@ -76,7 +79,7 @@ such that
     \underbrace{\mathbf{\bar{x}}}_{\ge\mathbf{0}}
     =\underbrace{\mathbf{y}^\top \mathbf{b}}_{\nless 0}
 \]
-a contradiction to 2.
+a contradiction to (2).
 \end{proof}
 
 An optimization problem is called unbounded if $\forall M\in\mathbb{R}$, there
@@ -169,20 +172,23 @@ t
 1+t(-1+2)=1+t\rightarrow+\infty \text{ as }t\rightarrow+\infty\]
 Therefore the LP is unbounded.
 
-\subsection{Proposition (Unboundedness)}
-If $\exists \mathbf{\bar{x}}\in\mathbb{R}^n$ such that
-\[A\mathbf{\bar{x}}=\mathbf{b}, \mathbf{x}\ge \mathbf{0}.\]
-and $\exists\mathbf{d}\in\mathbb{R}^n$ such that
-\begin{enumerate}
-    \item $A\mathbf{d}=\mathbf{0}$
-    \item $\mathbf{d}\ge \mathbf{0}$
-    \item $\mathbf{c}^\top \mathbf{d}>0$
-\end{enumerate}
-For every $\mathbf{c}\in\mathbb{R}^n$, the LP
-\[\max \{\mathbf{c}^\top \mathbf{x} \mid A\mathbf{x}=\mathbf{b}\text{, }
-\mathbf{x}\ge\mathbf{0}\}\]
-is unbounded. In particular, we call a pair of vectors $\mathbf{\bar{x}}$, $\mathbf{d}$ a
-\emph{certificate of unboundedness}.
+
+\begin{thmbox}
+    \subsection{Proposition (Unboundedness)}
+    If $\exists \mathbf{\bar{x}}\in\mathbb{R}^n$ such that
+    \[A\mathbf{\bar{x}}=\mathbf{b}, \mathbf{x}\ge \mathbf{0}.\]
+    and $\exists\mathbf{d}\in\mathbb{R}^n$ such that
+    \begin{enumerate}[(1)]
+        \item $A\mathbf{d}=\mathbf{0}$
+        \item $\mathbf{d}\ge \mathbf{0}$
+        \item $\mathbf{c}^\top \mathbf{d}>0$
+    \end{enumerate}
+    For every $\mathbf{c}\in\mathbb{R}^n$, the LP
+    \[\max \{\mathbf{c}^\top \mathbf{x} \mid A\mathbf{x}=\mathbf{b}\text{, }
+    \mathbf{x}\ge\mathbf{0}\}\]
+    is unbounded. In particular, we call a pair of vectors $\mathbf{\bar{x}}$, $\mathbf{d}$ a
+    \emph{certificate of unboundedness}.
+\end{thmbox}
 
 \begin{proof}
     Suppose there exists such $\mathbf{d}$. Consider
@@ -198,7 +204,7 @@ The objective value of the function is
 Therefore, the LP is unbounded.
 \end{proof}
 \begin{remark}
-    If the LP is $\min$, then flip the equality for 3.
+    If the LP is $\min$, then flip the equality for (3).
 \end{remark}
 
 \subsection{Example (Optimal LP)}

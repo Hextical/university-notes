@@ -42,10 +42,10 @@ subject to
     x_{ij}=\{0,1\} \qquad \forall i,j\in\{1,\dots,n\}
 \end{align}
 
-$(1)\implies$ every activity is assigned one building\\
-$(2)\implies$ every building is assigned one activity
+$(1)\implies$ every activity is assigned exactly one building\\
+$(2)\implies$ every building is assigned exactly one activity
 \begin{remark}
-    Example 3.1 is frequently known as an \emph{assignment problem}.
+    This example is frequently known as an \emph{assignment problem}.
 \end{remark}
 
 Suppose $c_{ij}\in\mathbb{R}$ and consider the inequality version:
@@ -57,11 +57,16 @@ subject to
     x_{ij}=\{0,1\} \qquad \forall i,j\in\{1,\dots,n\}
 \end{align*}
 We can generalize this class optimization problem further.
-An \emph{undirected graph} $G=(V,E)$ where $V$ is a finite set
-called \emph{vertices} and $E$ is a subset of ordered pairs of distinct
-vertices called \emph{edges}.
+
+\begin{defbox}
+    \subsection{Definition (Undirected Graph)}
+    An \emph{undirected graph} is a pair $G=(V,E)$, where $V$ is a finite set
+    of elements called \emph{vertices}, and $E$ is a set of pairs of distinct
+    vertices called \emph{edges}. All edges in an undirected graph are bidirectional.
+\end{defbox}
+
 \subsection{Example (Undirected Graph)}
-Given a graph $G:=$
+Given $G:=$
 \[
     \begin{tikzpicture}
         \tikzstyle{LabelStyle}=[fill=white,sloped]
@@ -79,10 +84,15 @@ Given a graph $G:=$
         \Edge(1)(3)
     \end{tikzpicture}
 \]
-$V=\{1,\dots,5\}$\\
-$E=\{12,13,23,24,35,34\}$\\
-A \emph{matching} in $G$ is a subset of edges $M$ in $G$ such
-that no two edges in $M$ share a vertex.
+we have
+\[V=\{1,\dots,5\}\]
+\[E=\{12,13,23,24,35,34\}\]
+
+\begin{defbox}
+    \subsection{Definition (Matching)}
+    Given a graph $G=(V,E)$, a \emph{matching} $M$ in $G$ is a subset of edges
+    in $G$ such that no two edges in $M$ share a common vertex.
+\end{defbox}
 In the above example:
 \begin{align*}
     \text{Matching}\qquad & \text{Not matching}\\
@@ -90,8 +100,14 @@ In the above example:
     M:=\emptyset \qquad & M:= \{67\}\\
     M:=\{12,35\} \qquad
 \end{align*}
-A matching is called a \emph{perfect matching} if every vertex
-in $G$ is an endpoint of an edge in $M$.\\
+
+\begin{defbox}
+    \subsection{Definition (Perfect Matching)}
+    Given a graph $G=(V,E)$, if every vertex $V$ in $G$ is
+    an endpoint of an edge in $M$, we call
+    the matching a \emph{perfect matching}.
+\end{defbox}
+
 The assignment problem is a special case of a
 \emph{minimum cost perfect matching problem} or weighted graphs
 (in this case every edge is given a weight/cost $c_{ij}$)
@@ -117,5 +133,6 @@ The assignment problem is a special case of a
     \end{tikzpicture}
 \]
 \begin{remark}
-    In a perfect matching graph, there are $n^2$ edges, and $2n$ vertices.
+    In a perfect matching graph, there are $n^2$ edges, and $2n$ 
+    (an even number of) vertices.
 \end{remark}

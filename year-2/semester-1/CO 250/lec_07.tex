@@ -5,20 +5,20 @@
 \mathbf{x}\ge\mathbf{0}\}\]
 \begin{itemize}
     \item if $\exists \mathbf{y}\in\mathbb{R}^m$ such that
-    \begin{enumerate}
+    \begin{enumerate}[(1)]
         \item $\mathbf{y}^\top A\ge\mathbf{0}^\top $
         \item $\mathbf{y}^\top \mathbf{b}<0$
     \end{enumerate}
     then (LP) is infeasible.
     \item if $\exists(\bar{\mathbf{x}}, \mathbf{d})\in\mathbb{R}^n$ such that $A\mathbf{x}=b$, $\mathbf{x}\ge \mathbf{0}$, 
-    \begin{enumerate}
+    \begin{enumerate}[(1)]
         \item $A\mathbf{d}=\mathbf{0}$
         \item $\mathbf{d}\ge \mathbf{0}$
         \item $\mathbf{c}^\top \mathbf{d}>0$
     \end{enumerate}
     then (LP) is unbounded.
     \item if $\exists(\mathbf{\bar{x}},\mathbf{y})$ such that
-    \begin{enumerate}
+    \begin{enumerate}[(1)]
         \item $A\mathbf{\bar{x}}=\mathbf{b}$, $\mathbf{x}\ge 0$
         \item $A^\top \mathbf{y}\ge\mathbf{c}$
         \item $\mathbf{c}^\top  \mathbf{\bar{x}}=\mathbf{y}^\top \mathbf{b}$
@@ -26,10 +26,28 @@
     then $\mathbf{\bar{x}}$ is an optimal solution of (LP).
 \end{itemize}
 
-\subsection{Standard Equality Form (SEF)}
+\begin{defbox}
+    \subsection{Definition (Standard Equality Form)}
+    An LP is said to be in \emph{Standard Equality Form} (SEF) if it has the Form
+    \[ \max \mathbf{c}^T \mathbf{x}+\bar{z}\]
+    subject to
+    \begin{align*}
+        A \mathbf{x}=\mathbf{b}\\
+        \mathbf{x}\ge \mathbf{0}
+    \end{align*}
+    where $ \bar{z} $ is a constant.
+    In other words, it satisfies all of the conditions:
+    \begin{enumerate}[(1)]
+        \item It is a maximization problem
+        \item All constraints are equations (other than non-negativity
+        constraints)
+        \item Every variable has a non-negativity constraint
+    \end{enumerate}
+\end{defbox}
 Every LP can be converted to SEF. A pair of LP problems LP1 and LP2 are equivalent if they both have the
-same status (infeasible, unbounded, optimal) and certificate of such a status for one problem can easily
+same status (infeasible, unbounded, or optimal) and certificate of such a status for one problem can easily
 be converted into a certificate of the same type for the other LP.
+
 Given an arbitrary LP problem, 
 \begin{itemize}
     \item if the objective function is a minimization problem, then 
@@ -104,36 +122,38 @@ or $\bar{x_2}< 0$
 then $(\bar{x_1},\bar{x_2^+},\bar{x_2^-},\bar{x_3},\bar{x_4})^\top$
 is a feasible solution of (P$^\prime$).
 \begin{remark}
-    Example 7.2 was a question from a past midterm and not covered in class. The class example was
-    not helpful.
+    This example was a question from a past midterm and not covered in class.
+    The class example was useless.
 \end{remark}
 
-\subsection{Definition (Basis)}
-Let $A\in M_{m\times n}(\mathbb{R})$, $B\subseteq\{1,\dots,n\}$ such that $|B|=m$. If
-\[A_B:=
-\begin{bmatrix}
-    a_i \mid i\in B
-\end{bmatrix}\in M_{m\times m}(\mathbb{R})
-\]
-where $A_B$ is non-singular (i.e. IMT holds), then $B$ is a basis of $A$.
+\begin{defbox}
+    \subsection{Definition (Basis)}
+    Let $A\in M_{m\times n}(\mathbb{R})$, $B\subseteq\{1,\dots,n\}$ such that $|B|=m$. If
+    \[A_B:=
+    \begin{bmatrix}
+        a_i \mid i\in B
+    \end{bmatrix}\in M_{m\times m}(\mathbb{R})
+    \]
+    where $A_B$ is non-singular (i.e. IMT holds), then $B$ is a basis of $A$.
+    If $B$ is a basis of $A$, then $A_B$ is a basis for $\mathbb{R}^m$. We
+    denote $N$ as the set that does not have the elements of $B$.
+\end{defbox}
 
+\begin{defbox}
+    \subsection{Definition (Basic Solution)}
+    A vector $\mathbf{\bar{x}}$ is a \emph{basic solution} of $ A \mathbf{x}=\mathbf{b} $
+    for a basis $ B $ if the following conditions hold:
+    \begin{enumerate}[(1)]
+        \item $A \mathbf{\bar{x}}=\mathbf{b}$
+        \item $\mathbf{\bar{x}_N}=0$
+    \end{enumerate}
+\end{defbox}
 
-If $B$ is a basis of $A$, then 
-$\begin{bmatrix}
-    a_i \mid i\in B
-\end{bmatrix}$
-is a basis for $R^m$.
-
-\subsection{Definition (Basic solution)}
-Let $\mathbf{b}\in\mathbb{R}^m$ be given. $\mathbf{\bar{x}}$ is a \emph{basic solution} 
-corresponding to $B$ if
-\begin{enumerate}
-    \item $B$ is a basis
-    \item $x_i=0 \qquad \forall i\notin B$
-\end{enumerate}
-
-\subsection{Definition (Basic feasible solution)}
-In addition to a \emph{basic solution}, we need  $\mathbf{\bar{x}}\ge \mathbf{0}$.
+\begin{defbox}
+    \subsection{Definition (Basic Feasible Solution)}
+    If $\mathbf{\bar{x}}$ is a \emph{basic solution} and $\mathbf{\bar{x}}\ge \mathbf{0}$,
+    then $\mathbf{\bar{x}}$ is a \emph{basic feasible solution} .
+\end{defbox}
 
 \subsection{Example (Bases of A)}
 \[A:=
