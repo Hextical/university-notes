@@ -4,21 +4,21 @@
 \end{remark}
 
 \subsection{Example (Continuation of 8.3)}
-So, the new basic feasible solution is $\mathbf{\bar{x}}:=(1,5,0,3,0)^\top$
+So, the new basic feasible solution is $\symbfit{\bar{x}}:=(1,5,0,3,0)^\top$
 determined by the basis $B:=\{1,2,5\}\cup\{4\}\setminus \{5\}=\{1,2,4\}$. Note that
 we exclude $\{5\}$ since the index of which $t$ achieved the minimum was at
 $\nicefrac{6}{2}$, i.e. index $5$ (row $x_5$). The canonical form determined by the new
 basis is
 \[\max \begin{bmatrix}
     0 & 0 & -\nicefrac{5}{2} & 0 & -\nicefrac{1}{2}
-\end{bmatrix}\mathbf{x}+3\]
+\end{bmatrix}\symbfit{x}+3\]
 subject to
 \[
     \begin{bmatrix}
         1 & 0 & \nicefrac{1}{2} & 0 & -\nicefrac{1}{2}\\
         0 & 1 & \nicefrac{1}{2} & 0 & \nicefrac{1}{2}\\
         0 & 0 & -\nicefrac{3}{2} & 1 & \nicefrac{1}{2}
-    \end{bmatrix}\mathbf{x}
+    \end{bmatrix}\symbfit{x}
     =
     \begin{bmatrix}
         1\\
@@ -27,7 +27,7 @@ subject to
     \end{bmatrix}
 \]
 \begin{remark}
-    $\mathbf{\bar{x}}$ is the optimal solution with optimal value $3$.
+    $\symbfit{\bar{x}}$ is the optimal solution with optimal value $3$.
 \end{remark}
 \begin{remark}
     How did we arrive to this LP? Using the formulae in Proposition 8.2. If you didn't want to
@@ -37,7 +37,7 @@ subject to
 \subsection{Example (Canonical form without computing the inverse)}
 \begin{remark}
     The following was not taught in class or the textbook. 
-    This method can be confusing not intuitive.
+    This method can be confusing and not intuitive.
 \end{remark}
 
 
@@ -57,18 +57,18 @@ Write
 \]
 and row reduce $A$ to make fourth column get a leading one as seen above.
 The row-reduced matrix and the augment are your new constraints.\\
-The objective function is tricky, we want a 0 in the fourth column of our $\mathbf{c}^\top $.
+The objective function is tricky, we want a 0 in the fourth column of our $\symbfit{c}^\top $.
 Also, we denote $x_1,x_2,x_4$ as the rows of the matrix respectively.
 Using $x_4$ (which is our row-reduced $A$), we get
 \[-1\left(
     \begin{bmatrix}
         0 & 0 & -\nicefrac{3}{2} & 1 & \nicefrac{1}{2}
-    \end{bmatrix}\mathbf{x}-3\right)+
+    \end{bmatrix}\symbfit{x}-3\right)+
     \begin{bmatrix}
         0 & 0 & -4 & 1 & 0
-    \end{bmatrix}\mathbf{x}
+    \end{bmatrix}\symbfit{x}
 \]
-The $-3$ right after the first matrix was the row of $\mathbf{b}$.
+The $-3$ right after the first matrix was the row of $\symbfit{b}$.
 
 \newpage
 
@@ -77,11 +77,11 @@ The $-3$ right after the first matrix was the row of $\mathbf{b}$.
     \caption{Simplex Algorithm}
     \SetKwInOut{Input}{Input}
     \SetKwInOut{Output}{Output}
-    \Input{$A\in M_{m\times n}(\mathbb{R})$, $b\in\mathbb{R}^m$, $c\in\mathbb{R}^n$}
-    Compute the canonical form for $B$, let $\mathbf{\bar{x}}$ be the basic feasible solution.\\
-    If $\mathbf{c_N}\le 0$, then stop ($\mathbf{\bar{x}}$ is optimal).\\
+    \Input{$A\in \mathbb{R}^{m\times n}$, $\symbfit{b}\in\mathbb{R}^m$, $\symbfit{c}\in\mathbb{R}^n$}
+    Compute the canonical form for $B$, let $\symbfit{\bar{x}}$ be the basic feasible solution.\\
+    If $\symbfit{c_N}\le 0$, then stop ($\symbfit{\bar{x}}$ is optimal).\\
     Choose $k\in N$ such that $c_k>0$.\\
-    If $A_k\le \mathbf{0}$, then stop (the LP is unbounded).\\
+    If $A_k\le \mathbb{0}$, then stop (the LP is unbounded).\\
     Let $r$ be the index which attains $t=\min\{\nicefrac{b_i}{A_{ik}}\mid A_{ik}>0\}$.\\
     Let $l\in B$ be the $r^{th}$ basis element.\\
     Set $B:=B\cup\{k\}\setminus\{l\}$.\\

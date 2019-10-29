@@ -1,0 +1,303 @@
+\section{2019-10-22}
+Given any LP problem, we know how to convert it into an equivalent LP
+problem in SEF:
+
+(P)
+\[\max z:=\symbfit{c}^\top \symbfit{x}\]
+subject to
+\begin{align*}
+    A \symbfit{x}=\symbfit{b}\\
+    \symbfit{x}\ge 0
+\end{align*}
+where $ A\in\mathbb{R}^{m\times n}, \rank(A)=m $.
+
+Given an LP in SEF, with a given basic feasible solution, we know
+how to solve it.
+
+\subsection{Finding a Feasible Solution To LPs (Two Phase Method)}
+Given an LP in SEF with $ \rank(A)=m $, how do we find a feasible
+solution or prove that none exists.
+
+We will construct an \emph{auxiliary LP problem}.
+
+We can always make sure $ b\ge 0 $. (If any $ b_i<0 $, multiply both
+sides of that equation by $ (-1) $) Introduce artificial variables
+$ x_{n+1},x_{n+2},\ldots,x_{n+m} $
+
+$ (P_{aux}) $
+\[ \min w:=x_{n+1}+x_{n+2}+\cdots+x_{n+m} \]
+subject to
+\[
+    \left[\begin{array}{c|c}
+        A & I
+    \end{array}\right]
+    \underbrace{\left[\begin{array}{c}
+        x_1\\
+        x_2\\
+        \vdots\\
+        x_{n+1}\\
+        x_{n+2}\\
+        \vdots\\
+        x_{n+m}
+    \end{array}\right]}_{\symbfit{x}}
+    =\symbfit{b}\]
+\[ \symbfit{x} \ge \mathbb{0}\]
+
+For every feasible solution of $ (P_{aux}) $, $ w\ge 0 $.
+
+Therefore, $ (P_{aux}) $ is not unbounded.
+
+If the optimal value of $ (P_{aux}) $ is zero, let
+$ 
+\begin{bmatrix}
+    \hat{x_1}\\
+    \vdots\\
+    \hat{x_{n+m}}
+\end{bmatrix}
+$ 
+be the corresponding basic feasible solution. Then, 
+$ 
+\begin{bmatrix}
+    \hat{x_1}\\
+    \vdots\\
+    \hat{x_{n}}
+\end{bmatrix}
+$
+is a basic feasible solution of (P).
+
+It is basic since $ \{A_j : \hat{x_j}>0\} $ is linearly independent.
+
+If $ |\{j:\hat{x_j}>0\}|=m $, this index set is a basis of $ A $ which
+determines 
+$ 
+\begin{bmatrix}
+    \hat{x_1}\\
+    \vdots\\
+    \hat{x_{n}}
+\end{bmatrix}
+$.
+
+Otherwise, $ |\{j:\hat{x_j}>0\}|\le m-1 $, we can extend this index set
+to be a basis of $ A $, since $ \rank(A)=m $.
+
+If the optimal value of $ (P_{aux}) $ is positive, then (P) is
+infeasible.
+
+\subsection{Two Phase Method}
+\begin{algorithm}
+    \caption{Two Phase Method}
+    \SetKwInOut{Input}{Input}
+    \SetKwInOut{Output}{Output}
+    \Input{$A,\symbfit{b}, \symbfit{c}$ data for LP in SEF such that
+    full row rank and $ \symbfit{b}\ge \mathbb{0} $.}
+    Construct $ (P_{aux}) $ put into SEF, $ B:=\{n+1,n+2,\ldots,n+m\} $\\
+    Put $ (P_{aux}) $ into the canonical form determined by $ B $.\\
+    Solve $ (P_{aux}) $ starting with basis $ B $ by Simplex Method.\\
+    If the optimal value of $ (P_{aux}) $ is zero, then we have a basic
+    feasible solution of (P). Solve (P) using Simplex Method.\\
+    If the optimal objective value of $ (P_{aux}) $ is not zero, then
+    (P) is infeasible (a certificate of infeasibility is given by
+    the last $ \symbfit{\bar{y}} $ computed).\\
+\end{algorithm}
+
+\subsection{Example}
+(P)
+\[ \max z:= \begin{bmatrix} 1 & 2 & -1 \end{bmatrix} \symbfit{x} \]
+subject to
+\begin{align}
+    \begin{bmatrix}
+        1 & -2 & -3\\
+        -1 & 1 & 1
+    \end{bmatrix}
+    \symbfit{x} =
+    \begin{bmatrix}
+        -3\\
+        1
+    \end{bmatrix}\\
+    \symbfit{x}\ge \mathbb{0}
+\end{align}
+Since $ b_1<0 $
+we write
+\[ \begin{bmatrix}
+    -1 & 2 & 3\\
+    -1 & 1 & 1
+\end{bmatrix}
+x=
+\begin{bmatrix}
+    3\\
+    1
+\end{bmatrix}
+\]
+Introduce artificial variables: $ x_4, x_5 $
+
+$ (P_{aux}) $ 
+\[\min w:=\begin{bmatrix} 0 & 0 & 0 & 1 & 1 \end{bmatrix} \symbfit{x} \]
+subject to
+\begin{align}
+    \begin{bmatrix}
+        -1 & 2 & 3 & 1 & 0\\
+        -1 & 1 & 1 & 0 & 1
+    \end{bmatrix}
+    \symbfit{x}=
+    \begin{bmatrix}
+        3\\
+        1
+    \end{bmatrix}\\
+    \symbfit{x}:=
+    \begin{bmatrix}
+        x_1\\
+        x_2\\
+        x_3\\
+        x_4\\
+        x_5\\
+    \end{bmatrix} \ge \mathbb{0}
+\end{align}
+Apply Simplex Method starting with the basis $ B:=\{4,5\} $
+\[\max -w=\begin{bmatrix} 0 & 0 & 0 & -1 & -1 \end{bmatrix} \symbfit{x} \]
+subject to
+\begin{align}
+    \begin{bmatrix}
+        1 & 0 & 1 & 1 & -2\\
+        0 & 1 & 2 & 1 & 1
+    \end{bmatrix}
+    \symbfit{x}=
+    \begin{bmatrix}
+        1\\
+        2
+    \end{bmatrix}\\
+    \symbfit{x}\ge \mathbb{0}
+\end{align}
+
+Optimal basic feasible solution of $ (P_{aux}) $ is
+\[ 
+    \begin{bmatrix}
+        \hat{x_1}\\
+        \hat{x_2}\\
+        \hat{x_3}\\
+        \hat{x_4}\\
+        \hat{x_5}
+    \end{bmatrix}
+    :=
+    \begin{bmatrix}
+        1\\
+        2\\
+        0\\
+        0\\
+        0\\
+    \end{bmatrix}
+    \rightarrow
+    \begin{bmatrix}
+        \hat{x_1}\\
+        \hat{x_2}\\
+        \hat{x_3}
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        1\\
+        2\\
+        0
+    \end{bmatrix}
+    \text{ is a basic feasible solution of (P).}
+\]
+
+\subsection{Example}
+(P)
+\[ \max z:=\begin{bmatrix} 3 & 2 & 4 \end{bmatrix} \symbfit{x} \]
+subject to
+\[
+    \underbrace{
+    \begin{bmatrix}
+        5 & 1 & 1\\
+        -1 & 1 & 2\\
+    \end{bmatrix}}_{A}
+    \symbfit{x}=
+    \begin{bmatrix}
+        1\\
+        5
+    \end{bmatrix}
+\]
+\[\symbfit{x}\ge \mathbb{0}\]
+$ (P_{aux}) $ 
+\[ \max w:=\left[\begin{array}{ccccc}
+0 & 0 & 0 & -1 & -1
+\end{array}\right] \symbfit{x} \]
+subject to
+\[
+    \underbrace{\left[
+    \begin{array}{ccccc}
+        5 & 1 & 1 & 1 & 0\\
+        -1 & 1 & 2 & 0 & 1
+    \end{array}\right]}_{\tilde{A}}
+    \symbfit{x}=
+    \begin{bmatrix}
+        1\\
+        5
+    \end{bmatrix}
+\]
+\[ \symbfit{x}:=(x_1,x_2,x_3,x_4,x_5)^\top \ge \mathbb{0} \]
+Turn $ (P_{aux}) $ into canonical form for $ B:=\{4,5\} $
+\[ \max w:=\left[\begin{array}{ccccc}
+4 & 2 & 3 & 0 & 0
+\end{array}\right] \symbfit{x} \]
+subject to
+\[
+    \underbrace{\left[
+    \begin{array}{ccccc}
+        5 & 1 & 1 & 1 & 0\\
+        -1 & 1 & 2 & 0 & 1
+    \end{array}\right]}_{\tilde{A}}
+    \symbfit{x}=
+    \begin{bmatrix}
+        1\\
+        5
+    \end{bmatrix}
+\]
+\[ \symbfit{x}\ge \mathbb{0} \]
+Starting with the basis $ B=\{4,5\} $, solve $ (P_{aux}) $
+by Simplex Method
+\[ \max -w=\begin{bmatrix}-11 & -1 & 0 & -3 & 0\end{bmatrix} \symbfit{x} - 3 \]
+subject to
+\[
+    \begin{bmatrix}
+        5 & 1 & 1 & 1 & 0\\
+        -11 & -1 & 0 & -2 & 1
+    \end{bmatrix}
+    \symbfit{x}=
+    \begin{bmatrix}
+        1\\
+        3
+    \end{bmatrix}
+\]
+\[ \symbfit{x}\ge \mathbb{0} \]
+
+The optimal value of $ (P_{aux}) $ is not zero. Therefore, (P) is
+infeasible.
+
+$ \symbfit{\bar{y}} $ is the unique solution of 
+\[ \symbfit{y}^\top =\symbfit{\tilde{c}_B}^\top\tilde{A}_B^{-1} \iff 
+\symbfit{y}^\top
+=
+\underbrace{\begin{bmatrix}0 & -1\end{bmatrix}}_
+    {\text{SEF of $ (P_{aux}) $ }}
+\begin{bmatrix}
+    1 & 0\\
+    2 & 1
+\end{bmatrix}^{-1}
+\]
+$ \symbfit{\bar{y}}=(2,-1)^\top $
+is a certificate of infeasibility of (P).
+
+$ \symbfit{\bar{y}}^\top  A 
+= \begin{bmatrix}11 & 1 & 0 \end{bmatrix}\ge \mathbb{0}^\top $ ,
+$ \symbfit{\bar{y}}^\top \symbfit{b}=-3 $
+So, $ \symbfit{\bar{y}} $ optimality of $ (P_{aux}) $
+
+\subsection{Theorem (Fundamental Theorem of LP (SEF))}
+Every LP problem in SEF, with a full row rank coefficient
+matrix, is either infeasible, or unbounded or has
+optimal solution(s). Moreover
+\begin{enumerate}[(1)]
+    \item if the LP is feasible, it has a basic feasible solution
+    \item if the LP has an optimal solution, then it has
+    a basic feasible solution that is optimal.
+\end{enumerate}

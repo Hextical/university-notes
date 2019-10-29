@@ -1,0 +1,70 @@
+\section{Lecture 13}
+\textbf{Recall}
+
+Binomial approximation to Hypergeometric distribution:
+If $ X\thicksim\hyp (N,r,n) $, we can approximate it with 
+$ \bin (n,\frac{r}{N}) $ if $ n $ is a small proportion of $ N $.
+
+\subsection{Negative Binomial Distribution}
+Setup: Bernoulli Trials
+\begin{itemize}
+    \item independent
+    \item each trial is a success or fail (S or F)
+    \item $ P(\text{success})=p=\text{constant} $ 
+\end{itemize}
+Suppose we want to get $ k $ S's. We do trials until we get
+$ k $ S's and let $ X= $ \# of F's. We get
+\[ X\thicksim \nb(k,p) \]
+in a total of $ k+X $ trials.
+
+\begin{tabular}{|c|c|}
+    Binomial & Negative Binomial \\
+    \hline
+    know \# of trials & unknown \# of trials\\
+    unknown \# of S's & known \# of S's\\
+    $ \binom{n}{x}p^x(1-p)^{n-x} $ & 
+    $ \binom{x+k-1}{k-1}p^k(1-p)^x $ 
+\end{tabular}
+
+\subsection{Example}
+How many tails until we get the $10$th head on a fair coin.
+$ X\thicksim\nb(10,\frac{1}{2}) $
+
+\subsection{Example}
+If courses were independent with probability $ p $ of passing
+and you need $ 40 $ courses, then the number of failed courses
+would be $ \nb(40,p) $.
+
+\subsection{Range and Probability Function of the Negative Binomial Distribution}
+range $ x\in\{0,1,\dots\} $ (countably infinite)
+\begin{align*}
+    f(x)=P(X=x)
+    &=p(x\text{ F's before $ k $th S})\\
+    &=\binom{x+k-1}{x}p^k(1-p)^x\\
+    &=\binom{x+k-1}{k-1}p^k(1-p)^x
+\end{align*}
+In a picture:
+\[\underbrace{\text{\_ \_ \_ $\ldots$ \_}\mid}_
+{k-1 \text{ S's, }x \text{ F's}}
+\underbrace{\text{ S}}_{k\text{th S}}\]
+with $ x+k-1 $ trials.
+
+\subsection{Example}
+Suppose a startup is looking for $ 5 $ investors. They ask
+investors repeatedly where each independently has a $ 20\% $ chance
+of saying yes. Let $ X= $ total \# of investors that they ask and
+note that $ X $ does not follow a negative binomial distribution.
+Find $ f(x) $ and $ f(10) $.
+
+Let $ Y= $ \# who say no before $ 5 $ say yes.
+$ Y\thicksim\nb(5,0.2) $, and $ X=Y+5 $. So,
+\begin{align*}
+    f(x)&=P(X=x)\\
+    &=P(Y+5=x)\\
+    &=P(Y=x-5)\\
+    &=\binom{(x-5)+5-1}{5-1}(0.2)^5(0.8)^{x-5}\\
+    &=\binom{x-1}{4}(0.2)^5(0.8)^{x-5} \qquad \text{for } x=5,\ldots
+\end{align*}
+\[ f(10)=\binom{9}{4}(0.2)^5(0.8)^5 \]
+note that it's $ \binom{9}{4} $ and not $ \binom{10}{5} $ because
+the 10th investor must have said yes.

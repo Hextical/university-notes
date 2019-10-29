@@ -1,0 +1,138 @@
+\section{Lecture 14}
+
+\textbf{Recall} 
+\[ X\thicksim\nb(k,p) \]
+\[ f(x)=\binom{x+k-1}{k-1}p^k(1-p)^x \]
+with $ k-1 $ S's, $ x $ F's and the last one is a S.
+
+\subsection{Example}
+Suppose you send a bit string over a noisy connection with
+each bit independently having a probability $ 0.01 $ of being
+flipped. What is the probability that
+\begin{enumerate}[(a)]
+    \item it takes 50 bits to get 5 errors?
+    \item a 50 bit message has 5 errors?
+\end{enumerate}
+
+(b) Let $ Y= $ \# of errors in 50 bits. $ Y\thicksim\bin(50,0.01) $.
+
+Then, $ P(Y=5)=\binom{50}{5}(0.01)^5(0.99)^{45} $
+
+(a) Let $ X= $ \# of correct bits until 5 errors.
+$ X\thicksim\nb(5,0.01) $. 
+
+Then, $ P(X=45)=\binom{49}{4}(0.01)^5(0.99)^{45} $ 
+
+\subsection{Geometric Distribution}
+The Geometric Distribution is just a special case of the
+Negative Binomial Distribution with $ k=1 $.
+Let $ X= $ \# of F's in Bernoulli trials before the first S.
+$ X\thicksim\geo(p) $
+
+\subsection{Range and Probability Function of the Geometric Distribution}
+range: $ x\in\{0,1,\ldots \} $ 
+\begin{align*}
+    f(x)&=P(X=x)\\
+    &=P( \underbrace{\text{F, F, $ \ldots $}}_{\text{all F's}}
+    \text{, S})\\
+    &=(1-p)^x p
+\end{align*}
+or sub $ k=1 $ into the $ \nb $ probability function.
+
+Prove $ \sum\limits_{\text{all } x}^{} f(x) =1$
+\begin{proof}
+    \begin{align*}
+        \sum\limits_{x=0}^{\infty} (1-p)^x p
+        &=\underbrace{p+p(1-p)+\dots}_
+        \text{ (a geometric series with $a=p$, $r=1-p$)}\\
+        &=\frac{p}{1-(1-p)}\\
+        &=1
+    \end{align*}
+\end{proof}
+
+Find the cumulative distribution function.
+\begin{align*}
+    F(x)&=P(X\le x)\\
+    &=1-P(X>x)\\
+    &=1-[f(x+1)+\dots]\\
+    &=\underbrace{1-[p(1-p)^{x+1}+p(1-p)^{x+2}+\dots]}_
+    \text{ (a geometric series with $a=p(1-p)^{x-1}$, $r=1-p$)}\\
+    &=1-\frac{p(1-p)^{x+1}}{1-(1-p)}\\
+    &=1-(1-p)^{x+1} \text{ for } x=0,1,\ldots
+\end{align*}
+if $ x\in\mathbb{R} $, then
+\[ F(x)=
+\begin{cases}
+    1-(1-p)^{\lfloor x \rfloor +1} \text{, if } x\ge 0\\
+    0 \text{, if } x < 0
+\end{cases} \]
+
+\scalebox{0.5}{
+\begin{tabular}{ L{2.5cm} | L{3cm} | L{3cm} | L{3cm} | L{3.5cm} | L{3cm} | L{3cm} }
+    & Discrete Uniform & Hypergeometric & Binomial & Negative Binomial & Geometric & Poisson\\
+    \hline
+    function \newline range \newline parameters & 
+   $ \du[a,b] $\newline $a,a+1,\ldots,b$& 
+    $ \hyp(N,r,n) $\newline bad & 
+    $ \bin(n,p) $\newline $ 0,1,\ldots,n $ &
+    $ \nb(k,p) $\newline $ 0,1,\ldots $ &
+    $ \geo(p) $\newline $ 0,1,\ldots $ &
+    $ \poi(\mu) $\newline $ 0,1,\ldots $\newline
+    $ \mu=np $, $\mu=\lambda t $ \\
+    \hline
+    pf, $ f(x) $  &
+    $ \frac{1}{b-a+1} $ &
+    $ \frac{\binom{r}{x}{\binom{N-r}{n-x}}}{\binom{N}{n}} $ &
+    $ \binom{n}{x}p^x(1-p)^{n-x} $ &
+    $ \binom{x+k-1}{k-1}p^k(1-p)^x $ &
+    $ p(1-p)^x $ &
+    $ \frac{e^{-\mu}\mu^x}{x!} $\\
+    \hline
+    cdf,     $ F(x) $ &
+    $ \frac{x-a+1}{b-a+1} $ & & & &
+    $ 1-(1-p)^{x+1} $ &
+    $ e^{\mu}[1+\frac{\mu^1}{1!}+\cdots\frac{\mu^x}{x!}] $\\
+    \hline
+    how to tell &
+    ``equally likely'' 
+    \newline know min. \& max. &
+    
+        know total \# objects
+        \newline know \# S's
+        \newline know \# trials
+        \newline without replacement
+        \newline selecting a subset
+     &
+    
+        Bernoulli trials
+        \newline know \# trials
+        \newline count \# S's
+     &
+    
+        Bernoulli trials
+        \newline ``until''
+        \newline ``it take... to get''
+        \newline ``before''
+        \newline know how many S's we want
+     &
+    
+        ``until we get''
+        \newline ``before the first''
+     &
+    
+    Bin. with large amount of trials, small prob
+        \newline rate specified (\#events/time)
+        \newline no pre-specified max.
+        \newline events occurring at any time (randomly)
+        \newline Poisson process \& know time \& count events
+        \newline doesn't make sense to ask how often
+        an event did \textbf{not} occur
+    
+\end{tabular}}
+
+Bernoulli trials: 
+\begin{itemize}
+    \item independent
+    \item each outcome is a S or F
+    \item $P$(success)=$p$=constant
+\end{itemize}

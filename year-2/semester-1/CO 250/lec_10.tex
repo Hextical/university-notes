@@ -11,8 +11,8 @@ consistent in this case if we repeat a basis we call it a \emph{cycle}.
 
 \begin{thmbox}
     \subsection{Theorem}
-    The Simplex Algorithm starting from a basic feasible solution and using the
-    smallest subscript rule terminates in at most $\binom{n}{m}$ iterations.
+    The Simplex Algorithm starting from a basic feasible solution and
+    Bland's Rule terminates.
 \end{thmbox}
 
 \subsection{Implementation of the Simplex Algorithm in "Big Data"}
@@ -20,21 +20,21 @@ In a given iteration of the Simplex Algorithm, what information do we need to
 execute the algorithm?
 
 
-We have the original data ($A$, $\mathbf{b}$, $\mathbf{c}$) and we have the
-current $B$, $\mathbf{\bar{x}}$, $\mathbf{\bar{v}}$.
+We have the original data ($A$, $\symbfit{b}$, $\symbfit{c}$) and we have the
+current $B$, $\symbfit{\bar{x}}$, $\symbfit{\bar{v}}$.
 
-Pick any $k\in N$ such that $\bar{c_k}\ge 0$. $\bar{c_k}=c_k-\mathbf{\bar{y}}^\top  A\mathbf{x}$ 
-(where $\mathbf{\bar{y}}^\top =c_B A_B^{-1}$).
+Pick any $k\in N$ such that $\bar{c_k}\ge 0$. $\bar{c_k}=c_k-\symbfit{\bar{y}}^\top  A\symbfit{x}$ 
+(where $\symbfit{\bar{y}}^\top =c_B A_B^{-1}$).
 
 Then to compute $t$, we need
 $t=\min\{\nicefrac{b_i}{A_{ik}}\mid A_{ik}>0\}$.
 
 So, we need
-$\bar{A_k}$: $\bar{A_k}=A_B^{-1}A_k$ and note that $\mathbf{\bar{x_N}}=\mathbf{0}$,
-$\mathbf{\bar{x_B}}=\mathbf{\bar{b}}$
+$\bar{A_k}$: $\bar{A_k}=A_B^{-1}A_k$ and note that $\symbfit{\bar{x_N}}=\mathbb{0}$,
+$\symbfit{\bar{x_B}}=\symbfit{\bar{b}}$
 
 
-We solve linear systems $A_B^\top \mathbf{y}=\mathbf{c_B}$ and $A_B\mathbf{d_B}=A_k$.
+We solve linear systems $A_B^\top \symbfit{y}=\symbfit{c_B}$ and $A_B\symbfit{d_B}=A_k$.
 
 In implementations, we typically express $A_B$ or $A_B^{-1}$ as a product of elementary
 matrices.
