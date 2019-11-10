@@ -1,0 +1,138 @@
+\section{2019-10-24}
+\begin{thmbox}
+    \subsection{Theorem (Fundamental Theorem of LP)}
+    Let (P) be an LP problem. Then exactly one of the following holds:
+    \begin{itemize}
+        \item (P) is infeasible
+        \item (P) is unbounded
+        \item (P) has an optimal solution
+    \end{itemize}
+\end{thmbox}
+
+\begin{defbox}
+    \subsection{Definition (Hyperplane, Half-space)}
+    Let $ \bm{a} \in \mathbb{R}^n\setminus{\bm{0}} $, $ \beta \in\mathbb{R} $.
+
+    $ H:=\{\bm{x}\in\mathbb{R}^n:
+    \bm{a} ^\top \bm{x}=\beta \} $ is a \emph{hyperplane}.
+
+    $ F:=\{\bm{x}\in\mathbb{R}^n:
+    \bm{a} ^\top \bm{x}\le \beta\} $ is a \emph{half-space}.
+\end{defbox}
+
+Solution sets of linear equations are intersections of hyperplanes.
+
+\begin{defbox}
+    \subsection{Definition (Polyhedron)}
+    Let $ A\in \mathbb{R}^{m \times n} $, $ \bm{b}\in \mathbb{R}^m $.
+    $ P:=\{\bm{x}\in\mathbb{R}^n:A\bm{x}\le \bm{b}\} $ is a \emph{polyhedron}.
+\end{defbox}
+\begin{remark}
+    The set of solutions to any one of the inequalities of 
+    $ A\bm{x}\le \bm{b} $ is a half-space.
+\end{remark}
+
+\begin{thmbox}
+    \subsection{Proposition}
+    The feasible region of an LP is a polyhedron or equivalently the
+    intersection of a finite number of half-spaces.
+\end{thmbox}
+\begin{proof}
+    Let $ \bm{a}\in\mathbb{R}^n,\bm{x}\in\mathbb{R}^n,\beta\in \mathbb{R} $.
+
+    Given an inequality of the form $ \bm{a} ^\top \bm{x}\ge \beta $, we can
+    rewrite it as $ -\bm{a} ^\top \bm{x}\le -\beta $.
+
+    Given an equation of the form $ \bm{a} ^\top \bm{x}=\beta $ we can rewrite it as
+    $ \bm{a} ^\top \bm{x}\ge \beta $ and $ -\bm{a} ^\top \bm{x}\le -\beta $.
+
+    Thus, any set of linear constraints can be rewritten as 
+    $ A\bm{x}\le \bm{b} $ for some $ A\in \mathbb{R}^{m \times n} $ and $ \bm{b}\in \mathbb{R}^m $, where $ \bm{a}^\top $ can correspond to each row of $ A $,
+    and $ \beta $ can correspond to each row of the column vector $ \bm{b} $.
+\end{proof}
+
+Solutions sets of $ A\bm{x}=\bm{b} $ are either $ \emptyset $, a single
+point, a line, or in general, an intersection of a hyperplane.
+
+Note that already in $ \mathbb{R}^2 $ there are already equivalent polyhedra.
+The mathematical modelling power of LPs are significantly more than that of
+linear systems of equations.
+
+\begin{defbox}
+    \subsection{Definition (Line segment)}
+    The \emph{line segment} joining two points, $ u $ and $ v $ is
+    \[ \{\lambda u + (1-\lambda)v:\lambda\in[0,1]\} \]
+\end{defbox}
+Graphically, the line segment can be seen as:
+\begin{center}
+    \includegraphics{linesegment}
+\end{center}
+
+\begin{defbox}
+    \subsection{Definition (Convex)}
+    A set $ S\subseteq \mathbb{R}^n $ is \emph{convex} if for 
+    every pair of points $ u,v\in S $, the line segment joining $ u $ and $ v $
+    is contained in $ S $.
+\end{defbox}
+\begin{center}
+    \includegraphics{convex}
+\end{center}
+
+
+\begin{thmbox}
+    \subsection{Proposition}
+    Half-spaces are convex.
+\end{thmbox}
+\begin{proof}
+    Let $ H\subseteq\mathbb{R}^n $ be a half-space. Then $ \bm{a} \in \mathbb{R}
+    ^n\setminus{\bm{0}} $ and $ \beta\in\mathbb{R}^n $ such that
+    \[ \{\bm{x}\in\mathbb{R}^n:\bm{a} ^\top \bm{x}=\beta\} \]
+    Let $ u,v\in H $ and let $ \lambda\in[0,1] $ arbitrary.
+    \[ \bm{a} ^\top[\lambda u+(1-\lambda)v]=
+    \underbrace{\lambda}_{\ge 0}\underbrace{\bm{a} ^\top u}_{\le \beta}+
+    \underbrace{(1-\lambda)}_{\ge 0}\underbrace{\bm{a} ^\top v}_{\le \beta}
+    \le \lambda \beta + (1-\lambda)\beta=\beta \]
+    Thus, $ H $ is convex.
+\end{proof}
+
+\begin{thmbox}
+    \subsection{Proposition}
+    The intersection of any collection of convex sets is convex. 
+    That is, a convex set $ C_j $ $ \forall j\in J $, the intersection
+    \[ C:=\bigcap_{j\in J} C_j \]
+    is convex.
+\end{thmbox}
+
+\begin{proof}
+    Let $ u,v $ be two points in $ C $. Let $ w $ lie on the line
+    segment between $ u $ and $ v $. Then, $ w\in C_j $ since $ C_j $ is convex
+    for each $ j\in J $. Thus, $ w\in C $.
+\end{proof}
+
+\begin{remark}
+    $ J $ can be infinite. That is, the intersection of infinitely many convex sets
+    is convex.
+\end{remark}
+
+\begin{thmbox}
+    \subsection{Proposition}
+    Polyhedra are convex.
+\end{thmbox}
+
+\begin{defbox}
+    \subsection{Definition (Properly Contained)}
+    We say that a point $x$ is \emph{properly contained} in a line segment if it is in the line segment and not an endpoint.
+\end{defbox}
+
+\begin{defbox}
+    \subsection{Definition (Extreme Point)}
+    Let $ S\subseteq \mathbb{R}^n $ be a convex set, $ u\in S $. $ u $ is an
+    \emph{extreme point} of $ S $ if $ u $ cannot be properly contained in a
+    line segment in S. Equivalently, $ u\in S $ and $ \nexists v,w\in S $,
+    $ v\neq w $ and $ \lambda\in (0,1) $ such that
+    \[ u=\lambda v+(1-\lambda)w \]
+\end{defbox}
+
+\begin{center}
+    \includegraphics{extremepoint}
+\end{center}

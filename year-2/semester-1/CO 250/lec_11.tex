@@ -3,11 +3,11 @@ Given any LP problem, we know how to convert it into an equivalent LP
 problem in SEF:
 
 (P)
-\[\max z:=\symbfit{c}^\top \symbfit{x}\]
+\[\max z:=\bm{c}^\top \bm{x}\]
 subject to
 \begin{align*}
-    A \symbfit{x}=\symbfit{b}\\
-    \symbfit{x}\ge 0
+    A \bm{x}=\bm{b}\\
+    \bm{x}\ge 0
 \end{align*}
 where $ A\in\mathbb{R}^{m\times n}, \rank(A)=m $.
 
@@ -39,9 +39,9 @@ subject to
         x_{n+2}\\
         \vdots\\
         x_{n+m}
-    \end{array}\right]}_{\symbfit{x}}
-    =\symbfit{b}\]
-\[ \symbfit{x} \ge \mathbb{0}\]
+    \end{array}\right]}_{\bm{x}}
+    =\bm{b}\]
+\[ \bm{x} \ge \bm{0}\]
 
 For every feasible solution of $ (P_{aux}) $, $ w\ge 0 $.
 
@@ -88,8 +88,8 @@ infeasible.
     \caption{Two Phase Method}
     \SetKwInOut{Input}{Input}
     \SetKwInOut{Output}{Output}
-    \Input{$A,\symbfit{b}, \symbfit{c}$ data for LP in SEF such that
-    full row rank and $ \symbfit{b}\ge \mathbb{0} $.}
+    \Input{$A,\bm{b}, \bm{c}$ data for LP in SEF such that
+    full row rank and $ \bm{b}\ge \bm{0} $.}
     Construct $ (P_{aux}) $ put into SEF, $ B:=\{n+1,n+2,\ldots,n+m\} $\\
     Put $ (P_{aux}) $ into the canonical form determined by $ B $.\\
     Solve $ (P_{aux}) $ starting with basis $ B $ by Simplex Method.\\
@@ -97,24 +97,24 @@ infeasible.
     feasible solution of (P). Solve (P) using Simplex Method.\\
     If the optimal objective value of $ (P_{aux}) $ is not zero, then
     (P) is infeasible (a certificate of infeasibility is given by
-    the last $ \symbfit{\bar{y}} $ computed).\\
+    the last $ \bm{\bar{y}} $ computed).\\
 \end{algorithm}
 
 \subsection{Example}
 (P)
-\[ \max z:= \begin{bmatrix} 1 & 2 & -1 \end{bmatrix} \symbfit{x} \]
+\[ \max z:= \begin{bmatrix} 1 & 2 & -1 \end{bmatrix} \bm{x} \]
 subject to
 \begin{align}
     \begin{bmatrix}
         1 & -2 & -3\\
         -1 & 1 & 1
     \end{bmatrix}
-    \symbfit{x} =
+    \bm{x} =
     \begin{bmatrix}
         -3\\
         1
     \end{bmatrix}\\
-    \symbfit{x}\ge \mathbb{0}
+    \bm{x}\ge \bm{0}
 \end{align}
 Since $ b_1<0 $
 we write
@@ -131,41 +131,41 @@ x=
 Introduce artificial variables: $ x_4, x_5 $
 
 $ (P_{aux}) $ 
-\[\min w:=\begin{bmatrix} 0 & 0 & 0 & 1 & 1 \end{bmatrix} \symbfit{x} \]
+\[\min w:=\begin{bmatrix} 0 & 0 & 0 & 1 & 1 \end{bmatrix} \bm{x} \]
 subject to
 \begin{align}
     \begin{bmatrix}
         -1 & 2 & 3 & 1 & 0\\
         -1 & 1 & 1 & 0 & 1
     \end{bmatrix}
-    \symbfit{x}=
+    \bm{x}=
     \begin{bmatrix}
         3\\
         1
     \end{bmatrix}\\
-    \symbfit{x}:=
+    \bm{x}:=
     \begin{bmatrix}
         x_1\\
         x_2\\
         x_3\\
         x_4\\
         x_5\\
-    \end{bmatrix} \ge \mathbb{0}
+    \end{bmatrix} \ge \bm{0}
 \end{align}
 Apply Simplex Method starting with the basis $ B:=\{4,5\} $
-\[\max -w=\begin{bmatrix} 0 & 0 & 0 & -1 & -1 \end{bmatrix} \symbfit{x} \]
+\[\max -w=\begin{bmatrix} 0 & 0 & 0 & -1 & -1 \end{bmatrix} \bm{x} \]
 subject to
 \begin{align}
     \begin{bmatrix}
         1 & 0 & 1 & 1 & -2\\
         0 & 1 & 2 & 1 & 1
     \end{bmatrix}
-    \symbfit{x}=
+    \bm{x}=
     \begin{bmatrix}
         1\\
         2
     \end{bmatrix}\\
-    \symbfit{x}\ge \mathbb{0}
+    \bm{x}\ge \bm{0}
 \end{align}
 
 Optimal basic feasible solution of $ (P_{aux}) $ is
@@ -202,7 +202,7 @@ Optimal basic feasible solution of $ (P_{aux}) $ is
 
 \subsection{Example}
 (P)
-\[ \max z:=\begin{bmatrix} 3 & 2 & 4 \end{bmatrix} \symbfit{x} \]
+\[ \max z:=\begin{bmatrix} 3 & 2 & 4 \end{bmatrix} \bm{x} \]
 subject to
 \[
     \underbrace{
@@ -210,17 +210,17 @@ subject to
         5 & 1 & 1\\
         -1 & 1 & 2\\
     \end{bmatrix}}_{A}
-    \symbfit{x}=
+    \bm{x}=
     \begin{bmatrix}
         1\\
         5
     \end{bmatrix}
 \]
-\[\symbfit{x}\ge \mathbb{0}\]
+\[\bm{x}\ge \bm{0}\]
 $ (P_{aux}) $ 
 \[ \max w:=\left[\begin{array}{ccccc}
 0 & 0 & 0 & -1 & -1
-\end{array}\right] \symbfit{x} \]
+\end{array}\right] \bm{x} \]
 subject to
 \[
     \underbrace{\left[
@@ -228,17 +228,17 @@ subject to
         5 & 1 & 1 & 1 & 0\\
         -1 & 1 & 2 & 0 & 1
     \end{array}\right]}_{\tilde{A}}
-    \symbfit{x}=
+    \bm{x}=
     \begin{bmatrix}
         1\\
         5
     \end{bmatrix}
 \]
-\[ \symbfit{x}:=(x_1,x_2,x_3,x_4,x_5)^\top \ge \mathbb{0} \]
+\[ \bm{x}:=(x_1,x_2,x_3,x_4,x_5)^\top \ge \bm{0} \]
 Turn $ (P_{aux}) $ into canonical form for $ B:=\{4,5\} $
 \[ \max w:=\left[\begin{array}{ccccc}
 4 & 2 & 3 & 0 & 0
-\end{array}\right] \symbfit{x} \]
+\end{array}\right] \bm{x} \]
 subject to
 \[
     \underbrace{\left[
@@ -246,36 +246,36 @@ subject to
         5 & 1 & 1 & 1 & 0\\
         -1 & 1 & 2 & 0 & 1
     \end{array}\right]}_{\tilde{A}}
-    \symbfit{x}=
+    \bm{x}=
     \begin{bmatrix}
         1\\
         5
     \end{bmatrix}
 \]
-\[ \symbfit{x}\ge \mathbb{0} \]
+\[ \bm{x}\ge \bm{0} \]
 Starting with the basis $ B=\{4,5\} $, solve $ (P_{aux}) $
 by Simplex Method
-\[ \max -w=\begin{bmatrix}-11 & -1 & 0 & -3 & 0\end{bmatrix} \symbfit{x} - 3 \]
+\[ \max -w=\begin{bmatrix}-11 & -1 & 0 & -3 & 0\end{bmatrix} \bm{x} - 3 \]
 subject to
 \[
     \begin{bmatrix}
         5 & 1 & 1 & 1 & 0\\
         -11 & -1 & 0 & -2 & 1
     \end{bmatrix}
-    \symbfit{x}=
+    \bm{x}=
     \begin{bmatrix}
         1\\
         3
     \end{bmatrix}
 \]
-\[ \symbfit{x}\ge \mathbb{0} \]
+\[ \bm{x}\ge \bm{0} \]
 
 The optimal value of $ (P_{aux}) $ is not zero. Therefore, (P) is
 infeasible.
 
-$ \symbfit{\bar{y}} $ is the unique solution of 
-\[ \symbfit{y}^\top =\symbfit{\tilde{c}_B}^\top\tilde{A}_B^{-1} \iff 
-\symbfit{y}^\top
+$ \bm{\bar{y}} $ is the unique solution of 
+\[ \bm{y}^\top =\bm{\tilde{c}_B}^\top\tilde{A}_B^{-1} \iff 
+\bm{y}^\top
 =
 \underbrace{\begin{bmatrix}0 & -1\end{bmatrix}}_
     {\text{SEF of $ (P_{aux}) $ }}
@@ -284,20 +284,20 @@ $ \symbfit{\bar{y}} $ is the unique solution of
     2 & 1
 \end{bmatrix}^{-1}
 \]
-$ \symbfit{\bar{y}}=(2,-1)^\top $
+$ \bm{\bar{y}}=(2,-1)^\top $
 is a certificate of infeasibility of (P).
 
-$ \symbfit{\bar{y}}^\top  A 
-= \begin{bmatrix}11 & 1 & 0 \end{bmatrix}\ge \mathbb{0}^\top $ ,
-$ \symbfit{\bar{y}}^\top \symbfit{b}=-3 $
-So, $ \symbfit{\bar{y}} $ optimality of $ (P_{aux}) $
+$ \bm{\bar{y}}^\top  A 
+= \begin{bmatrix}11 & 1 & 0 \end{bmatrix}\ge \bm{0}^\top $ ,
+$ \bm{\bar{y}}^\top \bm{b}=-3 $
+So, $ \bm{\bar{y}} $ optimality of $ (P_{aux}) $
 
-\subsection{Theorem (Fundamental Theorem of LP (SEF))}
-Every LP problem in SEF, with a full row rank coefficient
-matrix, is either infeasible, or unbounded or has
-optimal solution(s). Moreover
-\begin{enumerate}[(1)]
-    \item if the LP is feasible, it has a basic feasible solution
-    \item if the LP has an optimal solution, then it has
-    a basic feasible solution that is optimal.
-\end{enumerate}
+\begin{thmbox}
+    \subsection{Theorem (Fundamental Theorem of LP (SEF))}
+    Let $ (\mathcal{P}) $ be an LP problem in SEF, where $ A\in \mathbb{R}^{m\times n} $ has $ \rank(A)=m $.
+    \begin{enumerate}[(1)]
+        \item if (P) does not have an optimal solution, then (P) is either infeasible or unbounded.
+        \item if (P) is feasible, then (P) has a basic feasible solution.
+        \item if (P) has an optimal solution, then (P) has an optimal basic feasible solution.
+    \end{enumerate}
+\end{thmbox}

@@ -4,21 +4,21 @@
 \end{remark}
 
 \subsection{Example (Continuation of 8.3)}
-So, the new basic feasible solution is $\symbfit{\bar{x}}:=(1,5,0,3,0)^\top$
+So, the new basic feasible solution is $\bm{\bar{x}}:=(1,5,0,3,0)^\top$
 determined by the basis $B:=\{1,2,5\}\cup\{4\}\setminus \{5\}=\{1,2,4\}$. Note that
 we exclude $\{5\}$ since the index of which $t$ achieved the minimum was at
 $\nicefrac{6}{2}$, i.e. index $5$ (row $x_5$). The canonical form determined by the new
 basis is
 \[\max \begin{bmatrix}
     0 & 0 & -\nicefrac{5}{2} & 0 & -\nicefrac{1}{2}
-\end{bmatrix}\symbfit{x}+3\]
+\end{bmatrix}\bm{x}+3\]
 subject to
 \[
     \begin{bmatrix}
         1 & 0 & \nicefrac{1}{2} & 0 & -\nicefrac{1}{2}\\
         0 & 1 & \nicefrac{1}{2} & 0 & \nicefrac{1}{2}\\
         0 & 0 & -\nicefrac{3}{2} & 1 & \nicefrac{1}{2}
-    \end{bmatrix}\symbfit{x}
+    \end{bmatrix}\bm{x}
     =
     \begin{bmatrix}
         1\\
@@ -27,7 +27,7 @@ subject to
     \end{bmatrix}
 \]
 \begin{remark}
-    $\symbfit{\bar{x}}$ is the optimal solution with optimal value $3$.
+    $\bm{\bar{x}}$ is the optimal solution with optimal value $3$.
 \end{remark}
 \begin{remark}
     How did we arrive to this LP? Using the formulae in Proposition 8.2. If you didn't want to
@@ -54,35 +54,40 @@ Write
         0 & 1 & \nicefrac{1}{2} & 0 & \nicefrac{1}{2} & 5\\
         0 & 0 & -\nicefrac{3}{2} & 1 & \nicefrac{1}{2} & 3
     \end{array}\right]
+    \begin{matrix}
+        -x_1\\
+        -x_2\\
+        -x_4
+    \end{matrix}
 \]
 and row reduce $A$ to make fourth column get a leading one as seen above.
 The row-reduced matrix and the augment are your new constraints.\\
-The objective function is tricky, we want a 0 in the fourth column of our $\symbfit{c}^\top $.
-Also, we denote $x_1,x_2,x_4$ as the rows of the matrix respectively.
+The objective function is tricky, we want a 0 in the fourth column of our $\bm{c}^\top $.
+Also, we denote $x_1,x_2,x_4$ as the rows of the matrix respectively as seen above.
 Using $x_4$ (which is our row-reduced $A$), we get
-\[-1\left(
+\[(-1)\left(
     \begin{bmatrix}
         0 & 0 & -\nicefrac{3}{2} & 1 & \nicefrac{1}{2}
-    \end{bmatrix}\symbfit{x}-3\right)+
-    \begin{bmatrix}
+    \end{bmatrix}\bm{x}-3\right)+
+    (\begin{bmatrix}
         0 & 0 & -4 & 1 & 0
-    \end{bmatrix}\symbfit{x}
+    \end{bmatrix}\bm{x})
 \]
-The $-3$ right after the first matrix was the row of $\symbfit{b}$.
-
-\newpage
+The $-3$ right after the first matrix was the row of $\bm{b}$. General form:
+\[ c([\text{Row}_i(A)]\bm{x}-\bm{b_i})+\text{original objective function} \]
+where $ c $ is a constant.
 
 \subsection{Simplex Algorithm}
 \begin{algorithm}
     \caption{Simplex Algorithm}
     \SetKwInOut{Input}{Input}
     \SetKwInOut{Output}{Output}
-    \Input{$A\in \mathbb{R}^{m\times n}$, $\symbfit{b}\in\mathbb{R}^m$, $\symbfit{c}\in\mathbb{R}^n$}
-    Compute the canonical form for $B$, let $\symbfit{\bar{x}}$ be the basic feasible solution.\\
-    If $\symbfit{c_N}\le 0$, then stop ($\symbfit{\bar{x}}$ is optimal).\\
+    \Input{$A\in \mathbb{R}^{m\times n}$, $\bm{b}\in\mathbb{R}^m$, $\bm{c}\in\mathbb{R}^n$}
+    Compute the canonical form for $B$, let $\bm{\bar{x}}$ be the basic feasible solution.\\
+    If $\bm{c_N}\le 0$, then stop ($\bm{\bar{x}}$ is optimal).\\
     Choose $k\in N$ such that $c_k>0$.\\
-    If $A_k\le \mathbb{0}$, then stop (the LP is unbounded).\\
-    Let $r$ be the index which attains $t=\min\{\nicefrac{b_i}{A_{ik}}\mid A_{ik}>0\}$.\\
+    If $A_k\le \bm{0}$, then stop (the LP is unbounded).\\
+    Let $r$ be the index which attains $t=\min\{\nicefrac{\bm{b_i}}{A_{ik}} : A_{ik}>0\}$.\\
     Let $l\in B$ be the $r^{th}$ basis element.\\
     Set $B:=B\cup\{k\}\setminus\{l\}$.\\
     Go to step 1.
@@ -90,7 +95,7 @@ The $-3$ right after the first matrix was the row of $\symbfit{b}$.
 
 \begin{thmbox}
     \subsection{Bland's Rule}
-    In step 3, among all $k\in N$, with $c_k>0$ and in step 5, $r\in B$, 
+    In step 3, among all $k\in N$, with $c_k>0$ and in step 5, $l\in B$, 
     choose the smallest index for both $k$ and $r$.
 \end{thmbox}
 

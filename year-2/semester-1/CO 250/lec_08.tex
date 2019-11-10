@@ -1,99 +1,99 @@
 \section{2019-10-01}
-Let $A\in \mathbb{R}^{m\times n}, \symbfit{b}\in\mathbb{R}^m, \symbfit{c}\in\mathbb{R}^n$.
+Let $A\in \mathbb{R}^{m\times n}, \bm{b}\in\mathbb{R}^m, \bm{c}\in\mathbb{R}^n$.
 Consider (P)
-\[\max \symbfit{c}^\top \symbfit{x}\]
+\[\max \bm{c}^\top \bm{x}\]
 subject to
-\[ A\symbfit{x}=\symbfit{b} \]
-\[ \symbfit{x}\ge\mathbb{0} \]
+\[ A\bm{x}=\bm{b} \]
+\[ \bm{x}\ge\bm{0} \]
 Suppose we are given
-$\symbfit{\tilde{x}}\in\mathbb{R}^n$ such that, $A\symbfit{\tilde{x}}=\symbfit{b}$,
-$\symbfit{\tilde{x}}\ge\mathbb{0}$
+$\bm{\tilde{x}}\in\mathbb{R}^n$ such that, $A\bm{\tilde{x}}=\bm{b}$,
+$\bm{\tilde{x}}\ge\bm{0}$
 and
-$\symbfit{y}\in\mathbb{R}^m$ such that $A^\top \symbfit{y}\ge\symbfit{c}$,
-$\symbfit{y}^\top \symbfit{b}=\symbfit{c}^\top \symbfit{\bar{x}}$ with objective function
-value $=\symbfit{c}^\top \symbfit{\bar{x}}$.
+$\bm{y}\in\mathbb{R}^m$ such that $A^\top \bm{y}\ge\bm{c}$,
+$\bm{y}^\top \bm{b}=\bm{c}^\top \bm{\bar{x}}$ with objective function
+value $=\bm{c}^\top \bm{\bar{x}}$.
 
 
-Computing $\symbfit{c}^\top \symbfit{\bar{x}}$ we get
+Computing $\bm{c}^\top \bm{\bar{x}}$ we get
 \begin{align*}
-    \symbfit{c}^\top \symbfit{\bar{x}}&=\symbfit{y}^\top \symbfit{b}\\
-    &=\symbfit{y}^\top (A\symbfit{\tilde{x}})\\
+    \bm{c}^\top \bm{\bar{x}}&=\bm{y}^\top \bm{b}\\
+    &=\bm{y}^\top (A\bm{\tilde{x}})\\
     &=
-    \underbrace{(\symbfit{y}^\top A)}_{\ge \symbfit{c}^\top }
-    \underbrace{\symbfit{\tilde{x}}}_{\ge \mathbb{0}}\\
-    &\ge \symbfit{c}^\top \symbfit{\tilde{x}}
+    \underbrace{(\bm{y}^\top A)}_{\ge \bm{c}^\top }
+    \underbrace{\bm{\tilde{x}}}_{\ge \bm{0}}\\
+    &\ge \bm{c}^\top \bm{\tilde{x}}
 \end{align*}
-Since $\symbfit{\bar{x}}$ achieves the objective value of 
-$\symbfit{c}^\top \symbfit{\bar{x}}$ and for every feasible solution the objective
-value is at most $\symbfit{c}^\top \symbfit{\bar{x}}$, $\symbfit{\bar{x}}$ is an
+Since $\bm{\bar{x}}$ achieves the objective value of 
+$\bm{c}^\top \bm{\bar{x}}$ and for every feasible solution the objective
+value is at most $\bm{c}^\top \bm{\bar{x}}$, $\bm{\bar{x}}$ is an
 optimal solution of (P).
 
 
 \begin{defbox}
     \subsection{Definition (Canonical form)}
     Consider the following LP in SEF: (P)
-    \[\max \symbfit{c}^\top  \symbfit{x}+\bar{z}\]
+    \[\max \bm{c}^\top  \bm{x}+\bar{z}\]
     subject to
     \begin{align*}
-        A\symbfit{x}=\symbfit{b}\\
-        \symbfit{x}\ge \mathbb{0}
+        A\bm{x}=\bm{b}\\
+        \bm{x}\ge \bm{0}
     \end{align*}
     We say (P) is in \emph{canonical form} for a basis $B$ of $A$ if
     \begin{enumerate}[(C1)]
         \item $A_B$ is an identity matrix
-        \item $\symbfit{c_B}=\mathbb{0}$
+        \item $\bm{c_B}=\bm{0}$
     \end{enumerate}
 \end{defbox}
 
 Now,
 \begin{align*}
-    A\symbfit{x}
-    &=\sum_{j = 1}^{n}\symbfit{a_j}x_j\\
-    &=\sum_{j\in B}^{n}\symbfit{a_j}x_j+\sum_{j\in N}^{n}\symbfit{a_j}x_j\\
-    &=A_B \symbfit{x_B}+A_N \symbfit{x_N}
+    A\bm{x}
+    &=\sum_{j = 1}^{n}\bm{a_j}x_j\\
+    &=\sum_{j\in B}^{n}\bm{a_j}x_j+\sum_{j\in N}^{n}\bm{a_j}x_j\\
+    &=A_B \bm{x_B}+A_N \bm{x_N}
 \end{align*}
 Since $B$ is a basis of $A$, $A_B$ is non-singular,
 \begin{align*}
-    &A\symbfit{x}=\symbfit{b}\\
+    &A\bm{x}=\bm{b}\\
     &\iff
-    A_B^{-1}A\symbfit{x}=A_B^{-1}\symbfit{b}\\
+    A_B^{-1}A\bm{x}=A_B^{-1}\bm{b}\\
     &\iff
-    A_B^{-1}(A_B\symbfit{x_B}+A_N\symbfit{x_N})=A_B^{-1}\symbfit{b}\\
+    A_B^{-1}(A_B\bm{x_B}+A_N\bm{x_N})=A_B^{-1}\bm{b}\\
     &\iff
-    (\underbrace{A_B^{-1} A_B}_{I}\symbfit{x_B})+
-    (A_B^{-1} A_N\symbfit{x_N})=A_B^{-1}\symbfit{b}\\
+    (\underbrace{A_B^{-1} A_B}_{I}\bm{x_B})+
+    (A_B^{-1} A_N\bm{x_N})=A_B^{-1}\bm{b}\\
     &\iff
-    \symbfit{x_B}=A_B^{-1}\symbfit{b}-(A_B^{-1} A_N\symbfit{x_N})
+    \bm{x_B}=A_B^{-1}\bm{b}-(A_B^{-1} A_N\bm{x_N})
 \end{align*}
-Consider (C2). For any $\symbfit{y}:=(y_1,\dots, y_m)^\top$
+Consider (C2). For any $\bm{y}:=(y_1,\dots, y_m)^\top$
 the equation
-\[\symbfit{y}^\top A\symbfit{x}=\symbfit{y}^\top \symbfit{b}\]
+\[\bm{y}^\top A\bm{x}=\bm{y}^\top \bm{b}\]
 can be written as
-\[0=\symbfit{y}^\top \symbfit{b}-\symbfit{y}^\top A\symbfit{x}\]
+\[0=\bm{y}^\top \bm{b}-\bm{y}^\top A\bm{x}\]
 Since  this  equation  holds  for  every  feasible  solution,  we  can  add  this 
 constraint to the objective function of (Q). The objective function is now
-\[\max \symbfit{c}^\top  \symbfit{x}+\bar{z}+\symbfit{y}^\top \symbfit{b}-\symbfit{y}^\top A\symbfit{x}
+\[\max \bm{c}^\top  \bm{x}+\bar{z}+\bm{y}^\top \bm{b}-\bm{y}^\top A\bm{x}
 \implies
-\max (\symbfit{c}^\top -\symbfit{y}^\top A)\symbfit{x}+\symbfit{y}^\top \symbfit{b}+\bar{z}\]
-Let $\symbfit{\bar{c}}^\top :=\symbfit{c}^\top -\symbfit{y}^\top A$. For (C2) to be satisfied we need
-$\symbfit{\bar{c}_B}=\mathbb{0}$, so we need to choose $\symbfit{y}$ accordingly, such as
-\[\symbfit{\bar{c}_B}^\top =\symbfit{c_B}^\top -\symbfit{y}^\top A_B=\mathbb{0}^\top \]
+\max (\bm{c}^\top -\bm{y}^\top A)\bm{x}+\bm{y}^\top \bm{b}+\bar{z}\]
+Let $\bm{\bar{c}}^\top :=\bm{c}^\top -\bm{y}^\top A$. For (C2) to be satisfied we need
+$\bm{\bar{c}_B}=\bm{0}$, so we need to choose $\bm{y}$ accordingly, such as
+\[\bm{\bar{c}_B}^\top =\bm{c_B}^\top -\bm{y}^\top A_B=\bm{0}^\top \]
 equivalently,
-\[\symbfit{y}^\top A_B=\symbfit{c_B}^\top 
+\[\bm{y}^\top A_B=\bm{c_B}^\top 
 \implies
-\symbfit{y}^\top =\symbfit{c_B}^\top A_B^{-1}\]
+\bm{y}^\top =\bm{c_B}^\top A_B^{-1}\]
 We have shown the following:
 
 
 \begin{thmbox}
     \subsection{Proposition (Canonical Form)}
-    \[\max (\symbfit{c}^\top -\symbfit{y}^\top A)\symbfit{x}+\symbfit{y}^\top \symbfit{b}+\bar{z}\]
+    \[\max (\bm{c}^\top -\bm{y}^\top A)\bm{x}+\bm{y}^\top \bm{b}+\bar{z}\]
     subject to
     \begin{align*}
-        A_B^{-1}A\symbfit{x}=A_B^{-1}\symbfit{b}\\
-        \symbfit{x}\ge \mathbb{0}
+        A_B^{-1}A\bm{x}=A_B^{-1}\bm{b}\\
+        \bm{x}\ge \bm{0}
     \end{align*}
-    where $\symbfit{y}^\top =\symbfit{c_B}A_B^{-1}$, is an equivalent LP in canonical form for the 
+    where $\bm{y}^\top =\bm{c_B}A_B^{-1}$, is an equivalent LP in canonical form for the 
     basis $B$ of $A$.
 \end{thmbox}
 
@@ -103,32 +103,32 @@ The canonical form is useful because it:
     \item gives us easy ways to move in the feasible region to improve the current basic
     feasible solution
     \item gives us a way to obtain optimality certificates if
-    $\symbfit{c_N}^\top -\symbfit{c_B}^\top A_B^{-1}A_N\le \mathbb{0}^\top $
+    $\bm{c}^\top -\bm{y}^\top A\le \bm{0}^\top $
 \end{itemize}
 
 \subsection{Example (Canonical Form)}
 (P)
 \[\max \begin{bmatrix}
     0 & 0 & -4 & 1 & 0
-\end{bmatrix}\symbfit{x}\]
+\end{bmatrix}\bm{x}\]
 subject to
 \[
     \begin{bmatrix}
         1 & 0 & -1 & 1 & 0\\
         0 & 1 & 2 & -1 & 0\\
         0 & 0 & -3 & 2 & 1
-    \end{bmatrix}\symbfit{x}
+    \end{bmatrix}\bm{x}
     =
     \begin{bmatrix}
         4\\
         2\\
         6
     \end{bmatrix} \]
-\[ \symbfit{x}\ge \mathbb{0} \]
+\[ \bm{x}\ge \bm{0} \]
 
 Note that $B:=\{1,2,5\}$ is a basis of $A$, so the basic solution corresponding to the
 basis is
-$\symbfit{\bar{x}}:=(4,2,0,0,6)^\top$.
+$\bm{\bar{x}}:=(4,2,0,0,6)^\top$.
 
 $c_3=-4$, increasing the value of $x_3$ from $0$ will decrease the objective value by $-4$ units\\
 $c_4=1$, we want to increase the value of $x_4$, so

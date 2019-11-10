@@ -1,0 +1,140 @@
+\section{2019-10-31}
+Last lecture, we defined the dual of LPs in SIF and showed that
+the dual of
+$ (P_1) $
+\[ \max \bm{c}^\top x\]
+subject to
+\[ A \bm{x}\ge \bm{b} \]
+\[ \bm{x}\ge \bm{0} \]
+is
+$ (D_1) $
+\[ \min \bm{b}^\top \bm{y} \]
+subject to
+\[ A ^\top \bm{y}\le \bm{c} \]
+\[ \bm{y}\ge \bm{0} \]
+
+\subsection{How we do directly write down the dual of an LP?}
+Suppose $ A\in\mathbb{R}^{3\times 4} $
+(P)
+\[ \max 10x_1+20x_2+30x_3+40x_4 \]
+subject to
+\[ \begin{bmatrix}
+    \bm{a_1}^\top\\
+    \bm{a_2}^\top\\
+    \bm{a_3}^\top
+\end{bmatrix}
+\begin{bmatrix}
+    x_1\\
+    x_2\\
+    x_3\\
+    x_4
+\end{bmatrix}
+\begin{matrix}
+    \le\\
+    =\\
+    \ge
+\end{matrix}
+\begin{bmatrix}
+    1\\
+    2\\
+    3
+\end{bmatrix}\]
+\[ x_1\ge 0, x_2\ge 0, x_3\le 0, x_4 \text{ free} \]
+Note that $ \bm{a_1},\bm{a_2},\bm{a_3}\in \mathbb{R}^{4} $.
+
+(D)
+\[ \min \begin{bmatrix}
+    1 & 2 & 3
+\end{bmatrix}
+\begin{bmatrix}
+    y_1\\
+    y_2\\
+    y_3
+\end{bmatrix}\]
+subject to
+\[ 
+\begin{bmatrix}
+    \bm{a_1} & \bm{a_2} & \bm{a_3}
+\end{bmatrix}
+\begin{bmatrix}
+    y_1\\
+    y_2\\
+    y_3
+\end{bmatrix}
+\begin{matrix}
+    \le\\
+    \le\\
+    \ge\\
+    =
+\end{matrix}
+\begin{bmatrix}
+    10\\
+    20\\
+    30\\
+    40
+\end{bmatrix}\]
+\[ y_1\ge 0, y_2 \text{ free}, y_3\le 0 \]
+Dual of the dual is the original problem, the primal.
+
+Since:
+\begin{enumerate}
+    \item constraint 1 in (P) is $\le$, then $y_1 \ge 0$
+    \item constraint 2 in (P) is $=$, then $y_2$ free
+    \item constraint 3 in (P) is $\ge$, then $y_3 \le 0$
+    \item $x_1,x_2\ge 0$, then constraint 1, 2 in (D) is $\le$
+    \item $x_3\le 0$, then constraint 3 in (D) is $\ge$
+    \item $x_4$ free, then constraint 4 in (D) is $=$
+\end{enumerate}
+
+
+\begin{thmbox}
+    \subsection{Theorem (Weak Duality Theorem)}
+    Consider (P)
+    \[ \max \{\bm{c}^{\top} \bm{x}: A \bm{x} \geq \bm{b},\, \bm{x} \geq \bm{0}\} \]
+    and (P)'s dual (D)
+    \[ \min \{\bm{b}^{\top} \bm{y}: A^{\top} \bm{y} \leq \bm{c},\, \bm{y} \geq \bm{0}\}\]
+    Let $ \bm{\bar{x}} $ be a feasible solution for (P) and $ \bm{\bar{y}} $
+    be a feasible solution for (D). Then
+    \begin{enumerate}[(1)]
+        \item $ \bm{c}^\top \bm{\bar{x}}\ge \bm{b}^\top \bm{\bar{y}} $
+        \item $ \bm{c}^\top \bm{\bar{x}}=\bm{b}^\top \bm{\bar{y}} $ $ \implies $
+        $ \bm{\bar{x}} $ is an optimal solution for (P) and $ \bm{\bar{y}} $ is an optimal solution for (D).
+    \end{enumerate}
+\end{thmbox}
+We will prove (1), then (2).
+\begin{proof}
+    Let $ \bm{\bar{x}} $ be a feasible solution of (P) and let $ \bm{\bar{y}} $
+    be a feasible solution of (D). Then
+    \begin{align*}
+        \bm{b}^\top \bm{\bar{y}}&=\bm{\bar{y}}^\top \bm{b}\\
+        &\le \bm{\bar{y}}^\top(A \bm{\bar{x}})\\
+        &=(\bm{\bar{y}}^\top A) \bm{\bar{x}}\\
+        &=(A ^\top \bm{\bar{y}})^\top \bm{\bar{x}}\\
+        &\le \bm{c}^\top \bm{\bar{x}} 
+    \end{align*}
+    as desired.
+\end{proof}
+
+\begin{thmbox}
+    \subsection{Corollary}
+    Let (P) and (D) be a pair of primal-dual LPs. Then
+    \begin{enumerate}[(1)]
+        \item if (P) is unbounded, then (D) is infeasible
+        \item if (D) is unbounded, then (P) is infeasible
+        \item if (P) and (D) are both feasible, then they both
+        have optimal solutions
+    \end{enumerate}
+\end{thmbox}
+
+\begin{thmbox}
+    \subsection{Theorem (Strong Duality Theorem)}
+    Let (P) and (D) be a pair of primal-dual LPs. Then
+    \begin{enumerate}[(1)]
+        \item $ \exists $ an optimal solution $ \bm{\bar{x}} $ of (P) $ \implies $ $\exists$ an optimal solution $ \bm{\bar{y}} $ of (D).
+        \item The value of $ \bm{\bar{x}} $ in (P) equals the value of $ \bm{\bar{y}} $ in (D).
+    \end{enumerate}
+\end{thmbox}
+
+\subsection{Complementary Slackness}
+Recall our proof of Weak Duality. Then for LPs in SEF: 
+$ \bm{\bar{x}}, \bm{\bar{y}} $ are feasible in (P) and (D) respectively.

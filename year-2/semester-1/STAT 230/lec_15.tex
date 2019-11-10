@@ -1,0 +1,82 @@
+\section{Lecture 15}
+\subsection{Example}
+Naomi invites $ 12 $ people to her party. If each independently comes with
+probability $ p $.
+Let $ X= $ \# of guests.
+
+\emph{Binomial:} $ X \thicksim \bin(12,p) $
+
+\subsection{Example}
+$ 20 $ toys in a machine. Each time you grab one with a claw. 
+Let $ X= $ \# of tries to get one toy you want.
+
+\emph{None.}
+
+\subsection{Example}
+Trying to catch a pokemon, each time has a probability $ p $ of succeeding.
+Let $ X= $ \# of failed attempts.
+
+\emph{Geometric:} $ X \thicksim \geo(p) $
+
+\subsection{Example}
+You have $ 5 $ classes randomly scheduled in a row.
+Let $ X= $ \# of classes before your favourite.
+
+range: $ 0,1,2,3,4 $, and the probability is $ \nicefrac{1}{5} $ for each
+of the range.
+
+\emph{Discrete Uniform:} $ X \thicksim \du[1,4] $
+
+\subsection{Poisson Distribution from Binomial (5.7)}
+Suppose we have a $ X \thicksim \bin(n,p) $ where $ n $ is very large
+and $ p $ is very small. Then, as $ n\rightarrow \infty $ and $ p\rightarrow 0 $
+such that $ np $ remains constant, the probability function of X
+approaches a limit.
+
+Let $ np=\mu $, so $ p=\frac{\mu}{n} $. Then
+\begin{align*}
+    \lim\limits_{{n} \to {\infty}} f(x)
+    &=\lim\limits_{{n} \to {\infty}} \binom{n}{x}p^x(1-p)^{n-x}\\
+    &=\lim\limits_{{n} \to {\infty}} \frac{n(n-1)\cdots(n-x+1)}{x!}
+    \frac{\mu^x}{n^x} (1-\frac{\mu}{n})^n(1-\frac{\mu}{n})^{-x}\\
+    &=\frac{\mu^x}{x!} \lim\limits_{{n} \to {\infty}} \frac{n}{n}
+    \frac{n-1}{n} \cdots \frac{n-x+1}{n}(1-\frac{\mu}{n})^n(1-\frac{\mu}{n})^{-x}\\
+    &=\frac{\mu^x}{x!} \lim\limits_{{n} \to {\infty}} (1-\frac{\mu}{n})^n\\
+    &=\frac{e^{-\mu}\mu^x}{x!}\\
+\end{align*}
+
+We write: $ X \thicksim \poi(\mu) $, range: $ 0,1,\cdots $
+
+We can use the Poisson random variable as an approximation to the Binomial
+when $ n $ is large, and $ p $ is small. The only thing we need to do
+is $ \mu=np $.
+
+\subsection{Example}
+Tim Hortons roll up the rim says $ 1 $ in $ 6 $ cups win a prize. Suppose
+you have $ 80 $ cups. Find the probability that you get $ 10 $ or fewer
+winners.
+
+Let $ X= $ \# of winning cups. $ X \thicksim \bin(80,\nicefrac{1}{6}) $
+We want
+\begin{align*}
+    F(10)&=P(X\le 10)\\
+    &=\sum\limits_{x=0}^{10} f(x)\\
+    &=\binom{80}{0}\left(\frac{1}{6}\right)^0\left(\frac{5}{6}\right)^{80}+\cdots+
+    \binom{80}{10}\left(\frac{1}{6}\right)^{10}\left(\frac{5}{6}\right)^{70}\\
+    &=0.2002 \text{ (tedious) }
+\end{align*}
+Try a Poisson approximation.
+$ Y \thicksim \poi(\mu=np=\frac{80}{6}\approx 13.33) $. Then, 
+
+$ P(Y\le 10)=e^{-13.33}\left[1+\frac{13.33}{1!}+\cdots+\frac{13.33^10}{10!}\right]=0.224 $
+
+Not a good approximation since $ p $ was too large.
+
+\subsection{Poisson Distribution from Poisson Process (5.8)}
+The Poisson Process: Suppose events occur randomly in time or space
+according to three conditions:
+\begin{enumerate}[(1)]
+    \item Independence: the number of events in one period cannot affect another non-overlapping period
+    \item Individuality: events occur one at a time (cannot have two at the exact same time)
+    \item Homogeneity or Uniformity: events occur at a constant rate
+\end{enumerate}

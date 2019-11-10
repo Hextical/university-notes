@@ -1,40 +1,38 @@
 \section{2019-09-26}
 \subsection{Summary of outcomes}
-(LP)
-\[\max \{\symbfit{c}^\top \symbfit{x} \mid A\symbfit{x}=\symbfit{b}\text{, }
-\symbfit{x}\ge\mathbb{0}\}\]
+(P)
+\[\max \{\bm{c}^\top \bm{x} : A\bm{x}=\bm{b},\,
+\bm{x}\ge\bm{0}\}\]
 \begin{itemize}
-    \item if $\exists \symbfit{y}\in\mathbb{R}^m$ such that
+    \item If there exists a vector $ \bm{y} $ such that
     \begin{enumerate}[(1)]
-        \item $\symbfit{y}^\top A\ge\mathbb{0}^\top $
-        \item $\symbfit{y}^\top \symbfit{b}<0$
+        \item $\bm{y}^\top A\ge\bm{0}^\top $
+        \item $\bm{y}^\top \bm{b}<0$
     \end{enumerate}
-    then (LP) is infeasible.
-    \item if $\exists(\bar{\symbfit{x}}, \symbfit{d})\in\mathbb{R}^n$ such that $A\symbfit{x}=b$, $\symbfit{x}\ge \mathbb{0}$, 
+    then (P) is infeasible. We call $ \bm{y} $ a certificate of infeasibility.
+
+    \item If there exists a feasible solution $\bar{\bm{x}}$ and a vector $ \bm{d} $ such that:
     \begin{enumerate}[(1)]
-        \item $A\symbfit{d}=\mathbb{0}$
-        \item $\symbfit{d}\ge \mathbb{0}$
-        \item $\symbfit{c}^\top \symbfit{d}>0$
+        \item $A\bm{d}=\bm{0}$
+        \item $\bm{d}\ge \bm{0}$
+        \item $\bm{c}^\top \bm{d}>0$
     \end{enumerate}
-    then (LP) is unbounded.
-    \item if $\exists(\symbfit{\bar{x}},\symbfit{y})$ such that
+    then (P) is unbounded. We call a pair of vectors $ \bar{\bm{x}}, \bm{d} $
+    a certificate of unboundedness.
+
+    \item If there exists a feasible solution $ \bm{\bar{x}} $ and a vector $ \bm{y} $ such that:
     \begin{enumerate}[(1)]
-        \item $A\symbfit{\bar{x}}=\symbfit{b}$, $\symbfit{x}\ge 0$
-        \item $A^\top \symbfit{y}\ge\symbfit{c}$
-        \item $\symbfit{c}^\top  \symbfit{\bar{x}}=\symbfit{y}^\top \symbfit{b}$
+        \item $A^\top \bm{y}\ge\bm{c}$
+        \item $\bm{c}^\top \bm{\bar{x}}=\bm{y}^\top \bm{b}$
     \end{enumerate}
-    then $\symbfit{\bar{x}}$ is an optimal solution of (LP).
+    then $\bm{\bar{x}}$ is an optimal solution of (P). We call $ \bm{y} $
+    a certificate of optimality.
 \end{itemize}
 
 \begin{defbox}
     \subsection{Definition (Standard Equality Form)}
     An LP is said to be in \emph{Standard Equality Form} (SEF) if it has the Form
-    \[ \max \symbfit{c}^T \symbfit{x}+\bar{z}\]
-    subject to
-    \begin{align*}
-        A \symbfit{x}=\symbfit{b}\\
-        \symbfit{x}\ge \mathbb{0}
-    \end{align*}
+    \[ \max \{\bm{c}^T \bm{x}+\bar{z} : A \bm{x}=\bm{b},\,\bm{x}\ge \bm{0}\}\]
     where $ \bar{z} $ is a constant.
     In other words, it satisfies all of the conditions:
     \begin{enumerate}[(1)]
@@ -51,14 +49,14 @@ be converted into a certificate of the same type for the other LP.
 Given an arbitrary LP problem, 
 \begin{itemize}
     \item if the objective function is a minimization problem, then 
-    $\min \symbfit{c}^\top \symbfit{x}\rightarrow -(\max -\symbfit{c}^\top \symbfit{x})$
+    $\min \bm{c}^\top \bm{x}\rightarrow -(\max -\bm{c}^\top \bm{x})$
         \begin{remark}
         We often omit one negative sign
-        from a TA on Piazza: "It's more just a convention of not putting - 
+        from a TA on Piazza: "It's more just a convention of not putting $ - $
         before max when doing this and it's understood that the 
         optimal value of one is the negative of the optimal value of the other"
         \end{remark} 
-    \item if there are constraints $\alpha\symbfit{x}\le \alpha$, introduce a new
+    \item if there are constraints $\alpha\bm{x}\le \alpha$, introduce a new
     non-negative \emph{slack variable} $x_{n+1}$, $x_{n+1}\ge 0$.
     \item if some $x_j$ has no constraint on it, such variables are called \emph{free variables} and
     we represent that free variable as a difference of two non-negative variables,
@@ -72,8 +70,8 @@ Given an arbitrary LP problem,
 subject to
 \[
 \begin{array}{ccccc}
-    11x_1 & + & 12x_2 & \le & 2000\\
-    21x_1 & + & 22x_2 & \ge & 1000
+    x_1 & + & 2x_2 & \le & 20\\
+    3x_1 & + & 4x_2 & \ge & 10
 \end{array}
 \]
 \[x_1 \ge 0\]
@@ -82,8 +80,8 @@ Converting into SEF we get (P$^\prime$):
 subject to
 \[
 \begin{array}{ccccccccc}
-    11x_1 & + & 12(x_2^+-x_2^-) & + & x_3 & & & = & 2000\\
-    21x_1 & + & 22(x_2^+-x_2^-) & - & & x_4 & & = & 1000
+    x_1 & + & 2(x_2^+-x_2^-) & + & x_3 & & & = & 20\\
+    3x_1 & + & 4(x_2^+-x_2^-) & - & & x_4 & & = & 10
 \end{array}
 \]
 \[x_1,x_2^+,x_2^-,x_3,x_4\ge 0\]
@@ -109,8 +107,8 @@ be a feasible solution of (P).
 
 If
 \begin{align*}
-    \bar{x_3}:=2000-11\bar{x_1}-12\bar{x_2}\\
-    \bar{x_4}:=21\bar{x_1}+22\bar{x_2}-1000
+    \bar{x_3}:=20-\bar{x_1}-2\bar{x_2}\\
+    \bar{x_4}:=3\bar{x_1}+4\bar{x_2}-10
 \end{align*}
 and 
 if $\bar{x_2}\ge 0$
@@ -122,7 +120,7 @@ or $\bar{x_2}< 0$
 then $(\bar{x_1},\bar{x_2}^+,\bar{x_2}^-,\bar{x_3},\bar{x_4})^\top$
 is a feasible solution of (P$^\prime$).
 \begin{remark}
-    This example was a question from a past midterm and not covered in class.
+    This example was very similar to a past midterm question and was not covered in class.
     The class example was useless.
 \end{remark}
 
@@ -139,18 +137,18 @@ is a feasible solution of (P$^\prime$).
 
 \begin{defbox}
     \subsection{Definition (Basic Solution)}
-    A vector $\symbfit{\bar{x}}$ is a \emph{basic solution} of $ A \symbfit{x}=\symbfit{b} $
+    A vector $\bm{\bar{x}}$ is a \emph{basic solution} of $ A \bm{x}=\bm{b} $
     for a basis $ B $ if the following conditions hold:
     \begin{enumerate}[(1)]
-        \item $A \symbfit{\bar{x}}=\symbfit{b}$
-        \item $\symbfit{\bar{x}_N}=0$
+        \item $A \bm{\bar{x}}=\bm{b}$
+        \item $\bm{\bar{x}_N}=0$
     \end{enumerate}
 \end{defbox}
 
 \begin{defbox}
     \subsection{Definition (Basic Feasible Solution)}
-    If $\symbfit{\bar{x}}$ is a \emph{basic solution} and $\symbfit{\bar{x}}\ge \mathbb{0}$,
-    then $\symbfit{\bar{x}}$ is a \emph{basic feasible solution} .
+    If $\bm{\bar{x}}$ is a \emph{basic solution} and $\bm{\bar{x}}\ge \bm{0}$,
+    then $\bm{\bar{x}}$ is a \emph{basic feasible solution} .
 \end{defbox}
 
 \subsection{Example (Bases of A)}
@@ -160,7 +158,7 @@ is a feasible solution of (P$^\prime$).
     0 & 1 & 2 & -1 & 2
 \end{bmatrix}
 \text{, }
-\symbfit{b}:=
+\bm{b}:=
 \begin{bmatrix}
     2\\
     5
@@ -184,4 +182,4 @@ To find the basic solution determined by $B:=\{1,4\}$, solve
     5
 \end{bmatrix}
 \]
-and we get $\symbfit{\bar{x}}=(-3,0,0,-5,0)^\top $.
+and we get $\bm{\bar{x}}=(-3,0,0,-5,0)^\top $.
