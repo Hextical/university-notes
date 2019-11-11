@@ -1,0 +1,96 @@
+\section{Lecture 18}
+\subsection{Variance of a RV (7.4)}
+The mean $ E[X] $ tells us where the distribution is on average. We
+also need a way to describe how spread out a distribution is. Variance could
+be $ E[X-\mu]=0 $.
+
+What about $ E[|X-\mu] $
+\begin{itemize}
+    \item need cases to evaluate
+    \item non-differentiable at point $ X-\mu $
+    \item linear penalty for being away from the mean
+\end{itemize}
+Instead we use $ E[(X-\mu)^2] $
+
+\begin{defbox}
+    \subsubsection{Definition (Variance)}
+    The \emph{variance} of a random variable $X$, denoted by $Var(X)$ or by 
+    $ \sigma^2 $, is
+    \[ \sigma^2=Var(X)=E[(X-\mu)^2]=\sum\limits_{\text{all }x}(X-\mu)^2 f(x) \]
+\end{defbox}
+
+\subsection{Example}
+$ X= $ \# on fair 6-sided die
+
+$ E[X]=3.5 $
+
+$ E[(x-3.5)^2] $
+
+$ E[X]^2-3.5^2 $
+
+\begin{tabular}{| *{7}{>{\centering\arraybackslash}p{1cm} |}}
+    \hline
+    $x$ & 1 & 2 & 3 & 4 & 5 & 6\\
+    \hline
+    $x^2$ & 1 & 4 & 9 & 16 & 25 & 36\\
+    \hline
+\end{tabular}
+
+Alternate form (calculation form)
+\begin{align*}
+    Var(X)&=E[(X-E[X])^2]\\
+    &=E[X^2-2XE[X]+E[X]^2]\\
+    &=E[X^2]-2E[X]E[X]+E[X]^2\\
+    &=E[X^2]-2(E[X])^2+E[X]^2\\
+    &=E[X^2]-E[X]^2\\
+    &=\sum\limits_{\text{all }x}x^2 f(x)-\left(\sum\limits_{\text{all} x}xf(x)\right)^2 
+\end{align*}
+
+\subsection{Example (Roulette)}
+
+$ X=0 $ or $ 36 $ (dollars)
+
+\begin{tabular}{| *{3}{>{\centering\arraybackslash}p{1cm} |}}
+    \hline
+    $x$ & $0$ & $36$\\
+    \hline
+    $f(x)$ & $\frac{37}{38}$ & $\frac{1}{38}$ \\
+    \hline
+\end{tabular}
+
+\[ E[X]=0.94737 \]
+\[ Var(X)=E[X^2]-0.94737^2=36^2(\frac{1}{36})-0.94737^2=33.207\text{ dollars}^2 \]
+To interpret the variance better, we often take the square root to get the same
+units of the original variable.
+
+\begin{defbox}
+    \subsubsection{Definition (Standard Deviation)}
+    The \emph{standard deviation} of a random variable $X$ is
+    \[ \sigma=SD(X)=\sqrt{Var(X)} \]
+\end{defbox}
+\[ SD(X)=\sqrt{33.207}=5.76 \]
+
+What if we bet $ \$1 $ on red. Y=winnings
+
+\begin{tabular}{| *{3}{>{\centering\arraybackslash}p{1cm} |}}
+    \hline
+    $y$ & $0$ & $2$\\
+    \hline
+    $f(y)$ & $\frac{20}{38}$ & $\frac{18}{38}$ \\
+    \hline
+\end{tabular}
+\[ E[Y]=0.94737 \]
+\[ Var(Y)=E[Y^2]-0.94737^2=0.97723 \]
+\[ SD(Y)=0.9986 \]
+
+\subsection{Linear Transformations}
+If $ Y=aX=b $, and we know $ E[X] $ and $ Var(X) $, what
+can we say about $ E[Y] $ and $ Var(Y) $.
+\[ E[Y]=aE[X]+b \]
+\begin{align*}
+    Var(Y)&=E[(Y-E[Y])^2]\\
+    &=E[(aX+b)-(aE[X]+b)^2]\\
+    &=a^2E[(X-E[X])^2]
+\end{align*}
+\[ Var(Y)=a^2Var(X) \]
+\[ SD(Y)=|a|SD(X) \]

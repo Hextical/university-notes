@@ -1,4 +1,20 @@
 \section{Lecture 17}
+\subsection{Summary}
+Today we looked at what happens when we replace the relative frequency in the sample mean with a theoretical probability. We get the expected value of X (or theoretical mean) given by: $E[X] = \sum x f(x)$ (where the sum is over all x in the range of X.) 
+
+For our MLIW, we noticed that the sample mean in the class was quite different from the theoretical mean, when X was the number of kids in a family. There could be many reasons for this, but likely the most important is that the sample in the class was not representative of the population of Canada, since that includes many young families with one child that may have more, whereas most of the people in the class will not be gaining any new siblings. Any time you're building a machine learning algorithm, it's only as good as the data you build it on. So if the data is biased and does not reflect reality, the predictions from the model will be biased as well. An important concept in machine learning is data stewardship - making sure the data going in is accurate, representative, and appropriate for the purpose of the model.
+
+In addition to the formal definition of the expected value of X, we may be interested in a function of X, so we also defined the expected value of a function $g(X)$ to be $E[g(X)]$ = $\sum g(x) f(x)$. Expectation is a linear operator so we can split up sums and pull out constants (i.e. $E[aX+b] = aE[X] + b$) but for a general non-linear function, unfortunately $E[g(X)]\neq g(E[X])$.
+
+Then we looked at some applications of expectation, including caching and Roulette. I encourage you to read the other applications in section 7.3 for some more examples.
+\begin{itemize}
+    \item If you're interested, see if you can determine how small the probability of a cache hit would have to be (in our example) in order for it not to be worth it to use a cache. Post the answer in the follow-up if you get it.
+    \item In Roulette, a game where there are 38 sections that can be chosen with equal probability, and you can bet on lots of different outcomes. It turns out that no matter what betting strategy you use or how you split up your money, the expected payoff from any \$1 bet is always 0.94737, so you essentially lose about 5.3 cents every time you play! (Over Reading Week, I encourage you to imagine a betting strategy and verify this fact - but I do not encourage actually gambling!)
+    \item Of course, different betting strategies will have different amounts of risk, even if the expected value is the same. This is the idea of Variance, which we'll start talking about on Monday after Reading Week. :)
+\end{itemize}
+
+Have a fantastic Reading Week! I recommend setting realistic goals for yourself (including both some dedicated time to relax and dedicated time to catch up / get ahead on school work) and have both a productive and fun week!
+
 \subsection{Expectation of a Random Variable (7.2)}
 Imagine we know the theoretical probability of each
 \# of kids in a family.
@@ -22,7 +38,7 @@ Why do we have sample mean > theoretical mean?
     \item urban vs rural population
     \item income level
     \item sampled max family size but theoretical includes growing families
-    \item selection bias: more likely to choose one with more sister/brothers from population
+    \item selection bias (if you randomly select people rather than families, people with lots of siblings will be over-represented
 \end{itemize}
 
 \begin{defbox}
@@ -30,7 +46,7 @@ Why do we have sample mean > theoretical mean?
     Let $X$ be a discrete random variable and probability function $f(x)$. The
     \emph{expected value} (also called the mean or the expectation) of $X$ is
     given by
-    \[ \mu=E[x]=\sum\limits_{\text{all } x}xf(x) \]
+    \[ \mu=E[X]=\sum\limits_{\text{all } x}xf(x) \]
 \end{defbox}
 \begin{remark}
     $ \mu $ will be within the range but not necessarily
@@ -64,6 +80,61 @@ $ =(1250)(0.43)+\cdots+(2250)(0.01)=1450 $
 \end{thmbox}
 
 Note that $ g(x)=1000+250x$ from last example.
+\[ E[g(X)]=1000+250E[X]=1450 \]
 
-\[ E[g(X)]=1000+250E[x]=1450 \]
+What if tax credit = $ \frac{2000}{x} $
+\[ E[g(X)]=(2000)(0.43)+(1000)(0.40)+\cdots+(400)(0.01)=1364 \]
+But $ \frac{2000}{E[X]}=\frac{2000}{1.8}=1111.11 $. Therefore
+\[ E[g(X)]\neq g(E[X]) \]
+unless $ g $ is a linear function. That is, if $ g(X)=aX+b $, then
+$ E[g(X)]=aE[X]+b $
 
+\subsection{Example}
+A web server has a cache. Takes 10ms to check, $ 20 $\% of the requests are
+found (cache hit) and immediately shown. If it's not found (cache miss),
+it takes $ \underbrace{50}_{\text{to server}}+\underbrace{70}_{\text{lookup}}
++\underbrace{50}_{\text{to client}} $ additional ms to get info and display.
+Is it worth it? Let $ X= $\# of ms to display the information.
+
+\begin{tabular}{| *{3}{>{\centering\arraybackslash}p{4cm} |}}
+    \hline
+    $x$ & 10 & 10+50+70+50=180\\
+    \hline
+    $f(x)$ & 0.2 & 0.8\\
+    \hline
+\end{tabular}
+\[ E[X]=(10)(0.2)+(180)(0.8)=146\text{ms} \]
+Time no cache = $ 50+70+50=170\text{ms} $.
+
+Since $ 146\text{ms}<170\text{ms, it's worth it!} $
+
+\subsection{Example}
+Roulette: each of $38$ numbers is equally likely
+
+(1) If you bet $1$ dollar on number $7$ $ \rightarrow $ pays $ 35:1 $
+
+OR
+
+(2) If you bet $50$ cents on red $ \rightarrow $ pays $ 1:1 $
+and $ 50 $ cents on first $ 12 $ numbers $ \rightarrow $ pays $ 2:1 $
+
+(1)
+\begin{tabular}{| *{3}{>{\centering\arraybackslash}p{1cm} |}}
+    \hline
+    $x$ & $0$ & $36$\\
+    \hline
+    $f(x)$ & $\frac{37}{38}$ & $\frac{1}{38}$ \\
+    \hline
+\end{tabular}
+
+(2)
+\begin{tabular}{| *{5}{>{\centering\arraybackslash}p{2.5cm} |}}
+    \hline
+    $y$ & 0 & 1 & 1.50 & 2.50\\
+    \hline
+    $f(y)$ & $ \underbrace{\frac{14}{38}}_{\text{neither}} $ & $\underbrace{\frac{12}{38}}_{\text{red}}$ & $\underbrace{\frac{6}{38}}_{\text{black}}$ & $\underbrace{\frac{6}{38}}_{\text{both red}}$ \\
+    \hline
+\end{tabular}
+
+\[ E[X]=0(\frac{37}{38})+36(\frac{1}{38})=0.94737 \]
+\[ E[Y]=0(\frac{14}{38})+1(\frac{12}{38})+1.5(\frac{6}{38})+2.5(\frac{6}{38})=0.94737\]

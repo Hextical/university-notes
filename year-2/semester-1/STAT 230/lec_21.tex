@@ -1,0 +1,127 @@
+\section{Lecture 21}
+A \emph{continuous random variable} $ X $ maps points in a continuous
+sample space to real numbers such that the range is uncountably infinite.
+
+\textsc{Examples of continuous random variables}
+
+Let $ X $ be the number the point spots at.
+\begin{enumerate}[(1)]
+    \item temperature of a day
+    \item length of time until a bus arrives
+    \item height of a random person
+    \item by (3)/\# of people (avg height of 3)
+\end{enumerate}
+
+$F(x)=P(X\le x)$, $F(a)=P(X\le a) $
+
+\subsection{Example}
+For $ x<0 $, no chance of the point stopping at a number $ <0 $.
+
+For $ x>4 $, $ F(x)=1 $ since the point is certain to stop at a number
+below $ 4 $.
+
+$ P(0<x\le 1)=\frac{1}{4}=F(1) $
+
+\[ F(x)=\begin{cases}
+    0,\, x<0\\
+    \frac{x}{4},\,0\le x\le 4 \\
+    1,\,x>4
+\end{cases} \]
+
+\textsc{Properties of $ F(x) $}
+
+(1) For all $ x $, $ P(X=x)=0 $. So,
+\begin{align*}
+    P(a<x\le b)&=P(a\le x\le b)\\
+    &=P(a<x<b)\\
+    &=P(a\le x<b)
+\end{align*}
+\begin{remark}
+    End points don't matter.
+\end{remark}
+
+(2) \begin{align*}
+    \lim\limits_{{\epsilon} \to {0}} F(x)-F(x-\epsilon)&=
+    \lim\limits_{{\epsilon} \to {0}} P(x-\epsilon<X\le x)\\
+    &=P(X=x)\\
+    &=0
+\end{align*}
+Thus $ \lim\limits_{{\epsilon} \to {0}} F(x-\epsilon)=F(x) $, so
+$ F(x) $ is continuous.
+
+(3) $ F(x) $ is non-decreasing.
+
+(4) $ \lim\limits_{{x} \to {+\infty}} F(x)=1 $,
+$ \lim\limits_{{x} \to {-\infty}} F(x)=0 $
+
+(5) $ 0\le F(x)\le 1 $
+
+\begin{defbox}
+    \subsubsection{Definition (Probability Density Function)}
+    The \emph{probability density function} (p.d.f) $ f(x) $ for a continuous
+    random variable $ X $ is the derivative
+    \[ f(x)=\frac{d}{dx}F(x) \]
+    where $ F(x) $ is the cumulative distribution function for $ X $.
+\end{defbox}
+
+\begin{remark}
+    $ f(x) $ is not a probability. It can be $ >1 $ relative
+    likelihood that $ X $ takes a value near $ X $.
+\end{remark}
+
+\textsc{Properties of $ f(x) $}
+
+(1)
+\begin{align*}
+    P(a\le X\le b)&=F(b)-F(a)\\
+    &=\int\limits_{a}^{b} f(x) d{x}
+\end{align*}
+
+(2)
+\begin{align*}
+    \int\limits_{-\infty}^{+\infty} f(x) d{x}&=F(+\infty)-F(-\infty)\\
+    &=1-0\\
+    &=1
+\end{align*}
+
+(3) $ f(x)\ge 0 $ (since $ F(x) $ is non-decreasing, it's derivative is non-negative)
+
+(4) \[ F(x)=\int\limits_{-\infty}^{x} f(u) d{u} \]
+
+\subsection{Example}
+Suppose a continuous random variable $ X $ is on the range $ [0,1] $ has the 
+cumulative distribution function $ F(x)=x^2 $.
+
+\textsc{What is the probability density function?}
+
+$ f(x)=\frac{d}{dx} F(x)=2x $.
+
+\textsc{What is $ P(X=0.25) $?}
+
+$ P(X=0.25)=0 $
+
+\textsc{What is $ P(X\le 0.25) $?}
+
+(1) $ P(X\le 0.25)=F(0.25)=(0.25)^2=0.0625 $
+
+(2)
+\[  P(X\le 0.25)=
+\int\limits_{0}^{0.25} f(x) d{x} =\int\limits_{0}^{0.25} 2x d{x} =0.625 \]
+
+\begin{defbox}
+    Expectation:
+    \[ E[X]=\int\limits_{-\infty}^{+\infty} xf(x) d{x} =
+    \int\limits_{x\in\text{range}}^{} xf(x) d{x}  \]
+\end{defbox}
+
+\begin{defbox}
+    Variance:
+    \[ Var(X)=E[X^2]-E[X]^2=\int\limits_{-\infty}^{+\infty} x^2f(x) d{x}-
+    \int\limits_{-\infty}^{+\infty} xf(x) d{x} \]
+\end{defbox}
+
+\begin{defbox}
+    \subsubsection{Definition (Percentiles)}
+    The $ p^\text{th} $ \emph{percentile} of a distribution $ x_p $ such that
+    $ F(x_p)=p $.
+\end{defbox}

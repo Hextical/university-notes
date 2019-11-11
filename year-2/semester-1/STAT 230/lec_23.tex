@@ -1,0 +1,51 @@
+\section{Lecture 23}
+\subsection{Example}
+Let $ Y \thicksim U(0,1)\implies f_Y(y)=\frac{1}{1-0}=1,\,
+F_Y(y)=\frac{y-0}{1-0}=y $
+
+$ X=2\sqrt[3]{Y} $.
+
+\textsc{Find $ f_X(x) $}
+
+1.
+\begin{align*}
+    F_X(x)&=P(X\le x)\\
+    &=P\left(2\sqrt[3]{Y}\le x\right)\\
+    &=P\left(Y\le \frac{x^3}{8}\right)\\
+    &=F_Y\left(\frac{x^3}{8} \right)
+\end{align*}
+
+2.
+\begin{align*}
+    F_X(x)&=F_Y\left(\frac{x^3}{8} \right)\\
+    &=\frac{x^3}{8}
+\end{align*}
+$ f_X(x)=\frac{d}{dx}F_X(x)=\frac{3}{8}x^2 $
+
+3. $ x\in(0,2) $
+
+\subsection{Exponential Distribution (8.3)}
+Suppose we have a Poisson Process with rate $ \lambda $. Let
+$ X= $ time until the next event occurs. $ X $ has an exponential distribution.
+
+\textsc{Find range, $ F(x) $, and $ f(x) $}
+
+$ x\in(0,\infty) $
+
+\begin{align*}
+    F(x)&=P(X\le x)\\
+    &=P(\text{time to next event}\le x)\\
+    &=P(\text{number of events in } (0,x)\ge 1\\
+    &=P(Y\ge 1)\qquad Y \thicksim \poi(\lambda x)\\
+    &=1-P(Y=0)\\
+    &=1-\frac{(e^{-\lambda x})(\lambda x)^0}{0!}\\
+    &=
+    \begin{cases}
+        1-e^{-\lambda x},\, x>0\\
+        0,\, x\le 0
+    \end{cases}
+\end{align*}
+Alternate forms: $ \theta=\frac{1}{\lambda} $, so
+\[ F(x)=1-e^{-\frac{x}{\theta}} \]
+\[ f(x)=\frac{1}{\theta}e^{-\frac{x}{\theta}} \]
+We say $ X \thicksim Exp(\theta) $.

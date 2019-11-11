@@ -1,0 +1,119 @@
+\section{Lecture 19*}
+\subsection{Summary}
+Today we started with some examples of calculating variance and verified the results for linear transformation of variables using a specific example. 
+
+Then we derived the mean of the Binomial and Poisson distributions. Both of them used similar tricks ($x! = x(x-1)!$, and manipulating our sum until it became a pf so the sum was 1) and gave us results that make logical sense: the mean of a $\bin(n,p)$ is np and the mean of a $\poi(\mu) = \mu$. There are similar results for the means of the other named distributions, but there are easier ways to get them as we'll see later.
+
+Then we derived the variance of the Poisson distribution, which uses similar tricks to the proofs for the mean. Interestingly, the Poisson variance is equal to the mean $\mu$. If you want to give it a try, you can find that the Binomial variance is $np(1-p)$ which is symmetric around $p=0.5$, and smallest when p is near $0$ or $1$.
+
+I ran out of time for our SWAG about League of Legends, but the sheet is posted on Learn with lots of details about the calculations if you are interested.
+
+On Friday we'll review Chapters 5 and 7 before turning our attention to continuous random variables in Chapter 8.
+
+\subsection{Example}
+Suppose $ X $ has probability function:
+
+\begin{tabular}{| *{6}{>{\centering\arraybackslash}p{1cm} |}}
+    \hline
+    $x$ & 0 & 1 & 2 & 3 & 4\\
+    \hline
+    $y$ & 1 & 3 & 5 & 7 & 9\\
+    \hline
+    $f(x)$ & 0.1 & 0.1 & 0.1 & 0.5 & 0.2\\
+    \hline
+\end{tabular}
+
+Let $ Y=2X+1 $.
+
+$ E[X]=2.6 $
+
+$ E[X^2]=6.2 $
+
+$ E[Y]=6.2 $
+
+$ E[Y^2]=94.2 $
+
+$ Var(X)=8.2-2.6^2=1.44 $
+
+$ SD(X)=1.2 $
+
+$ Var(Y)=44.2-6.2^=5.76 $
+
+$SD(Y)=2.4$
+
+Now we can verify,
+\begin{align*}
+    E[Y]&=E[2X+1]\\
+    &=2E[X]+1\\
+    &=2(2.6)+1\\
+    &=6.2
+\end{align*}
+\[ Var(Y)=2^2 Var(X)=4(1.44)=5.76 \]
+\[ SD(Y)=|2|SD(X)=2(1.2)=2.4 \]
+
+Let $ X \thicksim \bin(n,p) $. Find $ E[X] $.
+\setcounter{equation}{0}
+\begin{align}
+    E[X]&=\sum\limits_{\text{all } x}xf(x)\\
+    &=\sum\limits_{x=0}^{n}x \binom{n}{x}p^x(1-p)^{n-x}\\
+    &=\sum\limits_{x=1}^{n}x \binom{n}{x}p^x(1-p)^{n-x}\\
+    &=\sum\limits_{x=1}^{n}x \frac{n!}{x!(n-x)!}p^x(1-p)^{n-x}\\
+    &=\sum\limits_{x=1}^{n}x \frac{n!}{x(x-1)!(n-x)!}p^x(1-p)^{n-x}\\
+    &=\sum\limits_{x=1}^{n}\frac{n!}{(x-1)!(n-x)!}p^x(1-p)^{n-x}\\
+    &=\sum\limits_{x=1}^{n}\frac{n(n-1)!}{(x-1)![(n-1)-(x-1)]!}pp^{x-1}(1-p)^{(n-1)-(x-1)}\\
+    &=np(1-p)^{n-1}\sum\limits_{x=1}^{n}\binom{n-1}{x-1}p^{x-1}(1-p)^{-(x-1)}\\
+    &=np(1-p)^{n-1}\sum\limits_{x=1}^{n}\binom{n-1}{x-1}\left(\frac{p}{1-p}\right)^{x-1}
+\end{align}
+From (2) to (3) we used to fact that when $ x=0 $ the value of the expression 
+is $ 0 $. Provided that $ x\neq 0 $, we can expand $ x! $ as $ x(x-1)! $ as
+seen from (4) to (5). Let $ y=x-1 $, we get
+\begin{align}
+    E[X]&=np(1-p)^{n-1}\sum\limits_{x=1}^{n}\binom{n-1}{y}\left(\frac{p}{1-p}\right)^{y}\\
+    &=np(1-p)^{n-1}\left(1+\frac{p}{1-p}\right)^{n-1}\\
+    &=np(1-p)^{n-1}\frac{(1-p+p)^{n-1}}{(1-p)^{n-1}}\\
+    &=np
+\end{align}
+From (10) to (11) we used the Binomial Theorem.
+
+Let $ X \thicksim \poi(\mu) $. Find $ E[X] $.
+\setcounter{equation}{0}
+\begin{align}
+    E[X]&=\sum\limits_{\text{all } x}xf(x)\\
+    &=\sum\limits_{x=0}^{\infty} x \frac{e^{-\mu}\mu^x}{x!}\\
+    &=\sum\limits_{x=1}^{\infty} x \frac{e^{-\mu}\mu^x}{x(x-1)!}\\
+    &=\sum\limits_{x=1}^{\infty} \mu \frac{e^{-\mu}\mu^{x-1}}{(x-1)!}\\
+\end{align}
+Let $ y=x-1 $, we get
+\begin{align}
+    E[X]&=\mu e^{-\mu}\sum\limits_{x=1}^{\infty} \frac{\mu^{y}}{y!}\\
+    &=\mu e^{-\mu}e^\mu\\
+    &=\mu
+\end{align}
+From (6) to (7) we used the fact that $ e^x=\sum\limits_{y=0}^{\infty}\frac{x^y}{y!} $.
+
+Similarly,
+\[ X \thicksim \du[a,b],\, E[X]=\frac{a+b}{2} \]
+\[ X \thicksim \hyp(N,r,n),\, E[X]=\frac{nr}{N} \]
+\[ X \thicksim \nb(k,p),\,E[X]=\frac{k(1-p)}{p} \]
+\[ X \thicksim \geo(p),\,E[X]=\frac{1-p}{p} \]
+
+Let $ X \thicksim \poi(\mu) $. Find $ Var(X) $.
+
+Since there's $ x! $ in the denominator of $ f(x) $, let's find
+$ E[X(X-1)] $.
+\begin{align*}
+    E[X(X-1)]&=\sum\limits_{x=0}^{\infty}x(x-1)\frac{\mu^xe^{-\mu}}{x!}\\
+    &=\sum\limits_{x=2}^{\infty}x(x-1)\frac{\mu^xe^{-\mu}}{x(x-1)(x-2)!}\\
+    &=\mu^2e^{-\mu}\sum\limits_{x=2}^{\infty} \frac{\mu^{x-2}}{(x-2)!}\\
+\end{align*}
+Let $ y=x-2 $, we get
+\begin{align*}
+    E[X(X-1)]&=\mu^2e^{-\mu}\sum\limits_{x=2}^{\infty} \frac{\mu^{y}}{y!}\\
+    &=\mu^2
+\end{align*}
+\begin{align*}
+    Var(X)&=E[X(X-1)]+E[X]-E[X]^2\\
+    &=\mu^2+\mu-\mu^2\\
+    &=\mu
+\end{align*}
+
