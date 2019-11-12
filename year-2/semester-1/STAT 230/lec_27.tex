@@ -1,0 +1,154 @@
+\section{Lecture 27}
+\textbf{Recall (on overhead):}
+\begin{itemize}
+    \item joint and marginal pfs, independence
+    \item conditional pfs
+    \item functions of two (or more) rvs
+\end{itemize}
+Questions from ch 5,7,9 (1 question)
+
+\textbf{Recall (on board):}
+
+joint pf $ f(x,y)=P(X=x,Y=y) $
+(non negative, sum up all pairs $x,y=1$)
+
+marginal pf:
+
+$ f_X(x)=\sum\limits_{y}^{} f(x,y) $
+
+$ f_Y(y)=\sum\limits_{x}^{} f(x,y) $
+
+independence: two variables are independent iff
+\[ f(x,y)=f_X(x)f_Y(y)\qquad \forall (x,y) \]
+
+For a full-time UW Math Faculty student, let $ X=$ number of courses taking
+and $ Y=1 $ if in co-op, or $ 0 $ if in regular. The joint pf is given by
+
+\begin{tabular}{| *{6}{>{\centering\arraybackslash}p{2cm} |}}
+    \hline
+    $y\backslash x$ & 3 & 4 & 5 & 6 & $ f_Y(y) $\\
+    \hline
+    $0$ & 0.09 & 0.17 & 0.22 & 0.07\\
+    \hline
+    $1$ & 0.05 & 0.1 & 0.32 & 0.04 & 0.51\\
+    \hline
+    $ f_X(x) $ & & & 0.54 & & 1\\
+    \hline
+\end{tabular}
+
+Are $ X $ and $ Y $ independent?
+
+No. $ f(5,1)=0.32\neq f_X(5)f_Y(1)=(0.54)(0.51)=0.2754 $
+
+\subsection{Example}
+Imagine you have a card game with a total of 12 cards. Classified in three
+different categories: 5 cards (money), 4 cards (action), 3 cards (useless).
+Draw a hand of them, in this case 3 without replacement, and let
+$ X= $ \# of useless, $ Y= $ \# action.
+
+\textsc{Find the joint pf and range}
+
+\begin{tabular}{| *{6}{>{\centering\arraybackslash}p{2cm} |}}
+    \hline
+    $y\backslash x$ & 0 & 1 & 2 & 3 & $ f_Y(y) $\\
+    \hline
+    $0$ & $\nicefrac{10}{220}$  & $\nicefrac{30}{220}$ & $\nicefrac{15}{220}$ & $\nicefrac{1}{220}$ & $\nicefrac{56}{220}$\\
+    \hline
+    $1$ & $\nicefrac{40}{220}$ & $\nicefrac{60}{220}$ & $\nicefrac{12}{220}$ & 0 & $\nicefrac{112}{220}$\\
+    \hline
+    $2$ & $\nicefrac{30}{220}$ & $\nicefrac{18}{220}$ & 0 & 0 & $\nicefrac{48}{220}$\\
+    \hline
+    $3$ & $\nicefrac{4}{220}$ & 0 & 0 & 0 & $\nicefrac{4}{220}$\\
+    \hline
+    $ f_X(x) $ & $\nicefrac{84}{220}$ & $\nicefrac{108}{220}$ & $\nicefrac{27}{220}$ & $\nicefrac{1}{220}$ & 1\\
+    \hline
+\end{tabular}
+
+Range: $ x\in \{0,1,2,3\} $, $ y\in \{0,1,2,3\} $ such that $ x+y\le 3 $
+
+$ f(0,0) $ (no useless, no action)=$ P $(all money)
+\[ \frac{\binom{5}{3}}{\binom{12}{3}}=\frac{10}{220} \]
+$ f(1,1) $ (1 useless, 1 action)=$ P $(one of each type)
+\[ \frac{\binom{3}{1}\binom{4}{1}\binom{5}{1}}{\binom{12}{3}} =\frac{60}{220}  \]
+\[ f(x,y)=\frac{\binom{3}{x}\binom{4}{y}\binom{5}{3-x-y}}{\binom{12}{3}}  \]
+
+Find marginal pfs (sum), $ X \thicksim \hyp(12,3,3) $. $ Y \thicksim \hyp(12,4,3) $. Check that the marginal pfs match.
+
+Are they independent? No (don't have a cartesian product)
+
+Recall: conditional probability:
+\[ P(A\mid B)=\frac{P(AB)}{P(B)} \]
+
+\begin{defbox}
+    \subsection{Definition (Conditional pf)}
+    The conditional pf of $ X $ given $ Y=y $ is
+    \[ f(x\mid y)=P(X=x\mid Y=y)=\frac{P(X=x,Y=y)}{P(Y=y)}=\frac{f(x,y)}{f_Y(y)} \]
+    for all $ y $.
+
+    Similarly, the conditional pf of $ Y $ given $ X=x $ is
+    \[ f(y\mid x)=\frac{f(x,y)}{f_X(x)} \]
+    for all $ x $.
+\end{defbox}
+
+\subsection{Example}
+What is the probability that someone taking 4 courses is a co-op student?
+
+In other words, $ P(Y=1\mid X=4)=\frac{0.1}{0.27}=0.37$
+
+For $ 6 $ courses, $ \frac{0.04}{0.05}=0.80 $.
+
+\subsection{Example}
+If you have $ 1 $ action card, find the pf of the number of useless cards.
+
+i.e. the pf of $ X\mid Y=1 $
+\begin{tabular}{| *{4}{>{\centering\arraybackslash}p{2cm} |}}
+    \hline
+    $x$ & 0 & 1 & 2\\
+    \hline
+    $f(x\mid 1)$ & $ \nicefrac{40}{112}$ & $ \nicefrac{60}{112} $ & $ \nicefrac{12}{112} $\\
+    \hline
+\end{tabular}
+
+\subsection{Functions of 2 or more rvs}
+Suppose $ U $ is some function of $ X $ and $ Y $, e.g. $ U=X-Y $. To find the
+pf of $ U $.
+
+\begin{tabular}{| *{5}{>{\centering\arraybackslash}p{2cm} |}}
+    \hline
+    $y\backslash x$ & 3 & 4 & 5 & 6\\
+    \hline
+    $0$ & 3 & 4 & 5 & 6\\
+    \hline
+    $1$ & 2 & 3 & 4 & 5\\
+    \hline
+\end{tabular}
+
+1. determine the possible values of $ U $ for each pair $ (x,y) $
+
+so the range is $ u\in \{2,3,4,5,6\} $
+
+2. $ f(u) $ is the sum of $ f(x,y) $ for all combos that map to $ u $.
+\[ f(u)=\sum\limits_{(x,y)\text{ s.t. }x-y=u} f(x,y)\]
+
+\begin{tabular}{| *{6}{>{\centering\arraybackslash}p{1cm} |}}
+    \hline
+    $u$ & 2 & 3 & 4 & 5 & 6\\
+    \hline
+    $f(u)$ & 0.05 & 0.19 & 0.49 & 0.24 & 0.01\\
+    \hline
+\end{tabular}
+
+$ u=2\rightarrow (x=3,y=1)=0.05$
+
+$ u=3\rightarrow (x=4,y=1)+(x=3,y=0)=0.1+0.09=0.19$
+
+Using the earlier table:
+\begin{tabular}{| *{5}{>{\centering\arraybackslash}p{2cm} |}}
+    \hline
+    $y\backslash x$ & 3 & 4 & 5 & 6\\
+    \hline
+    $0$ & 0.09 & 0.17 & 0.22 & 0.07\\
+    \hline
+    $1$ & 0.05 & 0.1 & 0.32 & 0.04\\
+    \hline
+\end{tabular}

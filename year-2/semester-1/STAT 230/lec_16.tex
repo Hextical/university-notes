@@ -4,7 +4,7 @@ Today we finished up Chapter 5 with more about the Poisson process and the Poiss
 
 If we define $X$ to be the number of events observed in a time period of length $t$ in a Poisson process with rate $\lambda$, then I claimed that $X$ has a Poisson distribution with parameter $\mu = \lambda t$. The proof in the course notes uses all three conditions for the Poisson process, as well as some calculus, and I encourage you to check it out if you enjoy neat proofs.
 
-Many different processes can be modelled with a Poisson process, and all we have to do is identify the values of $\lambda$ and t (making sure they are measured in the same time units) and define $\mu$ to be the product. We looked at some ways to tell when to use the Poisson distribution.
+Many different processes can be modelled with a Poisson process, and all we have to do is identify the values of $\lambda$ and $t$ (making sure they are measured in the same time units) and define $\mu$ to be the product. We looked at some ways to tell when to use the Poisson distribution.
 
 Then we looked at a detailed example of combining other models with the Poisson distribution. These types of problems are often found on tests/exams, and there are lots of other examples in the course notes to practice with. See if you can get the answer to part (d) of the question in class, and I'll post the solution as a follow-up below.
 
@@ -39,7 +39,7 @@ We say that a second is quiet if it has no requests.
 \end{enumerate}
 (a) Let $ X= $ \# requests in a second. $ X \thicksim \poi(\nicefrac{5}{3}) $.
 
-We want $ P(X=0)=\frac{e^{-\frac{5}{3}(\frac{5}{3})^0}}{0!}=0.189 $
+We want $ P(X=0)=\frac{e^{-\frac{5}{3}}\left(\frac{5}{3}\right)^0}{0!}=0.189 $
 
 
 (b) Let $ Y= $ \# quiet seconds out of 60. $ Y \thicksim \bin(60,0.189) $.
@@ -51,14 +51,15 @@ $ Z \thicksim \nb(2,0.189) $.
 
 We want $ P(Z=28)=\binom{29}{1}(0.189)^2(0.811)^{28}=0.003 $
 
-(d) Let $ D= $ 1 quiet second in the first 15 seconds,
-$ D_x=$ \# of quiet seconds out of 15. $ D_x \thicksim \bin(15,0.189) $.
+(d) $ D_x=$ \# of quiet seconds out of 15. $ D_x \thicksim \bin(15,0.189) $.
 \[ P(D_x=1)=\binom{15}{1}(0.189)^1(0.811)^{14} \]
 We get,
+
+$ P(\text{1 quiet second in the first 15 seconds}\mid\text{wait 30 to get 2 quiet})= $
 \begin{align}
-    P(D\mid\text{wait 30 to get 2 quiet})&=\frac{P(D\text{ AND wait 30 to get 2 quiet})}{P(\text{wait 30 to get 2 quiet})}\\
-    &=\frac{P(D \text{ AND wait an additional 15 to get 1 additional quiet})}{P(C)} \\
-    &=\frac{P(D)P(\text{wait an additional 15 to get 1 additional quiet}) }{P(C)}\\
+    &=\frac{P(\text{1 quiet second in the first 15 seconds}\text{ AND wait 30 to get 2 quiet})}{P(\text{wait 30 to get 2 quiet})}\\
+    &=\frac{P(\text{1 quiet second in the first 15 seconds} \text{ AND wait an additional 15 to get 1 additional quiet})}{P(C)} \\
+    &=\frac{P(\text{1 quiet second in the first 15 seconds})P(\text{wait an additional 15 to get 1 additional quiet}) }{P(C)}\\
     &=\frac{\binom{15}{1}(0.189)^1(0.811)^{14}\times (0.811)^{14}(0.189)}
     {\binom{29}{28}(0.189)^2(0.811)^{28}}\\
     &=\frac{\binom{15}{1}}{\binom{29}{28}}\\

@@ -1,0 +1,91 @@
+\section{Lecture 25}
+\textbf{Recall}
+$ X \thicksim N(\mu,\sigma^2) $
+\[ f(x)=\frac{1}{\sqrt{2\pi}\sigma}e^{-(x-\mu)^2/(2\sigma^2)}\]
+Standard normal: $ Z \thicksim N(0,1) $
+\[ f(x)=\frac{1}{\sqrt{2\pi}}e^{-x^2/2}\]
+No integrable cdf, use table.
+
+\textsc{Find $ P(Z\le 2.31) $}
+\[ P(Z\le \underbrace{2}_{\text{row}}.\underbrace{31}_{\text{col}})=0.98956 \]
+
+\textsc{Find $ P(Z\le-0.63) $}
+\[ P(Z\le-0.63)=P(Z>0.63)=1-P(Z\le 0.63)=1-0.73565=0.26435\]
+
+\subsection{Example}
+A voltage of $ +2 $ means $ 1 $ and $ -2 $ means $ 0 $. The connection
+adds a $ N(0,1) $ distribution amount of noise. If they receive a voltage of
+$ >0.5 $, they interpret as $ 1 $, $ <0.5 $ as $ 0 $.
+
+\textsc{Find $ P $(error) if a $ 1 $ was sent}
+Let $ R = $ received $ =2+Z $. $ Z \thicksim N(0,1) $
+\begin{align*}
+    P(\text{error})&=P(R<0.5)\\
+    &=P(2+Z<0.5)\\
+    &=P(Z<-1.5)\\
+    &=P(Z> 1.5)\\
+    &=1-P(Z\le 1.5)\\
+    &=1-0.93319\\
+    &=0.06681
+\end{align*}
+Similarly $ P $(error) if $ 0 $ was sent: $ R=-2+Z $,
+\begin{align*}
+    P(\text{error})&=P(R>0.5)\\
+    &=P(-2+Z>0.5)\\
+    &=P(Z>2.5)\\
+    &=1-P(Z\le 2.5)\\
+    &=1-0.99379\\
+    &=0.06621
+\end{align*}
+\textsc{Find percentiles of $ N(0,1) $}
+
+Suppose we want $ c $ such that $ P(Z<c)=0.85 $
+\begin{itemize}
+    \item look in body of table for $ \approx 0.85 $ and read off row and column: $ c $ is between $ 1.03 $ and $ 1.04 $
+    \item use reverse table, look up row and column: 1.0364
+\end{itemize}
+
+\textsc{Transforming a Normal rv}
+
+Suppose $ X \thicksim (\mu,\sigma^2) $, $ \mu,\sigma^2<\infty $.
+
+Claim: if
+\[ Z=\frac{X-\mu}{\sigma}  \]
+then $ Z \thicksim N(0,1) $
+
+Proof.
+
+1.
+\begin{align*}
+    F_Z(z)&=P(Z\le z)\\
+    &=P\left(\frac{X-\mu}{\sigma}\le z\right)\\
+    &=P\left(X\le z\sigma + \mu\right)\\
+    &=F_X(\sigma z+\mu)\\
+\end{align*}
+2. Differentiate
+\begin{align*}
+    f_Z(z)&=\frac{d}{dz}F_Z(z)\\
+    &=\frac{d}{dz}F_X(\sigma z+\mu)\\
+    &=f_X(\sigma z+\mu)\sigma\\
+    &=\left(\frac{1}{\sqrt{2\pi}\sigma}e^{-((\sigma z+\mu)-\mu)^2/(2\sigma^2)}\right)\sigma\\
+    &=\frac{1}{\sqrt{2\pi}}e^{-z^2/2}
+\end{align*}
+3. range of $ Z $ is $ \mathbb{R} $, so $ Z \thicksim N(0,1) $
+
+\subsection{Example}
+MCAT scores are normal with mean $ 25.3 $ and standard deviation 6.5.
+
+\textsc{A score of $ 41 $ is how good?}
+
+Find $ P(X>41) $ where $ X \thicksim N(25.3,6.5^2) $
+\[ P\left(\frac{X-25.3}{6.5}>\frac{41-25.3}{6.5}\right)=P(Z>2.42)=1-0.99202=0.00798 \]
+
+\subsection{Example}
+You want $ 98\% $ of the population to use a ride by height.
+$ X= $ height $ \thicksim N(69,2.4^2) $. That is, find $ h $
+such that $ P(X<h)=0.98 $, so
+\[ P\left(\frac{X-69}{2.4}<\frac{h-69}{2.4}\right)=0.98\implies P\left(Z<\frac{h-69}{2.4}\right)\]
+Set $ z_{0.98}= \frac{h-69}{2.4} $, and solve for $ h $.
+\[ 2.0537=\frac{h-69}{2.4}\implies h=(2.0537)(2.4)+69=73.93\text{ inches} \]
+In general,
+\[ x_p=\sigma z_p+\mu \]
