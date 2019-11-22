@@ -26,9 +26,9 @@ subject to
 \subsection{Example (Constraints on Ratios, Percentages and Proportions)}
 Suppose we are required to manufacture at least 10 tables and
 80 chairs per week. Also 
-$\nicefrac{\nicefrac{\text{\#of tables manufactured}}{\text{week}}}
+\[\nicefrac{\nicefrac{\text{\#of tables manufactured}}{\text{week}}}
 {\nicefrac{\text{\#of chairs manufactured}}{\text{week}}}
-\ge 6$.
+\ge 6\]
 \[
    \left\{\begin{array}{r}
         x_1\ge 10\\
@@ -44,32 +44,36 @@ $\nicefrac{\nicefrac{\text{\#of tables manufactured}}{\text{week}}}
 \]
 In general suppose $f,g$ are affine functions
 \[
-    b_1\le \nicefrac{f(x)}{g(x)}\le b_2
+    b_1\le \nicefrac{f(\bm{x})}{g(\bm{x})}\le b_2
 \]
-provided that $g(x)>0$ for every feasible solution $x$ we
+provided that $g(\bm{x})>0$ for every feasible solution $\bm{x}$ we
 can equivalently write
 \begin{align*}
-    f(x)\le b_2 g(x)\\
-    f(x)\ge b_1 g(x)
+    f(\bm{x})\le b_2 g(\bm{x})\\
+    f(\bm{x})\ge b_1 g(\bm{x})
 \end{align*}
 
 \subsection{Example (Multi-period, Multi-stage optimization problems)}
 Consider planning for multiple periods where in each period we
 want to decide how much to produce, how much to keep in stock
-(inventory) for the upcoming periods. Suppose we have just one period
-(WLOG),
+(inventory) for the upcoming periods.
+
+\textbf{Variables}
+
+For all $ i\in \{1,\ldots,T\} $, where $ T $ is the last period, we have:
 \begin{itemize}
-    \item $d_t:=$ the demand for the end of period $t$ in \# of units (given)
-    \item $s_t:=$ the \# of units of products in stock at beginning of period $t$
-    \item $p_t:=$ the \# of units of products manufactured at period $t$
+    \item $ s_i:= $ the amount of units sold in period $ i $
+    \item $ p_i:= $ the amount of units purchased/manufactured of period $ i $
+    \item $ t_i:= $ the amount of units in stock at the end of period $ i $
+    \item $ t_0:= $ the amount of units in stock at the beginning of the first period.
 \end{itemize}
-\textbf{Key constraints}
+\textbf{Key Constraints}
 \begin{align*}
-    p_t+s_t=d_t+s_{t+1} \qquad\qquad \forall t\in \{0,\dots,T\}\\
-    p_t,s_t,d_t\ge 0 \qquad\qquad \forall t\in \{0,\dots,T\}
+    p_i+t_{i-1}=s_{i}+t_i \qquad\qquad \forall i\in \{1,\dots,T\}\\
+    p_t,s_t,d_t\ge 0 \qquad\qquad \forall i\in \{1,\dots,T\}
 \end{align*}
 \begin{remark}
-    Typically we have additional constraints on $s_0$ and $s_{T+1}$.
+    Typically we have additional constraints on $s_i,\,p_i,\,t_i,\,t_0$.
 \end{remark}
 
 \begin{defbox}

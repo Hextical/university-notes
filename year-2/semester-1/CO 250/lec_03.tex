@@ -4,7 +4,7 @@ a non-empty subset of variables to be integers. So, in IP problems
 we are allowed to have constraints $x_i\in\mathbb{Z}$, $x\in\mathbb{Z}^n$,
 $x_i\in\{0,1\}$, $x_i$ is an integer, $x_i\in\{0,1\}^n$.
 
-\subsection{Example (SPIT - Smart People Institute of Technology)}
+\subsection{Example (Assignment Problem)}
 SPIT has a campus near the North Pole. They have three buildings named
 $A,B,C$ which need to be renovated to be served as one of a
 Library, Laboratory, or Gym (sometimes called functions). Each 
@@ -43,12 +43,14 @@ subject to
 \end{align}
 
 $(1)\implies$ every activity is assigned exactly one building\\
-$(2)\implies$ every building is assigned exactly one activity
-\begin{remark}
-    This example is frequently known as an \emph{assignment problem}.
-\end{remark}
+$(2)\implies$ every building is assigned exactly one activity\\
+$(3)\implies $ $ x_{ij} $ is a \emph{binary} variable that takes
+values only $ 1 $ or $ 0 $. If we wanted an IP formulation,
+we would remove the constraint $ x_{ij}=\{0,1\} $
+and add: $ x_{ij}\ge 0 $, $ x_{ij}\le 1 $ and $ x_{ij} $ integer.
 
-Suppose $c_{ij}\in\mathbb{R}$ and consider the inequality version:
+Suppose $c_{ij}\in\mathbb{R}$ and consider the inequality version
+(if we don't assign exactly one item to another):
 \[\min \sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{n}c_{ij}x_{ij}\]
 subject to
 \begin{align*}
@@ -59,10 +61,17 @@ subject to
 We can generalize this class optimization problem further.
 
 \begin{defbox}
-    \subsection{Definition (Undirected Graph)}
+    \subsection{Definition (Undirected Graph, Vertices, and Edges)}
     An \emph{undirected graph} is a pair $G=(V,E)$, where $V$ is a finite set
     of elements called \emph{vertices}, and $E$ is a set of pairs of distinct
     vertices called \emph{edges}. All edges in an undirected graph are bidirectional.
+\end{defbox}
+
+\begin{defbox}
+    \subsection{Definition (Adjacent, Endpoints, and Incident)}
+    Let $ G=(V,E) $ be a graph. Suppose $ uv\in E $. $ u,\,v $ are \emph{adjacent}
+    vertices. $ u,\,v $ are the \emph{endpoints} of the edge $ uv $. The edge
+    $ uv $ is \emph{incident} to vertices $ u $ and $ v $.
 \end{defbox}
 
 \subsection{Example (Undirected Graph)}

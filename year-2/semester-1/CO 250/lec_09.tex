@@ -83,11 +83,12 @@ where $ c $ is a constant.
     \SetKwInOut{Input}{Input}
     \SetKwInOut{Output}{Output}
     \Input{$A\in \mathbb{R}^{m\times n}$, $\bm{b}\in\mathbb{R}^m$, $\bm{c}\in\mathbb{R}^n$}
-    Compute the canonical form for $B$, let $\bm{\bar{x}}$ be the basic feasible solution.\\
-    If $\bm{c_N}\le 0$, then stop ($\bm{\bar{x}}$ is optimal).\\
+    Compute the canonical form for $B$, let $\bm{\bar{x}}$ 
+    be the basic feasible solution for $ B $.\\
+    If $\bm{c_N}\le \bm{0}$, then stop ($\bm{\bar{x}}$ is optimal).\\
     Choose $k\in N$ such that $c_k>0$.\\
-    If $A_k\le \bm{0}$, then stop (the LP is unbounded).\\
-    Let $r$ be the index which attains $t=\min\{\nicefrac{\bm{b_i}}{A_{ik}} : A_{ik}>0\}$.\\
+    If $\bm{a_k}\le \bm{0}$, then stop (the LP is unbounded).\\
+    Let $r$ be any index $ i $ which attains $t=\min\{\nicefrac{b_i}{a_{ik}} : a_{ik}>0\}$.\\
     Let $l\in B$ be the $r^{th}$ basis element.\\
     Set $B:=B\cup\{k\}\setminus\{l\}$.\\
     Go to step 1.
@@ -99,3 +100,194 @@ where $ c $ is a constant.
     choose the smallest index for both $k$ and $r$.
 \end{thmbox}
 
+\subsection{Example (Simplex Algorithm with Bland's Rule)}
+(P)
+\[ \max
+\begin{bmatrix}
+    0 & 3 & 1 & 0
+\end{bmatrix}\bm{x} \]
+subject to
+\[ 
+\begin{bmatrix}
+    1 & 2 & -2 & 0\\
+    0 & 1 & 3 & 1
+\end{bmatrix}\bm{x}=
+\begin{bmatrix}
+    2\\
+    5
+\end{bmatrix} \]
+\[ \bm{x}\ge \bm{0} \]
+\underline{Iteration 1}
+
+1. The LP is already in canonical form determined by $ B=\{1,4\} $.
+Let $ \bm{\bar{x}}:=(2,0,0,5)^\top $ be the basic feasible solution.
+
+2. $ c_{\{2,3\}} \nleq \bm{0} $, so $ \bm{\bar{x}} $ is not optimal.
+
+3. Using Bland's Rule we choose $ 2\in N $ as $ c_2\ge 0 $.
+
+4.
+$ 
+A_2= \begin{bmatrix}
+    2\\
+    1
+\end{bmatrix}\nleq \bm{0}
+$,
+so the LP is not unbounded.
+
+5.
+$
+\begin{bmatrix}
+    x_1\\
+    x_4
+\end{bmatrix}
+=
+\begin{bmatrix}
+    2\\
+    5
+\end{bmatrix}-
+\begin{bmatrix}
+    2\\
+    1
+\end{bmatrix}\ge 0
+$
+so
+\[ t=\min \left\{\frac{2}{2},\frac{5}{1} \right\} \]
+Thus, we let $ r=1 $ be the index which attains the smallest value of $ t $.
+
+6. Let $ 1\in B $ be a basis element.
+
+7. Set $ B:=\{1,4\}\cup \{2\}\setminus\{1\}=\{2,4\} $
+
+\underline{Iteration 2}
+
+1. Canonical form determined by $ B=\{2,4\} $ is
+\[ \max 
+\begin{bmatrix}
+    -\nicefrac{3}{2} & 0 & 4 & 0
+\end{bmatrix} + 3\]
+subject to
+\[ 
+\begin{bmatrix}
+    \nicefrac{1}{2} & 1 & -1 & 0\\
+    -\nicefrac{1}{2} & 0 & 4 & 1
+\end{bmatrix}\bm{x}=
+\begin{bmatrix}
+    1\\
+    4
+\end{bmatrix}
+\]
+Useful values computed:
+\[ A_B=
+\begin{bmatrix}
+    2 & 0\\
+    1 & 1\\
+\end{bmatrix} \Rightarrow
+A_B^{-1}=
+\begin{bmatrix}
+    \nicefrac{1}{2} & 0\\
+    -\nicefrac{1}{2} & 1\\
+\end{bmatrix} \]
+\[ \bm{y}^\top=\bm{c_B}^\top A_B^{-1}=
+\begin{bmatrix}
+    3 & 0
+\end{bmatrix}
+\begin{bmatrix}
+    \nicefrac{1}{2} & 0\\
+    -\nicefrac{1}{2} & 1\\
+\end{bmatrix}=
+\begin{bmatrix}
+    \nicefrac{3}{2} \\
+    0
+\end{bmatrix}\]
+
+Let $ \bm{\bar{x}}:=(0,1,0,4)^\top $ be the basic feasible solution.
+
+2. $ c_{\{1,3\}} \nleq \bm{0} $, so $ \bm{\bar{x}} $ is not optimal.
+
+3. Using Bland's Rule we choose $ 3\in N $ as $ c_3\ge 0 $.
+
+4.
+$ 
+A_3= \begin{bmatrix}
+    -1\\
+    4
+\end{bmatrix}\nleq \bm{0}
+$,
+so the LP is not unbounded.
+
+5.
+$
+\begin{bmatrix}
+    x_2\\
+    x_4
+\end{bmatrix}
+=
+\begin{bmatrix}
+    1\\
+    4
+\end{bmatrix}-
+\begin{bmatrix}
+    -1\\
+    4
+\end{bmatrix}\ge 0
+$
+so
+\[ t=\min \left\{\_,\frac{4}{4} \right\} \]
+Thus, we let $ r=4 $ be the index which attains the smallest value of $ t $.
+
+6. Let $ 4\in B $ be a basis element.
+
+7. Set $ B:=\{1,4\}\cup \{3\}\setminus\{4\}=\{2,3\} $
+
+\underline{Iteration 3}
+
+1. Canonical form determined by $ B=\{2,3\} $ is
+\[ \max
+\begin{bmatrix}
+    -1 & 0 & 0 & -1
+\end{bmatrix} + 7\]
+
+subject to
+\[ 
+\begin{bmatrix}
+    \nicefrac{3}{8} & 1 & 0 & \nicefrac{1}{4} \\
+    -\nicefrac{1}{8} & 0 & 1 & \nicefrac{1}{4}
+\end{bmatrix}\bm{x}=
+\begin{bmatrix}
+    2\\
+    1
+\end{bmatrix}\]
+Useful values computed:
+\[ A_B=
+\begin{bmatrix}
+    1 & -1\\
+    0 & 4\\
+\end{bmatrix} \Rightarrow
+A_B^{-1}=
+\begin{bmatrix}
+    1 & \nicefrac{1}{4} \\
+    0 & \nicefrac{1}{4} 
+\end{bmatrix} \]
+\[ \bm{y}^\top=\bm{c_B}^\top A_B^{-1}=
+\begin{bmatrix}
+    0 & 4
+\end{bmatrix}
+\begin{bmatrix}
+    1 & \nicefrac{1}{4} \\
+    0 & \nicefrac{1}{4} 
+\end{bmatrix}=
+\begin{bmatrix}
+    0 & 1
+\end{bmatrix}\]
+Let $ \bm{\bar{x}}:=(0,2,1,0)^\top $ be the basic feasible solution.
+
+2. $ c_{\{1,4\}}\le \bm{0} $, stop $ \bm{\bar{x}} $ is optimal.
+
+The certificate of optimality is $ \bm{y}=(0,1)^\top $.
+
+\begin{remark}
+    This was obviously not done in class (in fact it's a textbook question!).
+    It can be verified that $ \bm{y} $ is indeed the certificate of optimality by
+    using the summary of outcomes.
+\end{remark}

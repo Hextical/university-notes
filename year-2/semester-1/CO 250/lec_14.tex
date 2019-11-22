@@ -62,9 +62,9 @@ subject to
     y_3
 \end{bmatrix}
 \begin{matrix}
-    \le\\
-    \le\\
     \ge\\
+    \ge\\
+    \le\\
     =
 \end{matrix}
 \begin{bmatrix}
@@ -81,14 +81,14 @@ Since:
     \item constraint 1 in (P) is $\le$, then $y_1 \ge 0$
     \item constraint 2 in (P) is $=$, then $y_2$ free
     \item constraint 3 in (P) is $\ge$, then $y_3 \le 0$
-    \item $x_1,x_2\ge 0$, then constraint 1, 2 in (D) is $\le$
-    \item $x_3\le 0$, then constraint 3 in (D) is $\ge$
+    \item $x_1,x_2\ge 0$, then constraint 1, 2 in (D) is $\ge$
+    \item $x_3\le 0$, then constraint 3 in (D) is $\le$
     \item $x_4$ free, then constraint 4 in (D) is $=$
 \end{enumerate}
 
 
 \begin{thmbox}
-    \subsection{Theorem (Weak Duality Theorem)}
+    \subsection{Theorem (Weak Duality - Special Form)}
     Consider (P)
     \[ \max \{\bm{c}^{\top} \bm{x}: A \bm{x} \geq \bm{b},\, \bm{x} \geq \bm{0}\} \]
     and (P)'s dual (D)
@@ -97,11 +97,10 @@ Since:
     be a feasible solution for (D). Then
     \begin{enumerate}[(1)]
         \item $ \bm{c}^\top \bm{\bar{x}}\ge \bm{b}^\top \bm{\bar{y}} $
-        \item $ \bm{c}^\top \bm{\bar{x}}=\bm{b}^\top \bm{\bar{y}} $ $ \implies $
-        $ \bm{\bar{x}} $ is an optimal solution for (P) and $ \bm{\bar{y}} $ is an optimal solution for (D).
+        \item if $ \bm{c}^\top \bm{\bar{x}}=\bm{b}^\top \bm{\bar{y}} $, then
+        $ \bm{\bar{x}} $ is an optimal solution for (P).
     \end{enumerate}
 \end{thmbox}
-We will prove (1), then (2).
 \begin{proof}
     Let $ \bm{\bar{x}} $ be a feasible solution of (P) and let $ \bm{\bar{y}} $
     be a feasible solution of (D). Then
@@ -112,7 +111,8 @@ We will prove (1), then (2).
         &=(A ^\top \bm{\bar{y}})^\top \bm{\bar{x}}\\
         &\le \bm{c}^\top \bm{\bar{x}} 
     \end{align*}
-    as desired.
+    If $ \bm{c}^\top \bm{\bar{x}}=\bm{b}^\top \bm{\bar{y}} $ it follows
+    that $ \bm{\bar{x}} $ is optimal for (P).
 \end{proof}
 
 \begin{thmbox}
@@ -138,3 +138,100 @@ We will prove (1), then (2).
 \subsection{Complementary Slackness}
 Recall our proof of Weak Duality. Then for LPs in SEF: 
 $ \bm{\bar{x}}, \bm{\bar{y}} $ are feasible in (P) and (D) respectively.
+$ \bm{\bar{x}} $ is optimal in (P), $ \bm{\bar{y}} $ is optimal in
+(D)  if and only if
+\[ \bm{c} ^\top \bm{\bar{x}}=(A^\top \bm{\bar{y}})^\top \bm{\bar{x}}=\bm{\bar{y}}^\top(A \bm{\bar{x}})=
+\bm{\bar{y}}^\top \bm{b} \]
+The first equality came from $ (A ^\top \bm{y})^\top=\bm{c}^\top $, and the
+last equality came from $ A \bm{\bar{x}}=\bm{b} $ (check Weak Duality Theorem -
+Special Form).
+That is, if and only if
+\[ \bm{\bar{x}}^\top(A ^\top \bm{\bar{y}}-\bm{c})=0 \]
+and
+\[ \bm{\bar{y}}^\top(\bm{b}-A \bm{\bar{x}})=0 \]
+That is, if and only if $ \forall j\in \{1,\ldots,n\} $ either
+$ x_j=0 $ or $ (A ^\top \bm{\bar{y}}-\bm{c})_j=0 $ possibly
+both, and $ \forall i\in \{1,\ldots,m\} $ either $ y_i=0 $
+or $ (\bm{b}-A \bm{\bar{x}})_i=0 $ possibly both. We call these
+the Complementary Slackness Conditions (CS).
+
+\begin{thmbox}
+    \subsection{Theorem (Complementary Slackness Theorem)}
+    Let (P) and (D) be an arbitrary primal-dual pair. Let
+    $ \bm{\bar{x}} $ be a feasible solution to (P) and let
+    $ \bm{\bar{y}} $ be a feasible solution to (D). Then,
+    $ \bm{\bar{x}} $ is an optimal solution to (P) and
+    $ \bm{\bar{y}} $ is an optimal solution to (D) if and only if
+    the complementary slackness conditions hold.
+\end{thmbox}
+
+\subsection{Example (Complementary Slackness)}
+(P)
+\[ \max
+\begin{bmatrix}
+    -2 & -1 & 0
+\end{bmatrix}\bm{x} \]
+subject to
+\[
+\begin{bmatrix}
+    1 & 3 & 2\\
+    -1 & 4 & 2
+\end{bmatrix}\bm{x}
+\begin{matrix}
+    \ge\\
+    \le
+\end{matrix}
+\begin{bmatrix}
+    5\\
+    7
+\end{bmatrix}\]
+\[ x_1\le 0,\,x_2\ge 0,\,x_3\text{ free} \]
+\begin{enumerate}[(1)]
+    \item Write the dual (D) of (P)
+    \item Write the complementary slackness (CS) conditions for (P) and (D)
+    \item Use weak duality to prove that $ \bm{\bar{x}} $ is optimal for (P)
+    and $ \bm{\bar{y}} $ is optimal for (D)
+    \item Use CS to prove that $ \bm{\bar{x}} $ is optimal for (P) and
+    $ \bm{\bar{y}} $ is optimal for (D)
+\end{enumerate}
+and
+\[ \bm{\bar{x}}=(-1,0,3)^\top\qquad \bm{\bar{y}}=(-1,1)^\top \]
+\emph{Solution.}
+
+(1)
+
+(D)
+\[ \min
+\begin{bmatrix}
+    5 & 7
+\end{bmatrix} \]
+subject to
+\[
+\begin{bmatrix}
+    1 & -1\\
+    3 & 4\\
+    2 & 2
+\end{bmatrix}\bm{y}
+\begin{matrix}
+    \ge\\
+    \le\\
+    =
+\end{matrix}
+\begin{bmatrix}
+    -2\\
+    -1\\
+    0
+\end{bmatrix}\]
+\[ y_1\le 0,\,y_2\ge 0,\,y_3\text{ free} \]
+
+(2)
+\begin{itemize}
+    \item $ x_1=0 $ OR $ \boxed{y_1-y_2=-2} $
+    \item $ \boxed{x_2=0} $ OR $ 3y_1+4y_2=-1 $
+    \item $ y_1=0 $ OR $ \boxed{x_1+3x_2+2x_3=5} $
+    \item $ y_2=0 $ OR $ \boxed{-x_1+4x_2+2x_3=7} $
+\end{itemize}
+
+(3) Verify that $ \bm{c}^\top \bm{\bar{x}}=\bm{b}^\top \bm{\bar{y}} $.
+
+(4) By Complementary Slackness Theorem, this is trivially true.

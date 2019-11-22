@@ -1,6 +1,7 @@
 \section{2019-09-05}
 \subsection{Example (Manufacturing Tables and Chairs)}
 \textsc{Process}: raw materials $\rightarrow$ machine $\rightarrow$ labour $\rightarrow$ final products
+
 \textsc{Rules}:
 \begin{itemize}
     \item Company has 30 workers and 40 machines available 40hrs/week.
@@ -12,15 +13,18 @@
 \textsc{Goal}: The company wants to prepare a weekly production plan which maximizes
 total profit.
 
-Variables:
+\textbf{Variables}
 \begin{itemize}
     \item $x_1:=$ the number of tables manufactured per week
     \item $x_2:=$ the number of chairs manufactured per week
 \end{itemize}
 
-The total profit per week can be modelled by $10x_1 + 15x_2$.
+\textbf{Objective function}
 
-Constraints:
+The total profit per week can be modelled by $10x_1 + 15x_2$, which is what
+we want to maximize.
+
+\textbf{Constraints}
 \begin{itemize}
     \item Machine-hours used per week $\le$  machine-hours available per week which
 can be modelled by $2x_1 + x_2 \le  40 \times 40 = 1600$
@@ -28,7 +32,9 @@ can be modelled by $2x_1 + x_2 \le  40 \times 40 = 1600$
     be modelled by $x_1 + 3x_2 \le 30 \times 40 = 1200$
 \end{itemize}
 
-We can then create a linear programming (LP) model.
+We can then formulate the linear programming (LP) model:
+
+(LP)
 \[\max 10x_1 + 15x_2\]
 subject to
 \begin{align*}
@@ -36,6 +42,10 @@ subject to
     x_1 + 3x_2 \le 1200\\
     x_1, x_2 \ge 0
 \end{align*}
+
+An \emph{optimal} solution to the LP using an algorithm later in
+in this course is $ \bm{x}:=(720,160)^\top $, which means
+that we want $ 720 $ tables, and $ 160 $ chairs.
 
 \subsection{Example (A General Production Planning Problem)}
 There are resources $I:=\{1,\dots,m\}$ and products $J:=\{1,\dots,n\}$. 
@@ -75,7 +85,7 @@ in 1.2 such that it satisfies $A\bm{x}\le \bm{b}$, with $\bm{x}\ge \bm{0}$.
 \begin{defbox}
     \subsection{Definition (Affine Function)}
     Let $f:\mathbb{R}^n\rightarrow\mathbb{R}$. $f$ is an \emph{affine function} if
-    $f(x)=\bm{a}^\top \bm{x}+\beta$ for some $\bm{a}\in\mathbb{R}^n$, and $\beta\in\mathbb{R}$.    
+    $f(\bm{x})=\bm{a}^\top \bm{x}+\beta$ for some $\bm{a}\in\mathbb{R}^n$, and $\beta\in\mathbb{R}$.    
 \end{defbox}
 
 \begin{defbox}
@@ -92,9 +102,9 @@ in 1.2 such that it satisfies $A\bm{x}\le \bm{b}$, with $\bm{x}\ge \bm{0}$.
     \subsection{Definition (Linear Constraint)}
     A \emph{linear constraint} is one of
     \begin{align*}
-        f(x)\le \beta\\
-        f(x)=\beta\\
-        f(x)\ge \beta
+        f(\bm{x})\le \beta\\
+        f(\bm{x})=\beta\\
+        f(\bm{x})\ge \beta
     \end{align*}
     where $f$ is a linear function and $ \beta\in\mathbb{R} $
 \end{defbox}

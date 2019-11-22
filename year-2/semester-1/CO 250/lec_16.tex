@@ -1,0 +1,86 @@
+\section{2019-11-12}
+\subsection{Combinatorial Optimization Utilizing Duality}
+\subsection{Shortest-Path Problem}
+Given a graph $ G=(V,E) $, two distinct distinguished nodes $ s,t\in V $,
+$ c_e\ge 0 $ $ \forall e\in E $, we want to find a shortest path from $s$ to $t$
+
+Recall, an $ st $-path in $ G $ is a sequence of edges of $ G $:
+\[ \{v_1,v_2,v_3,v_4,\ldots,v_{k-1},v_k\} \]
+such that $ v_1=s $, $ v_k=t $ and $ v_i\neq v_j $ for $ i\neq j $.
+
+For every $ U\subseteq V $ $ \delta(U) $ denotes the set of edges in
+$ G $ with exactly one endpoint in $ U $.
+
+An $ st $- cut in G is $ \delta(U) $ for some $ U\subset V $ such that
+$ s\in U $, $ t\notin(U) $\ldots 
+
+Recall, every $ st $- path contains at least one edge from every $ st $-cut. 
+
+Suppose $ G $ contains an $ st $-path. Let $ S\subseteq E $ such that
+$ S $ contains at least one edge from each $ st $-cut. Then such $ S $
+contains an $ st $-path.
+\[ x_e:=
+\begin{cases}
+    1,\,\text{if edge $e$ is in the shortest $ st $- path}\\
+    0,\,\text{otherwise}
+\end{cases} \]
+(IP) \[ \min \sum\limits_{e\in E}^{} c_ex_e \]
+subject to
+\[ \sum\limits_{e\in\delta(U)}^{} x_1\ge 1 \qquad st \text{-cuts in}  \delta(U)\]
+\[ x_e\ge 0 \qquad \forall e\in E\]
+\[ x_e\in \mathbb{Z} \qquad \forall e\in E\]
+If $ c_e>0\, \forall e\in E$ then optimal solutions of this $ IP $ correspond to
+shortest $ st $-paths. If some $ c_e=0 $, then some optimal solutions will
+correspond to sets like set $ S $ above which property contains a shortest $st$-path.
+
+Let (P) denote the LP relaxation of (IP) (replace $ x_e \{0,1\} $) by
+$ 0\le x_e\le 1\, \forall e\in E $. Write down the dual of (P):
+(D)
+\[ \max \Sigma(y_u:\delta(U)\text{ is an $st$- cut})  \]
+\[ \Sigma(y_u:\delta(U)\text{ is an $st$- cut containing $ e $})\le c_e \qquad \forall e\in E \]
+\[ y_u\ge 0\qquad \forall st \text{-cuts in }\delta(U) \]
+
+A consequence of Complementary Slackness for a shortest path problem is:
+Let $ \mathcal{P} $ be an $ st $-path (as set of edges) and let
+$ \bm{\bar{y}} $ be a feasible solution of (D). Suppose
+\begin{itemize}
+    \item every edge in $ \mathcal{P} $ corresponds to an equality edge 
+    $ \Sigma(\bar{y_u}:\delta(U)\text{ is an $st$-cut containing $ e $ } )=c_e $
+    \item for every active cut (i.e. $st$-cut $ \delta(U) $ such that
+    $ \bm{\bar{y_u}}>0 $, $ \mathcal{P} $ must contain at least one edge from
+    that $ st $- cut.
+\end{itemize}
+Then $ \mathcal{P} $ is a shortest $ st $-path. 
+
+\begin{remark}
+    $ \bm{\bar{y_u}}:=0 $ for all $ st $-cuts $ \delta(U) $ gives a feasible
+    solution of (D)
+\end{remark}
+
+\subsection{A Dual Algorithm for the shortest path problem}
+Given $ y $, $\slack_{y} (e)$ is
+\[ c_e-\Sigma(y_U :\delta(U) \text{ is a $ st $-cut containing $ e $}) \]
+That is, $ \slack_y(e) $ is the length of $ e $ minus the total width of all
+$ st $-cuts using $ e $.
+
+\begin{algorithm}
+    \caption{Shortest path}
+    \SetKwInOut{Input}{Input}
+    \SetKwInOut{Output}{Output}
+    \Input{Graph $G=(V,E)$, costs $c_e\ge 0$ for all $e\in E$, $ s,t\in V $, where $ s\neq t $.}
+    \Output{A shortest $ st $-path $ P $.}
+    $ y_w := 0 $ for all $ st $-cuts $ \delta(W) $. Set $ U:=\{s\} $
+
+    \While{$ t\notin U $} {
+        Let $ ab $ be an edge in $ \delta(U) $ of smallest slack for $ y $
+        where $ a\in U $, $ b\notin U $
+
+        $ y_U:=\slack_y(ab) $
+
+        $ U:=U\cup \{b\} $
+
+        change edge $ ab $ into an arc $ \vec{ab} $
+    }
+
+    \Return A directed $ st $-path $ P $.
+\end{algorithm}

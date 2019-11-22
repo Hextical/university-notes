@@ -19,8 +19,8 @@ In general,
 \[ \Gamma(\alpha)=(\alpha-1)! \]
 So, back to our example:
 \begin{align*}
-    E[X]&=\int\limits_{0}^{\infty} x \frac{1}{\theta}e^{-\frac{x}{\theta}} d{x}\\
-    &=\int\limits_{0}^{\infty} \theta y \frac{1}{\theta} e^{-y}\theta d{y}\\
+    E[X]&=\int\limits_{0}^{\infty} x \frac{1}{\theta}e^{-\frac{x}{\theta}} d{x}\qquad y=\frac{x}{\theta}\implies x=(\theta y) \land \theta dy=dx\\
+    &=\int\limits_{0}^{\infty} (\theta y) \frac{1}{\theta} e^{-y}\theta d{y}\\
     &=\theta \int\limits_{0}^{\infty} y^{2-1}e^{-y} d{y}\qquad \Gamma(2)=(2-1)!=1\\
     &=\theta
 \end{align*}
@@ -30,16 +30,16 @@ If $ \lambda $ is higher, events happen more often, which means shorter wait tim
 
 To find $ Var(X) $,
 \begin{align*}
-    E[X]^2&=\int\limits_{0}^{\infty} x^2 \frac{1}{\theta}e^{-\frac{x}{\theta}}  d{d}\\
-    &=\int\limits_{0}^{\infty} (\theta y)^2(\frac{1}{\theta}e^{-y}\theta d{y}\\
-    &=\theta^2 \int\limits_{0}^{\infty} y^{3-1}e^{-y} d{y}\\
+    E[X]^2&=\int\limits_{0}^{\infty} x^2 \frac{1}{\theta}e^{-\frac{x}{\theta}}  d{x}\qquad y=\frac{x}{\theta}\implies x^2=(\theta y)^2 \land \theta dy=dx\\
+    &=\int\limits_{0}^{\infty} (\theta y)^2\frac{1}{\theta}e^{-y}\theta d{y}\\
+    &=\theta^2 \int\limits_{0}^{\infty} y^{3-1}e^{-y} d{y} \qquad \Gamma(3)=(3-1)!=2\\
     &=2\theta^2
 \end{align*}
 So $ Var(X)=2\theta^2-\theta^2=\theta^2 $, $ SD(X)=\theta=E[X] $
 
 \subsection{Memoryless Property}
 \subsection{Example}
-Suppose busses follow a poisson process with avg $ 5 $ per hour.
+Suppose busses follow a Poisson process with average $ 5 $ per hour.
 
 (a) Find the probability that you wait $ >15 $ mins.
 
@@ -62,7 +62,7 @@ The memoryless property says the past is irrelevant in the future distribution.
 In general, if $ s,t>0 $:
 \[ P(X>t+s\mid X>s)=P(X>t) \]
 
-\subsection{Normal Gaussian rv (8.5)}
+\subsection{Normal Distribution (8.5)}
 Many natural phenomena tend to follow a shape like this:
 
 \begin{center}
@@ -78,7 +78,7 @@ Many natural phenomena tend to follow a shape like this:
 
 \begin{defbox}
     A normal rv $ X $ with parameters $ \mu $ and $ \sigma^2 $ has pdf
-    \[ f(x)=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma} \right)^2}  \]
+    \[ f(x)=\frac{1}{\sqrt{2\pi}\sigma}e^{-(x-\mu)^2/(2\sigma^2)}\]
     for $ x\in\mathbb{R} $
 \end{defbox}
 \begin{itemize}
@@ -98,13 +98,13 @@ We can show that $ E[X]=\mu $ and $ Var(X)=\sigma^2 $
 \end{center}
 
 \textsc{Find $ f(x) $}
-\[ F(x)=\int\limits_{-\infty}^{x} \frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{1}{2}\left(\frac{u-\mu}{\sigma} \right)^2} d{u} \]
+\[ F(x)=\int\limits_{-\infty}^{x} \frac{1}{\sqrt{2\pi}\sigma}e^{-(u-\mu)^2/(2\sigma^2)} d{u} \]
 \begin{itemize}
     \item not analytically integrable
-    \item look it up or numericaly evaluate
+    \item look it up or numerically evaluate
 \end{itemize}
 Standard Normal rv (special case with $ \mu=0,\,\sigma^2=1 $)
 
 $ Z \thicksim N(0,1) $
-\[ f(2)=\frac{1}{\sqrt{2\pi}}e^{-\frac{1}{2}z^2} \]
+\[ f(z)=\frac{1}{\sqrt{2\pi}}e^{-z^2/2} \]
 $ F(z) $ still has no closed form.
