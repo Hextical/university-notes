@@ -1,0 +1,88 @@
+\section{Lecture 10}
+MLIW \# 3: Naïve Bayes' Classifier
+
+In ML classification, we use evidence to decide what category something
+belongs to. That is,
+\[ P(\text{category}|\text{evidence})=\frac{P(\text{category})P(\text{evidence})}
+{\sum\limits_{\text{cat }i} P(\text{cat }i)P(\text{evidence}|\text{cat }i)} \]
+The NBC assumes that if there are multiple types of evidence, their probabilities
+are independent \myuline{conditional on the category}.
+
+For example, Spam detection. Let $ A_1= $ fail rdns checked (sender spoofed).
+Let $ A_2= $ sends to over $ 100 $ people. Let $ A_3= $ link text doesn't
+match actual URL. Then what is
+\[P(\text{Spam}|A_1A_2A_3) =\frac{P(A_1A_2A_3|\text{Spam})}{P(A_1A_2A_3|\text{Spam})P(\text{Spam})+
+P(A_1A_2A_3|\overline{\text{Spam}})P(\overline{\text{Spam}})}  \]
+
+\textbf{\myuline{Chapter 5: Random Variables}}
+
+\myuline{5.1 Random Variables and Probability Functions}
+\begin{defbox}
+    \subsection{Definition (Random Variable)}
+    A \emph{random variable} is a function that assigns a real number to each point in
+    a sample space $S$.
+\end{defbox}
+We typically use $ X,\,Y,\,Z $ as random variables and $ x,\,y,\,z $ as the
+possible values the random variable can take on. There are two types
+of random variables based on the range.
+\begin{defbox}
+    \subsection{Definition (Discrete Random Variables)}
+    \emph{Discrete random variables} take integer values or, more generally, values in a
+    countable set.
+\end{defbox}
+\begin{defbox}
+    \subsection{Definition (Continuous Random Variables)}
+    \emph{Continuous random variables} take values in some interval of real numbers
+    like $(0,1)$ or $(1,\infty)$ or $ (-\infty,\infty) $.
+\end{defbox}
+We can define multiple random variables on the same sample space $ S $. For example,
+roll a fair $ 6 $-sided die $ 3 $ times.
+\[ S=\{(x,y,z)|1\le x, y, z\le 6\} \]
+
+\begin{itemize}
+    \item Let $ X= $ sum on the three die. $range(X) =\{3,\ldots ,18\} $.
+    \item Let $ Y= $ product on the three die. $range(Y) =\{1,\ldots ,216\} $.
+    \item Let $ Z= $ number on the first die. $range(Z) =\{1,\ldots ,6\} $
+    \item Let $ \bar{X}= $ average. $range(\bar{X}) =\{1,\nicefrac{4}{3},\ldots ,6\} $
+    \item Let $ W= $ \# of dice that are $ 1 $. $range(W)= \{0,1,2,3\} $
+\end{itemize}
+
+Examples of continuous random variables include:
+\begin{itemize}
+    \item $ T= $ time until an event
+    \item $ P= $ positive in space of a particle
+    \item $ H= $ height of a random person.
+\end{itemize}
+
+For Chapter 5, we will focus on discrete random variables.
+\begin{defbox}
+    \subsection{Definition (Probability Function, Probability Distribution)}
+    Let $X$ be a discrete random variable with $range(X)$ = $A$. 
+    The \emph{probability function} of $X$ is the function
+    \[ f(x)=P(X=x) \]
+    for all $ x\in A $.
+
+    The set of pairs $ \{(x,f(x)):x\in A\} $ is called the \emph{probability
+    distribution} of $ X $.
+\end{defbox}
+
+\begin{thmbox}
+    \subsection{Theorem (Properties of Probability Functions)}
+    All probability functions must have the two properties:
+    
+    1. $0\le f(x)\le 1 $ for all $ x\in A $
+
+    2. $ \sum\limits_{\text{all }x\in A} f(x)=1 $
+\end{thmbox}
+
+\myuline{Example}
+
+Let $ X= $ \# of dice that are $ 1 $.
+
+\begin{tabular}{| *{5}{>{\centering\arraybackslash}p{1.5cm} |}}
+    \hline
+    $x$ & $0$ & $1$ & $2$ & $3$\\
+    \hline
+    $f(x)$ & $\nicefrac{5^3}{6^3}$ & $\nicefrac{3\times 5^2}{6^2}$ & $\nicefrac{3\times 5}{6^3}$ & $\nicefrac{1^3}{6^3}$ \\
+    \hline
+\end{tabular}

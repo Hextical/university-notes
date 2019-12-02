@@ -15,7 +15,7 @@ of convex sets.
     $\Rightarrow$
     Suppose $ \bar{x} $ is an extreme point of $ S $. Pick two points
     $ x^{(1)},x^{(2)}\in S\setminus\{\bar{x}\} $ and $ \lambda\in[0,1] $
-    and set $\bar{x}=\lambda x^{(1)} + (1-\lambda)x^{(2)}$. Two show
+    and set $\bar{x}=\lambda x^{(1)} + (1-\lambda)x^{(2)}$. To show
     that $ S\setminus\{\bar{x}\} $ is convex, we have to verify that $ x\in S\setminus\{\bar{x}\} $.
     Now the set $ S $ is convex, so $ x\in S $. It remains to show that
     $ x\neq \bar{x} $.
@@ -55,12 +55,12 @@ of convex sets.
     a polyhedron and let $ \bm{\bar{x}}\in P $. 
     Let $ A^=\bm{x} = \bm{b}^= $ be the set of tight constraints
     for $ \bm{\bar{x}} $. 
-    Then $\bm{\bar{x}}$ is an extreme point of $ P $ if and only if
-    $ \rank(A^=)=n $.
+    Then $ \rank(A^=)=n $ if and only if
+    $\bm{\bar{x}}$ is an extreme point of $ P $.
 \end{thmbox}
 
 \begin{proof}
-    $ \implies $ [$\rank(A^=)=n$ $ \implies $ $\bm{\bar{x}}$ is an extreme]
+    $ \implies $ [$\rank(A^=)=n$ $ \implies $ $\bm{\bar{x}}$ is an extreme point of $ P $]
     
     Suppose $ \rank(A^=)=n $. Suppose for a contradiction that
     $\bm{\bar{x}}$ is not an extreme point. Then there exists
@@ -84,10 +84,10 @@ of convex sets.
     $ A^=\bm{x^{(1)}}=A^=\bm{x^{(2)}}=\bm{b^=}$.
     $ \rank(A^=)=n $ implies there is a unique solution
     to $ A^=\bm{\bar{x}}=\bm{b^=}$, so we have 
-    $ \bm{\bar{x}}=\bm{x^{(1)}}=\bm{x^{(2)}} $, a contradiction for
-    $ \bm{\bar{x}} $ to not be an extreme point.
+    $ \bm{\bar{x}}=\bm{x^{(1)}}=\bm{x^{(2)}} $, a contradiction that
+    $ \bm{\bar{x}} $ is an extreme point.
 
-    $ \impliedby $ [$\rank(A^=)=n$ $ \impliedby $ $\bm{\bar{x}}$ is an extreme]
+    $ \impliedby $ [$\rank(A^=)=n$ $ \impliedby $ $\bm{\bar{x}}$ is an extreme point of $ P $]
 
     We will prove the contrapositive of this. That is, we will be prove
     $ \rank(A^=)\neq n $ $\implies$ $\bm{\bar{x}}$ is not 
@@ -96,30 +96,30 @@ of convex sets.
     Suppose that $ \rank(A^=)\neq n $, that is $ \rank(A^=)<n $, which
     means that the columns of $ A^= $ are linearly dependent. Thus,
     $ \exists \bm{d} $ such that $ A^=\bm{d}=\bm{0} $. Let
-    $ \epsilon > 0 $ be arbitrarily small and define
-    \[ \bm{x^{(1)}} := \bm{\bar{x}} + \epsilon \bm{d} \]
-    \[ \bm{x^{(2)}} := \bm{\bar{x}} - \epsilon \bm{d} \]
+    $ \varepsilon > 0 $ be arbitrarily small and define
+    \[ \bm{x^{(1)}} := \bm{\bar{x}} + \varepsilon \bm{d} \]
+    \[ \bm{x^{(2)}} := \bm{\bar{x}} - \varepsilon \bm{d} \]
 Hence, $ \bm{\bar{x}}=\frac{1}{2}\bm{x^{(1)}}+\frac{1}{2} \bm{x^{(2)}} $, where
 $ \bm{x^{(1)}} $ and $ \bm{x^{(2)}} $ are distinct. Thus,
 $ \bm{\bar{x}} $ is in the line segment between $ \bm{x^{(1)}} $ and
 $ \bm{x^{(2)}} $. 
 
 We need to show that $ \bm{x^{(1)}},\bm{x^{(2)}}\in P $
-for  $ \epsilon > 0 $ arbitrarily small. We have
+for  $ \varepsilon > 0 $ arbitrarily small. We have
 \begin{align*}
-    A^= \bm{x^{(1)}}&=A^=(\bm{\bar{x}} + \epsilon \bm{d})\\
+    A^= \bm{x^{(1)}}&=A^=(\bm{\bar{x}} + \varepsilon \bm{d})\\
     &=A^= \underbrace{\bm{\bar{x}}}_{=\bm{b^=}}
-    +\epsilon\underbrace{A^= \bm{d}}_{=\bm{0}}\\
+    +\varepsilon\underbrace{A^= \bm{d}}_{=\bm{0}}\\
     &=\bm{b^=}
 \end{align*}
-Similarly, $ A^= \bm{x^{(1)}}= \bm{b^=}$. Let $ \bm{a}^\top \bm{x}\le \beta $
+Similarly, $ A^= \bm{x^{(2)}}= \bm{b^=}$. Let $ \bm{a}^\top \bm{x}\le \beta $
 be any of the inequalities of $ A \bm{x}\le \bm{b} $ that is not in
 $ A^= \bm{x}\le \bm{b}^= $. 
-It follows for $ \epsilon >0 $ arbitrarily small that:
+It follows for $ \varepsilon >0 $ arbitrarily small that:
 \begin{align*}
-    \bm{a}^\top \bm{x^{(1)}}&= \bm{a}^\top(\bm{\bar{x}} + \epsilon \bm{d})\\
-    &=\underbrace{\bm{a}^\top \bm{\bar{x}}}{\le \beta}+
-    \epsilon \bm{a}^\top \bm{d}\\
+    \bm{a}^\top \bm{x^{(1)}}&= \bm{a}^\top(\bm{\bar{x}} + \varepsilon \bm{d})\\
+    &=\underbrace{\bm{a}^\top \bm{\bar{x}}}_{\le \beta}+
+    \varepsilon \bm{a}^\top \bm{d}\\
     &\le \beta
 \end{align*}
 hence $ \bm{x^{(1)}}\in P $. Similarly, $ \bm{x^{(2)}}\in P $. Thus, 
@@ -131,7 +131,7 @@ an extreme point.
 \[ F:=\left\{ \bm{x}\in\mathbb{R}^2: \begin{bmatrix}
     1 & 1\\
     1 & 0\\
-    1 & 0\\
+    -1 & 0\\
     0 & -1
 \end{bmatrix}\bm{x}\le
 \begin{bmatrix}
@@ -187,7 +187,7 @@ point of $ F $.
 \[ F:=\left\{ \bm{x}\in\mathbb{R}^2: \begin{bmatrix}
     1 & 1\\
     1 & 0\\
-    1 & 0\\
+    -1 & 0\\
     0 & -1
 \end{bmatrix}\bm{x}\le
 \begin{bmatrix}
@@ -199,7 +199,7 @@ point of $ F $.
 
 \[ P:=\left\{\bm{x}\in\mathbb{R}^4:
 \begin{bmatrix}
-    1&1&1&0\\
+    1&1&-1&0\\
     1&0&0&-1
 \end{bmatrix}\bm{x}=
 \begin{bmatrix}
@@ -248,10 +248,7 @@ Suppose $ n=1 $ and $ m=6 $ with $ \bm{b}\ge \bm{0} $.
 
 \subsection{Duality Theory}
 (P)
-\[ \max z:=\bm{c}^\top x \]
-subject to
-\[ A \bm{x}= \bm{b} \]
-\[ \bm{x}\ge \bm{0} \]
+\[ \max \{\bm{c}^{\top} \bm{x}: A \bm{x}=\bm{b},\, \bm{x} \geq \bm{0}\} \]
 Recall the notation of optimality certificate $ \bm{\bar{y}}\in\mathbb{R}^m $ such that $ A ^\top \bm{\bar{y}}\ge \bm{c} $. We noted that for
 every feasible $ \bm{x} $ in (P), $ A \bm{x}= \bm{b}\implies
 \bm{\bar{y}}^\top A \bm{x}=\bm{\bar{y}}^\top \bm{b} $
@@ -266,20 +263,19 @@ We want to minimize $ \bm{b}^\top\bm{y} $ subject to $ A ^\top \bm{y}\ge \bm{c} 
 
 \begin{defbox}
     \subsection{Definition (Dual)}
-    Consider (P)
-    \[ \max \{\bm{c}^{\top} \bm{x}: A \bm{x} \geq \bm{b},\, \bm{x} \geq \bm{0}\} \]
-    and (P)'s dual (D)
-    \[ \min \{\bm{b}^{\top} \bm{y}: A^{\top} \bm{y} \leq \bm{c},\, \bm{y} \geq \bm{0}\}\]
-    We define (D) to be the \emph{dual} of (P).
+    Given (P)
+    \[ \max \{\bm{c}^{\top} \bm{x}: A \bm{x}=\bm{b},\, \bm{x} \geq \bm{0}\} \]
+    we define (D)
+    \[ \min \{\bm{b}^{\top} \bm{y}: A^{\top} \bm{y} \geq \bm{c},\, \bm{y} \geq \bm{0}\}\]
+    to be the \emph{dual} of (P).
 \end{defbox}
 
 \subsection{Example (Dual)}
-What is the dual of
-$ (P_1) $
-\[ \max \bm{c}^\top \bm{x} \]
-subject to
-\[ A \bm{x}\le \bm{b} \]
-\[ \bm{x}\ge \bm{0} \]
+Find the dual of
+$ (P_1)$: $\max \{\bm{c}^\top \bm{x}: A \bm{x}\le \bm{b},\,\bm{x}\ge \bm{0}\}$.
+
+\emph{Solution.}
+
 Convert to SEF by introducing slack variables: $ \bm{s}=(s_1,\ldots,s_n)^\top $.
 
 $ (P_2) $
@@ -296,10 +292,7 @@ subject to
     \bm{x}\\
     \bm{s}
 \end{bmatrix} = \bm{b} \]
-\[ \begin{bmatrix}
-    \bm{x}\\
-    \bm{s}
-\end{bmatrix}\ge \bm{0} \]
+\[ (\bm{x},\bm{s})^\top\ge \bm{0} \]
 
 $ (D_2) $
 \[ \min \bm{b}^\top \bm{y} \]
@@ -313,9 +306,5 @@ $ (D_2) $
 \end{bmatrix}\]
 \[ \bm{y}\ge \bm{0} \]
 
-or
-$ (D_2) $
-\[ \min \bm{b}^\top \bm{y} \]
-subject to
-\[ A ^\top \bm{y}\ge \bm{c} \]
-\[ \bm{y}\ge \bm{0} \]
+Thus, the dual of $ (P_1) $ is $ (D_2) $: 
+$\min\{\bm{b}^\top \bm{y}: A ^\top \bm{y}\ge \bm{c},\,\bm{y}\ge \bm{0}\}$.

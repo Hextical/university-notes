@@ -1,0 +1,122 @@
+\section{Lecture 31}
+
+Suppose two variables $ X $ and $ Y $ have \myuline{non-zero} covariance.
+What can we say?
+
+a) $ X $ and $ Y $ are independent. b) $ X $ and $ Y $ are not independent.
+c) we cannot tell if they are independent.
+
+Same question, but for \myuline{zero} covariance.
+
+\myuline{Today}
+\begin{itemize}
+    \item Linear Combinations of RVs (9.5 \& 9.6), which connects nicely to CLT
+    \item a couple of examples
+\end{itemize}
+
+\myuline{Friday}
+\begin{itemize}
+    \item Indicator Variables
+\end{itemize}
+
+\myuline{Rules of Linear Combinations}
+
+$ P=\alpha X+(1-\alpha)Y\rightarrow\text{two stocks} $
+
+$ S=0.05A+0.3M+0.15Q+0.5F $
+
+\myuline{Means}
+
+1. $ E(aX+bY)=aE(X)+bE(Y) $
+
+2. $ E\left(\sum\limits_{i=1}^{n} a_iX_i\right)=\sum\limits_{i=1}^{n}a_i E(X_i)=
+a_1E(X_1)+a_2E(X_2)+\cdots +a_nE(X_n) $
+
+3. $ E\left(\sum\limits_{i=1}^{n} \frac{X_i}{n}\right)=\sum\limits_{i=1}^{n}\frac{\mu}{n}=\frac{n}{n} \mu=\mu $
+
+$ X_i $'s all have mean $ \mu $
+
+$ \bar{X} $ = $ \frac{1}{n} \sum\limits_{i=1}^{n} X_i\implies E(\bar{X})=\mu $
+
+\myuline{Variances}
+
+1. $ Var(aX+bY)=a^2Var(X)+b^2Var(Y)+2abCov(X,Y) $
+
+2. $ Var(\bar{X})=Var\left(\sum\limits_{i=1}^{n} \frac{X_i}{n}\right)=\sum\limits_{i=1}^{n}\left( \frac{1}{n}  \right)^2
+Var(X_i)=\frac{n\sigma^2}{n^2}=\frac{\sigma^2}{n} $
+
+where $ X_i $'s are independent. Thus, if we have independent RV's
+$ X_1,\ldots,X_n $ all with $ \mu,\sigma^2 $, then $ E(\bar{X})=\mu $,
+$ Var(\bar{X})=\frac{\sigma^2}{n} $
+
+$\boxed{\nicefrac{\sigma}{\sqrt{n}}\rightarrow\text{ std error of the mean}}$
+
+\myuline{Note}:
+\begin{align*}
+    Cov(X,X)
+    &=E[XX]-E[X]E[X]\\
+    &=E[X^2]-(E[X])^2\\
+    &=Var(X)
+\end{align*}
+$ \implies Corr(X,X)=1 $
+
+\myuline{Covariances}
+
+$ Cov(aX+bY,cZ+dW)=acCov(X,Z)+adCov(X,W)+bcCov(Y,Z)+bdCov(Y,W) $
+
+\myuline{Normal RVs}
+
+\myuline{Claim:}
+If $ X_i \thicksim N(\mu_i,\sigma_i^2) $ for $ i=1,2,\ldots ,n $
+are random variables, then
+\[ \sum\limits_{i=1}^{n} a_i X_i \thicksim 
+N\left(\sum\limits_{i=1}^{n}a_i\mu_i,\sum\limits_{i=1}^{n} a_i^2\sigma_i^2\right) \]
+\[ \boxed{X_i \thicksim N(\mu,\sigma^2)\implies\bar{X} \thicksim N(\mu,\sigma^2/n)} \]
+
+\myuline{Example}
+
+Weight of a cat $ C \thicksim N(4.1,1.6^2) $, weight of a dog
+$ D \thicksim (9.4,3.6^2) $. Find the probability that a cat weighs more than
+a dog.
+
+\emph{Solution.}
+
+$ P(C>D)\implies P(C-D>0)\rightarrow C-D \thicksim N(4.1-9.4,1.6^2+(-3.6)^2)$
+\begin{align*}
+    &=P\left(\frac{C-D-(-5.3)}{\sqrt{15.52}}>\frac{0-(-5.3)}{\sqrt{15.52}}\right)\\
+    &=P(Z>1.35)\\
+    &=1-0.91149\\
+    &=0.08851
+\end{align*}
+
+\myuline{Example}
+
+Heights of cats are $ N(24,1.5^2) $. Find probability a cat has height
+within 1cm of average.
+
+\emph{Solution.}
+
+\begin{align*}
+    P(23<X<25)&=
+    P\left( \frac{23-24}{1.5}<\frac{X-24}{1.5}<\frac{25-24}{1.5} \right)\\
+    &=P(-0.67<Z<0.67)\\
+    &=2(0.74857)-1\\
+    &=0.49714
+\end{align*}
+
+\myuline{Example}
+
+Find the probability the \myuline{average height} of 5 cats is within 1cm of average.
+
+\emph{Solution.}
+
+$ \bar{X}=\sum\limits_{i=1}^{5} X_i \thicksim N(24,\nicefrac{1.5^2}{5}) $
+
+\begin{align*}
+    P\left(\left|\bar{X}-24\right|<1\right)&=
+    P(23<\bar{X}<25)\\
+    &=P\left( \frac{23-24}{\nicefrac{1.5}{\sqrt{5}}}<Z<
+    \frac{25-25}{\nicefrac{1.5}{\sqrt{5}}} \right)\\
+    &=P(-1.49<Z<1.49)\\
+    &=0.86378
+\end{align*}

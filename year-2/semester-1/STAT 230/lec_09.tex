@@ -1,0 +1,79 @@
+\section{Lecture 9}
+We might be interested in reversing the direction of a conditional
+probability.
+\begin{itemize}
+    \item given a positive test, what is the probability that you have a disease?
+    \item given an error in code, who wrote it?
+\end{itemize}
+
+\myuline{Example}
+
+1. If you test for a disease, what is the probability that you have it?
+
+$ P(D)=0.02 $
+
+$ P(T|\bar{D})=0.05 $ false positive
+
+$ P(\bar{D}|T)=0.01 $ false negative
+
+We found $ P(T)=0.0688 $, we want
+\begin{align*}
+    P(D|T)&=\frac{P(T|D)P(D)}{P(T|D)P(D)+P(T|\bar{D})P(\bar{D})}\\
+    &=\frac{0.99\times 0.02}{0.99\times 0.02+0.05\times 0.98}\\
+    &=0.288
+\end{align*}
+
+2. Given a line of code that has an error, what is the probability that
+$ A $ wrote it?
+
+$ P(A)=0.5 $
+
+$ P(B)=P(C)=0.25 $
+
+$ P(E|A)=0.01 $
+
+$ P(E|B)=0.02 $
+
+$ P(E|C)=0.05 $
+
+We want
+\begin{align*}
+    P(A|E)&=\frac{P(E|A)P(A)}{P(E|A)P(A)+P(E|B)P(B)+P(E|C)P(C)}\\
+    &=\frac{0.5\times 0.01}{0.0225}\\
+    &=0.222<P(A)
+\end{align*}
+Similarly,
+\[ P(B|E)=0.22<P(B) \]
+\[ P(C|E)=0.556>P(C) \]
+Note the three conditional probabilities sum to $ 1 $ which they must since exactly
+one of $ A $, $ B $, or $ C $ wrote the line.
+
+3. Probability of a LoL player also playing Warcraft?
+\[ P(W|L)=\frac{P(L|W)P(W)}{0.0387}=\text{exercise} \]
+
+\myuline{4.6 Useful Series and Sums}
+
+\begin{thmbox}
+    \subsection{Theorem (Geometric Series)}
+    The geometric series $ \sum\limits_{n=0}^{\infty} ar^n $ converges
+    if $ |r|<1 $ and diverges otherwise. If $ |r|<1 $, then
+    \[ \sum\limits_{n=0}^{\infty} ar^n=a+ar+ar^2+\cdots =\frac{a}{1-r}  \]
+\end{thmbox}
+
+\begin{thmbox}
+    \subsection{Theorem (Binomial Theorem)}
+    Let $ n $ be a positive integer, $ x\in\mathbb{R} $.
+    \[ (1+x)^n=\sum\limits_{k=0}^{n} \binom{n}{k}x^k \]
+\end{thmbox}
+
+\begin{thmbox}
+    \subsection{Theorem (Exponential Series)}
+    Let $ x\in\mathbb{R} $.
+    \[ e^x=\sum\limits_{n=0}^{\infty}\frac{x^n}{n!}  \]
+    \[ e^x=\lim\limits_{{n} \to {\infty}} \left( 1+\frac{x}{n}  \right)^n \]
+\end{thmbox}
+
+\begin{thmbox}
+    \subsection{Theorem (Hypergeometric Identity)}
+    \[ \binom{a+b}{n}=\sum\limits_{x=0}^{n} \binom{a}{x}\binom{b}{n-x} \]
+\end{thmbox}

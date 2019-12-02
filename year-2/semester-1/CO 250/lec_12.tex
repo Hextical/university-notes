@@ -17,11 +17,11 @@
     \subsection{Definition (Hyperplane, Half-space)}
     Let $ \bm{a} \in \mathbb{R}^n\setminus{\bm{0}} $, $ \beta \in\mathbb{R} $.
 
-    $ H:=\{\bm{x}\in\mathbb{R}^n:
-    \bm{a} ^\top \bm{x}=\beta \} $ is a \emph{hyperplane}.
+    $ H:=\left\{\bm{x}\in\mathbb{R}^n:
+    \bm{a} ^\top \bm{x}=\beta \right\} $ is a \emph{hyperplane}.
 
-    $ F:=\{\bm{x}\in\mathbb{R}^n:
-    \bm{a} ^\top \bm{x}\le \beta\} $ is a \emph{half-space}.
+    $ F:=\left\{\bm{x}\in\mathbb{R}^n:
+    \bm{a} ^\top \bm{x}\le \beta\right\} $ is a \emph{half-space}.
 \end{defbox}
 
 Solution sets of linear equations are intersections of hyperplanes.
@@ -29,7 +29,7 @@ Solution sets of linear equations are intersections of hyperplanes.
 \begin{defbox}
     \subsection{Definition (Polyhedron)}
     Let $ A\in \mathbb{R}^{m \times n} $, $ \bm{b}\in \mathbb{R}^m $.
-    $ P:=\{\bm{x}\in\mathbb{R}^n:A\bm{x}\le \bm{b}\} $ is a \emph{polyhedron}.
+    $ P:=\left\{\bm{x}\in\mathbb{R}^n:A\bm{x}\le \bm{b}\right\} $ is a \emph{polyhedron}.
 \end{defbox}
 \begin{remark}
     The set of solutions to any one of the inequalities of 
@@ -64,8 +64,8 @@ linear systems of equations.
 
 \begin{defbox}
     \subsection{Definition (Line segment)}
-    The \emph{line segment} joining two points, $ u $ and $ v $ is
-    \[ \{\lambda u + (1-\lambda)v:\lambda\in[0,1]\} \]
+    The \emph{line segment} joining two points, $ x^{(1)} $ and $ x^{(2)} $ is
+    \[ \left\{\lambda x^{(1)} + (1-\lambda)x^{(2)}:\lambda\in[0,1]\right\} \]
 \end{defbox}
 Graphically, the line segment can be seen as:
 \begin{center}
@@ -77,7 +77,7 @@ Graphically, the line segment can be seen as:
     A subset $ S\subseteq \mathbb{R}^n $ is \emph{convex} if for 
     every pair of points $ x^{(1)},x^{(2)}\in S $, the line segment with
     ends $ x^{(1)} $ and $ x^{(2)} $ is included in $ S $. That is,
-    \[ \{\lambda x^{(1)} + (1-\lambda)x^{(2)}:\lambda\in[0,1]\}\subseteq S \]
+    \[ \left\{\lambda x^{(1)} + (1-\lambda)x^{(2)}:\lambda\in[0,1]\right\}\subseteq S \]
     
 \end{defbox}
 \begin{center}
@@ -92,19 +92,19 @@ Graphically, the line segment can be seen as:
 \begin{proof}
     Let $ H\subseteq\mathbb{R}^n $ be a half-space. Then $ \bm{a} \in \mathbb{R}
     ^n\setminus{\bm{0}} $ and $ \beta\in\mathbb{R}^n $ such that
-    \[ \{\bm{x}\in\mathbb{R}^n:\bm{a} ^\top \bm{x}=\beta\} \]
-    Let $ u,v\in H $ and let $ \lambda\in[0,1] $ arbitrary.
-    \[ \bm{a} ^\top[\lambda u+(1-\lambda)v]=
-    \underbrace{\lambda}_{\ge 0}\underbrace{\bm{a} ^\top u}_{\le \beta}+
-    \underbrace{(1-\lambda)}_{\ge 0}\underbrace{\bm{a} ^\top v}_{\le \beta}
+    \[ H=\left\{\bm{x}\in\mathbb{R}^n: \bm{a} ^\top \bm{x}\le\beta \right\} \]
+    Let $ \bar{x}=\lambda x^{(1)} + (1-\lambda)x^{(2)} $ where $ \lambda\in[0,1] $.
+    \[ \bm{a}^\top\bar{x}=\bm{a}^\top\left[\lambda x^{(1)} + (1-\lambda)x^{(2)}\right]=
+    \underbrace{\lambda}_{\ge 0}\underbrace{\bm{a} ^\top x^{(1)}}_{\le \beta}+
+    \underbrace{(1-\lambda)}_{\ge 0}\underbrace{\bm{a} ^\top x^{(2)}}_{\le \beta}
     \le \lambda \beta + (1-\lambda)\beta=\beta \]
-    Thus, $ H $ is convex.
+    Thus, $ H $ is convex since $ \bar{x}\in H $.
 \end{proof}
 
 \begin{thmbox}
     \subsection{Proposition}
     The intersection of any collection of convex sets is convex. 
-    That is, a convex set $ C_j $ $ \forall j\in J $, the intersection
+    That is, a convex set $ C_j $ for all $ j\in J $, the intersection
     \[ C:=\bigcap_{j\in J} C_j \]
     is convex.
 \end{thmbox}
@@ -142,6 +142,10 @@ Graphically, the line segment can be seen as:
     $ \bar{x}\in S $ and no two distinct $ x^{(1)},x^{(2)}\in S $ exist satisfying
     \[ \bar{x}=\lambda x^{(1)} + (1-\lambda)x^{(2)} \]
     for some $ \lambda\in (0,1) $.
+
+    Equivalently, $ \bar{x} $ is an \emph{extreme point} of $ S $, if
+    $ \bar{x}\in S $ and no two distinct $ x^{(1)},x^{(2)}\in S $ exist satisfying
+    \[ \bar{x}=\frac{1}{2} x^{(1)} + \frac{1}{2} x^{(2)} \]
 \end{defbox}
 
 \begin{center}
