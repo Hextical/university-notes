@@ -1,18 +1,51 @@
 \section{Lecture 10}
-MLIW \# 3: Naïve Bayes' Classifier
+\myuline{MLIW 3: Naïve Bayes' Classifier}
 
 In ML classification, we use evidence to decide what category something
 belongs to. That is,
-\[ P(\text{category}|\text{evidence})=\frac{P(\text{category})P(\text{evidence})}
-{\sum\limits_{\text{cat }i} P(\text{cat }i)P(\text{evidence}|\text{cat }i)} \]
-The NBC assumes that if there are multiple types of evidence, their probabilities
-are independent \myuline{conditional on the category}.
+\[ P(\text{category}\mid\text{evidence})
+=\frac{P(\text{cat})P(\text{evidence}\mid\text{cat})}
+{\sum\limits_{\text{cat }i} P(\text{cat }i)P(\text{evidence}\mid\text{cat }i)} \]
+The Naïve Bayes' Classifier  assumes that if there are multiple pieces of evidence,
+they are conditionally independent (conditional on the category).
 
-For example, Spam detection. Let $ A_1= $ fail rdns checked (sender spoofed).
-Let $ A_2= $ sends to over $ 100 $ people. Let $ A_3= $ link text doesn't
-match actual URL. Then what is
-\[P(\text{Spam}|A_1A_2A_3) =\frac{P(A_1A_2A_3|\text{Spam})}{P(A_1A_2A_3|\text{Spam})P(\text{Spam})+
-P(A_1A_2A_3|\overline{\text{Spam}})P(\overline{\text{Spam}})}  \]
+A very simple ML example of this is spam detection. Consider the machine
+learning problem of classifying incoming messages as spam. We define:
+\begin{itemize}
+    \item $ A_1= $ message fails rDNS (reverse DNS lookup) check (i.e. the "from" domain doesn't match)
+    \item $ A_2= $ message is sent to over $ 100 $ people
+    \item $ A_3= $ message contains a link with the URL not matching the alt 
+\end{itemize}
+
+We will assume that the $ A_i $'s are independent events, given that a message
+is a spam, and that they are also independent events, given that a message is
+$ \overline{\text{spam}} $.
+
+We estimate
+\begin{itemize}
+    \item $ P(\text{Spam})=0.25 $
+    \item $ P(A_1\mid \text{Spam})=0.3$
+    \item $ P(A_2\mid \text{Spam})=0.2$
+    \item $ P(A_3\mid \text{Spam})=0.1$
+    \item $ P(A_1\mid \overline{\text{Spam}})=0.005$
+    \item $ P(A_2\mid \overline{\text{Spam}})=0.04$
+    \item $ P(A_3\mid \overline{\text{Spam}})=0.05$
+\end{itemize}
+We use Bayes' Theorem:
+
+$ P(\text{Spam}\mid A_1A_2A_3)= $
+\begin{align*}
+    &=\frac{P(A_1A_2A_3\mid\text{Spam})P(\text{Spam})}
+    {P(A_1A_2A_3\mid\text{Spam})P(\text{Spam})+
+    P(A_1A_2A_3\mid\overline{\text{Spam}})P(\overline{\text{Spam}})}\\
+    &=\frac{P(A_1\mid\text{Spam}) P(A_2\mid\text{Spam}) P(A_3\mid\text{Spam}) P(\text{Spam})}
+    {P(A_1\mid\text{Spam}) P(A_2\mid\text{Spam}) P(A_3\mid\text{Spam})P(\text{Spam})+
+    P(A_1\mid\overline{\text{Spam}}) P(A_2\mid\overline{\text{Spam}}) P(A_3\mid\overline{\text{Spam}})P(\overline{\text{Spam}})}\\
+    &=\frac{(0.3)(0.2)(0.1)(0.25)}{(0.3)(0.2)(0.1)(0.25)+(0.005)(0.04)(0.05)(0.75)} \\
+    &\approx 0.9950
+\end{align*}
+Remember that $ A_1 $, $ A_2 $, and $ A_3 $ are NOT independent!
+They are only conditionally independent, given the type of email.
 
 \textbf{\myuline{Chapter 5: Random Variables}}
 

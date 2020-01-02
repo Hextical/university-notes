@@ -1,5 +1,6 @@
 \section{Lecture 14}
-\subsection{Example}
+\myuline{Example}
+
 Suppose you send a bit string over a noisy connection with
 each bit independently having a probability $ 0.01 $ of being
 flipped. What is the probability that
@@ -8,127 +9,66 @@ flipped. What is the probability that
     \item a 50 bit message has 5 errors?
 \end{enumerate}
 
-(b) Let $ Y= $ \# of errors in 50 bits. $ Y\thicksim\bin(50,0.01) $.
+\emph{Solution.}
 
-Then, $ P(Y=5)=\binom{50}{5}(0.01)^5(0.99)^{45} $
+(b) Let $ Y= $ \# of errors in 50 bits. 
+\[ Y\thicksim\bin(50,0.01) \]
+
+\[ P(Y=5)=\binom{50}{5}(0.01)^5(0.99)^{45} \]
 
 (a) Let $ X= $ \# of correct bits until 5 errors.
-$ X\thicksim\nb(5,0.01) $.
+\[ X\thicksim\nb(5,0.01) \]
 
-Then, $ P(X=45)=\binom{49}{4}(0.01)^5(0.99)^{45} $
+\[ P(X=45)=\binom{49}{4}(0.01)^5(0.99)^{45} \]
 
-\subsection{Geometric Distribution (5.6)}
-The Geometric Distribution is just a special case of the
-Negative Binomial Distribution with $ k=1 $.
-Let $ X= $ \# of F's in Bernoulli trials before the first S.
-$ X\thicksim\geo(p) $
+\myuline{5.6 Geometric Distribution}
 
-\subsection{Range and Probability Function of the Geometric Distribution}
-range: $ x\in\{0,1,\ldots \} $
-\begin{align*}
-    f(x) & =P(X=x)                                                   \\
-         & =P( \underbrace{\text{F, F, $ \ldots $}}_{\text{all F's}}
-    \text{, S})                                                      \\
-         & =(1-p)^x p
-\end{align*}
-or sub $ k=1 $ into the $ \nb $ probability function.
+\begin{defbox}
+    \subsection{Definition (Geometric Distribution)}
+    Consider the exact same process as in the Negative Binomial distribution
+    case, but with $ k=1 $. That is, we repeat the Bernoulli trials until
+    the first success. Let $ X $ be the number of failures obtained before
+    the first success. Then $ X $ has a \emph{Geometric distribution}
+    and we write
+    \[ X \thicksim \geo(p) \]
+\end{defbox}
 
-Prove $ \sum\limits_{\text{all } x}^{} f(x) =1$
+\myuline{Find the probability function, $ f(x)$}
+
+Substitute $ k=1 $ into the Negative Binomial distribution to obtain
+\[ f(x)=p(1-p)^x \]
+for $ x\in[0,\infty) $.
+
+\myuline{Prove the following:}
+
+$ \sum\limits_{x=0}^{\infty} f(x) = 1$
+
 \begin{proof}
     \begin{align*}
         \sum\limits_{x=0}^{\infty} (1-p)^x p
-         & =\underbrace{p+p(1-p)+\dots}_
+         & =\underbrace{p+p(1-p)+\cdots}_
         \text{ (geo. series: $a=p$, $r=1-p$)} \\
          & =\frac{p}{1-(1-p)}                 \\
          & =1
     \end{align*}
 \end{proof}
 
-Find the cumulative distribution function.
+\myuline{Find the cumulative distribution function, $ F(x)$}
 \begin{align*}
     F(x) & =P(X\le x)                                         \\
          & =1-P(X>x)                                          \\
-         & =1-[f(x+1)+\dots]                                  \\
-         & =\underbrace{1-[p(1-p)^{x+1}+p(1-p)^{x+2}+\dots]}_
-    \text{ (geo. series: $a=p(1-p)^{x-1}$, $r=1-p$)}          \\
+         & =1-\left[f(x+1)+f(x+2)+\cdots\right]                                  \\
+         & =1-\underbrace{\left[p(1-p)^{x+1}+p(1-p)^{x+2}+\cdots\right]}_
+    \text{ (geo. series: $a=p(1-p)^{x+1}$, $r=1-p$)}          \\
          & =1-\frac{p(1-p)^{x+1}}{1-(1-p)}                    \\
-         & =1-(1-p)^{x+1} \text{ for } x=0,1,\ldots
+         & =1-(1-p)^{x+1}
 \end{align*}
-if $ x\in\mathbb{R} $, then
+for $ x\in[0,\infty) $.
+
+If $ x\in\mathbb{R} $, then
 \[ F(x)=
-    \begin{cases}
-        1-(1-p)^{\lfloor x \rfloor +1} \text{, if } x\ge 0 \\
-        0 \text{, if } x < 0
-    \end{cases} \]
-
-
-\begin{center}
-    \scalebox{0.68}{
-        \begin{tabular}{ L{2.5cm} | L{3cm} | L{3cm} | L{3cm} | L{3.5cm} | L{3cm} | L{3cm} }
-                                                                    & Discrete Uniform & Hypergeometric & Binomial & Negative Binomial & Geometric & Poisson \\
-            \hline
-            function \newline range \newline parameters             &
-            $ \du[a,b] $\newline $a,a+1,\ldots,b$                   &
-            $ \hyp(N,r,n) $\newline bad                             &
-            $ \bin(n,p) $\newline $ 0,1,\ldots,n $                  &
-            $ \nb(k,p) $\newline $ 0,1,\ldots $                     &
-            $ \geo(p) $\newline $ 0,1,\ldots $                      &
-            $ \poi(\mu) $\newline $ 0,1,\ldots $\newline
-            $ \mu=np $, $\mu=\lambda t $                                                                                                                     \\
-            \hline
-            pf, $ f(x) $                                            &
-            $ \frac{1}{b-a+1} $                                     &
-            $ \frac{\binom{r}{x}{\binom{N-r}{n-x}}}{\binom{N}{n}} $ &
-            $ \binom{n}{x}p^x(1-p)^{n-x} $                          &
-            $ \binom{x+k-1}{k-1}p^k(1-p)^x $                        &
-            $ p(1-p)^x $                                            &
-            $ \frac{e^{-\mu}\mu^x}{x!} $                                                                                                                     \\
-            \hline
-            cumulative distribution function,     $ F(x) $          &
-            $ \frac{x-a+1}{b-a+1} $                                 &                  &                &          &
-            $ 1-(1-p)^{x+1} $                                       &
-            $ e^{\mu}[1+\frac{\mu^1}{1!}+\cdots\frac{\mu^x}{x!}] $                                                                                           \\
-            \hline
-            how to tell                                             &
-            ``equally likely''
-            \newline know min. \& max.                              &
-
-            know total \# objects
-            \newline know \# S's
-            \newline know \# trials
-            \newline without replacement
-            \newline selecting a subset
-                                                                    &
-
-            Bernoulli trials
-            \newline know \# trials
-            \newline count \# S's
-                                                                    &
-
-            Bernoulli trials
-            \newline ``until''
-            \newline ``it take... to get''
-            \newline ``before''
-            \newline know how many S's we want
-                                                                    &
-
-            ``until we get''
-            \newline ``before the first''
-                                                                    &
-
-            Bin. with large amount of trials, small prob
-            \newline rate specified (\#events/time)
-            \newline no pre-specified max.
-            \newline events occurring at any time (randomly)
-            \newline Poisson process \& know time \& count events
-            \newline doesn't make sense to ask how often
-            an event did \textbf{not} occur
-        \end{tabular}}
-\end{center}
-
-Bernoulli trials:
-\begin{itemize}
-    \item independent
-    \item each outcome is a S or F
-    \item $P$(success)=$p$=constant
-\end{itemize}
+    \left\{\begin{array}{cc}
+        1-(1-p)^{\lfloor x \rfloor +1}& x\ge 0 \\
+        0& x < 0
+    \end{array}\right.
+\]

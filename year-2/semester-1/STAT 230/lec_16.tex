@@ -1,14 +1,17 @@
 \section{Lecture 16}
-\subsection{Example}
+\myuline{Example}
+
 Request coming in from a web server at a rate of $ 100 $ requests per minute.
 $ \lambda = 100, t=\frac{1}{60} $
 The \# of requests per second would be
 \[ \poi\left(\mu=\frac{100}{60}=\frac{5}{3}\right) \]
 
-\subsection{Combining Other Models with the Poisson Process (5.9)}
+\myuline{5.9 Combining Other Models with the Poisson Process}
+
 Problems may involve many different random variables!
 
-\subsection{Example (Continued)}
+\myuline{Example (Continued)}
+
 We say that a second is quiet if it has no requests.
 \begin{enumerate}[(a)]
     \item Find probability that a second is quiet
@@ -47,9 +50,75 @@ $ P(\text{1 quiet second in the first 15 seconds}\mid\text{wait 30 to get 2 quie
 In (3) we used the independence of non-overlapping time intervals and constant
 probability of events.
 
-\subsection{Summarizing Data on Random Variables (7.1)}
-Let $ X= $ \# of kids in a family.
+\begin{center}
+    \scalebox{0.68}{
+        \begin{tabular}{ L{2.5cm} | L{3cm} | L{3cm} | L{3cm} | L{3.5cm} | L{3cm} | L{3cm} }
+                                                                    & Discrete Uniform & Hypergeometric & Binomial & Negative Binomial & Geometric & Poisson \\
+            \hline
+            function \newline range \newline parameters             &
+            $ \du[a,b] $\newline $a,a+1,\ldots,b$                   &
+            $ \hyp(N,r,n) $\newline bad                             &
+            $ \bin(n,p) $\newline $ 0,1,\ldots,n $                  &
+            $ \nb(k,p) $\newline $ 0,1,\ldots $                     &
+            $ \geo(p) $\newline $ 0,1,\ldots $                      &
+            $ \poi(\mu) $\newline $ 0,1,\ldots $\newline
+            $ \mu=np $, $\mu=\lambda t $                                                                                                                     \\
+            \hline
+            pf, $ f(x) $                                            &
+            $ \frac{1}{b-a+1} $                                     &
+            $ \frac{\binom{r}{x}{\binom{N-r}{n-x}}}{\binom{N}{n}} $ &
+            $ \binom{n}{x}p^x(1-p)^{n-x} $                          &
+            $ \binom{x+k-1}{k-1}p^k(1-p)^x $                        &
+            $ p(1-p)^x $                                            &
+            $ \frac{e^{-\mu}\mu^x}{x!} $                                                                                                                     \\
+            \hline
+            cumulative distribution function,     $ F(x) $          &
+            $ \frac{x-a+1}{b-a+1} $                                 &                  &                &          &
+            $ 1-(1-p)^{x+1} $                                       &
+            $ e^{\mu}[1+\frac{\mu^1}{1!}+\cdots\frac{\mu^x}{x!}] $                                                                                           \\
+            \hline
+            how to tell                                             &
+            ``equally likely''
+            \newline know min. \& max.                              &
 
+            know total \# objects
+            \newline know \# S's
+            \newline know \# trials
+            \newline without replacement
+            \newline selecting a subset
+                                                                    &
+
+            Bernoulli trials
+            \newline know \# trials
+            \newline count \# S's
+                                                                    &
+
+            Bernoulli trials
+            \newline ``until''
+            \newline ``it take... to get''
+            \newline ``before''
+            \newline know how many S's we want
+                                                                    &
+
+            ``until we get''
+            \newline ``before the first''
+                                                                    &
+
+            Bin. with large amount of trials, small probability
+            \newline rate specified (\#events/time)
+            \newline no pre-specified max.
+            \newline events occurring at any time (randomly)
+            \newline Poisson process \& know time \& count events
+            \newline doesn't make sense to ask how often
+            an event did \textbf{not} occur
+        \end{tabular}}
+\end{center}
+
+\textbf{\myuline{Chapter 7: Expected Value and Variance}}
+
+\myuline{Summarizing Data on Random Variables (7.1)}
+
+Let $ X= $ \# of kids in a family.
 
 \begin{center}
     \begin{tabular}{| *{2}{>{\centering\arraybackslash}p{3cm} |}}
@@ -63,19 +132,19 @@ Let $ X= $ \# of kids in a family.
 \end{center}
 
 \begin{defbox}
-    \subsubsection{Definition (Median)}
+    \subsection{Definition (Median)}
     The \emph{median} of a sample is a value such that half the results are 
     below it and half above it, when the results are arranged in numerical 
     order.
 \end{defbox}
 
 \begin{defbox}
-    \subsubsection{Definition (Mode)}
+    \subsection{Definition (Mode)}
     The \emph{mode} of the sample is the value which occurs most often. There
     is no guarantee there will be only a single mode.
 \end{defbox}
 Mean: average $ \rightarrow
-\frac{1\times 3+2\times 10+3\times 1+4\times 1}{15} $
+\frac{1\times 3+2\times 10+3\times 1+4\times 1}{15}=2 $
 
 Median: $ 2 $
 

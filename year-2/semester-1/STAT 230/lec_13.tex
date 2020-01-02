@@ -1,70 +1,70 @@
 \section{Lecture 13}
-\subsection{Negative Binomial Distribution (5.5)}
-Setup: Bernoulli Trials
-\begin{itemize}
-    \item independent
-    \item each trial is a success or fail (S or F)
-    \item $ P(\text{success})=p=\text{constant} $ 
-\end{itemize}
-Suppose we want to get $ k $ S's. We do trials until we get
-$ k $ S's and let $ X= $ \# of F's. We get
-\[ X\thicksim \nb(k,p) \]
-in a total of $ k+X $ trials.
 
+\myuline{5.5 Negative Binomial Distribution}
+\begin{defbox}
+    \subsection{Definition (Negative Binomial Distribution)}
+    Suppose an experiment follows the Bernoulli trials, and continue
+    doing this experiment until $ k $ success are obtained. Let $ X $
+    be the number of failures obtained before the $ k^{\text{th}} $
+    success. Then $ X $ has a \emph{Negative Binomial distribution}
+    and we write
+    \[ X \thicksim \nb(k,p) \]
+\end{defbox}
 
-\begin{center}
-    \begin{tabular}{|c|c|}
-        \hline
-        Binomial & Negative Binomial \\
-        \hline
-        know \# of trials & unknown \# of trials\\
-        unknown \# of S's & known \# of S's\\
-        $ \binom{n}{x}p^x(1-p)^{n-x} $ & 
-        $ \binom{x+k-1}{k-1}p^k(1-p)^x $\\
-        \hline
-    \end{tabular}
-\end{center}
+\myuline{Find the probability function, $ f(x)$}
 
-\subsection{Example}
-How many tails until we get the $10$th head on a fair coin.
-$ X\thicksim\nb(10,\frac{1}{2}) $
+There will be a total of $ (x+k) $ trials ($ x $ F's $ k $ S's)
+and the last trial will be a success. In the first $ (x+k-1) $ trials
+we must have $ x $ failures and $ (k-1) $ successes, where order does not matter
+(the last trial we know it must be a success, that's why we are only looking at
+before the $ k^{\text{th}} $ success!)
+Hence, we have a combination which is $ \binom{x+k-1}{k-1} $. Each order
+will have a probability $ p^k(1-p)^x $. Hence
+\[ f(x)=\binom{x+k-1}{k-1}p^k(1-p)^x \]
+for $ x\in[0,\infty) $.
 
-\subsection{Example}
-If courses were independent with probability $ p $ of passing
-and you need $ 40 $ courses, then the number of failed courses
-would be $ \nb(40,p) $.
-
-\subsection{Range and Probability Function of the Negative Binomial Distribution}
-range $ x\in\{0,1,\dots\} $ (countably infinite)
-\begin{align*}
-    f(x)=P(X=x)
-    &=p(x\text{ F's before $ k $th S})\\
-    &=\binom{x+k-1}{x}p^k(1-p)^x\\
-    &=\binom{x+k-1}{k-1}p^k(1-p)^x
-\end{align*}
 In a picture:
 \[\overbrace{
     \underbrace{
         \text{\_ \_ \_ $\ldots$ \_}\mid}
-        _{(k-1) \text{ S's, }x \text{ F's }}}^{x+(k-1)\text{ Trials}}
-\underbrace{ \text{ S } }_{ k\text{th S} } \]
+        _{x \text{ F's},\,(k-1) \text{ S's}}}^{x+(k-1)\text{ Trials}}
+\underbrace{ \text{ S } }_{ k^{\text{th}} \text{ S}} \]
 
-\subsection{Example}
-Suppose a startup is looking for $ 5 $ investors. They ask
+\myuline{Example}
+
+How many tails until we get the $10^{\text{th}}$ head on a fair coin?
+
+\emph{Solution.}
+
+Let $ X= $ \# of tails before the $ 10^{\text{th}} $ head.
+\[ X\thicksim\nb\left(10,\nicefrac{1}{2}\right) \]
+
+\myuline{Example}
+
+If courses were independent with probability $ p $ of passing
+and you need $ 40 $ courses, then the number of failed courses
+would be $ \nb(40,p) $.
+
+\myuline{Example}
+
+Suppose a start-up is looking for $ 5 $ investors. They ask
 investors repeatedly where each independently has a $ 20\% $ chance
 of saying yes. Let $ X= $ total \# of investors that they ask and
 note that $ X $ does not follow a negative binomial distribution.
 Find $ f(x) $ and $ f(10) $.
 
-Let $ Y= $ \# who say no before $ 5 $ say yes.
-$ Y\thicksim\nb(5,0.2) $, and $ X=Y+5 $. So,
+\emph{Solution.}
+
+Let $ Y= $ \# who say no before $ 5 $ say yes. We know $ X=Y+5 $.
+\[ Y\thicksim\nb(5,0.2) \]
 \begin{align*}
     f(x)&=P(X=x)\\
     &=P(Y+5=x)\\
     &=P(Y=x-5)\\
     &=\binom{(x-5)+5-1}{5-1}(0.2)^5(0.8)^{x-5}\\
-    &=\binom{x-1}{4}(0.2)^5(0.8)^{x-5} \qquad \text{for } x=5,\ldots
+    &=\binom{x-1}{4}(0.2)^5(0.8)^{x-5}
 \end{align*}
-\[ f(10)=\binom{9}{4}(0.2)^5(0.8)^5 \]
-note that it's $ \binom{9}{4} $ and not $ \binom{10}{5} $ because
-the 10th investor must have said yes.
+for $ x\in[5,\infty) $.
+\[ f(10)=\binom{9}{4}(0.2)^5(0.8)^5\approx 0.0132\]
+Note that we have $ \binom{9}{4} $ and not $ \binom{10}{5} $ because
+the $10^{\text{th}}$ investor must have said yes.

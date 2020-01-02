@@ -5,13 +5,21 @@
 \textsc{Find $ P(Z\le-0.63) $}
 \[ P(Z\le-0.63)=P(Z>0.63)=1-P(Z\le 0.63)=1-0.73565=0.26435\]
 
-\subsection{Example}
-A voltage of $ +2 $ means $ 1 $ and $ -2 $ means $ 0 $. The connection
-adds a $ N(0,1) $ distribution amount of noise. If they receive a voltage of
-$ >0.5 $, they interpret as $ 1 $, $ <0.5 $ as $ 0 $.
+\myuline{MLIW 9: Setting the Threshold for a Classifier}
 
-\textsc{Find $ P $(error) if a $ 1 $ was sent}
-Let $ R = $ received $ =2+Z $. $ Z \thicksim N(0,1) $
+Imagine we send a voltage of $ +2 $ (for $ 1 $) or $ -2 $ (for $ 0 $) over
+a connection to convey a string of bits. The connection is noisy and adds
+a $ N(0,1) $ distributed amount of voltage to whatever signal is sent.
+
+The person receiving the message on the other side must interpret the incoming
+signal as either a $ 1 $ or $ 0 $, based on a threshold $ c $. If the voltage
+is above $ c $, it will interpret it as a $ 1 $, otherwise a $ 0 $.
+
+\myuline{Find $P(\text{error})$ if $ c=0.5 $}
+
+\emph{Solution.}
+
+$ P(\text{error}) $ if a $ 1 $ was sent: $ R =2+Z $. $ Z \thicksim N(0,1) $
 \begin{align*}
     P(\text{error})&=P(R<0.5)\\
     &=P(2+Z<0.5)\\
@@ -21,15 +29,45 @@ Let $ R = $ received $ =2+Z $. $ Z \thicksim N(0,1) $
     &=1-0.93319\\
     &=0.06681
 \end{align*}
-Similarly $ P $(error) if $ 0 $ was sent: $ R=-2+Z $,
+$ P(\text{error}) $ if a $ 0 $ was sent: $ R=-2+Z $. $ Z \thicksim N(0,1) $
 \begin{align*}
     P(\text{error})&=P(R>0.5)\\
     &=P(-2+Z>0.5)\\
     &=P(Z>2.5)\\
     &=1-P(Z\le 2.5)\\
     &=1-0.99379\\
-    &=0.06621
+    &=0.006621
 \end{align*}
+Why? We had $ c=0.5 $ closer to $ 2 $ than $ -2 $, thus the probability
+of error is higher for $ 1 $'s sent than for $ 0 $'s.
+
+If we wanted the probabilities of error to be equal no matter what input,
+we could set $ c=0 $.
+
+\myuline{Find $P(\text{error})$ if $ c=0 $}
+
+\emph{Solution.}
+
+$ P(\text{error}) $ if a $ 1 $ was sent: $ R =2+Z $. $ Z \thicksim N(0,1) $
+\begin{align*}
+    P(\text{error})&=P(R<0)\\
+    &=P(2+Z<0)\\
+    &=P(Z<-2)\\
+    &=P(Z>2)\\
+    &=1-P(Z\le 2)\\
+    &=1-0.97725\\
+    &=0.02275
+\end{align*}
+$ P(\text{error}) $ if a $ 0 $ was sent: $ R=-2+Z $. $ Z \thicksim N(0,1) $
+\begin{align*}
+    P(\text{error})&=P(R>0)\\
+    &=P(-2+Z>0)\\
+    &=P(Z>2)\\
+    &=1-P(Z\le 2)\\
+    &=1-0.97725\\
+    &=0.02275
+\end{align*}
+
 \textsc{Find percentiles of $ N(0,1) $}
 
 Suppose we want $ c $ such that $ P(Z<c)=0.85 $
@@ -38,7 +76,7 @@ Suppose we want $ c $ such that $ P(Z<c)=0.85 $
     \item use reverse table, look up row and column: 1.0364
 \end{itemize}
 
-\textsc{Transforming a Normal rv}
+\textsc{Transforming a Normal random variable}
 
 Suppose $ X \thicksim (\mu,\sigma^2) $, $ \mu,\sigma^2<\infty $.
 
@@ -65,7 +103,8 @@ Proof.
 \end{align*}
 3. range of $ Z $ is $ \mathbb{R} $, so $ Z \thicksim N(0,1) $
 
-\subsection{Example}
+\myuline{Example}
+
 MCAT scores are normal with mean $ 25.3 $ and standard deviation 6.5.
 
 \textsc{A score of $ 41 $ is how good?}
@@ -73,7 +112,8 @@ MCAT scores are normal with mean $ 25.3 $ and standard deviation 6.5.
 Find $ P(X>41) $ where $ X \thicksim N(25.3,6.5^2) $
 \[ P\left(\frac{X-25.3}{6.5}>\frac{41-25.3}{6.5}\right)=P(Z>2.42)=1-0.99202=0.00798 \]
 
-\subsection{Example}
+\myuline{Example}
+
 You want $ 98\% $ of the population to use a ride by height.
 $ X= $ height $ \thicksim N(69,2.4^2) $. That is, find $ h $
 such that $ P(X<h)=0.98 $, so

@@ -1,15 +1,7 @@
 \section{Lecture 17*}
-\begin{itemize}
-    \item If you're interested, see if you can determine how small the probability of a cache hit would have to be (in our example) in order for it not to be worth it to use a cache. Post the answer in the follow-up if you get it.
-    \item In Roulette, a game where there are 38 sections that can be chosen with equal probability, and you can bet on lots of different outcomes. It turns out that no matter what betting strategy you use or how you split up your money, the expected payoff from any \$1 bet is always 0.94737, so you essentially lose about 5.3 cents every time you play! (Over Reading Week, I encourage you to imagine a betting strategy and verify this fact - but I do not encourage actually gambling!)
-    \item Of course, different betting strategies will have different amounts of risk, even if the expected value is the same. This is the idea of Variance, which we'll start talking about on Monday after Reading Week. :)
-\end{itemize}
+\myuline{7.2 Expectation of a Random Variable}
 
-Have a fantastic Reading Week! I recommend setting realistic goals for yourself (including both some dedicated time to relax and dedicated time to catch up / get ahead on school work) and have both a productive and fun week!
-
-\subsection{Expectation of a Random Variable (7.2)}
-Imagine we know the theoretical probability of each
-\# of kids in a family.
+Imagine we know the theoretical probability of each \# of kids in a family.
 
 \begin{tabular}{| *{6}{>{\centering\arraybackslash}p{1cm} |}}
     \hline
@@ -19,8 +11,7 @@ Imagine we know the theoretical probability of each
     \hline
 \end{tabular}
 
-Now we replace the observed proportion in the sample mean
-with $ f(x) $
+Now we replace the observed proportion in the sample mean with $ f(x) $.
 \[ \sum\limits_{\text{all } x} x f(x)=(1)(0.43)+(2)(0.4)+
 (3)(0.12)+(4)(0.04)+(5)(0.01)=1.8 \]
 which is the theoretical mean.
@@ -34,11 +25,11 @@ Why do we have sample mean > theoretical mean?
 \end{itemize}
 
 \begin{defbox}
-    \subsubsection{Definition (Expected Value)}
-    Let $X$ be a discrete random variable and probability function $f(x)$. The
-    \emph{expected value} (also called the mean or the expectation) of $X$ is
-    given by
-    \[ \mu=E[X]=\sum\limits_{\text{all } x}xf(x) \]
+    \subsection{Definition (Expected Value)}
+    Let $X$ be a discrete random variable with $ \text{range}(X)=A $
+    and probability function $f(x)$. The \emph{expected value} 
+    (also called the mean or the expectation) of $X$ is given by
+    \[ \mu=E\left[X\right]=\sum\limits_{x\in A} x f(x) \]
 \end{defbox}
 \begin{remark}
     $ \mu $ will be within the range but not necessarily
@@ -48,7 +39,8 @@ Why do we have sample mean > theoretical mean?
     some function of $ X $, $ g(X) $.
 \end{remark}
 
-\subsection{Example}
+\myuline{Example}
+
 Tax credit of $ \$ 1000 $ plus $ \$250 $ per kid. Find the
 average cost.
 
@@ -65,10 +57,11 @@ $ =(1250)(0.43)+\cdots+(2250)(0.01)=1450 $
 
 
 \begin{thmbox}
-    \subsubsection{Theorem}
-    Let $X$ be a discrete random variable and probability function $f(x)$. The
-    expected value of a some function $ g(X) $ of $ X $ is given by
-    \[ E[g(X)]=\sum\limits_{\text{all } x} g(x)f(x) \]
+    \subsection{Theorem}
+    Let $X$ be a discrete random variable with $ \text{range}(X)=A $
+    and probability function $f(x)$. 
+    The expected value of a some function $ g(X) $ of $ X $ is given by
+    \[ E\left[g(X)\right]=\sum\limits_{x\in A} g(x)f(x) \]
 \end{thmbox}
 
 Note that $ g(x)=1000+250x$ from last example.
@@ -81,7 +74,44 @@ But $ \frac{2000}{E[X]}=\frac{2000}{1.8}=1111.11 $. Therefore
 unless $ g $ is a linear function. That is, if $ g(X)=aX+b $, then
 $ E[g(X)]=aE[X]+b $
 
-\subsection{Example}
+\begin{thmbox}
+    \subsection{Theorem}
+    Let $X$ be a discrete random variable with $ \text{range}(X)=A $
+    and probability function $f(x)$.    
+    For constants $ a $ and $ b $ and some function $ g(X) $,
+    \[ E[ag(X)+b]=aE[g(X)]+b \]
+\end{thmbox}
+\begin{proof}
+    \begin{align*}
+        E[ag(X)+b]
+        &=\sum\limits_{x\in A}\left(ag(x)+b\right)f(x)\\
+        &=\sum\limits_{x\in A}\left(ag(x)f(x)+bf(x)\right)\\
+        &=a\sum\limits_{x\in A}g(x)f(x)+b\sum\limits_{x\in A}f(x)\\
+        &=aE[g(X)]+b \qquad \left[\text{since }\sum\limits_{x\in A}f(x)=1\right]
+    \end{align*}
+\end{proof}
+
+\begin{thmbox}
+    \subsection{Theorem}
+    Let $X$ be a discrete random variable with $ \text{range}(X)=A $
+    and probability function $f(x)$.    
+    For constants $ a $ and $ b $ and some functions $ g_1(X) $, $ g_2(X) $,
+    \[ E[ag_1(X)+bg_2(X)]=aE[g_1(X)]+bE[g_2(X)] \]
+\end{thmbox}
+\begin{proof}
+    \begin{align*}
+        E[ag_1(X)+b g_2(X)]
+        &=\sum\limits_{x\in A}\left(a g_1(x)+b g_2(x)\right)f(x)\\
+        &=\sum\limits_{x\in A}\left(a g_1(x)f(x)+b g_2(x)f(x)\right)\\
+        &=a\sum\limits_{x\in A}g_1(x)f(x)+b\sum\limits_{x\in A}g_2(x)f(x)\\
+        &=aE[g_1(X)]+bE[g_2(X)]
+    \end{align*}
+\end{proof}
+
+\myuline{7.3 Some Applications of Expectation}
+
+\myuline{Example}
+
 A web server has a cache. Takes 10ms to check, $ 20 $\% of the requests are
 found (cache hit) and immediately shown. If it's not found (cache miss),
 it takes $ \underbrace{50}_{\text{to server}}+\underbrace{70}_{\text{lookup}}
@@ -100,7 +130,8 @@ Time no cache = $ 50+70+50=170\text{ms} $.
 
 Since $ 146\text{ms}<170\text{ms, it's worth it!} $
 
-\subsection{Example}
+\myuline{Example}
+
 Roulette: each of $38$ numbers is equally likely
 
 (1) If you bet $1$ dollar on number $7$ $ \rightarrow $ pays $ 35:1 $
@@ -128,5 +159,9 @@ and $ 50 $ cents on first $ 12 $ numbers $ \rightarrow $ pays $ 2:1 $
     \hline
 \end{tabular}
 
-\[ E[X]=0(\frac{37}{38})+36(\frac{1}{38})=0.94737 \]
-\[ E[Y]=0(\frac{14}{38})+1(\frac{12}{38})+1.5(\frac{6}{38})+2.5(\frac{6}{38})=0.94737\]
+\[ E[X]=0\left(\frac{37}{38}\right)+36\left(\frac{1}{38}\right)=0.94737 \]
+\[ E[Y]=0\left(\frac{14}{38}\right)+
+1\left(\frac{12}{38}\right)+
+1.5\left(\frac{6}{38}\right)+
+2.5\left(\frac{6}{38}\right)=
+0.94737\]
