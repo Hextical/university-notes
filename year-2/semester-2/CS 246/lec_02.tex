@@ -1,0 +1,101 @@
+\section{2020-01-09}
+It's strongly recommend that you \textbf{do not} memorize these commands presented,
+you should try them out on your own to see what the output is.
+
+CTRL + C : kill signal
+\begin{lstlisting}
+    # print out all text on console
+    cat FILENAME
+\end{lstlisting}
+CTRL + D : EOF (end-of-file)
+
+> output redirection, overwrites files, e.g.
+\begin{lstlisting}
+    # Redirects output produced by cat to the file out.txt
+    cat > out.txt
+    # Redirects all text from t1.txt to t2.txt
+    cat t1.txt > t2.txt
+\end{lstlisting}
+>{}> appends at the end of the file instead of overwriting like >
+\begin{lstlisting}
+    # Input redirection, the shell handles this
+    cat < sample.txt
+    # The cat (program) handles this, in this case sample.txt is an argument
+    cat sample.txt
+    # cat: command
+    # -n: argument, adds a line number to all lines
+    # < in: input redirection
+    # > out: output redirection
+    cat -n < in > out
+\end{lstlisting}
+
+\subsection{Linux Streams}
+
+\myuline{1. Standard input (stdin)}: keyboard, use < to change to file
+
+\myuline{2. Standard output (stdout)}: screen, use 1> to change to file,
+side note: the 1 is not needed before the >, buffered
+
+\myuline{3. Standard error (stderr)}: screen, use 2> to change to file, non-buffered
+
+We use the non-buffered stream when we immediately want to output an error
+so that it does not take extra CPU cycles (extra material).
+
+Within the stream,
+
+stdin $ \rightarrow $ program $ \rightarrow $
+
+1) stdout
+
+2) stderr
+
+\begin{lstlisting}
+    # &1 is the location (address in C like CS 136) of stdout
+    prog arg1 < in > out 2>&1
+\end{lstlisting}
+
+\subsection{Wildcard Matching}
+\begin{lstlisting}
+    # *.txt is a globbing pattern, it will match anything that
+    # ends with .txt, the shell performs this operation
+    ls *.txt
+    # concatenate
+    cat
+\end{lstlisting}
+single/double quotes will suppress globbing patterns
+
+$\backslash$ is the escape character
+
+\subsection{Example}
+Count the number of words in the first 15 lines of sample.txt.
+
+\emph{Solution.}
+
+\begin{lstlisting}
+    # print number of words in entire text
+    wc -w
+    # get only the first 15 lines of sample.txt
+    head -15 sample.txt
+    # putting it all together
+    head -15 sample.txt > temp.txt wc -w temp.txt
+\end{lstlisting}
+
+What if we didn`t want temp.txt to be produced?
+
+\subsection{Linux Pipe}
+Connect stdout of program 1 to stdin of program 2.
+\begin{lstlisting}
+    head -15 sample.txt | wc -w
+\end{lstlisting}
+
+Suppose words*.txt that contain words one per line produce
+a duplicate list of words in words*.txt.
+\begin{lstlisting}
+    cat words*.txt | sort -u
+    cat words*.txt | sort | uniq
+    # $(date) is embedding a command date
+    echo Today is $(date)
+\end{lstlisting}
+Double quotes: not supressing embedded commands
+
+Single quotes: suppressing embedded commands

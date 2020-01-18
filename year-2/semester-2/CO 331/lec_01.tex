@@ -1,0 +1,80 @@
+\section{2020-01-06}
+Data source
+$ \rightarrow $
+$ \underset{\text{(digital data)}}{\text{Source encoder}} $
+$ \rightarrow $
+$ \underset{\text{(encoding algorithm)}}{\text{Channel encoder}} $ 
+$ \underset{\overset{\Big\uparrow}{\text{noise}}}{\overset{\text{channel}}{\rightarrow}} $
+$ \underset{\text{(decoding algorithm)}}{\text{Channel decoder}} $
+$ \rightarrow $
+Source Decoder $
+\rightarrow $
+Data
+
+\subsection{Example (Repetition Code)}
+
+\begin{tabular}{| *{5}{>{\centering\arraybackslash}p{3cm} |}}
+    \hline
+    source message $\rightarrow$ codeword & \# errors/codeword that can be detected & \# errors/codeword that can be corrected & rate\\
+    \hline
+    0 $ \rightarrow $ 0 & 0 & 0 & 1\\
+    1 $ \rightarrow $ 1 &&&\\
+    \hline
+    0 $ \rightarrow $ 00 & 1 & 0 & $ \nicefrac{1}{2} $\\
+    1 $ \rightarrow $ 11 &&&\\
+    \hline
+    0 $ \rightarrow $ 000 & 2 & 1 & $ \nicefrac{1}{3} $\\
+    1 $ \rightarrow $ 111 &&&\\
+    \hline
+    0 $ \rightarrow $ 00000 & 4 & 2 & $ \nicefrac{1}{5} $\\
+    1 $ \rightarrow $ 11111 &&&\\
+    \hline
+\end{tabular}
+
+\myuline{Goal of Coding Theory}
+
+Design codes so that:
+\begin{itemize}
+    \item High information rate
+    \item High error-correcting capability
+    \item Efficient encoding/decoding algorithm
+\end{itemize}
+
+Codes $ \subset $ Block codes $ \subset $  Linear codes
+$ \subset $  Cyclic codes $ \subset$ BCH Codes
+$ \subset $ RS Codes
+
+Requirements for this course:
+\begin{itemize}
+    \item MATH 136
+    \item Not required (but required to take the course): MATH 235
+    \item Familiarity with: Groups, Fields, Ideals, Rings (these will be taught)
+    \item Useful, if you have completed these you might be bored:
+    PMATH 336, PMATH 334 [or the advanced equivalents]
+\end{itemize}
+
+\myuline{The big picture}
+
+In its broadest sense, coding deals with the reliable, efficient, and secure
+transmissions of data over channels that are subject to inadvertent noise and
+malicious intrusion.
+
+Data source
+$ \rightarrow $
+$ \underset{\text{(data compression)}}{\text{Source encoder}} $
+$ \rightarrow $
+$ \underset{\text{(cryptography; co 487)}}{\text{Encryptory authentication}} $
+$ \rightarrow $
+$ \underset{\text{(error correction codes)}}{\text{Channel encoder}} $
+$ \underset
+{
+    \overset{\Big\uparrow}{\overset{\text{noise}}{\text{(non-malicious)}}}\qquad
+    \overset{\Big\uparrow}{\overset{\text{adversarial intrusion}}{\text{(malicious)}}}
+}
+{\overset{\text{channel}}{\longrightarrow}} $
+$ \rightarrow $
+Decriptory verification
+$ \rightarrow $
+$ \underset{\text{(data decompression)}}{\text{Source decoder}}  $
+$ \rightarrow $
+Data
