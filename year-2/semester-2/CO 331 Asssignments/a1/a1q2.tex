@@ -1,0 +1,101 @@
+\input{../../../../preamble.tex}
+
+\begin{document}
+2. (10 marks)
+\textbf{IMLD vs.\ MED}\\
+Consider the binary code $C=\{c_1=0000,c_2=1110,c_3=0111\}$.
+Suppose that $P(c_1)=0.1$, $P(c_2)=0.2$, and $P(c_3)=0.7$, where $P(c_i)$
+denotes the probability that $c_i$ is sent. Suppose that a binary
+symmetric channel with symbol error probability $p$ is being used,
+and $r=1001$ is received.
+
+\textbf{(a) What is the distance of $C$?}
+
+We have $ \binom{M}{2}=\binom{3}{2}=3 $ comparisons.
+\begin{enumerate}
+    \item $ d(c_1,c_2)=3 $
+    \item $ d(c_1,c_3)=3 $
+    \item $ d(c_2,c_3)=2 $
+\end{enumerate}
+We take the minimum value, and get $ d(C)=2 $.
+
+\textbf{(b) Suppose that $p=0.1$. Decode $r$ using IMLD.}
+
+IMLD decodes to the minimum Hamming Distance.
+\begin{enumerate}
+    \item $ d(r,c_1)=2 $
+    \item $ d(r,c_2)=3 $
+    \item $ d(r,c_3)=3 $
+\end{enumerate}
+Thus, $ r=1001 $ decodes to $ r=0000 $.
+
+\textbf{(c) Suppose that $p=0.1$. Decode $r$ using MED.}
+
+$ P(r\mid c_1)
+=(1-p)^{n-d}\left( \frac{p}{q-1} \right)^d
+=(1-0.1)^{4-2}\left( \frac{0.1}{2-1} \right)^{2}
+=0.0081 $
+
+$ P(r\mid c_2)
+=(1-p)^{n-d}\left( \frac{p}{q-1} \right)^d
+=(1-0.1)^{4-3}\left( \frac{0.1}{2-1} \right)^{3}
+=0.0009 $
+
+$ P(r\mid c_3)=0.0009 $
+
+$ P(c_1\mid r)
+=\frac{P(r\mid c_1)P(c_1)}{P(r)}
+=\frac{(0.0081)(0.1)}{P(r)}
+=\frac{0.00081}{P(r)} $
+
+$ P(c_2\mid r)
+=\frac{P(r\mid c_2)P(c_1)}{P(r)}
+=\frac{(0.0009)(0.2)}{P(r)}
+=\frac{0.00018}{P(r)} $
+
+$ P(c_3\mid r)
+=\frac{P(r\mid c_3)P(c_1)}{P(r)}
+=\frac{(0.0009)(0.7)}{P(r)}
+=\frac{0.00063}{P(r)} $
+
+Since we want to maximize $ P(c\mid r) $, we pick $ c_1 $. Thus,
+$ r=1001 $ decodes to $ r=0000 $.
+
+\textbf{(d) Suppose that $p=0.4$. Decode $r$ using IMLD.}
+
+Since the probability does not matter for IMLD, the answer will be
+the same as (b). Thus, $ r=1001 $ decodes to $ r=0000 $.
+
+\textbf{(e) Suppose that $p=0.4$. Decode $r$ using MED.}
+
+$ P(r\mid c_1)
+=(1-p)^{n-d}\left( \frac{p}{q-1} \right)^d
+=(1-0.4)^{4-2}\left( \frac{0.4}{2-1} \right)^{2}
+=0.0576 $
+
+$ P(r\mid c_2)
+=(1-p)^{n-d}\left( \frac{p}{q-1} \right)^d
+=(1-0.4)^{4-3}\left( \frac{0.4}{2-1} \right)^{3}
+=0.0384 $
+
+$ P(r\mid c_3)=0.0384 $
+
+$ P(c_1\mid r)
+=\frac{P(r\mid c_1)P(c_1)}{P(r)}
+=\frac{(0.0576)(0.1)}{P(r)}
+=\frac{0.00576}{P(r)} $
+
+$ P(c_2\mid r)
+=\frac{P(r\mid c_2)P(c_1)}{P(r)}
+=\frac{(0.0384)(0.2)}{P(r)}
+=\frac{0.00768}{P(r)} $
+
+$ P(c_3\mid r)
+=\frac{P(r\mid c_3)P(c_1)}{P(r)}
+=\frac{(0.0384)(0.7)}{P(r)}
+=\frac{0.02688}{P(r)} $
+
+Since we want to maximize $ P(c\mid r) $, we pick $ c_3 $. Thus,
+$ r=1001 $ decodes to $ r=0111 $.
+
+\end{document}

@@ -2,100 +2,104 @@
 It's strongly recommend that you \textbf{do not} memorize these commands presented,
 you should try them out on your own to see what the output is.
 
-CTRL + C : kill signal
-\begin{lstlisting}
-    # print out all text on console
-    cat FILENAME
-\end{lstlisting}
-CTRL + D : EOF (end-of-file)
-
-> output redirection, overwrites files, e.g.
-\begin{lstlisting}
-    # Redirects output produced by cat to the file out.txt
-    cat > out.txt
-    # Redirects all text from t1.txt to t2.txt
-    cat t1.txt > t2.txt
-\end{lstlisting}
->{}> appends at the end of the file instead of overwriting like >
-\begin{lstlisting}
-    # Input redirection, the shell handles this
-    cat < sample.txt
-    # The cat (program) handles this, in this case sample.txt is an argument
-    cat sample.txt
-    # cat: command
-    # -n: argument, adds a line number to all lines
-    # < in: input redirection
-    # > out: output redirection
-    cat -n < in > out
-\end{lstlisting}
+\begin{itemize}
+    \item \code{CTRL + C} $ \rightarrow $ send kill signal
+    \item \code{CTRL + D} $ \rightarrow $ send EOF (end-of-file)
+    \item NAME: \code{cat} $ \rightarrow $ concatenate files and print on the standard output
+    \subitem SYNOPSIS: \code{cat [OPTION]$\ldots$ [FILE]}
+    \subitem DESCRIPTION: Concatenate FILE(s) to standard output.
+    With no \code{FILE}, or when \code{FILE} is \code{-}, read standard input.
+    \item \code{>} $ \rightarrow $ output redirection, overwrites files
+    \subitem \code{cat > out.txt} $ \rightarrow $ redirects output produced by
+    \code{cat} to the file \code{out.txt}
+    \subitem \code{cat t1.txt > t2.txt} $ \rightarrow $ redirects all text from 
+    \code{t1.txt} to \code{t2.txt}
+    \item \code{>{}>} $ \rightarrow $ appends at the end of the file instead of overwriting like 
+    \code{>}
+    \item \code{<} $ \rightarrow $ input redirection
+    \subitem \code{cat < sample.txt} $ \rightarrow $
+    input redirection, the shell handles this
+    \subitem \code{cat sample.txt} $ \rightarrow $
+    \code{cat} handles this
+    \subitem \code{cat -n < in > out} $ \rightarrow $
+    \code{-n} numbers all output lines. Input redirect from file \code{in} to
+    \code{cat}, then output redirect with numbered lines to file \code{out}.
+\end{itemize}
 
 \subsection{Linux Streams}
 
-\myuline{1. Standard input (stdin)}: keyboard, use < to change to file
-
-\myuline{2. Standard output (stdout)}: screen, use 1> to change to file,
-side note: the 1 is not needed before the >, buffered
-
-\myuline{3. Standard error (stderr)}: screen, use 2> to change to file, non-buffered
+\begin{itemize}
+    \item \myuline{1. Standard input (stdin)}
+    \subitem keyboard
+    \subitem use \code{<} to change to file
+    \item \myuline{2. Standard output (stdout)}
+    \subitem terminal
+    \subitem use \code{1>} to change to file; the \code{1} before the \code{>} 
+    is optional
+    \subitem buffered
+    \item \myuline{3. Standard error (stderr)}
+    \subitem terminal
+    \subitem use \code{2>} to change to file
+    \subitem non-buffered
+\end{itemize}
 
 We use the non-buffered stream when we immediately want to output an error
 so that it does not take extra CPU cycles (extra material).
 
 Within the stream,
 
-stdin $ \rightarrow $ program $ \rightarrow $
+\code{stdin} $ \rightarrow $ program $ \rightarrow $ 
+1. \code{stdout} and 2. \code{stderr}
 
-1) stdout
-
-2) stderr
-
-\begin{lstlisting}
-    # &1 is the location (address in C like CS 136) of stdout
-    prog arg1 < in > out 2>&1
-\end{lstlisting}
+\code{prog arg1 < in > out 2>\&1} $ \rightarrow $
+\code{\&1} is the location of \code{stdout}, so any errors will be redirected to
+\code{stdout}.
 
 \subsection{Wildcard Matching}
-\begin{lstlisting}
-    # *.txt is a globbing pattern, it will match anything that
-    # ends with .txt, the shell performs this operation
-    ls *.txt
-    # concatenate
-    cat
-\end{lstlisting}
-single/double quotes will suppress globbing patterns
+$ \underbrace{\code{ls *.txt}}_{\text{globbing pattern}} \rightarrow $
+match anything that ends with \code{.txt}. The shell performs this operation.
 
-$\backslash$ is the escape character
+Using single/double quotes will suppress globbing patterns.
 
-\subsection{Example}
-Count the number of words in the first 15 lines of sample.txt.
+\code{\textbackslash} is the escape character
+
+\myuline{Example}
+
+Count the number of words in the first 15 lines of \code{sample.txt}.
 
 \emph{Solution.}
 
-\begin{lstlisting}
-    # print number of words in entire text
-    wc -w
-    # get only the first 15 lines of sample.txt
-    head -15 sample.txt
-    # putting it all together
-    head -15 sample.txt > temp.txt wc -w temp.txt
-\end{lstlisting}
+\begin{itemize}
+    \item \code{wc -w} $ \rightarrow $ print number of words in entire text
+    \item \code{head -15 sample.txt} $ \rightarrow $ get only the first 15 lines
+    of \code{sample.txt}
+    \item \code{head -15 sample.txt > temp.txt wc -w temp.txt} $ \rightarrow $
+    doing both, with output in a \code{temp.txt} file.
+\end{itemize}
 
-What if we didn`t want temp.txt to be produced?
+What if we didn't want \code{temp.txt} to be produced? We use Linux pipes.
 
 \subsection{Linux Pipe}
-Connect stdout of program 1 to stdin of program 2.
-\begin{lstlisting}
-    head -15 sample.txt | wc -w
-\end{lstlisting}
+Connect \code{stdout} of prog1 to \code{stdin} of prog2.
 
-Suppose words*.txt that contain words one per line produce
-a duplicate list of words in words*.txt.
-\begin{lstlisting}
-    cat words*.txt | sort -u
-    cat words*.txt | sort | uniq
-    # $(date) is embedding a command date
-    echo Today is $(date)
-\end{lstlisting}
-Double quotes: not supressing embedded commands
+\code{head -15 sample.txt | wc -w} $ \rightarrow $
+the first program, \code{head} runs with \code{sample.txt}, then the output is fed into
+the second program, \code{wc}.
 
-Single quotes: suppressing embedded commands
+\myuline{Example}
+
+Suppose \code{words*.txt} contains one word per line. Produce
+a list of words sorted, with no duplicates from \code{words*.txt}.
+
+\emph{Solution.}
+
+\code{cat words*.txt | sort -u} OR 
+\code{cat words*.txt | sort | uniq} $ \rightarrow $ \code{sort -u} will sort
+and remove any duplicate words. \code{uniq} removes duplicates.
+
+\code{echo Today is \$(date)} $ \rightarrow $
+\code{\$(date)} is embedding a command date
+
+Double quotes: does not supresses embedded commands
+
+Single quotes: supresses embedded commands

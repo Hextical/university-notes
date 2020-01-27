@@ -1,0 +1,128 @@
+\section{2020-01-16}
+\subsection{Shell Scripts}
+Shell scripts: text files containing Linux commands executed as a program.
+Information to a program: \textbf{arguments}, \code{stdin}
+
+We can provide arguments to a script. Arguments are available in special
+variables named \code{\$1}, \code{\$2},$\ldots$
+
+File: \code{isItAWord}
+\begin{lstlisting}
+    #!/bin/bash
+    egrep "^$1$" /usr/share/dict/words
+\end{lstlisting}
+\begin{itemize}
+    \item \code{./isItAWord hello} $ \rightarrow $ finds \code{hello} in
+    \code{/usr/share/dict/words}
+\end{itemize}
+
+Every process sets a status code: $ 0 $ a success, non-zero for failure.
+\code{\$?} $ \rightarrow $ last status code
+
+Run: \code{[ 1 -eq 2]} \code{echo \$?} $ \rightarrow $ returns $ 0 $ because $ 1\neq 2 $
+
+File: \code{goodPassword}
+\begin{lstlisting}
+    #!/bin/bash
+    # Answers whether a word is in the dictionary (and therefore not a good
+    #  password)
+
+    egrep "^$1$" /usr/share/dict/words > /dev/null
+
+    if [ $? -eq 0 ]; then
+        echo Not a good password
+    else
+        echo Maybe a good password
+    fi
+\end{lstlisting}
+\begin{itemize}
+    \item \code{/dev/null} $ \rightarrow $ equivalent to discarding output
+\end{itemize}
+
+\code{if} statement:
+\begin{lstlisting}
+    if [  ]; then
+        ...
+    elif [  ]; then
+        ...
+    else
+        ...
+    fi
+\end{lstlisting}
+
+\code{while} loop:
+\begin{lstlisting}
+    while [  ]; do
+        ...
+    done
+\end{lstlisting}
+
+File: \code{goodPasswordCheck} $ \rightarrow $ same as \code{goodPassword},
+but checks for the correct number of arguments by adding the following
+(exits with a non-zero code if incorrect number of arguments are supplied):
+
+\begin{lstlisting}
+    if [ ${#} -ne 1 ]; then
+        echo "Usage: $0 password" >&2
+        exit 1
+    fi
+\end{lstlisting}
+
+\begin{itemize}
+    \item \code{\$\{\#\}} $ \rightarrow $ number of arguments to the script
+\end{itemize}
+
+File: \code{count}
+\begin{lstlisting}
+    #!/bin/bash
+    # count limit ---counts the numbers from 1 to limit
+
+    x=1
+    while [ $x -le $1 ]; do
+        echo $x
+        x=$((x + 1))
+    done
+\end{lstlisting}
+\begin{itemize}
+    \item \code{./count 10} $ \rightarrow $ prints out numbers 1 to 10,
+    each on a new line
+    \item \code{\$((x+1))} is proper addition for \code{int} data type
+\end{itemize}
+
+Run: \code{x=1} 
+
+\code{echo \$((x+1))} $ \rightarrow $ outputs \code{2}
+
+\code{echo \$x+1} $ \rightarrow $ outputs \code{1+1}
+
+File: \code{renameC}
+
+\begin{lstlisting}
+    #!/bin/bash
+    # Renames all .C files to .cc
+    
+    for name in *.C; do
+        mv ${name} ${name%C}cc
+    done
+\end{lstlisting}
+\begin{itemize}
+    \item given a \code{file}, \code{mv \$\{file\} \$\{file\%C\}cc} 
+    $ \rightarrow $ renames \code{file.C}
+    to \code{file.cc} $ \rightarrow $ removes \code{C}, adds \code{cc}; that is,
+    anything after \code{\%} is removed
+\end{itemize}
+
+Files: \code{countWords}, \code{payday}
+
+\subsection{Summary of Files}
+Files covered in this lecture found in \code{1201/lectures/shell/scripts}:
+\begin{itemize}
+    \item \code{basic}
+    \item \code{isItAWord}
+    \item \code{goodPassword}
+    \item \code{goodPasswordCheck}
+    \item \code{renameC}
+    \item \code{count}
+    \item \code{countWords}
+    \item \code{payday}
+\end{itemize}

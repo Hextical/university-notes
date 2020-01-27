@@ -1,0 +1,71 @@
+\input{../../../../preamble.tex}
+
+\begin{document}
+
+4. (10 marks) \textbf{Telephone numbers}\\
+Let $C$ be an $[n,M]$-code with distance $d$ over an alphabet $A$
+of size $q$. Let $e = \lfloor \frac{d-1}{2} \rfloor$.
+
+\textbf{(a) Prove that $M \sum_{i=0}^e {n \choose i} (q-1)^i \leq q^n$.\\
+     (Hint: Consider the number of words in a sphere of radius $e$ centred
+      at a codeword)}
+\begin{proof}
+    Consider the number of words in a single sphere of radius $ e $ centred
+    at a codeword $ c\in C $, call it $ x $. Every pair of spheres do not intersect
+    since $ d(C)=d\implies C $ is a $ e $-error correcting code. There are up to
+    $ \binom{n}{e} $ (from $ \binom{n}{0} $) ways
+    to choose the components of $ c $ to differ by $ (q-1) $ other values.
+    Hence,
+    \[ x=\sum\limits_{i=0}^{e} \binom{n}{i}(q-1)^i \]
+    For the total number of spheres, $ M $, we get
+    \[ M x = M \sum\limits_{i=0}^{e} \binom{n}{i}(q-1)^i \]
+    which cannot possibly be more than the total number of words in the alphabet
+    $ A $ of size $ q $, $ q^n $. Thus,
+    \[ M \sum\limits_{i=0}^e {n \choose i} (q-1)^i \leq q^n \]
+\end{proof}
+
+\textbf{(b) Suppose that there are 110 million telephones in a country.
+      Is it possible to assign 10-digit decimal numbers to these
+      telephones so that a single error in dialing can always be
+      (automatically) corrected? (Explain)}
+
+      Try the following parameters with the sphere packing bound:
+      \begin{itemize}
+        \item $ M=110000000 $ (number of telephones/codewords)
+        \item $ q=10 $ (all decimal digits)
+        \item $ n=10 $ (length of each telephone number/length of words)
+        \item $ e=1 $ (errors to be corrected)
+      \end{itemize}
+      We get,
+      \[ (110000000)\sum\limits_{i=0}^1 {10 \choose i} (10-1)^i
+        =10010000000
+        \nleq 10^{10} \]
+
+        The block code \textbf{does not} satisfy the \emph{necessary}
+        sphere packing bound condition, thus it is \textbf{not possible} to assign a
+        10-digit decimal numbers to these telephones so that a single error
+        in dialing can always be (automatically) corrected.
+
+\textbf{(c) Suppose that there are 80 million telephones in a country.
+      Is it possible to assign 10-digit decimal numbers to these
+      telephones so that a single error in dialing can always be
+      (automatically) corrected? (Explain)}
+
+      Try the following parameters with the sphere packing bound:
+      \begin{itemize}
+        \item $ M=80000000 $ (number of telephones/codewords)
+        \item $ q=10 $ (all decimal digits)
+        \item $ n=10 $ (length of each telephone number/length of words)
+        \item $ e=1 $ (errors to be corrected)
+      \end{itemize}
+      We get,
+      \[ (80000000)\sum\limits_{i=0}^1 {10 \choose i} (10-1)^i=
+        7280000000
+        \leq 10^{10} \]
+
+        The block code \textbf{does} satisfy the \emph{necessary}
+        sphere packing bound condition, but the bound is not \emph{sufficient}
+        to say whether there exists a code for this problem. Thus,
+        the solution to this problem is \textbf{inconclusive}.
+
+\end{document}

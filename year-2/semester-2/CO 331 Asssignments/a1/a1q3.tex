@@ -1,0 +1,79 @@
+\input{../../../../preamble.tex}
+
+\begin{document}
+3. (10 marks) \textbf{Error probability of a code}\\
+Consider the binary code $C=\{c_1=0000, c_2=1010, c_3=0111\}$.
+Suppose we are using IMLD and a BSC with symbol error probability $p$.
+Assume also that all codewords are sent with equal probability.
+
+\textbf{(a) For $c \in C$, let $L(c)$ denote the set of all binary $4$-tuples
+which are closer to $c$ than any other codeword. Determine $L(c_1)$,
+$L(c_2)$ and $L(c_3)$.}
+
+We know there are $ 2^4=16 $ possible binary 4-tuples, so we will use a table
+to determine which are in $ L(c_i) $, $ \forall i\in\{1,2,3\} $ where $ X $ are the ties
+(in that case, IMLD cannot accurately correct the error).
+\[
+\begin{tabular}{| *{5}{>{\centering\arraybackslash}p{2cm} |}}
+    \hline
+    $x_i$ & $d(c_1,x_i)$ & $d(c_2,x_i)$ & $d(c_3,x_i)$ & $\min d(c_i,x_i) $\\
+    \hline
+    $0000$ & $0$ & $2$ & $3$ & $c_1$\\
+    $0001$ & $1$ & $3$ & $2$ & $c_1$\\
+    $0010$ & $1$ & $1$ & $2$ & $X$\\
+    $0011$ & $2$ & $2$ & $1$ & $c_3$\\
+    $0100$ & $1$ & $3$ & $2$ & $c_1$\\
+    $0101$ & $2$ & $4$ & $1$ & $c_3$\\
+    $0110$ & $2$ & $2$ & $1$ & $c_3$\\
+    $0111$ & $3$ & $3$ & $0$ & $c_3$\\
+    $1000$ & $1$ & $1$ & $4$ & $X$\\
+    $1001$ & $2$ & $2$ & $3$ & $X$\\
+    $1010$ & $2$ & $0$ & $3$ & $c_2$\\
+    $1011$ & $3$ & $1$ & $2$ & $c_2$\\
+    $1100$ & $2$ & $2$ & $3$ & $X$\\
+    $1101$ & $3$ & $3$ & $2$ & $c_3$\\
+    $1110$ & $3$ & $1$ & $2$ & $c_2$\\
+    $1111$ & $4$ & $2$ & $1$ & $c_3$\\
+    \hline
+\end{tabular}
+\]
+Thus,
+
+$ L(c_1)=\{0000,\,0001,\,0100\} $
+
+$ L(c_2)=\{1010,\,1011,\,1110\} $
+
+$ L(c_3)=\{0011,\,0101,\,0110,\,0111,\,1101,\,1111\} $
+
+\textbf{(b) For each $i$, $1 \leq i \leq 3$, let $w_i$ denote the probability that
+IMLD makes an incorrect decision or rejects the received word, given that
+$c_i$ was transmitted. Determine $w_1$, $w_2$ and $w_3$.}
+
+For $ w_1 $, we know there are $ 3 $ codewords that can be corrected out of
+$ 16 $. Similarly, for $ w_2 $, there are $ 3 $ codewords that can be corrected
+out of $ 16 $. Lastly, for $ w_3 $, there are $ 6 $ codewords that can be
+corrected out of $ 16 $. Thus, we get $ w_1=w_2=\nicefrac{p}{13} $ and
+$ w_3=\nicefrac{p}{10} $ chance that IMLD makes an incorrect decision
+or rejects the received word, given that $ c_i $ was transmitted.
+
+\textbf{(c) The error probability of an $[n,M]$-code $C$ is defined to be
+$P_C = \frac{1}{M}\sum_{i=1}^M w_i$. Determine $P_C$ for the code $C$ of
+this example when $p=0.1$.}
+\begin{align*}
+    P_C&=\frac{1}{M}\sum_{i=1}^M w_i\\
+    &=\frac{1}{3}\left( \frac{0.1}{13} + \frac{0.1}{13} + \frac{0.1}{10} \right)\\
+    &\approx 0.008461
+\end{align*}
+
+\textbf{(d) Suppose now that the codewords are not sent with equal probability.
+Then we define the error probability of $C$ to be
+$P_C = \sum_{i=1}^M w_i P(c_i)$. Suppose that $P(c_1)=0.7$, $P(c_2)=0.2$,
+and $P(c_3)=0.1$. Determine $P_C$ for the code $C$ of this
+example when $p=0.1$.}
+\begin{align*}
+    P_C&=\frac{1}{M}\sum_{i=1}^M w_iP(c_i)\\
+    &=\frac{1}{3}\left( \frac{0.1}{13}(0.7) + \frac{0.1}{13}(0.2) + \frac{0.1}{10}(0.1) \right)\\
+    &\approx 0.002641
+\end{align*}
+
+\end{document}

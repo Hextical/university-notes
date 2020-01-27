@@ -1,0 +1,114 @@
+\section{2020-01-23}
+\subsection{C++ I/O}
+\code{cin >{}> x >{}> y;} $ \rightarrow $
+\code{cin >{}> y;} $ \rightarrow $  \code{cin;}
+
+If a read fails, all subsequent attempts to read fail, unless
+you acknowledge that failure.
+
+Read and print all ints from \code{stdin}. Terminate on EOF.
+Ignore ``bad input'' (non-int).
+
+File: \code{readInts5.cc}
+\begin{lstlisting}[language = C++]
+    #include <iostream>
+    using namespace std;
+
+    int main () {
+        int i;
+        while (true) {
+            if (!(cin >> i)) {
+                if (cin.eof()) {
+                    break; // nothing left to read
+                } else { // read failed, infinite loop without below
+                    cin.clear(); // set flag to false
+                    cin.ignore(); // ignore next character
+                } else {
+                    cout << i << endl;
+                }
+            }
+        }
+    }
+\end{lstlisting}
+
+\subsection{C++ Strings}
+In C, we used null-terminated character arrays. In C++, we have
+a string type, header: \code{<string>}
+
+\code{string str = "hello";} $ \rightarrow $ creates a null terminated
+string in both C and C++
+
+C++ strings automatically resize.
+
+\begin{tabular}{c|c|c}
+    & C & C++\\
+    \hline
+    comparisons & \code{strcmp(s1,s2)} & \code{s1 == s2}\\
+    length & \code{strlen(s)} & \code{s.length}\\
+    concatenation & \code{strcat(s1,s2)} & \code{s1 + s2}
+\end{tabular}
+When we do \code{s1 + s2}, we create a new string. If we wanted to
+append s1 to s2, we can do \code{s1 = s1 + s2}.
+
+File: \code{readStrings.cc}
+\begin{itemize}
+    \item reads until first whitespace (ignore all whitespace until first
+    character)
+\end{itemize}
+\code{getline(cin,s)} $ \rightarrow $ reads until a new line
+
+In C, we used \code{\%d}, \code{\%x}, etc. for \code{printf}. In C++, we
+can use the \code{<iomanip>} header as follows:
+\begin{lstlisting}[language = C++]
+    int x = 24;
+    cout << x; // prints 24 in decimal
+    cout << hex; // switch cout to hexadecimal
+    cout << x; // prints 24 in hexadecimal
+    cout << dec; // switch cout to decimal
+\end{lstlisting}
+
+\code{<fstream>} $ \rightarrow $ input file stream
+
+\code{<ofstream>} $ \rightarrow $ output file stream
+
+File: \code{fileInput.cc}
+\begin{lstlisting}
+    #include <iostream>
+    #include <fstream>
+    using namespace std;
+    
+    int main () {
+        ifstream file{"suite.txt"};
+        string s;
+        while (file >> s) {
+            cout << s << endl;
+        }
+    }
+\end{lstlisting}
+\code{$\underbrace{\text{ifstream}}_{\text{type}} \underbrace{\text{file}}_{\text{variable}}
+\underbrace{\{\text{``suite.txt''\}}}_{\text{initialization of variable}}$}
+$ \rightarrow $ uniform initialization syntax, only in $ \ge $ C++11
+
+Other examples of uniform initialization syntax:
+\begin{itemize}
+    \item \code{int x\{5\}};
+    \item \code{string s\{``hello''\}};
+\end{itemize}
+
+\code{<sstream>}
+\begin{itemize}
+    \item \code{istringstream}
+    \item \code{ostringstream}
+\end{itemize}
+
+File: \code{buildString.cc}, \code{getNum.cc}
+
+\subsection{Summary of Files}
+Files covered in this lecture found in \code{1201/lectures/c++/2-io}:
+\begin{itemize}
+    \item \code{readInts5.cc}
+    \item \code{readStrings.cc}
+    \item \code{fileInput.cc}
+    \item \code{buildString.cc}
+    \item \code{getNum.cc}
+\end{itemize}

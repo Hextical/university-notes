@@ -1,0 +1,112 @@
+\input{../../../preamble.tex}
+
+\begin{document}
+\section{Math 239 Tutorial \# 2 (Shayla)}
+
+\textbf{Problem 1.}
+Use the negative binomial theorem and substitutions to give a formula for the
+coefficient of $ x^n $ in $ (1-3x)^{-1} + 2(1-2x)^{-2} $.
+\[ (1-x)^{-k}=\sum\limits_{n\ge 0}\binom{n+k-1}{k-1}x^n \]
+
+\emph{Solution.}
+
+Hint: Start with $ [x^n](1-3x)^{-1} $
+
+$ x\rightarrow 3x $, $ k\rightarrow1 $
+\[ (1-3x)^{-1}=\sum\limits_{n\ge 0}\binom{n+1-1}{1-1}(3x)^n
+=\sum\limits_{n\ge 0}\binom{n}{0}3^n x^n=\sum\limits_{n\ge 0}3^n x^n  \]
+\[ (1-2x)^{-2}=\sum\limits_{n\ge 0}\binom{n+2-1}{2-1}(2x)^n
+=\sum\limits_{n\ge 0}\binom{n+1}{1}2^n x^n=\sum\limits_{n\ge 0}(n+1)2^{n+1} \]
+\[ [x^n](\text{expr.})=3^n+(n+1)2^{n+1} \]
+
+
+\textbf{Problem 2.}
+Let $ F(x)=x+x^2+\cdots $ and let $ G(x)=1+3x+2x^2 $. Compute the coefficient
+of $ x^n $ in $ G(F(x)) $.
+
+\emph{Solution.}
+
+\[ G(F(x))=1+3(x+x^2+\cdots)+2(x+x^2+\cdots)^2 \]
+\begin{align*}
+    (x+x^2+\cdots)^2&=
+    \left( \frac{1}{1-x} -1 \right)^2\\
+    &=\left( \frac{x}{1-x}  \right)^2\\
+    &=x^2(1-x)^{-2}\\
+    &=x^2 \sum\limits_{n\ge 0}\binom{n+2-1}{2-1}x^n\\
+    &=x^2 \sum\limits_{n\ge 0}(n+1)x^n 
+\end{align*}
+\[ [x^{n-2}]\sum\limits_{n\ge 0}\binom{n+1}{1}x^n\qquad
+[x^n]\sum\limits_{n\ge 0}(n+1)x^{n+2} \]
+\[
+    [x^{n-2}]\sum\limits_{n\ge 0}\binom{n+1}{1}x^n=n-1\text{ where }
+    m=n-2\ge 0 \]
+\[ [x^n]2(x+x^2+\cdots)^2=
+\begin{cases}
+    2(n-1),\,n\ge 2\\
+    0,\,n=0,1
+\end{cases} \]
+\[ [x^n]1=
+\begin{cases}
+    0,\,n>0\\
+    1,\,n=0
+\end{cases} \]
+\[ [x^n]3(x+x^2+\cdots)=
+\begin{cases}
+    3,\,n\ge 1\\
+    0,\,n=0
+\end{cases} \]
+
+Thus,
+\[ =\begin{cases}
+    2n+1,\,n\ge 2\\
+    3,\,n=1\\
+    1,\,n=0
+\end{cases} \]
+
+\textbf{Problem 3.} Show that if $ F(x)=a_0+a_1x+a_2x^2+\cdots $. Then
+\[ F(x)(1-x)=a_0+(a_1-a_0)x+(a_2-a_1)x^2+\cdots \]
+and
+\[ F(x)(1-x)^{-1}=\sum\limits_{n=0}^{\infty} c_n x^n, \]
+where $ c_n=a_0+a_1+\cdots+a_n $.
+
+\emph{Solution.}
+
+Note that $ F(x)(1-x)=F(x)-xF(x) $
+
+We know that $ (1-x)^{-1}=1+x+x^2+\cdots $, thus
+\begin{align*}
+    F(x)(1-x)^{-1}&=
+    F(x)+xF(x)+x^2F(x)+\cdots\\
+    &=\sum\limits_{i\geq 0}x^{i} F(x)\\
+    &=\sum\limits_{i\ge 0}[x^{n-i}] F(x)\\
+    &=\sum\limits_{i\ge 0}^{n} a_{n-i} \text{ for } 0\leq k=n-i\leq n\\
+    &=\sum\limits_{k=0}^{n} a_k 
+\end{align*}
+where $ [x^{n-i}]F(x)=a_{n-i}=\begin{cases}
+    a_{n-i},\,i\leq n\\
+    0,\,i>n
+\end{cases} $
+
+\textbf{Problem 4.} Show that for $ k\ge 1 $ and $ n\ge 1 $, we have
+\[ \sum\limits_{i=0}^{k} (-1)^i\binom{k}{i}\binom{n-i+k-1}{k-1}=0, \]
+where we interpret $ \binom{j}{i}=0 $ when $ j<i $. 
+Hint: Look at $ 1=(1-x)^{k}(1-x)^{-k} $) and compute the coefficient of $ x^n $
+in both sides.
+
+\emph{Solution.}
+
+$ [x^n]1=0 $
+
+$ [x^n](1-x)^k(1-x)^{-k} $;
+coefficient of $ x^i $ in $ (1-x)^k $ and $ x^{n-i} $ for $ (1-x)^{-k} $;
+add them up.
+
+\begin{align*}
+    &=\sum\limits_{i=0}^{n} [x^i](1-x)^{-k}[x^{n-i}](1-x)^{-k}\\
+    &=\sum\limits_{i=0}^{n} (-1)^{i}\binom{k}{i}\binom{n-i+k-1}{k-1}
+    \text{ by Bin. \& NB .thm}\\
+    &=\sum\limits_{i=0}^{k} (-1)^i\binom{k}{i}\binom{n-i+k-1}{k-1}
+\end{align*}
+
+
+\end{document}
