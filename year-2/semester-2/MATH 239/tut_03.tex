@@ -1,0 +1,88 @@
+\section{Math 239 Tutorial 3 (Shayla)}
+\textbf{Problem 1.} Consider the set of non-negative integers
+$ \mathbb{N}_0 $, but with a non-standard weight function
+\[ w(a)=
+\begin{cases}
+    \frac{3}{2} a + 1,\,\text{if $a$ is even},\\
+    2(a+1),\,\text{if $a$ is odd.}
+\end{cases} \]
+Find the generating series for $ \mathbb{N}_0 $ with respect to this weight
+function and express it as a simplified rational expression.
+
+\emph{Solution.}
+
+$ \mathbb{N}_0=\mathbb{N}_{\text{even}}\cup\mathbb{N}_{\text{odd}} $
+\begin{align*}
+    \Phi_{\mathbb{N}_0}(x)
+    &=\Phi_{\mathbb{N}_{\text{even}}}(x)+\Phi_{\mathbb{N}_{\text{odd}}}(x)\qquad\text{Sum Lemma}\\
+    &=\sum\limits_{a \text{ even}}x^{3/2a+1}+\sum\limits_{a \text{ odd}}x^{2(a+1)}\\
+    &=x \sum\limits_{a \text{ even}}x^{3/2a}+x^2\sum\limits_{a \text{ odd}}x^{2a}\\
+    &=x \sum\limits_{i\ge 0} (x^{3/2})^{2i}+x^2\sum\limits_{i \ge 0} (x^{2})^{2i+1}\\
+    &=x \sum\limits_{i\ge 0} (x^3)^i + x^4 \sum\limits_{i\ge 0} (x^4)^i\\
+    &=\frac{x}{1-x^3} + \frac{x^4}{1-x^4}
+\end{align*}
+
+\textbf{Problem 2.} Let $ m,\,n $ be positive integers and $ \alpha,\,\beta $
+positive real numbers. Find the generating series for the cartesian product
+\[ \{1,\ldots ,m\}\times \{1,\ldots ,n\} \]
+with respect to the weight function
+\[ w(a,b)=\alpha a+ \beta b \]
+and express it as a simplified rational expression.
+
+\emph{Solution.}
+
+\myuline{Partial Geometric series}
+\[ \sum\limits_{i=0}^{k} x^i=\frac{1-x^{k+1}}{1-x} \]
+
+\begin{align*}
+    \Phi_{A\times B}(x)
+    &=\sum\limits_{(a,b)\in A\times B}x^{\alpha a+\beta B}\\
+    &=\sum\limits_{a\in A}x^{\alpha a} + \sum\limits_{b\in B}x^{\beta b}\\
+    &=\sum\limits_{i=1}^{m} (x^{\alpha})^i+\sum\limits_{j=1}^{n} (x^{\beta})^j\\
+    &=x^{\alpha}\sum\limits_{i=0}^{m-1}(x^{\alpha})^i
+    +x^{\beta}\sum\limits_{j=0}^{n}(x^{\beta})^j\\
+    &=x^{\alpha + \beta}
+    \frac{(1-x^{\alpha m})(1-x^{\beta n})}{(1-x^{\alpha})(1-x^{\beta})}
+\end{align*}
+
+\textbf{Problem 3.} Let $ a,\,b,\,n,\,k $ be positive integers with $ a\le b $
+and $ k\le n $. How many compositions of $ n $ with $ k $ parts are there in which
+all parts are elements of $ \{a,\ldots ,b\} $? Expressing the result as a finite
+sum $ \sum\limits_{i=0}^{k} s_i $ is sufficient.
+
+\emph{Rough.}
+
+Start with a small example $ a=2,\,b=4,\,n=9,\,k=3 $.
+
+Let $ C=\{\text{compositions with 3 parts where each part is 2, 3, or 4}\} $.
+We want $ [x^9]\Phi_C(x) $. 
+
+Let $ P=\{\text{parts of value 2, 3, or 4}\} $. $ C=P\times P \times P $ (3 parts).
+Thus, $ \Phi_C(x)=(\Phi_P(x))^3 $.
+
+\begin{align*}
+    (\Phi_P(x))^3&=\left( \sum\limits_{i=2}^{4} x^i \right)^3
+\end{align*}
+We want $ [x^9](x^2+x^3+x^4)^3 $.
+
+\emph{Solution.}
+
+So, in general we have
+\begin{align*}
+    \Phi_C(x)&=\left(\Phi_P(x)\right)^k\\
+    &=\left( \sum\limits_{i=a}^{b} x^i \right)^k
+\end{align*}
+We want $ \left[x^n\right]\left( \sum\limits_{i=a}^{b} x^i \right)^k $.
+\begin{align*}
+    [x^n]\left( \sum\limits_{i=a}^{b} x^i \right)^k
+    &=\left[x^n\right](x^a+\cdots+x^b)^k\\
+    &=\left[x^n\right]x^{ak}(1+\cdots+x^{b-a})^k\\
+    &=\left[x^{n-ak}\right]\left(\frac{1-x^{b-a+1}}{1-x}\right)^k\\
+    &=\left[x^{n-ak}\right]\left(1+(-x^{b-a+1})\right)^k(1-x)^{-k}\\
+    &=\left[x^{n-ak}\right]\sum\limits_{i\ge 0}\binom{k}{i}(-1)^ix^{i(b-a+1)}
+    \sum\limits_{j\ge 0}\binom{j+k-1}{k-1}x^{j}\\
+    &=\left[x^{n-ak}\right]\sum\limits_{i\ge 0}\sum\limits_{j\ge 0}\binom{k}{i}\binom{j+k-1}{k-1}(-1)^ix^{i(b-a+1)+j}
+\end{align*}
+$ i(b-a+1)+j=n-ak $
+\[ \sum\limits_{i=0}^{\lfloor \frac{n-ak}{b-a+1} \rfloor}
+\binom{k}{i}\binom{n-ak-i(b-a+1)+k-1}{k-1}(-1)^i \]

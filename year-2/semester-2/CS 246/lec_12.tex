@@ -1,0 +1,143 @@
+\section{2020-02-13}
+\subsection{Big 5 (Cont.)}
+\begin{lstlisting}
+    a = b = c = 0; // right associative (first: c = 0)
+    cout << a << b; // left associative (first: cout << a)
+    // n1, n2, n3 are nodes
+    n1 = n2 = n3; // n2 = n3 is done first
+    // n1.operator=(n2.operator=(n3))
+\end{lstlisting}
+
+\code{.h}
+\begin{lstlisting}
+    struct Node {
+        ...
+        Node &operator=(const Node &);
+    };
+\end{lstlisting}
+
+\code{.cc}
+\begin{lstlisting}
+    // Node& Node and Node &Node are equivalent
+    Node &Node::operator=(const Node &other) {
+        if (this == &other) {
+            return *this;
+        }
+        data = other.data;
+        // next might already point to heap nodes; must deallocate those
+        delete next;
+        // *other.next -> copy constructor
+        next = other.next ? new Node{*other.next} : nullptr;
+        return *this;
+    }
+\end{lstlisting}
+Case (self assignment):
+\begin{lstlisting}
+    Node n{...};
+    Node &m = n; // self assignment
+    n = m; // breaks w/o first if-statement of above
+\end{lstlisting}
+If new fails (no more heap memory), next becomes a dangling pointer.
+
+\code{.cc}
+\begin{lstlisting}
+    Node &Node:: operator=(const Node &other) {
+        if (this == &other) {
+            return *this;
+        }
+        Node *temp = next;
+        // Exception safety
+        next = other.next ? new Node{*other.next} : nullptr;
+        data = other.data;
+        delete temp;
+        return *this;
+    }
+\end{lstlisting}
+
+\subsection{Copy and Swap Idiom}
+\code{node.h}
+\begin{lstlisting}
+    struct Node {
+        void swap(Node &);
+        Node &operator=(const Node&);
+    };
+\end{lstlisting}
+
+\code{.cc}
+\begin{lstlisting}
+    #include <utility>
+
+    // not const, hint to update other
+    void Node::swap(Node &other) {
+        using std::swap;
+        swap(data, other.data);
+        swap(next, other.next);
+    }
+
+    Node &Node::operator=(const Node &other) {
+        Node temp{other}; // calls copy constructor
+        swap(temp);
+        // temp is destroyed automatically b/c stack allocated (calls destructor)
+        return *this;
+    }
+\end{lstlisting}
+
+\code{1201/lectures/c++/6-classes/rvalue}
+
+\code{node.cc}
+
+\myuline{Trace of} \code{node.cc}
+
+\code{Node n{...};}
+\begin{enumerate}[(1)]
+    \item Create linked list with two nodes. The basic constructor is called twice
+    as there are two nodes.
+\end{enumerate}
+
+\code{Node n2{plusOne(n)};}
+\begin{enumerate}[(1)]
+    \item Evaluate \code{plusOne(n)}, which takes \code{n} by value; that is
+    the copy constructor is called twice as \code{n} is passed by value.
+    \item \code{plusOne(n)} is returned \code{n2} is constructed, the copy constructor
+    is called twice again.
+    \item \code{Node n2} calls the copy constructor twice for \code{plusOne(n)}'s value.
+\end{enumerate}
+
+Total: 6 calls to copy constructor, 2 calls to basic constructor.
+
+The returned value from \code{plusOne(n)} is temporary only alive until \code{n2}
+has been constructed; an rvalue. For a simpler example,
+\begin{lstlisting}
+    int x = ...;
+    int y = ...;
+    int z = x + y; // x + y is an rvalue which is temporary
+\end{lstlisting}
+
+Copy constructor: copies from objects that will continue to live
+
+Move constructor: steals from objects that are about to die (temporaries, rvalues)
+
+In C++, we can use rvalue references to refer to temporaries. \code{Node\&}
+lvalue reference, \code{Node\&\&} is a rvalue reference
+
+\begin{lstlisting}
+    Node::Node(Node &&other)
+    // n2 and temp `share' next, which is bad because when temp dies => dangling pointer
+        : data{other.data}, next{other.next} {
+            other.next = nullptr;
+        }
+\end{lstlisting}
+
+\begin{lstlisting}
+    // MIL only available to constructors, can't use it here
+    Node &Node::operator=(Node &&other) {
+        swap(other);
+        return *this;
+    }
+\end{lstlisting}
+
+Compiler Optimization: Copy/Move Elision, which can be turned off with
+\code{-fno-elide-constructors}.
+
+The compiler is allowed to avoid copy/move constructor calls even if this
+changes program behaviour.

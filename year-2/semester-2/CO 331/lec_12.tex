@@ -1,0 +1,106 @@
+\section{2020-01-31}
+\begin{thmbox}
+    \begin{theorem}
+    Let $ C $ be an $ (n,k) $-code over $ F $, and let $ H $ be a PCM
+    for $ C $. Then $ d(C)\geqslant s $ if and only if every $ (s-1) $ columns
+    of $ H $ are linearly independent over $ F $.
+\end{theorem} \end{thmbox}
+
+\begin{proof}
+    Let $ h_1,\ldots ,h_n $ be the columns of $ H $.
+
+    $ (\impliedby) $ Suppose $ d(C)\leqslant s-1 $, so $ w(C)\leqslant s-1 $.
+    Let $ c\in C $, with $ 1\leqslant w(c)\leqslant s-1 $. WLOG, suppose
+    $ c_j=0 $ for all $ s\leqslant j\leqslant n $. Since $ c\in C $,
+    we have $ Hc^{\top}=0 $. Therefore,
+    $ c_1h_1+\cdots+c_{s-1}h_{s-1}=0 $.
+    Since $ w(C)\geqslant 1 $, this is a non-trivial linear combination
+    of $ h_1,\ldots ,h_{s-1} $ that equal $ 0 $. So,
+    $ h_1,\ldots ,h_{s-1} $ are linearly dependent over $ F $.
+
+    $ (\implies) $ Suppose there are $ s-1 $ columns of $ H $ that
+    are linearly dependent over $ F $, say $ h_1,\ldots ,h_{s-1} $. So,
+    we can write
+    \[ c_1h_1+\cdots+c_{s-1}h_{s-1} \]
+    where $ c_j\in F $ not all zero. Let $ c=(c_1,\ldots ,c_{s-1},
+    \underbrace{0\cdots 0}_{n-s+1})\in V_n(F) $. Then,
+    $ Hc^{\top}=0 $. So, $ c_i C $ and $ 1\leqslant w(c)\leqslant s-1 $,
+    so $ d(C)\leqslant s-1 $.
+\end{proof}
+
+\begin{thmbox}
+    \begin{theorem}
+    \subsection{Corollary}
+    Let $ C $ be an $ (n,k) $-code over $ F $ with PCM $ H $. Then,
+    $ d(C) $ is the smallest number of columns of $ H $ that
+    are linearly dependent over $ F $.
+\end{theorem} \end{thmbox}
+
+\begin{exbox}
+    \subsection{Example}
+    Recall, we found a PCM
+    \[ H=
+    \left[\begin{array}{cc|ccc}
+        2 & 1 & 1 & 0 & 0\\
+        1 & 2 & 0 & 1 & 0\\
+        0 & 2 & 0 & 0 & 1
+    \end{array}\right] \]
+    for a $ (5,2) $-code $ C $ over $ \mathbb{Z}_3 $. Find $ d(C) $.
+
+    \textbf{Solution:}
+    \begin{itemize}
+        \item No $ 0 $ column in $ H\implies d(C)\geqslant 2 $
+        \item No two linearly dependent columns in $ H $ (since
+        no repeated columns, and no column is two times another
+        column $ \implies d(C)\geqslant 2 $)
+    \end{itemize}
+    \[ \begin{bmatrix} 2 & 1 & 0 \end{bmatrix}
+        = 2\begin{bmatrix} 1 & 0 & 0 \end{bmatrix} 
+        + \begin{bmatrix} 0 & 1 & 0 \end{bmatrix} \]
+    Therefore $ d(C)\ngeqslant 4 $, therefore $ d(C)=3 $.
+\end{exbox}
+
+\begin{exbox}
+    \subsection{Example}
+    Let $ C $ be a binary code with PCM $ H $.
+    \begin{itemize}
+        \item $ d(C)=1\iff  $ $ H $ has a $ 0 $ column.
+        \item $ d(C)=2\iff $ the columns of $ H $ are non-zero and two are
+        the same.
+        \item $ d(C)=3\iff $ the columns of $ H $ are non-zero, distinct, and one
+        column is the sum of two other (distinct) columns.
+    \end{itemize}
+\end{exbox}
+
+\begin{exbox}
+    \subsection{Example}
+    Construct a $ (\underbrace{7}_{n},\underbrace{4}_{k},\underbrace{3}_{d}) $
+    -binary code $ C $.
+
+    \textbf{Solution:}
+    Consider a PCM for $ C $:
+    \[ \left[ H=
+    \begin{array}{ccc|cccc}
+        1 & 0 & 0 & 1 & 1 & 0 & 1\\
+        0 & 1 & 0 & 1 & 0 & 1 & 1\\
+        0 & 0 & 1 & 0 & 1 & 1 & 1
+    \end{array} \right]_{3\times 7} \]
+    This is a \textbf{Hamming Code} of order $ 3 $ over $ \mathbb{Z}_2 $.
+\end{exbox}
+
+\begin{defbox}
+    \begin{definition}
+    Let $ C $ be an $ [n,M] $-code with distance $ d $ over an
+    alphabet $ A $ of size $ q $. Let $ e=\lfloor \frac{d-1}{2} \rfloor $.
+    The \textbf{sphere packing bound} or \textbf{Hamming bound} is:
+    \[ M \sum\limits_{i=0}^{e} \binom{n}{i}(q-1)^i\leqslant q^n \]
+\end{definition} \end{defbox}
+
+\begin{defbox}
+    \begin{definition}
+    Let $ C $ be an $ [n,M] $-code over $ A $ of distance $ d $. Then, 
+    $ C $ is perfect if
+    \[ M \sum\limits_{i=0}^{e} \binom{n}{i}(q-1)^i = q^n \]
+\end{definition} \end{defbox}
+
+\myuline{Note:} If $ C $ is perfect, then IMLD=CMLD.

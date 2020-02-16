@@ -1,0 +1,70 @@
+\section{Math 239 Tutorial 5}
+
+\textbf{Problem 1.}
+Let $ S $ denote the set of binary strings not containing the string $ 101 $
+as a substring. Find an unambiguous expression for $ S $, and use it to give a
+rational expression for $ \Phi_S(x) $, weighted by length.
+
+\emph{Solution.}
+
+$ \{0\}^* (\{1\}\{1\}^*\{0\}\{0\}^*)^*\{1\}^* $
+
+$ S = \{0\}^*(\{1\}\{1\}^*\{00\}\{0\}^*)^*\{1\}^*\{\varepsilon, 10\} $
+
+$ T=\{\text{binary strings containing exactly one copy of } 101\text{ as a suffix}\} $
+
+\[ \{\varepsilon\}\cup S \{0,1\}=S \cup T \]
+\[ S \{101\}=T\cup T \{01\} \]
+\[ 1+\Phi_S(x)2x=\Phi_S(x)+\Phi_T(x) \]
+\[ \Phi_S(x)x^3=\Phi_T(x)+\Phi_T(x)x^2 \]
+\[ \implies 1+\Phi_S(x)2x-\Phi_S(x)=\Phi_T(x) \]
+substituting,
+\[ \Phi_S(x)x^3=1+\Phi_S(x)2x-\Phi_S(x)+x^2+\Phi_S(x)2x^3-\Phi_S(x)x^2 \]
+\[ \implies\Phi_S(x)x^3=1+\Phi_S(x)2x-\Phi_S(x)+\Phi_S(x)2x^3-\Phi_S(x)x^2+x^2 \]
+\[ \implies\Phi_S(x)x^3-\Phi_S(x)2x+\Phi_S(x)-\Phi_S(x)2x^3+\Phi_S(x)x^2=1+x^2 \]
+\[ \implies-\Phi_S(x)x^3-\Phi_S(x)2x+\Phi_S(x)+\Phi_S(x)x^2=1+x^2 \]
+\[ \implies\Phi_S(x)(-x^3-2x+1+x^2)=1+x^2 \]
+\[ \implies\Phi_S(x)=\frac{1+x^2}{-x^3+x^2-2x+1} \]
+
+
+\textbf{Problem 2.}
+Let $ S $ be the set of binary strings with an odd number of blocks. Find
+an unambiguous recursive decomposition for $ S $, and use it to find a rational
+expression for $ \Phi_S(x) $, weighted by length.
+
+$ X=\{\text{binary strings with odd number of blocks, beginning with }1\} $
+
+$ Y=\{\text{binary strings with odd number of blocks, beginning with }0\} $
+
+$ S\cup T = T \{0,1\}\cup S \{0,1\} \cup \{\varepsilon\} $
+
+$ S=X\cup Y $
+
+$ X=\{1\}\{1\}^*(\{0\}\{0\}^* X \cup \{\varepsilon\}) \rightarrow
+\Phi_X(x)=\frac{x}{1-x}\left( \frac{x}{1-x} \Phi_X(x)+1 \right)$
+
+$ Y=\{0\}\{0\}^*(\{1\}\{1\}^* Y\cup \{\varepsilon\}) $
+
+\[ \Phi_X(x)=\frac{x^2}{(1-x)^2}\Phi_X(x)+\frac{x}{1-x} \]
+\begin{align*}
+    \implies\Phi_X(x)
+    &=\frac{\frac{x}{1-x}}{1-\frac{x^2}{(1-x)^2}}\\
+    &=\frac{x(1-x)}{(1-x)^2-x^2}\\
+    &=\frac{x-x^2}{1-2x}
+\end{align*}
+\[ \Phi_S(x)=\frac{2x-2x^2}{1-2x} \]
+
+\textbf{Problem 3.}
+Let $ k $ and $ \ell $ be non negative, and $ S $ be the set of binary
+strings in which no block of zeros has length greater than $ k $
+and no blocks of ones has length greater than $ \ell $. Find
+an unambiguous recursive decomposition for $ S $, and use it to find a rational
+expression for $ \Phi_S(x) $, weighted by length.
+
+$ T=\{0,00,\ldots ,0^k\} $, $ U=\{1,11,\ldots ,1^\ell\} $
+
+$ (T \cup \{\varepsilon\})(UT)^*(U\cup \{\varepsilon\}) $
+
+\[ \Phi_T(x)= \frac{x(1-x^{k})}{1-x} \]
+
+\[ \Phi_U(x)=\frac{x(1-x^\ell)}{1-x} \]

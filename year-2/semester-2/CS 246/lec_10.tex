@@ -1,0 +1,160 @@
+\section{2020-02-06}
+\subsection{Preprocessor, Include Guards, C++ Classes}
+File: \code{example3}
+\begin{itemize}
+    \item won't compile as \code{vec.h} gets included twice
+    \item use an include guard to prevent multiple includes
+\end{itemize}
+File: \code{example4} $ \rightarrow $ fixes the issue above
+
+In \code{vec.h},
+\begin{lstlisting}
+    #ifndef VEC_H // true
+        #define VEC_H
+        struct Vec {
+            ...
+        }
+    #endif
+\end{lstlisting}
+Never put \code{using namespace std;} in a header file since it forces
+others to use the \code{namespace}.
+
+\subsection{C++ Classes}
+A C++ class is a \code{struct} that may contain functions.
+
+The big innovation of OOP: \code{struct}s can have functions.
+
+File: \code{student.h}
+\begin{lstlisting}
+    struct Student {
+        int assign, mt, final;
+        // since grade is only relevant for this function, we declare it here
+        float grade(); // good style to have declaration only, and not the entire thing
+    };
+\end{lstlisting}
+
+File: \code{student.cc}
+\begin{lstlisting}
+    #include "student.h"
+    float Student::grade() {
+        return 0.4 * assign + 0.2 * mt + 0.4 * final;
+    }
+\end{lstlisting}
+\code{std::ostream} $ \rightarrow $ 
+In the scope of the standard namespace, there is an \code{ostream}.
+Above, the same thing is happening.
+
+An \textbf{object} is an instance of a class.
+\begin{lstlisting}
+    // Bobby is an object.
+    Student Bobby{75, 50, 65};
+    // Let's compute Bobby's grade.
+    cout << Bobby.grade();
+\end{lstlisting}
+
+\begin{itemize}
+    \item A function within a class is called a \textbf{member function}
+    or \textbf{method}.
+    \item You can only call methods using objects of the class.
+    \item All methods have a hidden parameter named \code{this}
+    $ \rightarrow $ a pointer to the object used to call the method.
+    \subitem \code{this == \&bobby}
+\end{itemize}
+\code{ptr -> field} is the same as \code{(*ptr).field}. Equivalently as in
+\code{student.cc}.
+\begin{lstlisting}
+    return 0.4 * this->assign + 0.2 * this->mt + 0.4 * this->final;
+\end{lstlisting}
+
+\subsection{Initializing Objects}
+C style initialization:
+
+\code{Student Bobby = \{75,50,65\}} $ \rightarrow $ not going to use this syntax,
+but it's allowed.
+
+In C++:
+
+Special methods to construct objects are called \textbf{constructors}, they do
+not need a return type.
+
+Header file (\code{.h}):
+\begin{lstlisting}
+    // same name as class
+    struct Student {
+        ...
+        Student (int assign, int mt, int final); // declaration, no return type
+    };
+\end{lstlisting}
+Implementation file (\code{.cc}):
+\begin{lstlisting}
+    Student::Student (int assign, int mt, int final) {
+        // cannot do assign = assign;
+        this->assign = assign < 0 ? 0 : assign; // short hand if statement
+        this->mt = mt;
+        this->final = final;
+    }
+    Student s1{70, 60, 75};
+    Student s2{70, 60}; // final = 0
+    Student s3{70}; // mt = final = 0
+    Student s4{}; // assign = mt = final = 0
+    Student s5; // equivalent to Student s4
+\end{lstlisting}
+Older initialization:
+\begin{lstlisting}
+    Student Bobby = Student(75, 50, 65);
+\end{lstlisting}
+Heap allocated \code{Student}:
+\begin{lstlisting}
+    // round or curly braces acceptable, but curly braces is good style
+    Student *p = new Student{75, 50, 65};
+    ...
+    delete p;
+\end{lstlisting}
+\textbf{Default constructor}:
+A zero parameter constructor. Alternatively, it is a constructor
+where all parameters have default values.
+
+Every class comes with a built-in/free default constructor. It calls default
+constructors on any fields that are objects.
+
+\begin{lstlisting}
+    struct MyClass {
+        int x;
+        Student s;
+        Vec *p;
+    };
+    Myclass a;
+\end{lstlisting}
+For \code{a}, the default constructor:
+\begin{itemize}
+    \item initializes \code{s} as it is an object \code{Student}.
+    \item \textbf{does not} initialize \code{p} as is not
+    an object, but \textbf{a pointer to an object} \code{Vec}.
+    \item \textbf{does not} initialize \code{x}.
+\end{itemize}
+As soon as you write any constructor, you lose the built-in default constructor
+and C style initialization, for example:
+\begin{lstlisting}
+    struct Vec {
+        int x, y;
+        Vec (int x, int y) { // bad style
+            this->x = x;
+            this->y = y;
+        }
+    };
+    Vec v; // does not compile
+\end{lstlisting}
+Initializing constant fields:
+\begin{lstlisting}
+    int m;
+    // probably not what you want, all objects here have a constant id of 10
+    struct MyClass {
+        const int id = 10; // in class initialization
+        int &n = m;
+    };
+\end{lstlisting}
+\begin{lstlisting}
+    struct Student {
+        const int id; // want to figure out how to do this, next class
+    };
+\end{lstlisting}

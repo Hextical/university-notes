@@ -1,0 +1,123 @@
+\section{2020-01-30}
+\subsection{More Short C++ Topics}
+Why does \code{cin >{}> x} work?
+
+\code{operator >{}> (cin, x);} $ \rightarrow $ \code{x} is passed by reference
+
+\code{istream \&operator >{}> (istream \&in, int \&n);}
+
+We take the stream by reference since 
+\begin{enumerate}
+    \item we want changes to the stream be changes to \code{cin}.
+    \item streams cannot be copied.
+\end{enumerate}
+Pass by value vs pass by reference
+\begin{lstlisting}
+    struct ReallyBig {...};
+    void f(ReallyBig rb); // pass by value, costly
+    void g(ReallyBig &rb); // pass by reference: avoid copy
+    void h(const ReallyBig &rb); // avoid copy, h cannot change what rb refers to
+\end{lstlisting}
+Advice: prefer to pass arguments as reference to \code{const} for anything bigger
+than an \code{int}.
+\begin{lstlisting}
+    void f(int &n);
+    f(5); // 5 is not an lvalue; illegal
+    f(x + y); // illegal
+    int temp = x + y;
+    f(temp); // legal
+    // pass by reference to constant
+    void g(const int &n);
+    g(5); // legal
+    g(x + y); // legal
+\end{lstlisting}
+\subsection{Dynamic Memory Allocation}
+\begin{itemize}
+    \item In C, \code{int *p = malloc (sizeof(int) * length);}, \code{free(p);}.
+    \item In C++, \code{malloc, free, realloc} $ \rightarrow $ banned
+\end{itemize}
+\begin{lstlisting}
+    // {data, next};
+    Node n{5, nullptr}; // n is on stack
+    // np is on stack, pointing to the heap
+    Node *np = new Node {2, nullptr}; // on heap, new figures out how much memory is needed
+    n.next = np;
+    delete np;
+\end{lstlisting}
+Stack allocated nodes:
+\begin{lstlisting}
+    Node myNodes[10];
+    Node *np = new Node[10];
+    delete np; // undefined behaviour
+    delete []np; // syntax to deallocate an array
+\end{lstlisting}
+\begin{lstlisting}
+    // return by value, copy is made
+    Node getNode() {
+        Node n;
+        ...
+        return n;
+    };
+    // compiles, "Dangling Pointer", but incorrect
+    // to correct: heap allocate + return pointer to heap node
+    Node *getNode() {
+        Node n;
+        ...
+        return &n;
+    }
+\end{lstlisting}
+
+\subsection{Operator Overloading}
+Define the meaning of C++ operators for user-defined types.
+\begin{lstlisting}
+    struct Vec {
+        int x;
+        int y;
+    };
+    Vec v1{1, 2};
+    Vec v2{1, 2};
+    Vec v3 = add(v1, v2); // In C, we would do this
+
+    // Overload the + operator such that `v1 + v2' works
+    Vec operator+(const Vec &vec1, const Vec &vec2) {
+        Vec toRet{vec1.x + vec2.x, vec1.y + vec2.y};
+        return toRet;
+    }
+
+    Vec v4 = v1 + v2 + v3; // works, wouldn't work without const
+    
+    // Overload the * operator such that `c * v' works
+    Vec operator*(int c, const Vec &vec) {
+        return {c * vec.x, c * vec.y};
+    }
+
+    Vec v = 3 * v2; // works
+    Vec v = v2 * 3; // doesn't work
+    
+    Vec operator*(const Vec &vec, int c) {
+        return c * vec;
+    }
+\end{lstlisting}
+
+\begin{lstlisting}
+    struct Student {
+        int grade;
+    };
+    Struct s{15};
+    cout << s.grade << "%";
+    
+    // Overload the << operator such that `cout << s' works
+    ostream operator<<(ostream &out, const Student &s) {
+        out << s.grade << "%";
+        return out;
+    }
+
+    // Overload the >> such that `cin >> s' works
+    istream &operator>>(istream &in, Student &s) {
+        int n;
+        in >> n;
+        s.grade = (n < 0) ? 0 : n; // short hand if statement
+        s.grade = (s.grade < 100) ? 100 : s.grade;
+        return in;
+    }
+\end{lstlisting}

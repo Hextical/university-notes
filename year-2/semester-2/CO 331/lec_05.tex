@@ -1,0 +1,161 @@
+\chapter{Finite Fields}
+\section{2020-01-15}
+\subsection{Introduction}
+\begin{defbox}
+    \begin{definition}
+    A \textbf{field} $ F $ is a set of elements under two binary operations,
+    which we denote by $ + $ and $ \cdot $ such that
+    $ +:F\times F\rightarrow F $ and $ \cdot:F\times F\rightarrow F $
+    where all the following axioms are satisfied:
+    \begin{enumerate}[V1]
+        \item $ a+(b+c)=(a+b)+c $
+        \item $ a+b=b+a $
+        \item $ \exists\, 0\in F $ such that $ a+0=a $
+        \item $ \exists\, (-a)\in F $ such that $ a+(-a)=0 $
+        \item $ a\cdot (b\cdot c)=(a\cdot b)\cdot c $
+        \item $ a\cdot b=b\cdot a $
+        \item $ \exists\, 1\in F $ such that $ a\cdot 1=a $
+        \item $ \forall\,a\neq 0,\,\exists (a^{-1})\in F $ such that
+        $ a\cdot (a^{-1})=1 $
+        \item $ a\cdot (b+c)=a\cdot b+a\cdot c $
+    \end{enumerate}
+\end{definition} \end{defbox}
+
+\begin{defbox}
+    \begin{definition}
+    A field $ F $ is \textbf{infinite} if $ |F| $ is infinite.
+\end{definition} \end{defbox}
+
+\begin{defbox}
+    \begin{definition}
+    A field $ F $ is \textbf{finite} if $ |F| $ is finite.
+\end{definition} \end{defbox}
+
+\begin{defbox}
+    \begin{definition}
+    The \textbf{order} of a field $ F $, denoted $ \ord(F) $ is $ |F| $.
+\end{definition} \end{defbox}
+
+\begin{exbox}
+    \subsection{Example (Infinite and Finite Fields)}
+    \begin{itemize}
+        \item $ \mathbb{Q},\,\mathbb{R},\,\mathbb{C} $ are infinite fields.
+        \item $ \mathbb{Z} $ is \textbf{not} a field since $ 3\in\mathbb{Z} $, but
+        $ (\frac{1}{3})\notin\mathbb{Z} $.
+    \end{itemize}
+\end{exbox}
+
+\myuline{Question:} For what $ n\in\mathbb{Z}_{\geqslant 2} $ do there exists
+finite fields of order $ n $? If a field of order $ n $ exists, how do
+we ``construct'' it?
+
+\myuline{Recall:} Let $ n\geqslant 2 $. The integers modulo $ n $,
+$ \mathbb{Z}_n $ is the set of all equivalence classes $ \mod n $.
+\[ \mathbb{Z}_n=\left\{ [0],[1],[2],\ldots ,[n-1]\right\} \]
+where $ [a]+[b]=[a+b] $ and $ [a][b]=[ab] $.
+More simply, $ \mathbb{Z}_{n}=\left\{ 0,1,\ldots ,n-1\right\} $
+with addition and multiplication performed $ \mod n $.
+
+\begin{exbox}
+    \subsection{Example (Modulo)}
+    Let $ \mathbb{Z}_9=\{0,1,\ldots ,8\} $.
+    \begin{itemize}
+        \item $ 5+7=3 $ (i.e. $ 5+7\equiv 3 \mod 9 $)
+        \item $ 5\cdot 7=8 $ (i.e. $ 5+7\equiv 8 \mod 9 $)
+    \end{itemize}
+\end{exbox}
+
+\begin{defbox}
+    \begin{definition}
+    A \textbf{commutative ring} satisfies field axioms V1-V9 except
+    V8.
+\end{definition} \end{defbox}
+
+\begin{thmbox}
+    \begin{theorem}
+    $ \mathbb{Z}_n $ is a commutative ring.
+\end{theorem} \end{thmbox}
+
+\begin{thmbox}
+    \begin{theorem}
+    $ \mathbb{Z}_n $ is a field if and only if $ n $ is prime.
+\end{theorem} \end{thmbox}
+
+\begin{proof}
+    $ (\impliedby) $ Suppose $ n $ is prime. Let $ a\in\mathbb{Z}_n $, $ a\neq 0 $
+    (i.e. $ 1\leqslant a\leqslant n-1 $). Since $ n $ is prime, $ \gcd(a,n)=1 $
+    so $ \exists\,s,t\in\mathbb{Z} $ such that
+    \[ as+nt=1 \]
+    Reducing both sides $ \mod n $ gives
+    \[ as\equiv 1 \mod n \]
+    Define $ a^{-1}=s $. Thus, V8 is satisfied and hence $ \mathbb{Z}_n $
+    is a field of order $ n $.
+
+    $ (\implies) $ Suppose for a contradiction that $ n $ is composite, say $ n=ab $
+    where $ 2\leqslant a,b\leqslant n-1 $. Suppose $ a^{-1} $ exists, and define
+    $ a^{-1}=s $. Then,
+    \[ as\equiv 1 \mod n\implies abs\equiv b\mod n\implies ns\equiv b \mod n
+    \implies 0\equiv b\mod n \]
+    So, $ n\mid b $ which is impossible. Therefore, $ a^{-1} $ does not exist, and hence
+    $ \mathbb{Z}_n $ is not a field.
+\end{proof}
+
+\myuline{Question:} Do there exist finite fields of orders $ 4 $ and $ 6 $?
+
+\begin{defbox}
+    \begin{definition}
+    The \textbf{characteristic} of a field, denoted $ \ch(F) $, is the smallest
+    possible integer $ m $ such that
+    \[ \underbrace{1+\cdots+1}_{m}=0 \]
+    If no such $ m $ exists, then we define $ \ch(F)=0 $
+\end{definition} \end{defbox}
+
+\begin{exbox}
+    \subsection{Characteristic of Fields}
+    \begin{itemize}
+        \item $ \ch(\mathbb{Q})=0 $
+        \item $ \ch(\mathbb{R})=0 $
+        \item $ \ch(\mathbb{C})=0 $
+        \item $ \ch(\mathbb{Z}_p)=p $ where $ p $ is prime.
+    \end{itemize}
+\end{exbox}
+
+\begin{thmbox}
+    \begin{theorem}
+    If $ \ch(F)=0 $, then $ F $ is infinite.
+\end{theorem} \end{thmbox}
+
+\begin{proof}
+    Consider $ 1,1+1,\ldots,\underbrace{1+\cdots+1}_{a}\in F $. 
+    Suppose for a contradiction there exists distinct $ a,b\in\mathbb{Z} $
+    such that
+    \[ \underbrace{1+\cdots+1}_{a}=\underbrace{1+\cdots+1}_{b} \]
+    where $ a>b $, then
+    \[ \underbrace{1+\cdots+1}_{a}=\underbrace{1+\cdots+1}_{b}+
+    \underbrace{1+\cdots+1}_{a-b}=\underbrace{1+\cdots+1}_{b} \]
+    Hence, $ \underbrace{1+\cdots+1}_{a-b}=0\implies \ch(F)=(a-b) $
+    which contradicts $ \ch(F)=0 $. Thus, $ F $ is infinite.
+\end{proof}
+
+\begin{thmbox}
+    \begin{theorem}
+    If $ F $ is a finite field, then $ \ch(F) $ is prime.
+\end{theorem} \end{thmbox}
+
+\begin{proof}
+    Suppose for a contradiction that $ \ch(F)=m $ is composite,
+    say $ m=ab $ where
+    $ 2\leqslant a,b\leqslant m-1 $. Now
+    \[ (\underbrace{1+\cdots+1}_{a})(\underbrace{1+\cdots+1}_{b})
+    =\underbrace{1+\cdots+1}_{m}=0 \]
+    since $ \ch(F)=m $. Let $ \underbrace{1+\cdots+1}_{a}=s $
+    and $ \underbrace{1+\cdots+1}_{b}=t $, so $ st=0 $ where $ s\neq 0 $. 
+    Since $ \ch(F)=m>a $, there exists $ c\in F $ such that
+    $ cs=1 \implies c=s^{-1} $. Therefore $ s^{-1}st=0 $. Thus,
+    $ t=0 $ which is a contradiction to $ \ch(F)=m $.
+\end{proof}
+
+\myuline{Roadmap:} Let $ F $ be a finite field of order $ n $.
+Then, $ \ch(F)=p $ where $ p $ is prime. Then, $ \mathbb{Z}_p $ is a subfield
+of $ F $. $ F $ is a vector space over $ \mathbb{Z}_p $ of $ \dim=k $.
+Then, order of $ F $ is $ p^k $.

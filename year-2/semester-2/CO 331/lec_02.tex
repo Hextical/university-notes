@@ -1,5 +1,5 @@
+\chapter{Introduction and Fundamentals}
 \section{2020-01-08}
-\subsection{Chapter 1: Introduction and Fundamentals}
 Message source
 $ \rightarrow $
 $ \underbrace{
@@ -11,169 +11,181 @@ $ \underbrace{
 $ \rightarrow \text{Source Decoder} \rightarrow \text{Message} $
 
 \begin{defbox}
-    \subsection{Definition (Alphabet)}
-    An \emph{alphabet} $ A $ is a finite set of $ q\ge 2 $ symbols.
-\end{defbox}
-
-Since we will be using the alphabet
-$ A=\{0,1\} $ very often, we make the following definition.
-
-\begin{defbox}
-    \subsection{Definition (Binary Alphabet)}
-    The alphabet $ A=\{0,1\} $ is a \emph{binary alphabet}.
+    \begin{definition}
+        An \textbf{alphabet} $ A $ is a finite set of $ |A|= q\geqslant 2 $ symbols.
+    \end{definition}
 \end{defbox}
 
 \begin{defbox}
-    \subsection{Definition (Word, Tuples, Vectors)}
-    A \emph{word} is a finite sequence of symbols from $ A $ (\emph{tuples},
-    or \emph{vectors}). We use the terms \emph{vector} and \emph{word}
-    interchangeably for $ n $-tuple.
-\end{defbox}
+    \begin{definition}
+    A \textbf{word} is a finite sequence (\textbf{tuples} or \textbf{vectors})
+    of symbols from an alphabet $ A $.
+\end{definition} \end{defbox}
 
 \begin{defbox}
-    \subsection{Definition (Length)}
-    The \emph{length} of a word is the number of symbols in it.
-\end{defbox}
+    \begin{definition}
+    The \textbf{length} of a word is the number of symbols in it.
+\end{definition} \end{defbox}
 
 \begin{defbox}
-    \subsection{Definition (Code)}
-    A \emph{code} $ C $ over $ A $ is a finite set of words over $ A $.
-    We define $ |C|\ge 2 $.
-\end{defbox}
+    \begin{definition}
+    A \textbf{code} $ C $ over $ A $ is a finite set of words in $ A $
+    with $ |C|\geqslant 2 $.
+\end{definition} \end{defbox}
 
 \begin{defbox}
-    \subsection{Definition (codeword)}
-    A \emph{codeword} is a word in $ C $.
-\end{defbox}
+    \begin{definition}
+    A \textbf{codeword} $ \bm{c} $ is a word in code $ C $.
+\end{definition} \end{defbox}
 
 \begin{defbox}
-    \subsection{Definition (Block code)}
-    A \emph{block code} is a code where all codewords have the same length.
+    \begin{definition}
+    A \textbf{block code} is a code where all codewords have the same length.
     A block code $ C $ of length $ n $ containing $ M $ codewords over $ A $
     is a subset $ C\subseteq A^n $, with $ |C|=M $. We refer to such a block
     code as an $ [n,M] $-code over $ A $.
+    \end{definition}
 \end{defbox}
 
 \begin{exbox}
-    \subsection{Example (Block code)}
-    
-    \begin{tabular}{| *{1}{>{\centering\arraybackslash}p{6cm} |}}
-        \hline
-        Message $ \rightarrow $ Codeword\\
-        \hline
-        $ 00\rightarrow 00000 $\\
-        $ 10\rightarrow 10110 $\\
-        $ 01\rightarrow 01011 $\\
-        $ 11\rightarrow 11101 $\\
-        \hline
-    \end{tabular}
-
-    The alphabet is $ A=\{0,1\} $. We have a $ 5 $-tuple since the length
-    of each word is $ n=5 $. The code is $ C=\{00000,\,10110,\,01011,\,11101\} $.
-    Each element in $ C $ is a codeword, thus there are a total of $ 4 $ codewords.
+    \begin{example}[Block Code]
+        Let $ A=\{0,1\} $ and $ C=\{00000,\,11100,\,00111,\,10101\} $.
+        $ C $ is a $ [5,4] $-code over $ \{0,1\} $.
+        
+        \begin{center}
+            \begin{tabular}{| *{1}{>{\centering\arraybackslash}p{6cm} |}}
+                \hline
+                Messages $ \rightarrow $ Codewords\\
+                \hline
+                $ 00\rightarrow 00000 $\\
+                $ 10\rightarrow 11100 $\\
+                $ 01\rightarrow 00111 $\\
+                $ 11\rightarrow 10101 $\\
+                \hline
+            \end{tabular}
+        \end{center}
+        The encoding is a one-to-one map. 
+    \end{example}
 \end{exbox}
 
-\begin{exbox}
-    \subsection{Example (Block code)}
-    $ A=\{0,1\} $, $ C=\{00000,\,11100,\,00111,\,10101\} $ is a $ [5,4] $-code over
-    $ \{0,1\} $.
-    
-    \begin{tabular}{| *{1}{>{\centering\arraybackslash}p{6cm} |}}
-        \hline
-        Messages $ \rightarrow $ codewords\\
-        \hline
-        $ 00\rightarrow 00000 $\\
-        $ 10\rightarrow 11100 $\\
-        $ 01\rightarrow 00111 $\\
-        $ 11\rightarrow 10101 $\\
-        \hline
-    \end{tabular}
-    
-    This is an $ n $-coding (1-1) map.
-\end{exbox}
+The channel encoder transmits only codewords, but what's received by the channel
+decoder might not be a codeword. For example, suppose the channel decoder
+receives $ \bm{r}=11001 $. What should it do? In our above example, we can see
+that $ \bm{r} $ is closest to $ 11100 $ and $ 10101 $ (only two bits are different),
+so it's possible that the codeword was one of those two. However,
+this may not be the case in practice.
 
-- The channel encoder transmits only codewords. But, what's received by
-the channel decoder might not be a codeword.
-
-\subsection{Example}
-Suppose the channel decoder receives $ r=11001 $. What should it do?
-
-\subsection{Assumptions about the communications channel}
+\subsection{Assumptions About the Communications Channel}
 \begin{enumerate}[1)]
-    \item Channels only transmit symbols from $ A $
-    \item No symbols are deleted, added, or transposed
-    \item (Errors are "random")
+    \item The channels only transmit symbols from $ A $.
+    \item No symbols are deleted, added, or transposed.
+    \item Errors are random
 \end{enumerate}
 
-\subsection{Example (Binary symmetric channel, BSC)}
-$ q=2 $ ($ 0 $ or $ 1 $)
+\begin{exbox}
+    \begin{example}[Binary Symmetric Channel, BSC]
+        Let $ A=\{0,1\} $, and $ p $ denote the symbol error probability.
+        The encoding map is:
+        \begin{center}
+            \input{figures/bsc.pdf_tex}
+        \end{center}
+    \end{example}
+    A similar encoding map can be drawn for $ A=\{0,1,2\} $,
+    with symbol error probability $ \nicefrac{p}{2} $.
+\end{exbox}
 
-Suppose that the symbols transmitted are $ X_1,\,X_2,\,X_3,\,\ldots $,
-and the symbols received are $ Y_1,\,Y_2,\,Y_3,\,\ldots $. Then for all
-$ i\ge 1 $, and all $ i\le j,\,k\le q $,
-\[ P_r(Y_i=a_j\mid X_i=a_k)=
+Suppose that the symbols transmitted are $ X_1,X_2,\ldots $,
+and the symbols received are $ Y_1,Y_2,\ldots $. Then for all
+$ i\geqslant 1 $, $ j\geqslant 1 $, $ k\leqslant q $, the probability
+that $ Y_i $ is received, given that $ X_i $ is transmitted is:
+\[ P(Y_i=a_j\mid X_i=a_k)=
 \begin{cases}
-    1-p,\,\text{if } j=k\\
-    \frac{p}{q-1},\,\text{if } j\neq k
+    1-p, & \text{if } j=k\\
+    \frac{p}{q-1}, & \text{if } j\neq k
 \end{cases} \]
-Here, $ p $ is the symbol error probability.
 
 \subsection{Notes about BSC}
 \begin{enumerate}[(i)]
-    \item if $ p=0 $, the channel is perfect
-    \item if $ p=\nicefrac{1}{2} $, the channel is useless
-    \item if $ \nicefrac{1}{2}<p\le 1 $, then simply flip all bits that aren't received
-    \item WLOG, we'll assume that $ 0<p<\nicefrac{1}{2} $
-    \item Analogously, for any $ q $-ary channel, we can assume that $ 0<p<\frac{q-1}{q} $
+    \item If $ p=0 $, the channel is perfect.
+    \item If $ p=\nicefrac{1}{2} $, the channel is useless.
+    \item If $ \nicefrac{1}{2}<p\leqslant 1 $, then simply flip all bits that are received.
+    \item WLOG, we can assume $ 0<p<\nicefrac{1}{2} $.
+    \item Analogously, for a $ q $-ary channel, we can assume that $ 0<p<\frac{q-1}{q} $.
 \end{enumerate}
 
 \begin{defbox}
-    \subsection{Definition (Hamming distance)}
-    If $ x,y\in A^n $, the \emph{Hamming distance}, $ d(x,y) $ is
-    the \# of coordinate positions in which $ x $ and $ y $ differ.
-\end{defbox}
+    \begin{definition}
+    If $ \bm{x},\bm{y}\in A^n $, the \textbf{Hamming distance} $ d(\bm{x},\bm{y}) $ is
+    the number of coordinate positions in which $ \bm{x} $ and $ \bm{y} $ differ.
+\end{definition} \end{defbox}
 
 \begin{exbox}
-    \subsection{Example (Hamming distance)}
-    The hamming distance of $ 10111 $ and $ 01010 $ is 
-    \[ d(10111,01010)=4 \]
+    \begin{example}[Hamming Distance]
+        Let $ \bm{x} = 10111 $ and $ \bm{y} = 01010 $. The Hamming distance
+        of $ \bm{x} $ and $ \bm{y} $ is $  d(\bm{x},\bm{y})=4  $
+        since $ \bm{x} $ and $ \bm{y} $ differ in the coordinate positions
+        1, 2, 3, and 5.
+    \end{example}
 \end{exbox}
 
 \begin{defbox}
-    \subsection{Definition (Hamming distance of a code)}
+    \begin{definition}
     Let $ C $ be an $ [n,M] $-code.
-    The \emph{Hamming distance $ d $ of a code} $ C $ is
-    \[ d(C)=\min \{d(x,y):x,y\in C,\,x\neq y\} \]
-\end{defbox}
+    The \textbf{Hamming distance $ d $ of a code} $ C $ is
+    \[ d(C)=\min \{d(\bm{x},\bm{y}):\bm{x},\bm{y}\in C,\;\bm{x}\neq \bm{y}\} \]
+\end{definition} \end{defbox}
 
 \begin{thmbox}
-    \subsection{Theorem}
-    $ d $ is a \emph{metric}. For all $ x,y,z\in A^n $:
-    \begin{enumerate}[(i)]
-        \item $ d(x,y)\ge 0 $, and $ d(x,y)=0 $ if and only if $ x=y $
-        \item $ d(x,y)=d(y,x) $
-        \item ($ \triangle $ inequality): $ d(x,z)\le d(x,y)+d(y,z) $
+    \begin{theorem}
+    $ d $ is a \textbf{metric}. For all $ \bm{x},\bm{y},\bm{z}\in A^n $:
+    \begin{enumerate}[(1)]
+        \item $ d(\bm{x},\bm{y})\geqslant 0 $
+        \item $ d(\bm{x},\bm{y})=0 $ if and only if
+        $ \bm{x}=\bm{y} $
+        \item $ d(\bm{x},\bm{y})=d(\bm{y},\bm{x}) $
+        \item (Triangle inequality): $ d(\bm{x},\bm{z})\leqslant
+        d(\bm{x},\bm{y})+d(\bm{y},\bm{z}) $
     \end{enumerate}
-\end{thmbox}
+\end{theorem} \end{thmbox}
+\begin{proof}
+    (1)-(3) are trivially true.
+
+    (4) Let $ \bm{x},\bm{y},\bm{z}\in A^n $. Suppose that $ \bm{x} $
+    and $ \bm{z} $ differ in exactly $ a $ positions; that is, $ d(\bm{x},\bm{z})=a $.
+    Out of the $ a $ positions in which $ \bm{x} $ and $ \bm{z} $ differ,
+    there are $ b $ positions in which $ \bm{y} $ is identical to
+    $ \bm{x} $, but not $ \bm{z} $. Out of the $ a $ positions,
+    there are $ a-b $ positions in which $ \bm{y} $ is identical to
+    $ \bm{z} $, but not $ \bm{x} $. Lastly, in the $ n-a $ positions
+    where $ \bm{x} $ is identical to $ \bm{z} $, there are $ c $
+    positions in which $ \bm{y} $ does not match either
+    $ \bm{x} $ or $ \bm{z} $. We can see that
+    $ d(\bm{x},\bm{y})=b+c $ and $ d(\bm{y},\bm{z})=a-b+c $. We get
+    \[ d(\bm{x},\bm{y})+d(\bm{y},\bm{z})=(b+c) + (a-b+c)=a+2c\geqslant a \]
+    Therefore $ d $ is a metric.
+\end{proof}
 
 \begin{defbox}
-    \subsection{Definition (Rate)}
-    The \emph{rate} (or \emph{information rate}) of an $ [n,M] $-code $ C $ over
+    \begin{definition}
+    The \textbf{rate} (or \textbf{information rate}) of an $ [n,M] $-code $ C $ over
     $ A $, is
     \[ R=\frac{\log_q(M)}{n} \]
     where $ q=|A| $.
 
-    If the source messages are all $ k $-tuples over $ A $, then
+    If the source messages are all $ k $-tuples over $ A $, then $ M=q^k $, so we have
     \[ R=\frac{\log_q(q^k)}{n}=\frac{k}{n}  \]
-    that is, there are $ q^k $ source messages.
-\end{defbox}
+\end{definition} \end{defbox}
 
 \begin{exbox}
-    \subsection{Example (Rate)}
-    $ A=\{0,1\} $, $ C=\{00000,\,11100,\,00111,\,10101\} $.
-    
-    We have a $ [2,4] $-code over $ \{0,1\} $.
-    
-    $ R=\frac{2}{5} $, and $ d(C)=2 $ since $ 00111 $ and $ 10101 $
-    differ by $ 2 $ in the first and fourth bit.
+    \begin{example}[Rate \& Distance of Code]
+        Let $ A=\{0,1\} $ and $ C=\{00000,\,11100,\,00111,\,10101\} $ which is a
+        $ [2,4] $-code over $ \{0,1\} $.
+        \begin{itemize}
+            \item Rate of code: $ R=\nicefrac{2}{5} $
+            \item Distance of code: $ d(C)=2 $, since the minimum distance
+            are from the pair of codewords $ 00111 $ and $ 10101 $ which
+            have Hamming distance of $ 2 $ as they differ in coordinate
+            positions $ 1 $ and $ 4 $.
+        \end{itemize}
+    \end{example}
 \end{exbox}

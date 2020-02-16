@@ -1,0 +1,118 @@
+\section{2020-02-04}
+\subsection{Preprocessor, Separate Compilation}
+Source code $ \rightarrow $ Preprocessor $ \rightarrow $ Compiler
+$ \rightarrow $ \code{a.out} executable
+
+\code{\#include} is a direct copy/paste for the preprocessor directive
+
+\code{\#include} with quotes $ \rightarrow $ look in current directory,
+e.g. \code{\# include ``file''}
+
+\code{g++ -E FILE} shows what the \code{include} copy/pastes
+
+\code{1201/lectures/c++/4-preprocess}
+
+File: \code{hello.cc}
+
+\begin{itemize}
+    \item \code{\#define VAR VALUE} $ \rightarrow $ searches and replaces
+    \code{VAR} with \code{VALUE}
+    \subitem \code{\#define MAX 10} $ \rightarrow $ replaces \code{MAX} with \code{10}
+    \subitem Obsolete because now we have \code{const}
+\end{itemize}
+
+\subsection{Conditional Compilation}
+File: \code{course.cc}
+
+\code{g++14 -DVAR=VALUE FILE} $ \rightarrow $ changes type in command-line
+for \code{course.cc}
+
+Preprocessor comment; nests perfectly:
+\begin{lstlisting}
+    #if 0
+        ...
+    #endif
+\end{lstlisting}
+
+Block comments (less powerful):
+\begin{lstlisting}
+    /*
+    ...
+    */
+\end{lstlisting}
+
+\begin{lstlisting}
+    #define VAR // VAR gets empty string
+    #ifdef VAR // if VAR is defined, true
+    #ifndef VAR // if VAR is not defined, true
+\end{lstlisting}
+
+File: \code{debug.cc}
+
+\code{g++14 -DDEBUG debug.cc} $ \rightarrow $ defines \code{DEBUG}, so
+one can see full verbose due to the \code{\#ifdef}s in \code{debug.cc}
+
+Note: \code{-D} can be used to define multiple variables
+
+\subsection{Separate Compilation}
+\begin{itemize}
+    \item Header files (\code{.h}): Declarations of functions, Global Variables,
+    and Type Definitions
+    \item Implementation files (\code{.cc}): Definitions of functions
+\end{itemize}
+
+\code{1201/lectures/c++/5-separate}
+
+File: \code{example1}
+
+Compile the files with either:
+\begin{itemize}
+    \item \code{g++14 main.cc vec.cc}
+    \item \code{g++14 *.cc}
+\end{itemize}
+Notes:
+\begin{itemize}
+    \item Implementation files (\code{.cc}) are never \code{include}d
+    \item Implementation files (\code{.cc}) are compiled
+    \item Header (\code{.h}) files are \textbf{never compiled}, they are \code{include}d
+\end{itemize}
+
+Want to compile each file separately to produce a position of the executable,
+then finally merge these positions.
+
+By default, \code{g++} will compile and link to produce the executable.
+
+\code{g++14 -c vec.cc}, \code{g++14 -c main.cc} $ \rightarrow $ compiles each
+separately, without the executable (\code{.o} (Object) files are produced).
+
+\code{g++14 main.o vec.o -o myprog} $ \rightarrow $ merges them into
+the \code{myprog} executable
+
+\subsection{Build Tools}
+Don't memorize any of this section.
+
+\textbf{make}: Automatically use ``last modified timestamp'' (uses \code{ls -l})
+
+Specify dependencies in a \code{Makefile}.
+
+\code{1201/lectures/tools/1-make}
+
+File: \code{example1}
+\begin{itemize}
+    \item \code{.PHONY} $ \rightarrow $ specifies that \code{clean} is not a file, but
+    a command
+    \subitem \code{clean} $ \rightarrow $ \code{make clean} will delete any \code{.o} files
+    in the current directory
+\end{itemize}
+
+File: \code{example2}
+\begin{itemize}
+    \item Uses variables for compilation
+    \item \code{-Wall} $ \rightarrow $ warn all, compiler will give errors for warnings
+\end{itemize}
+
+File: \code{example3}
+\begin{itemize}
+    \item \code{main.o}, \code{vec.o}, \code{myprog} within
+    the Makefile is all one needs to change for A2Q5
+\end{itemize}

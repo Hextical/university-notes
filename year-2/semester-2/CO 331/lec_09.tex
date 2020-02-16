@@ -1,0 +1,163 @@
+\section{2020-01-24}
+\begin{thmbox}
+    \begin{theorem}
+    If $ GF(q)^* $ has order $ t $, then
+    \[ \alpha^0,\alpha^1,\ldots,\alpha^{t-1} \]
+    are pairwise distinct.
+\end{theorem} \end{thmbox}
+
+\begin{proof}
+    Suppose $ \alpha^i=\alpha^j $ where $ 0\leqslant i<j\leqslant t-1 $.
+    Then $ \alpha^{j-i}=1 $ which contradicts $ \ord(\alpha)=t $
+    since $ 1\leqslant j-i\leqslant t-1 $.
+\end{proof}
+
+So, if $ \alpha $ is a generator of $ GF(q)^* $, then
+\[ \alpha^0,\alpha_1,\ldots ,\alpha^{q-2}=GF(q)^* \]
+
+\begin{thmbox}
+    \begin{theorem}
+    \subsection{Lemma}
+    Let $ \alpha\in GF(q)^* $ with $ \ord(\alpha)=t $. Then $ \ord(\alpha^i)=
+    t/\gcd(t,i) $.
+\end{theorem} \end{thmbox}
+
+\begin{proof}
+    Let $ d=\gcd(t,i) $. The order of $ a^i $ is the smallest positive
+    integer $ s $ such that $ \alpha^{is}=1 $. Now,
+    \[ \alpha^{is}=1\iff t\mid is\iff \frac{t}{d}\mid \frac{i}{d}s
+    \iff \frac{t}{d} \mid s \]
+    Since the smallest positive integer $ s $ satisfying $ \frac{t}{d} \mid s $
+    is $ s=\frac{t}{d} $, we have $ \ord(\alpha^i)=\frac{t}{d} $.
+\end{proof}
+
+\begin{thmbox}
+    \begin{theorem}
+    \subsection{Lemma}
+    Let $ \alpha,\beta\in GF(q)^* $, with $ \ord(\alpha)=m $ and $ \ord(\beta)=n $.
+    If $ \gcd(m,n)=1 $ then $ \ord(\alpha\beta)=mn $.
+\end{theorem} \end{thmbox}
+
+\begin{thmbox}
+    \begin{theorem}
+    Every finite field $ GF(q) $ has a generator.
+\end{theorem} \end{thmbox}
+
+The following proof is optional.
+\begin{proof}
+    Let $ \alpha $ be an element of highest order in $ GF(q)^* $;
+    say $ \ord(\alpha)=t $. Suppose that $ t<(q-1) $.
+    
+    If the order of every element in $ GF(q)^* $ were to divide $ t $ then the equation
+    $ y^t-1=0 $ would have $ q-1 $ roots in $ GF(q) $, which is impossible
+    since $ (q-1)>t $. Hence there exists an element $ \beta\in GF(q)^* $
+    whose order $ b $ does not divide $ t $.
+
+    Now, let $ \ell $ be a prime such that the highest power of $ \ell $
+    which divides $ b $ (say $ \ell^e $) is greater than the highest
+    power of $ \ell $ which divides $ t $ (say $ \ell^f $) --- such a prime
+    $ \ell $ must exist since $ b $ does not divide $ t $.
+
+    Consider the field elements $ \alpha^{\prime}=\alpha^{\ell^f} $
+    and $ \beta^{\prime}=\beta^{b/\ell^e} $. We have
+    \[ \ord(\alpha^{\prime})=\frac{t}{\gcd(t,\ell^f)} =\frac{t}{\ell^f} \]
+    and
+    \[ \ord(\beta^{\prime})=\frac{b}{\gcd(b,\ell^e)} =\frac{b}{b/\ell^e}=\ell^e \]
+    Since $ \gcd(t/\ell^f,\ell^e)=1 $, we have $ \ord(\alpha^{\prime}\beta^{\prime})=
+    (t/\ell^f)(\ell^e)=t\ell^{e-f}>t $. This contradicts the hypothesis
+    that the highest order of any element in $ GF(q)^* $ is $ t $. Hence the
+    hypothesis that $ t<(q-1) $ is wrong, and so $ t=q-1 $. Thus $ \alpha $
+    is a generator of $ GF(q)^* $.
+\end{proof}
+
+\subsection{Linear Codes}
+Let $ F=GF(q) $. Let $ V_n(F)=\underbrace{F\times\cdots\times F}_{n}=F^n $.
+Then, $ V_n(F) $ is an $ n $-dimensional vector space over $ F $ and
+we have $ |V_n(F)|=q^n $.
+
+\begin{defbox}
+    \begin{definition}
+    Let $ F=GF(q) $.
+    A \textbf{linear $ (n,k) $-code} over $ F $ is an $ n $-dimensional subspace
+    of $ V_n(F) $.
+\end{definition} \end{defbox}
+
+\begin{defbox}
+    \begin{definition}
+    A subspace of a vector space $ V $ over $ F $ is a subset
+    $ S\subseteq V $ such that
+    \begin{enumerate}[V1]
+        \item $ 0\in S \implies S\neq \varnothing $
+        \item $ v_1+v_2\in S $, $ \forall v_1,v_2\in S $
+        \item $ \lambda v\in S $, $ \forall \lambda\in F $ and $ v\in S $
+    \end{enumerate}
+    Note that $ S\subseteq V $ is also a vector space over $ F $. 
+\end{definition} \end{defbox}
+
+\subsection{Properties of Linear Codes}
+Let $ C $ be an $ (n,k) $-code over $ F $. Let $ v_1,\ldots,v_k $ be
+an ordered basis for $ C $.
+\begin{enumerate}[(1)]
+    \item The codewords in $ C $ are precisely:
+    \[ m_1v_1+\cdots +m_kv_k \]
+    where $ m_i\in F $. So, $ |C|=M=q^k $ since there are $ q $ choices for each $ m $.
+    The length of $ C $ is $ n $ and has dimension $ k $.
+    \item The rate of $ C $ is
+    \[ R=\frac{\log_q(M)}{n} =\frac{k}{n} \]
+\end{enumerate}
+
+\begin{defbox}
+    \begin{definition}
+    The \textbf{Hamming weight} of $ v\in V_n(F) $, denoted
+    $ w(v) $ is the number of non-zero coordinate positions in $ V $.
+\end{definition} \end{defbox}
+
+\begin{defbox}
+    \begin{definition}
+    The \textbf{Hamming weight of an $ (n,k) $-code} $ C $ is:
+    \[ w(C)=\min \left\{ w(c):c\in C,\,c\neq 0\right\} \]
+\end{definition} \end{defbox}
+
+\begin{thmbox}
+    \begin{theorem}
+    If $ C $ is a linear code, then $ d(C)=w(C) $.
+\end{theorem} \end{thmbox}
+
+\begin{proof}
+    \begin{align*}
+        d(C)
+        &=\min \left\{ d(x,y):x,y\in C,\,x\neq y\right\}\\
+        &=\min \left\{ w(x-y):x,y\in C,\,x\neq y\right\}\qquad\text{by (A2Q1a)}\\
+        &=\min \left\{ w(c):c\in C,\,x\neq y\right\}\qquad\text{since $C$ is a vector space}\\
+        &=w(C)
+    \end{align*}
+\end{proof}
+
+Since $ M=q^k $, there are $ q^k $ source messages. We'll assume that the source
+messages are elements of $ V_k(F) $. Then, a natural encoding rule is,
+given $ (m_1,\ldots ,m_k)\in V_k(F) $ we'll encode the message as
+\[ c=m_1v_1+\cdots+m_kv_k \]
+The encoding rule depends on the basis chosen for $ C $.
+
+If $ m=(m_1,\ldots ,m_k) $, then the encoding rule can be written as follows:
+\begin{align*}
+    C&=(m_1,\ldots ,m_k)
+\begin{bmatrix}
+    -v_1-\\
+    -v_2-\\
+    \vdots\\
+    -v_k-
+\end{bmatrix}_{k\times n}\\
+&=mG
+\end{align*}
+Note that $ v_i $ are row vectors in this course.
+
+\begin{defbox}
+    \begin{definition}
+    Let $ C $ be an $ (n,k) $-code. A \textbf{generator matrix} $ G $
+    for $ C $ is a $ k\times n $ matrix whose rows form a basis for $ C $.
+\end{definition} \end{defbox}
+
+\myuline{Note:} An encoding rule for $ C $ with respect to $ G $ is $ C=mG $.
+Performing elementary row operations on $ G $ gives
+a different matrix for the same code $ C $ due to the order of the basis.

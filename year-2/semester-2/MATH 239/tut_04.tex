@@ -1,0 +1,72 @@
+\section{Math 239 Tutorial 4}
+\textbf{Problem 1.} Let $ S $ denote the set of strings of the form
+$ \{1\}^* \{0\}^* \{1\}^* \{0\}^* $. Find the generating function for
+$ \Phi_S(x) $, where the weight of a string is given by its length.
+
+\emph{Solution.}
+
+$ \{1\}^*\left( \{0\}\{0\}^* \{1\}\{1\}^* \right)\{0\}^*\cup \{1\}^* \{0\}^* $
+
+\textbf{Problem 2.} Let $ S=\{00,111\}^* $. Find a formula for
+$ \Phi_S(x) $.
+
+\emph{Solution.}
+
+\begin{align*}
+    \Phi_S(x)
+    &=\Phi_{\{00,111\}^*}\\
+    &=\frac{1}{1-\Phi_{\{00,111\}}}\\
+    &=\frac{1}{1-(x^2+x^3)}\\
+\end{align*}
+
+\textbf{Problem 3.} Let $ S $ be $ \{00,111\}^* $ and let $ S_n $
+denote the set of strings of length $ n $ in $ S $. Give a combinatorial
+proof that $ |S_n|=|S_{n-2}|+|S_{n-3}| $ for $ n\geqslant 3 $.
+
+Look at $ n=0,...,6 $.
+
+$ n=2 : |S_2|=1\rightarrow 00 $
+
+$ n=3 : |S_3|=1 \rightarrow 111 $
+
+$ n=4 : |S_4|=1 \rightarrow 0000$
+
+$ n=5 : |S_5|=2 \rightarrow 00111, 11100 $
+
+$ n=6 : |S_6|=2 \rightarrow 111111,000000 $
+
+\emph{Solution.}
+
+Let $ s\in S_n $, $ n\geqslant 3 $. What could $ s $ start with?
+
+Case 1: $ 00t $, $ t\in S_{n-2} $
+
+Case 2: $ 111t $, $ t\in S_{n-3} $
+
+$ f: S_n\rightarrow S_{n-2}\cup S_{n-3} $, $\forall s\in S_n $, $ f(s)=t $
+where
+\[ s=
+\begin{cases}
+    00t,\,\text{if $s$ starts with }00\\
+    111t,\,\text{if $s$ starts with }111
+\end{cases} \]
+$ g:S_{n-2}\cup S_{n-3}\rightarrow S_n $
+\[ g(t)=
+\begin{cases}
+    00t,\,t\in S_{n-2}\\
+    111t,\,t\in S_{n-3}
+\end{cases} \]
+Explain how $ f(g(t))=t $ and $ g(f(s))=s $.
+
+\textbf{Problem 4.} Explain why $ \left( \{1\}^* \{0\}^* \right) $
+is ambiguous.
+
+\emph{Solution.}
+
+Ambiguous means there are multiple ways to create a string. So, taking
+$ \varepsilon $ works since,
+\begin{align*}
+    \left(\{1\}^0\{0\}^0\right)^{x}
+    &=(\varepsilon)^{x}\\
+    &=\varepsilon
+\end{align*}

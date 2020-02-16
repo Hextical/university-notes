@@ -1,0 +1,189 @@
+\section{2020-02-11}
+\subsection{C++ Classes (Cont.)}
+Last time: Initializing objects
+
+\begin{lstlisting}
+    struct Student {
+        const int id;
+    };
+\end{lstlisting}
+How to initialize fields that are constants or lvalue references?
+
+Fields must always already be initialized before constructor body runs;
+i.e. step 2 occurs before step 3 below
+
+\myuline{Steps for Object Construction}
+\begin{enumerate}[(1)]
+    \item allocate space: could be on stack or could be on heap if new
+    \item field initialization: only fields that are \textbf{objects} are initialized
+    \subitem their default constructor gets called
+    \item constructor body runs
+\end{enumerate}
+`Hijack' (2): \textbf{Use Member Initialization List} (MIL)
+
+Example (4 fields, 4 parameter constructor):
+\begin{lstlisting}
+    Student::Student(int id, int assigns, int mt, int final)
+        // pairs separated by commas
+        // before curly brace are field names
+        // initialize id to id, assigns to assigns, ...
+        : id{id}, assigns{assigns}, mt{mt}, final{final} {
+            ... // constructor body
+        }
+\end{lstlisting}
+MIL should use field declaration order; will compile with a warning if you do not
+do this, but it will initialize according to field order.
+
+Not that we did not need to use \code{this} to disambiguate field/parameter.
+
+MIL is necessary to initialize constants and references that can be used for
+all fields.
+
+Using the MIL can be more efficient than using the constructor body.
+
+Special constructor that takes a single parameter: Constructing objects
+as copies of other objects
+
+\begin{lstlisting}
+    Student billy{75, 50, 65}; // three parameter constructor {assigns, mt, final}
+    Student bobby{billy}; // Uses copy constructor
+\end{lstlisting}
+Constructing an object as a copy of another called the \textbf{copy constructor}.
+There is always a built-in constructor for any class.
+
+(\code{.cc}) (You get this for free already)
+\begin{lstlisting}
+    // crucial to be by reference; will not compile if done by value
+    Student::Student(const Student &other)
+    : assigns{others.assigns}, mt{others.mt}, final{others.final} {}
+\end{lstlisting}
+When is a copy constructor called?
+\begin{enumerate}[(1)]
+    \item Explicitly constructing an object as a copy of another
+    \item Pass by value
+    \item Return by value
+\end{enumerate}
+Every class comes with (gets for free):
+\begin{enumerate}[(I)]
+    \item default constructor
+    \item copy constructor
+    \item copy assignment operator
+    \item destructor
+    \item move constructor
+    \item move assignment operator
+\end{enumerate}
+The \textbf{Big 5}: (II)-(VI).
+
+\begin{lstlisting}
+    struct Node {
+        int data;
+        Node *next;
+        // two parameter constructor
+        Node(int data, Node *next);
+        // free copy constructor
+        Node(const Node &other);
+    };
+    Node::Node(int data, Node *next) : data{data}, next{next} {}
+    Node::Node(const Node &other) : data{other.next}, next{other.next} {}
+\end{lstlisting}
+
+\textbf{Shallow copy}:
+\begin{lstlisting}
+    Node *n = new Node{1, new Node{2, new Node{}, nullptr{}}};
+    // Three heads with shared tails, this is bad
+    // stack allocated node
+    // m on stack with head same as n's head, but tail points to n's tail (on heap)
+    Node m{*n}; // make a copy of *n and make it m
+    // heap allocate the copy
+    // p on stack, same as m, but with first node in heap
+    Node *p = new Node{*n};
+\end{lstlisting}
+Sometimes we want a \textbf{deep copy} (need to write your own copy constructor):
+\begin{lstlisting}
+    Node::Node(const Node &other) {
+        data = others.data;
+        // INCORRECT, segementation fault if next is nullptr (dereferencing nullptr)
+        next = new Node{*other.next};
+        // CORRECT
+        if (others.next) {
+            next = new Node{*other.next};
+        } else {
+            next = nullptr;
+        }
+    }
+\end{lstlisting}
+More compactly,
+\begin{lstlisting}
+    Node::Node(const Node &other) :
+    data{other.data},
+    next{other.next ? new Node {*other.next} : nullptr} {}
+\end{lstlisting}
+
+One parameter constructors create ``implicit'' conversions.
+\begin{lstlisting}
+    Node::Node(int data) : data{data}, next{nullptr} {}
+\end{lstlisting}
+
+\begin{lstlisting}
+    void foo(Node n) {
+        ...
+    }
+    Node n{4};
+    Node n = 4;
+    // Both possible, implicit conversion
+    foo(n);
+    foo(5);
+\end{lstlisting}
+We can declare a constructor ``explicit'' to disable implicit conversions:
+\begin{lstlisting}
+    struct Node {
+        ...
+        explicit Node(int);
+    };
+\end{lstlisting}
+
+\subsection{Destructor}
+\textbf{Destructor:} method that gets called when objects are destroyed.
+\begin{itemize}
+    \item Stack: when stack is popped
+    \item Heap: when delete is called on a pointer to a heap allocated object
+\end{itemize}
+A class can only have \myuline{one} destructor, they cannot be overloaded.
+
+\myuline{Steps for Object Deconstruction}
+\begin{enumerate}[(1)]
+    \item Destructor body runs
+    \item Fields that are objects are destroyed (reverse declaration order)
+    \item Space is reclaimed
+\end{enumerate}
+Free destructor has an empty destructor body.
+\begin{lstlisting}
+    // Allocate everything on heap
+    Node *p = new Node{1, new Node{2, new Node{}, nullptr}};
+    delete p; // leaks Node 2 and Node 3
+\end{lstlisting}
+
+\code{(.h)}
+\begin{lstlisting}
+    struct Node {
+        ~Node();
+    };
+\end{lstlisting}
+\code{(.c)}
+\begin{lstlisting}
+    Node::~Node() {
+        delete next; // recursively deletes next (including nullptr which is safe)
+    }
+\end{lstlisting}
+
+\subsection{Copy Assignment Operator}
+\begin{lstlisting}
+    Student billy{..., ..., ...};
+    // Bobby was born a cheater
+    Student bobby{billy}; // done already
+    // Jane existed, then started cheating off Billy
+    Student jane; // default constructor
+    jane = billy;
+    jane.operator=(billy); // equivalent to line above (don't do this)
+\end{lstlisting}
+The \textbf{Copy Assignment Operator} is used to assign to existing objects.
