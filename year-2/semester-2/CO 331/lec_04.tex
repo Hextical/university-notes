@@ -1,55 +1,55 @@
-\section{2020-01-13}
-\subsection{Error Correcting \& Detecting Capabilities of a Code}
+\makeheading{ 2020-01-13 }
+
+\section{Error Correcting \& Detecting Capabilities of a Code}
 \begin{itemize}
     \item If $ C $ is used for error correction, the strategy is IMLD/CMLD.
     \item If $ C $ is used for error detection only, the strategy is
-    to reject $ \bm{r} $ if $ \bm{r}\notin C $, otherwise accept $ \bm{r} $.
+          to reject $ \bm{r} $ if $ \bm{r}\notin C $, otherwise accept $ \bm{r} $.
 \end{itemize}
 \begin{defbox}
     \begin{definition}
-    A code $ C $ is called an \textbf{$\bm{e}$-error correcting code}
-    if the decoder always makes the correct decision if
-    at most $ e $ errors per codeword are introduced per transmission.
-    We define \textbf{$\bm{e}$-error detecting code} similarly.
-\end{definition} \end{defbox}
+        A code $ C $ is called an \textbf{$\bm{e}$-error correcting code}
+        if the decoder always makes the correct decision if
+        at most $ e $ errors per codeword are introduced per transmission.
+        We define \textbf{$\bm{e}$-error detecting code} similarly.
+    \end{definition} \end{defbox}
 
 \begin{exbox}
-\begin{example}[Error Detecting and Correcting Codes]
-
-    \begin{itemize}
-        \item $ C=\{0000,\,1111\} $ is a $ 1 $-error correcting code, but not a
-        $ 2 $-error correcting code.
-        \item $ C=\{\underbrace{0\cdots 0}_{m},\,\underbrace{1\cdots 1}_{m}\} $
-        is a $ \lfloor \frac{m-1}{2} \rfloor $-error correcting code.
-        \item $ C=\{0000,\,1111\} $ is a $ 3 $-error detecting code.
-    \end{itemize}
-\end{example}
+    \begin{example}[Error Detecting and Correcting Codes]
+        \begin{itemize}
+            \item $ C=\{0000,\,1111\} $ is a $ 1 $-error correcting code, but not a
+                  $ 2 $-error correcting code.
+            \item $ C=\{\underbrace{0\cdots 0}_{m},\,\underbrace{1\cdots 1}_{m}\} $
+                  is a $ \lfloor \frac{m-1}{2} \rfloor $-error correcting code.
+            \item $ C=\{0000,\,1111\} $ is a $ 3 $-error detecting code.
+        \end{itemize}
+    \end{example}
 \end{exbox}
 
 \begin{thmbox}
     \begin{theorem}
-    Suppose $ d(C)=d $, then $ C $ is a $ (d-1) $-error detecting code.
-\end{theorem} \end{thmbox}
+        Suppose $ d(C)=d $, then $ C $ is a $ (d-1) $-error detecting code.
+    \end{theorem} \end{thmbox}
 
 \begin{proof}
     Suppose $ \bm{c}\in C $ is transmitted $ \bm{r} $ is received. Let
     $ e $ denote the amount of errors that have occurred in transmission.
     \begin{itemize}
         \item If $ e = 0 $, then $ \bm{r}=\bm{c}\in C $, and the decoder accepts
-        $ \bm{r} $.
+              $ \bm{r} $.
         \item If $ e \geq d $, then the decoder can make the wrong
-        choice since $ d(C)=d $.
+              choice since $ d(C)=d $.
         \item If $ e\in[1,d-1] $, then
-        $ 1\leqslant d(\bm{r},\bm{c})\leqslant d-1 $.
-        So, $ \bm{r}\notin C $, hence the decoder
-        rejects $ \bm{r} $. Hence, $ C $ is a $ (d-1) $-error detecting code.
+              $ 1\leqslant d(\bm{r},\bm{c})\leqslant d-1 $.
+              So, $ \bm{r}\notin C $, hence the decoder
+              rejects $ \bm{r} $. Hence, $ C $ is a $ (d-1) $-error detecting code.
     \end{itemize}
 \end{proof}
 
 \begin{thmbox}
     \begin{theorem}
-    If $ d(C)=d $, then $ C $ is not a $ d $-error detecting code.
-\end{theorem} \end{thmbox}
+        If $ d(C)=d $, then $ C $ is not a $ d $-error detecting code.
+    \end{theorem} \end{thmbox}
 
 \begin{proof}
     Since $ d(C)=d $, there exists codewords $ \bm{c}_1,\bm{c}_2\in C $
@@ -61,33 +61,33 @@
 
 \begin{thmbox}
     \begin{theorem}
-    If $ d(C)=d $, then $ C $ is a $ \lfloor \frac{d-1}{2} \rfloor $-error
-    correcting code.
-\end{theorem} \end{thmbox}
+        If $ d(C)=d $, then $ C $ is a $ \lfloor \frac{d-1}{2} \rfloor $-error
+        correcting code.
+    \end{theorem} \end{thmbox}
 
 \begin{proof}
     Suppose $ \bm{c}\in C $ is transmitted, at most $ \frac{d-1}{2}  $ errors
-    are introduced, and $ \bm{r} $ is received. 
+    are introduced, and $ \bm{r} $ is received.
     Let $ \bm{z}\in C $ with $ \bm{z}\neq \bm{c} $.
     By the triangle inequality, we have
     \begin{align*}
         d(\bm{c},\bm{z})\leqslant d(\bm{c},\bm{r})+d(\bm{r},\bm{z})\implies
         d(\bm{r},\bm{z})
-        &\geqslant d(\bm{c},\bm{z})-d(\bm{c},\bm{r})\\
-        &\geqslant d-\frac{d-1}{2}\\
-        &=\frac{d+1}{2}\\
-        &>\frac{d-1}{2}
+         & \geqslant d(\bm{c},\bm{z})-d(\bm{c},\bm{r}) \\
+         & \geqslant d-\frac{d-1}{2}                   \\
+         & =\frac{d+1}{2}                              \\
+         & >\frac{d-1}{2}
     \end{align*}
     So, $ \bm{c} $ is the unique codeword closest to $ \bm{r} $. Hence, IMLD/CMLD
-    will decode $ \bm{r} $ to $ \bm{c} $. Thus, $ C $ is a 
+    will decode $ \bm{r} $ to $ \bm{c} $. Thus, $ C $ is a
     $ \lfloor \frac{d-1}{2} \rfloor $-error correcting code.
 \end{proof}
 
 \begin{thmbox}
     \begin{theorem}
-    If $ d(C)=d $, then $ C $ is not a $ \left( \lfloor \frac{d-1}{2}\rfloor +1 \right) $-
-    error correcting code.
-\end{theorem} \end{thmbox}
+        If $ d(C)=d $, then $ C $ is not a $ \left( \lfloor \frac{d-1}{2}\rfloor +1 \right) $-
+        error correcting code.
+    \end{theorem} \end{thmbox}
 
 \begin{proof}
     Exercise.

@@ -23,6 +23,9 @@
 \usepackage{esvect}
 \usepackage{stackengine}
 \usepackage{listings}
+\usepackage[explicit]{titlesec}
+\usepackage{xhfill}
+\usepackage{varwidth}
 \graphicspath{ {./figures/} }
 
 % input multiple
@@ -102,12 +105,29 @@
 }
 
 \theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[chapter] % reset theorem numbering for each chapter
+\newtheorem{theorem}{THEOREM}[section] % reset theorem numbering for each chapter
 \theoremstyle{plain}
-\newtheorem{lemma}{Lemma}[chapter] % reset theorem numbering for each chapter
+\newtheorem{corollary}[theorem]{COROLLARY} % reset theorem numbering for each chapter
+\theoremstyle{plain}
+\newtheorem{lemma}[theorem]{LEMMA} % reset theorem numbering for each chapter
 \theoremstyle{definition}
-\newtheorem{definition}[theorem]{Definition} % definition numbers are dependent on theorem numbers
+\newtheorem{definition}[theorem]{DEFINITION} % definition numbers are dependent on theorem numbers
 \theoremstyle{definition}
-\newtheorem{example}[theorem]{Example} % definition numbers are dependent on theorem numbers
+\newtheorem{example}[theorem]{EXAMPLE} % definition numbers are dependent on theorem numbers
+
+\def\dotfill#1{\cleaders\hbox to #1{.}\hfill}
+\makeatletter
+\def\myrulefill{\leavevmode\leaders\hrule height .7ex width 1ex depth -0.6ex\hfill\kern\z@}
+\makeatother
+
+\newcommand{\makeheading}[1]%
+{%
+\begin{center}%
+\rule{\columnwidth}{1pt}\\%
+{\large \scshape{#1}}\\[-0.6\baselineskip]%
+\rule{\columnwidth}{1pt}%
+\end{center}
+}
+
 
 \pagestyle{headings}
