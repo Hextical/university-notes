@@ -1,0 +1,99 @@
+\makeheading{2020-01-03}
+For fixed $ n,q,d $, a perfect code maximizes
+\[ R=\frac{log_q(M)}{n} \]
+\begin{exbox}
+    \begin{example}
+        $ GF(q)^n $ is a trivial perfect code with $ d=1 $.
+
+        $ C=\{\underbrace{0\cdots 0}_{n},\underbrace{1\cdots 1}_{n}\} $ over $ \mathbb{Z}_2 $
+        is a perfect code if $ n $ is odd.
+    \end{example}
+\end{exbox}
+
+\begin{proof}
+    \begin{align*}
+        2\left( \sum\limits_{i=0}^{e} \binom{n}{i} \right)
+         & =2\left( \binom{n}{0}+\binom{n}{e} \right)                                         \\
+         & =\binom{n}{0}+\binom{n}{1}+\cdots+\binom{n}{e+1}+\cdots\binom{n}{n-1}+\binom{n}{n} \\
+         & =(1+1)^n                                                                           \\
+         & =2^n
+    \end{align*}
+\end{proof}
+
+\myuline{Exercise}: Prove that every perfect code must have odd distance
+(without using the theorem below)
+
+\begin{thmbox}
+    \begin{theorem}[Tietäväinen, 1973]
+        The only perfect codes are:
+        \begin{enumerate}[(1)]
+            \item $ V_n(GF(q)) $.
+            \item The binary replication code of odd length.
+            \item The $ (23,12,7) $-binary Golay code and all codes equivalent to it.
+            \item The $ (11,6,5) $-ternary Golay code and all codes equivalent to it.
+                  A generator matrix for this code is:
+                  \[ G=
+                      \left[\begin{array}{c|ccccc}
+                                  & 1 & 1 & 1 & 1 & 1 \\
+                                  & 0 & 1 & 2 & 2 & 1 \\
+                              I_6 & 1 & 0 & 1 & 2 & 2 \\
+                                  & 2 & 1 & 0 & 1 & 2 \\
+                                  & 2 & 2 & 1 & 0 & 1 \\
+                                  & 1 & 2 & 2 & 1 & 0
+                          \end{array}\right]_{6\times 11} \]
+            \item The Hamming codes and all codes of the same $ [n,M,d] $ parameters as them
+                  with $ d=3 $.
+        \end{enumerate}
+    \end{theorem}
+\end{thmbox}
+
+\begin{exbox}
+    \begin{example}
+        A Hamming code of order $ r=3 $ over $ GF(3) $ is a $ (13,10,3) $-code over $ GF(3) $ with
+        PCM:
+        \[ H=
+            \left[\begin{array}{ccc|ccc|ccc|ccc|c}
+                    1 & 0 & 0 & 1 & 0 & 1 & 2 & 2 & 0 & 2 & 1 & 2 & 1 \\
+                    0 & 1 & 0 & 1 & 1 & 0 & 1 & 0 & 1 & 2 & 2 & 1 & 1 \\
+                    0 & 0 & 1 & 0 & 1 & 1 & 0 & 1 & 2 & 1 & 2 & 2 & 1
+                \end{array}\right]_{3\times 13} \]
+    \end{example}
+\end{exbox}
+
+\myuline{Observations}:
+\begin{enumerate}[(i)]
+    \item For every non-zero vector $ v\in V_r(GF(q)) $, exactly one scalar multiple of $ v $
+          must be a column of a PCM (for the Hamming code of order $ r $ over $ GF(q) $)
+    \item The dimension of the code is indeed $ k $ since $ \rank(\text{PCM})=r=n-k $
+          since $ \lambda_i e_i $ are columns of the PCM.
+    \item The Hamming codes have distance 3.
+\end{enumerate}
+
+\begin{thmbox}
+    \begin{theorem}
+        Hamming codes are perfect.
+    \end{theorem}
+\end{thmbox}
+\begin{proof}
+    Recall that Hamming codes have $ e=1 $ and $ n=\frac{q^r-1}{q-1} $ with $ r=n-k $.
+    \begin{align*}
+        M \sum\limits_{i=0}^{e} \binom{n}{i}(q-1)^i
+         & =q^{n-r}(1+n(q-1))                               \\
+         & =q^{n-r}\left( 1+\frac{q^r-1}{q-1} (q-1) \right) \\
+         & =q^n
+    \end{align*}
+\end{proof}
+
+\begin{defbox}
+    \begin{definition}
+        Suppose $ \bm{c}\in C $ is transmitted. Suppose $ \bm{r}\in V_n(F) $ is received.
+        Then, the \textbf{error vector} is $ \bm{e}=\bm{r}-\bm{c} $.
+    \end{definition}
+\end{defbox}
+
+\begin{exbox}
+    \begin{example}[Error Vector]
+        Over $ \mathbb{Z}_3 $, if $ \bm{c}=(120212) $ is sent, and $ \bm{r}=(122102) $ is received, then
+        the error vector is $ \bm{e}=(002220) $.
+    \end{example}
+\end{exbox}
