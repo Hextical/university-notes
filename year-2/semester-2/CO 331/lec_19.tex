@@ -1,0 +1,116 @@
+\makeheading{2020-02-24}
+\section{Ideals and Cyclic Subspaces}
+\begin{defbox}
+    \begin{definition}
+        A \textbf{monic polynomial} $ g(x) $ is a single-variable
+        polynomial in which the non-zero coefficient of the highest degree of $ x $
+        is $ 1 $. That is,
+        \[ g(x)=c_0+\cdots+c_{\ell -1}x^{\ell -1}+ x^\ell \]
+        for some constants $ c_i $ where $ i\in[\ell-1,1] $.
+    \end{definition}
+\end{defbox}
+If $ I\neq \{0\} $, then we took $ g(x)=a $ non-zero
+polynomial of smallest degree in $ I $. Note, we can
+take $ g(x) $ to be monic. If $ g(x) $ is not monic, say
+\[ g(x)=c_0+\cdots+c_\ell x^{\ell} \]
+where $ c_\ell \neq 0, 1 $, then
+\[ c_{\ell}^{-1}g(x)=c_\ell^{-1} g_0+\cdots x^\ell \]
+is monic and is also in $ I $. We'll call this process
+\textbf{making $\bm{g(x)$} monic}.
+
+\begin{defbox}
+    \begin{definition}
+        Let $ I $ be an ideal in $ R=F[x]/(x^n-1) $.
+
+        The \textbf{generator polynomial of $ \bm{I} $} is:
+        \begin{enumerate}[(1)]
+            \item $ x^n-1 $ since $ x^n-1\equiv 0 \mod x^n-1 $ when $ I=\{0\} $.
+            \item \textbf{the}
+                  monic polynomial of least degree in $ I $ when $ I \neq \{0\} $.
+        \end{enumerate}
+    \end{definition}
+\end{defbox}
+
+\begin{thmbox}
+    \begin{theorem}
+        Let $ I $ be a non-zero ideal in $ R=F[x]/(x^n-1) $.
+        \begin{enumerate}[(1)]
+            \item There is a \textbf{unique} monic polynomial
+                  g(x) of smallest degree in $ I $.
+            \item $ g(x)\mid (x^n-1) $
+        \end{enumerate}
+    \end{theorem}
+\end{thmbox}
+
+\begin{proof}
+    (1) Suppose
+    there exists two monic polynomials $ g(x) $ and $ h(x) $
+    of the same smallest degree in $ I $.
+    Then, $ g(x)-h(x)\in I $ and $ \deg(g-h)<\deg (g) $. Hence, we must
+    have $ g-h=0 $, so $ g=h $.
+
+    (2) We can write
+    \[ x^n-1=\ell(x)g(x)+r(x) \]
+    where $ \ell,r\in F[x] $ and $ \deg(r)<\deg(g) $. Then,
+    \[ 0\equiv \ell (x)g(x)+r(x)\mod x^n-1\iff r(x)\equiv -\ell(x)g(x)\mod x^n-1 \]
+    Since $ \langle g(x)\rangle = I $, we must have $ r(x)\in I $.
+    Hence, $ \deg(r)<\deg(g) $ so we must have $ r(x)=0 $. Thus,
+    \[ g(x)\mid (x^n-1) \]
+\end{proof}
+
+\begin{thmbox}
+    \begin{theorem}
+        Let $ h(x) $ be a monic divisor of $ x^n-1 $ in $ F[x] $.
+        Then, \textbf{the} generator polynomial of $ \langle h(x)\rangle $
+        is $ h(x) $.
+    \end{theorem}
+\end{thmbox}
+
+\begin{proof}
+    If $ h(x)=x^n-1 $, then $ I=\{0\} $ and by definition, its
+    generator polynomial is $ x^n-1 $.
+
+    If $ \deg(h)<n $, then $ I\neq \{0\} $. Let $ g(x) $
+    be \textbf{the} monic polynomial of smallest degree in $ I $.
+    Since $ g $ is a generator of $ I $, we can write
+    \[ g(x)\equiv a(x)h(x)\mod x^n-1\implies g(x)=a(x)h(x)+\ell(x)(x^n-1) \]
+    for some $ \ell\in F[x] $. Since $ h\mid (x^n-1) $, and $ h\mid ah $,
+    we have $ h\mid g $. So, $ \deg(h)\leqslant \deg(g) $ since
+    $ g $ is a monic polynomial of smallest degree in $ I $,
+    we must have $ \deg(g)\leqslant \deg(h) $, so $ \deg(g)=\deg(h) $.
+    Since $ g $ and $ h $ are both monic, we have
+    $ g=h $.
+\end{proof}
+
+\begin{thmbox}
+    \begin{corollary}
+        There is a 1-1 correspondence between monic
+        divisors of $ x^n-1 $ in $ F[x] $ and ideals in $ R $.
+        There is a 1-1 correspondence between monic
+        divisors of $ x^n-1 $ in $ F[x] $ and cyclic
+        subspaces of $ V_n(F) $.
+    \end{corollary}
+\end{thmbox}
+
+\begin{exbox}
+    \begin{example}
+        Find all cyclic subspaces of $ V_3(\mathbb{Z}_2) $.
+
+        \textbf{Solution.} The complete factorization
+        of $ x^3-1 $ over $ \mathbb{Z}_2 $ is
+        \[ x^3-1=(1+x)(1+x+x^2) \]
+
+        \begin{center}
+            \begin{tabular}{| *{3}{>{\centering\arraybackslash}p{4cm} |}}
+                \hline
+                Monic divisor of $ x^3-1 $ & $ \langle g_i(x) \rangle $  & $ \dim \langle g_i(x) \rangle $ \\
+                \hline
+                $ g_1(x)=1 $               & $ \{000,001,\ldots ,111\} $ & $ 3 $                           \\
+                $ g_2(x)=1+x $             & $ \{000,110,001,101\} $     & $ 2 $                           \\
+                $ g_3(x)=1+x+x^2 $         & $ \{000,111\} $             & $ 1 $                           \\
+                $ g_4(x)=1+x^3 $           & $ \{0\} $                   & $ 0 $\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{example}
+\end{exbox}

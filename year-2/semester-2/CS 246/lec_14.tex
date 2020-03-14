@@ -1,0 +1,166 @@
+\section{2020-02-27}
+\subsection{Invariants of Encapsulation}
+Visibility: public/private
+
+Node invariant: next is either \code{nullptr} or points to the heap
+
+Strategy: create a wrapper list class which maintains full control over \code{Node}s.
+
+\code{list.h}: \code{1201/lectures/se/iterator}
+\begin{lstlisting}
+    class List {
+        struct Node; // private nested Node class
+        Node *theList = nullptr;
+        public:
+            void addFront(int);
+            int ith(int);
+            ~List();
+    };
+\end{lstlisting}
+\code{list.cc}
+\begin{lstlisting}
+    struct List::Node {
+        int data;
+        Node *next;
+        Node(int data, Node *next) : data{data}, next{next} {};
+        ~Node() {
+            delete next;
+        }
+    };
+    void List::addFront(int i) {
+        theList = new Node{i, theList};
+    }
+    int List::ith(int index) { // precondition index is valid
+        Node *curr = thisList;
+        for (int j=0; j < index; ++j, curr = curr->next);
+        return curr->data;
+    }
+    List::~List() {
+        delete theList;
+    }
+    
+    int main() {
+        List l;
+        l.addFront(1);
+        l.addFront(2);
+        l.addFront(3);
+        for (int i=0; i < 3; ++i) {
+            cout << list.ith(i); // 321
+        }
+    }
+\end{lstlisting}
+List traversal is $ O(n^2) $.
+Previously,
+\begin{lstlisting}
+    Node *curr = theList;
+    while(curr) {
+        ...
+        curr = curr->next;
+    }
+\end{lstlisting}
+List traversal is $ O(n) $.
+
+Idea: need to keep track of how much of the \code{List} has been traversed/iterated.
+Create another class that wraps a \code{Node*}.
+
+Design patterns: known good strategies to solve common design problems.
+
+\subsection{Iterator Design Pattern}
+Abstraction of a pointer to the container without exposing the pointer to the client.
+\begin{lstlisting}
+    // arr is an array
+    for (int *p = arr; p!= arr + arraySize; ++p) {
+        ...
+    }
+\end{lstlisting}
+Need a begin and end to our iteration.
+\begin{itemize}
+    \item class should support
+    \subitem \code{!=}
+    \subitem \code{++} $ \rightarrow $ prefix plus
+    \subitem \code{*} $ \rightarrow $ unary dereference
+\end{itemize}
+
+\begin{lstlisting}
+    class List {
+        struct Node {...};
+        Node *theList = nullptr;
+        public:
+            ... // methods from before
+            class Iterator { // public nested class
+                Node *curr;
+                public:
+                    explicit Iterator(Node *curr) : curr{curr} {}
+                    bool operator!=(const Iterator &rhs) {
+                        return curr != rhs.curr;
+                    }
+                    Iterator &operator++() {
+                        curr = curr->next;
+                        return *this;
+                    }
+                    // by reference to be able to write to the data field.
+                    int &operator*() {
+                        return curr->data;
+                    }
+            }; // end Iterator
+            Iterator begin() {
+                return Iterator{theList};
+            }
+            Iterator end() {
+                return Iterator{nullptr};
+            }
+    };
+
+    int main() {
+        List ;
+        l.addFront(1);
+        l.addFront(2);
+        l.addFront(3);
+        // List::Iterator -> auto
+        for (List::Iterator it = l.begin(); it != l.end(); ++it) {
+            cout << *it; // 321
+            *it = 5; // example of a write
+        }
+    }
+
+\end{lstlisting}
+\begin{itemize}
+    \item \code{auto x = y;} $ \rightarrow $ automatic type inference; define \code{x}
+    to be the same type as \code{y}.
+    \item C++ has built-in support for the Iterator design pattern
+\end{itemize}
+\subsection{C++ Range-based for loops}
+We can use range-based for loops for a class \code{MyClass} if:
+\begin{enumerate}[(1)]
+    \item \code{MyClass} supports methods named \code{begin} and \code{end}
+    that return objects of some type, \code{T}
+    \item \code{class T} must support \code{!=}, \code{++}, \code{*}
+\end{enumerate}
+Example of a range-based for loop:
+\begin{lstlisting}
+    // First type, by value declaration of variable n, of type int
+    for (auto n : l) {
+        // implicit of n = *it;
+        cout << n;
+    }
+    // Second type, take by reference to be able to mutate
+    for (auto &n : l) {
+        n = ...;
+    }
+\end{lstlisting}
+
+To force clients to use \code{begin} and \code{end}, we should make the
+\code{Iterator} private, but then \code{List::begin} and \code{List::end}
+would lose access to this constructor. The \code{Iterator} class can declare
+\code{List} to be a friend.
+\begin{lstlisting}
+    class List {
+        ...
+        public:
+            class Iterator {
+                ...
+                friend class List;
+            };
+    };
+\end{lstlisting}
+Friendship weakens encapsulation. Advice: have as few friends as possible.

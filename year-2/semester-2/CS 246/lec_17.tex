@@ -1,0 +1,188 @@
+\section{2020-03-10}
+\subsection{Templates, STL, Design Patterns}
+\begin{lstlisting}
+    class Stack {
+        int *content;
+        int capacity; // capacity of array
+        int length; // useful items in array
+        public:
+            Stack();
+            void push(int);
+            int top() const; // get the top of the stack
+            void pop();
+            ~Stack();
+    };
+\end{lstlisting}
+Suppose we wanted a different data type from \code{int}, a \code{string}. One option
+would be to manually copy the \code{.cc} and \code{.h} file and replace the types.
+A better option, is to use \textbf{C++ Templates}.
+
+\textbf{C++ template class}: a class parameterized on one or more types.
+\begin{lstlisting}
+    template <typename T> // T is a parameter with a type
+    class Stack {
+        T *content;
+        int capacity; // capacity of array
+        int length; // useful items in array
+        public:
+            Stack();
+            void push(T);
+            T top() const; // get the top of the stack
+            void pop();
+            ~Stack();
+    };
+\end{lstlisting}
+There are only minor changes for this simple class.
+\begin{lstlisting}
+    stack<int> s;
+    s.push(s);
+    // stack where each entry of the element of the stack is another stack of type string
+    stack<stack<string>> bla;
+\end{lstlisting}
+For the \code{List} class:
+\begin{lstlisting}
+    template <typename T>
+    // not parameterizing the node class
+    class List {
+        struct Node {
+            T data;
+            Node *next;
+        };
+        ...
+        public:
+            class Iterator {
+                Node *curr;
+                Iterator(Node *);
+                public:
+                    T &operator*();
+                    Iterator &operator++();
+                    bool operator!=(Iterator &);
+                    friend class List<T>;
+            };
+            T ith(int idx);
+            void addToFront(T &);
+            ~List();
+    };
+\end{lstlisting}
+\begin{lstlisting}
+    List<int> l1;
+    l1.addToFront(1);
+    List<List<int>> l2;
+    l2.addToFront(l1);
+    // a is a list of ints that are copied by value
+    for(auto a : l2) { ... }
+    // let's take it by reference
+    for (auto &a : l2) {
+        for (auto b : a) {
+            cout << b;
+        }
+    }
+\end{lstlisting}
+
+\textbf{STL} (Standard Template Library)
+
+\code{std::vector} $ \longleftrightarrow $ dynamic length arrays
+\begin{itemize}
+    \item automatically resize as needed (possibly even shrink)
+\end{itemize}
+
+\begin{lstlisting}
+    // Can even be used as a Queue
+    #include <vector> // ArrayList from Java
+    ...
+    vector<int> v; // stack allocated, empty vector
+    vector<int> v{3,4}; // [3, 4]
+    v.emplace_back(5); // [3, 4, 5] // automatically resizes
+    // emplace_back can be more efficient than push_back as it uses move whenever
+    // possible; place_back will do a copy
+    v.pop_back(); // pop
+    v.erase(v.begin()); // vectors have iterators
+    v.erase(v.begin() + 3);
+    // Suppose we wanted to traverse the vector; there are a lot of options.
+    // Option 1
+    for (int i = 0; i < v.size(); ++i) {
+        cout << v[i]; // overloaded []
+    }
+    // Option 2
+    for (vector<int>::iterator it = v.begin(); it != v.end(); ++it) {
+        ...
+    }
+    // Option 3 (don't need access to the iterator)
+    for (auto &i : v) {
+        ...
+    }
+    // Option 4 (reverse iterate), no shortcut based for loop
+    // r.begin() (reverse begin)
+    // r.end() (reverse end)
+    for (vector<int>::reverse.iterator it = v.rbegin(); it != v.rend(); ++it) {
+        ...
+    }
+    // Option 2 and 4 can use auto in the beginning of the for loop
+\end{lstlisting}
+
+Code to an interface not to an implementation.
+\begin{itemize}
+    \item Create abstract classes that define the interface
+    \item (Destructor needs \code{virtual} A4Q1), else memory leaks will occur
+    \item Work with pointers of this abstract type
+    \subitem call the interface methods
+    \subitem use \code{virtual} methods where behaviour differs
+\end{itemize}
+
+\subsection{Abstract Iterator Design Pattern}
+\begin{lstlisting}
+    class AbsIter {
+        public:
+            // need the virtual keyword, else breaks
+            virtual int &operator*() const = 0; // pure virtual method
+            virtual AbsIter &operator++() = 0;
+            virtual bool operator!=(const AbsIter &) = 0;
+            virtual ~AbsIter();
+    };
+\end{lstlisting}
+
+\begin{lstlisting}
+    class List {
+        ...
+        public:
+            class Iterator : public AbsIter {
+                ...
+                public:
+                    // override inherited pure virtual methods
+            };
+    };
+\end{lstlisting}
+
+\begin{lstlisting}
+    class Set {
+        public:
+            class Iterator : public AbsIter {
+                ...
+            };
+    };
+\end{lstlisting}
+
+\begin{lstlisting}
+    void each(AbsIter &start, cons AbsIter &end) {
+        while (start != end) {
+            // do something with *start
+            ++start;
+        }
+    }
+\end{lstlisting}
+
+\begin{lstlisting}
+    template <typename Fn>
+    // template function
+    void foreach(AbsIter &start, const AbsIter &end, Fn f) {
+        while (start != end) {
+            f(*start); // can only take one parameter (possible to do more)
+            ++start;
+        }
+    }
+    void addOne(int &n) { n = n+1; }
+    List l;
+    // done add to front
+    List::Iterator begin = l.begin();
+    foreach(begin, l.end(), addOne);
+\end{lstlisting}

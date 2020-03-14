@@ -1,0 +1,181 @@
+\section{2020-02-25}
+\subsection{Copy/Move Elision}
+C++ allows compilers (not requires) to avoid copy or move constructors
+even if this changes program behaviour.
+
+\subsection{Rule of 5}
+If you implement one of the Big 5, typically you need to implement
+all 5.
+
+Implementing operators as methods or functions?
+
+\code{operator=} must be implemented as a method; recall \code{n1=n2}
+is actually \code{n1.operator=(n2)}.
+
+\code{.h}
+\begin{lstlisting}
+    struct Vec {
+        int x;
+        int y;
+        Vec operator+(const Vec &v2) {
+            return {x + v2.x, y + v2.y};
+        }
+        Vec operator*(int k); // v1 * 5
+        // can't implement 5 * v1 since this will refer to 5 which is not an object
+    };
+    Vec operator*(int k, const Vec &v1) {
+        return v1 * k;
+    }
+\end{lstlisting}
+\code{cout <{}< v1;} $ \rightarrow $ cannot be implemented within the method as with
+\code{cin >{}> v2;}
+\code{.h}
+\begin{lstlisting}
+    ostream &operator<<(const Vec &v1);
+\end{lstlisting}
+\code{.c}
+\begin{lstlisting}
+    ostream &Vec::operator<<(ostream &out) {
+        out << x << " " << y;
+        return out;
+    }
+    v1 << cout; // you can do this, but don't since:
+    v2 << (v1 << cout); // needs brackets, still don't do this.
+\end{lstlisting}
+
+Following operators \textbf{must} be implemented as methods.
+\begin{itemize}
+    \item \code{operator=}
+    \item \code{operator->}
+    \item \code{operator[]}; like q3
+    \item \code{operator()} $ \rightarrow $ allows you treat an object as a function
+    \item \code{operator T()} $ \rightarrow $ allows you to implicitly convert
+    an object as another type given as \code{T}; \code{istream} to \code{bool}s
+    is an example of this
+\end{itemize}
+
+\subsection{Arrays of Objects}
+\code{.h}
+\begin{lstlisting}
+    struct Vec {
+        int x, y;
+        Vec(int x, int y);
+    };
+    Vec arr[3]; // stack array of 3 Vec objects; does not compile
+    Vec *parr = new Vec[3]; // heap array of 3 Vec objects; does not compile
+\end{lstlisting}
+Won't compile, no default constructor. Options:
+\begin{itemize}
+    \item implement default constructor
+    \item for stack arrays, use array initialization syntax; e.g.
+    \code{Vec arr[3] = \{Vec\{0, 0\}, Vec\{1, 2\}, Vec\{3, 4\}\};}
+    \item create an array of pointers to objects
+\end{itemize}
+\begin{lstlisting}
+    // Keep all on the stack or all on the heap, or else deallocation will be confusing
+    Vec *arr[3]; // stack array of 3 pointers, each element is a pointer to the Vec objects
+    Vec **p = new Vec*[3]; // each element is a Vec*
+    p[0] = new Vec{0, 0};
+    p[1] = new Vec{1, 2};
+    p[2] = new Vec{3, 4};
+    // Deallocate the array p:
+    for (...) {
+        delete p[i];
+    }
+    delete[] p;
+\end{lstlisting}
+
+\subsection{Constant Methods}
+\code{.h, .cc}
+\begin{lstlisting}
+    struct Student {
+        int assign, mt, final;
+        float grade() {
+            return assign * 0.4 + mt * 0.2 + final * 0.4;
+        }
+    };
+    const Student billy{70, 50, 75};
+    cout << billy.grade(); // does not compile
+    // we add `const' after the signature of the method, so we modify as follows:
+    float grade() const {...}
+\end{lstlisting}
+
+\textbf{Bad Style the Language Supports}
+\begin{lstlisting}
+    struct Student {
+        int assigns, mt, final;
+        int count = 0;
+        // does not compile since count field is being modified in a constant method
+        float grade() const {
+            ++count;
+            return ...;
+        }
+    };
+    // adding `mutable' before int count = 0; will allow this code to compile now
+\end{lstlisting}
+
+\subsection{Invariants and Encapsulation}
+\code{.h}
+\begin{lstlisting}
+    struct Node {
+        int data;
+        Node *next;
+        Node(int, Node *);
+        ~Node() {
+            delete next;
+        }
+    };
+\end{lstlisting}
+\code{.cc}
+\begin{lstlisting}
+    Node n1{1, New Node{2, nullptr}};
+    // deallocating stack memory (segmentation fault if deleting n2)
+    Node n2{10, &n1};
+\end{lstlisting}
+
+An invariant is an assumption that needs to stay true for the class to function
+correctly. For example, the invariant for the Node class is that \code{next}
+is either \code{nullptr} or points to the heap.
+
+Use encapsulation:
+\begin{itemize}
+    \item informally treating an object as a black box
+    \item using an exposed interface to interact with the object
+\end{itemize}
+
+\textbf{Encapsuating the Vector Class}
+
+\code{.h}
+\begin{lstlisting}
+    struct Vec {
+        // default visibility is `public'
+        private: 
+            int x, y; // hidden from outside the class
+        public:
+            Vec(int, int);
+            Vec operator+(const Vec &other) {
+                return {x + other.x, y + other.y};
+            }
+    };
+\end{lstlisting}
+\code{.cc}
+\begin{lstlisting}
+    int main() {
+        Vec v{1, 2};
+        Vec v1 = v + v;
+        cout << v1.x << v1.y; // does not compile, accessing private fields: x, y
+    }
+\end{lstlisting}
+
+Advice: at a minimum keep all fields \code{private}, make certain methods \code{public}
+(makes the interface).
+
+\begin{lstlisting}
+    class Vec {
+        // default visibility is `private'
+        int x, y;
+        public:
+            Vec(int, int);
+            Vec operator+(...);
+    };
+\end{lstlisting}

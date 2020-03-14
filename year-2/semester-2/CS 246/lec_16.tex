@@ -1,0 +1,187 @@
+\section{2020-03-05}
+\subsection{Method Overloading}
+\code{bool isHeavy()}
+\begin{itemize}
+    \item Books $ > 200 $
+    \item Test $ > 500 $
+    \item Comic $ > 30 $
+\end{itemize}
+
+\code{c++/8-inheritance/example1}
+\begin{lstlisting}
+    class Book {
+        string title, author;
+        int numPages;
+        public:
+            int getPages() const { return numPages; }
+            bool isHeavy() const { return numPages > 200; }
+            class Text : public Book {
+                string topic;
+                public:
+                    bool isHeavy() const { return getPages() > 500; }
+            };
+            bool Comic::isHeavy() const { return getPages() > 30; }
+    };
+    
+    Book b{..., ..., 100};
+    b.isHeavy(); // returns false
+    Comic c{..., ..., 40, ...};
+    c.isHeavy(); // Comic::isHeavy, returns true
+    // b2 will not contain hero; `object slicing/cohesion'
+    Book b2 = Comic{..., ..., 40, ...}; // all comics are books, (converse false)
+    b2.isHeavy(); // Book::isHeavy, returns false
+    Comic c{..., ..., 40, ...};
+    Comic *pc{&c};
+    pc->isHeavy(); // Comic::isHeavy, returns true
+    // Note: auto will make the type Comic
+    Book *pb{&c}; // legal b/c all Comics are Books; no slicing
+    pb->isHeavy(); // Book:isHeavy
+\end{lstlisting}
+The compiler looks at the declared type of the pointer to choose the method.
+\code{pb} is a \code{Book} pointer, so \code{Book::isHeavy} runs. We
+would rather the decision be made on the actual type of object.
+
+\textbf{Rice's Property}
+\begin{lstlisting}
+    // legal
+    if (...) bp = &c;
+    else bp = &book;
+\end{lstlisting}
+
+\code{virtual} methods: the choice of which method to run is decided
+based on the runtime type of the object a pointer is pointing to.
+
+\begin{lstlisting}
+    // only needed in parent
+    class Book {
+        ...
+        public:
+            virtual bool isHeavy() const;
+    };
+\end{lstlisting}
+
+\begin{lstlisting}
+    bool Book::isHeavy() const {...}
+    // override: prompts compiler to check the method that you 
+    // override had an implementation in the base class
+    // e.g. isheavy() or forgetting const -> override catches this
+    // override can only be used for virtual methods
+    bool Comic::isHeavy() const override {...}
+    bool Text::isHeavy() const override {...}
+
+    Comic c{..., ..., 40, ...};
+    Comic *pc{&c};
+    Book *pb{&c};
+    Book &br{c};
+    // Java behaviour (due to virtual)
+    pc->isHeavy(); // Comic::isHeavy
+    pb->isHeavy(); // Comic::isHeavy
+    br.isHeavy(); // Comic::isHeavy
+\end{lstlisting}
+Since the program makes the decision, we call this \textbf{dynamic dispatch}.
+
+\code{example4}
+\begin{lstlisting}
+    // array that store 20 Book pointers, can point to: Comic, Book, Text
+    Book *collection[20]; // polymorphic array
+    for (int i = 0, i < 20; ++i) {
+        collection[i]->isHeavy();
+        // dynamically dispatch to the appropriate isHeavy
+    }
+\end{lstlisting}
+\textbf{Polymorphism}: ability to accommodate multiple types
+under one abstraction.
+
+\code{inheritance/example5}: Destructors
+\begin{lstlisting}
+    struct x {
+        int *x;
+        X(int n) : x{new int[n]} {}
+        ~x() { delete[] x; }
+    };
+    // y IS-A x
+    struct y : public x {
+        int *y;
+        Y(int n, int m) : X{n}, y{new int[m]} {}
+        ~Y() { delete[] y; }
+    };
+\end{lstlisting}
+
+\textbf{Steps for Destroying Subclass Objects}:
+\begin{enumerate}[(1)]
+    \item Subclass constructor
+    \item Subclass fields that are objects are destroyed
+    \item Superclass part is destroyed (destructor is called)
+    \item Space is reclaimed
+\end{enumerate}
+\begin{lstlisting}
+    Y myY{10, 20}; // 2 does not happen for this when it goes out of scope
+    X *myX = new Y{10, 20};
+    delete myX; // calls ~X(), leaks memory
+    // we need to make ~X() virtual, then this problem is fixed
+\end{lstlisting}
+If a class \textbf{might} have subclasses, declare the destructor virtual,
+even if the destructor body is empty.
+
+If a class should not have subclasses, declare it \code{final}.
+\begin{lstlisting}
+    class Abc final {
+        ...
+    };
+    class Xyz : public Abc {}; // does not compile
+\end{lstlisting}
+
+Pure Virtual methods (P.V):
+\begin{enumerate}[(1)]
+    \item Class
+          \subitem \emph{\code{Student}} (italics for abstract)
+    \item Fields
+          \subitem +\code{fees()}: int
+\end{enumerate}
+
+\code{Regular} \& \code{Co-op} IS-A \code{Student} (both point towards \code{Student} box)
+\begin{enumerate}[(1)]
+    \item Class
+          \subitem \code{Regular}
+    \item Fields
+          \subitem +\emph{\code{fees()}: int}
+\end{enumerate}
+
+\begin{enumerate}[(1)]
+    \item Class
+          \subitem \code{Co-op}
+    \item Fields
+          \subitem +\emph{\code{fees()}: int}
+\end{enumerate}
+
+\emph{Note}: \code{virtual} $ \rightarrow $ \emph{italics}
+
+\begin{lstlisting}
+    class Student {
+        public:
+            // pure virtual method (bizarre syntax)
+            virtual int fees() = 0;
+    };
+    class Regular : public Student {
+        public:
+            int fees() override {...}
+    }
+\end{lstlisting}
+
+\code{Student} is an \textbf{abstract} class. A class is \textbf{abstract}
+if:
+\begin{enumerate}[(1)]
+    \item it declares a pure virtual method
+    \item it inherits a pure virtual method that it does not override
+\end{enumerate}
+We cannot instantiate abstract classes.
+\begin{lstlisting}
+    Student s{..., ..., ...}; // does not compile (attempt to instantiate abstract class)
+\end{lstlisting}
+We say a class is \textbf{concrete} if it is not abstract.
+\begin{itemize}
+    \item organize entities (place common attributes, behaviours)
+          in the base class
+    \item can still use \code{Student} pointers
+    \subitem \code{Student *arr[200]; for (...) { arr[i]->fees; }}
+\end{itemize}

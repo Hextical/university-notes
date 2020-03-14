@@ -1,0 +1,89 @@
+\section{Tutorial 7}
+\textbf{Problem 1.} Determine the number of vertices
+and edges of each of the following graphs.
+
+$ G(n,k) $ for each $ n $ and $ k $. For integers $ n $ and $ k $,
+let $ G(n,k) $ be the graph whose vertices are the $ k $-element subsets
+of $ \{1,\ldots ,n\} $, where two vertices $ A $ and $ B $ are
+adjacent if $ |A\cap B|\leqslant 2 $.
+
+(a) The graph $ G_1 $ whose vertices are the $ 4 $-element subsets of
+$ \{1,\ldots ,8\} $, where two vertices $ A $ and $ B $ are adjacent
+if and only if $ |A\cap B|\leqslant 2 $.
+
+(b) The graph $ G_2 $ whose vertices are the binary strings of length $ n $,
+where two vertices are adjacent if and only if they differ in exactly
+two positions.
+
+\textbf{Solution.} The number of vertices are $ 2^n $.
+Let $ s\in V(G_2) $. How many other elements is $ s $ adjacent to?
+\[ \deg(s)=\binom{n}{2} \]
+Handshake Lemma:
+\[ 2|E|=\sum\limits_{s\in V(G)}\deg(s)=2^n\binom{n}{2} \]
+Thus,
+\[ |E|=2^{n-1}\binom{n}{2} \]
+
+(c) The graph $ G_3 $ with vertex set $ \{1,2,3,4,5\}\times \{1,2,3,4,5\} $,
+where two vertices $ (x,y) $ and $ (x^\prime, y^\prime) $ are
+adjacent if and only if $ (x-x^\prime)^2+(y-y^\prime)\leqslant 2 $.
+
+\textbf{Solution.} The number of vertices are $ |V(G_3)|=5\times 5=25 $.
+Let $ (x,y)\in V(G_3) $. What vertices are adjacent to $ (x,y) $?
+\[ (x+1,y),(x-1,y),(x+1,y-1),(x-1,y-1),(x,y-1),(x+1,y+1),(x-1,y+1),(x,y+1) \]
+If $ 2\leqslant x,y \leqslant 4 $,
+\[ \deg((x,y))=8 \]
+If $ x\in \{1,5\} $, $ 2\leqslant y\leqslant 5 $,
+\[ \deg((x,y))=5 \]
+If $ x,y\in \{1,5\} $,
+\[ \deg((x,y))=3 \]
+Using the Handshake Lemma,
+\begin{align*}
+    2|E|
+    &=\sum\limits_{v\in V(G_3)} \deg(v)\\
+    &=8(3\times 3)+5(2\times 3\times 2)+3(2\times 2)\\
+    &=72+60+12\\
+    &=144
+\end{align*}
+Thus,
+\[ |E|=72 \]
+
+\textbf{Problem 2.} Which of the graphs in the previous question are connected?
+Give a proof either way.
+
+(b) \textbf{Solution.} $ n=4 $, $ \binom{n}{2}=\binom{4}{2}=6 $.
+We know $ 1010 $ is adjacent to $ 1001,0011,0000,1100,0110,1111 $.
+Note that the parity is the same in all.
+
+Connected: $ \forall x,y\in V(G) $, there exists a path between
+$ x $ and $ y $ in $ G $.
+
+Consider $ 0001 $ and $ 1101 $.
+
+Changing two bits will always leave the parity the same (since we either add 2
+to the sum, subtract 2, or add 1 and subtract 1). Therefore, there is no path
+between a vertex of even parity and a vertex with odd
+parity. Thus, $ G_2 $ is not connected.
+
+(c) \textbf{Solution.} Claim: $ G_3 $ is connected. Suppose for a contradiction that $ G_3 $
+is not connected. Then, there exists a $ (x,y),(x^\prime,y^\prime)\in V(G_3) $
+such that there is not path between them. WLOG, $ x\leqslant x^\prime $
+and $ y\leqslant y^\prime $ (invert one of the following sequences
+in each case we have $ > $)
+\[ x,x+1,\ldots ,x^\prime \qquad;\qquad y,y+1,\ldots ,y^\prime \]
+\[ (x,y)\tilde{} (x+1,y)\tilde{}\cdots\tilde{}(x^\prime,y)\tilde{} (x^\prime,y+1)\tilde{} (x^\prime,y^\prime) \]
+Contradiction.
+
+\textbf{Problem 3.} Prove that every graph on at least two vertices
+has two vertices of the same degree.
+
+\textbf{Solution.} Suppose for a contradiction that
+$ V=\{v_1,\ldots ,v_k\} $ have different degrees. Say $ d_i $
+is the degree of $ v_i $ for each $ i\in[1,k] $. WLOG,
+\[ d_1<d_2<\cdots<d_k \]
+You can assume that $ d_1\geqslant 1 $.
+\[ d_1\geqslant 1 \implies d_i\geqslant i\qquad \forall i \]
+\[ d_k\geqslant k \implies v_k\text{ is adjacent to $k$ vertices, but there are only
+$k-1$ available} \]
+contradiction. If $ d_1=0 $, then it doesn't affect the degrees
+of other vertices so we can remove it from $ G $, and just look at
+\[ v_2,\ldots,v_k \]

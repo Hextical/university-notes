@@ -12,7 +12,7 @@ How to initialize fields that are constants or lvalue references?
 Fields must always already be initialized before constructor body runs;
 i.e. step 2 occurs before step 3 below
 
-\myuline{Steps for Object Construction}
+\textbf{Steps for Object Construction}
 \begin{enumerate}[(1)]
     \item allocate space: could be on stack or could be on heap if new
     \item field initialization: only fields that are \textbf{objects} are initialized
@@ -51,7 +51,7 @@ as copies of other objects
 Constructing an object as a copy of another called the \textbf{copy constructor}.
 There is always a built-in constructor for any class.
 
-(\code{.cc}) (You get this for free already)
+\code{.cc} (You get this for free already)
 \begin{lstlisting}
     // crucial to be by reference; will not compile if done by value
     Student::Student(const Student &other)
@@ -84,12 +84,12 @@ The \textbf{Big 5}: (II)-(VI).
         Node(const Node &other);
     };
     Node::Node(int data, Node *next) : data{data}, next{next} {}
-    Node::Node(const Node &other) : data{other.next}, next{other.next} {}
+    Node::Node(const Node &other) : data{other.data}, next{other.next} {}
 \end{lstlisting}
 
 \textbf{Shallow copy}:
 \begin{lstlisting}
-    Node *n = new Node{1, new Node{2, new Node{}, nullptr{}}};
+    Node *n = new Node{1, new Node{2, new Node{3, nullptr}}};
     // Three heads with shared tails, this is bad
     // stack allocated node
     // m on stack with head same as n's head, but tail points to n's tail (on heap)
@@ -148,9 +148,9 @@ We can declare a constructor ``explicit'' to disable implicit conversions:
     \item Stack: when stack is popped
     \item Heap: when delete is called on a pointer to a heap allocated object
 \end{itemize}
-A class can only have \myuline{one} destructor, they cannot be overloaded.
+A class can only have \textbf{one} destructor, they cannot be overloaded.
 
-\myuline{Steps for Object Deconstruction}
+\textbf{Steps for Object Deconstruction}
 \begin{enumerate}[(1)]
     \item Destructor body runs
     \item Fields that are objects are destroyed (reverse declaration order)
@@ -163,7 +163,7 @@ Free destructor has an empty destructor body.
     delete p; // leaks Node 2 and Node 3
 \end{lstlisting}
 
-\code{(.h)}
+\code{.h}
 \begin{lstlisting}
     struct Node {
         ~Node();

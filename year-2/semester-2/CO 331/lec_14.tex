@@ -1,0 +1,93 @@
+\makeheading{2020-01-05}
+\section{Decoding Single-Error Correcting Codes}
+Let $ H $ be a PCM for an $ (n,k) $-code $ C $ over $ GF(q) $
+with $ d\geqslant 3 $.
+
+\begin{align*}
+    H\bm{r}^\top
+    &=H(\bm{c}+\bm{e})^\top\\
+    &=H\bm{c}^\top+H \bm{e}^\top\\ 
+    &=H\bm{e}^\top \qquad\text{since $ c^\top $ is in nullspace of }H
+\end{align*}
+
+\begin{defbox}
+    \begin{definition}
+        Let $ H $ be a parity-check matrix for an $ (n,k) $-code.
+        The \textbf{syndrome} $ \bm{s} $ of $ \bm{r} $
+        is defined to be $ \bm{s}=H\bm{r}^\top $.
+    \end{definition}
+\end{defbox}
+
+Notes:
+\begin{enumerate}[(1)]
+    \item $ \bm{r} $ and $ \bm{e} $ have the same syndrome
+    \item If $ \bm{e}=\bm{0} $, then $ H\bm{e}^\top=\bm{0} $.
+    \item If $ w(\bm{e})=1 $, say $ \bm{e}=(0,\ldots,0,\alpha,0,\ldots,0) $
+    where $ \alpha $ is in the $ i^{\text{th}} $ position with $ \alpha \neq 0 $,
+    then $ H\bm{e}^\top=\alpha h_i $ where $ h_i $ is the $ i^{\text{th}} $
+    column of $ H $.
+    \item The converse of (2) and (3) are false.
+\end{enumerate}
+
+\begin{algbox}
+    \begin{algorithm}[H]
+        \caption{Decoding Algorithm for Single-Error Correcting Codes}
+        \SetKwInOut{Input}{Input}
+        \SetKwInOut{Output}{Output}
+        \Input{$ H $, $ r $}
+        \Output{Decoded vector}
+        Compute syndrome: $ \bm{s}=H\bm{r}^\top $
+
+        If $ w(\bm{s})=0 $, then accept $ \bm{r} $; STOP.
+
+        Compare $ \bm{r} $ with the columns of $ H $. If $ \bm{s}=\alpha h_i $
+        with $ \alpha\neq 0 $, then correct $ \bm{r} $ to
+        $ \bm{c}=\bm{r}-\bm{e} $; STOP.
+
+        Reject, (not needed if $ H $ is a Hamming code).
+    \end{algorithm}
+\end{algbox}
+
+\textbf{Claim}: If $ w(\bm{e})\leqslant 1 $, then the decoding algorithm always
+makes the correct decision.
+
+\textbf{Note}: If $ H $ is a Hamming code and $ w(\bm{e})\geqslant 2 $,
+then this decoding algorithm will always make the wrong decision.
+
+\begin{exbox}
+    \begin{example}[Single-Error Decoding]
+        Consider the $ (7,4,3) $-binary Hamming code with PCM
+        \[ H=\begin{bmatrix}
+            1 & 0 & 1 & 0 & 1 & 0 & 1\\
+            0 & 1 & 1 & 0 & 0 & 1 & 1\\
+            0 & 0 & 0 & 1 & 1 & 1 & 1
+        \end{bmatrix}_{3\times 7} \]
+        Decode $ \bm{r}=(0111110) $.
+
+        \textbf{Solution.}
+
+        1. Compute $ \bm{s}=H\bm{r}^\top=(011)^\top $.
+
+        2. $ \bm{s} $ is the 6th column of $ H $, so $ \bm{e}=(0000010) $.
+
+        3. $ \bm{r}\rightarrow 0111100 $. Verify that $ H\bm{c}^\top=\bm{0} $.
+    \end{example}
+\end{exbox}
+
+\textbf{General Decoding Problem for Binary Linear Codes}
+
+\textbf{Instance}: An $ (n-k)\times n $ matrix $ H $ over $ GF(2) $
+with $ \rank(H)=n-k $. $ \bm{r}\in V_n(GF(2)) $.
+
+\textbf{Find}: A vector $ \bm{e}\in V_n(GF(2)) $ of minimum weight
+with $ H\bm{r}^\top=H\bm{e}^\top $.
+
+\textbf{Fact}: This problem is NP-hard.
+
+\begin{itemize}
+    \item P = problems solvable in ``polynomial time''; that is, efficiently.
+    \item NP = a ``certain'' class of problems including problems of strong
+    practical interest which we do not know how to solve efficiently
+    \item NP-hard = If any single problem in this class of problems can be
+    solved efficiently, then so can all problems in NP, in which case P=NP.
+\end{itemize}

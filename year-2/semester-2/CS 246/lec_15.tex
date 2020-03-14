@@ -1,0 +1,228 @@
+\section{2020-03-03}
+\subsection{Accessors/Mutators (Getters/Setters), System modelling}
+Advice: keep fields \code{private}
+
+\begin{lstlisting}
+    class Vec {
+        int x, y;
+        public:
+            // accessors/getters
+            int getX() const { return x; }
+            int getY() const { return y; }
+            // mutators/setters
+            void setX(int _x) { x = _x; }
+            void setY(int _y) { y = _y; }
+    };
+\end{lstlisting}
+
+\subsection{I/O Operators}
+\begin{itemize}
+    \item standalone functions
+    \item need to access fields
+          \subitem Option 1: provide provide accessors/mutators
+          \subitem Option 2: make I/O operators \code{friend}s
+\end{itemize}
+
+\begin{lstlisting}
+    class Vec {
+        int x, y;
+        friend ostream &operator<<(ostream &, const Vec &);
+    };
+\end{lstlisting}
+
+\subsection{System Modelling}
+\begin{itemize}
+    \item identifying main entities (what are the main classes in the program)
+    \item relationship between entities
+    \item UML: Unified Modelling Language
+\end{itemize}
+
+A class in UML: (box with three sections)
+\begin{enumerate}[(1)]
+    \item Class
+          \subitem \code{Vec}
+    \item (Optional) Fields
+          \subitem -\code{x}: Integer
+          \subitem -\code{y}: Integer
+    \item (Optional) Methods
+          \subitem +\code{getX()}: Integer
+          \subitem +\code{setX(Integer)}
+\end{enumerate}
+Constructors and the Big 5 are not shown.
+
+\emph{Note}:
+\begin{itemize}
+    \item \code{-} $ \rightarrow $ private
+    \item \code{+} $ \rightarrow $ public
+\end{itemize}
+
+Relationship 1: Composition (OWNS-A)
+\begin{lstlisting}
+    class Vec {
+        int x, y;
+        public:
+            Vec(int, int);
+            // default constructor `could' go here
+    };
+    class Basis {
+        Vec v1, v2;
+        // let's put it here instead to avoid calling Vec
+        public:
+            Basis() : v1{0, 1}, v2{1, 1} {}
+    };
+\end{lstlisting}
+
+Basis is composed of 2 \code{Vec} objects. Instead, we write:
+`Basis OWNS-A \code{Vec}'. Typically, if A OWNS-A B:
+\begin{enumerate}[(1)]
+    \item copying \code{A} copies \code{B} (deep)
+    \item destroying \code{A} destroys \code{B}
+\end{enumerate}
+
+\begin{lstlisting}
+    class List {
+        Node *theList; // List OWNS-A Node
+    };
+\end{lstlisting}
+
+\code{Basis} OWNS-A \code{Vec}:
+
+TODO: Diamond is shaded
+$ \diamond\longrightarrow^2_{\code{v1}, \code{v2}} $
+\begin{itemize}
+    \item Draw a diamond from \code{Basis} with the arrow head
+          pointing \code{Vec}
+    \item Above the arrow, write the number of how many objects are owned
+    \item Below the arrow, write the objects that are owned
+\end{itemize}
+
+Relationship 2: Aggregation (HAS-A)
+
+Typically, \code{A} HAS-A \code{B} if:
+\begin{itemize}
+    \item copying \code{A} does not copy \code{B} (shallow)
+    \item destroying \code{A} does not destroy \code{B}
+\end{itemize}
+
+Same drawing as OWNS-A, but diamond is not shaded.
+
+Relationship 3: Inheritance (IS-A)
+
+Three classes:
+\begin{enumerate}[(1)]
+    \item Class
+          \subitem \code{Book}
+    \item Fields
+          \subitem -\code{title}: String
+          \subitem -\code{author}: String
+          \subitem -\code{numPages}: Integer
+\end{enumerate}
+
+\begin{enumerate}[(1)]
+    \item Class
+          \subitem \code{Text}
+    \item Fields
+          \subitem -\code{title}: String
+          \subitem -\code{author}: String
+          \subitem -\code{numPages}: Integer
+          \subitem -\code{topic}: String
+\end{enumerate}
+
+\begin{enumerate}[(1)]
+    \item Class
+          \subitem \code{Comic}
+    \item Fields
+          \subitem -\code{title}: String
+          \subitem -\code{author}: String
+          \subitem -\code{numPages}: Integer
+          \subitem -\code{hero}: String
+\end{enumerate}
+
+Observe:
+\begin{itemize}
+    \item \code{Text} IS-A \code{Book} with an additional \code{topic} field
+    \item \code{Comic} IS-A \code{Book} with an additional \code{hero} field
+\end{itemize}
+
+We represent \code{Text} IS-A \code{Book} by drawing an arrow from \code{Text}
+with the head pointing to \code{Book}. Similarly, \code{Comic}.
+The new \code{Text} and \code{Comic} class will only have the class name
+with the extra field.
+
+We refer to the \code{Book} class as a:
+\begin{itemize}
+    \item Superclass
+    \item Parent
+\end{itemize}
+
+We refer to the \code{Comic} and \code{Text} class as a:
+\begin{itemize}
+    \item Subclass
+    \item Child
+\end{itemize}
+
+\begin{lstlisting}
+    class Book {
+        string title, author;
+        int numPages;
+        public:
+            Book(string, string, int);
+    };
+    // public inheritance (similar to extends keyword in Java)
+    class Text : public Book {
+        // only need to write new field
+        string topic;
+        ...
+    };
+\end{lstlisting}
+
+\code{Text} inherits \textbf{all} (public \textbf{and} private)
+members from \code{Book}.
+\begin{itemize}
+    \item any method that could be called on \code{Book} can also
+          be called on \code{Text}
+\end{itemize}
+\code{Text} has inherited the \code{private} fields.
+\begin{lstlisting}
+    int main() {
+        Text t{...};
+        t.author // cannot access this
+    }
+\end{lstlisting}
+
+\begin{lstlisting}
+    // will not compile (even if we changed all fields to public)
+    Text::Text(string t, string a, int n, string topic) :
+        title{t}, author{a}, numPages{n}, topic{topic} {}
+\end{lstlisting}
+\begin{itemize}
+    \item Inherited fields: private in base class (\code{title}, \code{author},
+          \code{numPages})
+    \item MIL can only refer to fields declared by the class
+\end{itemize}
+
+\textbf{Steps of Object Construction}:
+\begin{enumerate}[(1)]
+    \item Space is allocated
+    \item Superclass part is constructed
+    \item Subclass' field initialization/MIL
+    \item Subclass constructor runs
+\end{enumerate}
+
+\begin{lstlisting}
+    Text::Text(string t, string a, int numPages, String topic) : // (1)
+        Book(t, a, n), // (2) and (3)
+        topic{topic} // (4)
+        {}
+\end{lstlisting}
+
+Visibility: \code{protected} (UML \#)
+\begin{itemize}
+    \item members that are \code{protected} are visible to the class
+          and its subclasses.
+    \item breaks encapsulation
+          \subitem child classes can break invariants
+\end{itemize}
+Compromise: keep fields \code{private} but provide \code{protected}
+accessors and mutators.
+

@@ -1,0 +1,65 @@
+\section{Tutorial 7}
+\textbf{Problem 1.} Determine the following coefficient.
+$ [x^{2n}](x/(1-x))^n $.
+
+\textbf{Solution.}
+
+\textbf{Problem 2.} Let $ S $ be the class of binary strings in which every
+block has length of at most $ 6 $, every block of zeros has even length,
+and every block of ones has odd length. Find an unambiguous expression for $ S $,
+and use it to compute $ \Phi_S(x) $.
+
+\textbf{Solution.}
+
+Decomposition strategy (from course notes):
+\[ \{0\}^*(\{1\}\{1\}^*\{0\}\{0^*\})^*\{1\}^* \]
+
+$ B_0=\{\varepsilon,00,0000,000000\} $
+
+$ B_1=\{\varepsilon, 1, 111, 11111\} $
+
+\[ S=B_0(B_1\setminus \varepsilon\; B_0\setminus \varepsilon)^* B_1 \]
+\[ \Phi_{B_0}(x)=1+x^2+x^4+x^6 \]
+\[ \Phi_{B_1}(x)=1+x+x^3+x^5 \]
+\[ \Phi_S(x)=\frac{\Phi_{B_0}(x)\Phi_{B_1}(x)}{1-(x^2+x^4+x^6)(x+x^3+x^5)} \]
+
+
+\textbf{Problem 3.} For each $ n $, let $ a_n $ denote the number of compositions
+of $ n $ where every part is even, and the number of parts is a multiple of $ 3 $.
+Find an explicit formula for $ a_n $.
+
+\textbf{Solution.}
+
+Let $ A= \{(\alpha_1,\alpha_2,\ldots,\alpha_{3m}):
+    \alpha_i\in\mathbb{N}_{\text{even}}\,, m\in\mathbb{N}\} $.
+\[ A=\bigcup_{m\geqslant 0}(\mathbb{N}_{\text{even}})^{3m}(x) \]
+\[ \Phi_{\mathbb{N}_{\text{even}}}=x^2+x^4+\cdots=\frac{x^2}{1-x^2} \]
+\begin{align*}
+    \Phi_A(x)
+     & =\sum\limits_{m\geqslant 0} \Phi_{\mathbb{N}_{\text{even}^{3m}}}(x)
+    \qquad\text{by Sum Lemma}                                              \\
+     & =\sum\limits_{m\geqslant 0} \Phi_{\mathbb{N}_{\text{even}}}(x)^{3m}
+    \qquad\text{by Product Lemma}                                          \\
+     & =\sum\limits_{m\geqslant 0} \left( \frac{x^2}{1-x^2} \right)^{3m}   \\
+     & =\sum\limits_{m\geqslant 0} \left( \frac{x^6}{(1-x^2)^3}  \right)^m \\
+     & =\frac{1}{1-\frac{x^6}{(1-x^2)^3}}                                  \\
+     & =\frac{(1-x^2)^3}{(1-x^2)^3-x^6}
+\end{align*}
+Thus,
+\[ a_n=[x^n]\frac{(1-x^2)^3}{(1-x^2)^3-x^6} \]
+
+
+\textbf{Problem 4.} Solve the linear recurrence relation defined by
+$ a_n=5a_{n-1}-6a_{n-2} $, with initial conditions $ a_0=2 $
+and $ a_1=5 $.
+
+\textbf{Solution.}
+
+\textbf{Textbook Problem.}
+
+\[ S_k=\{(A,B): A,B\subseteq \{1,\ldots ,n\},|A|=|B|=m,|A\cap B|=k\} \]
+\[ T_k=\{(X,Y,Z):X,Y,Z\subseteq \{1,\ldots ,n\},|X|=k,|Y|=|Z|=m-k,
+X\cap Y=X\cap Z=Y\cap Z=\varnothing\} \]
+Define a bijection $ f:S_k\rightarrow T_k $ and it's inverse.
+
+\[ f(A,B)=(A\cap B, A\setminus B, B\setminus A) \]

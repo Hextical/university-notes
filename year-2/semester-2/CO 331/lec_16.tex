@@ -1,0 +1,137 @@
+\chapter{Some Special Linear Codes}
+\makeheading{2020-02-07}
+\begin{defbox}
+    \begin{definition}
+        A linear code $ C $ is \textbf{self-orthogonal} if $ C\subseteq C^{\perp} $.
+    \end{definition}
+\end{defbox}
+\begin{defbox}
+    \begin{definition}
+        A linear code $ C $ is \textbf{self-dual} if $ C=C^{\perp} $.
+    \end{definition}
+\end{defbox}
+For a binary $ (n,k) $-code $ C $, the syndrome table has
+size $ 2^{n-k}\times n $ which is exponentially large.
+
+\textbf{Goal}: Design decoding algorithm which require
+very little space.
+
+\begin{exbox}
+    \begin{example}
+        Use only the PCM $ H $ which is $ (n-k)\times n $ bits.
+    \end{example}
+\end{exbox}
+
+\section{The Binary Golay Code C23 (1949)}
+Let
+\[
+    \hat{B}=
+    \left[
+        \begin{array}{cccccccccccc}
+            1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+            1 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 0 \\
+            1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 1 \\
+            0 & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 \\
+            1 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 0 \\
+            1 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 0 & 1 \\
+            1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 0 & 1 & 1 \\
+            0 & 0 & 0 & 1 & 0 & 1 & 1 & 0 & 1 & 1 & 1 \\
+            0 & 0 & 1 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 0 \\
+            0 & 1 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 0 \\
+            1 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 \\
+            0 & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 1
+        \end{array}
+        \right]_{12\times 11} \]
+Then, $ \hat{G}=\left[\; I_{12}\mid \hat{B}\; \right]_{12\times 23} $
+is a generator matrix for a $ (23,12) $-binary code called $ C_{23} $.
+
+\textbf{Note}: In $ \hat{B} $,
+\begin{itemize}
+    \item $ R_1 $ in only contains $ 1 $'s.
+    \item $ R_3 $ to $ R_{12} $ are left cyclic shifts of $ R_2 $.
+\end{itemize}
+
+\begin{thmbox}
+    \begin{theorem}
+        Facts:
+        \begin{enumerate}
+            \item $ d(C_{23})=7 $.
+            \item $ C_{23} $ is perfect.
+        \end{enumerate}
+    \end{theorem}
+\end{thmbox}
+
+\begin{proof}
+    We know that $ e=3 $, so
+    $ 2^{12}\left[ \binom{23}{0}+\binom{23}{1}+\binom{23}{2}+\binom{23}{3} \right]=
+        2^{23} $.
+\end{proof}
+
+\section{The Extended Golay Code C24}
+Let
+\[ B=
+    \left[
+        \begin{array}{c|c}
+            0 & \hat{B} \\
+            \bm{1}_{11}
+        \end{array}
+        \right]_{12\times 12}
+\]
+Then, $ G=\left[\; I_{12}\mid B \;\right]_{12\times 24} $ is a generator
+matrix for a $ (24,12) $-binary code called $ C_{24} $.
+
+Notes:
+\begin{enumerate}[(i)]
+    \item $ C_{24} $ is a $ (24,12,8) $-binary code ($ e=3 $)
+    \item $ GG^\top=\bm{0} $
+    \item $ C_{24}\subseteq C_{24}^\perp $, $ C_{24} $ is a self-orthogonal code.
+    \item $ \dim (C_{24})=12 $ and $ d(C^{\perp})=12 $, so
+          $ C_{24}=C_{24}^\perp $ ($ C_{24} $ is a self-dual code)
+    \item $ B $ is symmetric
+    \item PCM for $ C_{24} $ is $ H=\left[ -B ^\top \mid I_{12} \right]=
+              \left[ B\mid I_{12} \right] $
+    \item Since $ C_{24}=C_{24}^\perp $, $ H $ is also a GM for $ C_{24} $.
+    \item $ G $ is also a PCM for $ C_{24}^\perp $.
+\end{enumerate}
+
+\subsection{Decoding Algorithm for C24}
+Compute a syndrome of $ \bm{r} $. Find a vector $ \bm{e} $ with $ w(\bm{e})\leqslant 3 $,
+that has the same syndrome as $ \bm{r} $. If no such $ \bm{e} $ exists, then
+reject $ \bm{r} $, otherwise decode $ \bm{r} $ to $ \bm{c}=\bm{r}-\bm{e} $.
+
+Let $ \bm{r}=(\bm{x},\bm{y}) $ and $ \bm{e}=(\bm{e}_1,\bm{e}_2) $.
+There are five (not mutually exclusive) cases to consider. In the event that
+$ w(\bm{e})\leqslant 3 $,
+\begin{enumerate}[(A))]
+    \item $ w(\bm{e}_1)=0 $, $ w(\bm{e}_2)=0 $
+    \item $ 1\leqslant w(\bm{e}_1)\leqslant 3 $, $ w(\bm{e}_2)=0 $
+    \item $ w(\bm{e}_1)=1 $ or $ 2 $, $ w(\bm{e}_2)=1 $
+    \item $ w(\bm{e}_1)=0 $, $ 1\leqslant w(\bm{e}_2)\leqslant 3 $
+    \item $ w(\bm{e}_1)=1 $, $ w(\bm{e}_2)=1 $ or $ 2 $
+\end{enumerate}
+
+\begin{thmbox}
+    \begin{theorem}
+        Let $ C $ be an $ (n,k,d) $-code over $ GF(q) $. Let $ \bm{x}=
+            V_n(GF(q)) $ with $ w(\bm{x})\leqslant \lfloor \frac{d-1}{2} \rfloor $.
+        Then $ \bm{x} $ is the unique vector of minimum weight in the coset
+        of $ C $ containing $ \bm{x} $ (so, it must be a coset leader).
+    \end{theorem}
+\end{thmbox}
+
+\begin{proof}
+    Suppose for a contradiction that
+    $ \bm{y} $ is a vector in the same coset of $ C $ as $ \bm{x} $
+    with $ \bm{y}\neq \bm{x} $ and
+    \[ w(\bm{y})\leqslant w(\bm{x})\leqslant \left\lfloor \frac{d-1}{2} \right\rfloor \]
+    Then, $ \bm{y}-\bm{x}\neq 0 $, $ \bm{x}\equiv \bm{y}\mod C $,
+    and so $ \bm{x}-\bm{y}\in C $. Now,
+    \begin{align*}
+        w(\bm{x}-\bm{y})=w(\bm{x}+(-\bm{y}))
+         & \leqslant w(\bm{x})+w(\bm{y})                                                                 \\
+         & =w(\bm{x})+w(\bm{y})                                                                          \\
+         & \leqslant \left\lfloor \frac{d-1}{2} \right\rfloor + \left\lfloor \frac{d-1}{2} \right\rfloor \\
+         & \leqslant d-1
+    \end{align*}
+    contradicting $ d(C)=d $.
+\end{proof}

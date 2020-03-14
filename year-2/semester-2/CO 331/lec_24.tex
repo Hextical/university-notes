@@ -1,0 +1,148 @@
+\makeheading{2020-03-06}
+\section{Burst Error Correcting}
+``Cyclic codes are good for (cyclic) burst error correcting.''
+
+Suppose we have a $ C:(n,k,d) $ code, with $ e=\lfloor \frac{d-1}{2} \rfloor=5 $.
+In practice, errors typically happen in bursts (not spread out).
+We expect typically one burst per codeword, or bursts to carry through
+two codewords.
+
+\begin{defbox}
+    \begin{definition}
+        Let $ \bm{e}\in V_n(F) $. The \textbf{cyclic burst length of $\bm{e}$}
+        is the length of the smallest cyclic block that contain all the non-zero
+        entries of $ \bm{e} $.
+    \end{definition}
+\end{defbox}
+
+\begin{exbox}
+    \begin{example}
+        $ \bm{e}=\bm{011}00000\bm{1} $ has cyclic burst length $ 4 $.
+    \end{example}
+\end{exbox}
+
+\begin{defbox}
+    \begin{definition}
+        We say $ \bm{e} $ is a \textbf{cyclic burst error of length $ \bm{t} $} if its cyclic
+        burst length is $ t $.
+    \end{definition}
+\end{defbox}
+
+\begin{defbox}
+    \begin{definition}
+        A linear code $ C $ is a \textbf{$ \bm{t} $-cyclic burst error correcting code}
+        if every cyclic burst error of length at most $ t $ lies in a unique coset
+        of $ C $. The largest such $ t $ is called the \textbf{cyclic burst error capability
+        of $ \bm{C} $}.
+    \end{definition}
+\end{defbox}
+
+\begin{exbox}
+    \begin{example}
+        $ g(x)=1+x+x^2+x^3+x^6 $ generates a $ (15,9) $-binary cyclic code $ C $
+        that is a $ 3 $-cyclic burst error correcting code.
+    \end{example}
+\end{exbox}
+
+$ d(C)\leqslant 5 $, so $ e\leqslant 2 $. We verify this by checking that
+each cyclic burst of length $ \leqslant 3 $ has a unique syndrome.
+
+\begin{center}
+    \begin{tabular}{| *{2}{>{\centering\arraybackslash}p{4cm} |}}
+        \hline
+        Cyclic burst errors & Syndromes\\
+        \hline
+        0 & 000000\\
+        \hline
+        $ x^0 $ & 100000\\
+        $ x^1 $ & 010000\\
+        $ x^2 $ & 001000\\
+        $ x^3 $ & 000100\\
+        $ \vdots $ & \\
+        $ x^6 $ & 111100 ($ x^6 + g(x) $)\\
+        $ x^7 $ & 011110\\
+        $ x^8 $ & 001111\\
+        $ x^9 $ & 111011 (0001111+1111001)\\
+        $ \vdots $ & \\
+        $ x^{14} $ & 111001\\
+        \hline
+        $ 1+x $ & 110000\\
+        $ x(1+x) $ & 011000\\
+        $ \vdots $ & \\
+        $ x^{14}(1+x) $ & 011001\\
+        \hline
+        $ 1+x+x^2 $ & 111100\\
+        $ x(1+x+x^2) $ & 011100\\
+        $ \vdots $ & 011100\\
+        $ x^{14}(1+x+x^2) $ & 001001\\
+        \hline
+        $ 1+x^2 $ & 101000\\
+        $ x(1+x^2) $ & 010100\\
+        $ \vdots $ &\\
+        $ x^{14}(1+x^2) $ & 101001\\
+        \hline
+    \end{tabular}
+\end{center}
+The number of cyclic bursts of length $ \leqslant 3 $ is $ 61 $.
+The number of syndromes is $ 64 $.
+
+\begin{exbox}
+    \begin{example}
+        $ g(x)=1+x^4+x^6+x^7+x^8 $ generates a $ (15,7) $-binary cyclic
+        code that is $ 4 $-cyclic burst error correcting.
+        Distance $ \leqslant 5 $ so $ e\leqslant 2 $.
+    \end{example}
+\end{exbox}
+
+\textbf{Question}: How to construct codes with high cyclic burst error
+correcting capability?
+\begin{enumerate}[(1)]
+    \item Use a computer search
+    \item RS Codes
+    \item Interleaving
+\end{enumerate}
+
+\begin{thmbox}
+    \begin{theorem}
+        Let $ C $ be an $ (n,k,d) $-code over $ GF(q) $. Let $ t $ be its
+        cyclic burst error correcting capability.
+        \[ \left\lfloor \frac{d-1}{2} \right\rfloor \leqslant t \leqslant n-k \]  
+    \end{theorem}
+\end{thmbox}
+
+\begin{proof}
+    Every cyclic burst of length $ \leqslant t $ has weight $ \leqslant t $.
+    Since every vector of weight $ \leqslant \lfloor \frac{d-1}{2} \rfloor $
+    has a unique syndrome, we have $ \lfloor \frac{d-1}{2} \rfloor \leqslant t $. 
+
+    The number of cyclic burst errors where all the non-zero entries lie in the first
+    $ t $ coordinate positions is $ q^t $. Each of them has a unique coset
+    and the total number of cosets is $ q^{n-k} $. Thus,
+    \[ q^t\leqslant q^{n-k}\implies t\leqslant n-k \]
+\end{proof}
+
+Exercise: Prove that $ t\leqslant \frac{n-k}{2} $.
+
+\section{Decoding Cyclic Burst Errors}
+Let $ C $ be a $ t $-cyclic burst error correcting code generated
+by $ g(x) $ which is a degree-$ k $ monic divisor of $ x^n-1 $ over $ GF(q) $.
+
+Recall: A PCM for $ C $ is:
+\[ H= \left[\; I_{n-k}\mid -R^\top \;\right] \]
+whose columns are $ x^0 \mod g(x),\ldots ,x^{n-1} \mod g(x) $.
+The syndrome of $ r(x) $ is $ s(x)\equiv r(x)\mod g(x) $.
+
+\textbf{Idea:} Suppose $ \bm{e} $ is a cyclic burst of length $ \leqslant t $.
+
+Compute $ \bm{s}=H\bm{r}^\top\equiv r(x)\mod g(x) $.
+
+Suppose $ \bm{e}= $ \fbox{x o $ \cdots $ o x x x} . We multiply $ x^3 $ by $ \bm{e} $,
+so we get \fbox{x x x x o $ \cdots $ o}.
+
+$ \bm{s}=H\bm{r}^\top=H\bm{e}^\top $.
+
+$ \bm{s}_1=H(x\bm{r})^\top = H(x\bm{e})^\top $
+
+$ \bm{s}_2=H(x^2\bm{r})^\top = H(x^2\bm{e})^\top $
+
+$ \bm{s}_3=H(x^3\bm{r})^\top = H(x^3\bm{e})^\top $

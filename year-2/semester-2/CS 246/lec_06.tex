@@ -10,25 +10,26 @@ Read and print all ints from \code{stdin}. Terminate on EOF.
 Ignore ``bad input'' (non-int).
 
 File: \code{readInts5.cc}
-\begin{lstlisting}[language = C++]
+\begin{lstlisting}
     #include <iostream>
     using namespace std;
 
-    int main () {
-        int i;
-        while (true) {
-            if (!(cin >> i)) {
-                if (cin.eof()) {
-                    break; // nothing left to read
-                } else { // read failed, infinite loop without below
-                    cin.clear(); // set flag to false
-                    cin.ignore(); // ignore next character
-                } else {
-                    cout << i << endl;
-                }
-            }
+    int main() {
+      int i;
+      while (true) {
+        if (!(cin >> i)) {
+          if (cin.eof()) {
+            break;         // nothing left to read
+          } else {         // read failed, infinite loop without below
+            cin.clear();   // set flags to false
+            cin.ignore();  // ignore next character
+          }
+        } else {
+          cout << i << endl;
         }
+      }
     }
+
 \end{lstlisting}
 
 \subsection{C++ Strings}
@@ -51,6 +52,20 @@ When we do \code{s1 + s2}, we create a new string. If we wanted to
 append s1 to s2, we can do \code{s1 = s1 + s2}.
 
 File: \code{readStrings.cc}
+
+\begin{lstlisting}
+    #include <iostream>
+    #include <string>
+    using namespace std;
+    
+    int main() {
+      string s;
+      cin >> s;
+      cout << s << endl;
+    }    
+    
+\end{lstlisting}
+
 \begin{itemize}
     \item reads until first whitespace (ignore all whitespace until first
     character)
@@ -73,20 +88,20 @@ can use the \code{<iomanip>} header as follows:
 
 File: \code{fileInput.cc}
 \begin{lstlisting}
-    #include <iostream>
     #include <fstream>
+    #include <iostream>
     using namespace std;
     
-    int main () {
-        ifstream file{"suite.txt"};
-        string s;
-        while (file >> s) {
-            cout << s << endl;
-        }
-    }
+    int main() {
+      ifstream file{"t.txt"};
+      string s;
+      while (file >> s) {
+        cout << s << endl;
+      }
+    }    
 \end{lstlisting}
 \code{$\underbrace{\text{ifstream}}_{\text{type}} \underbrace{\text{file}}_{\text{variable}}
-\underbrace{\{\text{``suite.txt''\}}}_{\text{initialization of variable}}$}
+\underbrace{\{\text{``t.txt''\}}}_{\text{initialization of variable}}$}
 $ \rightarrow $ uniform initialization syntax, only in $ \ge $ C++11
 
 Other examples of uniform initialization syntax:

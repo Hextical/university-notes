@@ -1,0 +1,149 @@
+\section{2020-03-12: Design Patterns, Exceptions}
+\emph{Note: These patterns can be changed, and are not set in stone.}
+\subsection{Observer Pattern}
+Publish/Subscribe model.
+\begin{itemize}
+    \item Generate data: Publisher, Subject
+    \item Consume data: Subscriber, Observer
+\end{itemize}
+\begin{itemize}
+    \item \textbf{Publisher} $ \rightarrow $ \textbf{Subscriber}
+    \item \textbf{Subject} $ \rightarrow $ \textbf{Observer}
+\end{itemize}
+We will have a \textbf{subject} entity, and an \textbf{observer} entity.
+
+\begin{enumerate}[(1)]
+    \item Class
+          \subitem \code{Subject} (abstract)
+    \item Fields
+          \subitem +\code{attatch(Observer)}: void
+          \subitem +\code{detach(Observer)}: void
+          \subitem +\code{notifyObserver()}: void
+\end{enumerate}
+\begin{enumerate}[(1)]
+    \item Class
+          \subitem \code{Observer} (abstract)
+    \item Fields
+          \subitem \emph{+\code{notify()}}: void
+\end{enumerate}
+
+\begin{enumerate}[(1)]
+    \item Class
+          \subitem \code{ConcObserver}
+    \item Fields
+          \subitem \emph{+\code{notify()}}: void
+\end{enumerate}
+
+\begin{enumerate}[(1)]
+    \item Class
+          \subitem \code{ConSubject}
+    \item Fields
+          \subitem +\code{getState()}:
+\end{enumerate}
+
+\begin{itemize}
+    \item \code{Subject} $ \diamond\rightarrow^* $ \code{Observer}
+    \item \code{ConObserver} $ \diamond \rightarrow_1 $ \code{ConSubject}
+    \item \code{ConObserver} $ \rightarrow $ \code{Observer}
+    \item \code{ConSubject} $ \rightarrow $ \code{Subject}
+\end{itemize}
+
+If a class needs to be abstract but there is no obvious pure virtual method, choose
+the destructor.
+\begin{itemize}
+    \item destructors, even if pure virtual must still have an implementation
+          \subitem when a subclass object is destroyed, it automatically calls the parent
+          destructor
+\end{itemize}
+
+\code{c++/1201/lectures/se/observer}
+
+\textbf{Tips for Q4}
+\begin{itemize}
+    \item Spend a couple of hours just understanding Q4, not baby code
+    \item UML (optional)
+    \item Recall what an observer pattern is with the repository
+    \item Figure out logic within the game, who, what, when to notify
+\end{itemize}
+
+\textbf{Tips for Q5}
+\begin{itemize}
+    \item Creating a graphical observer, should be easy; but Q4
+          needs to be done first
+    \item At most 20 lines of code, \code{for} loops to update rectangles
+\end{itemize}
+
+\subsection{Decorator}
+
+\begin{enumerate}[(1)]
+    \item Class
+          \subitem \code{Component} (abstract)
+    \item Fields
+          \subitem \emph{+\code{render()}}
+\end{enumerate}
+
+\begin{enumerate}[(1)]
+    \item Class
+          \subitem \code{BasicWindow}
+    \item Fields
+          \subitem +\code{render()}
+\end{enumerate}
+
+\begin{enumerate}[(1)]
+    \item Class
+          \subitem \code{Decorator}
+    \item Fields
+          \subitem +\code{render()}
+\end{enumerate}
+
+\begin{enumerate}[(1)]
+    \item Class
+          \subitem \code{Toolbar}
+    \item Fields
+          \subitem +\code{render()}
+\end{enumerate}
+
+\begin{enumerate}[(1)]
+    \item Class
+          \subitem \code{Scrollbar}
+    \item Fields
+          \subitem +\code{render()}
+\end{enumerate}
+
+\begin{itemize}
+    \item \code{BasicWindow}, \code{Decorator}  $ \rightarrow $ \code{Component}
+    \item \code{Toolbar}, \code{Scrollbar} $ \rightarrow $ \code{Decorator}
+    \item \code{Concrete} $ \rightarrow $ \code{BasicWindow}
+    \item \code{Concrete} $ \rightarrow $ \code{Toolbar}
+    \item \code{Concrete} $ \rightarrow $ \code{Scrollbar}
+    \item \code{Decorator} $ \diamond \rightarrow $ \code{Component} (diamond
+          is shaded in the \code{Pizza} example)
+\end{itemize}
+
+\textbf{Essentially the main function of Q3}
+\begin{lstlisting}
+    Component *p = new BasicWindow;
+    p = new Toolbar(p);
+    p = new Scrollbar(p);
+    p->render(); // call render at any time since it's pure virtual
+\end{lstlisting}
+
+\subsection{Exceptions}
+\begin{itemize}
+    \item \code{v[i]} - index out of range $ \rightarrow $ undefined behaviour
+    \item \code{v.at(i)} - checked access $ \rightarrow $ if \code{i} out
+    of range, an \code{out\_of\_range} exception is thrown
+\end{itemize}
+
+File: \code{rangeError.cc}
+\begin{itemize}
+    \item \code{out\_of\_range}
+    \item terminates the program, we fix this with \code{try-catch} statement
+\end{itemize}
+
+File: \code{rangeErrorCaught.cc}
+\begin{itemize}
+    \item the moment an error occurs within the \code{try} block, the program
+    goes straight to the \code{catch} block and finishes
+    \item the program does not terminate now
+\end{itemize}

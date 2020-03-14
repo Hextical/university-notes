@@ -1,0 +1,126 @@
+\makeheading{2020-03-13}
+\subsection{Minimal Polynomials}
+\begin{defbox}
+    \begin{definition}
+        Let $ \alpha\in GF(q^m) $. \textbf{The minimal polynomial
+            $\bm{m_\alpha(x)} $ of $ \bm{\alpha} $ over $ \bm{GF(q)} $} is
+        the monic polynomial of smallest degree in $ GF(q)[x] $ with
+        $ m_\alpha(\alpha)=0 $.
+    \end{definition}
+\end{defbox}
+
+\begin{thmbox}
+    \begin{theorem}
+        Let $ \alpha\in GF(q^m) $.
+        \begin{enumerate}[(i)]
+            \item $ m_\alpha(x) $ is unique.
+            \item $ m_\alpha(x) $ is irreducible over $ GF(q) $.
+            \item $ \deg(m_\alpha)\leqslant m $.
+            \item Let $ f(x)\in GF(q)[x] $. Then, $ f(\alpha)=0 $ if and only
+                  if $ m_\alpha(x)\mid f(x) $.
+        \end{enumerate}
+    \end{theorem}
+\end{thmbox}
+We proved $ (i)-(iii) $ last class. We now prove $ (iv) $.
+\begin{proof}
+    $ (\implies) $
+    By long division,
+    \[ f(x)=\ell(x)m_\alpha(x)+r(x) \]
+    where $ \ell,r\in GF(q)[x] $, and $ \deg(r)<\deg(m_\alpha) $.
+    Therefore, $ f(\alpha)=\ell(\alpha)\underbrace{m_\alpha(\alpha)}_{0}+r(\alpha)=0 $.
+    Therefore, $ f(\alpha)=r(\alpha)=0 $. By definition of $ m_\alpha(x) $,
+    we have that $ r(x)=0, $ so $ m_\alpha(x)\mid f(x) $.
+
+    $ (\impliedby) $ If $ m_\alpha(x)\mid f(x) $, then $ f(x)=\ell(x)m_\alpha(x) $,
+    so $ f(\alpha)=\ell(\alpha)m_\alpha(\alpha)=0 $.
+\end{proof}
+
+\begin{thmbox}
+    \begin{theorem}
+        Let $ \alpha\in GF(q^m) $. Then, $ \alpha\in GF(q) $ if and only if
+        $ \alpha^q=\alpha $.
+    \end{theorem}
+\end{thmbox}
+
+\begin{proof}
+    \textbf{Recall}: If $ \alpha\in GF(q) $, then $ \alpha^q=\alpha $.
+    So, each such $ \alpha $ is a root of $ x^q-x $. Since $ \deg(x^q-x)=q $,
+    its roots are precisely the elements of $ GF(q) $.
+\end{proof}
+
+\begin{defbox}
+    \begin{definition}
+        Let $ \alpha\in GF(q^m) $. \textbf{The conjugates of $ \bm{\alpha} $
+            with respect to $ \bm{GF(q)} $} is
+        \[ C(\alpha)=\{\alpha,\alpha^q,\alpha^{q^2},\ldots,\alpha^{q^{t-1}}\} \]
+        where $ t $ is the smallest positive integer such that
+        $ \alpha^{q^t}=\alpha $ ($ t $ exists, and $ t\leqslant m $)
+
+        Note: The elements of $ C(\alpha) $ are distinct.
+    \end{definition}
+\end{defbox}
+
+\begin{thmbox}
+    \begin{theorem}
+        Let $ \alpha\in GF(q^m) $. Then
+        \[ m_\alpha(x)=\prod_{\beta\in C(\alpha)}(x-\beta) \]
+    \end{theorem}
+\end{thmbox}
+
+\begin{proof}
+    $ \; $
+
+    \begin{enumerate}[(i)]
+        \item $ m_\alpha(x) $ is monic.
+        \item $ m_\alpha(\alpha)=0 $.
+        \item Clearly, $ m_\alpha(x)\in GF(q^m)[x] $. In fact,
+              $ m_\alpha(x)\in GF(q)[x] $.
+        \item If $ f\in GF(q)[x] $, $ f\neq 0 $, with $ f(\alpha)=0 $,
+              then $ f(\beta)=0 $ for all $ \beta\in C(\alpha) $. Hence,
+              $ \deg(f)\geqslant \deg(m_\alpha) $.
+    \end{enumerate}
+\end{proof}
+
+\begin{exbox}
+    \begin{example}
+        Consider $ GF(2^4)=\mathbb{Z}_2[x]/(x^4+x+1) $. Find the minimal
+        polynomial of $ \beta=x^2+x^3 $ over $ \mathbb{Z}_2 $.
+        (so $ q=2 $, $ m=4 $)
+
+        \textbf{Solution.} It would help to have a generator $ \alpha $
+        of $ GF(2^4)^* $ and its powers. Take $ \alpha=x $.
+        \begin{center}
+            \begin{tabular}{| *{1}{>{\centering\arraybackslash}p{3cm} |}}
+                \hline
+                $ \alpha^0=1 $                             \\
+                $ \alpha^1=\alpha $                        \\
+                $ \alpha^2=\alpha^2 $                      \\
+                $ \alpha^3=\alpha^3 $                      \\
+                $ \alpha^4=\alpha+1 $                      \\
+                $ \alpha^5=\alpha^2+\alpha $               \\
+                $ \alpha^6=\alpha^3+\alpha^2 $             \\
+                $ \alpha^7=\alpha^3+\alpha+1 $             \\
+                $ \alpha^8=\alpha^2+1 $                    \\
+                $ \alpha^9=\alpha^3+\alpha $               \\
+                $ \alpha^{10}=\alpha^2+\alpha+1 $          \\
+                $ \alpha^{11}=\alpha^3+\alpha^2+\alpha $   \\
+                $ \alpha^{12}=\alpha^3+\alpha^2+\alpha+1 $ \\
+                $ \alpha^{13}=\alpha^3+\alpha^2+1 $        \\
+                $ \alpha^{14}=\alpha^3+1 $                 \\
+                $ \alpha^{15}=1 $                          \\
+                \hline
+            \end{tabular}
+        \end{center}
+        $ C(\beta)=C(\alpha^6)=\{\alpha^6,\alpha^{12},\alpha^9=\alpha^{24},
+            \alpha^3=\alpha^{18}\} $. Therefore,
+        \begin{align*}
+            m_\beta(y)
+             & =(y-\alpha^{6})(y-\alpha^{12})(y-\alpha^{9})(y-\alpha^3)                                 \\
+             & =[(y-\alpha^{6})(y-\alpha^{12})][(y-\alpha^{9})(y-\alpha^3)]                             \\
+             & =[y^2+(\alpha^6+\alpha^{12})y+\alpha^3][y^2+(\alpha^9+\alpha^3)y+\alpha^{12}]            \\
+             & =[y^2+\alpha^4 y+\alpha^3][y^2+\alpha y+\alpha^{12}]                                     \\
+             & =y^4+(\alpha+\alpha^4)y^3+(\alpha^{12}+\alpha^3+\alpha^5)y^2+(\alpha^{16}+\alpha^{4})y+1 \\
+             & =y^4+y^3+y^2+y+1\in \mathbb{Z}_2
+        \end{align*}
+    \end{example}
+\end{exbox}
