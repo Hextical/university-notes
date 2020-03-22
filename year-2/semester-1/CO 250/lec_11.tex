@@ -1,4 +1,4 @@
-\section{2019-10-22}
+\makeheading{2019-10-22}
 Given any LP problem, we know how to convert it into an equivalent LP
 problem in SEF:
 
@@ -6,59 +6,60 @@ problem in SEF:
 \[\max z:=\bm{c}^\top \bm{x}\]
 subject to
 \begin{align*}
-    A \bm{x}=\bm{b}\\
-    \bm{x}\ge 0
+    A \bm{x}=\bm{b} \\
+    \bm{x}\geqslant  0
 \end{align*}
 where $ A\in\mathbb{R}^{m\times n}$ has $\rank(A)=m $.
 
 Given an LP in SEF, with a given basic feasible solution, we know
 how to solve it.
 
-\subsection{Finding a Feasible Solution To LPs (Two Phase Method)}
+\section{Finding Feasible Solutions}
 Given an LP in SEF with $ \rank(A)=m $, how do we find a feasible
 solution or prove that none exists.
 
 We will construct an \emph{auxiliary LP problem}.
 
-We can always make sure $ \bm{b}\ge \bm{0} $. (If any $ b_i<0 $, multiply both
+We can always make sure $ \bm{b}\geqslant  \bm{0} $. (If any $ b_i<0 $, multiply both
 sides of that equation by $ (-1) $) Introduce artificial variables
 $ x_{n+1},\ldots,x_{n+m} $
 
 \begin{defbox}
-    \subsection{Definition (Auxiliary Linear Program, Auxiliary Variables)}
-    Given (P): $\max \left\{ \bm{c}^\top \bm{x},\,A \bm{x}=\bm{b},\bm{x}\ge \bm{0} \right\}$,
-    we define the \emph{auxiliary linear program} of (P) as:
+    \begin{definition}
+        Given (P): $\max \left\{ \bm{c}^\top \bm{x},\,A \bm{x}=\bm{b},\bm{x}\geqslant  \bm{0} \right\}$,
+        we define the \emph{auxiliary linear program} of (P) as:
 
-    $ (P_{aux}) $
-    \[ \min w:=x_{n+1}+\cdots+x_{n+m} \]
-    subject to
-    \[
-        \left[\begin{array}{c|c}
-            A & I
-        \end{array}\right]
-        \underbrace{\begin{bmatrix}
-            x_1\\
-            \vdots\\
-            x_{n}\\
-            x_{n+1}\\
-            \vdots\\
-            x_{n+m}
-        \end{bmatrix}}_{\bm{x}}
-        =\bm{b}\]
-    \[ \bm{x} \ge \bm{0}\]
-    where $ \bm{b}\ge \bm{0} $, and $ I $ is the $ m\times m $ identity matrix.
+        $ (P_{aux}) $
+        \[ \min w:=x_{n+1}+\cdots+x_{n+m} \]
+        subject to
+        \[
+            \left[\begin{array}{c|c}
+                    A & I
+                \end{array}\right]
+            \underbrace{\begin{bmatrix}
+                    x_1     \\
+                    \vdots  \\
+                    x_{n}   \\
+                    x_{n+1} \\
+                    \vdots  \\
+                    x_{n+m}
+                \end{bmatrix}}_{\bm{x}}
+            =\bm{b}\]
+        \[ \bm{x} \geqslant  \bm{0}\]
+        where $ \bm{b}\geqslant  \bm{0} $, and $ I $ is the $ m\times m $ identity matrix.
 
-    We call the variables $ x_{n+1},\ldots,x_{n+m} $ \emph{auxiliary variables}.
+        We call the variables $ x_{n+1},\ldots,x_{n+m} $ \emph{auxiliary variables}.
+    \end{definition}
 \end{defbox}
 
-For every feasible solution of $ (P_{aux}) $, $ w\ge 0 $.
+For every feasible solution of $ (P_{aux}) $, $ w\geqslant  0 $.
 
 Therefore, $ (P_{aux}) $ is not unbounded.
 
-If the optimal value of $ (P_{aux}) $ is zero, let 
-$ (\hat{x}_1,\ldots,\hat{x}_{n+m})^\top$ 
-be the basic feasible solution of $ (P_{aux}) $. Then, 
-$ (\hat{x}_1,\ldots,\hat{x}_{n})^\top$ 
+If the optimal value of $ (P_{aux}) $ is zero, let
+$ (\hat{x}_1,\ldots,\hat{x}_{n+m})^\top$
+be the basic feasible solution of $ (P_{aux}) $. Then,
+$ (\hat{x}_1,\ldots,\hat{x}_{n})^\top$
 is a basic feasible solution of (P).
 
 It is basic since $ \{A_j : \hat{x_j}>0\} $ is linearly independent where
@@ -67,21 +68,23 @@ $ J $ is the column indices $ j $ of $ A $ for which $ \hat{x}_j\neq 0 $.
 If $ |\{j:\hat{x_j}>0\}|=m $, this index set is a basis of $ A $ which
 determines $ (\hat{x}_1,\ldots,\hat{x}_{n})^\top$.
 
-If $ |\{j:\hat{x_j}>0\}|\le m-1 $, we can extend this index set
+If $ |\{j:\hat{x_j}>0\}|\leqslant m-1 $, we can extend this index set
 to be a basis of $ A $, since $ \rank(A)=m $.
 
 If the optimal value of $ (P_{aux}) $ is positive, then (P) is
 infeasible. We state this as a theorem.
 
 \begin{thmbox}
-    \subsection{Theorem}
-    Let $ \bar{\bm{x}}=(\bar{x}_1,\ldots ,\bar{x}_{n+m})^\top $ be an optimal solution
-    to $ (P_{aux}) $.
-    \begin{enumerate}[(1)]
-        \item if $ w=0 $, then $ (\bar{x}_1,\ldots,\bar{x}_n)^\top $ is a solution to (P).
-        \item if $ w>0 $, then (P) is infeasible.
-    \end{enumerate}
+    \begin{theorem}
+        Let $ \bar{\bm{x}}=(\bar{x}_1,\ldots ,\bar{x}_{n+m})^\top $ be an optimal solution
+        to $ (P_{aux}) $.
+        \begin{enumerate}[(1)]
+            \item if $ w=0 $, then $ (\bar{x}_1,\ldots,\bar{x}_n)^\top $ is a solution to (P).
+            \item if $ w>0 $, then (P) is infeasible.
+        \end{enumerate}
+    \end{theorem}
 \end{thmbox}
+
 \begin{proof}
     Let $ \bar{\bm{x}}=(\bar{x}_1,\ldots ,\bar{x}_{n+m})^\top $ be an optimal solution
     to $ (P_{aux}) $.
@@ -97,13 +100,12 @@ infeasible. We state this as a theorem.
 \end{proof}
 
 \begin{algbox}
-    \subsection{Algorithm (Two Phase Method)}
     \begin{algorithm}[H]
         \caption{Two Phase Method}
         \SetKwInOut{Input}{Input}
         \SetKwInOut{Output}{Output}
         \Input{$A,\bm{b}, \bm{c}$ data for LP in SEF such that
-        full row rank and $ \bm{b}\ge \bm{0} $.}
+            full row rank and $ \bm{b}\geqslant  \bm{0} $.}
         Construct $ (P_{aux}) $ put into SEF, $ B:=\{n+1,n+2,\ldots,n+m\} $\\
         Put $ (P_{aux}) $ into the canonical form determined by $ B $.\\
         Solve $ (P_{aux}) $ starting with basis $ B $ by Simplex Method.\\
@@ -115,217 +117,227 @@ infeasible. We state this as a theorem.
         the last $ \bm{\bar{y}} $ computed).\\
     \end{algorithm}
 \end{algbox}
+
 As seen above, the original LP can either have an optimal
 solution or be infeasible when performing the Two Phase Method.
 
-\subsection{Example (Two Phase Method - Optimal)}
-(P)
-\[ \max z:= \begin{bmatrix} 1 & 2 & -1 \end{bmatrix} \bm{x} \]
-subject to
-\[
-    \begin{bmatrix}
-        1 & -2 & -3\\
-        -1 & 1 & 1
-    \end{bmatrix}
-    \bm{x} =
-    \begin{bmatrix}
-        -3\\
-        1
-    \end{bmatrix}
-\]
-\[ \bm{x}\ge \bm{0} \]
+\subsection{The Two Phase Simplex Algorithm---An Optimal Example}
+\begin{exbox}
+    \begin{example}[Two Phase---Optimal]
+        (P)
+        \[ \max z:= \begin{bmatrix} 1 & 2 & -1 \end{bmatrix} \bm{x} \]
+        subject to
+        \[
+            \begin{bmatrix}
+                1  & -2 & -3 \\
+                -1 & 1  & 1
+            \end{bmatrix}
+            \bm{x} =
+            \begin{bmatrix}
+                -3 \\
+                1
+            \end{bmatrix}
+        \]
+        \[ \bm{x}\geqslant  \bm{0} \]
 
-Since $ b_1<0 $
-we write
-\[ \begin{bmatrix}
-    -1 & 2 & 3\\
-    -1 & 1 & 1
-\end{bmatrix}
-x=
-\begin{bmatrix}
-    3\\
-    1
-\end{bmatrix}
-\]
-we do this because we will not have a feasible solution if $ \bm{b}<\bm{0} $.
+        Since $ b_1<0 $
+        we write
+        \[ \begin{bmatrix}
+                -1 & 2 & 3 \\
+                -1 & 1 & 1
+            \end{bmatrix}
+            x=
+            \begin{bmatrix}
+                3 \\
+                1
+            \end{bmatrix}
+        \]
+        we do this because we will not have a feasible solution if $ \bm{b}<\bm{0} $.
 
-Introduce artificial variables: $ x_4, x_5 $
+        Introduce artificial variables: $ x_4, x_5 $
 
-\underline{Phase I}
+        \underline{Phase I}
 
-$ (P_{aux}) $ 
-\[\max -w:=\begin{bmatrix} 0 & 0 & 0 & -1 & -1 \end{bmatrix} \bm{x} \]
-subject to
-\[
-    \begin{bmatrix}
-        -1 & 2 & 3 & 1 & 0\\
-        -1 & 1 & 1 & 0 & 1
-    \end{bmatrix}
-    \bm{x}=
-    \begin{bmatrix}
-        3\\
-        1
-    \end{bmatrix}
-\]
-\[ \bm{x}:=(x_1,x_2,x_3,x_4,x_5)^\top \ge \bm{0} \]
+        $ (P_{aux}) $
+        \[\max -w:=\begin{bmatrix} 0 & 0 & 0 & -1 & -1 \end{bmatrix} \bm{x} \]
+        subject to
+        \[
+            \begin{bmatrix}
+                -1 & 2 & 3 & 1 & 0 \\
+                -1 & 1 & 1 & 0 & 1
+            \end{bmatrix}
+            \bm{x}=
+            \begin{bmatrix}
+                3 \\
+                1
+            \end{bmatrix}
+        \]
+        \[ \bm{x}:=(x_1,x_2,x_3,x_4,x_5)^\top \geqslant  \bm{0} \]
 
-Turn $ (P_{aux}) $ into canonical form for $ B:=\{4,5\} $
-\[\max -w:=\begin{bmatrix} -2 & 3 & 4 & 0 & 0 \end{bmatrix} \bm{x} \]
-    subject to
-    \[
-        \begin{bmatrix}
-            -1 & 2 & 3 & 1 & 0\\
-            -1 & 1 & 1 & 0 & 1
-        \end{bmatrix}
-        \bm{x}=
-        \begin{bmatrix}
-            3\\
-            1
-        \end{bmatrix}
-    \]
-\[ \bm{x}\ge \bm{0} \]
-We solve the LP via Simplex Algorithm and obtain the following
-LP corresponding to the optimal basis of $ B=\{1,2\} $
-\[\max -w:=\begin{bmatrix} 0 & 0 & 0 & -1 & -1 \end{bmatrix} \bm{x} \]
-    subject to
-    \[
-        \begin{bmatrix}
-            1 & 0 & 1 & 1 & -2\\
-            0 & 1 & 2 & 1 & -1
-        \end{bmatrix}
-        \bm{x}=
-        \begin{bmatrix}
-            1\\
-            2
-        \end{bmatrix}
-    \]
-\[ \bm{x}\ge \bm{0} \]
-End of Phase I.
+        Turn $ (P_{aux}) $ into canonical form for $ B:=\{4,5\} $
+        \[\max -w:=\begin{bmatrix} -2 & 3 & 4 & 0 & 0 \end{bmatrix} \bm{x} \]
+        subject to
+        \[
+            \begin{bmatrix}
+                -1 & 2 & 3 & 1 & 0 \\
+                -1 & 1 & 1 & 0 & 1
+            \end{bmatrix}
+            \bm{x}=
+            \begin{bmatrix}
+                3 \\
+                1
+            \end{bmatrix}
+        \]
+        \[ \bm{x}\geqslant  \bm{0} \]
+        We solve the LP via Simplex Algorithm and obtain the following
+        LP corresponding to the optimal basis of $ B=\{1,2\} $
+        \[\max -w:=\begin{bmatrix} 0 & 0 & 0 & -1 & -1 \end{bmatrix} \bm{x} \]
+        subject to
+        \[
+            \begin{bmatrix}
+                1 & 0 & 1 & 1 & -2 \\
+                0 & 1 & 2 & 1 & -1
+            \end{bmatrix}
+            \bm{x}=
+            \begin{bmatrix}
+                1 \\
+                2
+            \end{bmatrix}
+        \]
+        \[ \bm{x}\geqslant  \bm{0} \]
+        End of Phase I.
 
-\underline{Phase II}
+        \underline{Phase II}
 
-We rewrite the original LP in canonical form corresponding
-to basis $ B=\{1,2\} $ to obtain
-\[ \max z:= \begin{bmatrix}0 & 0 & -6 \end{bmatrix}\bm{x}+5 \]
-subject to
-\[ \begin{bmatrix}
-    1 & 0 & 1\\
-    0 & 1 & 2
-\end{bmatrix}\bm{x}=
-\begin{bmatrix}
-    1\\
-    2
-\end{bmatrix} \]
-\[ \bm{x}:=(x_1,x_2,x_3)^\top\ge \bm{0} \]
+        We rewrite the original LP in canonical form corresponding
+        to basis $ B=\{1,2\} $ to obtain
+        \[ \max z:= \begin{bmatrix}0 & 0 & -6 \end{bmatrix}\bm{x}+5 \]
+        subject to
+        \[ \begin{bmatrix}
+                1 & 0 & 1 \\
+                0 & 1 & 2
+            \end{bmatrix}\bm{x}=
+            \begin{bmatrix}
+                1 \\
+                2
+            \end{bmatrix} \]
+        \[ \bm{x}:=(x_1,x_2,x_3)^\top\geqslant  \bm{0} \]
 
-We obtain the optimal basic feasible solution of $ (P_{aux}) $ via the Simplex
-Algorithm
-\[(\hat{x_1}, \hat{x_2}, \hat{x_3}, \hat{x_4}, \hat{x_5}):=
-(1,2,0,0,0)^\top\]
-Thus, the corresponding basic feasible solution of (P) is
-\[(\hat{x_1}, \hat{x_2}, \hat{x_3})=(1,2,0)^\top\]
-with an optimal objective value of $ z:= 5 $.
+        We obtain the optimal basic feasible solution of $ (P_{aux}) $ via the Simplex
+        Algorithm
+        \[(\hat{x_1}, \hat{x_2}, \hat{x_3}, \hat{x_4}, \hat{x_5}):=
+            (1,2,0,0,0)^\top\]
+        Thus, the corresponding basic feasible solution of (P) is
+        \[(\hat{x_1}, \hat{x_2}, \hat{x_3})=(1,2,0)^\top\]
+        with an optimal objective value of $ z:= 5 $.
+    \end{example}
+\end{exbox}
 
-\subsection{Example (Two Phase Method - Infeasible)}
-(P)
-\[ \max z:=\begin{bmatrix} 3 & 2 & 4 \end{bmatrix} \bm{x} \]
-subject to
-\[
-    \underbrace{
-    \begin{bmatrix}
-        5 & 1 & 1\\
-        -1 & 1 & 2\\
-    \end{bmatrix}}_{A}
-    \bm{x}=
-    \begin{bmatrix}
-        1\\
-        5
-    \end{bmatrix}
-\]
-\[\bm{x}\ge \bm{0}\]
-$ (P_{aux}) $ 
-\[ \max -w:=\underbrace{\left[\begin{array}{ccccc}
-0 & 0 & 0 & -1 & -1
-\end{array}\right]}_{\bm{\tilde{c_B}}} \bm{x} \]
-subject to
-\[
-    \underbrace{\left[
-    \begin{array}{ccccc}
-        5 & 1 & 1 & 1 & 0\\
-        -1 & 1 & 2 & 0 & 1
-    \end{array}\right]}_{\tilde{A}}
-    \bm{x}=
-    \begin{bmatrix}
-        1\\
-        5
-    \end{bmatrix}
-\]
-\[ \bm{x}:=(x_1,x_2,x_3,x_4,x_5)^\top \ge \bm{0} \]
-Turn $ (P_{aux}) $ into canonical form for $ B:=\{4,5\} $ (by adding
-the constraints up to the original objective function).
-\[ \max -w:=\left[\begin{array}{ccccc}
-4 & 2 & 3 & 0 & 0
-\end{array}\right] \bm{x} - 4 \]
-subject to
-\[
-    \left[
-    \begin{array}{ccccc}
-        5 & 1 & 1 & 1 & 0\\
-        -1 & 1 & 2 & 0 & 1
-    \end{array}\right]
-    \bm{x}=
-    \begin{bmatrix}
-        1\\
-        5
-    \end{bmatrix}
-\]
-\[ \bm{x}\ge \bm{0} \]
-Starting with the basis $ B=\{4,5\} $, solve $ (P_{aux}) $
-with the Simplex Algorithm to get:
-\[ \max -w=\begin{bmatrix}-11 & -1 & 0 & -3 & 0\end{bmatrix} \bm{x} - 3 \]
-subject to
-\[
-    \begin{bmatrix}
-        5 & 1 & 1 & 1 & 0\\
-        -11 & -1 & 0 & -2 & 1
-    \end{bmatrix}
-    \bm{x}=
-    \begin{bmatrix}
-        1\\
-        3
-    \end{bmatrix}
-\]
-\[ \bm{x}\ge \bm{0} \]
+\subsection{The Two Phase Simplex Algorithm---An Infeasible Example}
+\begin{exbox}
+    \begin{example}[Two Phase---Infeasible]
+        (P)
+        \[ \max z:=\begin{bmatrix} 3 & 2 & 4 \end{bmatrix} \bm{x} \]
+        subject to
+        \[
+            \underbrace{
+                \begin{bmatrix}
+                    5  & 1 & 1 \\
+                    -1 & 1 & 2 \\
+                \end{bmatrix}}_{A}
+            \bm{x}=
+            \begin{bmatrix}
+                1 \\
+                5
+            \end{bmatrix}
+        \]
+        \[\bm{x}\geqslant  \bm{0}\]
+        $ (P_{aux}) $
+        \[ \max -w:=\underbrace{\left[\begin{array}{ccccc}
+                        0 & 0 & 0 & -1 & -1
+                    \end{array}\right]}_{\bm{\tilde{c_B}}} \bm{x} \]
+        subject to
+        \[
+            \underbrace{\left[
+                    \begin{array}{ccccc}
+                        5  & 1 & 1 & 1 & 0 \\
+                        -1 & 1 & 2 & 0 & 1
+                    \end{array}\right]}_{\tilde{A}}
+            \bm{x}=
+            \begin{bmatrix}
+                1 \\
+                5
+            \end{bmatrix}
+        \]
+        \[ \bm{x}:=(x_1,x_2,x_3,x_4,x_5)^\top \geqslant  \bm{0} \]
+        Turn $ (P_{aux}) $ into canonical form for $ B:=\{4,5\} $ (by adding
+        the constraints up to the original objective function).
+        \[ \max -w:=\left[\begin{array}{ccccc}
+                    4 & 2 & 3 & 0 & 0
+                \end{array}\right] \bm{x} - 4 \]
+        subject to
+        \[
+            \left[
+                \begin{array}{ccccc}
+                    5  & 1 & 1 & 1 & 0 \\
+                    -1 & 1 & 2 & 0 & 1
+                \end{array}\right]
+            \bm{x}=
+            \begin{bmatrix}
+                1 \\
+                5
+            \end{bmatrix}
+        \]
+        \[ \bm{x}\geqslant  \bm{0} \]
+        Starting with the basis $ B=\{4,5\} $, solve $ (P_{aux}) $
+        with the Simplex Algorithm to get:
+        \[ \max -w=\begin{bmatrix}-11 & -1 & 0 & -3 & 0\end{bmatrix} \bm{x} - 3 \]
+        subject to
+        \[
+            \begin{bmatrix}
+                5   & 1  & 1 & 1  & 0 \\
+                -11 & -1 & 0 & -2 & 1
+            \end{bmatrix}
+            \bm{x}=
+            \begin{bmatrix}
+                1 \\
+                3
+            \end{bmatrix}
+        \]
+        \[ \bm{x}\geqslant  \bm{0} \]
 
-The optimal value of $ (P_{aux}) $ is not zero. Therefore, (P) is
-infeasible. The basis in the last iteration was $ B=\{3,5\} $.
+        The optimal value of $ (P_{aux}) $ is not zero. Therefore, (P) is
+        infeasible. The basis in the last iteration was $ B=\{3,5\} $.
 
-\[ \bm{y}^\top =\bm{\tilde{c}_B}^\top\tilde{A}_B^{-1} \iff 
-\bm{y}^\top
-=
-\underbrace{\begin{bmatrix}0 & -1\end{bmatrix}}_
-    {\text{SEF of $ (P_{aux}) $ }}
-\begin{bmatrix}
-    1 & 0\\
-    2 & 1
-\end{bmatrix}^{-1}
-\]
-$ \bm{\bar{y}}=(2,-1)^\top $
-is a certificate of infeasibility of (P).
+        \[ \bm{y}^\top =\bm{\tilde{c}_B}^\top\tilde{A}_B^{-1} \iff
+            \bm{y}^\top
+            =
+            \underbrace{\begin{bmatrix}0 & -1\end{bmatrix}}_
+            {\text{SEF of $ (P_{aux}) $ }}
+            \begin{bmatrix}
+                1 & 0 \\
+                2 & 1
+            \end{bmatrix}^{-1}
+        \]
+        $ \bm{\bar{y}}=(2,-1)^\top $
+        is a certificate of infeasibility of (P).
 
-Compute $ \bm{\bar{y}}^\top  A 
-= \begin{bmatrix}11 & 1 & 0 \end{bmatrix}\ge \bm{0}^\top $ and
-$ \bm{\bar{y}}^\top \bm{b}=-3=\bm{c}^\top \bm{x} $
-where $ \bm{\bar{x}}=(0,0,0,1,3)^\top $.
+        Compute $ \bm{\bar{y}}^\top  A
+            = \begin{bmatrix}11 & 1 & 0 \end{bmatrix}\geqslant  \bm{0}^\top $ and
+        $ \bm{\bar{y}}^\top \bm{b}=-3=\bm{c}^\top \bm{x} $
+        where $ \bm{\bar{x}}=(0,0,0,1,3)^\top $.
 
-Thus, $ \bm{\bar{y}} $ is a certificate of optimality for $ (P_{aux}) $.
+        Thus, $ \bm{\bar{y}} $ is a certificate of optimality for $ (P_{aux}) $.
+    \end{example}
+\end{exbox}
 
 \begin{thmbox}
-    \subsection{Theorem (Fundamental Theorem of LP (SEF))}
-    Let (P) be an LP problem in SEF, where $ A\in \mathbb{R}^{m\times n} $ has $ \rank(A)=m $.
-    \begin{enumerate}[(1)]
-        \item if (P) does not have an optimal solution, then (P) is either infeasible or unbounded.
-        \item if (P) has a feasible solution, then (P) has a basic feasible solution.
-        \item if (P) has an optimal solution, then (P) has an optimal basic feasible solution.
-    \end{enumerate}
+    \begin{theorem}[Fundamental Theorem of LP (SEF)]
+        Let (P) be an LP problem in SEF, where $ A\in \mathbb{R}^{m\times n} $ has $ \rank(A)=m $.
+        \begin{enumerate}[(1)]
+            \item if (P) does not have an optimal solution, then (P) is either infeasible or unbounded.
+            \item if (P) has a feasible solution, then (P) has a basic feasible solution.
+            \item if (P) has an optimal solution, then (P) has an optimal basic feasible solution.
+        \end{enumerate}
+    \end{theorem}
 \end{thmbox}

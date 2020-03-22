@@ -1,0 +1,125 @@
+\chapter{Non-linear Optimization}
+\makeheading{2019-11-26}
+
+All linear programs are non-linear programs.
+\section{Convexity}
+\begin{defbox}
+    \begin{definition}
+        Let $ f:\mathbb{R}^n\to \mathbb{R} $. Then $ \bm{\bar{x}}\in\mathbb{R}^n $
+        is a \emph{local minimizer} if for some $ \varepsilon\in\mathbb{R}_{>0} $
+        we have that $ f(\bm{x})\geqslant f(\bm{\bar{x}}) $ where
+        \[ ||\bm{x}-\bm{\bar{x}}||<\varepsilon \]
+        for all $ \bm{x}\in\mathbb{R}^n $.
+    \end{definition}
+\end{defbox}
+
+\begin{defbox}
+    \begin{definition}
+        Let $ f:\mathbb{R}^n\to \mathbb{R} $. Then $ \bm{\bar{x}}\in\mathbb{R}^n $
+        is a \emph{global minimizer} if for each $ \bm{x}\in\mathbb{R}^n $,
+        \[ f(\bm{x})\geqslant f(\bm{\bar{x}}) \]
+    \end{definition}
+\end{defbox}
+
+\subsection{Convex Functions and Epigraphs}
+
+\begin{defbox}
+    \begin{definition}
+        Let $ C\subseteq \mathbb{R}^n $ be a convex set. Let $ f:C\to\mathbb{R} $.
+        $ f $ is \emph{convex} if for each $ \bm{x},\bm{y}\in\mathbb{R}^n $ and $ \lambda\in[0,1] $
+        \[ f(\lambda \bm{x} + (1-\lambda)\bm{y})\leqslant \lambda f(\bm{x})+(1-\lambda)f(\bm{y}) \]
+    \end{definition}
+\end{defbox}
+
+\begin{defbox}
+    \begin{definition}
+        Let $ f:\mathbb{R}^n\to\mathbb{R} $. The \emph{epigraph} of $ f $ is the following set:
+        \[ \text{epi}(f):=\left\{
+            \begin{pmatrix}
+                \mu \\
+                \bm{x}
+            \end{pmatrix}\in\mathbb{R}\times\mathbb{R}^n:f(\bm{x})\leqslant \mu\right\} \]
+    \end{definition}
+\end{defbox}
+
+\begin{thmbox}
+    \begin{theorem}
+        Let $ f:\mathbb{R}^n\to\mathbb{R} $ be convex.
+        $ f $ is convex if and only if $ \text{epi}(f) $ is convex.
+    \end{theorem}
+\end{thmbox}
+
+\begin{proof}
+    $ (\implies) $ Suppose $ f:\mathbb{R}^n\to\mathbb{R} $ is convex.
+    Let $ \begin{pmatrix}
+            \mu_1 \\
+            \bm{x}
+        \end{pmatrix},
+        \begin{pmatrix}
+            \mu_2 \\
+            \bm{y}
+        \end{pmatrix}\in\text{epi}(f) $ and $ \lambda\in[0,1] $. We have
+    \[ f(\lambda \bm{x} + (1-\lambda)\bm{y})\leqslant \lambda f(\bm{x})+(1-\lambda)f(\bm{y})
+        \leqslant \lambda\mu_1+(1-\lambda)\mu_2 \]
+    which implies
+    \[ \begin{pmatrix}
+            \lambda\mu_1+(1-\lambda)\mu_2 \\
+            \lambda\bm{x}+(1-\lambda)\bm{y}
+        \end{pmatrix}\in\text{epi}(f) \]
+
+    $ (\impliedby) $ Suppose $ \text{epi}(f) $ is convex. Let $ \bm{x},\bm{y}\in\mathbb{R}^n $
+    and $ \lambda\in[0,1] $. Then,
+    $
+        \begin{pmatrix}
+            f(\bm{x}) \\
+            \bm{x}
+        \end{pmatrix},
+        \begin{pmatrix}
+            f(\bm{y}) \\
+            \bm{y}
+        \end{pmatrix}
+        \in\text{epi}(f) $.
+    Hence,
+    \[ \lambda
+        \begin{pmatrix}
+            f(\bm{x}) \\
+            \bm{x}
+        \end{pmatrix}+
+        (1-\lambda)
+        \begin{pmatrix}
+            f(\bm{y}) \\
+            \bm{y}
+        \end{pmatrix}\in\text{epi}(f) \]
+    Hence, by definition of $ \text{epi}(f) $,
+    \[ f(\lambda \bm{x} + (1-\lambda)\bm{y})\leqslant \lambda f(\bm{x})+(1-\lambda)f(\bm{y}) \]
+    Thus, $ f $ is a convex function.
+\end{proof}
+
+\subsection{Level Sets and Feasible Region}
+\begin{defbox}
+    \begin{definition}
+        Let $ f:\mathbb{R}^n\to\mathbb{R} $ be a convex function
+        and $ \beta\in\mathbb{R} $. The \emph{level set}
+        of $ f $ is:
+        \[ S_\beta = \{\bm{x}\in\mathbb{R}^n:f(\bm{x})\leqslant \beta\} \]
+    \end{definition}
+\end{defbox}
+
+\begin{thmbox}
+    \begin{theorem}
+        Let $ f:\mathbb{R}^n\to\mathbb{R} $ be a convex and $ \beta\in\mathbb{R} $. Then the level set
+        is a convex set.
+    \end{theorem}
+\end{thmbox}
+
+\begin{proof}
+    Since $ f $ is convex, we know that
+    \begin{align*}
+        f(\lambda\bm{x} + (1-\lambda)\bm{y})
+         & \leqslant \lambda f(\bm{x})+(1-\lambda)f(\bm{y}) \\
+         & \leqslant\lambda\beta + (1-\lambda)\beta         \\
+         & =\beta
+    \end{align*}
+    Thus, $ \lambda \bm{x} + (1-\lambda)\bm{y}\in S_\beta $. Thus, $ S_\beta $ is a convex
+    set.
+\end{proof}

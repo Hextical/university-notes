@@ -1,13 +1,14 @@
-\section{2019-10-30}
+\makeheading{2019-10-30}
 Recall the notions: hyperplane, half-space, polyhedron,
 feasible regions of LPs, convex sets, extreme points
 of convex sets.
 
 \begin{thmbox}
-    \subsection{Proposition}
-    Let $ S\subseteq \mathbb{R}^n $ be a convex set and $ \bar{x}\in S $. 
-    $ \bar{x} $ is an extreme point of $ S $ if and only if
-    $ S\setminus \{\bar{x}\} $ is convex.
+    \begin{theorem}
+        Let $ S\subseteq \mathbb{R}^n $ be a convex set and $ \bar{x}\in S $. 
+        $ \bar{x} $ is an extreme point of $ S $ if and only if
+        $ S\setminus \{\bar{x}\} $ is convex.
+    \end{theorem}
 \end{thmbox}
 \begin{proof}
     Assume $ S\subseteq\mathbb{R}^n $ is convex and $ \bar{x}\in S $.
@@ -37,26 +38,27 @@ of convex sets.
 \end{proof}
 
 \begin{defbox}
-    \subsection{Definition (Tight Constraints)}
-    Let $ A\in \mathbb{R}^{m \times n} $, $ \bm{b}\in \mathbb{R}^m $. Consider
-    the polyhedron $ P\subseteq \mathbb{R}^n $
-    $ P:=\{\bm{x}\in\mathbb{R}^n:A\bm{x}\le \bm{b}\} $. We say
-    that a constraint $ \bm{\alpha ^\top} \bm{x}\le \beta $ of
-    $ A \bm{x}\le \bm{b} $ is \emph{tight} for $ \bm{\bar{x}} $ if
-    $ \bm{\alpha}^\top \bm{\bar{x}}=\beta $. We denote the set of all
-    inequalities of $ A \bm{x}\le \bm{b} $ that
-    are tight at $ \bm{\bar{x}} $ by $ A^=\bm{\bar{x}}=b^= $.
+    \begin{definition}
+        Let $ A\in \mathbb{R}^{m \times n} $, $ \bm{b}\in \mathbb{R}^m $. Consider
+        the polyhedron $ P\subseteq \mathbb{R}^n $
+        $ P:=\{\bm{x}\in\mathbb{R}^n:A\bm{x}\leqslant \bm{b}\} $. We say
+        that a constraint $ \bm{\alpha ^\top} \bm{x}\leqslant \beta $ of
+        $ A \bm{x}\leqslant \bm{b} $ is \emph{tight} for $ \bm{\bar{x}} $ if
+        $ \bm{\alpha}^\top \bm{\bar{x}}=\beta $. We denote the set of all
+        inequalities of $ A \bm{x}\leqslant \bm{b} $ that
+        are tight at $ \bm{\bar{x}} $ by $ A^=\bm{\bar{x}}=b^= $.
+    \end{definition}
 \end{defbox}
 
-
 \begin{thmbox}
-    \subsection{Theorem}
-    Let $ P=\{\bm{x}\in\mathbb{R}^n:A \bm{x}\le \bm{b}\} $ be 
-    a polyhedron and let $ \bm{\bar{x}}\in P $. 
-    Let $ A^=\bm{x} = \bm{b}^= $ be the set of tight constraints
-    for $ \bm{\bar{x}} $. 
-    Then $ \rank(A^=)=n $ if and only if
-    $\bm{\bar{x}}$ is an extreme point of $ P $.
+    \begin{theorem}
+        Let $ P=\{\bm{x}\in\mathbb{R}^n:A \bm{x}\leqslant \bm{b}\} $ be 
+        a polyhedron and let $ \bm{\bar{x}}\in P $. 
+        Let $ A^=\bm{x} = \bm{b}^= $ be the set of tight constraints
+        for $ \bm{\bar{x}} $. 
+        Then $ \rank(A^=)=n $ if and only if
+        $\bm{\bar{x}}$ is an extreme point of $ P $.
+    \end{theorem}
 \end{thmbox}
 
 \begin{proof}
@@ -73,9 +75,9 @@ of convex sets.
         \bm{b^=}&=A^=\bm{\bar{x}}\\
         &=A^=[\lambda \bm{x^{(1)}}+(1-\lambda)\bm{x^{(2)}}]\\
         &=\underbrace{\lambda}_{>0}
-        \underbrace{A^=\bm{x^{(1)}}}_{\le \bm{b^=}}
+        \underbrace{A^=\bm{x^{(1)}}}_{\leqslant \bm{b^=}}
         +\underbrace{(1-\lambda)}_{>0} 
-        \underbrace{A^=\bm{x^{(2)}}}_{\le \bm{b^=}}\\
+        \underbrace{A^=\bm{x^{(2)}}}_{\leqslant \bm{b^=}}\\
         &\le\lambda\bm{b^=}+(1-\lambda)\bm{b^=}\\
         &=\bm{b^=}
     \end{align*}
@@ -112,15 +114,15 @@ for  $ \varepsilon > 0 $ arbitrarily small. We have
     +\varepsilon\underbrace{A^= \bm{d}}_{=\bm{0}}\\
     &=\bm{b^=}
 \end{align*}
-Similarly, $ A^= \bm{x^{(2)}}= \bm{b^=}$. Let $ \bm{a}^\top \bm{x}\le \beta $
-be any of the inequalities of $ A \bm{x}\le \bm{b} $ that is not in
-$ A^= \bm{x}\le \bm{b}^= $. 
+Similarly, $ A^= \bm{x^{(2)}}= \bm{b^=}$. Let $ \bm{a}^\top \bm{x}\leqslant \beta $
+be any of the inequalities of $ A \bm{x}\leqslant \bm{b} $ that is not in
+$ A^= \bm{x}\leqslant \bm{b}^= $. 
 It follows for $ \varepsilon >0 $ arbitrarily small that:
 \begin{align*}
     \bm{a}^\top \bm{x^{(1)}}&= \bm{a}^\top(\bm{\bar{x}} + \varepsilon \bm{d})\\
-    &=\underbrace{\bm{a}^\top \bm{\bar{x}}}_{\le \beta}+
+    &=\underbrace{\bm{a}^\top \bm{\bar{x}}}_{\leqslant \beta}+
     \varepsilon \bm{a}^\top \bm{d}\\
-    &\le \beta
+    &\leqslant \beta
 \end{align*}
 hence $ \bm{x^{(1)}}\in P $. Similarly, $ \bm{x^{(2)}}\in P $. Thus, 
 $ \bm{\bar{x}} $ is properly contained in $ P $ and hence is not
@@ -140,7 +142,7 @@ an extreme point.
     2\\
     0\\
     0\\
-\end{bmatrix}, \bm{x}\ge \bm{0} \right\} \]
+\end{bmatrix}, \bm{x}\geqslant  \bm{0} \right\} \]
 (i) 
 $\bm{x}^{(1)}:=\begin{bmatrix}2\\0\end{bmatrix}$,
 $ A^= =
@@ -178,11 +180,13 @@ point of $ F $.
 \end{center}
 
 \begin{thmbox}
-    \subsection{Theorem}
-    Let $ A\in\mathbb{R}^{m\times n} $ with $ \rank(A)=m $. 
-    Let $ P=\{\bm{x}\in\mathbb{R}^n: A \bm{x}=\bm{b},
-    \bm{x}\ge \bm{0}\} $, and let $ \bm{\bar{x}}\in P $.
-    $ \bm{\bar{x}} $ is an extreme point of $ P $ if and only if $ \bm{\bar{x}} $ is a basic feasible solution of $  A \bm{x}=\bm{b} $.
+    \begin{theorem}
+        Let $ A\in\mathbb{R}^{m\times n} $ with $ \rank(A)=m $. 
+        Let $ P=\{\bm{x}\in\mathbb{R}^n: A \bm{x}=\bm{b},
+        \bm{x}\geqslant  \bm{0}\} $, and let $ \bm{\bar{x}}\in P $.
+        $ \bm{\bar{x}} $ is an extreme point of $ P $ if and only if $ \bm{\bar{x}} $ is a basic feasible
+        solution of $  A \bm{x}=\bm{b} $.
+    \end{theorem}
 \end{thmbox}
 
 \[ F:=\left\{ \bm{x}\in\mathbb{R}^2: \begin{bmatrix}
@@ -196,7 +200,7 @@ point of $ F $.
     2\\
     0\\
     0\\
-\end{bmatrix}, \bm{x}\ge \bm{0} \right\} \]
+\end{bmatrix}, \bm{x}\geqslant  \bm{0} \right\} \]
 
 \[ P:=\left\{\bm{x}\in\mathbb{R}^4:
 \begin{bmatrix}
@@ -206,7 +210,7 @@ point of $ F $.
 \begin{bmatrix}
     4\\
     2
-\end{bmatrix}, \bm{x}\ge \bm{0}\right\} \]
+\end{bmatrix}, \bm{x}\geqslant  \bm{0}\right\} \]
 Note that for every feasible solution
 $ \begin{bmatrix}
     \bar{x}_1\\
@@ -235,45 +239,47 @@ Consider the basis $ B:=\{3,4\} $ of $ A $. The corresponding basic feasible
 solution is $ \bm{\bar{x}}=(0,0,4,2)^\top $. Thus, $ \bm{\bar{x}} $ is
 an extreme point of $ P $.
 
-\subsection{Geometric Interpretation of Simplex Method}
+\subsection{Geometric Interpretation of Simplex Algorithm}
 (P)
 \[ \max z:=\bm{c}^\top x \]
 subject to
-\[ A \bm{x}\le \bm{b} \]
-\[ \bm{x}\ge \bm{0} \]
-Suppose $ n=1 $ and $ m=6 $ with $ \bm{b}\ge \bm{0} $.
+\[ A \bm{x}\leqslant \bm{b} \]
+\[ \bm{x}\geqslant  \bm{0} \]
+Suppose $ n=1 $ and $ m=6 $ with $ \bm{b}\geqslant  \bm{0} $.
 
 \begin{center}
     \includegraphics{geosimplex}
 \end{center}
 
-\subsection{Duality Theory}
+\chapter{Duality Theory}
 (P)
-\[ \max \{\bm{c}^{\top} \bm{x}: A \bm{x}=\bm{b},\, \bm{x} \geq \bm{0}\} \]
-Recall the notation of optimality certificate $ \bm{\bar{y}}\in\mathbb{R}^m $ such that $ A ^\top \bm{\bar{y}}\ge \bm{c} $. We noted that for
+\[ \max \{\bm{c}^{\top} \bm{x}: A \bm{x}=\bm{b},\, \bm{x} \geqslant  \bm{0}\} \]
+Recall the notation of optimality certificate $ \bm{\bar{y}}\in\mathbb{R}^m $ such that $ A ^\top \bm{\bar{y}}\geqslant  \bm{c} $. We noted that for
 every feasible $ \bm{x} $ in (P), $ A \bm{x}= \bm{b}\implies
 \bm{\bar{y}}^\top A \bm{x}=\bm{\bar{y}}^\top \bm{b} $
 
-Since $ A ^\top \bm{\bar{y}}\ge \bm{c} $ and $ \bm{x}\ge \bm{0} $,
-we have $ \bm{c}^\top \bm{x}\le \bm{\bar{y}}^\top A \bm{x} =
+Since $ A ^\top \bm{\bar{y}}\geqslant  \bm{c} $ and $ \bm{x}\geqslant  \bm{0} $,
+we have $ \bm{c}^\top \bm{x}\leqslant \bm{\bar{y}}^\top A \bm{x} =
 \bm{\bar{y}}^\top \bm{b} $. So as long as $ \bm{y}\in\mathbb{R}^m $
-with $ A ^\top \bm{y}\ge \bm{c} $, we can get an upper bound
+with $ A ^\top \bm{y}\geqslant  \bm{c} $, we can get an upper bound
 of $ \bm{b} ^\top\bm{y} $ on the optimal objective value of (P).
 
-We want to minimize $ \bm{b}^\top\bm{y} $ subject to $ A ^\top \bm{y}\ge \bm{c} $
+We want to minimize $ \bm{b}^\top\bm{y} $ subject to $ A ^\top \bm{y}\geqslant  \bm{c} $
 
 \begin{defbox}
-    \subsection{Definition (Dual)}
-    Given (P)
-    \[ \max \{\bm{c}^{\top} \bm{x}: A \bm{x}=\bm{b},\, \bm{x} \geq \bm{0}\} \]
-    we define (D)
-    \[ \min \{\bm{b}^{\top} \bm{y}: A^{\top} \bm{y} \geq \bm{c},\, \bm{y} \geq \bm{0}\}\]
-    to be the \emph{dual} of (P).
+    \begin{definition}
+        Given (P)
+        \[ \max \{\bm{c}^{\top} \bm{x}: A \bm{x}=\bm{b},\, \bm{x} \geqslant qslant  \bm{0}\} \]
+        we define (D)
+        \[ \min \{\bm{b}^{\top} \bm{y}: A^{\top} \bm{y} \geqslant qslant  \bm{c},\, \bm{y} \geqslant qslant  \bm{0}\}\]
+        to be the \emph{dual} of (P).
+    \end{definition}
 \end{defbox}
 
-\subsection{Example (Dual)}
-Find the dual of
-$ (P_1)$: $\max \{\bm{c}^\top \bm{x}: A \bm{x}\le \bm{b},\,\bm{x}\ge \bm{0}\}$.
+\begin{exbox}
+    \begin{example}[Dual]
+        Find the dual of
+$ (P_1)$: $\max \{\bm{c}^\top \bm{x}: A \bm{x}\leqslant \bm{b},\,\bm{x}\geqslant  \bm{0}\}$.
 
 \textbf{Solution.}
 
@@ -293,19 +299,22 @@ subject to
     \bm{x}\\
     \bm{s}
 \end{bmatrix} = \bm{b} \]
-\[ (\bm{x},\bm{s})^\top\ge \bm{0} \]
+\[ (\bm{x},\bm{s})^\top\geqslant  \bm{0} \]
 
 $ (D_2) $
 \[ \min \bm{b}^\top \bm{y} \]
 \[ \begin{bmatrix}
     A^T\\
     I
-\end{bmatrix} \ge
+\end{bmatrix} \geqslant 
 \begin{bmatrix}
     \bm{c}\\
     \bm{0}
 \end{bmatrix}\]
-\[ \bm{y}\ge \bm{0} \]
+\[ \bm{y}\geqslant  \bm{0} \]
 
 Thus, the dual of $ (P_1) $ is $ (D_2) $: 
-$\min\{\bm{b}^\top \bm{y}: A ^\top \bm{y}\ge \bm{c},\,\bm{y}\ge \bm{0}\}$.
+$\min\{\bm{b}^\top \bm{y}: A ^\top \bm{y}\geqslant  \bm{c},\,\bm{y}\geqslant  \bm{0}\}$.
+
+    \end{example}
+\end{exbox}

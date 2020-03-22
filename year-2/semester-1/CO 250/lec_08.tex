@@ -1,70 +1,71 @@
-\section{2019-10-01}
+\makeheading{2019-10-01}
 Let $A\in \mathbb{R}^{m\times n}, \bm{b}\in\mathbb{R}^m, \bm{c}\in\mathbb{R}^n$.
 Consider (P)
 \[\max \bm{c}^\top \bm{x}\]
 subject to
 \[ A\bm{x}=\bm{b} \]
-\[ \bm{x}\ge\bm{0} \]
+\[ \bm{x}\geqslant \bm{0} \]
 Suppose we are given
 $\bm{\tilde{x}}\in\mathbb{R}^n$ such that, $A\bm{\tilde{x}}=\bm{b}$,
-$\bm{\tilde{x}}\ge\bm{0}$
+$\bm{\tilde{x}}\geqslant \bm{0}$
 and
-$\bm{y}\in\mathbb{R}^m$ such that $A^\top \bm{y}\ge\bm{c}$,
+$\bm{y}\in\mathbb{R}^m$ such that $A^\top \bm{y}\geqslant \bm{c}$,
 $\bm{y}^\top \bm{b}=\bm{c}^\top \bm{\bar{x}}$ with objective function
 value $=\bm{c}^\top \bm{\bar{x}}$.
 
 
 Computing $\bm{c}^\top \bm{\bar{x}}$ we get
 \begin{align*}
-    \bm{c}^\top \bm{\bar{x}}&=\bm{y}^\top \bm{b}\\
-    &=\bm{y}^\top (A\bm{\tilde{x}})\\
-    &=
-    \underbrace{(\bm{y}^\top A)}_{\ge \bm{c}^\top }
-    \underbrace{\bm{\tilde{x}}}_{\ge \bm{0}}\\
-    &\ge \bm{c}^\top \bm{\tilde{x}}
+    \bm{c}^\top \bm{\bar{x}} & =\bm{y}^\top \bm{b}                   \\
+                             & =\bm{y}^\top (A\bm{\tilde{x}})        \\
+                             & =
+    \underbrace{(\bm{y}^\top A)}_{\geqslant  \bm{c}^\top }
+    \underbrace{\bm{\tilde{x}}}_{\geqslant  \bm{0}}                  \\
+                             & \geqslant  \bm{c}^\top \bm{\tilde{x}}
 \end{align*}
-Since $\bm{\bar{x}}$ achieves the objective value of 
+Since $\bm{\bar{x}}$ achieves the objective value of
 $\bm{c}^\top \bm{\bar{x}}$ and for every feasible solution the objective
 value is at most $\bm{c}^\top \bm{\bar{x}}$, $\bm{\bar{x}}$ is an
 optimal solution of (P).
 
-
+\subsection{Canonical Forms}
 \begin{defbox}
-    \subsection{Definition (Canonical form)}
-    Consider the following LP in SEF:
+    \begin{definition}
+        Consider the following LP in SEF:
 
-    (P)
-    \[\max \bm{c}^\top  \bm{x}+\bar{z}\]
-    subject to
-    \begin{align*}
-        A\bm{x}=\bm{b}\\
-        \bm{x}\ge \bm{0}
-    \end{align*}
-    We say (P) is in \emph{canonical form} for a basis $B$ of $A$ if
-    \begin{enumerate}[(C1)]
-        \item $A_B$ is an identity matrix
-        \item $\bm{c_B}=\bm{0}$
-    \end{enumerate}
+        (P)
+        \[\max \bm{c}^\top  \bm{x}+\bar{z}\]
+        subject to
+        \begin{align*}
+            A\bm{x}=\bm{b} \\
+            \bm{x}\geqslant  \bm{0}
+        \end{align*}
+        We say (P) is in \emph{canonical form} for a basis $B$ of $A$ if
+        \begin{enumerate}[(C1)]
+            \item $A_B$ is an identity matrix
+            \item $\bm{c_B}=\bm{0}$
+        \end{enumerate}
+    \end{definition}
 \end{defbox}
 
 Now,
 \begin{align*}
     A\bm{x}
-    &=\sum_{j = 1}^{n}\bm{a_j}x_j\\
-    &=\sum_{j\in B}^{n}\bm{a_j}x_j+\sum_{j\in N}^{n}\bm{a_j}x_j\\
-    &=A_B \bm{x_B}+A_N \bm{x_N}
+     & =\sum_{j = 1}^{n}\bm{a_j}x_j                               \\
+     & =\sum_{j\in B}^{n}\bm{a_j}x_j+\sum_{j\in N}^{n}\bm{a_j}x_j \\
+     & =A_B \bm{x_B}+A_N \bm{x_N}
 \end{align*}
 Since $B$ is a basis of $A$, $A_B$ is non-singular,
 \begin{align*}
-    &A\bm{x}=\bm{b}\\
-    &\iff
-    A_B^{-1}A\bm{x}=A_B^{-1}\bm{b}\\
-    &\iff
-    A_B^{-1}(A_B\bm{x_B}+A_N\bm{x_N})=A_B^{-1}\bm{b}\\
-    &\iff
+     & A\bm{x}=\bm{b}                                \\
+     & \iff
+    A_B^{-1}A\bm{x}=A_B^{-1}\bm{b}                   \\
+     & \iff
+    A_B^{-1}(A_B\bm{x_B}+A_N\bm{x_N})=A_B^{-1}\bm{b} \\
+     & \iff
     (\underbrace{A_B^{-1} A_B}_{I}\bm{x_B})+
-    (A_B^{-1} A_N\bm{x_N})=A_B^{-1}\bm{b}\\
-    &\iff
+    (A_B^{-1} A_N\bm{x_N})=A_B^{-1}\bm{b}            \\
+     & \iff
     \bm{x_B}=A_B^{-1}\bm{b}-(A_B^{-1} A_N\bm{x_N})
 \end{align*}
 Consider (C2). For any $\bm{y}:=(y_1,\dots, y_m)^\top$
@@ -72,90 +73,93 @@ the equation
 \[\bm{y}^\top A\bm{x}=\bm{y}^\top \bm{b}\]
 can be written as
 \[0=\bm{y}^\top \bm{b}-\bm{y}^\top A\bm{x}\]
-Since  this  equation  holds  for  every  feasible  solution,  we  can  add  this 
+Since  this  equation  holds  for  every  feasible  solution,  we  can  add  this
 constraint to the objective function which is now:
 \[\max \bm{c}^\top  \bm{x}+\bar{z}+\bm{y}^\top \bm{b}-\bm{y}^\top A\bm{x}
-\implies
-\max (\bm{c}^\top -\bm{y}^\top A)\bm{x}+\bm{y}^\top \bm{b}+\bar{z}\]
+    \implies
+    \max (\bm{c}^\top -\bm{y}^\top A)\bm{x}+\bm{y}^\top \bm{b}+\bar{z}\]
 Let $\bm{\bar{c}}^\top :=\bm{c}^\top -\bm{y}^\top A$. For (C2) to be satisfied we need
 $\bm{\bar{c}_B}=\bm{0}$, so we need to choose $\bm{y}$ accordingly, such as
 \[\bm{\bar{c}_B}^\top =\bm{c_B}^\top -\bm{y}^\top A_B=\bm{0}^\top \]
 equivalently,
-\[\bm{y}^\top A_B=\bm{c_B}^\top 
-\implies
-\bm{y}^\top =\bm{c_B}^\top A_B^{-1}\]
+\[\bm{y}^\top A_B=\bm{c_B}^\top
+    \implies
+    \bm{y}^\top =\bm{c_B}^\top A_B^{-1}\]
 We have shown the following:
 
-
 \begin{thmbox}
-    \subsection{Proposition (Canonical Form)}
-    Suppose an LP
-    \[ \max \{\bm{c}^\top \bm{x}+\bar{z}:A \bm{x}=\bm{b},\, \bm{x}\ge \bm{0}\} \]
-    and a basis $ B $ of $ A $ are given. Then
-    \[\max (\bm{c}^\top -\bm{y}^\top A)\bm{x}+\bm{y}^\top \bm{b}+\bar{z}\]
-    subject to
-    \[ A_B^{-1}A\bm{x}=A_B^{-1}\bm{b} \]
-    \[ \bm{x}\ge \bm{0} \]
-    
-    where $\bm{y}^\top =\bm{c_B}^\top A_B^{-1}$, is an equivalent LP in canonical form for the 
-    basis $B$ of $A$.
+    \begin{theorem}[Canonical Form]
+        Suppose an LP
+        \[ \max \{\bm{c}^\top \bm{x}+\bar{z}:A \bm{x}=\bm{b},\, \bm{x}\geqslant  \bm{0}\} \]
+        and a basis $ B $ of $ A $ are given. Then
+        \[\max (\bm{c}^\top -\bm{y}^\top A)\bm{x}+\bm{y}^\top \bm{b}+\bar{z}\]
+        subject to
+        \[ A_B^{-1}A\bm{x}=A_B^{-1}\bm{b} \]
+        \[ \bm{x}\geqslant  \bm{0} \]
+
+        where $\bm{y}^\top =\bm{c_B}^\top A_B^{-1}$, is an equivalent LP in canonical form for the
+        basis $B$ of $A$.
+    \end{theorem}
 \end{thmbox}
 
 The canonical form is useful because it:
 \begin{itemize}
     \item allows us to simply read a basic solution
     \item gives us easy ways to move in the feasible region to improve the current basic
-    feasible solution
+          feasible solution
     \item gives us a way to obtain optimality certificates if
-    $\bm{c}^\top -\bm{y}^\top A\le \bm{0}^\top $
+          $\bm{c}^\top -\bm{y}^\top A\leqslant \bm{0}^\top $
 \end{itemize}
 
-\subsection{Example (Canonical Form)}
-(P)
-\[\max \begin{bmatrix}
-    0 & 0 & -4 & 1 & 0
-\end{bmatrix}\bm{x}\]
-subject to
-\[
-    \begin{bmatrix}
-        1 & 0 & -1 & 1 & 0\\
-        0 & 1 & 2 & -1 & 0\\
-        0 & 0 & -3 & 2 & 1
-    \end{bmatrix}\bm{x}
-    =
-    \begin{bmatrix}
-        4\\
-        2\\
-        6
-    \end{bmatrix} \]
-\[ \bm{x}\ge \bm{0} \]
+\begin{exbox}
+    \begin{example}[Canonical Form]
+        (P)
+        \[\max \begin{bmatrix}
+                0 & 0 & -4 & 1 & 0
+            \end{bmatrix}\bm{x}\]
+        subject to
+        \[
+            \begin{bmatrix}
+                1 & 0 & -1 & 1  & 0 \\
+                0 & 1 & 2  & -1 & 0 \\
+                0 & 0 & -3 & 2  & 1
+            \end{bmatrix}\bm{x}
+            =
+            \begin{bmatrix}
+                4 \\
+                2 \\
+                6
+            \end{bmatrix} \]
+        \[ \bm{x}\geqslant  \bm{0} \]
 
-$B:=\{1,2,5\}$ is a basis of $A$. Thus, the basic solution corresponding to the
-basis is
-\[\bm{\bar{x}}:=(4,2,0,0,6)^\top\]
+        $B:=\{1,2,5\}$ is a basis of $A$. Thus, the basic solution corresponding to the
+        basis is
+        \[\bm{\bar{x}}:=(4,2,0,0,6)^\top\]
 
-$c_3=-4$, increasing the value of $x_3$ from $0$ will decrease the objective value by $-4$ units\\
-$c_4=1$, we want to increase the value of $x_4$, so
-\[
-    \begin{bmatrix}
-        x_1\\
-        x_2\\
-        x_5
-    \end{bmatrix}
-    =
-    \begin{bmatrix}
-        4\\
-        2\\
-        6
-    \end{bmatrix}
-    -x_4
-    \begin{bmatrix}
-        1\\
-        -1\\
-        2
-    \end{bmatrix}
-    \ge 0
-\]
-Let $t$ denote the maximum value we can assign to $x_4$ and stay feasible.\\
-So,
-$t=\min\{\nicefrac{4}{1},\_,\nicefrac{6}{2}\}=3$
+        $c_3=-4$, increasing the value of $x_3$ from $0$ will decrease the objective value by $-4$ units\\
+        $c_4=1$, we want to increase the value of $x_4$, so
+        \[
+            \begin{bmatrix}
+                x_1 \\
+                x_2 \\
+                x_5
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+                4 \\
+                2 \\
+                6
+            \end{bmatrix}
+            -x_4
+            \begin{bmatrix}
+                1  \\
+                -1 \\
+                2
+            \end{bmatrix}
+            \geqslant  0
+        \]
+        Let $t$ denote the maximum value we can assign to $x_4$ and stay feasible.\\
+        So,
+        $t=\min\{\nicefrac{4}{1},\_,\nicefrac{6}{2}\}=3$
+    \end{example}
+\end{exbox}

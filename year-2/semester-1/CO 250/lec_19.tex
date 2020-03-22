@@ -1,0 +1,108 @@
+\makeheading{2019-11-21}
+\begin{defbox}
+    \begin{definition}
+        Given a set $ S\subseteq \mathbb{R}^n $, the \emph{convex hull} of $ S $
+        is the smallest convex set which contains $ S $.
+        Equivalently,
+        \[ \text{conv}(S)=\bigcap C \]
+        where $ C\subseteq S $ is convex.
+    \end{definition}
+\end{defbox}
+
+Let $ S_1\supseteq S_2 $, $ c\in\mathbb{R}^n $ and consider
+
+\[ (P_2)\; \max \{\bm{c}^\top\bm{x}:\bm{x}\in S_2\} \]
+\[ (P_1)\; \max \{\bm{c}^\top\bm{x}:\bm{x}\in S_1\} \]
+If we have an optimal solution $ \bm{\bar{x}} $ of $ (P_1) $ and $ \bm{\bar{x}}\in S_2 $,
+then $ \bm{\bar{x}} $ is an optimal solution of $ (P_2) $. Regardless of whether
+$ \bm{\bar{x}}\in S_2 $, $ \bm{c}^\top \bm{\bar{x}} $ is an upper bound on the optimal
+value of $ (P_2) $.
+
+\[ (IP)\; \max \bm{c}^\top \bm{x} \]
+subject to
+\[
+    \begin{array}{ccc}
+        A\bm{x} & =         & \bm{b}       \\
+        \bm{x}  & \geqslant & \bm{0}       \\
+        \bm{x}  & \in       & \mathbb{Z}^n
+    \end{array} \]
+
+\[ (LP)\; \max \bm{c}^\top \bm{x} \]
+subject to
+\[
+    \begin{array}{ccc}
+        A\bm{x} & =         & \bm{b} \\
+        \bm{x}  & \geqslant & \bm{0}
+    \end{array} \]
+Find an optimal solution $ \bm{\bar{x}} $ of $ (LP) $. If $ \bm{\bar{x}}\in\mathbb{Z}^n $,
+then $ \bm{\bar{x}} $ is optimal in $ (IP) $. Otherwise,
+find a cut ($ \bm{\bar{x}}\in\mathbb{R}^n\setminus \mathbb{Z}^n $)
+\[ \bm{a}^\top \bm{x} \geqslant \alpha \]
+such that
+\begin{enumerate}[(i)]
+    \item $ \bm{a}^\top\bm{x}\leqslant \alpha $
+    \item $ \bm{a}^\top \bm{\bar{x}}>\alpha $
+\end{enumerate}
+for all $ \bm{x} $ feasible in $ (IP) $. The inequality ``cuts''
+the current optimal solution $ \bm{\bar{x}} $ of $ (LP) $.
+
+\begin{exbox}
+    \begin{example}[Cutting Plane Algorithm]
+        \[ (IP) \max x_2 \]
+        subject to
+        \[
+            \begin{array}{ccc}
+                3x_1+2x_2             & \leqslant & 6            \\
+                -3x_1+2x_2            & \leqslant & 0            \\
+                \bm{x}=(x_1,x_2)^\top & \geqslant & \bm{0}       \\
+                \bm{x}                & \in       & \mathbb{Z}^2
+            \end{array}
+        \]
+        Introduce slack variables $ x_3, x_4\in\mathbb{Z}_{\geqslant 0} $.
+        Then solve the LP relaxation:
+        \[
+            \begin{array}{cccccccc}
+                z   & =   &   & -\frac{1}{4} x_3 & - & \frac{1}{4} x_4 & + & \frac{3}{2} \\
+                x_1 &     & + & \frac{1}{6} x_3  & - & x_4             & = & 1           \\
+                    & x+2 & + & \frac{1}{4} x_3  & + & \frac{1}{4} x_3 & = & \frac{3}{2}
+            \end{array}
+        \]
+        For every feasible solution of $ (IP) $,
+        \begin{align*}
+             & x_3+\frac{1}{4} x_3+ \frac{1}{4} x_4 = \frac{3}{2}                                                                          \\
+             & \implies x_2 + \left\lfloor \frac{1}{4} \right\rfloor x_3 + \left\lfloor \frac{1}{4} \right\rfloor x_4\leqslant \frac{3}{2}
+        \end{align*}
+        Since there are no integers in $ (1,\nicefrac{3}{2}) $, every feasible solution of the $ (IP) $
+        \[ x_2\leqslant \left\lfloor \frac{3}{2} \right\rfloor=1 \]
+        we call this a \emph{cut} since:
+        \begin{enumerate}[(i)]
+            \item we proved above
+            \item $ \bm{\bar{x}}_2=\nicefrac{3}{2}>1  $
+        \end{enumerate}
+        Add the constraints $ x_2+x_5=1 $, with $ x_5\geqslant 0 $ to the LP relaxation and solve.
+        \[
+            \begin{array}{cccccccccc}
+                z   & = &     &     &   &                 & - & x_5             & + & 1           \\
+                x_1 &   &     &     & - & \frac{1}{3} x_4 & + & \frac{2}{5} x_5 & = & \frac{2}{3} \\
+                    &   & x_2 &     &   &                 & + & x_5             & = & 1           \\
+                    &   &     & x_3 & + & x_4             & - & 4x_5            & = & 2
+            \end{array}
+        \]
+        Add the constraints $ x_1+x_4+x_6=0 $ with $ x_6\geqslant 0 $ to the LP relaxation and solve.
+        \[
+            \begin{array}{cccccccccccc}
+                z   & = &     &     &  &  & - & x_5  &   &                   & + & 1 \\
+                x_1 &   &     &     &  &  & + & x_5  & - & \frac{1}{2} x_6 = & = & 1 \\
+                    &   & x_2 &     &  &  & + & x_5  &   &                   & = & 1 \\
+                    &   &     & x_3 &  &  & - & 5x_5 & + & \frac{3}{2} x_6   & = & 1
+            \end{array}
+        \]
+        $ \bm{x}^*=(1,1)^\top $ with objective value $ z=1 $ is optimal in $ (LP) $.
+    \end{example}
+\end{exbox}
+
+Another idea for solving IPs is \textbf{Branch-and-Bound} (related to \emph{Divide-and-Conquer}).
+Seperate the problem at hand into exaustive and mutually exclusive subproblems (\emph{Branching}).
+For each subproblem, solve its relaxation and get an upper bound on the optimal objective
+value of the subproblem. If the upper bound is less than the objective value of the current
+best integer solution, fathom this branch.

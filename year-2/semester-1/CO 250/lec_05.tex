@@ -1,95 +1,101 @@
-\section{2019-09-19}
+\makeheading{2019-09-19}
 \begin{defbox}
-    \subsection{Definition (Non-linear Program)}
-    A \emph{non-linear program} has the form
-    \[\min f(\bm{x})\]
-subject to
-\begin{align*}
-    g_1(\bm{x})&\le 0\\
-    g_2(\bm{x})&\le 0\\
-    &\vdots\\
-    g_m(\bm{x})&\le 0
-\end{align*}
-where
-$f:\mathbb{R}^n\rightarrow \mathbb{R}$, 
-$g_i:\mathbb{R}^n\rightarrow\mathbb{R}$, $\forall i\in\{1,\dots,m\}$.
+    \begin{definition}
+        A \emph{non-linear program} has the form
+        \[\min f(\bm{x})\]
+        subject to
+        \begin{align*}
+            g_1(\bm{x}) & \leqslant 0 \\
+            g_2(\bm{x}) & \leqslant 0 \\
+                        & \vdots      \\
+            g_m(\bm{x}) & \leqslant 0
+        \end{align*}
+        where
+        $f:\mathbb{R}^n\rightarrow \mathbb{R}$,
+        $g_i:\mathbb{R}^n\rightarrow\mathbb{R}$, $\forall i\in\{1,\dots,m\}$.
+    \end{definition}
 \end{defbox}
 
 Every LP problem is a very special case of a NLP problem. IP problems can
 also be formulated as NLP problems.
-\subsection{Example (Formulating LP problems as NLP problems)}
-\begin{align*}
-    x_i\in\mathbb{Z}&\iff \sin(\pi x_i)=0\\
-    &\iff [\sin(\pi x_i)]^2\le 0
-\end{align*}
-\begin{align*}
-    x_i\in \{0,1\}&\iff x_i(1-x_i)=0\\
-    &\iff x_i^2(1-x_i)^2\le 0
-\end{align*}
+\begin{exbox}
+    \begin{example}[Formulating LP Problems as NLP Problems]
+        \begin{align*}
+            x_i\in\mathbb{Z} & \iff \sin(\pi x_i)=0              \\
+                             & \iff [\sin(\pi x_i)]^2\leqslant 0
+        \end{align*}
+        \begin{align*}
+            x_i\in \{0,1\} & \iff x_i(1-x_i)=0              \\
+                           & \iff x_i^2(1-x_i)^2\leqslant 0
+        \end{align*}
 
-NLP problems have huge modelling power, as a result, one must understand the
-structure of the underlying problem and construct "good" NLP models that are
-amendable to analysis and solution techniques.
+        NLP problems have huge modelling power, as a result, one must understand the
+        structure of the underlying problem and construct "good" NLP models that are
+        amendable to analysis and solution techniques.
+    \end{example}
+\end{exbox}
+\begin{exbox}
+    \begin{example}[Portfolio Optimization]
+        There are $n$ stocks $1,\dots,n$ to invest in. We have a budget of $B$ dollars.
+        We have an expected return (for \$1 investment at the end of our planning
+        horizon) of $\mu_1,\dots,\mu_n$. We are also given
+        $V\in \mathbb{R}^{n\times n}$, a variance covariance matrix so that if
+        we invest in $x_1,\dots,x_n$ dollars in $n$ stocks, $1,\dots,n$ respectively,
+        then the expected risk of such an investment is given by
+        $\bm{x}^\top  V\bm{x}$.
+        \[\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{n}V_{ij}x_ix_j\]
+        $x_j:=$ amount of investment in stock $j$ in dollars.
 
-\subsection{Example (Portfolio Optimization)}
-There are $n$ stocks $1,\dots,n$ to invest in. We have a budget of $B$ dollars.
-We have an expected return (for \$1 investment at the end of our planning
-horizon) of $\mu_1,\dots,\mu_n$. We are also given 
-$V\in \mathbb{R}^{n\times n}$, a variance covariance matrix so that if
-we invest in $x_1,\dots,x_n$ dollars in $n$ stocks, $1,\dots,n$ respectively,
-then the expected risk of such an investment is given by 
-$\bm{x}^\top  V\bm{x}$.
-\[\sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{n}V_{ij}x_ix_j\]
-$x_j:=$ amount of investment in stock $j$ in dollars.
+        Suppose we are also given a goal $G$ (a dollar amount we want as the value
+        of our portfolio at the end of the planning horizon).
 
-Suppose we are also given a goal $G$ (a dollar amount we want as the value
-of our portfolio at the end of the planning horizon).
+        \textbf{Data}
+        \begin{itemize}
+            \item Budget (\$) $\rightarrow$ B
+            \item Goal (\$) $\rightarrow$ G
+            \item Expected return $\rightarrow$ $ (\mu_1,\ldots,\mu_n)^\top $
+            \item Variance-covariance matrix $\rightarrow$
+                  $V\in \mathbb{R}^{n\times n}$
+        \end{itemize}
+        We want to minimize the risk of our portfolio while satisfying the budget and
+        the goal constraints.
 
-\textbf{Data}
-\begin{itemize}
-    \item Budget (\$) $\rightarrow$ B
-    \item Goal (\$) $\rightarrow$ G
-    \item Expected return $\rightarrow$ $ (\mu_1,\ldots,\mu_n)^\top $
-    \item Variance-covariance matrix $\rightarrow$ 
-    $V\in \mathbb{R}^{n\times n}$
-\end{itemize}
-We want to minimize the risk of our portfolio while satisfying the budget and
-the goal constraints. 
+        (NLP)
+        \[\min \bm{x}^\top  V\bm{x}\]
+        subject to
+        \begin{align*}
+            \sum_{j = 1}^{n}x_j\leqslant B       \\
+            \sum_{j = 1}^{n}\mu_jx_j\geqslant  G \\
+            \bm{x}\geqslant  \bm{0}
+        \end{align*}
+        There are many variants of such models and extensions. For example, instead
+        of a goal $G$, we may given an upper bound on the risk, say
+        $R\in\mathbb{R}_{>0}$.
 
-(NLP)
-\[\min \bm{x}^\top  V\bm{x}\]
-subject to
-\begin{align*}
-    \sum_{j = 1}^{n}x_j\le B\\
-    \sum_{j = 1}^{n}\mu_jx_j\ge G\\
-    \bm{x}\ge \bm{0}
-\end{align*}
-There are many variants of such models and extensions. For example, instead
-of a goal $G$, we may given an upper bound on the risk, say 
-$R\in\mathbb{R}_{>0}$.
-
-(NLP)
-\[\max \sum_{j = 1}^{n}\mu_jx_j\]
-subject to
-\begin{align*}
-    \sum_{j = 1}^{n}x_j\le B\\
-    \bm{x}^\top  V\bm{x}\le R\\
-    \bm{x}\ge \bm{0}
-\end{align*}
-We can handle many more variants and extensions. Suppose investing in stock
-$j$ below $\ell_j$ dollars is not allowed. For diversity of our portfolio, we
-want to invest in at least 20 stocks, and for the sake of simplicity we want
-to invest in at most 150 stocks. We introduce a binary-valued variable $z_j$.
-\[z_j:=
-\begin{cases}
-    1 \text{, if we invest in stock $j$}\\
-    0 \text{, otherwise}
-\end{cases}
-\forall j\in\{1,\dots,n\}\\
-\]
-Add these constraints:
-\begin{align*}
-    &\ell_j z_j\le x_j\le B z_j\qquad \forall j\in\{1,\dots,n\}\\
-    &20\le \sum_{j = 1}^{n}z_j\le 150 \qquad \forall j\in\{1,\dots,n\}\\
-    &z_j\in\{0,1\} \qquad \forall j\in\{1,\dots,n\}\\
-\end{align*}
+        (NLP)
+        \[\max \sum_{j = 1}^{n}\mu_jx_j\]
+        subject to
+        \begin{align*}
+            \sum_{j = 1}^{n}x_j\leqslant B  \\
+            \bm{x}^\top  V\bm{x}\leqslant R \\
+            \bm{x}\geqslant  \bm{0}
+        \end{align*}
+        We can handle many more variants and extensions. Suppose investing in stock
+        $j$ below $\ell_j$ dollars is not allowed. For diversity of our portfolio, we
+        want to invest in at least 20 stocks, and for the sake of simplicity we want
+        to invest in at most 150 stocks. We introduce a binary-valued variable $z_j$.
+        \[z_j:=
+            \begin{cases}
+                1 \text{, if we invest in stock $j$} \\
+                0 \text{, otherwise}
+            \end{cases}
+            \forall j\in\{1,\dots,n\}\\
+        \]
+        Add these constraints:
+        \begin{align*}
+             & \ell_j z_j\leqslant x_j\leqslant B z_j\qquad \forall j\in\{1,\dots,n\}        \\
+             & 20\leqslant \sum_{j = 1}^{n}z_j\leqslant 150 \qquad \forall j\in\{1,\dots,n\} \\
+             & z_j\in\{0,1\} \qquad \forall j\in\{1,\dots,n\}                                \\
+        \end{align*}
+    \end{example}
+\end{exbox}

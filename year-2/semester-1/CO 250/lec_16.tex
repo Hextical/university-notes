@@ -1,37 +1,41 @@
-\section{2019-11-12}
-\subsection{Combinatorial Optimization Utilizing Duality}
-\subsection{Shortest-Path Problem}
+\chapter{Duality Through Examples}
+\makeheading{2019-11-12}
+\section{The Shortest Path Problem}
 Given a graph $ G=(V,E) $, two distinct distinguished nodes $ s,t\in V $,
-$ c_e\ge 0 $ $ \forall e\in E $, we want to find a shortest path from $s$ to $t$
+$ c_e\geqslant  0 $ $ \forall e\in E $, we want to find a shortest path from $s$ to $t$
 
 \begin{defbox}
-    \subsection{Notation}
-    Let $ G=(V,E) $ be a graph, and let $ U\subseteq V $. We
-    let $ \delta(U) $ denote the set of edges that have exactly
-    one endpoint in $ U $. That is,
-    \[ \delta(U)=\{uv\in E:u\in U,\,v\in U\} \]
+    \begin{definition}
+            Let $ G=(V,E) $ be a graph, and let $ U\subseteq V $. We
+            let $ \delta(U) $ denote the set of edges that have exactly
+            one endpoint in $ U $. That is,
+            \[ \delta(U)=\{uv\in E:u\in U,\,v\in U\} \]
+    \end{definition}
 \end{defbox}
 
 \begin{defbox}
-    \subsection{Definition (s-t cut)}
-    Let $ G=(V,E) $ be a graph, and let $ U\subseteq V $.
-    Suppose $ G $ has a distinct pair of vertices $ s $ and $ t $.
-    An \emph{$s$-$t$ cut} is the set of edges of the form $ \delta(U) $
-    where $ s\in U $, $ t\notin U $.
+    \begin{definition}
+        Let $ G=(V,E) $ be a graph, and let $ U\subseteq V $.
+        Suppose $ G $ has a distinct pair of vertices $ s $ and $ t $.
+        An \emph{$s$-$t$ cut} is the set of edges of the form $ \delta(U) $
+        where $ s\in U $, $ t\notin U $.
+    \end{definition}
 \end{defbox}
 
 \begin{defbox}
-    \subsection{Definition (s-t path)}
-    Let $ G=(V,E) $ be a graph. Suppose $ G $ has a distinct pair of vertices $ s $ and $ t $.
-    An \emph{$s$-$t$ path} $\mathcal{P}$ in $ G $ is the following sequence of edges of $G$
-    \[ \left\{v_1,\ldots,v_{k}\right\} \]
-    where $ v_1=s $, $ v_k=t $, and $ v_i\neq v_j $ for $ i\neq j $
-    (as $ s $ and $ t $ are distinct).
+    \begin{definition}
+        Let $ G=(V,E) $ be a graph. Suppose $ G $ has a distinct pair of vertices $ s $ and $ t $.
+        An \emph{$s$-$t$ path} $\mathcal{P}$ in $ G $ is the following sequence of edges of $G$
+        \[ \left\{v_1,\ldots,v_{k}\right\} \]
+        where $ v_1=s $, $ v_k=t $, and $ v_i\neq v_j $ for $ i\neq j $
+        (as $ s $ and $ t $ are distinct).
+    \end{definition}
 \end{defbox}
 
 \begin{thmbox}
-    \subsection{Theorem}
-    An $s$-$t$ path $ \mathcal{P} $ intersects every $s$-$t$ cut.
+    \begin{theorem}
+        An $s$-$t$ path $ \mathcal{P} $ intersects every $s$-$t$ cut.
+    \end{theorem}
 \end{thmbox}
 
 \begin{proof}
@@ -45,10 +49,11 @@ $ c_e\ge 0 $ $ \forall e\in E $, we want to find a shortest path from $s$ to $t$
 \end{proof}
 
 \begin{thmbox}
-    \subsection{Theorem}
-    Let $ S\subseteq E $ be a set of edges that contains at least one edge from every
-    $s$-$t$ cut. Then there exists an $s$-$t$ path $ \mathcal{P} $ that is contained
-    in the edges of $ S $.
+    \begin{theorem}
+        Let $ S\subseteq E $ be a set of edges that contains at least one edge from every
+        $s$-$t$ cut. Then there exists an $s$-$t$ path $ \mathcal{P} $ that is contained
+        in the edges of $ S $.
+    \end{theorem}
 \end{thmbox}
 
 \begin{proof}
@@ -83,8 +88,8 @@ at least one edge from every $s$-$t$ cut. Then such $ S $ contains an $s$-$t$ pa
 subject to
 \[
 \begin{array}{cccc}
-    \sum\limits_{e\in\delta(U)} x_e & \ge & 1 & (U\subseteq V,\,s\in U,\,t\notin U)\\
-    x_e  & \ge & 0 & (e\in E)\\
+    \sum\limits_{e\in\delta(U)} x_e & \geqslant  & 1 & (U\subseteq V,\,s\in U,\,t\notin U)\\
+    x_e  & \geqslant  & 0 & (e\in E)\\
     x_e & \in & \mathbb{Z} & (e\in E)
 \end{array}
 \]
@@ -93,14 +98,14 @@ shortest $s$-$t$ paths. If some $ c_e=0 $ $(e\in E)$, then some optimal solution
 correspond to sets like set $ S $ above which contains a shortest $s$-$t$ path.
 
 Let (P) denote the LP relaxation of (IP) (replace $ x_e \{0,1\} $ with
-$ 0\le x_e\le 1$ $ (e\in E) $). Write down the dual of (P):
+$ 0\leqslant x_e\leqslant 1$ $ (e\in E) $). Write down the dual of (P):
 (D)
 \[ \max \sum(y_U:\delta(U)\text{ is an $s$-$t$ cut})  \]
 subject to
 \[ 
 \begin{array}{cccc}
-    \sum(y_U:\delta(U)\text{ is an $s$-$t$ cut containing $ e $}) & \le & c_e & (e\in E)\\
-    y_U & \ge & 0 & (U\subseteq V,\,s\in U,\,t\notin U)
+    \sum(y_U:\delta(U)\text{ is an $s$-$t$ cut containing $ e $}) & \leqslant & c_e & (e\in E)\\
+    y_U & \geqslant  & 0 & (U\subseteq V,\,s\in U,\,t\notin U)
 \end{array} \]
 
 A consequence of Complementary Slackness for a shortest path problem is:
@@ -120,7 +125,7 @@ Then $ \mathcal{P} $ is a shortest $s$-$t$ path.
     solution of (D)
 \end{remark}
 
-\subsection{A Dual Algorithm for the shortest path problem}
+\section{An Algorithm}
 Given $ y $, $\slack_{y} (e)$ is
 \[ c_e-\Sigma(y_U :\delta(U) \text{ is a $s$-$t$ cut containing $ e $}) \]
 That is, $ \slack_y(e) $ is the length of $ e $ minus the total width of all
@@ -128,12 +133,11 @@ $s$-$t$ cuts using $ e $.
 
 
 \begin{algbox}
-    \subsection{Algorithm (Shortest Path)}
     \begin{algorithm}[H]
         \caption{Shortest path}
         \SetKwInOut{Input}{Input}
         \SetKwInOut{Output}{Output}
-        \Input{Graph $G=(V,E)$, costs $c_e\ge 0$ for all $e\in E$, $ s,t\in V $, where $ s\neq t $.}
+        \Input{Graph $G=(V,E)$, costs $c_e\geqslant  0$ for all $e\in E$, $ s,t\in V $, where $ s\neq t $.}
         \Output{A shortest $s$-$t$ path $ \mathcal{P} $.}
         $ y_w := 0 $ for all $s$-$t$ cuts $ \delta(W) $. Set $ U:=\{s\} $
     
@@ -151,3 +155,6 @@ $s$-$t$ cuts using $ e $.
         \Return A directed $s$-$t$ path $ \mathcal{P} $.
     \end{algorithm}
 \end{algbox}
+
+This is similar to Dijkstra's shortest path algorithm, but out algorithm
+also generates an optimality certificate.

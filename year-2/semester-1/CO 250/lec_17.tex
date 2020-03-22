@@ -1,0 +1,111 @@
+\makeheading{2019-11-14}
+\section{Minimum Cost Perfect Matching Problem in Bipartite Graphs}
+Given a biparite graph $ G=(V,E) $ with biparition $ [W,J] $ where
+$ W\cap J = \varnothing $ and $ W\cup J = V $
+with cost $ c_e\in\mathbb{R} $ for each $ e\in E $, we want to find
+a perfect matching of minimum cost.
+
+What are necessary conditions for having a perfect matching in $ G $?
+\begin{itemize}
+    \item $ |W|=|J|=\frac{|V|}{2} $
+    \item For every $ S\subseteq W $, the \emph{neighbour set of $ S $},
+          \[ \mathcal{N}(S):=\left\{ v\in V : uv\in E, u\in S, v\notin S\right\} \]
+          has as many vertices as $ S $.
+\end{itemize}
+
+\begin{thmbox}
+    \begin{theorem}[Hall's Theorem]
+        Let $ G $ be a bipartite graph with biparition $ [W,J] $.
+        Suppose $ |W|=|S| $, then $ G $ has a perfect matching if and only if
+        \[ |S|\leqslant |\mathcal{N}(S)| \]
+        for each $ S\in W $.
+    \end{theorem}
+\end{thmbox}
+Therefore, if $ G $ does not have a perfect matching, then $ G $
+has a \emph{deficient set}; a subset $ S\subseteq W $ such that
+\[ |\mathcal{N}(S)|<|S| \]
+Moreover, there is an efficient algorithm to find such deficient sets.
+
+(IP)
+\[ \min \sum\limits_{e\in E}c_ex_e \]
+subject to
+\[
+    \begin{array}{cccc}
+        \sum\limits_{e\in \delta(V)}x_e & =         & 1            & \forall v\in V \\
+        \bm{x}                          & \geqslant & \bm{0}                        \\
+        \bm{x}                          & \in       & \mathbb{Z}^E
+    \end{array} \]
+Recall the meaning of $ x_e $:
+\[ x_e:=
+\begin{cases}
+    1 & \text{if edge $e$ is in the minimum cost perfect matching}\\
+    0 & \text{otherwise}
+\end{cases} \]
+(D)
+\[ \max \sum\limits_{v\in V}y_v  \]
+subject to
+\[ y_u+y_v\leqslant c_{uv}\qquad \forall uv\in E \]
+
+\[ \bar{y}:=\min\limits_{uv\in E}\frac{\{c_{uv}\}}{2} \]
+is a feasible solution for (D).
+
+Complementary Slackness Theorem implies: a feasible solution
+$ \bar{y} $ of (D) is optimal if and only if there exists a feasible
+solution $ \bar{x} $ of (P) such that
+\[ \bm{\bar{x}}>0\implies \bar{y}_u+\bar{y}_v=c_{uv} \]
+Let $ H=(V,E(\bar{y})) $,
+\[ E(\bar{y})=\{uv\in E: \bar{y}_u +\bar{y}_v=c_{uv}\} \]
+if we can find a perfect matching in $ H $, then that perfect matching
+is an optimal solution of (IP).
+
+If $ H $ does not have a perfect matching, then $ H $ has a deficient
+set $ S\subseteq W $.
+
+Modify our dual solution:
+\[ \bar{y}_v:=
+\begin{cases}
+    \bar{y}_v+\varepsilon & v\in S\\
+    \bar{y}_v-\varepsilon & v\in \mathcal{N}_H(S)\\
+    \bar{y}_v & \text{otherwise}
+\end{cases} \]
+Choose
+\[ \varepsilon:=\min \{c_{uv}-\bar{y}_u+\bar{y}_v:uv\in E, u\in S, v\notin \mathcal{N}_H(S)\} \]
+If no such $ \varepsilon $ exists, ($ \mathcal{N}_H(S)=\mathcal{N}(S) $),
+then $ S $ is a definite set in $ G $; moreover, (IP) and (P) are infeasible
+and (D) is unbounded.
+
+\begin{algbox}
+    \begin{algorithm}[H]
+        \caption{Minimum Cost Perfect Matching in Bipartite Graphs}
+        \SetKwInOut{Input}{Input}
+        \SetKwInOut{Output}{Output}
+        \Input{Biparite graph $ G=(V,E) $ with biparition $ [W,J] $ such that $ |W|=|J| $, $ c_e\in\mathbb{R} $,
+        for each $ e\in E $}
+        \Output{A minimum cost perfect matching, or a deficient set $ S $.}
+        $ \bar{y}_v:=\nicefrac{1}{2} \min\limits_{e\in E}\{c_e\} $ for all $ v\in V $
+
+        Construct $ H=(V,E(\bar{y})) $
+
+        Find a perfect matching in $ H $. If yes, STOP; we have a minimum cost
+        perfect matching. Otherwise, find a deficient set $ S $ in $ H $.
+
+        If $ \nexists\;uv\in E $ such that $ u\in S $, $ v\notin \mathcal{N}_H(S) $, then STOP;
+        $ G $ has no perfect matching, $ S $ is a deficient set in $ G $.
+
+        $ \varepsilon:=\min \{c_{uv}-\bar{y}_u+\bar{y}_v:uv\in E, u\in S, v\notin \mathcal{N}_H(S)\}  $
+
+        $ \bar{y}_v:=
+        \begin{cases}
+            \bar{y}_v+\varepsilon & v\in S\\
+            \bar{y}_v-\varepsilon & v\in \mathcal{N}_H(S)\\
+            \bar{y}_v & \text{otherwise}
+        \end{cases} $
+
+        Go to step 2.
+    \end{algorithm}
+\end{algbox}
+
+Note that in every iteration, $ \varepsilon>0 $ and the objective value goes up by
+\[ \varepsilon(|S|-|\mathcal{N}_H(S)|)>0 \]
+Note that when the algorithm stops with a minimum cost perfect matching, the current
+$ \bar{y} $ is a certificate of optimality.

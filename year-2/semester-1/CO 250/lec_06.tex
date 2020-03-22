@@ -1,242 +1,259 @@
-\section{2019-09-24}
+\chapter{Solving Linear Programs}
+\makeheading{2019-09-24}
+\section{Possible Outcomes}
 \begin{defbox}
-    \subsection{Feasible and Infeasible Solutions}
-    Consider an LP with variables $x_1,\dots,x_n$.  Then the
-    assignment of values to all variables such that all constraints are satisfied,
-    gives a \emph{feasible solution}.
+    \begin{definition}
+        Consider an LP with variables $x_1,\dots,x_n$.  Then the
+        assignment of values to all variables such that all constraints are satisfied,
+        gives a \emph{feasible solution}.
 
-    An optimization problem is called \emph{feasible} if it has at least one feasible
-    solution, otherwise it is called \emph{infeasible}.
+        An optimization problem is called \emph{feasible} if it has at least one feasible
+        solution, otherwise it is called \emph{infeasible}.
+    \end{definition}
 \end{defbox}
 
-\subsection{Example (Infeasible LP)}
-(LP)
-\[\max x_1+2x_2+3x_3+4x_4+5x_5\]
-subject to
-\[
-    \begin{matrix}
-    1\\
-    -2
-    \end{matrix}
-    \underbrace{
-        \begin{bmatrix}
-        -3 & 2 & 7 & 1 & -7 \\
-        -2 & 1 & 2 & 0 & -4
-        \end{bmatrix}}_{A}
-    \underbrace{\begin{bmatrix}
-        x_1\\
-        x_2\\
-        x_3\\
-        x_4\\
-        x_5
-    \end{bmatrix}}_{\bm{x}}
-    =
-    \underbrace{\begin{bmatrix}
-        6\\
-        4
-    \end{bmatrix}}_{\bm{b}}
-\]
-\[ \bm{x}\ge \bm{0} \]
+\subsection{Infeasible Linear Programs}
+\begin{exbox}
+    \begin{example}[Infeasible LP]
+        (LP)
+        \[\max x_1+2x_2+3x_3+4x_4+5x_5\]
+        subject to
+        \[
+            \begin{matrix}
+                1 \\
+                -2
+            \end{matrix}
+            \underbrace{
+                \begin{bmatrix}
+                    -3 & 2 & 7 & 1 & -7 \\
+                    -2 & 1 & 2 & 0 & -4
+                \end{bmatrix}}_{A}
+            \underbrace{\begin{bmatrix}
+                    x_1 \\
+                    x_2 \\
+                    x_3 \\
+                    x_4 \\
+                    x_5
+                \end{bmatrix}}_{\bm{x}}
+            =
+            \underbrace{\begin{bmatrix}
+                    6 \\
+                    4
+                \end{bmatrix}}_{\bm{b}}
+        \]
+        \[ \bm{x}\geqslant  \bm{0} \]
 
-Let $\bm{y}:=(1,-2)^\top$
-and consider the facts
-\begin{align*}
-    &A\bm{x}=\bm{b}\\
-    &\implies \bm{y}^\top A\bm{x}=\bm{y}^\top \bm{b}\\
-    &\implies \underbrace{\begin{bmatrix}
-        1 & 0 & 3 & 1 & 1
-    \end{bmatrix}}_{\ge \bm{0}^\top }
-    \underbrace{\bm{x}}_{\ge \bm{0}}=\underbrace{6-8}_{< 0}=-2
-\end{align*}
-Therefore, since $\nexists$ any solution to $A\bm{x}=\bm{b}$, $\bm{x}\ge 0$
-the LP is infeasible.
-
+        Let $\bm{y}:=(1,-2)^\top$
+        and consider the facts
+        \begin{align*}
+             & A\bm{x}=\bm{b}                                                            \\
+             & \implies \bm{y}^\top A\bm{x}=\bm{y}^\top \bm{b}                           \\
+             & \implies \underbrace{\begin{bmatrix}
+                    1 & 0 & 3 & 1 & 1
+                \end{bmatrix}}_{\geqslant  \bm{0}^\top }
+            \underbrace{\bm{x}}_{\geqslant  \bm{0}}=\underbrace{6-8}_{< 0}=-2
+        \end{align*}
+        Therefore, since $\nexists$ any solution to $A\bm{x}=\bm{b}$, $\bm{x}\geqslant  0$
+        the LP is infeasible.
+    \end{example}
+\end{exbox}
 
 \begin{thmbox}
-    \subsection{Proposition (Infeasibility)}
-    If
-    $\exists \bm{y}\in\mathbb{R}^m$ such that
-    \begin{enumerate}[(1)]
-        \item $\bm{y}^\top A\ge\bm{0}^\top $
-        \item $\bm{y}^\top \bm{b}<0$
-    \end{enumerate}
-    then, the LP
-    \[\max \{\bm{c}^\top \bm{x} : A\bm{x}=\bm{b},\,
-    \bm{x}\ge\bm{0}\}\]
-    is infeasible. In particular, we call a vector $\bm{y}$ a \emph{certificate of infeasibility}.
+    \begin{theorem}[Infeasibility]
+        If
+        $\exists \bm{y}\in\mathbb{R}^m$ such that
+        \begin{enumerate}[(1)]
+            \item $\bm{y}^\top A\geqslant \bm{0}^\top $
+            \item $\bm{y}^\top \bm{b}<0$
+        \end{enumerate}
+        then, the LP
+        \[\max \{\bm{c}^\top \bm{x} : A\bm{x}=\bm{b},\,
+            \bm{x}\geqslant \bm{0}\}\]
+        is infeasible. In particular, we call a vector $\bm{y}$ a \emph{certificate of infeasibility}.
+    \end{theorem}
 \end{thmbox}
 
 \begin{proof}
-Suppose there exists such a $ \bm{y} $.
-Suppose for a contradiction that $\exists\bm{\bar{x}}\in\mathbb{R}^n$ 
-(there is a feasible solution)
-such that
-\[A\bm{\bar{x}}=\bm{b} \text{, }\bm{\bar{x}}\ge \bm{0}\]
-\[
-    A\bm{\bar{x}}=\bm{b}
-    \implies
-    \underbrace{\bm{y}^\top A}_{\ge\bm{0}^\top }
-    \underbrace{\bm{\bar{x}}}_{\ge\bm{0}}
-    =\underbrace{\bm{y}^\top \bm{b}}_{\nless 0}
-\]
-a contradiction to (2).
+    Suppose there exists such a $ \bm{y} $.
+    Suppose for a contradiction that $\exists\bm{\bar{x}}\in\mathbb{R}^n$
+    (there is a feasible solution)
+    such that
+    \[A\bm{\bar{x}}=\bm{b} \text{, }\bm{\bar{x}}\geqslant  \bm{0}\]
+    \[
+        A\bm{\bar{x}}=\bm{b}
+        \implies
+        \underbrace{\bm{y}^\top A}_{\geqslant \bm{0}^\top }
+        \underbrace{\bm{\bar{x}}}_{\geqslant \bm{0}}
+        =\underbrace{\bm{y}^\top \bm{b}}_{\nless 0}
+    \]
+    a contradiction to (2).
 \end{proof}
 
 An optimization problem is called unbounded if $\forall M\in\mathbb{R}$, there
-exists a feasible solution of the optimization problem with the objective 
+exists a feasible solution of the optimization problem with the objective
 value strictly better than $M$.
-\subsection{Example (Unbounded LP)}
-\[\max 
-\begin{bmatrix}
-    -1 & 3 & 0 & 0 & 1
-\end{bmatrix}\bm{x}\]
-subject to
-\[
-    \begin{bmatrix}
-        -1 & 3 & -1 & 1 & 0\\
-        -2 & 4 & 1 & 0 & 1
-    \end{bmatrix}
-    \bm{x}
-    =
-    \begin{bmatrix}
-        2\\
-        1
-    \end{bmatrix}
-\]
-\[ \bm{x}\ge \bm{0} \]
-Consider
-\[\bm{\tilde{x}}:=
-\underbrace{\begin{bmatrix}
-    0\\
-    0\\
-    0\\
-    2\\
-    1  
-\end{bmatrix}}_{\bm{x}}
-+
-t
-\underbrace{\begin{bmatrix}
-    1\\
-    0\\
-    0\\
-    1\\
-    2
-\end{bmatrix}}_{\bm{d}},\, t\ge 0
-\]
 
-\[
-    A\bm{x}=
-    \begin{bmatrix}
-        2\\
-        1
-    \end{bmatrix}, \bar{\bm{x}}\ge \bm{0}.\text{Therefore $\bar{\bm{x}}$ is a feasible solution.}
-\]
-\[
-    A\bm{d}=\begin{bmatrix}
-        0\\
-        0
-    \end{bmatrix}, \bm{d}\ge \bm{0}.\\
-\]
+\subsection{Unbounded Linear Programs}
+\begin{exbox}
+    \begin{example}[Unbounded LP]
+        \[\max
+            \begin{bmatrix}
+                -1 & 3 & 0 & 0 & 1
+            \end{bmatrix}\bm{x}\]
+        subject to
+        \[
+            \begin{bmatrix}
+                -1 & 3 & -1 & 1 & 0 \\
+                -2 & 4 & 1  & 0 & 1
+            \end{bmatrix}
+            \bm{x}
+            =
+            \begin{bmatrix}
+                2 \\
+                1
+            \end{bmatrix}
+        \]
+        \[ \bm{x}\geqslant  \bm{0} \]
+        Consider
+        \[\bm{\tilde{x}}:=
+            \underbrace{\begin{bmatrix}
+                    0 \\
+                    0 \\
+                    0 \\
+                    2 \\
+                    1
+                \end{bmatrix}}_{\bm{x}}
+            +
+            t
+            \underbrace{\begin{bmatrix}
+                    1 \\
+                    0 \\
+                    0 \\
+                    1 \\
+                    2
+                \end{bmatrix}}_{\bm{d}},\, t\geqslant  0
+        \]
 
-\[A\tilde{\bm{x}}=A(\bar{\bm{x}}+t\bm{d})=A\bar{\bm{x}}+t(A\bm{d})=
-\begin{bmatrix}
-    2\\
-    1
-\end{bmatrix}\]
-\[\tilde{\bm{x}}=\bar{\bm{x}}+t\bm{d}\]
-Therefore, $\tilde{\bm{x}}$ is a feasible solution $\forall t\ge 0$.
+        \[
+            A\bm{x}=
+            \begin{bmatrix}
+                2 \\
+                1
+            \end{bmatrix}, \bar{\bm{x}}\geqslant  \bm{0}.\text{Therefore $\bar{\bm{x}}$ is a feasible solution.}
+        \]
+        \[
+            A\bm{d}=\begin{bmatrix}
+                0 \\
+                0
+            \end{bmatrix}, \bm{d}\geqslant  \bm{0}.\\
+        \]
+
+        \[A\tilde{\bm{x}}=A(\bar{\bm{x}}+t\bm{d})=A\bar{\bm{x}}+t(A\bm{d})=
+            \begin{bmatrix}
+                2 \\
+                1
+            \end{bmatrix}\]
+        \[\tilde{\bm{x}}=\bar{\bm{x}}+t\bm{d}\]
+        Therefore, $\tilde{\bm{x}}$ is a feasible solution $\forall t\geqslant  0$.
 
 
-\textbf{Objective function value of $\tilde{\bm{x}}$:}
-\[
-\begin{bmatrix}
-    -1 & 3 & 0 & 0 & 1
-\end{bmatrix}
-\left(\begin{bmatrix}
-    0\\
-    0\\
-    0\\
-    2\\
-    1  
-\end{bmatrix}
-+
-t
-\begin{bmatrix}
-    1\\
-    0\\
-    0\\
-    1\\
-    2
-\end{bmatrix}\right)
-=
-1+t(-1+2)=1+t\rightarrow+\infty \text{ as }t\rightarrow+\infty\]
-Therefore the LP is unbounded.
-
+        \textbf{Objective function value of $\tilde{\bm{x}}$:}
+        \[
+            \begin{bmatrix}
+                -1 & 3 & 0 & 0 & 1
+            \end{bmatrix}
+            \left(\begin{bmatrix}
+                    0 \\
+                    0 \\
+                    0 \\
+                    2 \\
+                    1
+                \end{bmatrix}
+            +
+            t
+            \begin{bmatrix}
+                    1 \\
+                    0 \\
+                    0 \\
+                    1 \\
+                    2
+                \end{bmatrix}\right)
+            =
+            1+t(-1+2)=1+t\rightarrow+\infty \text{ as }t\rightarrow+\infty\]
+        Therefore the LP is unbounded.
+    \end{example}
+\end{exbox}
 
 \begin{thmbox}
-    \subsection{Proposition (Unboundedness)}
-    If $\exists \bm{\bar{x}}\in\mathbb{R}^n$ such that
-    \[A\bm{\bar{x}}=\bm{b}, \bm{x}\ge \bm{0}.\]
-    and $\exists\bm{d}\in\mathbb{R}^n$ such that
-    \begin{enumerate}[(1)]
-        \item $A\bm{d}=\bm{0}$
-        \item $\bm{d}\ge \bm{0}$
-        \item $\bm{c}^\top \bm{d}>0$
-    \end{enumerate}
-    then, the LP
-    \[\max \{\bm{c}^\top \bm{x} : A\bm{x}=\bm{b},\,
-    \bm{x}\ge\bm{0}\}\]
-    is unbounded. In particular, we call a pair of vectors $\bm{\bar{x}}$, $\bm{d}$ a
-    \emph{certificate of unboundedness}.
+    \begin{theorem}
+        If $\exists \bm{\bar{x}}\in\mathbb{R}^n$ such that
+        \[A\bm{\bar{x}}=\bm{b}, \bm{x}\geqslant  \bm{0}.\]
+        and $\exists\bm{d}\in\mathbb{R}^n$ such that
+        \begin{enumerate}[(1)]
+            \item $A\bm{d}=\bm{0}$
+            \item $\bm{d}\geqslant  \bm{0}$
+            \item $\bm{c}^\top \bm{d}>0$
+        \end{enumerate}
+        then, the LP
+        \[\max \{\bm{c}^\top \bm{x} : A\bm{x}=\bm{b},\,
+            \bm{x}\geqslant \bm{0}\}\]
+        is unbounded. In particular, we call a pair of vectors $\bm{\bar{x}}$, $\bm{d}$ a
+        \emph{certificate of unboundedness}.
+    \end{theorem}
 \end{thmbox}
 
 \begin{proof}
     Suppose there exists such $\bm{d}$. Consider
-    \[\tilde{\bm{x}}=\bar{\bm{x}}+t\bm{d}, t\ge 0\]
-Then,
-\[A\tilde{\bm{x}}=
-\underbrace{A\bar{\bm{x}}}_{\bm{b}}+
-t\underbrace{(A\bm{d})}_{\bm{0}}=\bm{b}\]
-Therefore $\tilde{\bm{x}}$ is a feasible solution of the LP, $t\ge 0$.
-The objective value of the function is
-\[\bm{c}^\top \tilde{\bm{x}}=\bm{c}^\top \bar{\bm{x}}+t
-\underbrace{(\bm{c}^\top \bm{d})}_{>\bm{0}}\rightarrow +\infty\text{ as }t\rightarrow+\infty\]
-Therefore, the LP is unbounded.
+    \[\tilde{\bm{x}}=\bar{\bm{x}}+t\bm{d}, t\geqslant  0\]
+    Then,
+    \[A\tilde{\bm{x}}=
+        \underbrace{A\bar{\bm{x}}}_{\bm{b}}+
+        t\underbrace{(A\bm{d})}_{\bm{0}}=\bm{b}\]
+    Therefore $\tilde{\bm{x}}$ is a feasible solution of the LP, $t\geqslant  0$.
+    The objective value of the function is
+    \[\bm{c}^\top \tilde{\bm{x}}=\bm{c}^\top \bar{\bm{x}}+t
+        \underbrace{(\bm{c}^\top \bm{d})}_{>\bm{0}}\rightarrow +\infty\text{ as }t\rightarrow+\infty\]
+    Therefore, the LP is unbounded.
 \end{proof}
 \begin{remark}
     If the LP is $\min$, then flip the equality for (3).
 \end{remark}
 
-\subsection{Example (Optimal LP)}
-\[\max 10x_1+15x_2\]
-subject to
-\begin{align*}
-    2x_1+x_2+x_3=1600\\
-    x_1+3x_2+x_4=1200\\
-\end{align*}
-\[ \bm{x}\ge \bm{0} \]
-Consider $\bar{\bm{x}}:=(720,160,0,0)^\top$ and $\bm{y}:=(3,4)^\top$.
+\subsection{Linear Programs with Optimal Solutions}
+\begin{exbox}
+    \begin{example}[Optimal LP]
+        \[\max 10x_1+15x_2\]
+        subject to
+        \begin{align*}
+            2x_1+x_2+x_3=1600 \\
+            x_1+3x_2+x_4=1200 \\
+        \end{align*}
+        \[ \bm{x}\geqslant  \bm{0} \]
+        Consider $\bar{\bm{x}}:=(720,160,0,0)^\top$ and $\bm{y}:=(3,4)^\top$.
 
-Note that
-$A\bar{\bm{x}}=\bm{b}$, with $\bar{\bm{x}}\ge \bm{0}$, 
-so $\bar{\bm{x}}$ is a feasible solution.
+        Note that
+        $A\bar{\bm{x}}=\bm{b}$, with $\bar{\bm{x}}\geqslant  \bm{0}$,
+        so $\bar{\bm{x}}$ is a feasible solution.
 
 
-Also, $\bm{c}^\top \bm{\bar{x}}=7200+2400=9600$.
-Every feasible solution satisfies
-\begin{align*}
-    &A\bm{x}=\bm{b}\\
-    &\implies \bm{y}^\top A\bm{x}=\bm{y}^\top \bm{b}
-\end{align*}
-\[\bm{y}^\top A=
-\begin{bmatrix}
-    10 & 15 & 3 & 4
-\end{bmatrix}
-\ge
-\begin{bmatrix}
-    10 & 15 & 0 & 0
-\end{bmatrix}=\bm{c}^\top \]
-\[\bm{y}^\top \bm{b}
-=3\times 1600+4\times 1200=9600
-=\bm{c}^\top \bm{\bar{x}}\]
-Therefore $\bar{\bm{x}}$ is an optimal solution.
+        Also, $\bm{c}^\top \bm{\bar{x}}=7200+2400=9600$.
+        Every feasible solution satisfies
+        \begin{align*}
+             & A\bm{x}=\bm{b}                                  \\
+             & \implies \bm{y}^\top A\bm{x}=\bm{y}^\top \bm{b}
+        \end{align*}
+        \[\bm{y}^\top A=
+            \begin{bmatrix}
+                10 & 15 & 3 & 4
+            \end{bmatrix}
+            \geqslant
+            \begin{bmatrix}
+                10 & 15 & 0 & 0
+            \end{bmatrix}=\bm{c}^\top \]
+        \[\bm{y}^\top \bm{b}
+            =3\times 1600+4\times 1200=9600
+            =\bm{c}^\top \bm{\bar{x}}\]
+        Therefore $\bar{\bm{x}}$ is an optimal solution.
+    \end{example}
+\end{exbox}
+

@@ -1,28 +1,31 @@
-\section{2019-10-03}
+\makeheading{2019-10-03}
+\begin{exbox}
+    \begin{example}[Previous Example Coninuted]
+        So, the new basic feasible solution is $\bm{\bar{x}}:=(1,5,0,3,0)^\top$
+        determined by the basis $B:=\{1,2,5\}\cup\{4\}\setminus \{5\}=\{1,2,4\}$. Note that
+        we exclude $\{5\}$ since the index of which $t$ achieved the minimum was at
+        $\nicefrac{6}{2}$, i.e. index $5$ (row $x_5$). The canonical form determined by the new
+        basis is
+        \[\max \begin{bmatrix}
+                0 & 0 & -\nicefrac{5}{2} & 0 & -\nicefrac{1}{2}
+            \end{bmatrix}\bm{x}+3\]
+        subject to
+        \[
+            \begin{bmatrix}
+                1 & 0 & \nicefrac{1}{2}  & 0 & -\nicefrac{1}{2} \\
+                0 & 1 & \nicefrac{1}{2}  & 0 & \nicefrac{1}{2}  \\
+                0 & 0 & -\nicefrac{3}{2} & 1 & \nicefrac{1}{2}
+            \end{bmatrix}\bm{x}
+            =
+            \begin{bmatrix}
+                1 \\
+                5 \\
+                3
+            \end{bmatrix}
+        \]
+    \end{example}
+\end{exbox}
 
-\subsection{Example (Continuation of 8.3)}
-So, the new basic feasible solution is $\bm{\bar{x}}:=(1,5,0,3,0)^\top$
-determined by the basis $B:=\{1,2,5\}\cup\{4\}\setminus \{5\}=\{1,2,4\}$. Note that
-we exclude $\{5\}$ since the index of which $t$ achieved the minimum was at
-$\nicefrac{6}{2}$, i.e. index $5$ (row $x_5$). The canonical form determined by the new
-basis is
-\[\max \begin{bmatrix}
-    0 & 0 & -\nicefrac{5}{2} & 0 & -\nicefrac{1}{2}
-\end{bmatrix}\bm{x}+3\]
-subject to
-\[
-\begin{bmatrix}
-    1 & 0 & \nicefrac{1}{2} & 0 & -\nicefrac{1}{2}\\
-    0 & 1 & \nicefrac{1}{2} & 0 & \nicefrac{1}{2}\\
-    0 & 0 & -\nicefrac{3}{2} & 1 & \nicefrac{1}{2}
-\end{bmatrix}\bm{x}
-=
-\begin{bmatrix}
-    1\\
-    5\\
-    3
-\end{bmatrix}
-\]
 \begin{remark}
     $\bm{\bar{x}}$ is the optimal solution with optimal value $3$.
 \end{remark}
@@ -31,64 +34,67 @@ subject to
     calculate $A_B^{-1}$, then follow the below instructions.
 \end{remark}
 
-\subsection{Example (Canonical form without computing the inverse)}
 \begin{remark}
-    The following was not taught in class or the textbook. 
+    The following was not taught in class or the textbook.
     This method can be confusing and not intuitive.
 \end{remark}
 
+\begin{exbox}
+    \begin{example}[Canonical Form Without Computing the Inverse]
+        Write
+        \[A:=
+            \left[\begin{array}{ccccc|c}
+                    1 & 0 & -1 & 1  & 0 & 4 \\
+                    0 & 1 & 2  & -1 & 0 & 2 \\
+                    0 & 0 & -3 & 2  & 1 & 6
+                \end{array}\right]
+            \rightarrow
+            \left[\begin{array}{ccccc|c}
+                    1 & 0 & \nicefrac{1}{2}  & 0 & -\nicefrac{1}{2} & 1 \\
+                    0 & 1 & \nicefrac{1}{2}  & 0 & \nicefrac{1}{2}  & 5 \\
+                    0 & 0 & -\nicefrac{3}{2} & 1 & \nicefrac{1}{2}  & 3
+                \end{array}\right]
+            \begin{matrix}
+                -x_1 \\
+                -x_2 \\
+                -x_4
+            \end{matrix}
+        \]
+        and row reduce $A$ to make fourth column get a leading one as seen above.
+        The row-reduced matrix and the augment are your new constraints.\\
+        The objective function is tricky, we want a 0 in the fourth column of our $\bm{c}^\top $.
+        Also, we denote $x_1,x_2,x_4$ as the rows of the matrix respectively as seen above.
+        Using $x_4$ (which is our row-reduced $A$), we get
+        \[(-1)\left(
+            \begin{bmatrix}
+                0 & 0 & -\nicefrac{3}{2} & 1 & \nicefrac{1}{2}
+            \end{bmatrix}\bm{x}-3\right)+
+            (\begin{bmatrix}
+                0 & 0 & -4 & 1 & 0
+            \end{bmatrix}\bm{x})
+        \]
+        The $-3$ right after the first matrix was the row of $\bm{b}$. General form:
+        \[ c([\text{Row}_i(A)]\bm{x}-\bm{b_i})+\text{original objective function} \]
+        where $ c $ is a constant.
+    \end{example}
+\end{exbox}
 
-Write
-\[A:=
-\left[\begin{array}{ccccc|c}  
-    1 & 0 & -1 & 1 & 0 & 4\\
-    0 & 1 & 2 & -1 & 0 & 2\\
-    0 & 0 & -3 & 2 & 1 & 6
-\end{array}\right]
-\rightarrow
-\left[\begin{array}{ccccc|c}
-    1 & 0 & \nicefrac{1}{2} & 0 & -\nicefrac{1}{2} & 1\\
-    0 & 1 & \nicefrac{1}{2} & 0 & \nicefrac{1}{2} & 5\\
-    0 & 0 & -\nicefrac{3}{2} & 1 & \nicefrac{1}{2} & 3
-\end{array}\right]
-\begin{matrix}
-    -x_1\\
-    -x_2\\
-    -x_4
-\end{matrix}
-\]
-and row reduce $A$ to make fourth column get a leading one as seen above.
-The row-reduced matrix and the augment are your new constraints.\\
-The objective function is tricky, we want a 0 in the fourth column of our $\bm{c}^\top $.
-Also, we denote $x_1,x_2,x_4$ as the rows of the matrix respectively as seen above.
-Using $x_4$ (which is our row-reduced $A$), we get
-\[(-1)\left(
-\begin{bmatrix}
-    0 & 0 & -\nicefrac{3}{2} & 1 & \nicefrac{1}{2}
-\end{bmatrix}\bm{x}-3\right)+
-(\begin{bmatrix}
-    0 & 0 & -4 & 1 & 0
-\end{bmatrix}\bm{x})
-\]
-The $-3$ right after the first matrix was the row of $\bm{b}$. General form:
-\[ c([\text{Row}_i(A)]\bm{x}-\bm{b_i})+\text{original objective function} \]
-where $ c $ is a constant.
+\section{The Simplex Algorithm}
 
 \begin{algbox}
-    \subsection{Algorithm (Simplex Algorithm)}
     \begin{algorithm}[H]
         \caption{Simplex Algorithm}
         \SetKwInOut{Input}{Input}
         \SetKwInOut{Output}{Output}
         \Input{$A\in \mathbb{R}^{m\times n}$, $\bm{b}\in\mathbb{R}^m$, $\bm{c}\in\mathbb{R}^n$ such that we have
-        linear program (P): $\max \left\{\bm{c}^\top \bm{x},\,A \bm{x}=\bm{b},\bm{x}\ge \bm{0} \right\}$,
-        and a feasible basis $ B $.}
+            linear program (P): $\max \left\{\bm{c}^\top \bm{x},\,A \bm{x}=\bm{b},\bm{x}\geqslant  \bm{0} \right\}$,
+            and a feasible basis $ B $.}
         \Output{An optimal solution $ \bm{\bar{x}} $ of (P) or a certificate proving that the (P) is unbounded.}
-        Compute the canonical form for the basis $B$. Let $\bm{\bar{x}}$ 
+        Compute the canonical form for the basis $B$. Let $\bm{\bar{x}}$
         be the basic feasible solution for $ B $.\\
-        If $\bm{c_N}\le \bm{0}$, then stop ($\bm{\bar{x}}$ is optimal).\\
+        If $\bm{c_N}\leqslant \bm{0}$, then stop ($\bm{\bar{x}}$ is optimal).\\
         Choose $k\in N$ such that $c_k>0$.\\
-        If $\bm{a_k}\le \bm{0}$, then stop (the LP is unbounded).\\
+        If $\bm{a_k}\leqslant \bm{0}$, then stop (the LP is unbounded).\\
         Let $r$ be any index $ i $ where the following minimum is attained:
         \[t=\min\left\{\frac{b_i}{a_{ik}} : a_{ik}>0\right\}\]\\
         Let $\ell$ be the $r^{th}$ basis element.\\
@@ -98,273 +104,279 @@ where $ c $ is a constant.
 \end{algbox}
 
 \begin{thmbox}
-    \subsection{Bland's Rule}
-    Throughout the Simplex iterations with $ t=0 $, in Step 3, among
-    all $ j\in N $, with $ c_j>0 $, choose $ k:=\min\left\{ j\in N:c_j>0\right\} $;
-    also in Step 5, define $ t $ as before and choose the smallest
-    $ r\in B $ with $ a_{rk}>0 $, and $ \nicefrac{b_r}{a_{rk}}=t $.
+    \begin{theorem}[Bland's Rule]
+        Throughout the Simplex iterations with $ t=0 $, in Step 3, among
+        all $ j\in N $, with $ c_j>0 $, choose $ k:=\min\left\{ j\in N:c_j>0\right\} $;
+        also in Step 5, define $ t $ as before and choose the smallest
+        $ r\in B $ with $ a_{rk}>0 $, and $ \nicefrac{b_r}{a_{rk}}=t $.
+    \end{theorem}
 \end{thmbox}
 
-\subsection{Example (Simplex Algorithm with Bland's Rule)}
-Solve
-(P)
-\[ \max
-\begin{bmatrix}
-    0 & 3 & 1 & 0
-\end{bmatrix}\bm{x} \]
-subject to
-\[ 
-\begin{bmatrix}
-    1 & 2 & -2 & 0\\
-    0 & 1 & 3 & 1
-\end{bmatrix}\bm{x}=
-\begin{bmatrix}
-    2\\
-    5
-\end{bmatrix} \]
-\[ \bm{x}\ge \bm{0} \]
-using the Simplex Algorithm with Bland's Rule. Give a certificate
-of optimality or unboundedness for the problem, and verify it.
+\subsection{An Example with an Optimal Solution}
 
-\textbf{Solution.}
+\begin{exbox}
+    \begin{example}[Simplex Algorithm with Bland's Rule]
+        Solve (P)
+        \[ \max
+            \begin{bmatrix}
+                0 & 3 & 1 & 0
+            \end{bmatrix}\bm{x} \]
+        subject to
+        \[
+            \begin{bmatrix}
+                1 & 2 & -2 & 0 \\
+                0 & 1 & 3  & 1
+            \end{bmatrix}\bm{x}=
+            \begin{bmatrix}
+                2 \\
+                5
+            \end{bmatrix} \]
+        \[ \bm{x}\geqslant  \bm{0} \]
+        using the Simplex Algorithm with Bland's Rule. Give a certificate
+        of optimality or unboundedness for the problem, and verify it.
 
-\textbf{Iteration 1}
+        \textbf{Solution.}
 
-Useful values computed:
-\[ A_B=
-\begin{bmatrix}
-    1 & 0\\
-    0 & 1\\
-\end{bmatrix} \Rightarrow
-A_B^{-1}=
-\begin{bmatrix}
-    1 & 0\\
-    0 & 1\\
-\end{bmatrix} \]
-\[ \bm{y}^\top=\bm{c_B}^\top A_B^{-1}=
-\begin{bmatrix}
-    0 & 0
-\end{bmatrix}
-\begin{bmatrix}
-    1 & 0\\
-    0 & 1\\
-\end{bmatrix}=
-\begin{bmatrix}
-    0 \\
-    0
-\end{bmatrix}\]
+        \textbf{Iteration 1}
 
-1. The LP is already in canonical form determined by $ B=\{1,4\} $.
-Let $ \bm{\bar{x}}:=(2,0,0,5)^\top $ be the basic feasible solution for $ B $.
+        Useful values computed:
+        \[ A_B=
+            \begin{bmatrix}
+                1 & 0 \\
+                0 & 1 \\
+            \end{bmatrix} \Rightarrow
+            A_B^{-1}=
+            \begin{bmatrix}
+                1 & 0 \\
+                0 & 1 \\
+            \end{bmatrix} \]
+        \[ \bm{y}^\top=\bm{c_B}^\top A_B^{-1}=
+            \begin{bmatrix}
+                0 & 0
+            \end{bmatrix}
+            \begin{bmatrix}
+                1 & 0 \\
+                0 & 1 \\
+            \end{bmatrix}=
+            \begin{bmatrix}
+                0 \\
+                0
+            \end{bmatrix}\]
 
-2. $ c_{\{2,3\}} \nleq \bm{0} $, so $ \bm{\bar{x}} $ is not optimal.
+        1. The LP is already in canonical form determined by $ B=\{1,4\} $.
+        Let $ \bm{\bar{x}}:=(2,0,0,5)^\top $ be the basic feasible solution for $ B $.
 
-3. Using Bland's Rule we choose $ k=2\in N $ which enters the basis
-as $ c_2\ge 0 $.
+        2. $ c_{\{2,3\}} \nleq \bm{0} $, so $ \bm{\bar{x}} $ is not optimal.
 
-4.
-$ 
-a_2= \begin{bmatrix}
-    2\\
-    1
-\end{bmatrix}\nleq \bm{0}
-$, so the LP is not unbounded.
+        3. Using Bland's Rule we choose $ k=2\in N $ which enters the basis
+        as $ c_2\geqslant  0 $.
 
-5.
-$
-\begin{bmatrix}
-    x_1\\
-    x_4
-\end{bmatrix}
-=
-\begin{bmatrix}
-    2\\
-    5
-\end{bmatrix}-t
-\begin{bmatrix}
-    2\\
-    1
-\end{bmatrix}\ge 0
-$
-so
-\[ t=\min \left\{\frac{2}{2},\frac{5}{1} \right\} \]
-Minimum is attained at index $ 1 $ ($ x_1 $). Let $ r=1 $ be the index which attains the smallest value of $ t $.
+        4.
+        $
+            a_2= \begin{bmatrix}
+                2 \\
+                1
+            \end{bmatrix}\nleq \bm{0}
+        $, so the LP is not unbounded.
 
-6. Let $ 1 $ be the $ 1^{st} $ basis element.
+        5.
+        $
+            \begin{bmatrix}
+                x_1 \\
+                x_4
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+                2 \\
+                5
+            \end{bmatrix}-t
+            \begin{bmatrix}
+                2 \\
+                1
+            \end{bmatrix}\geqslant  0
+        $
+        so
+        \[ t=\min \left\{\frac{2}{2},\frac{5}{1} \right\} \]
+        Minimum is attained at index $ 1 $ ($ x_1 $). Let $ r=1 $ be the index which attains the smallest value of $ t $.
 
-7. Set $ B:=\{1,4\}\cup \{2\}\setminus\{1\}=\{2,4\} $
+        6. Let $ 1 $ be the $ 1^{st} $ basis element.
 
-\textbf{Iteration 2}
+        7. Set $ B:=\{1,4\}\cup \{2\}\setminus\{1\}=\{2,4\} $
 
-Useful values computed:
-\[ A_B=
-\begin{bmatrix}
-    2 & 0\\
-    1 & 1\\
-\end{bmatrix} \Rightarrow
-A_B^{-1}=
-\begin{bmatrix}
-    \nicefrac{1}{2} & 0\\
-    -\nicefrac{1}{2} & 1\\
-\end{bmatrix} \]
-\[ \bm{y}^\top=\bm{c_B}^\top A_B^{-1}=
-\begin{bmatrix}
-    3 & 0
-\end{bmatrix}
-\begin{bmatrix}
-    \nicefrac{1}{2} & 0\\
-    -\nicefrac{1}{2} & 1\\
-\end{bmatrix}=
-\begin{bmatrix}
-    \nicefrac{3}{2} \\
-    0
-\end{bmatrix}\]
+        \textbf{Iteration 2}
 
-1. Canonical form determined by $ B=\{2,4\} $ is
-\[ \max 
-\begin{bmatrix}
-    -\nicefrac{3}{2} & 0 & 4 & 0
-\end{bmatrix} + 3\]
-subject to
-\[ 
-\begin{bmatrix}
-    \nicefrac{1}{2} & 1 & -1 & 0\\
-    -\nicefrac{1}{2} & 0 & 4 & 1
-\end{bmatrix}\bm{x}=
-\begin{bmatrix}
-    1\\
-    4
-\end{bmatrix}
-\]
-\[ \bm{x}\ge \bm{0} \]
+        Useful values computed:
+        \[ A_B=
+            \begin{bmatrix}
+                2 & 0 \\
+                1 & 1 \\
+            \end{bmatrix} \Rightarrow
+            A_B^{-1}=
+            \begin{bmatrix}
+                \nicefrac{1}{2}  & 0 \\
+                -\nicefrac{1}{2} & 1 \\
+            \end{bmatrix} \]
+        \[ \bm{y}^\top=\bm{c_B}^\top A_B^{-1}=
+            \begin{bmatrix}
+                3 & 0
+            \end{bmatrix}
+            \begin{bmatrix}
+                \nicefrac{1}{2}  & 0 \\
+                -\nicefrac{1}{2} & 1 \\
+            \end{bmatrix}=
+            \begin{bmatrix}
+                \nicefrac{3}{2} \\
+                0
+            \end{bmatrix}\]
 
-Let $ \bm{\bar{x}}:=(0,1,0,4)^\top $ be the basic feasible solution.
+        1. Canonical form determined by $ B=\{2,4\} $ is
+        \[ \max
+            \begin{bmatrix}
+                -\nicefrac{3}{2} & 0 & 4 & 0
+            \end{bmatrix} + 3\]
+        subject to
+        \[
+            \begin{bmatrix}
+                \nicefrac{1}{2}  & 1 & -1 & 0 \\
+                -\nicefrac{1}{2} & 0 & 4  & 1
+            \end{bmatrix}\bm{x}=
+            \begin{bmatrix}
+                1 \\
+                4
+            \end{bmatrix}
+        \]
+        \[ \bm{x}\geqslant  \bm{0} \]
 
-2. $ c_{\{1,3\}} \nleq \bm{0} $, so $ \bm{\bar{x}} $ is not optimal.
+        Let $ \bm{\bar{x}}:=(0,1,0,4)^\top $ be the basic feasible solution.
 
-3. Using Bland's Rule we choose $ k=3\in N $ which enters the basis
-as $ c_3\ge 0 $.
+        2. $ c_{\{1,3\}} \nleq \bm{0} $, so $ \bm{\bar{x}} $ is not optimal.
 
-4.
-$ 
-a_3= \begin{bmatrix}
-    -1\\
-    4
-\end{bmatrix}\nleq \bm{0}
-$,
-so the LP is not unbounded.
+        3. Using Bland's Rule we choose $ k=3\in N $ which enters the basis
+        as $ c_3\geqslant  0 $.
 
-5.
-$
-\begin{bmatrix}
-    x_2\\
-    x_4
-\end{bmatrix}
-=
-\begin{bmatrix}
-    1\\
-    4
-\end{bmatrix}-t
-\begin{bmatrix}
-    -1\\
-    4
-\end{bmatrix}\ge 0
-$
-so
-\[ t=\min \left\{\_,\frac{4}{4} \right\} \]
-Minimum is attained at index $ 2 $ ($ x_4 $). Let $ r=2 $ be the index which attains the smallest value of $ t $.
+        4.
+        $
+            a_3= \begin{bmatrix}
+                -1 \\
+                4
+            \end{bmatrix}\nleq \bm{0}
+        $,
+        so the LP is not unbounded.
 
-6. Let $ 4 $ be the $ 2^{nd} $ basis element.
+        5.
+        $
+            \begin{bmatrix}
+                x_2 \\
+                x_4
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+                1 \\
+                4
+            \end{bmatrix}-t
+            \begin{bmatrix}
+                -1 \\
+                4
+            \end{bmatrix}\geqslant  0
+        $
+        so
+        \[ t=\min \left\{\_,\frac{4}{4} \right\} \]
+        Minimum is attained at index $ 2 $ ($ x_4 $). Let $ r=2 $ be the index which attains the smallest value of $ t $.
 
-7. Set $ B:=\{1,4\}\cup \{3\}\setminus\{4\}=\{2,3\} $
+        6. Let $ 4 $ be the $ 2^{nd} $ basis element.
 
-\textbf{Iteration 3}
+        7. Set $ B:=\{1,4\}\cup \{3\}\setminus\{4\}=\{2,3\} $
 
-Useful values computed:
-\[ A_B=
-\begin{bmatrix}
-    2 & -2\\
-    1 & 3\\
-\end{bmatrix} \Rightarrow
-A_B^{-1}=
-\begin{bmatrix}
-    \nicefrac{3}{8} & \nicefrac{1}{4} \\
-    -\nicefrac{1}{8} & \nicefrac{1}{4} 
-\end{bmatrix} \]
-\[ \bm{y}^\top=\bm{c_B}^\top A_B^{-1}=
-\begin{bmatrix}
-    3 & 1
-\end{bmatrix}
-\begin{bmatrix}
-    \nicefrac{3}{8} & \nicefrac{1}{4} \\
-    -\nicefrac{1}{8} & \nicefrac{1}{4} 
-\end{bmatrix}=
-\begin{bmatrix}
-    1 & 1
-\end{bmatrix}\]
+        \textbf{Iteration 3}
 
-1. Canonical form determined by $ B=\{2,3\} $ is
-\[ \max
-\begin{bmatrix}
-    -1 & 0 & 0 & -1
-\end{bmatrix} + 7\]
+        Useful values computed:
+        \[ A_B=
+            \begin{bmatrix}
+                2 & -2 \\
+                1 & 3  \\
+            \end{bmatrix} \Rightarrow
+            A_B^{-1}=
+            \begin{bmatrix}
+                \nicefrac{3}{8}  & \nicefrac{1}{4} \\
+                -\nicefrac{1}{8} & \nicefrac{1}{4}
+            \end{bmatrix} \]
+        \[ \bm{y}^\top=\bm{c_B}^\top A_B^{-1}=
+            \begin{bmatrix}
+                3 & 1
+            \end{bmatrix}
+            \begin{bmatrix}
+                \nicefrac{3}{8}  & \nicefrac{1}{4} \\
+                -\nicefrac{1}{8} & \nicefrac{1}{4}
+            \end{bmatrix}=
+            \begin{bmatrix}
+                1 & 1
+            \end{bmatrix}\]
 
-subject to
-\[ 
-\begin{bmatrix}
-    \nicefrac{3}{8} & 1 & 0 & \nicefrac{1}{4} \\
-    -\nicefrac{1}{8} & 0 & 1 & \nicefrac{1}{4}
-\end{bmatrix}\bm{x}=
-\begin{bmatrix}
-    2\\
-    1
-\end{bmatrix}\]
-\[ \bm{x}\ge \bm{0} \]
+        1. Canonical form determined by $ B=\{2,3\} $ is
+        \[ \max
+            \begin{bmatrix}
+                -1 & 0 & 0 & -1
+            \end{bmatrix} + 7\]
 
-Let $ \bm{\bar{x}}:=(0,2,1,0)^\top $ be the basic feasible solution.
+        subject to
+        \[
+            \begin{bmatrix}
+                \nicefrac{3}{8}  & 1 & 0 & \nicefrac{1}{4} \\
+                -\nicefrac{1}{8} & 0 & 1 & \nicefrac{1}{4}
+            \end{bmatrix}\bm{x}=
+            \begin{bmatrix}
+                2 \\
+                1
+            \end{bmatrix}\]
+        \[ \bm{x}\geqslant  \bm{0} \]
 
-2. $ c_{\{1,4\}}\le \bm{0} $, stop $ \bm{\bar{x}} $ is optimal.
+        Let $ \bm{\bar{x}}:=(0,2,1,0)^\top $ be the basic feasible solution.
 
-The certificate of optimality is $ \bm{\bar{y}}=(1,1)^\top $.
+        2. $ c_{\{1,4\}}\leqslant \bm{0} $, stop $ \bm{\bar{x}} $ is optimal.
 
-To verify that $ \bm{\bar{y}}=(1,1)^\top $ is the certificate of optimality.
-We compute
-\[ A ^\top \bm{\bar{y}}=
-\begin{bmatrix}
-    1\\
-    3\\
-    1\\
-    1
-\end{bmatrix}\ge
-\begin{bmatrix}
-    0\\
-    3\\
-    1\\
-    0
-\end{bmatrix}=\bm{c}\]
-and
-\[ \bm{c}^\top \bm{\bar{x}}=
-\begin{bmatrix}
-    0 & 3 & 1 & 0
-\end{bmatrix}
-\begin{bmatrix}
-    0\\
-    2\\
-    1\\
-    0
-\end{bmatrix}
-=
-7
-=
-\begin{bmatrix}
-    1 & 1
-\end{bmatrix}
-\begin{bmatrix}
-    2\\
-    5
-\end{bmatrix}
-=
-\bm{\bar{y}}^\top \bm{b} \]
+        The certificate of optimality is $ \bm{\bar{y}}=(1,1)^\top $.
+
+        To verify that $ \bm{\bar{y}}=(1,1)^\top $ is the certificate of optimality.
+        We compute
+        \[ A ^\top \bm{\bar{y}}=
+            \begin{bmatrix}
+                1 \\
+                3 \\
+                1 \\
+                1
+            \end{bmatrix}\geqslant
+            \begin{bmatrix}
+                0 \\
+                3 \\
+                1 \\
+                0
+            \end{bmatrix}=\bm{c}\]
+        and
+        \[ \bm{c}^\top \bm{\bar{x}}=
+            \begin{bmatrix}
+                0 & 3 & 1 & 0
+            \end{bmatrix}
+            \begin{bmatrix}
+                0 \\
+                2 \\
+                1 \\
+                0
+            \end{bmatrix}
+            =
+            7
+            =
+            \begin{bmatrix}
+                1 & 1
+            \end{bmatrix}
+            \begin{bmatrix}
+                2 \\
+                5
+            \end{bmatrix}
+            =
+            \bm{\bar{y}}^\top \bm{b} \]
+    \end{example}
+\end{exbox}
+
 
 \begin{remark}
     This was obviously not done in class (in fact it's a textbook question!).

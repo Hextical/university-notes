@@ -1,0 +1,125 @@
+\makeheading{2019-11-28}
+\section{Relaxing Convex NLPs}
+\subsection{Subgradients}
+\begin{defbox}
+    \begin{definition}
+        Let $ g:\mathbb{R}^n\to\mathbb{R} $ be convex, and let $ \bm{\bar{x}}\in\mathbb{R}^n $.
+        We say that $ \bm{s}\in\mathbb{R} $ is a \emph{subgradient} at $ \bm{\bar{x}} $
+        if for every $ \bm{x}\in\mathbb{R}^n $ the following inequality holds:
+        \[ g(\bm{\bar{x}})+\bm{s}^\top(\bm{x}-\bm{\bar{x}})\leqslant g(\bm{x}) \]
+    \end{definition}
+\end{defbox}
+$ \{\bm{x}\in\mathbb{R}^n:g(\bm{x})\leqslant 0\}\subseteq
+\{\bm{x}\in\mathbb{R}^n:\bm{s}^\top\bm{x}\leqslant \bm{s}^\top \bm{\bar{x}}-g(\bm{\bar{x}})\}$
+Consider the NLP
+\[ (P_C)\min \bm{c}^\top\bm{x} \]
+subject to
+\[ g_i(x)\leqslant 0 \]
+$ g_i $ convex for all $ i\in{1,\ldots ,m} $.
+
+Let $ \bm{\bar{x}} $ be feasible in $ (P_C) $: $ g_i(\bm{x})\leqslant 0 $
+for all $ i\in \{1,\ldots ,m\} $.
+
+Consider the LP problem
+
+\[ (LP_C)\min \bm{c}^\top\bm{x} \]
+subject to
+\[ (\bm{s}^{(i)})^\top \bm{x}\leqslant  (\bm{s}^{(i)})^\top \bm{\bar{x}}-g_i(\bm{\bar{x}}) \]
+\[ s^{(i)}\in\mathbb{R}^n \text{ is a subgradient of $g_i$ at $\bm{\bar{x}}$} \]
+For $ (LP_C) $, we know that $ \bm{\bar{x}} $ is optimal if and only if
+\[ -c\in \{\text{cone of tight constraints at $ \bm{\bar{x}} $}\} \]
+If this condition holds, then $ \bm{\bar{x}} $ is optimal in $ (LP_C) $ as
+well as $ (P_C) $.
+
+\begin{thmbox}
+    \begin{theorem}
+        Let $ \bm{\bar{x}}\in \mathbb{R}^n $ be a feasible solution of $ (P_C) $.
+        Let $ \bm{s}^{(i)}\in\mathbb{R}^n $ denote the subgradients of $ g_i $
+        at $ \bm{\bar{x}} $ for all $ i\in J(\bm{\bar{x}}) $, where
+        $ J(\bm{\bar{x}}):=\{i:g_i(\bm{\bar{x}})=0\} $. Then, if
+        \[ -c\in\text{cone} \{s^{(i)}:i\in J(\bm{\bar{x}})\} \]
+        $ \bm{\bar{x}} $ is optimal in $ (P_C) $.
+    \end{theorem}
+\end{thmbox}
+
+The convex function $ f $ is differentiable at $ \bm{\bar{x}} $, but not
+differentiable at $ \bm{\hat{x}} $.
+
+Let $ f:\mathbb{R}^n\to\mathbb{R} $, let $ \bm{\bar{x}}\in\mathbb{R}^n $,
+then $ f $ is differentiable at $ \bm{\bar{x}} $
+if there exists $ \bm{s}\in \mathbb{R}^{n} $ such that
+\[ \lim\limits_{{h} \to {0}} \frac{f(\bm{\bar{x}}+h)-f(\bm{\bar{x}})-\bm{s}^\top h}{||h||_{2}}=0 \]
+If $ f $ is differentiable at $ \bm{\bar{x}} $, then such an $ \bm{s} $ is a subgradient
+of $ f $ at $ \bm{\bar{x}} $ (and it is unique). We denote such $ \bm{s} $ by
+\[ \nabla f(\bm{\bar{x}}) \]
+gradient of $ f $ at $ \bm{\bar{x}} $. If $ f $ is continuously differentiable
+at $ \bm{\bar{x}} $, then
+\[ \nabla f(\bm{\bar{x}})=
+\begin{bmatrix}
+    \frac{\partial f}{\partial x_1}\\
+    \vdots\\
+    \frac{\partial f}{\partial x_n} 
+\end{bmatrix} \]
+For example, consider $ f:\mathbb{R}^{2} \to \mathbb{R} $, $ f(\bm{x})=\frac{1}{4} {x_1}^2+x_2^2 $.
+What is the subgradient of $ f $ at $ \bm{\bar{x}}:=(2,1)^\top $?
+\[ \nabla f(\bm{x})=(\frac{1}{2} x_1, 2x_2)^\top \]
+The subgradient at $ \bm{\bar{x}} $ is $ \nabla f(\bm{\bar{x}})=(1,2)^\top $.
+
+Consider the constraint $ g(\bm{x})=\frac{1}{4} x_1^2+x_2^2-2\leqslant 0 $.
+
+Consider a convex NLP:
+\[ \min f(\bm{x}) \]
+subject to
+\begin{align*}
+    g_1(x)&\leqslant 0\\
+    &\vdots\\
+    g_m(x)&\leqslant 0
+\end{align*}
+Note that we can relax any constraint $ g_i(\bm{x})\leqslant 0 $ of NLP by replacing it with
+\[ \bm{s}^\top \bm{x}\leqslant \bm{s}^\top \bm{\bar{x}}-g_i(\bm{\bar{x}}) \]
+where $ \bm{\bar{x}} $ is a subgradient of $ g_i $ at $ \bm{\bar{x}} $.
+Note that since $ f $ is convex, if it differentiable, then
+\[ f(\bm{x})\geqslant f(\bm{\bar{x}})+\nabla f(\bm{\bar{x}})(\bm{x}-\bm{\bar{x}}) \]
+In dealing with the convex NLP, we can use the LP problem
+\[ \min \nabla f(\bm{\bar{x}})^\top \bm{x}+f(\bm{\bar{x}})-\nabla f(\bm{\bar{x}})^\top \bm{\bar{x}} \]
+subject to
+\begin{align*}
+    \nabla g_1(\bm{\bar{x}})^\top&\leqslant g_1(\bm{\bar{x}})^\top -g_1(\bm{\bar{x}})\\
+    &\vdots\\
+    \nabla g_m(\bm{\bar{x}})^\top&\leqslant g_m(\bm{\bar{x}})^\top -g_m(\bm{\bar{x}})
+\end{align*}
+$ \bm{\hat{x}} $ is called a \emph{Slater point} for the NLP if
+\[ g_i(\bm{\hat{x}})<0\; \qquad \forall i\in \{1,\ldots ,m\} \]
+
+\begin{thmbox}
+    \begin{theorem}[Karush-Kuhn-Tucker]
+        Consider a convex NLP that has a Slater point. Let $ \bm{\bar{x}}\in \mathbb{R}^{n} $
+        be a feasible solution and assume that $ f,g_1,g_2,\ldots ,g_m $ are differentiable
+        at $ \bm{\bar{x}} $. Then $ \bm{\bar{x}} $ is an optimal solution of NLP
+        if and only if
+        \[ -\nabla f(\bm{\bar{x}})\in\text{cone} \{\nabla g_i(\bm{\bar{x}}):i\in J(\bm{\bar{x}})\} \]
+    \end{theorem}
+\end{thmbox}
+
+\begin{exbox}
+    \begin{example}
+        (NLP)
+        \[ \min f(\bm{x}):=-x_1+x_2 \]
+        \[ g_1(\bm{x}):=(x_1-1)^2+(x_2-1)^2-1\leqslant 0 \]
+        \[ g_2(\bm{x}):=x_1^2+x_2^2-1\leqslant 0 \]
+        \begin{itemize}
+            \item Is $ \bm{\tilde{x}}:=(0,1)^\top $ optimal?
+            \item Is $ \bm{\bar{x}}:=(1,0)^\top $ optimal?
+        \end{itemize}
+        \textbf{Solution.} We can see that $ \bm{\hat{x}}:=(\nicefrac{1}{2},\nicefrac{1}{2})^\top $
+        is a Slater point.
+        \[ -\nabla f(\bm{\bar{x}}) = (1,-1)^\top \]
+        \[ g_1(\bm{\bar{x}})=(0,-2)^\top,\;g_2(\bm{\bar{x}})=(2,0)^\top \]
+        Thus,
+        \[ -\nabla f(\bm{\bar{x}})=\frac{1}{2} g_1(\bm{\bar{x}})+\frac{1}{2}g_2(\bm{\bar{x}})  \]
+        \[ \implies  -\nabla f(\bm{\bar{x}})\in\text{cone} \left\{\nabla g_1(\bm{\bar{x}}),g_2(\bm{\bar{x}})\right\}  \]
+        Hence, $ \bm{\bar{x}} $ is optimal in NLP.
+
+        \underline{Exercise}: Show that $ \bm{\tilde{x}} $ is not optimal.
+    \end{example}
+\end{exbox}

@@ -1,119 +1,125 @@
-\section{2019-10-31}
+\makeheading{2019-10-31}
 Last lecture, we defined the dual of LPs in SIF and found the dual of $ (P_1) $.
-\[ (P_1):\, \max \{\bm{c}^\top \bm{x}: A \bm{x}\le \bm{b},\,\bm{x}\ge \bm{0}\}\]
-\[ (D_1):\, \min\{ \bm{b}^\top \bm{y}: A ^\top \bm{y}\ge \bm{c},\,\bm{y}\ge \bm{0}\}\]
+\[ (P_1):\, \max \{\bm{c}^\top \bm{x}: A \bm{x}\leqslant \bm{b},\,\bm{x}\geqslant  \bm{0}\}\]
+\[ (D_1):\, \min\{ \bm{b}^\top \bm{y}: A ^\top \bm{y}\geqslant  \bm{c},\,\bm{y}\geqslant  \bm{0}\}\]
 
-\subsection{How we do directly write down the dual of an LP?}
-Suppose $ A\in\mathbb{R}^{3\times 4} $.
+\begin{exbox}
+    \begin{example}[Directly Writing the Dual of an LP]
+        Suppose $ A\in\mathbb{R}^{3\times 4} $.
 
-(P)
-\[ \max 10x_1+20x_2+30x_3+40x_4 \]
-subject to
-\[ \begin{bmatrix}
-    \bm{a_1}^\top\\
-    \bm{a_2}^\top\\
-    \bm{a_3}^\top
-\end{bmatrix}
-\begin{bmatrix}
-    x_1\\
-    x_2\\
-    x_3\\
-    x_4
-\end{bmatrix}
-\begin{matrix}
-    \le\\
-    =\\
-    \ge
-\end{matrix}
-\begin{bmatrix}
-    1\\
-    2\\
-    3
-\end{bmatrix}\]
-\[ x_1\ge 0, x_2\ge 0, x_3\le 0, x_4 \text{ free} \]
-where $ \bm{a_1},\bm{a_2},\bm{a_3}\in \mathbb{R}^{4} $.
+        (P)
+        \[ \max 10x_1+20x_2+30x_3+40x_4 \]
+        subject to
+        \[ \begin{bmatrix}
+                \bm{a_1}^\top \\
+                \bm{a_2}^\top \\
+                \bm{a_3}^\top
+            \end{bmatrix}
+            \begin{bmatrix}
+                x_1 \\
+                x_2 \\
+                x_3 \\
+                x_4
+            \end{bmatrix}
+            \begin{matrix}
+                \le \\
+                =   \\
+                \geqslant
+            \end{matrix}
+            \begin{bmatrix}
+                1 \\
+                2 \\
+                3
+            \end{bmatrix}\]
+        \[ x_1\geqslant  0, x_2\geqslant  0, x_3\leqslant 0, x_4 \text{ free} \]
+        where $ \bm{a_1},\bm{a_2},\bm{a_3}\in \mathbb{R}^{4} $.
 
-(D)
-\[ \min \begin{bmatrix}
-    1 & 2 & 3
-\end{bmatrix}
-\begin{bmatrix}
-    y_1\\
-    y_2\\
-    y_3
-\end{bmatrix}\]
-subject to
-\[ 
-\begin{bmatrix}
-    \bm{a_1} & \bm{a_2} & \bm{a_3}
-\end{bmatrix}
-\begin{bmatrix}
-    y_1\\
-    y_2\\
-    y_3
-\end{bmatrix}
-\begin{matrix}
-    \ge\\
-    \ge\\
-    \le\\
-    =
-\end{matrix}
-\begin{bmatrix}
-    10\\
-    20\\
-    30\\
-    40
-\end{bmatrix}\]
-\[ y_1\ge 0, y_2 \text{ free}, y_3\le 0 \]
-Dual of the dual is the original problem, the primal.
+        (D)
+        \[ \min \begin{bmatrix}
+                1 & 2 & 3
+            \end{bmatrix}
+            \begin{bmatrix}
+                y_1 \\
+                y_2 \\
+                y_3
+            \end{bmatrix}\]
+        subject to
+        \[
+            \begin{bmatrix}
+                \bm{a_1} & \bm{a_2} & \bm{a_3}
+            \end{bmatrix}
+            \begin{bmatrix}
+                y_1 \\
+                y_2 \\
+                y_3
+            \end{bmatrix}
+            \begin{matrix}
+                \geqslant \\
+                \geqslant \\
+                \le       \\
+                =
+            \end{matrix}
+            \begin{bmatrix}
+                10 \\
+                20 \\
+                30 \\
+                40
+            \end{bmatrix}\]
+        \[ y_1\geqslant  0, y_2 \text{ free}, y_3\leqslant 0 \]
+        Dual of the dual is the original problem, the primal.
 
-Since:
-\begin{enumerate}
-    \item constraint 1 in (P) is $\le$, then $y_1 \ge 0$
-    \item constraint 2 in (P) is $=$, then $y_2$ free
-    \item constraint 3 in (P) is $\ge$, then $y_3 \le 0$
-    \item $x_1,x_2\ge 0$, then constraint 1, 2 in (D) is $\ge$
-    \item $x_3\le 0$, then constraint 3 in (D) is $\le$
-    \item $x_4$ free, then constraint 4 in (D) is $=$
-\end{enumerate}
+        Since:
+        \begin{enumerate}
+            \item constraint 1 in (P) is $\leqslant$, then $y_1 \geqslant  0$
+            \item constraint 2 in (P) is $=$, then $y_2$ free
+            \item constraint 3 in (P) is $\geqslant $, then $y_3 \leqslant 0$
+            \item $x_1,x_2\geqslant  0$, then constraint 1, 2 in (D) is $\geqslant $
+            \item $x_3\leqslant 0$, then constraint 3 in (D) is $\le$
+            \item $x_4$ free, then constraint 4 in (D) is $=$
+        \end{enumerate}
+    \end{example}
+\end{exbox}
 
-
+\section{Weak Duality}
 \begin{thmbox}
-    \subsection{Theorem (Weak Duality - Special Form)}
-    Consider (P)
-    \[ \max \{\bm{c}^{\top} \bm{x}: A \bm{x} \leq \bm{b},\, \bm{x} \geq \bm{0}\} \]
-    and (P)'s dual (D)
-    \[ \min \{\bm{b}^{\top} \bm{y}: A^{\top} \bm{y} \geq \bm{c},\, \bm{y} \geq \bm{0}\}\]
-    Let $ \bm{\bar{x}} $ be a feasible solution for (P) and $ \bm{\bar{y}} $
-    be a feasible solution for (D). Then
-    \begin{enumerate}[(1)]
-        \item $ \bm{c}^\top \bm{\bar{x}}\le \bm{b}^\top \bm{\bar{y}} $
-        \item if $ \bm{c}^\top \bm{\bar{x}}=\bm{b}^\top \bm{\bar{y}} $, then
-        $ \bm{\bar{x}} $ is an optimal solution for (P).
-    \end{enumerate}
+    \begin{theorem}[Weak Duality - Special Form]
+        Consider (P)
+        \[ \max \{\bm{c}^{\top} \bm{x}: A \bm{x} \leqslant  \bm{b},\, \bm{x} \geqslant qslant  \bm{0}\} \]
+        and (P)'s dual (D)
+        \[ \min \{\bm{b}^{\top} \bm{y}: A^{\top} \bm{y} \geqslant qslant  \bm{c},\, \bm{y} \geqslant qslant  \bm{0}\}\]
+        Let $ \bm{\bar{x}} $ be a feasible solution for (P) and $ \bm{\bar{y}} $
+        be a feasible solution for (D). Then
+        \begin{enumerate}[(1)]
+            \item $ \bm{c}^\top \bm{\bar{x}}\leqslant \bm{b}^\top \bm{\bar{y}} $
+            \item if $ \bm{c}^\top \bm{\bar{x}}=\bm{b}^\top \bm{\bar{y}} $, then
+                  $ \bm{\bar{x}} $ is an optimal solution for (P).
+        \end{enumerate}
+    \end{theorem}
 \end{thmbox}
+
 \begin{proof}
     Let $ \bm{\bar{x}} $ be a feasible solution of (P) and let $ \bm{\bar{y}} $
     be a feasible solution of (D). Then
     \begin{align*}
         \bm{c}^\top \bm{\bar{x}}
-        &\le (\bm{\bar{y}}^\top A)\bm{\bar{x}}\\
-        &= \bm{\bar{y}}^\top (A\bm{\bar{x}})\\
-        &\le \bm{\bar{y}}^\top \bm{b}
+         & \leqslant (\bm{\bar{y}}^\top A)\bm{\bar{x}} \\
+         & = \bm{\bar{y}}^\top (A\bm{\bar{x}})         \\
+         & \leqslant \bm{\bar{y}}^\top \bm{b}
     \end{align*}
     If $ \bm{c}^\top \bm{\bar{x}}=\bm{b}^\top \bm{\bar{y}} $ it follows
     that $ \bm{\bar{x}} $ is optimal for (P).
 \end{proof}
 
 \begin{thmbox}
-    \subsection{Corollary}
-    Let (P) and (D) be a pair of primal-dual LPs. Then
-    \begin{enumerate}[(1)]
-        \item if (P) is unbounded, then (D) is infeasible
-        \item if (D) is unbounded, then (P) is infeasible
-        \item if (P) and (D) are both feasible, then they both
-        have optimal solutions
-    \end{enumerate}
+    \begin{theorem}
+        Let (P) and (D) be a pair of primal-dual LPs. Then
+        \begin{enumerate}[(1)]
+            \item if (P) is unbounded, then (D) is infeasible
+            \item if (D) is unbounded, then (P) is infeasible
+            \item if (P) and (D) are both feasible, then they both
+                  have optimal solutions
+        \end{enumerate}
+    \end{theorem}
 \end{thmbox}
 
 \begin{proof}
@@ -133,7 +139,7 @@ Since:
 
     (3) Assume (P) and (D) are both feasible. By (1) and (2) we know that
     (P) and (D) are both not unbounded. By Fundamental Theorem of Linear
-    Programming, we know that exactly one of the following holds 
+    Programming, we know that exactly one of the following holds
     from (I)-(III):
     \begin{enumerate}[(I)]
         \item (P) and (D) are infeasible
@@ -144,22 +150,26 @@ Since:
     thus (P) and (D) both have optimal solutions.
 \end{proof}
 
+\section{Strong Duality}
 \begin{thmbox}
-    \subsection{Theorem (Strong Duality Theorem)}
-    Let (P) and (D) be a pair of primal-dual LPs. Then
-    \begin{enumerate}[(1)]
-        \item If there exists an optimal solution $ \bm{\bar{x}} $ of (P), then there exists an optimal solution $ \bm{\bar{y}} $ of (D).
-        \item The value of $ \bm{\bar{x}} $ in (P) equals the value of $ \bm{\bar{y}} $ in (D).
-    \end{enumerate}
+    \begin{theorem}[Strong Duality]
+        Let (P) and (D) be a pair of primal-dual LPs. Then
+        \begin{enumerate}[(1)]
+            \item If there exists an optimal solution $ \bm{\bar{x}} $ of (P), then there exists an optimal solution $ \bm{\bar{y}} $ of (D).
+            \item The value of $ \bm{\bar{x}} $ in (P) equals the value of $ \bm{\bar{y}} $ in (D).
+        \end{enumerate}
+    \end{theorem}
 \end{thmbox}
 
+\section{A Geometric Characterization of Optimality}
+
 \subsection{Complementary Slackness}
-Recall our proof of Weak Duality. Then for LPs in SEF: 
+Recall our proof of Weak Duality. Then for LPs in SEF:
 $ \bm{\bar{x}}, \bm{\bar{y}} $ are feasible in (P) and (D) respectively.
 $ \bm{\bar{x}} $ is optimal in (P), $ \bm{\bar{y}} $ is optimal in
 (D)  if and only if
 \[ \bm{c} ^\top \bm{\bar{x}}=(A^\top \bm{\bar{y}})^\top \bm{\bar{x}}=\bm{\bar{y}}^\top(A \bm{\bar{x}})=
-\bm{\bar{y}}^\top \bm{b} \]
+    \bm{\bar{y}}^\top \bm{b} \]
 The first equality came from $ (A ^\top \bm{y})^\top=\bm{c}^\top $, and the
 last equality came from $ A \bm{\bar{x}}=\bm{b} $ (check Weak Duality Theorem -
 Special Form).
@@ -174,116 +184,120 @@ or $ (\bm{b}-A \bm{\bar{x}})_i=0 $ possibly both. We call these
 the Complementary Slackness Conditions (CS).
 
 \begin{thmbox}
-    \subsection{Theorem (Complementary Slackness Theorem)}
-    Let (P) and (D) be an arbitrary primal-dual pair. Let
-    $ \bm{\bar{x}} $ be a feasible solution to (P) and let
-    $ \bm{\bar{y}} $ be a feasible solution to (D). Then,
-    $ \bm{\bar{x}} $ is an optimal solution to (P) and
-    $ \bm{\bar{y}} $ is an optimal solution to (D) if and only if
-    the complementary slackness conditions hold.
+    \begin{theorem}[Complementary Slackness]
+        Let (P) and (D) be an arbitrary primal-dual pair. Let
+        $ \bm{\bar{x}} $ be a feasible solution to (P) and let
+        $ \bm{\bar{y}} $ be a feasible solution to (D). Then,
+        $ \bm{\bar{x}} $ is an optimal solution to (P) and
+        $ \bm{\bar{y}} $ is an optimal solution to (D) if and only if
+        the complementary slackness conditions hold.
+    \end{theorem}
 \end{thmbox}
 
-\subsection{Example (Complementary Slackness)}
-(P)
-\[ \max
-\begin{bmatrix}
-    -2 & -1 & 0
-\end{bmatrix}\bm{x} \]
-subject to
-\[
-\begin{bmatrix}
-    1 & 3 & 2\\
-    -1 & 4 & 2
-\end{bmatrix}\bm{x}
-\begin{matrix}
-    \ge\\
-    \le
-\end{matrix}
-\begin{bmatrix}
-    5\\
-    7
-\end{bmatrix}\]
-\[ x_1\le 0,\,x_2\ge 0,\,x_3\text{ free} \]
-\begin{enumerate}[(1)]
-    \item Write the dual (D) of (P)
-    \item Write the complementary slackness (CS) conditions for (P) and (D)
-    \item Use weak duality to prove that $ \bm{\bar{x}} $ is optimal for (P)
-    and $ \bm{\bar{y}} $ is optimal for (D)
-    \item Use CS to prove that $ \bm{\bar{x}} $ is optimal for (P) and
-    $ \bm{\bar{y}} $ is optimal for (D)
-\end{enumerate}
-and
-\[ \bm{\bar{x}}=(-1,0,3)^\top\qquad \bm{\bar{y}}=(-1,1)^\top \]
-\textbf{Solution.}
+\begin{exbox}
+    \begin{example}[Complementary Slackness]
+        (P)
+        \[ \max
+            \begin{bmatrix}
+                -2 & -1 & 0
+            \end{bmatrix}\bm{x} \]
+        subject to
+        \[
+            \begin{bmatrix}
+                1  & 3 & 2 \\
+                -1 & 4 & 2
+            \end{bmatrix}\bm{x}
+            \begin{matrix}
+                \geqslant \\
+                \le
+            \end{matrix}
+            \begin{bmatrix}
+                5 \\
+                7
+            \end{bmatrix}\]
+        \[ x_1\leqslant 0,\,x_2\geqslant  0,\,x_3\text{ free} \]
+        \begin{enumerate}[(1)]
+            \item Write the dual (D) of (P)
+            \item Write the complementary slackness (CS) conditions for (P) and (D)
+            \item Use weak duality to prove that $ \bm{\bar{x}} $ is optimal for (P)
+                  and $ \bm{\bar{y}} $ is optimal for (D)
+            \item Use CS to prove that $ \bm{\bar{x}} $ is optimal for (P) and
+                  $ \bm{\bar{y}} $ is optimal for (D)
+        \end{enumerate}
+        and
+        \[ \bm{\bar{x}}=(-1,0,3)^\top\qquad \bm{\bar{y}}=(-1,1)^\top \]
+        \textbf{Solution.}
 
-(1)
+        (1)
 
-(D)
-\[ \min
-\begin{bmatrix}
-    5 & 7
-\end{bmatrix} \]
-subject to
-\[
-\begin{bmatrix}
-    1 & -1\\
-    3 & 4\\
-    2 & 2
-\end{bmatrix}\bm{y}
-\begin{matrix}
-    \ge\\
-    \le\\
-    =
-\end{matrix}
-\begin{bmatrix}
-    -2\\
-    -1\\
-    0
-\end{bmatrix}\]
-\[ y_1\le 0,\,y_2\ge 0,\,y_3\text{ free} \]
+        (D)
+        \[ \min
+            \begin{bmatrix}
+                5 & 7
+            \end{bmatrix} \]
+        subject to
+        \[
+            \begin{bmatrix}
+                1 & -1 \\
+                3 & 4  \\
+                2 & 2
+            \end{bmatrix}\bm{y}
+            \begin{matrix}
+                \geqslant \\
+                \le       \\
+                =
+            \end{matrix}
+            \begin{bmatrix}
+                -2 \\
+                -1 \\
+                0
+            \end{bmatrix}\]
+        \[ y_1\leqslant 0,\,y_2\geqslant  0,\,y_3\text{ free} \]
 
-(2)
-\begin{itemize}
-    \item $ x_1=0 $ OR $ \boxed{y_1-y_2=-2} $
-    \item $ \boxed{x_2=0} $ OR $ 3y_1+4y_2=-1 $
-    \item $ y_1=0 $ OR $ \boxed{x_1+3x_2+2x_3=5} $
-    \item $ y_2=0 $ OR $ \boxed{-x_1+4x_2+2x_3=7} $
-\end{itemize}
+        (2)
+        \begin{itemize}
+            \item $ x_1=0 $ OR $ \boxed{y_1-y_2=-2} $
+            \item $ \boxed{x_2=0} $ OR $ 3y_1+4y_2=-1 $
+            \item $ y_1=0 $ OR $ \boxed{x_1+3x_2+2x_3=5} $
+            \item $ y_2=0 $ OR $ \boxed{-x_1+4x_2+2x_3=7} $
+        \end{itemize}
 
-(3) Verify that $ \bm{\bar{x}} $ and $ \bm{\bar{y}} $ are
-feasible for (P) and (D), and check
-$ \bm{c}^\top \bm{\bar{x}}=\bm{b}^\top \bm{\bar{y}} $.
+        (3) Verify that $ \bm{\bar{x}} $ and $ \bm{\bar{y}} $ are
+        feasible for (P) and (D), and check
+        $ \bm{c}^\top \bm{\bar{x}}=\bm{b}^\top \bm{\bar{y}} $.
 
-(4) By Complementary Slackness Theorem, this is trivially true as seen boxed
-above.
+        (4) By Complementary Slackness Theorem, this is trivially true as seen boxed
+        above.
+    \end{example}
+\end{exbox}
 
-\subsection{Geometric Interpretation of CS}
+\subsection{Geometry}
 (P) \[ \max 2x_1+x_2 \]
 subject to
 \[ \begin{bmatrix}
-    1 & 1\\
-    -1 & 0\\
-    0 & -1
-\end{bmatrix}\bm{x}\le
-\begin{bmatrix}
-    4\\
-    0\\
-    0
-\end{bmatrix} \]
+        1  & 1  \\
+        -1 & 0  \\
+        0  & -1
+    \end{bmatrix}\bm{x}\le
+    \begin{bmatrix}
+        4 \\
+        0 \\
+        0
+    \end{bmatrix} \]
 
 (D)
 \[ \min 4y_1 \]
 subject to
 \[ \begin{bmatrix}
-    1 & -1 & 0\\
-    1 & 0 & -1
-\end{bmatrix}
-\bm{y}=
-\begin{bmatrix}
-    2\\
-    1
-\end{bmatrix} \]
-\[ y_1,\,y_2,\,y_3\ge 0 \]
+        1 & -1 & 0  \\
+        1 & 0  & -1
+    \end{bmatrix}
+    \bm{y}=
+    \begin{bmatrix}
+        2 \\
+        1
+    \end{bmatrix} \]
+\[ y_1,\,y_2,\,y_3\geqslant  0 \]
 
 Let $ \bm{\bar{x}} $ be a feasible solution of (P) and $ J(\bm{\bar{x}}) $
 denote the indices of the tight constraints at $ \bm{\bar{x}} $.
@@ -292,10 +306,10 @@ Then, $ \bm{\bar{x}} $ is optimal in (P) if and only if $ c $ is a
 non-negative linear combination of tights rows ($ A^= $).
 
 Suppose $ \bm{\bar{x}}=(4,0)^\top $. Then $ A^= =\begin{bmatrix}
-    1 & 1\\
-    0 & -1
-\end{bmatrix} $. That is, $ \bm{\bar{x}} $ is tight at $ \row_1(A) $
-and $ \row_3(A) $. 
+        1 & 1  \\
+        0 & -1
+    \end{bmatrix} $. That is, $ \bm{\bar{x}} $ is tight at $ \row_1(A) $
+and $ \row_3(A) $.
 
 $ J(\bm{\bar{x}}):=\{1,3\} $, so $ \bm{\bar{x}} $
 is optimal if and only if $ \exists \, \bar{y}_1,\,\bar{y}_2 $ such that
