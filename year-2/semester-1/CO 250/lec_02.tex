@@ -10,20 +10,21 @@ Note that an optimization problem may have many optimal
 solutions, but it may have one optimal value.
 
 \begin{exbox}
-    \begin{example}[Refer to 1.1]
+    \begin{example}[Extension of \ref{Manufacturing Tables and Chairs}]
         Suppose an entrepreneur offers at most 500 machine hours/week
         (rental) at \$2.5/hour. Can we incorporate this new situation
         into our mathematical model? Can it still be a LP? Yes.
         $x_3:=$ the number of machine hours rented from the business
         person per week.
-        \[\max 10x_1+15x_2-2.5x_3\]
-        subject to
-        \begin{align*}
-            2x_1+x_2\leqslant 1600+x_3 \\
-            x_1+3x_2\leqslant 1200     \\
-            x_3\leqslant 500           \\
-            x_1,x_2,x_3\geqslant  0
-        \end{align*}
+        \begin{equation}
+            \begin{aligned}
+                 & \text{maximize}   & \quad & 10x_1+15x_2-2.5x_3         \\
+                 & \text{subject to} &       & 2x_1+x_2\leqslant 1600+x_3 \\
+                 &                   &       & x_1+3x_2\leqslant 1200     \\
+                 &                   &       & x_3\leqslant 500           \\
+                 &                   &       & x_1,x_2,x_3\geqslant  0    \\
+            \end{aligned}\tag{LP}
+        \end{equation}
     \end{example}
 \end{exbox}
 \begin{exbox}
@@ -46,7 +47,7 @@ solutions, but it may have one optimal value.
                 x_2\geqslant  6x_1
             \end{array}\right\}
         \]
-        In general suppose $f,g$ are affine functions
+        In general, suppose $f,g$ are affine functions
         \[
             b_1\leqslant \nicefrac{f(\bm{x})}{g(\bm{x})}\leqslant b_2
         \]
@@ -61,12 +62,12 @@ solutions, but it may have one optimal value.
 
 
 \begin{exbox}
-    \begin{example}[Multi-period, Multi-stage optimization problems]
+    \begin{example}[Multi-period, Multi-stage Optimization Problems]
         Consider planning for multiple periods where in each period we
         want to decide how much to produce, how much to keep in stock
         (inventory) for the upcoming periods.
 
-        \textbf{Variables}
+        \underline{Variables}
 
         For all $ i\in \{1,\ldots,T\} $, where $ T $ is the last period, we have:
         \begin{itemize}
@@ -75,27 +76,23 @@ solutions, but it may have one optimal value.
             \item $ t_i:= $ the amount of units in stock at the end of period $ i $
             \item $ t_0:= $ the amount of units in stock at the beginning of the first period.
         \end{itemize}
-        \textbf{Key Constraints}
+        \underline{Key Constraints}
         \begin{align*}
-            p_i+t_{i-1}=s_{i}+t_i \qquad\qquad \forall i\in \{1,\dots,T\} \\
-            p_t,s_t,d_t\geqslant  0 \qquad\qquad \forall i\in \{1,\dots,T\}
+            p_i+t_{i-1}=s_{i}+t_i   & \quad & \forall i\in \{1,\dots,T\} \\
+            p_i,s_i,d_i\geqslant  0 &       & \forall i\in \{1,\dots,T\}
         \end{align*}
+        \begin{remark}
+            Typically we have additional constraints on $s_i,\,p_i,\,t_i,\,t_0$.
+        \end{remark}
     \end{example}
 \end{exbox}
 
-\begin{remark}
-    Typically we have additional constraints on $s_i,\,p_i,\,t_i,\,t_0$.
-\end{remark}
-
 \begin{defbox}
     \begin{definition}
-        An \emph{integer program} (IP) is obtained from linear program
-        by requiring a non-empty subset of variables to be integers.
+        An \textbf{\emph{integer program}} (IP) is obtained from linear program
+        by requiring a non-empty subset of variables to be integers. If all variables are
+        restricted to be integers, we call the integer program a
+        \textbf{\emph{Pure IP}}, and if at least some variables may take
+        real values, we call the integer program a \textbf{\emph{Mixed IP}}.
     \end{definition}
 \end{defbox}
-
-\begin{remark}
-    If all variables are restricted to be integers we say that we
-    have a \emph{Pure IP}, and if at least some variables may take
-    real values, we call it a \emph{Mixed IP}.
-\end{remark}

@@ -1,7 +1,7 @@
 \chapter{Introduction}
 \makeheading{2019-09-05}
 \begin{exbox}
-    \begin{example}[Manufacturing Tables and Chairs]
+    \begin{example}[\label{Manufacturing Tables and Chairs}Manufacturing Tables and Chairs]
 
         $ \; $
 
@@ -38,15 +38,14 @@
         \end{itemize}
 
         We can then formulate the linear programming (LP) model:
-
-        (LP)
-        \[\max 10x_1 + 15x_2\]
-        subject to
-        \begin{align*}
-            2x_1 + x_2 \leqslant 1600 \\
-            x_1 + 3x_2 \leqslant 1200 \\
-            x_1, x_2 \geqslant  0
-        \end{align*}
+        \begin{equation}
+            \begin{aligned}
+                 & \text{minimize}   & \quad & 10x_1 + 15x_2             \\
+                 & \text{subject to} &       & 2x_1 + x_2 \leqslant 1600 \\
+                 &                   &       & x_1 + 3x_2 \leqslant 1200 \\
+                 &                   &       & x_1, x_2 \geqslant  0
+            \end{aligned}\tag{LP}
+        \end{equation}
 
         An \emph{optimal} solution to the LP using an algorithm later in
         in this course is $ \bm{x}:=(720,160)^\top $, which means
@@ -61,13 +60,14 @@
         $i$ available per week $\forall i\in I$. One unit of product $j$ yields $c_j$ of profit for
         $\forall j\in J$. Manufacturing one unit of product $j$ requires $a_{ij}$ units of resource $i$.
         We want to maximize the total profit of this manufacturing process.
-        $x_j :=$ amount of product $j$ manufactured per week. (LP)
-        \[\max c_1x_1 + \dots + c_nx_n = \sum\limits_{j=1}^n c_jx_j\]
-        subject to
-        \begin{align*}
-            \sum\limits_{j=1}^n a_{ij}x_{ij}\leqslant b_i \qquad\qquad\forall i\in\{1,\dots,m\} \\
-            x_{j}\geqslant  0 \qquad\qquad\forall j\in\{1,\dots,n\}
-        \end{align*}
+        $x_j :=$ amount of product $j$ manufactured per week.
+        \begin{equation}
+            \begin{aligned}
+                 & \text{maximize}   & \quad & c_1x_1 + \dots + c_nx_n = \sum\limits_{j=1}^n c_jx_j                             \\
+                 & \text{subject to} &       & \sum\limits_{j=1}^n a_{ij}x_{ij}\leqslant b_i        & \forall i\in\{1,\dots,m\} \\
+                 &                   &       & x_j\geqslant  0                                      & \forall j\in\{1,\dots,n\}
+            \end{aligned}\tag{LP}\label{1.2}
+        \end{equation}
     \end{example}
 \end{exbox}
 
@@ -90,20 +90,20 @@
     \]
     Given $A,\bm{b},\bm{c}$ with $\bm{x}\in\mathbb{R}^n$ as the variable vector, we realize that
     $\bm{c}^\top  \bm{x}=\sum\limits_{j=1}^n c_jx_j$ is exactly the model that we wanted to maximize
-    in 1.2 such that it satisfies $A\bm{x}\leqslant \bm{b}$, with $\bm{x}\geqslant  \bm{0}$.
+    in \ref{1.2} such that it satisfies $A\bm{x}\leqslant \bm{b}$, with $\bm{x}\geqslant  \bm{0}$.
 \end{remark}
 
 \begin{defbox}
     \begin{definition}
-        Let $f:\mathbb{R}^n\rightarrow\mathbb{R}$. $f$ is an \emph{affine function} if
-        $f(\bm{x})=\bm{a}^\top \bm{x}+\beta$ for some $\bm{a}\in\mathbb{R}^n$, and $\beta\in\mathbb{R}$.
+        Let $f:\mathbb{R}^n\rightarrow\mathbb{R}$. $f$ is an \textbf{\emph{affine function}} if
+        $f(\bm{x})=\bm{a}^\top \bm{x}+\beta$ for some $\bm{a}\in\mathbb{R}^n$ and $\beta\in\mathbb{R}$.
     \end{definition}
 \end{defbox}
 
 \begin{defbox}
     \begin{definition}
-        Let $f:\mathbb{R}^n\rightarrow\mathbb{R}$. $f$ is a \emph{linear function} if
-        $f$ is an affine function such that $\beta=0$.
+        Let $f:\mathbb{R}^n\rightarrow\mathbb{R}$. $f$ is a \textbf{\emph{linear function}} if
+        $f$ is an affine function with $\beta=0$.
     \end{definition}
 \end{defbox}
 
@@ -113,19 +113,19 @@
 
 \begin{defbox}
     \begin{definition}
-        A \emph{linear constraint} is one of
+        A \textbf{\emph{linear constraint}} is one of
         \begin{align*}
             f(\bm{x})\leqslant \beta \\
-            f(\bm{x})=\beta    \\
+            f(\bm{x})=\beta          \\
             f(\bm{x})\geqslant  \beta
         \end{align*}
-        where $f$ is a linear function and $ \beta\in\mathbb{R} $
+        where $f$ is a linear function and $ \beta\in\mathbb{R} $.
     \end{definition}
 \end{defbox}
 
 \begin{defbox}
     \begin{definition}
-        A \emph{linear program} (LP) is the problem of minimizing or
+        A \textbf{\emph{linear program}} (LP) is the problem of minimizing or
         maximizing an affine function subject to a finite number
         of linear constraints.
     \end{definition}

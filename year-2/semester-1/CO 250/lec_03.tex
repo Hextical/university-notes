@@ -1,13 +1,19 @@
 \makeheading{2019-09-12}
-Recall, IP problems are obtained from LP problems by requiring
-a non-empty subset of variables to be integers. So, in IP problems
-we are allowed to have constraints $x_i\in\mathbb{Z}$, $x\in\mathbb{Z}^n$,
-$x_i\in\{0,1\}$, $x_i$ is an integer, $x_i\in\{0,1\}^n$.
+\begin{remark}
+    In integer programs, some examples of constraints that can be used are:
+    \begin{itemize}
+        \item $x_i\in\mathbb{Z}$
+        \item $x\in\mathbb{Z}^n$
+        \item $x_i\in\{0,1\}$
+        \item $x_i$ is an integer
+        \item $x_i\in\{0,1\}^n$
+    \end{itemize}
+\end{remark}
 
 \begin{exbox}
     \begin{example}[Assignment Problem]
         SPIT has a campus near the North Pole. They have three buildings named
-        $A,B,C$ which need to be renovated to be served as one of a
+        A, B, C, which need to be renovated to be served as one of a
         Library, Laboratory, or Gym (sometimes called functions). Each
         building must be assigned one activity, and each activity must
         be assigned one building. Renovation costs in millions of
@@ -23,7 +29,9 @@ $x_i\in\{0,1\}$, $x_i$ is an integer, $x_i\in\{0,1\}^n$.
             \end{tabular}\\
         \end{center}
         Find an assignment of activities to buildings so that the total
-        renovation cost is minimized.\\
+        renovation cost is minimized.
+
+        \textbf{Solution.}
         Let us generalize to $n$ buildings and $n$ activities.
         \[
             x_{ij}:=
@@ -33,53 +41,59 @@ $x_i\in\{0,1\}$, $x_i$ is an integer, $x_i\in\{0,1\}^n$.
             \end{cases}
             \forall i,j\in\{1,\dots,n\}
         \]
+
         \[
             c_{ij}:=\text{renovation cost for assigning activity $j$ to building $i$}
         \]
-        (LP)
-        \[\min \sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{n}c_{ij}x_{ij}\]
-        subject to
-        \begin{align}
-            \sum\limits_{i = 1}^{n}x_{ij}=1 \qquad \forall j\in\{1,\dots,n\} \\
-            \sum\limits_{j = 1}^{n}x_{ij}=1 \qquad \forall i\in\{1,\dots,n\} \\
-            x_{ij}=\{0,1\} \qquad \forall i,j\in\{1,\dots,n\}
-        \end{align}
+        \begin{equation}
+            \begin{aligned}
+                 & \text{minimize}   & \quad & \sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{n}c_{ij}x_{ij}                                       \\
+                 & \text{subject to} &       & \sum\limits_{i = 1}^{n}x_{ij}=1                            & \quad & \forall j\in\{1,\dots,n\}   \\
+                 &                   &       & \sum\limits_{j = 1}^{n}x_{ij}=1                            & \quad & \forall i\in\{1,\dots,n\}   \\
+                 &                   &       & x_{ij}=\{0,1\}                                             & \quad & \forall i,j\in\{1,\dots,n\} \\
+                 &                   &       &
+            \end{aligned}\tag{IP}
+        \end{equation}
+        \begin{itemize}
+            \item First constraint $\implies$ every activity is assigned exactly one building
+            \item Second constraint $\implies$ every building is assigned exactly one activity
+            \item Third constraint $\implies $ $ x_{ij} $ is a \textbf{\emph{binary}} variable that takes
+                  values only $ 1 $ or $ 0 $. If we wanted an IP formulation,
+                  we would remove the constraint $ x_{ij}=\{0,1\} $
+                  and add: $ x_{ij}\geqslant  0 $, $ x_{ij}\leqslant 1 $ and $ x_{ij} $ integer.
+        \end{itemize}
 
-        $(1)\implies$ every activity is assigned exactly one building\\
-        $(2)\implies$ every building is assigned exactly one activity\\
-        $(3)\implies $ $ x_{ij} $ is a \emph{binary} variable that takes
-        values only $ 1 $ or $ 0 $. If we wanted an IP formulation,
-        we would remove the constraint $ x_{ij}=\{0,1\} $
-        and add: $ x_{ij}\geqslant  0 $, $ x_{ij}\leqslant 1 $ and $ x_{ij} $ integer.
     \end{example}
 \end{exbox}
 
 Suppose $c_{ij}\in\mathbb{R}$ and consider the inequality version
-(if we don't assign exactly one item to another):
-\[\min \sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{n}c_{ij}x_{ij}\]
-subject to
-\begin{align*}
-    \sum\limits_{i = 1}^{n}x_{ij}\le1 \qquad \forall j\in\{1,\dots,n\} \\
-    \sum\limits_{j = 1}^{n}x_{ij}\le1 \qquad \forall i\in\{1,\dots,n\} \\
-    x_{ij}=\{0,1\} \qquad \forall i,j\in\{1,\dots,n\}
-\end{align*}
+(if we don't assign \textbf{exactly} one item to another):
+\begin{equation}
+    \begin{aligned}
+         & \text{minimize}   & \quad & \sum\limits_{i = 1}^{n}\sum\limits_{j = 1}^{n}c_{ij}x_{ij}                                       \\
+         & \text{subject to} &       & \sum\limits_{i = 1}^{n}x_{ij}\leqslant 1                   & \quad & \forall j\in\{1,\dots,n\}   \\
+         &                   &       & \sum\limits_{j = 1}^{n}x_{ij}\leqslant 1                   & \quad & \forall i\in\{1,\dots,n\}   \\
+         &                   &       & x_{ij}=\{0,1\}                                             & \quad & \forall i,j\in\{1,\dots,n\} \\
+         &                   &       &
+    \end{aligned}\tag{IP}
+\end{equation}
 We can generalize this class optimization problem further.
 
 \chapter{Introduction to Graphs}
 
 \begin{defbox}
     \begin{definition}
-        An \emph{undirected graph} is a pair $G=(V,E)$, where $V$ is a finite set
-        of elements called \emph{vertices}, and $E$ is a set of pairs of distinct
-        vertices called \emph{edges}. All edges in an undirected graph are bidirectional.
+        An \textbf{\emph{undirected graph}} is a pair $G=(V,E)$, where $V$ is a finite set
+        of elements called \textbf{\emph{vertices}}, and $E$ is a set of pairs of distinct
+        vertices called \textbf{\emph{edges}}. All edges in an undirected graph are bidirectional.
     \end{definition}
 \end{defbox}
 
 \begin{defbox}
     \begin{definition}
-        Let $ G=(V,E) $ be a graph. Suppose $ uv\in E $. $ u,\,v $ are \emph{adjacent}
-        vertices. $ u,\,v $ are the \emph{endpoints} of the edge $ uv $. The edge
-        $ uv $ is \emph{incident} to vertices $ u $ and $ v $.
+        Let $ G=(V,E) $ be a graph. Suppose $ uv\in E $. $ u,\,v $ are \textbf{\emph{adjacent}}
+        vertices. $ u,\,v $ are the \textbf{\emph{endpoints}} of the edge $ uv $. The edge
+        $ uv $ is \textbf{\emph{incident}} to vertices $ u $ and $ v $.
     \end{definition}
 \end{defbox}
 \begin{exbox}
@@ -110,7 +124,7 @@ We can generalize this class optimization problem further.
 
 \begin{defbox}
     \begin{definition}
-        Given a graph $G=(V,E)$, a \emph{matching} $M$ in $G$ is a subset of edges
+        Given a graph $G=(V,E)$, a \textbf{\emph{matching}} $M$ in $G$ is a subset of edges
         in $G$ such that no two edges in $M$ share a common vertex.
     \end{definition}
 \end{defbox}
@@ -118,9 +132,9 @@ We can generalize this class optimization problem further.
     \begin{example}[Matching]
         In the above example:
         \begin{align*}
-            \text{Matching}\qquad & \text{Not matching} \\
-            M:=\{12\} \qquad      & M:=\{12,25\}        \\
-            M:=\emptyset \qquad   & M:= \{67\}          \\
+            \text{Matching}\qquad & \text{Not a Matching} \\
+            M:=\{12\} \qquad      & M:=\{12,25\}          \\
+            M:=\emptyset \qquad   & M:= \{67\}            \\
             M:=\{12,35\} \qquad
         \end{align*}
     \end{example}
@@ -128,9 +142,9 @@ We can generalize this class optimization problem further.
 
 \begin{defbox}
     \begin{definition}
-        Given a graph $G=(V,E)$, if every vertex $V$ in $G$ is
+        Given a graph $G=(V,E)$, if every vertex in $V$ of $G$ is
         an endpoint of an edge in $M$, we call
-        the matching a \emph{perfect matching}.
+        the matching a \textbf{\emph{perfect matching}}.
     \end{definition}
 \end{defbox}
 
