@@ -1,2 +1,100 @@
 \makeheading{2020-03-09}
-TODO.
+\textbf{Recall}: Let $ C $ be an $ (n,k) $ code with generator polynomial
+$ g(x) $. Suppose $ C $ is a $ t $-c.b.e.c.c. So, $ t\leqslant n-k $.
+\[ H=\left[ \; I_{n-k}\mid -R^\top \right] \]
+is a PCM for $ C $; $ s(x)=r(x)\mod g(x) $.
+
+\textbf{Idea}: Suppose $ e $ is a cyclic burst of length at most $ t $.
+Compute shifts of $ e $, say $ e_i=x^i e $ has all its non-zero entries in the first
+$ (n-k) $ positions. Then,
+\[ s_i(x)=e_i(x)\mod g_i(x) \]
+and we can recognize such an $ s_i(x) $ since it is a non-cyclic burst of length
+at most $ t $. Them, $ e=x^{n-i}e_i $. How do we compute $ s_i(x) $? Recall,
+$ \bm{r}=\bm{c}+\bm{e} $. So, $ x^i \bm{r}=x^i\bm{c}+x^i\bm{e} $, so
+$ x^i \bm{r} $ and $ x^i\bm{e} $ have the same syndrome.
+
+\section{Error Trapping Decoding (For Cyclic Burst Errors)}
+Let $ r(x)= $ received polynomial. Let $ s_i(x)= $ syndrome of $ x^i r(x) $ for
+each $ i\in[0,n-1] $. So, $ s_0=r(x)\mod g(x) $.
+
+\SetKwFor{For}{for (}{) $\lbrace$}{$\rbrace$}
+\begin{algbox}
+    \begin{algorithm}[H]
+        \caption{}
+        \SetKwInOut{Input}{Input}
+        \SetKwInOut{Output}{Output}
+        \Input{}
+        \Output{}
+
+        \For{$i = 0;\ i < n-1;\ i++$}{
+        Compute $ s_i(x) $.
+        If $ s_i(x) $ is a non-cyclic burst of length at most $ t $,
+        then
+
+        (1) Let $ e_i(x)=(s_i(x),0) $
+
+        (2) Let $ e(x)=x^{n-i}e_i(x) $
+
+        (3) Decode $ r(x) $ to $ r(x)-e(x) $.
+        }
+    \end{algorithm}
+\end{algbox}
+
+\begin{exbox}
+    \begin{example}
+        $ g(x)=1+x+x^2+x^3+x^6 $ is the generator polynomial for $ (15,9) $-binary
+        cyclic code with c.b.e.c.c $ 3 $. Decode $ r=(1110\; 1110\; 1100\; 000) $.
+
+        \textbf{Solution.}
+        Compute $ s_0(x)=r(x)\mod g(x)=x^5+x^4+x+1 $.
+        \[ \begin{array}{|c|c|}
+                \hline
+                i & s_i(x)\\
+                \hline
+                0 & 110011 \\
+                1 & 100101 \\
+                2 & 101110 \\
+                3 & 110111 \\
+                4 & 110111 \\
+                5 & 100111 \\
+                6 & 101111 \\
+                7 & 101011 \\
+                8 & 101001 \\
+                9 & 101000 \\
+                \hline
+            \end{array} \]
+            \[ \implies e_9=(101000\; 0000000000) \]
+            \[ \implies \bm{e}=x^6 e_9=(000000\; 101000\;000 ) \]
+            \[ \implies \bm{c}=\bm{r}-\bm{e}=(1110\;1100\;0100\;999) \]
+            Check: $ H\bm{c}^\top=\bm{0} \leftarrow $ bad OR $ g(x)\mid c(x) $.
+    \end{example}
+\end{exbox}
+
+\section{Interleaving}
+\textbf{Goal}: Improve the c.b.e.c.c of a code.
+
+Suppose $ C $ is an $ (n,k) $-code with c.b.e.c.c $ t $.
+
+Suppose the following codewords are transmitted:
+\[ \begin{array}{c}
+    v_1=(v_{11},v_{12},\ldots ,v_{1n})\in C\\
+    v_2=(v_{21},v_{22},\ldots ,v_{2n})\in C\\
+    \vdots\\
+    v_s=(v_{s1},v_{s2},\ldots ,v_{sn})\in C
+\end{array} \]
+Suppose $ v_1,\ldots ,v_s $ are transmitted in that order. If a cyclic burst error
+of length at most $ t $ occurs in any codeword, that error can be corrected.
+
+Instead, we transmit: the \underline{columns in order}:
+\[ \left[ v_{11},v_{21},\ldots ,v_{s1},\ldots ,v_{1n},v_{2n},\ldots ,v_{sn} \right] \]
+Now, if a cyclic burst error of length at most $ st $ occurs in this (fat) codeword,
+this means that each original codeword suffered a cyclic error burst of length at most $ t $.
+
+\begin{thmbox}
+    \begin{theorem}
+        Suppose $ C $ is an $ (n,k) $-cyclic code with generator polynomial $ g(x) $
+        and cyclic burst error correcting capability $ t $. $ C^* $, the code
+        obtained by \underline{interleaving $C$ to a depth $s$} is an
+        $ (ns,ks) $-cyclic code with generator polynomial $ g^*(x)=g(x^s) $.
+    \end{theorem}
+\end{thmbox}

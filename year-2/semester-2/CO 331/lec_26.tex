@@ -1,2 +1,97 @@
 \makeheading{2020-03-11}
-TODO.
+\section{Minimal Polynomials}
+Recall that if $ F=GF(p^m) $ is a finite field of characteristic $ p $,
+then $ \mathbb{Z}_p $ is a subfield of $ F $, and we can view
+$ F $ as an $ m $-dimensional vector space over $ \mathbb{Z}_p $. More
+generally, for any prime power $ q $, $ GF(q) $ is a subfield of $ GF(q^m) $,
+and we can view $ GF(q^m) $ as an $ m $-dimensional vector space over $ GF(q) $.
+\begin{exbox}
+    \begin{example}
+        $ GF(2^{16}) $ is:
+        \begin{itemize}
+            \item a $ 16 $-dimensional vector space over $ GF(2) $,
+            \item an $ 8 $-dimensional vector space over $ GF(2^2) $,
+            \item a $ 4 $-dimensional vector space over $ GF(2^4) $,
+            \item a $ 2 $-dimensional vector space over $ GF(2^8) $, and
+            \item a $ 1 $-dimensional vector space over $ GF(2^{16}) $.
+        \end{itemize}
+    \end{example}
+\end{exbox}
+We call $ GF(q^m) $ the \textbf{extension field}, and $ GF(q) $ the \textbf{subfield}.
+Informally, $ GF(q^m) $ is the ``big field'', and $ GF(q) $ is the ``small field''.
+
+Here is the main definition in this section:
+\begin{defbox}
+    \begin{definition}
+        Let $ \alpha\in GF(q^m) $. \textbf{The minimal polynomial
+        of $ \bm{\alpha} $ over $ \bm{GF(q)} $}, denoted $ m_\alpha(x) $, is
+        the monic polynomial of smallest degree in $ GF(q)[x] $ that
+        has $ \alpha $ as a root; that is, $ m_\alpha(\alpha)=0 $.
+    \end{definition}
+\end{defbox}
+\begin{remark} $ \; $
+    \begin{enumerate}[(1)]
+        \item If $ m_\alpha(x)\in GF(q)[x] $ is a non-zero polynomial with $ m_\alpha(\alpha) $
+        and $ c $ is the leading coefficient of $ m_\alpha(x) $, then
+        $ m_\alpha^\prime(x)=c^{-1}m_\alpha(x) $ is a monic polynomial in $ GF(q)[x] $
+        with $ m_\alpha^\prime(\alpha)=0 $.
+        \item More generally, multiplying a polynomial by a non-zero constant does not change
+        the roots of the polynomial.
+        \item We have $ m_0(x)=x $.
+        \item If $ \alpha\neq 0 $, let $ t $ be the order of $ \alpha $
+        (recall that $ t\mid (q^m-1) $). Then, $ \alpha $ is a root of $ x^t-1\in GF(q)[x] $.
+        It follows that there does indeed exist a monic polynomial of smallest degree in $ GF(q)[x] $
+        having $ \alpha $ as a root.
+    \end{enumerate}
+\end{remark}
+
+\begin{exbox}
+    \begin{example}
+        We found the minimal polynomial of elements in $ GF(2^2)=\mathbb{Z}_2[x]/(x^2+x+1) $
+        over $ GF(2) $ by trial and error:
+        \begin{itemize}
+            \item $ m_0(y)=y $.
+            \item $ m_1(y)=y+1 $.
+            \item $ m_x(y)=y^2+y+1 $.
+            \item $ m_{x+1}(y)=y^2+y+1 $.
+        \end{itemize}
+    \end{example}
+\end{exbox}
+\begin{thmbox}
+    \begin{theorem}
+        Let $ \alpha\in GF(q^m) $.
+        \begin{enumerate}[(i)]
+            \item The minimal polynomial, $ m_\alpha(x) $ of $ \alpha $
+            over $ GF(q) $ is unique.
+            \item $ m_\alpha(x) $ is irreducible over $ GF(q) $.
+            \item $ \deg(m_\alpha)\leqslant m $.
+            \item If $ f(x)\in GF(q)[x] $, then, $ f(\alpha)=0 $ if and only
+                  if $ m_\alpha(x)\mid f(x) $.
+        \end{enumerate}
+    \end{theorem}
+\end{thmbox}
+\begin{proof} $ \; $
+
+    (i) Suppose there are two monic polynomials, $ m_1(x) $ and $ m_2(x) $,
+    of (the same) smallest degree in $ GF(q)[x] $ that have $ \alpha $ as a root. Consider
+    $ r(x)=m_1(x)-m_2(x) $. Then,
+    \[ r(\alpha)=m_1(\alpha)-m_2(\alpha)=0-0=0 \]
+    But, $ \deg(r)<\deg(m_1) $, and so we conclude that $ r(x)=0 $. Hence, $ m_1(x)=m_2(x) $.
+
+    (ii) Suppose that $ m_\alpha $ is reducible over $ GF(q) $. Then, we can write
+    \[ m_\alpha(x)=s(x)t(x) \]
+    for some $ s,t\in GF(q)[x] $ with $ \deg(s),\deg(t)<\deg(m_\alpha) $. Then,
+    \[ m_\alpha(\alpha)=0=s(\alpha)t(\alpha), \]
+    and hence either of $ s(\alpha)=0 $ or $ t(\alpha)=0 $. In either case,
+    we have a contradiction of the minimality of $ \deg(m_\alpha) $. We conclude
+    that $ m_\alpha $ is irreducible over $ GF(q) $.
+
+    (iii) Recall that $ GF(q^m) $ can be viewed as an $ m $-dimensional vector space
+    over $ GF(q) $. Thus, the $ m+1 $ field elements $ 1,\alpha,\alpha^2,\ldots ,\alpha^m $
+    are linearly dependent over $ GF(q) $. Thus, we can write
+    \[ a_0+a_1\alpha+\cdots+a_m\alpha^m=0, \]
+    where $ a_0,a_1,\ldots ,a_m\in GF(q) $, and not all are $ 0 $. Hence, $ \alpha $
+    is a root of the non-zero polynomial
+    \[ a_0+a_1x+\cdots+a_mx^m\in GF(q)[x] \]
+    having degree $ \leqslant m $. It follows that $ \deg(m_\alpha) \leqslant m $.
+\end{proof}
