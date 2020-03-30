@@ -28,22 +28,17 @@
 
 \begin{thmbox}
     \begin{theorem}
-        Suppose $ d(C)=d $, then $ C $ is a $ (d-1) $-error detecting code.
+        If $ d(C)=d $, then $ C $ is a $ (d-1) $-error detecting code.
     \end{theorem} \end{thmbox}
 
 \begin{proof}
-    Suppose $ \bm{c}\in C $ is transmitted $ \bm{r} $ is received. Let
-    $ e $ denote the amount of errors that have occurred in transmission.
-    \begin{itemize}
-        \item If $ e = 0 $, then $ \bm{r}=\bm{c}\in C $, and the decoder accepts
-              $ \bm{r} $.
-        \item If $ e \geq d $, then the decoder can make the wrong
-              choice since $ d(C)=d $.
-        \item If $ e\in[1,d-1] $, then
-              $ 1\leqslant d(\bm{r},\bm{c})\leqslant d-1 $.
-              So, $ \bm{r}\notin C $, hence the decoder
-              rejects $ \bm{r} $. Hence, $ C $ is a $ (d-1) $-error detecting code.
-    \end{itemize}
+    Suppose $ \bm{c}\in C $ is transmitted $ \bm{r} $ is received. If no
+    errors occurred during transmission, then $ \bm{r}=\bm{c} $,
+    so the decoder correctly accepts $ \bm{r} $. If at least $ 1 $
+    and at most $ (d-1) $ errors occur, then
+    $ 1\leqslant d(\bm{r},\bm{c})\leqslant d-1 $. Since $ d(C)=d $,
+    we have $ \bm{r}\notin C $. Thus the decoder correctly rejects
+    $ \bm{r} $. Thus $ C $ is a $ (d-1) $-error detecting code.
 \end{proof}
 
 \begin{thmbox}
@@ -53,10 +48,10 @@
 
 \begin{proof}
     Since $ d(C)=d $, there exists codewords $ \bm{c}_1,\bm{c}_2\in C $
-    with $ d(\bm{c}_1,\bm{c}_2)=d $. If $ \bm{c}_1 $ is sent and $ \bm{r} $
-    is received with $ d $ errors, it is possible $ \bm{r}=\bm{c}_2 $
-    is received. In this case, the decoder accepts $ \bm{c}_2 $.
-    Hence, $ C $ is not a $ d $-error detecting code.
+    with $ d(\bm{c}_1,\bm{c}_2)=d $. Hence it is possible that
+    $ \bm{c}_1 $ is sent, $ d $ errors are introduced, and $ \bm{c}_2 $
+    is received. In this case, the decoder incorrectly accepts
+    $ \bm{c}_2 $. Thus $ C $ is not a $ d $-error detecting code.
 \end{proof}
 
 \begin{thmbox}
@@ -107,10 +102,8 @@ This question can be viewed as a \textbf{sphere packing problem}:
 Can we place $ M $ spheres of radius $ e $ in $ A^n $ such that
 no two spheres overlap? This is a purely combinatorial problem.
 
-Given $ A=\{0,1\},\,n=128,\,M=2^{64} $, determine
-if an $ [n,M] $-code $ C $ over $ A $ with $ d(C)=d $ exists.
-
-The answer to this problem is yes and we will see this in the following lectures.
+Does there exists a block code with parameters
+$ q=2,\,n=128,\,M=2^{64},\,d\geqslant 22 $? Yes, we will see this in Chapter 6.
 
 \textbf{Roadmap:} We'll view $ \{0,1\}^{n} $ as a vector space of
 dimension $ n $ over $ \mathbb{Z}_q $ where $ |A|=q $. We will chose the code

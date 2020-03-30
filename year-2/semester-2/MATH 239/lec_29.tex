@@ -1,0 +1,133 @@
+\makeheading{2020-03-25}
+
+\textbf{Q}: Which graphs can be drawn on a mobius strip?
+
+\begin{itemize}
+    \item Non-planar graphs like $ K_5 $
+\end{itemize}
+
+\begin{thmbox}
+    \begin{theorem}[Handshaking for Faces]
+        If $ G $ is a planar graph and $ F $ is the set of
+        faces in some drawing of $ G $, then
+        \[ \sum\limits_{f\in F}\deg(f)=2|E(G)| \]
+    \end{theorem}
+\end{thmbox}
+
+\begin{proof}
+    \[ \sum\limits_{f\in F}\deg(f)
+        =\sum\limits_{f\in F}(\text{length of boundary walk of }f) \]
+    Each edge contributes $ 1 $ to the length of exactly
+    two boundary walks of faces (one for each side).
+    Therefore,
+    \[ \sum\limits_{f\in F}(\text{length of boundary walk of }f)
+        =2|E| \]
+\end{proof}
+
+In a planar drawing of a tree,
+\begin{itemize}
+    \item there is exactly one face
+    \item its degree is $ 2|E| $
+\end{itemize}
+
+\begin{thmbox}
+    \begin{theorem}[Euler's Formula]
+        If $ F $ is the set of faces in a drawing of a connected
+        planar graph $ G=(V,E) $, then
+        \[ |V|-|E|+|F|=2 \]
+    \end{theorem}
+\end{thmbox}
+Suppose we have a spanning tree; that is, we have a tree with
+$ n $ vertices, $ n-1 $ edges, and $ 1 $ face. Now,
+\[ |V|,|E|,|F|\longrightarrow_{\text{+e}} |V|, |E|+1,|F|+1 \]
+\begin{proof}
+    Suppose for a contradiction that the theorem is false.
+    Let $ G $ be a counter-example with as few edges as possible.
+    If $ G $ is a tree, then $ |E(G)|=|V(G)|-1 $ and any
+    drawing of $ G $ has exactly one face, so for any
+    drawing,
+    \[ |V|-|E|+|F|=|V|-(|V|-1)+1=2 \]
+    So, $ G $ is not a counter-example. Otherwise, $ G $
+    is not a tree. Let $ e $ be an edge of $ G $ that is not
+    a bridge; that is, $ G-e $ is connected. Now, a plane
+    drawing of $ G $ gives rise to a plane drawing of $ G-e $
+    with exactly one less face. So, the number of faces of
+    (the drawing of) $ G-e $ is $ |F(G)|-1 $. By the minimality
+    of $ G $, the graph $ G-e $ satisfies Euler's Formula.
+    Therefore,
+    \[ |V(G-e)|-|E(G-e)|+(|F(G)|-1)=2 \]
+    \[ \implies |V(G)|-(|E(G)|-1)+(|F(G)|-1)=2 \]
+    \[ \implies |V(G)|-|E(G)|+|F(G)|=2, \]
+    contradicting the choice of $ G $.
+\end{proof}
+
+Let $ G=(V,E) $ be a connected planar graph, and $ F $ be the set of faces
+in some drawing of $ G $.
+\begin{itemize}
+    \item Handshaking for Faces: $ \sum\limits_{f\in F}\deg(f)=2|E| $.
+    \item Euler's Formula: $ |V|-|E|+|F|=2 $.
+\end{itemize}
+
+\textbf{Q}: What are the \emph{connected} planar drawings where:
+\begin{itemize}
+    \item every vertex has the same degree ($ d\geqslant 3 $), and
+    \item every face has the same degree ($ k\geqslant 3 $)?
+\end{itemize}
+
+\textbf{A}:
+\begin{itemize}
+    \item $ K_4 $: vertices of degree $ 3 $ and faces of degree $ 3 $
+    \item cube: vertices of degree $ 3 $ and faces of degree $ 4 $
+    \item $ k $-cycle: vertices of degree $ 2 $ and faces of degree $ k $
+\end{itemize}
+
+\section{Platonic Solids}
+\begin{defbox}
+    \begin{definition}
+        A graph is called \textbf{\emph{Platonic}} if it can be drawn in
+        the plane so it is connected, every vertex has degree
+        $ d\geqslant 3 $, and every face has degree $ k\geqslant 3 $.
+    \end{definition}
+\end{defbox}
+
+Let $ G $ be a Platonic graph. Let $ n=|V(G)| $, $ m=|E(G)| $,
+and $ \ell=|F| $ (in some plane drawing of $ G $).
+
+By Euler's Formula,
+\[ n-m+\ell=2 \]
+By the Handshake Lemma,
+\[ 2m=\sum\limits_{v\in V(G)}\deg(v)=n\times d \]
+By Handshaking for Faces,
+\[ 2m=\sum\limits_{f\in F}\deg(f)=\ell\times k \]
+Solving for $ n $ and $ \ell $,
+\[ n=\frac{2m}{d} \]
+\[ \ell=\frac{2m}{k} \]
+Plugging these into Euler's Formula,
+\[ 2=\frac{2m}{d}-m+\frac{2m}{k}=m\left(\frac{2}{d}+\frac{2}{k}-1\right) \]
+We have $ \frac{2}{d} +\frac{2}{k} -1=\frac{2}{m} >0 $.
+We know $ d,k\geqslant 3 $. If $ d,k\geqslant 4 $, then
+\[ \frac{2}{d} + \frac{2}{k} - 1\leqslant 0 \]
+So, one of $ d,k $ is at most $ 3 $. If (say) $ d=3 $, then
+\[ \frac{2}{d} +\frac{2}{k} -1>0 \]
+so, $ \frac{2}{k} >\frac{1}{3} \implies k<6 $. This
+only leaves $ 5 $ options:
+\[ (d,k)\in \{(3,3),(3,4),(4,3),(3,5),(5,3)\} \]
+The only equation that relates $ m,k, $ and $ d $ is:
+\[ \frac{2}{m} = \frac{2}{k} +\frac{2}{d} -1 \]
+If $ (k,d)=(3,3) $, then
+\[ \frac{2}{m} =\frac{2}{3} +\frac{2}{3} -1\implies m=6 \]
+\[ n=\frac{2m}{d} =4,\; \ell=\frac{2m}{k} =4 \]
+If $ (k,d)=(3,3) $, solving gives $ n=4,\ell=4,m=6 $ which is
+the \textbf{\emph{Tetrahedron}} ($ K_4 $); self-dual.
+
+If $ (k,d)=(4,3) $, solving gives $ n=8,m=12,\ell=6 $ which is
+the \textbf{\emph{Cube}}; dual: $ (k,d)=(3,4) $.
+
+If $ (k,d)=(3,4) $, solving gives $ n=6,m=12,\ell=8 $ which is
+the \textbf{\emph{Octahedron}}.
+
+If $ (k,d)=(5,3) $, solving gives $ n=20,m=30,\ell=12 $ which is
+the \textbf{\emph{Dodecahedron}}; dual: $ (k,d)=(3,5) $.
+
+If $ (k,d)=(3,5) $, solving gives $ n=12,m=30,\ell=20 $ which is
+the \textbf{\emph{Icosahedron}}.

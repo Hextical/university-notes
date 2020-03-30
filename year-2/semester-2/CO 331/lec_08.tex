@@ -16,30 +16,51 @@
 \end{exbox}
 
 \section{Properties of Finite Fields}
+
 \begin{thmbox}
-    \begin{theorem}[Frosh's Dream]
+    \begin{prop}\label{CAD}
+        $ \dagger $ For all integers $ a $, $ b $ and $ c $, if $ c\mid ab $
+        and $ \gcd(a,c)=1 $, then $ c\mid b $.
+    \end{prop}
+\end{thmbox}
+
+\begin{thmbox}
+    \begin{lemma}\label{p divides p choose k}
+        $ \dagger $ For each integer $ k\in[1,p-1] $,
+        \[ p\mid \binom{p}{k} \]
+    \end{lemma}
+\end{thmbox}
+
+\begin{proof}
+    We know that $ \binom{p}{k}\in\mathbb{Z} $ and
+    \[ \binom{p}{k}=\frac{p!}{(p-k)k!} \]
+    Since $ k\geqslant 1 $, then
+    \[ \binom{p}{k}=\frac{p(p-1)\cdots(p-k+1)}{k!} \]
+    Therefore, $ k!\binom{p}{k}=p(p-1)\cdots(p-k+1) $.
+
+    We note that $ p\mid p(p-1)\cdots(p-k+1) $ and therefore
+    $ p\mid k!\binom{p}{k} $. Since $ p $ is prime and $ p>k $,
+    then $ \gcd(p,k!)=1 $. Therefore, by \ref{CAD}
+    \[ p\mid \binom{p}{k} \]
+\end{proof}
+
+\begin{thmbox}
+    \begin{theorem}[Frosh's Dream\label{Frosh's Dream}]
         Let $ \alpha,\beta\in GF(q) $ where $ \ch(GF(q))=p $.
         \[ (\alpha + \beta)^p=\alpha^p+\beta^p \]
     \end{theorem}
 \end{thmbox}
 
 \begin{proof}
-    \[ (\alpha + \beta)^p=\alpha^p+\sum\limits_{i=1}^{p-1}
-        \binom{p}{i}\alpha^i\beta^{p-i}+\beta^p \]
-    Now,
+    \[ (\alpha + \beta)^p=\alpha^p+\sum\limits_{k=1}^{p-1}
+        \binom{p}{k}\alpha^k\beta^{p-k}+\beta^p \]
+    By $ \ref{p divides p choose k} $,
+    \[ p\mid \binom{p}{k}\implies p\lambda_k=\binom{p}{k} \]
+    where $ \lambda_k\in\mathbb{Z} $ for each $ k\in[1,p-1] $. Hence,
     \begin{align*}
-        \binom{p}{i}=\frac{p!}{i!(p-i)!}
-         & =\frac{p(p-1)\cdots (p-i+1)(p-i)(p-i-1)\cdots (2)(1)}{\left[i(i-1)\cdots(2)(1)\right]\left[(p-i)(p-i-1)\cdots(2)(1)\right]} \\
-         & =p\left[\frac{(p-1)\cdots (p-i+2)}{i(i-1)\cdots(2)(1)}\right]
-    \end{align*}
-    If $ 1\leqslant i\leqslant p-1 $ then $ p\mid $ numerator, but
-    $ p \nmid $ denominator. Thus,
-    \[ p\mid \binom{p}{i}=p\lambda \]
-    where $ \lambda\in\mathbb{N} $ with $ \lambda \neq 0 $ and $ p\nmid \lambda $.
-    \begin{align*}
-        \sum\limits_{i=1}^{p-1}\binom{p}{i}\alpha^i\beta^{p-i}
-         & = \sum\limits_{i=1}^{p-1} (p\lambda_i) \alpha^i\beta^{p-i}                          \\
-         & =\sum\limits_{i=1}^{p-1} (\underbrace{1+\cdots+1}_{p})\lambda_i \alpha^i\beta^{p-i} \\
+        \sum\limits_{k=1}^{p-1}\binom{p}{k}\alpha^k\beta^{p-k}
+         & = \sum\limits_{k=1}^{p-1} (p\lambda_k) \alpha^k\beta^{p-k}                          \\
+         & =\sum\limits_{k=1}^{p-1} (\underbrace{1+\cdots+1}_{p})\lambda_k \alpha^k\beta^{p-k} \\
          & =0
     \end{align*}
     Thus, $ (\alpha + \beta)^p=\alpha^p+\beta^p $.
@@ -47,13 +68,39 @@
 
 \begin{thmbox}
     \begin{corollary}
+        Let $ \alpha,\beta\in GF(q) $ where $ \ch(GF(q))=p $.
         \[ (\alpha+\beta)^{p^m}=\alpha^{p^m}+\beta^{p^m} \]
-        for all $ m\geqslant 1 $.
+        for all $ m\in\mathbb{Z}_{\geqslant 1} $.
     \end{corollary}
 \end{thmbox}
 
-\begin{proof}
-    Exercise. Hint: Induction on $ m $.
+\begin{proof} $ \dagger $
+    We prove this result by induction on $ m $, where $ P(m) $ is the statement
+    \[ (\alpha+\beta)^{p^m}=\alpha^{p^m}+\beta^{p^m} \]
+
+    \textbf{Base Case}: The statement $ P(1) $ is given by
+    \[ (\alpha+\beta)^{p}=\alpha^p+\beta^p \]
+    which is clearly true by \ref{Frosh's Dream}.
+
+    \textbf{Inductive Hypothesis}: Assume
+    \[ (\alpha+\beta)^{p^k}=\alpha^{p^k}+\beta^{p^k} \]
+    for an arbitrary integer $ k\geqslant 1 $.
+
+    \textbf{Inductive Conclusion}: We wish to prove $ P(k+1) $
+    which is the statement
+    \[ (\alpha+\beta)^{p^{k+1}}=\alpha^{p^{k+1}}+\beta^{p^{k+1}} \]
+    Starting with the expression on the left hand side of $ P(k+1) $,
+    we obtain
+    \[ \begin{aligned}
+            (\alpha+\beta)^{p^{k+1}}
+             & =\left[ (\alpha+\beta)^{p} \right]^{p^{k}}                                         \\
+             & =\left( \alpha^p+\beta^p \right)^{p^k}     & \quad & \text{by \ref{Frosh's Dream}} \\
+             & = (\alpha^p)^{p^k}+(\beta^p)^{p^k}         &       & \text{by IH}                  \\
+             & =\alpha^{p^{k+1}}+\beta^{p^{k+1}}
+        \end{aligned}
+    \]
+    The result is true for $ m=k+1 $, and hence holds for all $ m\in\mathbb{Z}_{\geqslant 1} $
+    by the Principle of Mathematical Induction.
 \end{proof}
 
 \begin{thmbox}
@@ -66,17 +113,22 @@
 \begin{proof}
     If $ \alpha=0 $, then $ \alpha^q=0=\alpha $.
 
-    If $ \alpha\neq 0 $, let $ \{\alpha_1,\ldots ,\alpha_{q-1}\} $ be the
-    non-zero elements in $ GF(q) $. Consider
-    \[ \{\alpha\alpha_1,\ldots,\alpha\alpha_{q-1}\} \]
-    Note that the elements in this list are pairwise distinct because if
-    $ \alpha\alpha_i=\alpha\alpha_j $ with $ i\neq j $, then
-    \[ \alpha^{-1}\alpha\alpha_i=\alpha^{-1}\alpha\alpha_j \]
-    which implies that $ \alpha_i=\alpha_j $ which is a contradiction.
-    Also $ \alpha\alpha_i\neq 0 $ for all $ i\in [1,q-1] $.
-    Hence, $ \{\alpha_1,\ldots ,\alpha_{q-1}\}=\{\alpha\alpha_1,\ldots ,\alpha\alpha_{q-1}\} $.
-    Therefore, $ \alpha_1\cdots\alpha_{q-1}=(\alpha\alpha_1)\cdots(\alpha\alpha_{q-1}) $.
-    Hence, $ \alpha^{q-1}=1 $. Thus, $ \alpha^q=\alpha $.
+    If $ \alpha\neq 0 $, let
+    \[ \{a_1,a_2,\ldots ,a_{q-1}\} \]
+    be the distinct non-zero elements in $ GF(q) $. Consider
+    \[ \{\alpha a_1,\alpha a_2\ldots,\alpha a_{q-1}\} \]
+    These are all distinct because otherwise for some $ i\neq j $,
+    $ \alpha a_i=\alpha a_j\implies a_i=a_j $ which is a contradiction.
+    Hence,
+    \[ \{\alpha a_1,\ldots ,\alpha a_{q-1}\}=\{a_1,\ldots ,a_{q-1}\} \]
+    This implies
+    \begin{align*}
+         & (\alpha a_1)\cdots (\alpha a_{q-1})=a_1\cdots a_{q-1}      \\
+         & \implies \alpha^{q-1}(a_1\cdots a_{q-1})=a_1\cdots a_{q-1} \\
+         & \implies \alpha^{q-1}=1
+    \end{align*}
+    since $ a_i $ is non-zero for each $ i\in[1,q-1] $.
+    Thus, since $ \alpha\neq 0 $ we have $ \alpha^q=\alpha $.
 \end{proof}
 
 \begin{defbox}
@@ -135,7 +187,7 @@
 \end{thmbox}
 
 \begin{proof}
-    Let $ s\in\mathbb{Z} $. By the division algorithm for integers, 
+    Let $ s\in\mathbb{Z} $. By the division algorithm for integers,
     \[ s=\ell t+r \]
     where $ 0\leqslant r\leqslant t-1 $. Then
     \[ \alpha^s=\alpha^{\ell t+r}=(\alpha^t)^\ell \alpha^r=\alpha^r \]
@@ -161,7 +213,7 @@
 \begin{defbox}
     \begin{definition}
         An element $ \alpha\in GF(q) $ is a \textbf{generator} of
-        $ GF(q)^* $ if 
+        $ GF(q)^* $ if
         \[ \{\alpha^i:i\geqslant 0\}=GF(q)^* \]
         That is, $ \alpha $ generates all the non-zero field elements.
         $ \ord(\alpha)=q-1 $.
