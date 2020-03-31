@@ -1,0 +1,50 @@
+\makeheading{2020-03-23}
+\underline{Roadmap}:
+\begin{enumerate}[(i)]
+    \item $ 5 $ min recap
+    \item MLE for $ \alpha,\,\beta,\,\sigma $
+    \item Least Squares
+    \item Example
+\end{enumerate}
+
+\underline{Recap}:
+
+General: $ Y \thicksim N(\mu(x),r(x)) $
+
+\underline{Assumptions for the Simple Linear Regression Model}
+(Gauss Markov Assumptions)
+\begin{enumerate}[(i)]
+    \item One covariate (for the time being)
+    \item Normality: $ Y_i $'s are Normal
+    \item Linearity: $ E(Y)=\alpha+\beta x $
+    \item Independence: $ Y_i $'s are all independent
+    \item Homoscedasticity: $ \sigma^2=\sigma^2(x)=\sigma^2 $ for all $ x $
+\end{enumerate}
+We call it a Simple since $ x $ is the only
+explanatory variate. If we used more than one explanatory variate,
+we call it a multi-variable regression (not covered in this course).
+
+\underline{MLE Calculation}
+
+\[ Y_i \thicksim N(\alpha+\beta x_i, \sigma^2) \]
+for each $ i\in[1,n] $
+independent. We can also write
+\[ Y_i=(\alpha+\beta x_i)+R_i \]
+where $ R_i \thicksim N(0,\sigma^2) $ and $ R_i $'s independent.
+\[ f(y_i)=\frac{1}{\sqrt{2 \pi}}e^{-\frac{1}{2\sigma^2}(y_i-(\alpha+\beta x_i))^2}  \]
+\[
+    L(\alpha, \beta, \sigma)=
+    \frac{1}{(2 \pi)^{n / 2} \sigma^{n}}
+    e^{-\frac{1}{2 \sigma^{2}}
+            \sum\left[y_{i}-\left(\alpha+\beta x_i\right)\right]^{2}}
+\]
+so,
+\[ \ell(\alpha,\beta,\sigma)=-\frac{n}{2} \ln(2\pi)-n\ln(\sigma)-
+    \frac{1}{2\sigma^2}\sum\left[y_{i}-\left(\alpha+\beta x_i\right)\right]^{2}  \]
+\[ \frac{\partial\ell}{\partial\alpha}=0\implies
+    \hat{\alpha}=\overline{y}-\hat{B}\overline{x} \]
+\[ \frac{\partial \ell}{\partial \beta}=0\implies
+    \hat{\beta}=\frac{S_{xy}}{S_{xx}}=\frac{\sum(x_i-\overline{x})(y_i-\overline{y})}
+    {\sum (x_i-\overline{x})^2}  \]
+\[ \frac{\partial\ell}{\partial \sigma}=0\implies
+    \hat{\sigma^2}=\frac{1}{n} \sum \left[ y_i-(\hat{\alpha}+\hat{\beta}x_i) \right]^2 \]
