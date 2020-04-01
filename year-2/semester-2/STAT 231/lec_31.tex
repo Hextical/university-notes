@@ -47,4 +47,70 @@ so,
     \hat{\beta}=\frac{S_{xy}}{S_{xx}}=\frac{\sum(x_i-\overline{x})(y_i-\overline{y})}
     {\sum (x_i-\overline{x})^2}  \]
 \[ \frac{\partial\ell}{\partial \sigma}=0\implies
-    \hat{\sigma^2}=\frac{1}{n} \sum \left[ y_i-(\hat{\alpha}+\hat{\beta}x_i) \right]^2 \]
+    \hat{\sigma}^2=\frac{1}{n} \sum \left[ y_i-(\hat{\alpha}+\hat{\beta}x_i) \right]^2 \]
+
+\underline{Roadmap}:
+\begin{enumerate}[(i)]
+    \item Interpretation of SLRM and Recap
+    \item An example
+    \item Possible Questions
+\end{enumerate}
+\underline{What we know so far}:
+\begin{itemize}
+    \item $ Y_i = $ response variate $ = $ R.V where $ i=1,\ldots ,n $
+    \item $ x_i = $ explanatory variable $ = $ given (known numbers)
+\end{itemize}
+Examples:
+\begin{itemize}
+    \item $ Y_i = $ STAT 231, $ x= $ STAT 230
+    \item $ Y_i= $ stock price in month $ i $, $ x=P/E $
+    \item $ Y_i= $ wage of UW graduate, $ x= $ major
+\end{itemize}
+
+\underline{Model}: $ Y_i  \thicksim N(\alpha+\beta x_i, \sigma^2) $ $ i\in[1,n] $ independent.
+\[ Y_i=\alpha+\beta x_i+R_i \]
+$ R_i = residuals $ and $ R_i \thicksim N(0,\sigma^2) $.
+
+\underline{Goal}: Extract the relationship between $ x $ and $ Y $.
+
+\underline{Interpretation}:
+
+$ E(Y_i)=\alpha+\beta x_i+0 $
+
+$ \beta = $ change in $ E(Y) $ if $ x $ changes by $ 1 $ unit
+
+Suppose $ x=0 $, then $ Y_i=\alpha+R_i $. So $ E(Y_i)=\alpha $.
+
+\begin{exbox}
+    \begin{example} $ \; $
+        \begin{itemize}
+            \item $ n=30 $
+            \item $ \overline{x}=76.733 $
+            \item $ \overline{y}=72.233 $
+            \item $ S_{yy}=7585.3667 $
+            \item $ S_{xx}=5135.8667 $
+            \item $ S_{xy}=5106.8667 $
+        \end{itemize}
+        What is $ \hat{\alpha},\,\hat{\beta},\,\hat{\sigma} $?
+        \begin{itemize}
+            \item $ \hat{\alpha}=\overline{y}-\hat{B}\overline{x}=-4.0677 $
+            \item $ \hat{\beta}=\frac{S_{xy}}{S_{xx}}=0.9944 $
+        \end{itemize}
+        \underline{Regression}: 
+        \[ Y=\underbrace{-4.0677}_{\hat{\alpha}}+\underbrace{0.9944}_{\hat{\beta}}x \]
+        \[ (x_1,y_1),\ldots ,(x_{30},y_{30}) \]
+        $ x_{15}=75 \rightarrow y_{15}= $ predicted with the regression. However, it may or may not lie
+        on the line.
+
+        Suppose $ \beta=0 $, this means that $ x $ has no effect on $ Y_i $ since
+        \[ Y_i \thicksim N(\alpha,\sigma^2) \]
+        \underline{Exercise}: $ \hat{\beta}=0\iff r_{xy}=0 $?
+
+        We could also figure out the following (next lecture):
+        \begin{itemize}
+            \item $ H_0 $: $ \beta=0 $
+            \item $ H_1 $: $ \beta\neq 0 $
+            \item Confidence interval for $ \beta $.
+        \end{itemize}
+    \end{example}
+\end{exbox}
