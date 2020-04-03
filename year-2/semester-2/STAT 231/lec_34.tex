@@ -1,0 +1,74 @@
+\makeheading{2020-03-28}
+\underline{Roadmap}:
+\begin{enumerate}[(i)]
+    \item Prediction Interval for $ Y $ given $ x=x_{\text{new}} $
+    \item Model Checking
+\end{enumerate}
+\underline{Problem}: $ Y_i \thicksim N(\alpha+\beta x_i,\sigma^2) $
+$ i=1,\ldots ,n $ independent. Find the $ 95\% $ Prediction Interval
+for $ Y_{\text{new}} $ when $ x=x_{\text{new}} $.
+
+\underline{Difference}:
+\begin{itemize}
+    \item $ \mu $ was constant (stationary target)
+    \item $ Y_{\text{new}} $ is a random variable with mean $ \mu $
+          (moving target)
+\end{itemize}
+
+\begin{exbox}
+    \begin{example}
+        $ x=x_{\text{new}} $
+
+        \underline{Problem 1}: Find the $ 95\% $ Confidence Interval for
+        $ \mu=\alpha+\beta(75) $. Done last lecture.
+
+        \underline{Problem 2}: Find the $ 95\% $ Prediction Interval for
+        $ Y $ when $ x_{\text{new}}=75 $.
+        \begin{equation}
+            Y \thicksim N(\alpha+\beta(75),\sigma^2)
+        \end{equation}
+        \begin{equation}
+            \tilde{\mu}(75) \thicksim N
+            \left(\mu(75),\sigma^2\left( \frac{1}{n} +
+                \frac{(75-\overline{x})^2}{S_{xx}} \right)\right)
+        \end{equation}
+        Subtracting (1) from (2), we get
+        \[ Y-\tilde{\mu}(75) \thicksim N\left( 0,
+            1+\frac{1}{n} + \frac{(75-\overline{x})^2}{S_{xx}} \right) \]
+        Thus,
+        \[ \frac{Y-\tilde{\mu}(75)}
+            {\sigma\sqrt{1+\frac{1}{n} + \frac{(75-\overline{x})^2}{S_{xx}}}}=
+            Z \thicksim N(0,1)  \]
+        we replace $ S_e $, then we get
+        \[ \frac{Y-\tilde{\mu}(75)}
+            {S_e\sqrt{1+\frac{1}{n} + \frac{(75-\overline{x})^2}{S_{xx}}}}=
+            T_{n-2} \]
+        Finally, the Prediction Interval is:
+        \[ \hat{\mu}(x_{\text{new}})\pm
+            t^* s_e
+            \sqrt{1+\frac{1}{n} + \frac{(x_{\text{new}}-\overline{x})^2}{S_{xx}}} \]
+        \[ \hat{\mu}(x_{\text{new}})=\hat{\alpha}+\hat{\beta}x_{\text{new}} \]
+    \end{example}
+\end{exbox}
+\underline{Checking the assumptions}
+
+\underline{Main assumptions}
+\begin{enumerate}[(i)]
+    \item Normality, with constant variance
+    \item Linearity: $ E(Y)=\alpha+\beta x $
+    \item Independence
+\end{enumerate}
+\underline{Checking}
+\begin{enumerate}[(i)]
+    \item Warning
+    \item The Least Squares line
+    \item The residual plots
+\end{enumerate}
+Estimated residuals $ =r_i=y_i-\underbrace{(\hat{\alpha}+\hat{\beta}x_i)}_{\hat{y}_i} $.
+The $ r_i $'s should behave like independent outcomes of $ N(0,\sigma^2) $.
+Some questions to think about:
+\begin{enumerate}[(1)]
+    \item $ (r_i,x_i) $
+    \item $ (r_i,\hat{y}_i) $
+    \item Q-Q plot of $ r_i $'s
+\end{enumerate}

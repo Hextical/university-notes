@@ -1,0 +1,63 @@
+\makeheading{2020-03-27}
+\underline{Roadmap}:
+\begin{enumerate}[(i)]
+    \item A look back: Pivot for $ \beta $
+    \item A look ahead: Confidence interval for $ \mu(x)= $ mean response
+\end{enumerate}
+STAT 230: If $ X \thicksim N(\mu_1, \sigma^2) $, $ Y $ is $ N(\mu_2,\sigma^2) $,
+$ X $ and $ Y $ independent, then
+\[ aX+bY \thicksim N(a\mu_1+b\mu_2,\sigma^2(a^2+b^2)) \]
+\underline{General result}: If $ X_i \thicksim N(\mu_i,\sigma^2) $
+with $ i=1,\ldots ,n $ independent, then
+\[ \sum\limits_{i=1}^{n} a_iX_i \thicksim N\left(\sum\limits_{i=1}^{n} a_i\mu_i,
+    \sigma^2 \sum\limits_{i=1}^{n} a_i^2\right) \]
+We know
+\[ \hat{\beta}=\sum\limits_{i=1}^{n} y_i\qquad
+    \tilde{\beta}=\sum\limits_{i=1}^{n} a_iY_i\qquad
+    Y_i \thicksim N(\underbrace{\alpha+\beta x_i}_{\mu_i},\sigma^2) \]
+\[ \tilde{\beta}=\left( \sum\limits_{i=1}^{n} a_i(\alpha+\beta x_i),
+    \sigma^2 \sum\limits_{i=1}^{n} a_i^2 \right) \]
+Recall:
+\[ a_i=\frac{x_i-\overline{x}}{s_{xx}}  \]
+\begin{enumerate}
+    \item $ \sum\limits_{i=1}^{n} a_i=0 $
+    \item $ \sum\limits_{i=1}^{n} a_ix_i=1 $
+    \item $ \sum\limits_{i=1}^{n} \frac{1}{S_{xx}} $
+\end{enumerate}
+So, the mean is
+\begin{align*}
+     & =\sum\limits_{i=1}^{n} a_i\alpha+\sum\limits_{i=1}^{n} a_i\beta x_i     \\
+     & =\alpha \sum\limits_{i=1}^{n} a_i + \beta \sum\limits_{i=1}^{n} a_i x_i \\
+     & =\beta
+\end{align*}
+the result now follows.
+$ \qed $
+
+Now, we fix $ x $ were
+\begin{itemize}
+    \item $ Y= $ STAT 231
+    \item $ X= $ STAT 230
+\end{itemize}
+Confidence interval for $ \mu(x)=\alpha+\beta x $.
+
+(Average STAT 231 score for all students with a $ 75 $ in STAT 230).
+
+\[ \mu(x)=\alpha+\beta 75 \]
+\[ \hat{\mu}(x)=\hat{\alpha}+\hat{\beta}x \]
+\[ \tilde{\mu}(x)+\tilde{\alpha}+\tilde{\beta}x \]
+We know $ \tilde{\beta} $ is normal, and we can show $ \tilde{\alpha} $ is normal.
+So,
+\[ \tilde{\mu} \thicksim N \left( \mu(x),\sigma^2
+    \left( \frac{1}{n} +\frac{(x-\overline{x})^2}{S_{xx}} \right) \right) \]
+(proof beyond the scope of this course)
+Thus, the corresponding pivot is
+\[ \frac{\tilde{\mu}(x)-\mu(x)}{S_{e}\sqrt{\frac{1}{n}-\frac{(x-\overline{x})^2}{S_{xx}}}}
+    \thicksim T_{n-2} \]
+Therefore, the confidence interval (exercise) for $ \mu(x) $ is:
+\[ \left[ \hat{\alpha}+\hat{\beta}x \right]
+    \pm
+    t^* S_e \sqrt{\frac{1}{n}-\frac{(x-\overline{x})^2}{S_{xx}}} \]
+Can we find the confidence interval for $ \alpha $? Yes.
+
+Recall, $ \alpha=\mu(0) $, so we can just plug in $ 0 $ and we get the confidence
+interval for $ \alpha $.
