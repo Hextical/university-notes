@@ -1,0 +1,100 @@
+\chapter{Error Correction Techniques and Digital Audio Recording}
+\makeheading{2020-04-01}
+\section{Reed-Solomon Codes}
+Invented by Irving Reed and Gustave Solomon in 1960.
+\begin{defbox}
+    \begin{definition}
+        A \textbf{\emph{Reed-Solomon (RS) code}} is a BCH code
+        of length $ n $ over $ GF(q) $ where $ n\mid (q-1) $.
+
+        \underline{Note}: $ m=1 $ since $ q^1\equiv 1\mod n $
+    \end{definition}
+\end{defbox}
+\begin{exbox}
+    \begin{example}
+        Let $ q=2^4 $ and $ GF(2^4)=\mathbb{Z}_2/(\alpha^4+\alpha+1) $.
+        Recall that $ \alpha $ is a generator of $ GF(2^4)^* $.
+
+        Let $ \beta=\alpha^3 $, then $ \ord(\beta)=5 $, so $ q=16 $
+        and $ n=5 $.
+
+        Let
+        \begin{align*}
+            g(x) & =\lcm \left\{ m_{\beta}(x),m_{\beta^2}(x),m_{\beta^3}(x)\right\} \\
+                 & =(x-\beta)(x-\beta^2)(x-\beta^3)                                 \\
+                 & =x^3+\alpha^4x^2+\alpha^2x+\alpha^3
+        \end{align*}
+        Then, $ g(x) $ generates a $ (5,2) $-RS code $ C $ over $ GF(2^4) $
+        with $ \delta=4 $. In fact, $ d(C)=4 $ since $ g(x) $
+        is a codeword of weight $ 4 $. A generator matrix for $ C $ is
+        \[ G=
+            \begin{bmatrix}
+                \alpha^3 & \alpha^2 & \alpha^{11} & 1           & 0 \\
+                0        & \alpha^3 & \alpha^2    & \alpha^{11} & 1
+            \end{bmatrix}_{2\times 5} \]
+        Consider the code $ C^{\prime} $ obtained from $ C $
+        by replacing each symbol in codewords of $ C $ by their binary vector representation.
+        For example,
+        \[ (\alpha^3,\alpha^2,\alpha^{11},1,0)\longleftrightarrow (0001\; 0010\; 0111\; 1000\; 0000) \]
+        It is not hard to see that $ C^{\prime} $ is closed under vector addition and scalar
+        multiplication over $ GF(2) $. Thus, $ C^{\prime} $ is a $ (20,8) $-binary code.
+    \end{example}
+\end{exbox}
+\begin{defbox}
+    \begin{definition}
+        Suppose $ n\mid (q-1) $, and let $ \beta\in GF(q) $ be an element of order $ n $.
+        Then, $ m_{\beta^i}(x)=x-\beta^i $ for all $ i $. A
+        \textbf{\emph{RS code $ \bm{C} $ of length $ \bm{n} $ over $ \bm{GF(q)} $
+                with designed distance $ \bm{\delta} $}} is a cyclic code over $ GF(q) $
+        with generator polynomial
+        \[ g(x)=(x-\beta^{a})(x-\beta^{a+1})(x-\beta^{a+2})\cdots
+            (x-\beta^{a+\delta-2}) \]
+        for some $ a $. Since $ \deg(g)=\delta-1 $, we have $ w(g)\leqslant \delta $,
+        so $ d(C)\leqslant \delta $. By the BCH bound, $ d(C)\geqslant \delta $,
+        hence $ d(C)=\delta $.
+
+        Since $ \dim(C)=k=n-\deg(g)=n-\delta+1 $, we have $ k=n-d+1 $,
+        so $ d=n-k+1 $. Recall that $ d\leqslant n-k+1 $ for any $ (n,k,d) $-code.
+        Thus, \underline{RS are optimal} in the sense that, for any fixed $ n,k,q $,
+        they achieve maximum distance among all $ (n,k,d) $-codes over $ GF(q) $.
+    \end{definition}
+\end{defbox}
+
+\underline{RS codes have good (cyclic) burst error correcting capability}
+
+Let $ C $ be a RS code of length $ n $ over $ GF(2^r) $ and designed
+distance $ \delta $. Consider $ \bm{c}=(c_1,c_2,\ldots ,c_n)\in C $,
+and let $ e=\lfloor\frac{d-1}{2} \rfloor =\lfloor\frac{n-k}{2} \rfloor $.
+Note that $ \bm{c}_i\in GF(2^r) $.
+
+By writing each $ \bm{c}_i $ as a binary vector of length
+$ r $, we can view $ \bm{c} $ as a binary vector of length $ nr $ bits.
+
+Now, if $ \bm{c} $ is transmitted and if a cyclic burst error of length
+$ \leqslant 1+(e-1)r $ bits is introduced, then at most $ e $
+symbols of $ \bm{c} $ are received incorrectly. Thus, the received
+word can be decoded correctly.
+
+\begin{thmbox}
+    \begin{theorem}
+        Let $ C $ be an $ (n,k) $-RS code over $ GF(2^r) $. Then
+        $ C^{\prime} $, the code obtained by replacing each symbol
+        in the codewords of $ C $ by the $ r $-bit binary representations,
+        is a binary $ (nr,kr) $-code with c.b.e.c.c $ 1+(e-1)r $
+        where $ e=\lfloor \frac{n-k}{2} \rfloor $.
+    \end{theorem}
+\end{thmbox}
+
+\begin{exbox}
+    \begin{example}
+        Consider $ GF(2^8)=\mathbb{Z}_2[\alpha]/(\alpha^8+\alpha^4+\alpha^3+\alpha^2+1) $.
+        Then $ \beta=\alpha $ has order $ n=255 $ (so $ q=256,n=255 $).
+        Let
+        \[ g(x)=\prod_{i=1}^{24}(x-\beta^i) \]
+        Then $ g(x) $ is the generator polynomial for a $ (255,231,25) $-RS
+        code $ C $ with e.c.c $ e=12 $. The related code $ C^{\prime} $
+        is a $ (2040,1848) $-binary code with c.b.e.c.c $ 89 $.
+    \end{example}
+\end{exbox}
+The code $ C $, and others derived from it, have widely been used in practice,
+including in CDs, DVDs, and QR codes.
