@@ -1,0 +1,77 @@
+\section{2020-03-18}
+\subsection{Exceptions}
+\begin{lstlisting}
+    v.at(i) // checks whether the index i is in range
+    // throws an out_of_range exception
+    // if a thrown exception is not caught, the program terminates
+    try {
+        ...
+    } catch (...) {
+        ...
+    } catch (...) {
+        ...
+    }
+\end{lstlisting}
+File: \code{callchain.cc}
+
+Stack unwinding: call stack is repeatedly popped until an appropriate
+catch block is found. If \code{main}'s stack frame is popped, then
+the program terminates with an uncaught exception.
+
+Error recovery can happen in stages
+\begin{lstlisting}
+    f() {
+        try {...}
+        catch (someExn e) { // the exception that is caught might be a subtype of someExn
+            // partial recovery
+            throw SomeOtherExn("...");
+        }
+    }
+\end{lstlisting}
+A few options when throwing an exception with a catch block:
+\begin{itemize}
+    \item \code{throw SomeOtherExn("...");}
+    \item \code{throw e;} $ \rightarrow $ e might have been sliced
+    \item \code{throw;} $ \rightarrow $ throw the original exception (want this in most cases)
+\end{itemize}
+
+\section{2020-03-19}
+C++ exceptions all inherit from an ``exception'' class.
+\begin{lstlisting}
+    try {...}
+    catch (exception &e) { // by reference
+        ...
+    }
+\end{lstlisting}
+In C++ you can throw any value. How do I catch any exception? C++ has special syntax for this:
+\begin{lstlisting}
+    try {
+        ...
+    } catch (...) { // ... is the literal syntax for ANYTHING (not the usual ... used in notes)
+        ...
+    }
+\end{lstlisting}
+While we can throw anything, we should use good design.
+\begin{itemize}
+    \item use c++ exception class
+          \subitem \code{out\_of\_range}
+          \subitem \code{bad\_alloc}
+    \item create your own classes
+          \subitem \code{class InvalidMove\{\};}
+          \subitem \code{class BadInput\{\};}
+\end{itemize}
+\begin{lstlisting}
+    int readInt() {
+        int n;
+        if (!(cin >> n)) throw BadInput{};
+    }
+    try {
+        n = readInt();
+    } catch (BadInput &) {
+        n = 0;
+        // use default
+    }
+\end{lstlisting}
+Destructors and Exceptions: By default if the destructor throws an exception, the program
+terminates.
+\section{2020-03-22: Factory Method Pattern}
