@@ -1,0 +1,143 @@
+\chapter{Lectures}
+\section{2020-03-02}
+\underline{Roadmap}:
+\begin{enumerate}[(i)]
+    \item 5 min recap
+    \item Confidence for Normal with unknown variance
+    \item Prediction Intervals
+    \item Relationship between likelihood intervals and confidence intervals
+\end{enumerate}
+\[ W \thicksim \chi^2_n\iff W=Z_1^2+Z_2^2+\cdots+Z_n^2 \]
+where each $ Z_i \thicksim N(0,1) $ and $ Z_i $'s independent. We know
+$ E(W)=n $ and $ Var(W)=2n $.
+
+Let $ W_1 \thicksim \chi^2_{n_1} $ and $ W_2 \thicksim \chi^2_{n_2} $
+be independent, then
+\[ W_1+W_2 \thicksim \chi^2_{n_1+n_2} \]
+
+\underline{Student's T-distribution}
+
+We say $ T \thicksim T_n $ if
+\[ T=\frac{Z}{\sqrt{\nicefrac{W}{n}}}  \]
+where $ Z \thicksim N(0,1) $ and $ W \thicksim \chi^2_n $ are independent. Note
+that $ E(T)=0 $ and $ T $ is symmetric. Also, as $ n \to \infty $, then
+$ T \to Z \thicksim N(0,1) $.
+
+\begin{thmbox}
+    \begin{theorem}
+        Let $ Y_1,\ldots ,Y_n $ be iid $ N(\mu,\sigma^2) $ where $ \mu $ and $ \sigma $ are
+        unknown. Let
+        \[ \overline{Y}=\frac{1}{n} \sum\limits_{i=1}^{n} Y_i \]
+        and
+        \[ S^2=\frac{1}{n-1} \sum\limits_{i=1}^{n} (Y_i-\overline{Y})^2 \]
+        Then,
+        \begin{enumerate}[(i)]
+            \item The pivotal quantity for $ \mu $ is:
+                  \[ \frac{\overline{Y}-\mu}{\frac{S}{\sqrt{n}}} \thicksim T_{n-1}  \]
+            \item The pivotal quantity for $ \sigma^2 $ is:
+                  \[ \frac{(n-1)S^2}{\sigma^2} \thicksim \chi^2_{n-1}  \]
+        \end{enumerate}
+    \end{theorem}
+\end{thmbox}
+\begin{remark}
+    (i) Shows that if we replace $ \sigma $ by its estimator $ S $, then it follows a $ T $-distribution
+    with $ (n-1) $ degrees of freedom.
+\end{remark}
+
+\begin{exbox}
+    \begin{example}
+        An independent sample of $ 25 $ students are taken and STAT 231 scores are recorded.
+        \begin{itemize}
+            \item $ \overline{y}=75 $
+            \item $ s^2=\frac{1}{n-1} \sum\limits_{i=1}^{n} (y_i-\overline{y})^2=64 $
+        \end{itemize}
+        \begin{enumerate}[(a)]
+            \item Find the $ 99\% $ confidence interval for $ \mu $.
+            \item Find the $ 95\% $ confidence interval for $ \sigma^2 $.
+            \item Find the $ 99\% $ prediction interval for $ Y_{26} $.
+        \end{enumerate}
+        \textbf{Solution.} We know $ Y_1,\ldots ,Y_{25} \thicksim N(\mu,\sigma^2) $
+        where $ Y_i= $ STAT 231 score of the $ i^{\text{th}} $ student.
+
+        (a) We know
+        \[ \frac{\overline{Y}-\mu}{\frac{S}{\sqrt{n}}} \thicksim T_{24} \]
+        We want a $ t $ such that
+        \[ P(|T_{24}|\leqslant t)=0.99 \]
+        Using the table we see that $ t=2.80 $. Now,
+        \[ P(-2.8\leqslant T_{24}\leqslant 2.8)=0.99 \]
+        \[ \implies P\left(-2.8\leqslant \frac{\overline{Y}-\mu}{\frac{S}{\sqrt{n}}}
+            \leqslant 2.8\right)=0.99 \]
+        \[ \implies P\left(\overline{Y}-2.8 \frac{S}{\sqrt{n}}\leqslant \mu\leqslant \overline{Y}+
+            2.8 \frac{S}{\sqrt{n}}\right)=0.99 \]
+        Thus, the $ 99\% $ confidence interval is:
+        \[ \overline{y}\pm 2.8 \frac{s}{\sqrt{n}}\implies \left[ 62.2, 87.8 \right] \]
+
+        (b) We know
+        \[ \frac{(n-1)S^2}{\sigma^2} \thicksim \chi^2_{24}  \]
+        We want any value $ a $ and $ b $ such that
+        \[ P(a\leqslant \chi^2_{24}\leqslant b)=0.95 \]
+        We choose the symmetric solution with $ a=0.025\rightarrow 13.120 $ and $ b=0.975\rightarrow 40.646 $.
+        Now,
+        \[ P\left( 13.120\leqslant \chi^2_{24}\leqslant 40.646 \right)=0.95 \]
+        \[ \implies P\left( 13.120\leqslant \frac{(n-1) S^2}{\sigma^2}\leqslant 40.646 \right)=0.95 \]
+        \[ \implies P\left( \frac{(n-1)S^2}{40.646}\leqslant \sigma^2 \leqslant \frac{(n-1)S^2}{13.120} \right)=0.95 \]
+        Thus, the $ 95\% $ confidence interval for $ \sigma^2 $ is:
+        \[ \left[ \frac{(n-1)s^2}{40.646} , \frac{(n-1)s^2}{a} \right]\implies
+            \left[ 37.79, 117.07 \right] \]
+
+        (c) Prediction interval.
+        \[ Y_{26} \thicksim N(\mu,\sigma^2) \]
+        \[ \overline{Y} \thicksim N(\mu,\nicefrac{\sigma^2}{n}) \]
+        \[ \implies Y_{26}-\overline{Y} \thicksim N\left(0,\sigma^2\left( 1+\frac{1}{n}  \right)\right) \]
+        Therefore, the pivotal quantity is:
+        \[ \frac{Y_{26}-\overline{Y}}{\sigma \sqrt{1+\frac{1}{n}}} =Z \thicksim N(0,1) \]
+        we replace $ \sigma $ by its estimator and get
+        \[ \frac{Y_{26}-\overline{Y}}{S \sqrt{1+\frac{1}{n}}} \thicksim T_{24} \]
+        Thus,
+        \[ P(|T_{24}|\leqslant 2.8)=0.99 \]
+        yields the general $ 99\% $ prediction interval:
+        \[ \overline{y}\pm t^* s \sqrt{1+\frac{1}{n}} \]
+    \end{example}
+\end{exbox}
+We make the following remark:
+\begin{remark} Let $ Y_1,\ldots ,Y_{n} $ be iid $ N(\mu,\sigma^2) $. Then,
+    \begin{enumerate}[(i)]
+        \item The general confidence interval for $ \mu $ is:
+              \[ \overline{y}\pm z^* \frac{\sigma}{\sqrt{n}} \quad\text{if $\sigma$ is known} \]
+              \[ \overline{y}\pm t^* \frac{s}{\sqrt{n}} \quad\text{if $\sigma$ is unknown} \]
+        \item The general confidence interval for $ \sigma^2 $ is:
+              \[ \left[ \frac{(n-1)s^2}{b} ,\frac{(n-1)s^2}{a} \right] \]
+              where $ a $ and $ b $ come from the $ \chi^2_{n-1} $ table
+              and $ b-a= $ RHS.
+        \item The general prediction interval for $ Y_{n+1} $ is:
+              \[ \overline{y}\pm t^* s \sqrt{1+\frac{1}{n}} \]
+    \end{enumerate}
+\end{remark}
+
+\begin{thmbox}
+    \begin{theorem}
+        As $ n\to \infty $,
+        \[ \Lambda(\theta)=-2\ln\left[  \frac{L(\theta)}{L(\tilde{\theta})} \right] \thicksim \chi^2_1  \]
+        where $ \tilde{\theta} $ is the maximum likelihood estimator. We call the random
+        variable $ \Lambda(\theta) $ the likelihood ratio statistic.
+    \end{theorem}
+\end{thmbox}
+
+\begin{exbox}
+    \begin{example}
+        Suppose $ n $ is large, and we have a $ 10\% $ likelihood interval. What is the corresponding
+        coverage probability?
+
+        \textbf{Solution.} $ 10\% $ likelihood interval $ \implies R(\theta)\geqslant 0.1 $
+        \[ \implies \frac{L(\theta)}{L(\hat{\theta})}\geqslant 0.1  \]
+        \[ \implies -2\ln\left[  \frac{L(\theta)}{L(\hat{\theta})} \right]\leqslant -2\ln(0.1)  \]
+        \[ \implies \lambda(\theta)\leqslant -2\ln(0.1) \]
+        Thus, the corresponding coverage:
+        \begin{align*}
+            P(\Lambda(\theta)\leqslant -2\ln(0.1))
+             & = P(Z^2\leqslant -2\ln(0.1))        \\
+             & = P(|Z|\leqslant \sqrt{-2\ln(0.1)}) \\
+             & \approx 97\%
+        \end{align*}
+    \end{example}
+\end{exbox}

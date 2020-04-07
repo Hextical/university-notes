@@ -1,0 +1,80 @@
+\section{2020-03-04}
+\begin{defbox}
+    \begin{definition}
+        An estimator $ \tilde{\theta} $ is called \textbf{\emph{unbiased}} for $ \theta $ if
+        \[ E(\tilde{\theta})=\theta \]
+    \end{definition}
+\end{defbox}
+\begin{exbox}
+    \begin{example}
+        Let $ W=\frac{(n-1)S^2}{\sigma^2} $. Find $ E(S^2) $.
+
+        \textbf{Solution.}
+        \begin{align*}
+             & E(W)=n-1                                              \\
+             & \implies E\left(\frac{(n-1)S^2}{\sigma^2} \right)=n-1 \\
+             & \implies \frac{n-1}{\sigma^2} E(S^2)=n-1              \\
+             & \implies E(S^2)=\sigma^2
+        \end{align*}
+        Therefore $ S^2 $ is an unbiased estimator for $ \sigma^2 $, and this is why
+        we divide by $ (n-1) $.
+    \end{example}
+\end{exbox}
+
+\underline{Other Confidence Intervals}
+
+\underline{Poisson}
+Suppose $ Y_1,\ldots ,Y_n \thicksim \poi(\mu) $
+are independent and $ n $ is large. Find the $ 95\% $ confidence interval.
+\[ \overline{Y} \thicksim N(\mu,\sigma^2=\nicefrac{\mu}{n}) \]
+Find the pivotal quantity now.
+
+\underline{Exponential}
+Suppose $ Y_1,\ldots ,Y_n \thicksim \exp(\theta) $ are independent and $ n $ is small.
+
+\begin{thmbox}
+    \begin{theorem}
+        If $ Y \thicksim \exp(\theta) $, then
+        \[ \frac{2Y}{\theta} \thicksim \exp(2) \]
+        If $ W_i=\nicefrac{2Y_i}{\theta} $, then
+        \[ \sum\limits_{i=1}^{n} W_i \thicksim \chi^2_{2n} \]
+    \end{theorem}
+\end{thmbox}
+\begin{proof}
+    Let $ F_W(w) $ be the cumulative distribution function of $ W $. Then,
+    \begin{align*}
+        F_W(w)
+         & =P(W\leqslant w)                               \\
+         & =P\left( \frac{2Y}{\theta} \leqslant w \right) \\
+         & =P\left( Y\leqslant \frac{w\theta}{2} \right)  \\
+         & =1-e^{-\frac{w\theta/2}{\theta}}               \\
+         & =1-e^{-\nicefrac{w}{2}}
+    \end{align*}
+    Therefore,
+    \[ f(w)=\frac{1}{2} e^{-\nicefrac{w}{2}} \]
+\end{proof}
+Using this theorem, we can find the confidence interval for $ \theta $.
+\begin{align*}
+     & P\left(a\leqslant \chi^2_{2n}\leqslant b\right)=0.95                                         \\
+     & \implies P\left(a \leqslant \sum\limits_{i=1}^{n} W_i \leqslant b\right)=0.95                \\
+     & \implies P\left(a\leqslant \sum\limits_{i=1}^{n} \frac{2Y_i}{\theta} \leqslant b\right)=0.95 \\
+     & \implies P\left(a\leqslant \frac{2}{\theta} \sum\limits_{i=1}^{n} Y_i\leqslant b\right)=0.95
+\end{align*}
+yields
+\[ \left[ \frac{2 \sum\limits_{i=1}^{n} Y_i}{b} , \frac{2 \sum\limits_{i=1}^{n} Y_i}{a} \right] \]
+where $ a $ and $ b $ are from the $ \chi^2 $ table.
+
+\begin{thmbox}
+    \begin{theorem}
+        If we have a $ p\% $ coverage interval with $ Z $ as a pivot, and $ n $ is large, then
+        the corresponding likelihood is given by
+        \[ e^{-\nicefrac{(z^*)^2}{2} } \]
+    \end{theorem}
+\end{thmbox}
+
+\begin{exbox}
+    \begin{example}
+        If $ p=0.95 $ and $ z^*=1.96 $, then the corresponding likelihood is:
+        \[ e^{-\nicefrac{(1.96)^2}{2} }\approx 0.15 \]
+    \end{example}
+\end{exbox}

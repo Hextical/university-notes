@@ -1,0 +1,56 @@
+\section{2020-03-09}
+\underline{Roadmap}:
+\begin{enumerate}[(i)]
+    \item Binomial testing
+    \item Review for the midterm (excluded from these notes)
+\end{enumerate}
+\begin{defbox}
+    \begin{definition}
+        $ p $-value: Probability of observing as extreme an observation of your data,
+        given the null hypothesis is true.
+    \end{definition}
+\end{defbox}
+
+\begin{defbox}
+    \begin{definition}
+        A test statistic (discrepancy measure) is a random variable that measures
+        the level of disagreement of your data with the null hypothesis. Typically,
+        it satisfies the following properties:
+        \begin{enumerate}
+            \item $ D\geqslant 0 $
+            \item $ D=0 \implies $ best news for $ H_0 $
+            \item High values of $ D \implies $ bad news for $ H_0 $
+            \item Probabilities can be calculated if $ H_0 $ is true
+        \end{enumerate}
+    \end{definition}
+\end{defbox}
+
+\underline{Steps for a Statistical test}
+
+\underline{Step 1}: Construct the test-statistic $ D $
+\begin{exbox}
+    \begin{example}
+        Test whether a coin is fair (against the two sided alternative).
+        Let $ n=100 $ and $ y=52 $ heads.
+        \begin{itemize}
+            \item $ H_0 $: $ \theta=\frac{1}{2} $
+            \item $ H_1 $: $ \theta\neq \frac{1}{2} $
+        \end{itemize}
+        where $ \theta=P(H) $.
+
+        \underline{Model}: $ Y \thicksim \bin(100,\theta) $.
+        \[ D=|Y-50| \]
+        as it satisfies (i)-(iv).
+    \end{example}
+\end{exbox}
+\underline{Step 2}: Find $ d $ from your data set.
+\[ p\text{-value}=P(D\geqslant d;H_0\text{ is true}) \]
+\underline{Step 3}: Make conclusions based on your p-value
+
+For our Binomial problem,
+\[ D=|Y-50|\implies d=|52-50|=2 \]
+Thus,
+\[ p\text{-value}=P(|Y-50|\geqslant 2) \]
+but this is difficult to calculate. For $ n $ large enough, we can use
+\[ D=\left| \frac{Y-n\theta}{\sqrt{n\theta(1-\theta)}} \right| \]
+as a possible test statistic.
