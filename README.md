@@ -1,7 +1,7 @@
 # university-notes
 All my latex'd university notes so far.
 
-# Year 2
+## Year 2
 ### Semester 1
 - **CO 250**: Levent Tunçel
 - **STAT 230**: Diana Skrzydlo
