@@ -2,12 +2,13 @@
 \underline{Roadmap}:
 \begin{enumerate}[(i)]
     \item Confidence Interval for $ \beta $
-    \item Testing for $ H_0 $: $ \beta=0 $ -- Test for correlation for
-          $ X $ and $ Y $
+    \item Testing for $ H_0 $: $ \beta=0 $ (Test for correlation for
+          $ x $ and $ Y $)
 \end{enumerate}
 
 \begin{exbox}
-    \begin{example} $ \; $
+    \begin{example} \label{ex least sq}
+        Last class we found the least square equation using the following data.
         \begin{itemize}
             \item $ n=30 $
             \item $ \overline{x}=76.733 $
@@ -15,15 +16,18 @@
             \item $ S_{yy}=7585.3667 $
             \item $ S_{xx}=5135.8667 $
             \item $ S_{xy}=5106.8667 $
-        \end{itemize}
-        Regression (Least Squared Equation): $ y=-4.0677+0.9944x $
-        \begin{itemize}
             \item $ \hat{\alpha}=-4.0677 $
             \item $ \hat{\beta}=0.9944 $
-            \item $ \hat{\sigma^2}=\frac{1}{n} \sum\limits_{i=1}^{n} \left[ y_i-(\hat{\alpha}+\hat{\beta}x_i) \right]^2 $
-            \item $ s_e^2=\frac{1}{n-2} \sum\limits_{i=1}^{n} \left[ y_i-(\hat{\alpha}+\beta x_i) \right]^2 $
-            \item $ s_e = $ standard error $ =9.4630 $ (sqrt of $ s_e^2 $)
         \end{itemize}
+        \[ y=-4.0677+0.9944x \]
+        \begin{itemize}
+            \item $ \hat{\sigma}^2=\frac{1}{n} \sum\limits_{i=1}^{n} \left[ y_i-(\hat{\alpha}+\hat{\beta}x_i) \right]^2 $
+        \end{itemize}
+        We now introduce the standard error, denoted $ s_e $, where we divide by $ (n-2) $
+        instead of $ (n-1) $ in our sample standard variance.
+        \[ s_e^2=\frac{1}{n-2} \sum\limits_{i=1}^{n} \left[ y_i-(\hat{\alpha}+\hat{\beta}x_i) \right]^2 \]
+        In our example, $ s_e=9.4630 $. Don't forget to square root $ s_e^2 $!
+
         A look ahead: $ s_e^2 $ is an unbiased estimator for $ \sigma^2 $.
     \end{example}
 \end{exbox}
@@ -44,25 +48,25 @@ Result:
 Therefore,
 \[ \frac{\tilde{\beta}-\beta}{\frac{\sigma}{\sqrt{S_{xx}}}} \thicksim N(0,1) \]
 but, $ \sigma $ is unknown, so
-\[ \frac{\tilde{\beta}-\beta}{\frac{s_e}{\sqrt{S_{xx}}}} \thicksim T_{n-2}  \]
+\[ \frac{\tilde{\beta}-\beta}{\frac{S_e}{\sqrt{S_{xx}}}} \thicksim T_{n-2}  \]
 \begin{thmbox}
     \begin{theorem} We can use
-        \[ \frac{\tilde{\beta}-\beta}{\frac{s_e}{\sqrt{S_{xx}}}} \thicksim T_{n-2} \]
+        \[ \frac{\tilde{\beta}-\beta}{\frac{S_e}{\sqrt{S_{xx}}}} \thicksim T_{n-2} \]
         as a pivotal quantity for $ \beta $. We can use
-        \[ \frac{(n-2)s_e^2}{\sigma^2} \thicksim \chi^2_{n-2} \]
+        \[ \frac{(n-2)S_e^2}{\sigma^2} \thicksim \chi^2_{n-2} \]
         as a pivotal quantity for $ \sigma^2 $.
     \end{theorem}
 \end{thmbox}
 \begin{exbox}
-    \begin{example} $ \; $
+    \begin{example} Continuation of \ref{ex least sq}.
         \begin{enumerate}[(i)]
             \item Find the $ 95\% $ Confidence Interval for $ \beta $.
             \item Test whether $ \beta=0 $
         \end{enumerate}
         (i) The pivot is:
-        \[ \frac{\tilde{\beta}-\beta}{\frac{s_e}{\sqrt{S_{xx}}}} \thicksim T_{28} \]
-        \underline{Step 1}: Critical points $ t^*=2.05 $.
-        \[ P(-2.05\leqslant \frac{\tilde{\beta}-\beta}{\frac{s_e}{\sqrt{S_{xx}}}}\leqslant 2.05)=0.95\]
+        \[ \frac{\tilde{\beta}-\beta}{\frac{S_e}{\sqrt{S_{xx}}}} \thicksim T_{28} \]
+        \underline{Step 1}: Critical points using table with $ p=0.975,\,df=28\rightarrow t^*=2.05 $.
+        \[ P\left(-2.05\leqslant \frac{\tilde{\beta}-\beta}{\frac{S_e}{\sqrt{S_{xx}}}}\leqslant 2.05\right)=0.95\]
         Coverage interval:
         \[ \tilde{\beta}\pm t^* \frac{S_e}{\sqrt{S_{xx}}} \]
         Confidence interval:
@@ -74,8 +78,9 @@ but, $ \sigma $ is unknown, so
             \item $ H_0 $: $ \beta=0 $
             \item $ H_1 $: $ \beta\neq 0 $
         \end{itemize}
-        \[ D=\left|\frac{\tilde{\beta}}{\frac{s_e}{\sqrt{S_{xx}}}}\right| \]
-        Value of the test $ d=7.53 $.
+        \[ D=\left|\frac{\tilde{\beta}}{\frac{S_e}{\sqrt{S_{xx}}}}\right| \]
+        Value of the test:
+        \[ d=\frac{\hat{\beta}}{\frac{s_e}{s_{xx}}}=\frac{0.9944}{\frac{9.4630}{\sqrt{5135.8667}}}=7.53 \]
         \begin{align*}
             p\text{-value}
              & =P(D\geqslant d)           \\

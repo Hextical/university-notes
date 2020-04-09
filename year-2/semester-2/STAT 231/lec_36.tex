@@ -4,7 +4,7 @@
 \underline{Roadmap}: Gaussian mean problem with equal variances
 
 \underline{Problem}: $ Y_{11},\ldots ,Y_{1n_1} \thicksim N(\mu_1,\sigma^2) $ and
-$ Y_{21},\ldots ,Y_{2n_2} \thicksim N(\mu^2,\sigma^2) $
+$ Y_{21},\ldots ,Y_{2n_2} \thicksim N(\mu_2,\sigma^2) $
 
 Question:
 \begin{enumerate}[(i)]
@@ -37,9 +37,11 @@ for some $ S_p $, we need to find this.
 
 \[ \hat{\mu}_1=\frac{1}{n_1} \sum\limits_{i=1}^{n_1} y_{1i} \]
 \[ \hat{\mu}_2=\frac{1}{n_2} \sum\limits_{j=1}^{n_2} y_{2j} \]
-\[ \hat{\sigma}^2=\frac{1}{n_1+n_2}\left[ \sum(y_{1i}+\overline{y}_1)^2+ \sum(y_{2j}-\overline{y}_2)^2\right] \]
+\[ \hat{\sigma}^2=\frac{1}{n_1+n_2}\left[ \sum\limits_{i=1}^{n_1}(y_{1i}+\overline{y}_1)^2+ \sum\limits_{j=1}^{n_2}(y_{2j}-\overline{y}_2)^2\right]
+    =\frac{1}{n_1+n_2} \left[ (n_1-1)s_1^2+(n_2-1)s_2^2  \right] \]
 \[ S_p^2=\frac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2} \]
-Check $ E(S_p^2)=\sigma^2 $.
+Check $ E(S_p^2)=\sigma^2 $; that is, $ S_p^2 $ is an unbiased estimator
+for $ \sigma^2 $. Hint: We already know $ E(S_1^2)=E(S_2^2)=\sigma^2 $
 
 \begin{exbox}
     \begin{example} Assume equal variances hold.
@@ -56,10 +58,12 @@ Check $ E(S_p^2)=\sigma^2 $.
         \underline{Test statistic}:
         \[ D=\left|\frac{(\overline{Y}_1-\overline{Y}_2)-(\mu_1-\mu_2)}{S_p\sqrt{\frac{1}{n_2}+\frac{1}{n_2}}}\right|=
             \left|\frac{(\overline{Y}_1-\overline{Y}_2)}{S_p\sqrt{\frac{1}{n_2}+\frac{1}{n_2}}}\right| \]
-        \[ d=\frac{\overline{y}_1-\overline{y}_2}{s_p\sqrt{\frac{1}{n_2}+\frac{1}{n_2}}} \]
+        \[ d=\frac{\overline{y}_1-\overline{y}_2}{s_p\sqrt{\frac{1}{n_2}+\frac{1}{n_2}}}=
+            \frac{10.4-9.0}{1.5480\sqrt{\frac{1}{10}+\frac{1}{10}}}=2.0223  \]
         where
-        \[ s_p^2=\frac{(n_1-1)s_1^2+(n_2-1)s_2^2}{n_1+n_2-2} \]
-        which we get $ s_p=1.548 $, and $ d=2.2215 $.
+        \[ s_p^2=\frac{(n_1-1)s_1^2+(n_2-1)s_2^2}{n_1+n_2-2}=\frac{(10-1)(1.1314)^2+(10-1)(1.8742)^2}{10+10-2}=2.3963458  \]
+        Thus, $ s_p=1.5480 $ and $ d=2.0223 $. Look in the table with $ df=18,\,t=2.10 \rightarrow
+            p=0.975$.
         \[ p\text{-value}<5\% \]
         reject $ H_0 $.
     \end{example}

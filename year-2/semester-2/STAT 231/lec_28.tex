@@ -6,37 +6,65 @@
     \item Testing for variance for Normal
     \item An example
 \end{enumerate}
-The general problem: $ Y_1,\ldots ,Y_n \thicksim N(\mu,\sigma^2)$ iid
-where $ \mu $ and $ \sigma^2 $ are both unknown.
-$ H_0 $: $ \sigma^2=\sigma_0^2 $ vs two sided alternative.
+The general problem:
+\begin{itemize}
+    \item $ Y_1,\ldots ,Y_n \thicksim N(\mu,\sigma^2)$ iid
+          where $ \mu $ and $ \sigma $ are both unknown.
+    \item Sample: $ \{y_1,\ldots ,y_n\} $
+    \item $ H_0 $: $ \sigma^2=\sigma_0^2 $ vs two sided alternative.
+\end{itemize}
+
 \begin{enumerate}[(i)]
     \item Test statistic? Problem
     \item Convention?
 \end{enumerate}
 The pivot is:
-\[ U=\frac{(n-1)s^2}{\sigma_0^2} \thicksim \chi^2_{n-1} \]
-can we use this as our test statistic?
+\[ U=\frac{(n-1)S^2}{\sigma_0^2} \thicksim \chi^2_{n-1} \]
+can we use this as our test statistic? We will calculate
+\[ u=\frac{(n-1)s^2}{\sigma_0^2} \]
+We want to compare $ u $ to the median of $ \chi^2_{n-1} $:
+\begin{itemize}
+    \item If $ u> $ median, then $ p\text{-value}=2P(U\geqslant u) $.
+    \item If $ u< $ median, then $ p\text{-value}=2P(U\leqslant u) $.
+\end{itemize}
 
 \begin{exbox}
-    \begin{example} $ \; $
+    \begin{example}\label{small u variance} $ \; $
         \begin{itemize}
             \item Normal population: $ \{y_1,\ldots ,y_n\} $
-            \item $ n=20 $, $ \sum y_i=888.1 $, $ \sum y_i^2=39545.03 $
-            \item $ H_0 $: $ \sigma=2 $
-            \item $ H_1 $: $ \sigma\neq 2 $
+            \item $ n=20 $
+            \item $ \sum\limits_{i=1}^{n} y_i=888.1 $
+            \item $ \sum\limits_{i=1}^{n} y_i^2=39545.03 $
+            \item $ H_0 $: $ \sigma=\sigma_0=2 \iff \sigma^2=\sigma_0^2=4 $
+            \item $ H_1 $: $ \sigma\neq \sigma_0=2 \iff \sigma^2\neq \sigma_0^2=4 $
         \end{itemize}
         What is the $ p $-value?
         We know
-        \[ s^2=\frac{1}{n-1} \left[ \sum y_i^2-n\overline{y}^2 \right]=5.7342 \]
-        Compute $ U $:
-        \[ U=\frac{(n-1)s^2}{\sigma_0^2}=27.24 \]
-        $ \chi^2_{19} $
+        \[ s^2=\frac{1}{n-1} \left[ \sum\limits_{i=1}^{n} y_i^2-n\overline{y}^2 \right]
+            =
+            \frac{1}{19} \left[ (39545.03)-(20)\left( \frac{888.1}{20}  \right)  \right]
+            =
+            5.7342 \]
+        Compute $ u $:
+        \[ u=\frac{(n-1)s^2}{\sigma_0^2}
+            =
+            \frac{(19)(5.7342)}{4}
+            =
+            27.24 \]
+        We need to determine if $ u $ is to the right or left of the median $ \chi^2_{19} $.
+        We know it will be to the right since the mean of $ \chi^2_{19} $ is $ 19 $.
+        $ \chi^2 $ is right-skewed, so the mean must be bigger than the median,
+        thus the median must be less than $ 19 $. Therefore, $ u> $ median. Alternatively,
+        we can use the table and look at $ p=0.5,\,df=19\rightarrow 18.338<u $.
         \begin{align*}
             p\text{-value}
+             & =2P(U\geqslant u)               \\
              & =2P(U\geqslant 27.24)           \\
-             & =2P(\chi^2_{19}\geqslant 27.24) \\
-             & =10\%\text{ and }20\%
+             & =2P(\chi^2_{19}\geqslant 27.24)
         \end{align*}
-        so, $ p>0.1 $ means there is no evidence against null-hypothesis.
+        We see that $ 27.24 $ falls between $ p=0.9 $ and $ p=0.95 $. The area to the right of
+        $ p=0.9 $ is $ 10\% $ and the area to the right of $ p=0.95 $ is $ 5\% $.
+        Thus, $ 2P(5\%\text{ and }\% 10)=10\%\text{ and } 20\% $,
+        which implies $ p>0.1 $ and we conclude there is no evidence against null-hypothesis.
     \end{example}
 \end{exbox}

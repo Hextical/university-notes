@@ -6,68 +6,75 @@
     \item An example
 \end{enumerate}
 
+(i) \underline{5 min recap}
+
 $ Y_1,\ldots ,Y_n $ iid $ \thicksim N(\mu,\sigma^2) $
 \begin{itemize}
     \item $ H_0 $: $ \sigma^2=\sigma_0^2 $
-    \item $ U=\frac{(n-1)s^2}{\sigma_0^2} \thicksim \chi^2_{n-1} $
+    \item $ U=\frac{(n-1)S^2}{\sigma_0^2} \thicksim \chi^2_{n-1} $
 \end{itemize}
 We calculated the $ p $-value:
-\[ U=\frac{(n-1)s^2}{\sigma_0^2}  \]
-If
+\[ u=\frac{(n-1)s^2}{\sigma_0^2}  \]
 \begin{itemize}
-    \item $ U > $ median $ \chi^2_{n-1} \implies $ $ p\text{-value}=2P(U\geqslant u) $
-    \item $ U < $ median $ \chi^2_{n-1} \implies $ $ p\text{-value}=2P(U\leqslant u) $
+    \item If $ u > $ median $ \chi^2_{n-1} \implies $ $ p\text{-value}=2P(U\geqslant u) $ (twice right tail)
+    \item If $ u < $ median $ \chi^2_{n-1} \implies $ $ p\text{-value}=2P(U\leqslant u) $ (twice left tail)
 \end{itemize}
-\underline{Exercise}: Construct the $ 95\% $ confidence interval for $ \sigma^2 $.
-Then, check if $ \sigma_0^2(4)\in 95\% $ confidence interval.
+\underline{Exercise} For \ref{small u variance},
 \begin{itemize}
-    \item $ H_0 $: $ \sigma^2=4 $ (more than $ 10\% $, so it is in the $ 95\% $
-          confidence interval)
+    \item Construct the $ 95\% $ confidence interval for $ \sigma^2 $.
+    \item Check if $ \sigma_0^2(4)\in 95\% $ confidence interval.
 \end{itemize}
+We already know that $ H_0 $: $ \sigma^2=4 $ yields a $ p\text{-value}>0.1 $, so it should
+be in the $ 90\% $ confidence interval $ \implies $ it's in the $ 95\% $ confidence interval.
 
-\underline{Likelihood Ratio Test Statistic} (one parameter)
+(ii) \underline{LTRS for large $ n $}
 
 $ Y_1,\ldots ,Y_n $ iid $ f(y_i;\theta) $ with $ n $ large.
 \begin{itemize}
     \item Sample: $ \{y_1,\ldots ,y_n\} $
     \item $ \theta= $ unknown parameter
     \item $ H_0 $: $ \theta=\theta_0 $
-    \item $ H_1 $: $ \theta=\theta_0 $
+    \item $ H_1 $: $ \theta\neq\theta_0 $
 \end{itemize}
 \underline{Step 1}: Test statistic:
-\[ \Lambda=-2\ln\left[ \frac{L(\theta)}{L(\tilde{\theta})}  \right] \]
+\[ \Lambda(\theta)=-2\ln\left[ \frac{L(\theta)}{L(\tilde{\theta})}  \right] \]
 If $ H_0 $ is true:
-\[ \Lambda=-2\ln\left[ \frac{L(\theta)}{L(\tilde{\theta})}  \right]
+\[ \Lambda(\theta_0)=-2\ln\left[ \frac{L(\theta_0)}{L(\tilde{\theta})}  \right]
     \thicksim \chi^2_{1} \]
-\underline{Step 2}: Calculate $ \lambda $
-\[ \lambda=-2\ln\left[ \frac{L(\theta_0)}{L(\hat{\theta})}  \right]=-2\ln
+\underline{Step 2}: Calculate $ \lambda(\theta_0) $
+\[ \lambda(\theta_0)=-2\ln\left[ \frac{L(\theta_0)}{L(\hat{\theta})}  \right]=-2\ln
     \left[ R(\theta_0) \right] \]
 \begin{align*}
     p\text{-value}
-     & =P(\Lambda\geqslant \lambda) \\
-     & =P(Z^2\geqslant \lambda)     \\
-     & =1-P(|Z|\leqslant \lambda)
+     & =P(\Lambda\geqslant \lambda)      \\
+     & =P(Z^2\geqslant \lambda)          \\
+     & =1-P(|Z|\leqslant \sqrt{\lambda})
 \end{align*}
 
+(iii) \underline{An example}
 \begin{exbox}
     \begin{example}
-        Suppose $ Y_1,\ldots ,Y_n \thicksim f(y_i;\theta) $ iid. where
+        Suppose $ Y_1,\ldots ,Y_n \thicksim f(y_i;\theta) $ iid where
         \[ f(y,\theta)=\frac{2y}{\theta}e^{-\nicefrac{y^2}{\theta}} \]
-        Data: $ n=20 $, $ \sum y_i^2=72 $
+        \begin{itemize}
+            \item $ n=20 $
+            \item $ \sum\limits_{i=1}^{n} y_i^2=72 $
+        \end{itemize}
 
         We want to test $ H_0 $: $ \theta=5 $ (two sided alternative).
         \begin{itemize}
-            \item $ \hat{\theta}=\frac{1}{n} \sum y_i^2 =3.6 $
-            \item $ R(\theta_0)=\frac{\hat{\theta}}{\theta_0}e^{(1-\nicefrac{\hat{\theta}}{\theta_0})^n} $
-            \item $ \lambda(\theta_0) = \cdots $
+            \item $ \hat{\theta}=\frac{1}{n} \sum\limits_{i=1}^{n}y_i=\frac{1}{20}(72)=3.6 $
+            \item $ R(\theta_0)=\left( \frac{\hat{\theta}}{\theta_0} \right)^n
+                      e^{\left(1-\frac{\hat{\theta}}{\theta_0}\right)n} = 0.379052 $
+            \item $ \lambda(\theta_0) =-2\ln \left[ R(\theta_0) \right]=1.94016 $
         \end{itemize}
-        We know $ \lambda=-2\ln \left[ R(\theta_0) \right]=1.9402 $ and so
-        \[ R(\theta_0)=\frac{L(\theta_0)}{L(\hat{\theta})}=0.3791 \]
-        also $ \theta_0=5 $. Lastly, calculate the $ p $-value.
         \begin{align*}
             p\text{-value}
-             & =P(\Lambda\geqslant \lambda) \\
-             & =P(Z^2\geqslant 1.9402)      \\
+             & =P(\Lambda\geqslant \lambda)                       \\
+             & =P(Z^2\geqslant 1.94016)                           \\
+             & =1-\left[ 2 P(Z\leqslant \sqrt{1.94016})-1 \right] \\
+             & = 1-\left[ 2(0.97381)-1 \right]                    \\
+             & = 0.16452                                          \\
              & \approx 16.5\%
         \end{align*}
         Thus, no evidence against null-hypothesis ($ H_0 $).
@@ -81,6 +88,5 @@ A few final points:
 \end{enumerate}
 \begin{itemize}
     \item $ n=20 $ is not large
-    \item $ \lambda=-2\ln\left[ R(\theta_0) \right] $: high values of $ \lambda\implies $
-          low values of $ R(\theta_0) $
+    \item High values of $ \lambda\implies $ low values of $ R(\theta_0) $
 \end{itemize}
