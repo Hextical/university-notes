@@ -1,2 +1,81 @@
 \section{2020-03-11}
-TODO.
+\underline{Roadmap}:
+\begin{enumerate}[(i)]
+    \item Testing for normal problems
+    \item How to test for a ``bias'' of a scale
+    \item One-sided tests
+    \item Relationship between C.I and H.T
+    \item Other distributions
+\end{enumerate}
+\underline{Problem}: $ Y_1,\ldots ,Y_n \thicksim N(\mu,\sigma^2) $ iid.
+\begin{itemize}
+    \item $ H_0 $: $ \mu=\mu_0 $
+    \item $ H_1 $: $ \mu\neq \mu_0 $
+\end{itemize}
+\underline{Steps involved}:
+\begin{enumerate}[(i)]
+    \item Construct the Discrepancy measure $ D $ (satisfying the properties), this
+          measures how much the data disagrees with $ H_0 $
+    \item Calculate the value of $ D $ from your sample ($ d $)
+    \item $ p\text{-value}=P(D\geqslant d; H_0\text{ is true}) $
+    \item Draw appropriate conclusions based on your $ p\text{-value} $
+\end{enumerate}
+\begin{exbox}
+    \begin{example}
+        The STAT 231 scores are normally distributed with mean $ \mu $
+        and variance $ \sigma^2=49 $.
+        \begin{itemize}
+            \item $ H_0 $: $ \mu=75 $
+            \item $ H_1 $: $ \mu\neq 75 $
+        \end{itemize}
+        A random sample of $ 25 $ students are taken $ \overline{y}=72 $.
+        Find the $ p $-value.
+
+        \textbf{Solution.}
+        From Chapter $ 4 $ we know that
+        \[ \frac{\overline{Y}-\mu}{\frac{\sigma}{\sqrt{n}}} =Z \thicksim N(0,1) \]
+        \[ D=\left|\frac{\overline{Y}-\mu_0}{\frac{\sigma}{\sqrt{n}}}\right| \]
+        where we can see that $ D $ is a legitimate test statistic as
+        it satisfies all the required properties since:
+        \begin{enumerate}
+            \item $ D\geqslant 0 $ for all $ d $
+            \item $ D=0\implies $ best news for $ H_0 $
+            \item High values of $ D \implies $ bad news for $ H_0 $
+            \item Probabilities can be calculated if $ H_0 $ is true
+        \end{enumerate}
+        Thus, we have
+        \[ d=\left|\frac{\overline{y}-\mu_0}{\frac{\sigma}{\sqrt{n}}}\right|=
+            \left|\frac{72-75}{\frac{7}{\sqrt{5}}} \right|=\frac{15}{7} =2.14 \]
+        \begin{align*}
+            p\text{-value}
+             & =P(D\geqslant d)      \\
+             & =P(|Z|\geqslant 2.14) \\
+             & <0.05
+        \end{align*}
+        Evidence against $ H_0 $.
+    \end{example}
+\end{exbox}
+
+\begin{exbox}
+    \begin{example}
+        UW brochure claims that the average starting salary of UW graduates
+        is $ \$60000\text{/year} $. We assume normality. We want to test this claim.
+        Let $ \overline{y}=58000 $ and $ s=5000 $. What should you conclude?
+
+        \textbf{Solution.}
+        \begin{itemize}
+            \item $ H_0 $: $ \mu=60000 $
+            \item $ H_1 $: $ \mu\neq 60000 $
+        \end{itemize}
+        \[ D=\left|\frac{\overline{Y}-\mu_0}{\frac{S}{\sqrt{n}}}\right| \]
+        where all the properties of $ D $ are satisfied.
+        \[ d=\left|\frac{\overline{y}-60000}{\frac{5000}{\sqrt{25}}}\right|=2 \]
+        \begin{align*}
+            p\text{-value}
+             & =P(D\geqslant d)        \\
+             & =P(|T_{24}|\geqslant 2)
+        \end{align*}
+        The $ p $-value for this test is between $ 5\% $ and $ 10\% $. Weak evidence
+        against $ H_0 $.
+    \end{example}
+\end{exbox}
