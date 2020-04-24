@@ -1,0 +1,100 @@
+\section{2020-02-10}
+\underline{Roadmap}:
+\begin{itemize}
+    \item Interval Estimation
+          \subitem Likelihood Estimation
+          \subitem Confidence Intervals: Coverage probabilities, Pivotal Quantities
+\end{itemize}
+\begin{exbox}
+    \begin{example}
+        The approval rating of Trump is $ 49\% $ ($ 49\% $ is the most ``likely'' value of $ \theta $)
+        where $ \theta= $ population approval rating.
+        \begin{itemize}
+            \item What is the ``Margin of Error''?
+                  \subitem How does one calculate it?
+        \end{itemize}
+    \end{example}
+\end{exbox}
+\underline{Setup} $ Y_1,\ldots ,Y_n $ are iid random variables with
+distribution (density) $ f(y;\theta) $ where $ \theta= $ unknown attribute.
+
+\underline{Objective}: Based on our data $ \{y_1,\ldots ,y_n\} $, we would
+construct an interval $ [a,b] $
+\[ a(y_1,\ldots ,y_n),b(y_1,\ldots ,y_n) \]
+which are the ``reasonable'' values of $ \theta $.
+
+\underline{Method 1}: Through the relative likelihood function.
+
+\underline{Intuition}: $ \theta $ is ``reasonable'' of $ L(\theta) $
+is ``close'' to $ L(\hat{\theta}) $, where $ \theta= $ MLE.
+
+\begin{defbox}
+    \begin{definition}
+        A $ 100p\% $ likelihood interval for $ \theta $ where $ p\in[0,1] $
+        \[ \{\theta:R(\theta)\geqslant p\} \]
+    \end{definition}
+\end{defbox}
+Take $ p=0.5 $, we get that $ R(\theta)\geqslant 0.5 $, so
+\[ \implies L(\theta)\geqslant 0.5 L(\hat{\theta}) \]
+The value of the likelihood at $ \theta $ is at least $ 50\% $ of the value of the
+likelihood evaluated at the MLE.
+
+\underline{Convention}
+\begin{itemize}
+    \item $ R(\theta)\geqslant 0.5\implies \theta $ is very plausible
+    \item $ 0.1\leqslant R(\theta)<0.5\implies \theta $ is plausible
+    \item $ 0.01\leqslant R(\theta)<0.1\implies \theta $ is implausible
+    \item $ R(\theta)<0.01\implies \theta $ is very implausible
+\end{itemize}
+\begin{exbox}
+    \begin{example}
+        A coin is tossed $ 200 $ times and we observe $ 120 $ heads.
+        Let $ \theta=P(\text{H}) $. Is $ \theta=0.5 $ plausible?
+
+        \textbf{Solution.} Find the $ 10\% $ likelihood interval for $ \theta $.
+        \[ L(\theta)=\binom{200}{120}\theta^{120}(1-\theta)^{80} \]
+        We are given that $ \hat{\theta}=0.6 $.
+        \[ \left\{ \theta:\frac{\theta^{120}(1-\theta)^80}{0.6^{120}(0.4)^{80}}\geqslant 0.1 \right\} \]
+        Thus,
+        \[ R(\theta)=\frac{\theta^{120}(1-\theta)^80}{0.6^{120}(0.4)^{80}} \]
+        Is $ \theta=0.5 $ plausible? Plug in $ \theta=0.5 $ and check if $ R(0.5)\geqslant 0.1 $.
+    \end{example}
+\end{exbox}
+\begin{exbox}
+    \begin{example}
+        Two Binomial experiments.
+        \begin{itemize}
+            \item $ n_1=1000 $, $ y_1=200 $
+            \item $ n_2=100 $, $ y_2=20 $
+            \item $ y= $ number of successes
+            \item $ n= $ number of trials
+        \end{itemize}
+        Which $ 10\% $ likelihood interval is wider?
+
+        \textbf{Solution.} We have $ \hat{\theta}=0.2 $.
+        $ n=100 $ yields a wider interval.
+    \end{example}
+\end{exbox}
+
+\underline{Method 2}: Confidence intervals.
+
+\underline{Setup}: There is a pre-specified probability (coverage probability),
+say $ 95\% $ or $ 99\% $ for example.
+
+\underline{Objective}: Based on your data, we want to estimate the (random)
+interval which would contain $ \theta $ with that probability.
+\begin{exbox}
+    \begin{example}
+        The STAT 231 scores of UW Math students is normally distributed independently
+        \[ Y_i \thicksim N(\mu,64) \]
+        A sample of $ 25 $ students are collected
+        \[ \overline{y}=75 \]
+        Find the $ 95\% $ confidence interval for $ \mu $.
+    \end{example}
+\end{exbox}
+\underline{Sampling Distributions}
+
+\underline{Idea}: All the data summaries are also outcomes of some random experiment.
+\[ Y_1,\ldots ,Y_n \thicksim N(\mu,\sigma^2) \quad\text{iid}\]
+\[ \implies \overline{Y} \thicksim N(\mu,\sigma^2/n) \]
+Our sample mean $ \overline{y} $ is an outcome of this experiment.

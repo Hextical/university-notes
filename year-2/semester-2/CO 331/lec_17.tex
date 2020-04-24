@@ -1,35 +1,49 @@
 \makeheading{2020-02-12}
 \begin{algbox}
     \begin{algorithm}[H]
-        \caption{Decoding Algorithm for C24}
+        \DontPrintSemicolon
+        \caption{Decoding Algorithm for $ C_{24} $}
         \SetKwInOut{Input}{Input}
-        \Input{$ \bm{r}=(\bm{x},\bm{y}) $ is recieved.}
-        \begin{enumerate}[(1)]
-            \item Compute the syndrome $ \bm{s}_1=\left[\;I_{12}\mid B\;\right]\bm{r}^\top $.
-                  If $ \bm{s}_1=\bm{0} $, then accept $ \bm{r} $ and STOP.
-            \item If $ w(\bm{s}_1)\leqslant 3 $, then correct $ \bm{x} $ in the positions
-                  corresponding to the $ 1 $'s in $ \bm{s}_1 $ and STOP.
-            \item Compare $ \bm{s}_1 $ to the columns (or rows) of $ B $. If any column,
-                  say column $ i $, differs in $ 1 $ position  from $ \bm{s}_1 $ (say position $ j $) or
-                  2 positions (say positions $ j $ and $ k $), then correct $ \bm{r} $
-                  as follows and STOP:
-                  \begin{itemize}
-                      \item Correct $ \bm{x} $ in positions $ j $ and $ k $.
-                      \item Correct $ \bm{y} $ in position $ i $.
-                  \end{itemize}
-            \item Compute the syndrome $ \bm{s}_2=\left[\;B\mid I_{12}\;\right]\bm{r}^\top $.
-            \item If $ w(\bm{s}_2)\leqslant 3 $, then correct $ \bm{y} $ in the positions
-                  corresponding to the $ 1 $'s in $ \bm{s}_2 $ and STOP.
-            \item Compare $ \bm{s}_2 $ to the columns (or rows) of $ B $. If any column,
-                  say column $ i $, differs in $ 1 $ position from $ \bm{s}_2 $ (say position $ j $) or
-                  2 positions (say positions $ j $ and $ k $), then correct $ \bm{r} $
-                  as follows and STOP:
-                  \begin{itemize}
-                      \item Correct $ \bm{y} $ in positions $ j $ and $ k $.
-                      \item Correct $ \bm{x} $ in position $ i $.
-                  \end{itemize}
-            \item Reject $ \bm{r} $.
-        \end{enumerate}
+        \SetKwInOut{Output}{Output}
+
+        \Input{$ G=\left[ \;I_{12}\mid B\; \right]=(\bm{g}_1,\ldots ,\bm{g}_{24})^\top $,
+        and $ \tilde{G}=\left[ \;B\mid I_{12} \;\right]=(\tilde{\bm{g}}_1,\ldots, \tilde{\bm{g}}_{24})^\top $,
+        and received vector $ \bm{r}=(\bm{x},\bm{y}) $}
+        \Output{Decoded vector}
+        $ \bm{s}_1\gets G\bm{r}^\top $\;
+        \If {$ \bm{s}_1=\bm{0} $} {
+            \Return{$ \bm{r} $}
+        }
+        \If {$ w(\bm{s}_1)\leqslant 3 $} {
+            $ \bm{x}^\prime \gets $ corrected $ \bm{x} $ in each position
+            corresponding to $ 1 $'s in $ \bm{s}_1 $\;
+            \Return{$ (\bm{x}^\prime,\bm{y}) $}
+        }
+        \For{$ i\gets 0 $ \KwTo $ 24 $} {
+            \If {$ \bm{g}_i $ differs in position $ j $ or
+                positions $ j $ and $ k $ from $ \bm{s}_1 $} {
+                $ \bm{x}^\prime\gets(x_1,\ldots ,x_{12}) $ where $ x_j\gets\overline{x}_j $ or
+                $ x_j\gets\overline{x}_j $ and $ x_k\gets\overline{x}_k $\;
+                $ \bm{y}^\prime \gets(y_1,\ldots ,y_{12}) $ where $ y_i\gets\overline{y}_i $\;
+                \Return{$ (\bm{x}^\prime,\bm{y}^\prime) $}\;
+            }
+        }
+        $ \bm{s}_2\gets\tilde{G}\bm{r}^\top $\;
+        \If {$ w(\bm{s}_2)\leqslant 3 $} {
+            $ \bm{y}^\prime \gets $ corrected $ \bm{y} $ in each position
+            corresponding to $ 1 $'s in $ \bm{s}_2 $\;
+            \Return{$ (\bm{x},\bm{y}^\prime) $}
+        }
+        \For{$ i\gets 0 $ \KwTo $ 24 $} {
+            \If {$ \tilde{\bm{g}_i} $ differs in position $ j $ or
+                positions $ j $ and $ k $ from $ \bm{s}_2 $} {
+                $ \bm{y}^\prime \gets (y_1,\ldots ,y_{12}) $ where $ y_j\gets\overline{y}_j $ or
+                $ y_j\gets\overline{y}_j $ and $ y_k\gets\overline{y}_k $\;
+                $ \bm{x}^\prime\gets(x_1,\ldots ,x_{12}) $ where $ x_i\gets\overline{x}_i $\;
+                \Return{$ (\bm{x}^\prime,\bm{y}^\prime) $}\;
+            }
+        }
+        \Return
     \end{algorithm}
 \end{algbox}
 
@@ -40,19 +54,19 @@
         (i) Decode $ \bm{r}=(1000\; 1000\; 0000\; 1001\; 0001\; 1101) $.
 
         \textbf{Solution.} Compute $ \bm{s}_1=\left[ \; I_{12}\mid B \; \right]\bm{r}^\top=
-        (0100\; 1000\; 0000)^\top $. Since $ w(\bm{s}_1)\leqslant 3 $, we set
+            (0100\; 1000\; 0000)^\top $. Since $ w(\bm{s}_1)\leqslant 3 $, we set
         $ \bm{e}=(\bm{s}_1^\top,0) $ and decode $ \bm{r} $ to
         \[ \bm{c}=\bm{r}-\bm{e}=(1100\; 0000\; 0000\; 1001\; 0001\; 1101) \]
 
         (ii) Decode $ \bm{r}=(1000\; 0010\; 0000\; 1000\; 1101\; 0010) $.
 
         \textbf{Solution.} Compute $ \bm{s}_1=\left[ \; I_{12}\mid B \; \right]\bm{r}^\top=
-        (1011\; 1110\; 1011)^\top $. Note that $ w(\bm{s}_1)>3 $. Comparing $ \bm{s}_1 $
+            (1011\; 1110\; 1011)^\top $. Note that $ w(\bm{s}_1)>3 $. Comparing $ \bm{s}_1 $
         with the rows of $ B $, we see that $ \bm{s}_1 $ differs in poisitions $ 6 $
         and $ 7 $ from row $ 4 $ of $ B $. Hence we set $ \bm{e}=(0000\; 0110\; 0000\; 0001\; 0000\; 0000) $
         and decode $ \bm{r} $ to
         \[ \bm{c}=\bm{r}-\bm{e}=(1000\; 0100\; 0000\; 1001\; 1101\; 0010) \]
-        
+
         NOTE: In both examples we should check out answers by verifying that $ H\bm{c}^\top=\bm{0} $
         (i.e., $ \bm{c} $ is indeed a codeword).
     \end{example}
@@ -86,7 +100,7 @@
         \hline
         $ p $     & $ (1-p)^{12} $ & $ 1-P_{C_{24}} $        & $ 1-P_T $                           & $ 1-P_H $                             \\
         \hline
-        $ 0.1 $   & $ 0.28243 $    & $ 0.785738      $       & $ 0.71121      $                   & $ 0.549043       $                    \\
+        $ 0.1 $   & $ 0.28243 $    & $ 0.785738      $       & $ 0.71121      $                    & $ 0.549043       $                    \\
         $ 0.01 $  & $ 0.886385 $   & $ 0.999909      $       & $ 0.99643      $                    & $ 0.99037       $                     \\
         $ 0.001 $ & $ 0.988066 $   & $ \approx 1    $        & $ 0.999964     $                    & $ 0.999896        $                   \\
         \hline

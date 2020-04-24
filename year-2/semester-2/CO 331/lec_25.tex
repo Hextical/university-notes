@@ -17,23 +17,21 @@ $ x^i \bm{r} $ and $ x^i\bm{e} $ have the same syndrome.
 Let $ r(x)= $ received polynomial. Let $ s_i(x)= $ syndrome of $ x^i r(x) $ for
 each $ i\in[1,n-1] $ where $ s_0=r(x)\mod g(x) $.
 
-\SetKwFor{For}{for (}{) $\lbrace$}{$\rbrace$}
 \begin{algbox}
     \begin{algorithm}[H]
+        \DontPrintSemicolon
         \caption{Error Trapping}
 
-        \For{$i = 0;\ i < n-1;\ i++$} {
-        Compute $ s_i(x) $.
+        \For{$ i=0$ \KwTo $ n-1 $} {
+            Compute $ s_i(x) $ with \ref{syndrome calculation}.
 
-        \If{$ s_i(x) $ is a non-cyclic burst of length at most $ t $} {
-        Let $ e_i(x)=(s_i(x),0) $
-
-        Let $ e(x)=x^{n-i}e_i(x) $
-
-        Decode $ r(x) $ to $ r(x)-e(x) $.
+            \If{$ s_i(x) $ is a non-cyclic burst of length at most $ t $} {
+                $ e_i(x)\gets(s_i(x),0) $\;
+                $ e(x)\gets x^{n-i}e_i(x) $\;
+                \Return $ r(x)-e(x) $
+            }
         }
-        }
-        Reject $ r(x) $.
+        \Return
     \end{algorithm}
 \end{algbox}
 

@@ -1,0 +1,103 @@
+\section{2020-02-14 \texorpdfstring{$\heartsuit$}{[Valentine's Day!]}}
+
+\underline{Roadmap}:
+\begin{itemize}
+    \item Confidence interval for a Normal problem with known variance
+    \item The Q-Q-plot, and how to interpret it?
+\end{itemize}
+\begin{defbox}
+    \begin{definition}
+        A $ 100p\% $ confidence interval for $ \theta $ is an interval $
+            [\ell,u] $ where $ \ell=\ell(y_1,\ldots ,y_n) $ and $ u=u(y_1,\ldots
+            ,y_n) $ which is an estimate of the random interval (coverage interval)
+        \[ \left[ L(Y_1,\ldots ,Y_n),U(Y_1,\ldots ,Y_n) \right] \] such that
+        \[ P\left( L(Y_1,\ldots ,Y_n)\leqslant \theta\leqslant U(Y_1,\ldots
+            ,Y_n) \right)=p \] where $ p $ is the coverage probability.
+    \end{definition}
+\end{defbox}
+\underline{Problem}:  $ Y_1,\ldots ,Y_n $ are iid $ N(\mu,\sigma^2) $
+\begin{itemize}
+    \item $ \sigma^2= $ known
+    \item $ \mu= $ unknown parameter of interest
+    \item a probability is pre-specified
+    \item Sample: $ \{y_1,\ldots ,y_n\} $
+\end{itemize}
+\underline{Objective}: To construct a $ 95\% $ confidence interval for $ \mu $.
+
+\underline{Step 1}: Identify the sampling distribution of the estimator
+\begin{itemize}
+    \item $ \mu= $ attribute
+    \item $ \overline{y}= $ sample mean = estimate
+    \item $ \overline{Y}= $ estimator $ = \tilde{\mu} $
+    \item If $ Y_1,\ldots ,Y_n \thicksim N(\mu,\sigma^2) $, then
+          \[ \overline{Y} \thicksim N\left( \mu,\sigma^2/n \right) \]
+\end{itemize}
+\underline{Step 2}: Construct the pivotal quantity $ Q $
+\begin{defbox}
+    \begin{definition}
+        A \textbf{\emph{pivotal quantity}} $ Q((Y_1,\ldots ,Y_n);\theta) $ is a
+        function of $ \left( Y_1,\ldots ,Y_n;\theta \right) $ (a random
+        variable) whose probabilities can be calculated without knowing what $
+            \theta $ is
+        \[ P(Q\geqslant a)\; P(Q\leqslant b) \] can be calculated without
+        knowing $ \theta $.
+    \end{definition}
+\end{defbox}
+For example, if $ \overline{Y} \thicksim N(\mu,\sigma^2/n) $, then the pivotal
+quantity is
+\[ \frac{\overline{Y}-\mu}{\sigma/n} \] and the pivotal distribution is $ Z $.
+
+\underline{Step 3}: Find the coverage interval using the pivotal distribution.
+For $ 95\% $ we got
+\[ \left[ \overline{Y}-1.96\frac{\sigma}{\sqrt{n}},
+        \overline{Y}+1.96\frac{\sigma}{\sqrt{n}}\right] \] \underline{Step 4}: Estimate
+the coverage interval using your data.
+
+Confidence Interval:
+\[ \left[ \overline{y}-1.96\frac{\sigma}{\sqrt{n}},
+        \overline{y}+1.96\frac{\sigma}{\sqrt{n}}\right] \]
+
+\underline{Notes}:
+\begin{enumerate}[(i)]
+    \item Interpretation of a confidence interval.
+
+          Coverage: $ \left[ \overline{Y}-1.96\frac{\sigma}{\sqrt{n}},
+                  \overline{Y}+1.96\frac{\sigma}{\sqrt{n}}\right] $
+
+          Confidence:$ \left[ \overline{y}-1.96\frac{\sigma}{\sqrt{n}},
+                  \overline{y}+1.96\frac{\sigma}{\sqrt{n}}\right] $
+
+          If we did this experiment many times, approximately $ 95\% $ of the
+          intervals will contain $ \mu $.
+
+    \item As the confidence level increases, the interval is wider.
+    \item Unrealistic example since $ \sigma $ is known
+    \item Can we choose the length of the interval? Yes.
+\end{enumerate}
+
+\underline{The Q-Q-Plot}
+
+\underline{Model Selection}
+
+The Q-Q plot is given by $ (y_{(\alpha)},z_{(\alpha)}) $ where
+\begin{itemize}
+    \item $ y_{(\alpha)} = \alpha^{\text{th}} $ quantile of your data set
+    \item $ z_{(\alpha)} = \alpha^{\text{th}}  $ quantile of $ Z \thicksim
+              N(0,1) $
+\end{itemize}
+If the Q-Q plot is linear, then there is evidence of normality.
+
+Let $ Y \thicksim N(\mu,\sigma^2) $. Show that the Q-Q plot is a straight line.
+
+\underline{Clicker Question}:
+\begin{itemize}
+    \item $ n=100 $
+    \item Confidence level: $ 95\% $
+\end{itemize}
+We want to half the length of the interval.
+\[ \overline{y}\pm a\rightarrow \overline{y}\pm \frac{a}{2} \] How many
+\underline{more} sample points do you need.
+\begin{enumerate}[(a)]
+    \item $ 100 $
+    \item $ 300 $
+\end{enumerate}

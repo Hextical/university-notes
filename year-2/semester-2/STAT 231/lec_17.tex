@@ -1,0 +1,119 @@
+\section{2020-02-12}
+\underline{Roadmap}:
+\begin{itemize}
+    \item 5 min recap
+    \item Recap of STAT 230
+          \subitem (Strong) Law of Large \#'s
+          \subitem CLT
+    \item Confidence Interval for the Normal problem with known variance
+\end{itemize}
+\[ Y_i \thicksim f(y_i;\theta) \]
+$ i=1,\ldots ,n $ and $ Y_i $'s independent with $ \theta= $ unknown parameter.
+
+\underline{Likelihood Interval}
+A $ 10\% $ likelihood interval:
+\[ \{\theta:R(\theta)\geqslant 0.1\} \]
+\underline{Notes}
+\begin{enumerate}[(i)]
+    \item The MLE $ \theta $ is in every likelihood interval for all $ p\in[0,1] $
+    \item Suppose $ \theta $ belongs to the $ 100p\% $ likelihood interval, then
+          $ \theta $ belongs to the $ 100q\% $ likelihood interval, where $ q<p $.
+    \item As $ n $ becomes large, the intervals become narrower, for given $ p $.
+    \item Plausibility
+          \subitem $ R(\theta)\geqslant 0.5\implies $ very plausible
+          \subitem $ \vdots $
+          \subitem $ R(\theta)<0.01\implies $ very implausible
+    \item $ \{\theta:R(\theta)\geqslant p\}\iff \{\theta:r(\theta)\geqslant \ln(p)\} $,
+          where $ r(\theta) = $ log relative likelihood function
+\end{enumerate}
+\underline{Confidence Interval}
+\begin{exbox}
+    \begin{example}
+        The STAT 231 scores are $ N(\mu,64) $. A sample of $ 25 $ students are
+        taken
+        \begin{itemize}
+            \item $ \overline{y}=75 $
+            \item $ s^2=81 $
+        \end{itemize}
+        Given this data, find the $ 95\% $ confidence interval for $ \mu $.
+    \end{example}
+\end{exbox}
+\underline{Central Limit Theorem}
+
+\underline{Law of Large Numbers}: $ Y_1,\ldots ,Y_n $ are iid random
+variables with mean $ \mu $ and variance $ \sigma^2 $.
+\[ \overline{Y}_n=\frac{1}{n} \sum\limits_{i=1}^{n} Y_i \]
+Then, $ \overline{Y}_n\to \mu $ as $ n\to \infty $.
+
+\underline{CLT}: If $ Y_1,\ldots ,Y_n $ are iid random variables
+with mean $ \mu $ and variance $ \sigma^2 $, and
+\[ S_n=\sum\limits_{i=1}^{n} Y_i \]
+\[ \overline{Y}_n=\frac{1}{n} \sum\limits_{i=1}^{n} Y_i \]
+Then, $ S_n \thicksim N(n\mu,n\sigma^2) $ and $ \overline{Y}_n
+    \thicksim N(\mu,\sigma^2/n) $ approximately as $ n\to \infty $.
+\begin{exbox}
+    \begin{example}
+        $ Y_1,\ldots ,Y_n \thicksim \exponential(100) $ with $ n=50 $.
+        \[ P(\overline{Y}>102) \]
+        \[ \overline{Y} \thicksim N(100,100^2/50) \]
+    \end{example}
+\end{exbox}
+\begin{exbox}
+    \begin{example}
+        $ Y \thicksim \bin(n,\theta) $. If $ n $ is large, then
+        \[ Y \thicksim N(n\theta,n\theta(1-\theta)) \]
+        where $ Y=Y_1+\cdots+Y_n $ where $ Y_i \thicksim \text{Bernoulli}(p) $.
+    \end{example}
+\end{exbox}
+\begin{exbox}
+    \begin{example}
+        For any iid Normal variables, the result is true for any $ n $ (not just large).
+        $ Y_1,\ldots ,Y_n $ iid $ N(\mu,\sigma^2) $, then $ S_n \thicksim N(n\mu,n\sigma^2) $
+        and $ \overline{Y}_n \thicksim N(\mu,\sigma^2/n) $ for all $ n $.
+    \end{example}
+\end{exbox}
+\underline{Back to the Confidence Interval problem}:
+
+\underline{Steps}
+
+\underline{Step 1}: Identify the sampling distribution of your estimator.
+
+\underline{Step 2}: Construct the Pivotal Quantity.
+
+\underline{Step 3}: Use the pivot to construct the coverage interval.
+
+\underline{Step 4}: Estimate this interval using your data (confidence interval).
+
+\begin{exbox}
+    \begin{example}
+        $ Y_1,\ldots ,Y_n \thicksim N(\mu,64) $ with
+        \begin{itemize}
+            \item $ n=25 $
+            \item $ \overline{y}=75 $
+            \item $ s^2=81 $
+        \end{itemize}
+        \underline{Objective}: To construct a $ 95\% $ confidence interval.
+
+        \underline{Step 1}: $ \hat{\mu}=\overline{y}=75 $, then
+        \[ \overline{Y} \thicksim N(\mu,64/25) \]
+        where $ \overline{Y} $ is the sampling distribution of the sample mean.
+
+        \underline{Step 2}: The pivotal quantity is given by
+        \[ \frac{\overline{Y}-\mu}{8/5} =Z \thicksim N(0,1) \]
+
+        \underline{Step 3}:
+        \[ P\left(-1.96\leqslant Z\leqslant 1.96\right)=0.95 \]
+        \[ \implies P\left( \overline{Y}-1.96\times \frac{8}{5} \leqslant \mu
+            \leqslant \overline{Y}+1.96\times \frac{8}{5} \right)=0.95 \]
+
+        \underline{Step 4}: The confidence interval is:
+        \[ \left[ \overline{y}-1.96\times \frac{8}{5},\;\overline{y}+1.96\times \frac{8}{5} \right] \]
+    \end{example}
+\end{exbox}
+
+\underline{Clicker Question}: The sample population is always a subset of the target
+population.
+\begin{enumerate}[(a)]
+    \item True
+    \item \textbf{False}
+\end{enumerate}

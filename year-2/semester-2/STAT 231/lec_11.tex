@@ -1,0 +1,134 @@
+\section{2020-01-29}
+\underline{Roadmap}:
+\begin{itemize}
+    \item 5 min recap
+    \item Likelihood and the MLE for continuous distributions
+    \item Invariance property of the MLE
+    \item Parameter, Estimate, and Estimator
+\end{itemize}
+\begin{defbox}
+    \begin{definition}
+        In many applications, the data $ \bm{Y}=(Y_1,\ldots ,Y_n) $ are independent
+        and identically distributed (iid) random variables each with probability function
+        $ f(y;\theta) $ for $ \theta\in\Omega $. We refer to $ \bm{Y} $
+        as a random sample from the distribution $ f(y;\theta) $. In this case,
+        the observed data are $ \bm{y}=(y_1,\ldots ,y_n) $ and
+        \[ L(\theta)=L(\theta;\bm{y})=\prod_{i=1}^n f(y_i;\theta) \]
+        for $ \theta\in\Omega $. Recall that if $ Y_1,\ldots ,Y_n $ are
+        independent random variables, then their joint probability function is
+        the product of their individual probability functions.
+    \end{definition}
+\end{defbox}
+
+\begin{thmbox}
+    \begin{prop}
+        Suppose the data $ \bm{y}=(y_1,\ldots ,y_n) $ is independently
+        drawn from a $ \poi(\theta) $ distribution, where $ \theta $ is unknown.
+        The maximum likelihood estimate for $ \theta $ is given by
+        \[ \hat{\theta}=\overline{y} \]
+    \end{prop}
+\end{thmbox}
+\begin{proof}
+    The likelihood function is
+    \begin{align*}
+        L(\theta) & =
+        \prod_{i=1}^n f(y_i;\theta)                                     \\
+                  & =\prod_{i=1}^n \frac{\theta^{y_i}e^{-\theta}}{y_i!} \\
+                  & =\left( \prod_{i=1}^n  \frac{1}{y_i!} \right)
+        \theta^{\sum\limits_{i=1}^{n} y_i}e^{-n\theta}
+    \end{align*}
+    or more simply
+    \[ L(\theta)=\theta^{n\overline{y}}e^{-n\theta} \]
+    for $ \theta\geqslant 0 $. The log likelihood function is
+    \[ \ell(\theta)=n\left[ \overline{y}\ln(\theta)-\theta \right] \]
+    for $ \theta>0 $.
+    \[ \frac{d\ell}{d\theta} =n\left( \frac{\overline{y}}{\theta}-1 \right)=\frac{n}{\theta}
+        \left( \overline{y}-\theta \right):=0 \]
+    \[ \implies \hat{\theta}=\overline{y} \]
+\end{proof}
+
+\begin{exbox}
+    \begin{example} $ \; $
+        \begin{itemize}
+            \item $ \mu= $ average time between two volcanic eruptions
+            \item $ \bm{y}=(y_1,\ldots ,y_n) $
+            \item $ y_i= $ waiting time for the $ i^{\text{th}} $ eruption
+        \end{itemize}
+        \underline{Model}: $ Y_i \thicksim \exponential(\theta) $ iid
+    \end{example}
+\end{exbox}
+
+\begin{defbox}
+    \begin{definition}
+        If $ \bm{y}=(y_1,\ldots ,y_n) $ are the observed values of a random sample from a distribution with
+        probability distribution function $ f(y;\theta) $, then the \textbf{\emph{likelihood function}}
+        is defined as
+        \[ L(\theta)=L(\theta;\bm{y})=\prod_{i=1}^n f(y_i;\theta) \]
+        for $ \theta\in\Omega $.
+    \end{definition}
+\end{defbox}
+
+\begin{thmbox}
+    \begin{prop}
+        Suppose the data $ \bm{y}=(y_1,\ldots ,y_n) $ is independently
+        drawn from a $ \exponential(\theta) $ distribution, where $ \theta $ is unknown.
+        The maximum likelihood estimate for $ \theta $ is given by
+        \[ \hat{\theta}=\overline{y} \]
+    \end{prop}
+\end{thmbox}
+\begin{proof}
+    The likelihood function is
+    \begin{align*}
+        L(\theta)
+         & =\prod_{i=1}^n \frac{1}{\theta} e^{-y_i/\theta}                        \\
+         & =\frac{1}{\theta^n} \exp\left(-\sum\limits_{i=1}^{n} y_i/\theta\right) \\
+         & =\theta^{-n}e^{-n\overline{y}/\theta}
+    \end{align*}
+    for $ \theta>0 $. The log likelihood function is
+    \[ \ell(\theta)=-n\left( \ln(\theta)+\frac{\overline{y}}{\theta} \right) \]
+    for $ \theta>0 $.
+    \[ \frac{d\ell}{d\theta} =-n\left( \frac{1}{\theta} -\frac{\overline{y}}{\theta^2} \right)=
+        \frac{n}{\theta^2} \left( \overline{y}-\theta \right):=0 \]
+    \[ \implies \hat{\theta}=\overline{y} \]
+\end{proof}
+
+\begin{exbox}
+    \begin{example} $ \; $
+        \begin{itemize}
+            \item $ \mu = $ average score in STAT 231
+            \item $ \sigma^2= $ variance in STAT 231 scores
+            \item $ \bm{y}=(y_1,\ldots ,y_n) $
+            \item $ y_i= $ STAT 231 score of the $ i^{\text{th}} $ student
+        \end{itemize}
+        \underline{Model}: $ Y_i \thicksim N(\mu,\sigma^2) $ iid
+    \end{example}
+\end{exbox}
+
+\begin{thmbox}
+    \begin{prop}
+        Suppose the data $ \bm{y}=(y_1,\ldots ,y_n) $ is independently
+        drawn from a $ N(\mu,\sigma^2) $ distribution,
+        where $ \mu $ and $ \sigma $ are unknown. The maximum
+        likelihood estimate for the pair $ (\mu,\sigma^2) $ is given by
+        \[ \hat{\mu}=\overline{y}, \]
+        \[ \hat{\sigma}^2=\frac{1}{n} \sum\limits_{i=1}^{n} \left( y_i-\overline{y} \right)^2 \]
+    \end{prop}
+\end{thmbox}
+
+\begin{thmbox}
+    \begin{theorem}
+        If $ \hat{\bm{\theta}}=(\hat{\theta}_1,\ldots ,\hat{\theta}_k) $ is the maximum likelihood
+        estimate of $ \bm{\theta}=(\theta_1,\ldots ,\theta_k) $, then
+        $ g(\bm{\hat{\theta}}) $ is the maximum likelihood estimate of $ g(\bm{\theta}) $.
+    \end{theorem}
+\end{thmbox}
+
+\begin{exbox}
+    \begin{example}
+        Suppose $ Y_1,\ldots ,Y_{25} \thicksim \poi(\mu) $ with $ \overline{y}=5 $.
+        Find the MLE for $ P(Y=1) $.
+
+        \textbf{Solution.}
+        \[ P(Y=1)=\frac{e^{-\mu}\mu^y}{y!}=\frac{e^{-5}5^1}{1!}=\frac{5}{e^5} \]
+    \end{example}
+\end{exbox}

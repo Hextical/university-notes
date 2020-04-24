@@ -1,0 +1,104 @@
+\section{2020-02-03}
+\underline{Roadmap}:
+\begin{itemize}
+    \item Review for the midterm
+    \item Likelihood and the MLE for Uniform distribution
+\end{itemize}
+\begin{exbox}
+    \begin{example}
+        The average number of typos in an academic journal. A random
+        sample of $ 100 $ pages are taken. Let $ y_1,\ldots ,y_{100} $
+        be the observed data where $ y_i $ is the number of typos
+        in page $ i $.
+    \end{example}
+\end{exbox}
+\begin{exbox}
+    \begin{example}
+        Average score in STAT 231 and whether STAT 231 scores
+        are correlated with STAT 230 scores.
+        Let $ (x_1,y_1),\ldots ,(x_n,y_n) $ be the observed data
+        where
+        \begin{itemize}
+            \item $ x_i= $ STAT 230 score of the $ i^{\text{th}} $ student
+            \item $ y_i= $ STAT 231 score of the $ i^{\text{th}} $ student
+        \end{itemize}
+    \end{example}
+\end{exbox}
+\underline{Step 1}: Identify the population, the parameter of interest,
+the type of study, variates, attributes (function of the variates), etc.
+
+\underline{Step 2}: Collect data
+\begin{itemize}
+    \item Observational: None of the variables are controlled
+    \item Experimental: Some variables are under the control of the person
+          doing the experiment
+\end{itemize}
+\underline{Types of problems}
+\begin{itemize}
+    \item Estimation: We are trying to estimate a population attribute
+    \item Hypothesis testing: Testing a claim made about the population
+    \item Prediction: Predict the ``future'' value of a variate
+\end{itemize}
+
+\underline{Step 3}: Summarize data (to identify the model)
+\begin{itemize}
+    \item Numerical
+    \item Graphical
+    \item Test whether the model is appropriate
+          \subitem Compare the CDF to the ECDF
+          \subitem Compare the theoretical properties
+          \subitem Compare the observed vs expected frequencies
+\end{itemize}
+
+\underline{Step 4}: Do the statistical analysis based on your final model
+\begin{itemize}
+    \item Parameter: Unknown constant, e.g. $ \theta= $ population mean
+    \item Estimate: A number that can be computed from the data set, e.g.
+          $ \hat{\theta}= $ (sample mean)
+    \item Estimator: The random variable from which $ \hat{\theta} $ is drawn,
+          denoted $ \tilde{\theta} $.
+\end{itemize}
+
+\underline{Likelihood function}
+\[ L(\theta)=\prod_{i=1}^n f(y_i;\theta) \]
+where $ f= $ distribution/density function.
+\[ \ell(\theta)=\ln\left[ L(\theta) \right] \]
+$ \hat{\theta} $ is the MLE of $ \hat{\theta} $ that maximizes $ L(\theta) $
+
+\underline{Measures of Association}
+\begin{itemize}
+    \item Data set: $ (x_1,y_1),\ldots ,(x_n,y_n) $
+          \subitem $ x_i= $ number of bears you drink per week
+          \subitem $ y_i= $ STAT 231 score in MT 1
+\end{itemize}
+If $ x_i>\overline{x} $ and $ y_i<\overline{y} $, then
+\[ (x_i-\overline{x})(y_i-\overline{y})<0 \]
+\underline{Sample Correlation}
+\[ r_{xy}=\frac{\sum\limits_{i=1}^{n} (x_i-\overline{x})(y_i-\overline{y})}{
+        \sqrt{\sum\limits_{i=1}^{n} (x_i-\overline{x})^2\sum\limits_{i=1}^{n}
+            (y_i-\overline{y})^2}
+    }=\frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}}  \]
+Note that we always have $ -1\leqslant r_{xy}\leqslant 1 $.
+\begin{itemize}
+    \item If $ |r_{xy}|\approx 1 $, then there is evidence of a strong linear relationship
+    \item If $ |r_{xy}|\approx 0 $, then there is no evidence of a linear relationship
+\end{itemize}
+Note that
+\begin{align*}
+    \sum\limits_{i=1}^{n} (x_i-\overline{x})(y_i-\overline{y})
+     & =\sum\limits_{i=1}^{n} x_iy_i-n\overline{x}\overline{y} \\
+     & =\sum\limits_{i=1}^{n} (x_i-\overline{x})y_i
+\end{align*}
+\[ \begin{array}{c|c|c}
+                          & \text{Rich}              & \text{Poor}              \\
+        \hline
+        \text{Smoker}     & \underbrace{20}_{n_{11}} & \underbrace{80}_{n_{12}} \\
+        \hline
+        \text{Non-smoker} & \underbrace{50}_{n_{21}} & \underbrace{50}_{n_{22}} \\
+        \hline
+    \end{array} \]
+\begin{align*}
+    \text{Relative Risk}
+     & =\frac{\frac{20}{20+80}}{\frac{50}{50+50}}                         \\
+     & =\frac{\frac{n_{11}}{n_{11}+n_{12}}}{\frac{n_{21}}{n_{21}+n_{22}}}
+\end{align*}
