@@ -1,0 +1,115 @@
+\section{2020-02-28}
+\begin{itemize}
+    \item 5 min recap
+    \item The Chi-squared and the T-distribution
+    \item Normal problem with unknown variance
+    \item Clicker questions
+\end{itemize}
+\underline{Confidence intervals}
+
+Case I: Confidence interval for the mean for normal when $ \sigma $ is known
+\[ \bar{y}\pm z^* \frac{\sigma}{\sqrt{n}}  \]
+\begin{itemize}
+    \item $ \bar{y}= $ sample mean
+    \item $ \sigma= $ population standard deviation
+    \item $ n= $ sample size
+    \item $ z^* $ depends on the level of confidence
+          \subitem $ z^*=1.96 $ if confidence level is $ 95\% $ for every $ n $
+\end{itemize}
+
+Case II: Binomial Confidence
+\[ Y \thicksim \bin(n,\theta) \]
+\begin{itemize}
+    \item $ \theta= $ probability of success (unknown)
+\end{itemize}
+Confidence interval is given by
+\[ \hat{\theta}\pm \underbrace{z^* \sqrt{\frac{\hat{\theta}\left( 1-\hat{\theta} \right)}{n}}}_{\text{
+            margin of error
+        }} \]
+\begin{itemize}
+    \item $ \hat{\theta}= $ sample proportion
+    \item $ n= $ sample size
+\end{itemize}
+If we want the margin of error to be $ \leqslant \ell $, then
+\[ n\geqslant \left( \frac{z^*}{\ell} \right)^2\left( \frac{1}{4} \right) \]
+
+\underline{The Chi-Squared Distriubtion}
+\begin{defbox}
+    \begin{definition}
+        $ W $ is a continuous random variable taking all non-negative values.
+        $ W $ is said to follow a \textbf{\emph{Chi-Squared}} distribution
+        with $ n $ degrees of freedom (d.f), denoted $ W \thicksim \chi^2(n) $,
+        if
+        \[ W=Z_1^2+\cdots+Z_n^2 \]
+        where $ Z_i \thicksim N(0,1) $ with $ Z_i $'s independent.
+    \end{definition}
+\end{defbox}
+\underline{Properties of the Chi-Squared}
+\begin{enumerate}[(i)]
+    \item $ n= $ d.f. = parameter of the Chi-squared. Once $ n $ is specified, the d.f. is known
+    \item Density function looks like a gaussian distribution as $ df\rightarrow\infty $
+    \item If $ W \thicksim \chi^2_n $, then $ E(W)=n $ and $ Var(W)=2n $
+\end{enumerate}
+Cases:
+\begin{itemize}
+    \item Case I: $ n=1 $, then $ W=Z^2 $
+    \item Case II: $ n=2 $, then $ W \thicksim \exponential(2) $
+    \item Case III: $ n $ is ``large'', then $ W \thicksim N(n,2n) $ approximately
+    \item Case IV: $ n $ is intermediate, then we use the table
+\end{itemize}
+
+Let $ (X,Y) $ be a random point on a Cartesian plane. Assuming $ X $ and $ Y $
+have independent $ G(0,1) $ distributions, the probability that a point is greater
+than $ 1.96 $ away from the origin is
+
+\textbf{Hint}: The distance formula is $ x^2+y^2=d^2 $.
+\begin{enumerate}[(A)]
+    \item \textbf{less than $ \bm{40\%} $}
+    \item at least $ 40\% $ but less than $ 60\% $
+    \item at least $ 60\% $ but less than $ 80\% $
+    \item at least $ 80\% $
+\end{enumerate}
+Why? We know that $ D^2 \thicksim \exponential(2) $, then we compute the following.
+\[ P(D\geqslant 1.96)=1-F(1.96)=1-\left( 1-\frac{1}{2} e^{-1.96/2} \right)\approx 0.19=19\% \]
+
+\underline{The Student's T-distribution}
+\begin{defbox}
+    \begin{definition}
+        $ T $ is said to follow a \textbf{\emph{Student's T-distribution}} with
+        $ n $ degrees of freedom, denoted $ T \thicksim t(n) $, if
+        \[ T=\frac{Z}{\sqrt{W/n}}  \]
+        where $ Z \thicksim N(0,1) $ and $ W \thicksim \chi^2(n) $.
+    \end{definition}
+\end{defbox}
+\underline{Properties}
+\begin{enumerate}[(i)]
+    \item $ T $ can take all possible values
+    \item $ T $ is symmetric around zero
+    \item Similar to $ Z $, but with flatter tails
+    \item As $ n\rightarrow+\infty $, then $ T\rightarrow Z $
+\end{enumerate}
+\underline{Clicker Question}:
+\begin{itemize}
+    \item $ Z \thicksim N(0,4) $
+    \item $ T \thicksim t(15) $
+    \item $ W \thicksim \chi^2(3) $
+    \item $ Z,\;T,\;W $ are all independent
+\end{itemize}
+$ \E{W+T+\left( \frac{Z}{2} \right)^2} = $
+\begin{enumerate}[(A)]
+    \item $ 3 $
+    \item $ \bm{4} $
+    \item $ 5 $
+    \item None of the above.
+\end{enumerate}
+Why?
+\begin{itemize}
+    \item $ \E{W}=3 $
+    \item $ \E{T}=0 $ since $ T $ is symmetric around zero for $ n>1 $
+    \item Let $ Y=\frac{Z}{2} $. Then,
+          \[ \E{Y^2}=\Var{Y}+\E{Y}^2
+              =\left( \frac{1}{2} \right)^2 \Var{Z}+\frac{1}{2} \E{Z}
+              =\frac{1}{4}(4)+0
+              =1 \]
+\end{itemize}
+Thus, $ \E{W+T+Y}=3+0+1=4 $.
