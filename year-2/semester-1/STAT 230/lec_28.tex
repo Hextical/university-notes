@@ -1,4 +1,4 @@
-\section{Lecture 28}
+\makeheading{Lecture 28}
 \subsection{Thought Question}
 Suppose $ X= $ \# apple products and $ Y= $ \# Microsoft products (given at least
 one of each) have a joint pf:
@@ -7,17 +7,17 @@ one of each) have a joint pf:
     \hline
     $y\backslash x$ & 1    & 2    & 3    \\
     \hline
-    $1$             & 0.30  & 0.17 & 0.20 \\
+    $1$             & 0.30 & 0.17 & 0.20 \\
     \hline
-    $2$             & 0.17 & 0.10  & 0.06 \\
+    $2$             & 0.17 & 0.10 & 0.06 \\
     \hline
 \end{tabular}
 
 Find $ P(X+Y=4) $
 
-a) $ 0.10 $, b) $ 0.20 $, c) $ 0.30 $,  d) $ 0.40 $, e) none
+(a) $ 0.10 $, (b) $ 0.20 $, (c) $ 0.30 $,  (d) $ 0.40 $, (e) none
 
-Correct answer is c):
+Correct answer is (c):
 $ P(X+Y=4)=(3,1)+(2,2)=0.20+0.10=0.30$
 
 \subsection{Sums of random variables
@@ -27,9 +27,9 @@ Suppose $ T=X+Y $, and $ X,Y $ are non-negative.
 The range of $ T $ is $ 0,1,\ldots,\max(X)+\max(Y) $
 pf of $ T $ is
 \begin{align*}
-    f_T(t)&=\sum \sum\limits_{x+y=t}f(x,y)\\
-    &=f(0,t)+f(1,t-1)+f(2,t-2)+\cdots+f(t,0)\\
-    &=\sum\limits_{x=0}^{t} f(x,t-x)
+    f_T(t) & =\sum \sum\limits_{x+y=t}f(x,y)         \\
+           & =f(0,t)+f(1,t-1)+f(2,t-2)+\cdots+f(t,0) \\
+           & =\sum\limits_{x=0}^{t} f(x,t-x)
 \end{align*}
 
 If $ X $ and $ Y $ are independent, then
@@ -40,7 +40,7 @@ This can be used to prove:
     \item sum of $ k $ independent $ \geo(P) $ is $ \nb(k,p) $
 \end{itemize}
 
-\subsection{Multinomial Distribution (9.2)}
+\section{Multinomial Distribution}
 An extension of Binomial, where each independent trial can have
 $ k $ possible outcomes.
 
@@ -68,33 +68,33 @@ Find range: $ X_i\in \{0,\ldots ,n\} $ $ n=10 $ in this case. So,
 
 Find joint pf: $ f({x_1},{x_2},{x_3})=P(X_1 1's, X_2 C's, X_3 P's) $. So,
 \[ \underbrace{\frac{10!}{{x_1}!{x_2}!{x_3}!}}_{\text{arrangements}}
-\underbrace{\left( \frac{1}{6}  \right)^{x_1} 
-\left( \frac{2}{6} \right)^{x_2} \left( \frac{3}{6} \right)^{x_3}}_{\text{outcomes}}\]
+    \underbrace{\left( \frac{1}{6}  \right)^{x_1}
+        \left( \frac{2}{6} \right)^{x_2} \left( \frac{3}{6} \right)^{x_3}}_{\text{outcomes}}\]
 In general,
 \[ f({x_1},\ldots,x_k)=\frac{n!}{{x_1}!\cdots x_k!}p_1^{{x_1}} \cdots p_k^{x_k}\]
 for $ {x_1}+\cdots+x_k=n $
 OR
 \[ f({x_1},\ldots,x_{k-1})=\frac{n!}{{x_1}!\cdots x_{k-1}!}p_1^{{x_1}} \cdots
-p_{k-1}^{x_{k-1}}\]
+    p_{k-1}^{x_{k-1}}\]
 for $ {x_1}+\cdots+x_{k-1}\le n $
 
 Find marginal pf of $ {x_1} $.
 \begin{align*}
-    f_1({x_1})&=\sum\limits_{{x_2}}^{{x_3}} f({x_1},{x_2},{x_3})\\
-    &=\sum\limits_{{x_2}=0}^{10-{x_1}} f({x_1},{x_2})\\
-    &=\sum\limits_{{x_2}=0}^{10-{x_1}} \frac{10!}{{x_1}!{x_2}!(10-{x_1}-{x_2})!}
-    \left( \frac{1}{6} \right)^{x_1} 
-    \left( \frac{1}{3} \right)^{x_2} \left( \frac{1}{2} \right)^{(10-{x_1}-{x_2})}\\
-    &=\frac{10!}{{x_1}!(10-{x_1})!}\left( \frac{1}{6}  \right)^{x_1}
+    f_1({x_1}) & =\sum\limits_{{x_2}}^{{x_3}} f({x_1},{x_2},{x_3})                           \\
+               & =\sum\limits_{{x_2}=0}^{10-{x_1}} f({x_1},{x_2})                            \\
+               & =\sum\limits_{{x_2}=0}^{10-{x_1}} \frac{10!}{{x_1}!{x_2}!(10-{x_1}-{x_2})!}
+    \left( \frac{1}{6} \right)^{x_1}
+    \left( \frac{1}{3} \right)^{x_2} \left( \frac{1}{2} \right)^{(10-{x_1}-{x_2})}           \\
+               & =\frac{10!}{{x_1}!(10-{x_1})!}\left( \frac{1}{6}  \right)^{x_1}
     \sum\limits_{{x_2}=0}^{10-{x_1}} \frac{(10-{x_1})!}{{x_2}!(10-{x_1}-{x_2})!}
-    \left( \frac{1}{3} \right)^{x_2} \left( \frac{1}{2} \right)^{(10-{x_1}-{x_2})}\\
-    &=\binom{10}{{x_1}}\left( \frac{1}{6}  \right)^{x_1}
+    \left( \frac{1}{3} \right)^{x_2} \left( \frac{1}{2} \right)^{(10-{x_1}-{x_2})}           \\
+               & =\binom{10}{{x_1}}\left( \frac{1}{6}  \right)^{x_1}
     \sum\limits_{{x_2}=0}^{10-{x_1}} \binom{10-{x_1}}{{x_2}}
-    \left( \frac{1}{3} \right)^{x_2} \left( \frac{1}{2} \right)^{(10-{x_1}-{x_2})}\\
-    &=\binom{10}{{x_1}}\left( \frac{1}{6}  \right)^{x_1}
+    \left( \frac{1}{3} \right)^{x_2} \left( \frac{1}{2} \right)^{(10-{x_1}-{x_2})}           \\
+               & =\binom{10}{{x_1}}\left( \frac{1}{6}  \right)^{x_1}
     \left(\frac{1}{3}+\frac{1}{2} \right)^{10-x_1}
 \end{align*}
 \[ f(x_1)=\binom{10}{{x_1}}\left( \frac{1}{6}  \right)^{x_1}
-\left(\frac{5}{6} \right)^{10-x_1} \thicksim \bin(10,\nicefrac{1}{6} )\]
+    \left(\frac{5}{6} \right)^{10-x_1} \thicksim \bin(10,\sfrac{1}{6} )\]
 In general:
 \[ X_i \thicksim \bin(n,p_i) \]

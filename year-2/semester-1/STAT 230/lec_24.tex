@@ -1,4 +1,4 @@
-\section{Lecture 24}
+\makeheading{Lecture 24}
 \textsc{Find the mean and variance}
 
 \[ E[X]=\int\limits_{0}^{\infty} x \frac{1}{\theta}e^{-\frac{x}{\theta}} d{x}  \text{ IBP} \]
@@ -19,10 +19,10 @@ In general,
 \[ \Gamma(\alpha)=(\alpha-1)! \]
 So, back to our example:
 \begin{align*}
-    E[X]&=\int\limits_{0}^{\infty} x \frac{1}{\theta}e^{-\frac{x}{\theta}} d{x}\qquad y=\frac{x}{\theta}\implies x=(\theta y) \land \theta dy=dx\\
-    &=\int\limits_{0}^{\infty} (\theta y) \frac{1}{\theta} e^{-y}\theta d{y}\\
-    &=\theta \int\limits_{0}^{\infty} y^{2-1}e^{-y} d{y}\qquad \Gamma(2)=(2-1)!=1\\
-    &=\theta
+    E[X] & =\int\limits_{0}^{\infty} x \frac{1}{\theta}e^{-\frac{x}{\theta}} d{x}\qquad y=\frac{x}{\theta}\implies x=(\theta y) \land \theta dy=dx \\
+         & =\int\limits_{0}^{\infty} (\theta y) \frac{1}{\theta} e^{-y}\theta d{y}                                                                 \\
+         & =\theta \int\limits_{0}^{\infty} y^{2-1}e^{-y} d{y}\qquad \Gamma(2)=(2-1)!=1                                                            \\
+         & =\theta
 \end{align*}
 \[ E[X]=\theta=\frac{1}{\lambda} \]
 Why?
@@ -30,40 +30,41 @@ If $ \lambda $ is higher, events happen more often, which means shorter wait tim
 
 To find $ Var(X) $,
 \begin{align*}
-    E[X]^2&=\int\limits_{0}^{\infty} x^2 \frac{1}{\theta}e^{-\frac{x}{\theta}}  d{x}\qquad y=\frac{x}{\theta}\implies x^2=(\theta y)^2 \land \theta dy=dx\\
-    &=\int\limits_{0}^{\infty} (\theta y)^2\frac{1}{\theta}e^{-y}\theta d{y}\\
-    &=\theta^2 \int\limits_{0}^{\infty} y^{3-1}e^{-y} d{y} \qquad \Gamma(3)=(3-1)!=2\\
-    &=2\theta^2
+    E[X]^2 & =\int\limits_{0}^{\infty} x^2 \frac{1}{\theta}e^{-\frac{x}{\theta}}  d{x}\qquad y=\frac{x}{\theta}\implies x^2=(\theta y)^2 \land \theta dy=dx \\
+           & =\int\limits_{0}^{\infty} (\theta y)^2\frac{1}{\theta}e^{-y}\theta d{y}                                                                        \\
+           & =\theta^2 \int\limits_{0}^{\infty} y^{3-1}e^{-y} d{y} \qquad \Gamma(3)=(3-1)!=2                                                                \\
+           & =2\theta^2
 \end{align*}
 So $ Var(X)=2\theta^2-\theta^2=\theta^2 $, $ SD(X)=\theta=E[X] $
 
 \subsection{Memoryless Property}
 \textbf{Example}
 
-Suppose busses follow a Poisson process with average $ 5 $ per hour.
+Suppose buses follow a Poisson process with average $ 5 $ per hour.
 
-(a) Find the probability that you wait $ >15 $ mins.
+(a) Find the probability that you wait $ >15 $ minutes.
 
 Let $ X= $ time until next bus. $ X \thicksim Exp(12) $
 
 $ P(X>15)=1-F(X\le 15)=1-\left(1-e^{-\frac{15}{12}}\right)= e^{-\frac{15}{12}}
-\approx 0.2865$
+    \approx 0.2865$
 
 (b) If you have been waiting 6 minutes already, what is the probability
 that you wait another $ >15 $ more minutes.
 
 \begin{align*}
-    P(X>21\mid X>6)&=\frac{P(X>21\text{ AND } X>6)}{P(X>6)}\\
-    &=\frac{P(X>21)}{P(X>6)}\\
-    &=\frac{1-F(21)}{1-F(6)}\\
-    &=\frac{1-(1-e^{-\frac{21}{12}})}{1-(1-e^{-\frac{6}{12}})}\\
-    &=e^{-\frac{15}{12}}\approx 0.2865
+    P(X>21\mid X>6) & =\frac{P(X>21\text{ AND } X>6)}{P(X>6)}                   \\
+                    & =\frac{P(X>21)}{P(X>6)}                                   \\
+                    & =\frac{1-F(21)}{1-F(6)}                                   \\
+                    & =\frac{1-(1-e^{-\frac{21}{12}})}{1-(1-e^{-\frac{6}{12}})} \\
+                    & =e^{-\frac{15}{12}}\approx 0.2865
 \end{align*}
 The memoryless property says the past is irrelevant in the future distribution.
 In general, if $ s,t>0 $:
 \[ P(X>t+s\mid X>s)=P(X>t) \]
 
-\subsection{Normal Distribution (8.5)}
+\setcounter{section}{4}
+\section{Normal Distribution}
 Many natural phenomena tend to follow a shape like this:
 
 \begin{center}

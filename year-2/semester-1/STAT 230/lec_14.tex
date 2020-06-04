@@ -1,17 +1,17 @@
-\section{Lecture 14}
+\makeheading{Lecture 14}
 \textbf{Example}
 
 Suppose you send a bit string over a noisy connection with
 each bit independently having a probability $ 0.01 $ of being
 flipped. What is the probability that
-\begin{enumerate}[(a)]
+\begin{enumerate}[label=(\alph*)]
     \item it takes 50 bits to get 5 errors?
     \item a 50 bit message has 5 errors?
 \end{enumerate}
 
 \textbf{Solution.}
 
-(b) Let $ Y= $ \# of errors in 50 bits. 
+(b) Let $ Y= $ \# of errors in 50 bits.
 \[ Y\thicksim\bin(50,0.01) \]
 
 \[ P(Y=5)=\binom{50}{5}(0.01)^5(0.99)^{45} \]
@@ -21,7 +21,7 @@ flipped. What is the probability that
 
 \[ P(X=45)=\binom{49}{4}(0.01)^5(0.99)^{45} \]
 
-\textbf{5.6 Geometric Distribution}
+\section{Geometric Distribution}
 
 \begin{defbox}
     \subsection{Definition (Geometric Distribution)}
@@ -37,7 +37,7 @@ flipped. What is the probability that
 
 Substitute $ k=1 $ into the Negative Binomial distribution to obtain
 \[ f(x)=p(1-p)^x \]
-for $ x\in[0,\infty) $.
+for $ x\in\rinterval{0}{\infty} $.
 
 \textbf{Prove the following:}
 
@@ -47,28 +47,28 @@ $ \sum\limits_{x=0}^{\infty} f(x) = 1$
     \begin{align*}
         \sum\limits_{x=0}^{\infty} (1-p)^x p
          & =\underbrace{p+p(1-p)+\cdots}_
-        \text{ (geo. series: $a=p$, $r=1-p$)} \\
-         & =\frac{p}{1-(1-p)}                 \\
+        \text{ (geo.\ series: $a=p$, $r=1-p$)} \\
+         & =\frac{p}{1-(1-p)}                  \\
          & =1
     \end{align*}
 \end{proof}
 
 \textbf{Find the cumulative distribution function, $ F(x)$}
 \begin{align*}
-    F(x) & =P(X\le x)                                         \\
-         & =1-P(X>x)                                          \\
-         & =1-\left[f(x+1)+f(x+2)+\cdots\right]                                  \\
+    F(x) & =P(X\le x)                                                     \\
+         & =1-P(X>x)                                                      \\
+         & =1-\left[f(x+1)+f(x+2)+\cdots\right]                           \\
          & =1-\underbrace{\left[p(1-p)^{x+1}+p(1-p)^{x+2}+\cdots\right]}_
-    \text{ (geo. series: $a=p(1-p)^{x+1}$, $r=1-p$)}          \\
-         & =1-\frac{p(1-p)^{x+1}}{1-(1-p)}                    \\
+    \text{ (geo.\ series: $a=p(1-p)^{x+1}$, $r=1-p$)}                     \\
+         & =1-\frac{p(1-p)^{x+1}}{1-(1-p)}                                \\
          & =1-(1-p)^{x+1}
 \end{align*}
-for $ x\in[0,\infty) $.
+for $ x\in\rinterval{0}{\infty} $.
 
 If $ x\in\mathbb{R} $, then
 \[ F(x)=
     \left\{\begin{array}{cc}
-        1-(1-p)^{\lfloor x \rfloor +1}& x\ge 0 \\
-        0& x < 0
+        1-(1-p)^{\lfloor x \rfloor +1} & x\ge 0 \\
+        0                              & x < 0
     \end{array}\right.
 \]

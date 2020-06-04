@@ -1,84 +1,110 @@
 \section{2020-01-14}
 \subsection{Searching Text}
 \begin{itemize}
-    \item NAME: \code{grep}
-    \subitem SYNOPSIS: \code{grep [OPTIONS] PATTERN [FILE$\ldots$]}
-    \subitem DESCRIPTION: \code{grep} searches for \code{PATTERN}
-    in each \code{FILE}. A \code{FILE} of ``-'' stands for standard input. 
-    If no \code{FILE} is given, recursive searches examine the working directory, 
-    and non-recursive searches read standard input. 
-    By default, \code{grep} prints the matching lines.
-    In addition, the variant programs \code{egrep}, \code{fgrep} and \code{rgrep}
-    are the same as \code{grep -E}, \code{grep -F}, and \code{grep -r}, respectively. 
-    These variants are deprecated, but are provided for backward compatibility.
+    \item NAME\@: \code{grep}
+          \begin{itemize}
+              \item SYNOPSIS\@: \code{grep [OPTIONS] PATTERN [FILE\textellipsis]}
+              \item DESCRIPTION\@: \code{grep} searches for \code{PATTERN}
+                    in each \code{FILE}. A \code{FILE} of ``-'' stands for standard input.
+                    If no \code{FILE} is given, recursive searches examine the working directory,
+                    and non-recursive searches read standard input.
+                    By default, \code{grep} prints the matching lines.
+                    In addition, the variant programs \code{egrep}, \code{fgrep} and \code{rgrep}
+                    are the same as \code{grep -E}, \code{grep -F}, and \code{grep -r}, respectively.
+                    These variants are deprecated, but are provided for backward compatibility.
+          \end{itemize}
 \end{itemize}
 \code{PATTERN} examples:
 \begin{itemize}
     \item outputs on \code{stdout} lines that contain a match for the pattern
     \item case sensitive
-    \item $ \underbrace{|}_{\text{``choice''}} $ $ \rightarrow $ OR
-    \subitem \code{``cs246|CS246''} $ \rightarrow $
-    \code{cs246} or \code{CS246} or possibly both
-    \item \code{\textbackslash} $ \rightarrow $ ``escape'' special characters
+    \item $ \underbrace{|}_{\text{``choice''}} $ \textrightarrow{} OR
+          \begin{itemize}
+              \item \code{``cs246|CS246''} \textrightarrow{}
+                    \code{cs246} or \code{CS246} or possibly both
+          \end{itemize}
+    \item \code{\textbackslash} \textrightarrow{} ``escape'' special characters
     \item factor stuff
-    \subitem \code{``cs246|CS246''} $ \iff $ \code{``(cs|CS)246''}
-    \item \code{``a|b|c|d''} $ \iff $ \code{``[abcd]''} $ \rightarrow $ choose
-    1 character from this set
-    \item \code{\textasciicircum} $ \rightarrow $ negation
-    \subitem \code{``[\textasciicircum abcd]''} $ \rightarrow $
-    1 character \emph{not} from this set.
-    \subitem \code{``CS24[\textasciicircum 6]''} $ \rightarrow $ anything character
-    except the \code{6} after \code{CS24}
+          \begin{itemize}
+              \item \code{``cs246|CS246''} $ \iff $ \code{``(cs|CS)246''}
+          \end{itemize}
+    \item \code{``a|b|c|d''} $ \iff $ \code{``[abcd]''} \textrightarrow{} choose
+          1 character from this set
+    \item \code{\textasciicircum} \textrightarrow{} negation
+          \begin{itemize}
+              \item \code{``[\textasciicircum{}abcd]''} \textrightarrow{}
+                    1 character \emph{not} from this set.
+              \item \code{``CS24[\textasciicircum{}6]''} \textrightarrow{} any character
+                    except the \code{6} after \code{CS24}
+          \end{itemize}
     \item within square brackets, characters don't have their typical
-    meanings
-    \item \code{?} $ \rightarrow $ $ 0 $ or $ 1 $ occurrences of the
-    proceeding subexpression
-    \subitem \code{``CS ?246''} $ \rightarrow $ \code{CS246} or \code{CS 246}
-    \subitem \code{``(CS)?246''} $ \rightarrow $ \code{CS} is optional
-    \item \code{*} $ \rightarrow $ 0 or more of the proceeding subexpression
-    \subitem \code{``CS *246''} $ \rightarrow $ \code{CS246},
-    \code{CS$\underbrace{}_{n}$246}, $ n\ge 0 $
-    \item \code{+} $ \rightarrow $ 1 or more occurrences
-    \subitem \code{``(CS)+246''} $ \rightarrow $ 
-    \code{$\underbrace{\text{CS}}_{n}$246}, $ n\ge 1 $
-    \item \code{.} $ \rightarrow $ any 1 character
-    \item \code{.*} $ \rightarrow $ any number of any character
-    \subitem \code{``CS.*246''} $ \rightarrow $ lines that contain substrings
-    that contain \code{CS} and end with \code{246}
-    \item \code{\textasciicircum} $ \rightarrow $ match beginning of line
-    \subitem \code{``\textasciicircum CS246''} lines that start with \code{CS246}
-    \item \code{\$} $ \rightarrow $ match ending of line
-    \subitem \code{CS246\$} $ \rightarrow $ lines that end with \code{CS246}
-    \subitem \code{\textasciicircum CS246\$} 
-    $ \rightarrow $ lines that \emph{only} contain
-    \code{CS246}
-    \item words in \code{dict} that begin with \code{e} and have length
-    \code{5}
-    \subitem \code{egrep ``\textasciicircum e(.)\{4\}'' /usr/share/dict/words}
+          meanings
+    \item \code{?} \textrightarrow{} $ 0 $ or $ 1 $ occurrences of the
+          proceeding sub-expression
+          \begin{itemize}
+              \item \code{``CS ?246''} \textrightarrow{} \code{CS246} or \code{CS 246}
+              \item \code{``(CS)?246''} \textrightarrow{} \code{CS} is optional
+          \end{itemize}
+    \item \code{*} \textrightarrow{} 0 or more of the proceeding sub-expression
+          \begin{itemize}
+              \item \code{``CS *246''} \textrightarrow{} \code{CS246},
+                    \code{CS$\underbrace{}_{n}$246}, $ n\ge 0 $
+          \end{itemize}
+    \item \code{+} \textrightarrow{} 1 or more occurrences
+          \begin{itemize}
+              \item \code{``(CS)+246''} \textrightarrow{}
+                    \code{$\underbrace{\text{CS}}_{n}$246}, $ n\ge 1 $
+          \end{itemize}
+    \item \code{.} \textrightarrow{} any 1 character
+    \item \code{.*} \textrightarrow{} any number of any character
+          \begin{itemize}
+              \item \code{``CS.*246''} \textrightarrow{} lines that contain substrings
+                    that contain \code{CS} and end with \code{246}
+          \end{itemize}
+    \item \code{\textasciicircum} \textrightarrow{} match beginning of line
+          \begin{itemize}
+              \item \code{``\textasciicircum{}CS246''} lines that start with \code{CS246}
+          \end{itemize}
+    \item \code{\$} \textrightarrow{} match ending of line
+          \begin{itemize}
+              \item \code{CS246\$} \textrightarrow{} lines that end with \code{CS246}
+              \item \code{\textasciicircum{}CS246\$}
+                    \textrightarrow{} lines that \emph{only} contain
+                    \code{CS246}
+          \end{itemize}
+    \item words in \code{dict} that begin with \code{e} and have length \code{5}
+          \begin{itemize}
+              \item \code{egrep ``\textasciicircum{}e(.)\{4\}'' /usr/share/dict/words}
+
+          \end{itemize}
     \item words in \code{dict} that have even length
-    \subitem \code{egrep ``\textasciicircum (..)*\$'' /usr/share/dict/words}
+    \item \code{egrep ``\textasciicircum{}(..)*\$'' /usr/share/dict/words}
     \item files in current directory that have exactly one \code{a} in their
-    name
-    \subitem \code{ls | egrep ``\textasciicircum [\textasciicircum a]*a[\textasciicircum a]*\$''}
+          name
+          \begin{itemize}
+              \item \code{ls | egrep ``\textasciicircum{}[\textasciicircum{}a]*a[\textasciicircum{}a]*\$''}
+          \end{itemize}
 \end{itemize}
 
 \subsection{File Permissions}
 
 \begin{itemize}
-    \item \code{ls -l} $ \rightarrow $ long listing
-    \item \code{ls -la} $ \rightarrow $ long listing with hidden files
+    \item \code{ls -l} \textrightarrow{} long listing
+    \item \code{ls -la} \textrightarrow{} long listing with hidden files
 \end{itemize}
 When above commands are run, in the first column there will be a sequence
 of $ 10 $ characters.
 
 \begin{center}
-    $\boxed{\text{d}}$$\boxed{\text{rwx}}$$\boxed{\text{r-x}}$$\boxed{\text{r--}}$
+    \[
+        \boxed{\text{d}}\boxed{\text{rwx}}\boxed{\text{r-x}}\boxed{\text{r--}}
+    \]
 \end{center}
 \begin{itemize}
-    \item \code{d} $ \rightarrow $ directory
-    \item \code{r} $ \rightarrow $ read
-    \item \code{w} $ \rightarrow $ write
-    \item \code{x} $ \rightarrow $ execute
+    \item \code{d} \textrightarrow{} directory
+    \item \code{r} \textrightarrow{} read
+    \item \code{w} \textrightarrow{} write
+    \item \code{x} \textrightarrow{} execute
     \item Box 2: \code{usr} bits, owner permissions
     \item Box 3: group bits
     \item Box 4: other bits
@@ -88,43 +114,51 @@ The owner can change perms with \code{chmod}.
 \code{chmod MODE FILEs}
 
 \code{MODE} has three subcategories:
-\begin{enumerate}[1.]
+\begin{enumerate}
     \item ownership
-    \subitem \code{u} $ \rightarrow $ \code{usr}
-    \subitem \code{g} $ \rightarrow $ \code{group}
-    \subitem \code{o} $ \rightarrow $ \code{other}
-    \subitem \code{a} $ \rightarrow $ \code{all}
+          \begin{itemize}
+              \item \code{u} \textrightarrow{} \code{usr}
+              \item \code{g} \textrightarrow{} \code{group}
+              \item \code{o} \textrightarrow{} \code{other}
+              \item \code{a} \textrightarrow{} \code{all}
+          \end{itemize}
     \item operator
-    \subitem \code{+} $ \rightarrow $ add permission(s)
-    \subitem \code{=} $ \rightarrow $ set exact permission(s)
-    \subitem \code{-} $ \rightarrow $ remove permission(s)
+          \begin{itemize}
+              \item \code{+} \textrightarrow{} add permission(s)
+              \item \code{=} \textrightarrow{} set exact permission(s)
+              \item \code{-} \textrightarrow{} remove permission(s)
+          \end{itemize}
     \item permissions
-    \subitem \code{r} $ \rightarrow $ read
-    \subitem \code{w} $ \rightarrow $ write
-    \subitem \code{x} $ \rightarrow $ execute
+          \begin{itemize}
+              \item \code{r} \textrightarrow{} read
+              \item \code{w} \textrightarrow{} write
+              \item \code{x} \textrightarrow{} execute
+          \end{itemize}
 \end{enumerate}
 Examples of \code{chmod}:
 \begin{itemize}
     \item \code{chmod g-x 1201}
-    \item \code{chmod a=rx file} $ \rightarrow $ set all read, execute access,
-    take away write; there is a implicit \code{-w} here
+    \item \code{chmod a=rx file} \textrightarrow{} set all read, execute access,
+          take away write; there is a implicit \code{-w} here
     \item \code{chmod u+x shellscript}
-    \subitem shortcut: \code{chmod 744}, in binary they are corresponding
-    to the box[2,4] above: \code{111 100 100}
+          \begin{itemize}
+              \item short-cut: \code{chmod 744}, in binary they are corresponding
+                    to the box[2,4] above: \code{111 100 100}
+          \end{itemize}
 \end{itemize}
 
-\code{umask} $ \rightarrow $ default permissions of a file
+\code{umask} \textrightarrow{} default permissions of a file
 
 \subsection{Shell Variables}
-\code{x=5} $ \rightarrow $ sets variable \code{x} to \code{5}; can't have spaces
+\code{x=5} \textrightarrow{} sets variable \code{x} to \code{5}; can't have spaces
 
-\code{echo \$\{x\}} $ \rightarrow $ prints out value of \code{x}; curly braces are good
+\code{echo \$\{x\}} \textrightarrow{} prints out value of \code{x}; curly braces are good
 
 Shell variables hold strings.
 
-\code{dir=\$(pwd)} $ \rightarrow $ \code{dir} holds \code{pwd}'s value now
+\code{dir=\$(pwd)} \textrightarrow{} \code{dir} holds \code{pwd}'s value now
 
-\code{\$PATH} $ \rightarrow $ special variable; to append stuff to
+\code{\$PATH} \textrightarrow{} special variable; to append stuff to
 \code{PATH} we can do \code{PATH=newpath:\$PATH}
 
 \subsection{Shell Scripts}
@@ -132,7 +166,7 @@ Shell variables hold strings.
     frame=tb,
     language = bash,
     morekeywords={date, whoami, egrep, mv, then}
-    }
+}
 Text file containing Linux commands executed as a program. See
 \code{1201/lectures/shell/scripts} for some examples of shell scripts.
 
@@ -144,9 +178,9 @@ File: \code{basic}
     pwd
 \end{lstlisting}
 \begin{itemize}
-    \item \code{\#!} $ \rightarrow $ Shebang
-    \item \code{chmod a+x basic} $ \rightarrow $ gives permission to execute \code{basic}
-    \item \code{./basic} $ \rightarrow $ executes basic
+    \item \code{\#!} \textrightarrow{} Shebang
+    \item \code{chmod a+x basic} \textrightarrow{} gives permission to execute \code{basic}
+    \item \code{./basic} \textrightarrow{} executes basic
 \end{itemize}
 
 \subsection{Summary of Files}

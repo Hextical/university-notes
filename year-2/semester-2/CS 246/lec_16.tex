@@ -108,7 +108,7 @@ under one abstraction.
 \end{lstlisting}
 
 \textbf{Steps for Destroying Subclass Objects}:
-\begin{enumerate}[(1)]
+\begin{enumerate}[label=(\arabic*)]
     \item Subclass constructor
     \item Subclass fields that are objects are destroyed
     \item Superclass part is destroyed (destructor is called)
@@ -132,29 +132,24 @@ If a class should not have subclasses, declare it \code{final}.
 \end{lstlisting}
 
 Pure Virtual methods (P.V):
-\begin{enumerate}[(1)]
-    \item Class
-          \subitem \emph{\code{Student}} (italics for abstract)
-    \item Fields
-          \subitem +\code{fees()}: int
-\end{enumerate}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \umlclass[type=abstract]{Student}{}{
+            + fees() : integer
+        }
+        \umlclass[x=-3,y=-3]{Regular}{}{
+            \umlvirt{+ fees()} : integer
+        }
+        \umlclass[x=3,y=-3]{Co-op}{}{
+            \umlvirt{+ fees()} : integer
+        }
+        \umluniassoc{Regular}{Student}
+        \umluniassoc{Co-op}{Student}
+    \end{tikzpicture}
+\end{figure}
 
-\code{Regular} \& \code{Co-op} IS-A \code{Student} (both point towards \code{Student} box)
-\begin{enumerate}[(1)]
-    \item Class
-          \subitem \code{Regular}
-    \item Fields
-          \subitem +\emph{\code{fees()}: int}
-\end{enumerate}
-
-\begin{enumerate}[(1)]
-    \item Class
-          \subitem \code{Co-op}
-    \item Fields
-          \subitem +\emph{\code{fees()}: int}
-\end{enumerate}
-
-\emph{Note}: \code{virtual} $ \rightarrow $ \emph{italics}
+\emph{Note}: \code{virtual} (\code{abstract} for class) \textrightarrow{} \emph{italics}
 
 \begin{lstlisting}
     class Student {
@@ -170,7 +165,7 @@ Pure Virtual methods (P.V):
 
 \code{Student} is an \textbf{abstract} class. A class is \textbf{abstract}
 if:
-\begin{enumerate}[(1)]
+\begin{enumerate}[label=(\arabic*)]
     \item it declares a pure virtual method
     \item it inherits a pure virtual method that it does not override
 \end{enumerate}
@@ -183,5 +178,7 @@ We say a class is \textbf{concrete} if it is not abstract.
     \item organize entities (place common attributes, behaviours)
           in the base class
     \item can still use \code{Student} pointers
-    \subitem \code{Student *arr[200]; for (...) { arr[i]->fees; }}
+          \begin{itemize}
+              \item \code{Student *arr[200]; for (\textellipsis) \{ arr[i]->fees; \}}
+          \end{itemize}
 \end{itemize}

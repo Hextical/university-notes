@@ -1,6 +1,6 @@
 \makeheading{2019-11-14}
 \section{Minimum Cost Perfect Matching Problem in Bipartite Graphs}
-Given a biparite graph $ G=(V,E) $ with biparition $ [W,J] $ where
+Given a bipartite graph $ G=(V,E) $ with bipartition $ [W,J] $ where
 $ W\cap J = \varnothing $ and $ W\cup J = V $
 with cost $ c_e\in\mathbb{R} $ for each $ e\in E $, we want to find
 a perfect matching of minimum cost.
@@ -15,7 +15,7 @@ What are necessary conditions for having a perfect matching in $ G $?
 
 \begin{thmbox}
     \begin{theorem}[Hall's Theorem]
-        Let $ G $ be a bipartite graph with biparition $ [W,J] $.
+        Let $ G $ be a bipartite graph with bipartition $ [W,J] $.
         Suppose $ |W|=|S| $, then $ G $ has a perfect matching if and only if
         \[ |S|\leqslant |\mathcal{N}(S)| \]
         for each $ S\in W $.
@@ -27,7 +27,7 @@ has a \emph{deficient set}; a subset $ S\subseteq W $ such that
 Moreover, there is an efficient algorithm to find such deficient sets.
 
 (IP)
-\[ \min \sum\limits_{e\in E}c_ex_e \]
+\[ \min \sum\limits_{e\in E}c_e x_e \]
 subject to
 \[
     \begin{array}{cccc}
@@ -37,10 +37,10 @@ subject to
     \end{array} \]
 Recall the meaning of $ x_e $:
 \[ x_e:=
-\begin{cases}
-    1 & \text{if edge $e$ is in the minimum cost perfect matching}\\
-    0 & \text{otherwise}
-\end{cases} \]
+    \begin{cases}
+        1 & \text{if edge $e$ is in the minimum cost perfect matching} \\
+        0 & \text{otherwise}
+    \end{cases} \]
 (D)
 \[ \max \sum\limits_{v\in V}y_v  \]
 subject to
@@ -63,11 +63,11 @@ set $ S\subseteq W $.
 
 Modify our dual solution:
 \[ \bar{y}_v:=
-\begin{cases}
-    \bar{y}_v+\varepsilon & v\in S\\
-    \bar{y}_v-\varepsilon & v\in \mathcal{N}_H(S)\\
-    \bar{y}_v & \text{otherwise}
-\end{cases} \]
+    \begin{cases}
+        \bar{y}_v+\varepsilon & v\in S                \\
+        \bar{y}_v-\varepsilon & v\in \mathcal{N}_H(S) \\
+        \bar{y}_v             & \text{otherwise}
+    \end{cases} \]
 Choose
 \[ \varepsilon:=\min \{c_{uv}-\bar{y}_u+\bar{y}_v:uv\in E, u\in S, v\notin \mathcal{N}_H(S)\} \]
 If no such $ \varepsilon $ exists, ($ \mathcal{N}_H(S)=\mathcal{N}(S) $),
@@ -80,26 +80,26 @@ and (D) is unbounded.
         \SetKwInOut{Input}{Input}
         \SetKwInOut{Output}{Output}
         \Input{Biparite graph $ G=(V,E) $ with biparition $ [W,J] $ such that $ |W|=|J| $, $ c_e\in\mathbb{R} $,
-        for each $ e\in E $}
+            for each $ e\in E $}
         \Output{A minimum cost perfect matching, or a deficient set $ S $.}
-        $ \bar{y}_v:=\nicefrac{1}{2} \min\limits_{e\in E}\{c_e\} $ for all $ v\in V $
+        $ \bar{y}_v:=\sfrac{1}{2} \min\limits_{e\in E}\{c_e\} $ for all $ v\in V $
 
         Construct $ H=(V,E(\bar{y})) $
 
-        Find a perfect matching in $ H $. If yes, STOP; we have a minimum cost
+        Find a perfect matching in $ H $. If yes, STOP\@; we have a minimum cost
         perfect matching. Otherwise, find a deficient set $ S $ in $ H $.
 
-        If $ \nexists\;uv\in E $ such that $ u\in S $, $ v\notin \mathcal{N}_H(S) $, then STOP;
+        If $ \nexists\;uv\in E $ such that $ u\in S $, $ v\notin \mathcal{N}_H(S) $, then STOP\@;
         $ G $ has no perfect matching, $ S $ is a deficient set in $ G $.
 
         $ \varepsilon:=\min \{c_{uv}-\bar{y}_u+\bar{y}_v:uv\in E, u\in S, v\notin \mathcal{N}_H(S)\}  $
 
         $ \bar{y}_v:=
-        \begin{cases}
-            \bar{y}_v+\varepsilon & v\in S\\
-            \bar{y}_v-\varepsilon & v\in \mathcal{N}_H(S)\\
-            \bar{y}_v & \text{otherwise}
-        \end{cases} $
+            \begin{cases}
+                \bar{y}_v+\varepsilon & v\in S                \\
+                \bar{y}_v-\varepsilon & v\in \mathcal{N}_H(S) \\
+                \bar{y}_v             & \text{otherwise}
+            \end{cases} $
 
         Go to step 2.
     \end{algorithm}

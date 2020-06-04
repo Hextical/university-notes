@@ -1,4 +1,4 @@
-\section{Lecture 22}
+\makeheading{Lecture 22}
 \textbf{Example}
 
 $ F(x)=x^2 $ for $ 0<x<1 $.
@@ -7,15 +7,15 @@ $ F(x)=x^2 $ for $ 0<x<1 $.
 
 Mean:
 \[ E[X]=\int\limits_{0}^{1} x2x d{x} =\int\limits_{0}^{1} 2x^2 d{x}=
-\left[\frac{2x^3}{3}\right]_0^1=\frac{2}{3} \]
+    \left[\frac{2x^3}{3}\right]_0^1=\frac{2}{3} \]
 
 Median:
 $ x_{0.5} $ satisfies $ F(x_{0.5})=0.5 \implies (x_{0.5})^2=0.5\implies x_{0.5}=
-\sqrt{0.5}=0.707$
+    \sqrt{0.5}=0.707$
 
 Mode: 1 ($ x $ value that maximizes $ f(x) $)
 
-\subsection{Continuous Uniform Distribution (8.2)}
+\section{Continuous Uniform Distribution}
 A \emph{continuous} random variable takes real values between $ a $ and
 $ b $ with $ a<b $ such that any interval of fixed size is equally likely.
 
@@ -35,25 +35,25 @@ $ \left[cx\right]_a^b=1\implies c(b-a)=1\implies c=\frac{1}{b-a} $
 
 So,
 \[ f(x)=\begin{cases}
-    \frac{1}{b-a},\, a\le x\le b\\
-    0,\, \text{otherwise}
-\end{cases} \]
+        \frac{1}{b-a},\, a\le x\le b \\
+        0,\, \text{otherwise}
+    \end{cases} \]
 
 \textsc{Find $ F(x) $}
 \[ F(x)=\int\limits_{-\infty}^{x} f(u) d{u}
-=\int\limits_{a}^{x} \frac{1}{b-a} d{u}
-=\left[\frac{u}{b-a}\right]_a^x=\frac{x-a}{b-a} \]
+    =\int\limits_{a}^{x} \frac{1}{b-a} d{u}
+    =\left[\frac{u}{b-a}\right]_a^x=\frac{x-a}{b-a} \]
 \[ F(x)=\begin{cases}
-    \frac{x-a}{b-a},\, a<x<b\\
-    0,\,x<a\\
-    1,\,x>b
-\end{cases} \]
+        \frac{x-a}{b-a},\, a<x<b \\
+        0,\,x<a                  \\
+        1,\,x>b
+    \end{cases} \]
 \textsc{Find the mean, median and mode}
 
 Mean:
 \[ E[X]=\int\limits_{a}^{b} x \frac{1}{b-a} d{x}
-=\left[\left(\frac{x^2}{2}\right)\left(\frac{1}{b-a}\right)\right]_a^b
-=\frac{b^2-a^2}{2(b-a)}=\frac{b+a}{2} \]
+    =\left[\left(\frac{x^2}{2}\right)\left(\frac{1}{b-a}\right)\right]_a^b
+    =\frac{b^2-a^2}{2(b-a)}=\frac{b+a}{2} \]
 
 Median: is also $ \frac{a+b}{2} $
 
@@ -66,51 +66,51 @@ Similarly,
 
 $ U \thicksim U(0,1) $ (i.e. $ a=0,\,b=0 $)
 \[ f(u)=
-\begin{cases}
-    1,\,0<u<1\\
-    0,\,\text{otherwise}
-\end{cases} \]
+    \begin{cases}
+        1,\,0<u<1 \\
+        0,\,\text{otherwise}
+    \end{cases} \]
 \[ F(u)=
-\begin{cases}
-    u,\,0<u<1\\
-    0,\,u<0\\
-    1,\,u>1
-\end{cases} \]
+    \begin{cases}
+        u,\,0<u<1 \\
+        0,\,u<0   \\
+        1,\,u>1
+    \end{cases} \]
 $ U(0,1) $ random variables are easy to generate.
 
 \subsection{Change of Variables}
 Suppose you know the distribution of $ X $ and you want the distribution of
 $ Y=g(X) $.
-\begin{enumerate}[1.]
+\begin{enumerate}
     \item Write the cumulative distribution function of $ Y $ in terms of the cumulative distribution function of $ X $
     \item Sub in what we know about $ X $, then differentiate to get the pdf
     \item Determine the range of $ Y $
 \end{enumerate}
 \subsection{Example (Change of Variable)}
-Let $ X \thicksim U(0,4) $, $ F_X(x)=\frac{x}{4} $, $ f_X(x)=\frac{1}{4} $ 
+Let $ X \thicksim U(0,4) $, $ F_X(x)=\frac{x}{4} $, $ f_X(x)=\frac{1}{4} $
 $ x\in(0,4) $
 
 Let $ Y=\frac{1}{X} $
 
 1.
 \begin{align*}
-    F_Y(y)&=P\left(Y\le y\right)\\
-    &=P\left(\frac{1}{X} \le y\right)\\
-    &=P\left(X>\frac{1}{y}\right)\\
-    &=1-F_X\left(\frac{1}{y}\right)
+    F_Y(y) & =P\left(Y\le y\right)            \\
+           & =P\left(\frac{1}{X} \le y\right) \\
+           & =P\left(X>\frac{1}{y}\right)     \\
+           & =1-F_X\left(\frac{1}{y}\right)
 \end{align*}
 
 2.
 \begin{align*}
-    F_Y(y)&=1-F_X\left(\frac{1}{y}\right)\\
-    &=1-\frac{\frac{1}{y}}{4}\\
-    &=1-\frac{1}{4y}
+    F_Y(y) & =1-F_X\left(\frac{1}{y}\right) \\
+           & =1-\frac{\frac{1}{y}}{4}       \\
+           & =1-\frac{1}{4y}
 \end{align*}
 $ f_Y(y)=\frac{d}{dx}F_Y(y)=\frac{1}{4y^2} $
 
 OR differentiate $ F_Y(y) $ before
 substituting in the information about $ X $. You need the chain rule!
 \[ \frac{d}{dy}\left[1-F_X\left(\frac{1}{y}\right)\right]=
--f_X\left(\frac{1}{y}\right)\left(-\frac{1}{y^2}\right)=\frac{1}{4y^2} \]
+    -f_X\left(\frac{1}{y}\right)\left(-\frac{1}{y^2}\right)=\frac{1}{4y^2} \]
 
 3. $ y\in(\frac{1}{4},\infty) $

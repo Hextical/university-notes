@@ -10,13 +10,15 @@ Last time: Initializing objects
 How to initialize fields that are constants or lvalue references?
 
 Fields must always already be initialized before constructor body runs;
-i.e. step 2 occurs before step 3 below
+i.e.\ step 2 occurs before step 3 below
 
 \textbf{Steps for Object Construction}
-\begin{enumerate}[(1)]
+\begin{enumerate}[label=(\arabic*)]
     \item allocate space: could be on stack or could be on heap if new
     \item field initialization: only fields that are \textbf{objects} are initialized
-    \subitem their default constructor gets called
+          \begin{itemize}
+              \item their default constructor gets called
+          \end{itemize}
     \item constructor body runs
 \end{enumerate}
 `Hijack' (2): \textbf{Use Member Initialization List} (MIL)
@@ -58,13 +60,13 @@ There is always a built-in constructor for any class.
     : assigns{others.assigns}, mt{others.mt}, final{others.final} {}
 \end{lstlisting}
 When is a copy constructor called?
-\begin{enumerate}[(1)]
+\begin{enumerate}[label=(\arabic*)]
     \item Explicitly constructing an object as a copy of another
     \item Pass by value
     \item Return by value
 \end{enumerate}
 Every class comes with (gets for free):
-\begin{enumerate}[(I)]
+\begin{enumerate}[label=(\Roman*)]
     \item default constructor
     \item copy constructor
     \item copy assignment operator
@@ -151,7 +153,7 @@ We can declare a constructor ``explicit'' to disable implicit conversions:
 A class can only have \textbf{one} destructor, they cannot be overloaded.
 
 \textbf{Steps for Object Deconstruction}
-\begin{enumerate}[(1)]
+\begin{enumerate}[label=(\arabic*)]
     \item Destructor body runs
     \item Fields that are objects are destroyed (reverse declaration order)
     \item Space is reclaimed

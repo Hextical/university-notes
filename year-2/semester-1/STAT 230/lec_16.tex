@@ -1,4 +1,4 @@
-\section{Lecture 16}
+\makeheading{Lecture 16}
 \textbf{Example}
 
 Request coming in from a web server at a rate of $ 100 $ requests per minute.
@@ -6,20 +6,20 @@ $ \lambda = 100, t=\frac{1}{60} $
 The \# of requests per second would be
 \[ \poi\left(\mu=\frac{100}{60}=\frac{5}{3}\right) \]
 
-\textbf{5.9 Combining Other Models with the Poisson Process}
+\section{Combining Other Models with the Poisson Process}
 
 Problems may involve many different random variables!
 
 \textbf{Example (Continued)}
 
 We say that a second is quiet if it has no requests.
-\begin{enumerate}[(a)]
+\begin{enumerate}[label=(\alph*)]
     \item Find probability that a second is quiet
     \item In a minute ($60$ non-overlapping seconds), find the probability of $10$ quiet seconds
     \item Find the probability of having to wait $ 30 $ non-overlapping seconds to get $ 2 $ quiet seconds
     \item Given (c), find the probability of $ 1 $ quiet second in the first $ 15 $ seconds
 \end{enumerate}
-(a) Let $ X= $ \# requests in a second. $ X \thicksim \poi(\nicefrac{5}{3}) $.
+(a) Let $ X= $ \# requests in a second. $ X \thicksim \poi(\sfrac{5}{3}) $.
 
 We want $ P(X=0)=\frac{e^{-\frac{5}{3}}\left(\frac{5}{3}\right)^0}{0!}=0.189 $
 
@@ -28,7 +28,7 @@ We want $ P(X=0)=\frac{e^{-\frac{5}{3}}\left(\frac{5}{3}\right)^0}{0!}=0.189 $
 
 We want $ P(Y=10)=\binom{60}{10}(0.189)^{10}(0.811)^{50}=0.124 $
 
-(c) Let $ Z= $ \# non-quiet seconds before getting $ 2 $ quiet seconds. 
+(c) Let $ Z= $ \# non-quiet seconds before getting $ 2 $ quiet seconds.
 $ Z \thicksim \nb(2,0.189) $.
 
 We want $ P(Z=28)=\binom{29}{1}(0.189)^2(0.811)^{28}=0.003 $
@@ -39,84 +39,87 @@ We get,
 
 $ P(\text{1 quiet second in the first 15 seconds}\mid\text{wait 30 to get 2 quiet})= $
 \begin{align}
-    &=\frac{P(\text{1 quiet second in the first 15 seconds}\text{ AND wait 30 to get 2 quiet})}{P(\text{wait 30 to get 2 quiet})}\\
-    &=\frac{P(\text{1 quiet second in the first 15 seconds} \text{ AND wait an additional 15 to get 1 additional quiet})}{P(C)} \\
-    &=\frac{P(\text{1 quiet second in the first 15 seconds})P(\text{wait an additional 15 to get 1 additional quiet}) }{P(C)}\\
-    &=\frac{\binom{15}{1}(0.189)^1(0.811)^{14}\times (0.811)^{14}(0.189)}
-    {\binom{29}{28}(0.189)^2(0.811)^{28}}\\
-    &=\frac{\binom{15}{1}}{\binom{29}{28}}\\
-    &=\frac{15}{29} 
+     & =\frac{P(\text{1 quiet second in the first 15 seconds}\text{ AND wait 30 to get 2 quiet})}{P(\text{wait 30 to get 2 quiet})} \\
+     & =\frac{P(\text{1 quiet second in the first 15 seconds} \text{ AND wait an additional 15 to get 1 additional quiet})}{P(C)}   \\
+     & =\frac{P(\text{1 quiet second in the first 15 seconds})P(\text{wait an additional 15 to get 1 additional quiet}) }{P(C)}     \\
+     & =\frac{\binom{15}{1}(0.189)^1(0.811)^{14}\times (0.811)^{14}(0.189)}
+    {\binom{29}{28}(0.189)^2(0.811)^{28}}                                                                                           \\
+     & =\frac{\binom{15}{1}}{\binom{29}{28}}                                                                                        \\
+     & =\frac{15}{29}
 \end{align}
 In (3) we used the independence of non-overlapping time intervals and constant
 probability of events.
 
-\begin{center}
-    \scalebox{0.68}{
-        \begin{tabular}{ L{2.5cm} | L{3cm} | L{3cm} | L{3cm} | L{3.5cm} | L{3cm} | L{3cm} }
-                                                                    & Discrete Uniform & Hypergeometric & Binomial & Negative Binomial & Geometric & Poisson \\
-            \hline
-            function \newline range \newline parameters             &
-            $ \du[a,b] $\newline $a,a+1,\ldots,b$                   &
-            $ \hyp(N,r,n) $\newline bad                             &
-            $ \bin(n,p) $\newline $ 0,1,\ldots,n $                  &
-            $ \nb(k,p) $\newline $ 0,1,\ldots $                     &
-            $ \geo(p) $\newline $ 0,1,\ldots $                      &
-            $ \poi(\mu) $\newline $ 0,1,\ldots $\newline
-            $ \mu=np $, $\mu=\lambda t $                                                                                                                     \\
-            \hline
-            pf, $ f(x) $                                            &
-            $ \frac{1}{b-a+1} $                                     &
-            $ \frac{\binom{r}{x}{\binom{N-r}{n-x}}}{\binom{N}{n}} $ &
-            $ \binom{n}{x}p^x(1-p)^{n-x} $                          &
-            $ \binom{x+k-1}{k-1}p^k(1-p)^x $                        &
-            $ p(1-p)^x $                                            &
-            $ \frac{e^{-\mu}\mu^x}{x!} $                                                                                                                     \\
-            \hline
-            cumulative distribution function,     $ F(x) $          &
-            $ \frac{x-a+1}{b-a+1} $                                 &                  &                &          &
-            $ 1-(1-p)^{x+1} $                                       &
-            $ e^{\mu}[1+\frac{\mu^1}{1!}+\cdots\frac{\mu^x}{x!}] $                                                                                           \\
-            \hline
-            how to tell                                             &
-            ``equally likely''
-            \newline know min. \& max.                              &
+\begin{table}[H]
+    \renewcommand{\arraystretch}{1.5}
+    \centering
+    \begin{adjustbox}{width=\textwidth}
+        \begin{tabular}{@{}llllllll@{}}
 
-            know total \# objects
-            \newline know \# S's
-            \newline know \# trials
-            \newline without replacement
-            \newline selecting a subset
-                                                                    &
+                       & Discrete Uniform        & Hypergeometric                                          & Binomial                       & Negative Binomial                & Geometric         & Poisson                                                           \\
+            \midrule
+            function   & $ \du[a,b] $            & $ \hyp(N,r,n) $                                         & $ \bin(n,p) $                  & $ \nb(k,p) $                     & $ \geo(p) $       & $ \poi(\mu) $                                                     \\
+            \midrule
+            range      & $a,a+1,\ldots,b$        & bad                                                     & $ 0,1,\ldots,n $               & $ 0,1,\ldots $                   & $ 0,1,\ldots $    & $ 0,1,\ldots $                                                    \\
+            \midrule
+            parameters &                         &                                                         &                                &                                  &                   & $ \mu=np $, $\mu=\lambda t $                                      \\
+            \midrule
+            $ f(x) $   & $ \frac{1}{b-a+1} $     & $ \frac{\binom{r}{x}{\binom{N-r}{n-x}}}{\binom{N}{n}} $ & $ \binom{n}{x}p^x(1-p)^{n-x} $ & $ \binom{x+k-1}{k-1}p^k(1-p)^x $ & $ p(1-p)^x $      & $ \frac{e^{-\mu}\mu^x}{x!} $                                      \\
+            \midrule
+            $ F(x) $   & $ \frac{x-a+1}{b-a+1} $ &                                                         &                                &                                  & $ 1-(1-p)^{x+1} $ & $ e^{\mu}\left[1+\frac{\mu^1}{1!}+\cdots\frac{\mu^x}{x!}\right] $ \\
+            \midrule
+            how to tell
+                       &
+            \renewcommand{\arraystretch}{1.5}
+            \begin{tabular}{@{}l@{}}
+                ``equally likely'' \\
+                know min.\ and max.
+            \end{tabular}
+                       &
+            \begin{tabular}{@{}l@{}}
+                know total \# objects \\
+                know \# S's           \\
+                know \# trials        \\
+                count \# S's          \\
+                without replacement   \\
+                selecting a subset
+            \end{tabular}
+                       &
+            \begin{tabular}{@{}l@{}}
+                Bernoulli trials \\
+                know \# trials   \\
+                count \# S's
+            \end{tabular}
+                       &
+            \begin{tabular}{@{}l@{}}
+                Bernoulli trials                   \\
+                ``until''                          \\
+                ``it takes\textellipsis{} to get'' \\
+                ``before''                         \\
+                know how many S's we want
+            \end{tabular}
+                       &
+            \begin{tabular}{@{}l@{}}
+                ``until we get'' \\
+                ``before the first''
+            \end{tabular}
+                       &
+            \begin{tabular}{@{}l@{}}
+                Bin.\ with large amount of trials and small probability \\
+                rate specified (\#events/time)                          \\
+                no pre-specified max.                                   \\
+                events occurring at any time (randomly)                 \\
+                Poisson process, known time, count events               \\
+                doesn't make sense to ask how often an event did \textbf{not} occur
+            \end{tabular}
+        \end{tabular}
+    \end{adjustbox}
+\end{table}
 
-            Bernoulli trials
-            \newline know \# trials
-            \newline count \# S's
-                                                                    &
+\setcounter{chapter}{6}
+\chapter{Expected Value and Variance}
 
-            Bernoulli trials
-            \newline ``until''
-            \newline ``it take... to get''
-            \newline ``before''
-            \newline know how many S's we want
-                                                                    &
-
-            ``until we get''
-            \newline ``before the first''
-                                                                    &
-
-            Bin. with large amount of trials, small probability
-            \newline rate specified (\#events/time)
-            \newline no pre-specified max.
-            \newline events occurring at any time (randomly)
-            \newline Poisson process \& know time \& count events
-            \newline doesn't make sense to ask how often
-            an event did \textbf{not} occur
-        \end{tabular}}
-\end{center}
-
-\textbf{\textbf{Chapter 7: Expected Value and Variance}}
-
-\textbf{Summarizing Data on Random Variables (7.1)}
+\section{Summarizing Data on Random Variables}
 
 Let $ X= $ \# of kids in a family.
 
@@ -124,17 +127,17 @@ Let $ X= $ \# of kids in a family.
     \begin{tabular}{| *{2}{>{\centering\arraybackslash}p{3cm} |}}
         \hline
         Value & Frequency \\ \hline
-        1 & 3\\
-        2 & 10\\
-        3 & 1\\
-        4 & 1 \\ \hline
+        1     & 3         \\
+        2     & 10        \\
+        3     & 1         \\
+        4     & 1         \\ \hline
     \end{tabular}
 \end{center}
 
 \begin{defbox}
     \subsection{Definition (Median)}
-    The \emph{median} of a sample is a value such that half the results are 
-    below it and half above it, when the results are arranged in numerical 
+    The \emph{median} of a sample is a value such that half the results are
+    below it and half above it, when the results are arranged in numerical
     order.
 \end{defbox}
 
@@ -144,7 +147,7 @@ Let $ X= $ \# of kids in a family.
     is no guarantee there will be only a single mode.
 \end{defbox}
 Mean: average $ \rightarrow
-\frac{1\times 3+2\times 10+3\times 1+4\times 1}{15}=2 $
+    \frac{1\times 3+2\times 10+3\times 1+4\times 1}{15}=2 $
 
 Median: $ 2 $
 

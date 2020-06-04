@@ -1,20 +1,20 @@
-\section{Lecture 10}
+\makeheading{Lecture 10}
 \textbf{MLIW 3: Naïve Bayes' Classifier}
 
 In ML classification, we use evidence to decide what category something
 belongs to. That is,
 \[ P(\text{category}\mid\text{evidence})
-=\frac{P(\text{cat})P(\text{evidence}\mid\text{cat})}
-{\sum\limits_{\text{cat }i} P(\text{cat }i)P(\text{evidence}\mid\text{cat }i)} \]
+    =\frac{P(\text{cat})P(\text{evidence}\mid\text{cat})}
+    {\sum\limits_{\text{cat }i} P(\text{cat }i)P(\text{evidence}\mid\text{cat }i)} \]
 The Naïve Bayes' Classifier  assumes that if there are multiple pieces of evidence,
 they are conditionally independent (conditional on the category).
 
 A very simple ML example of this is spam detection. Consider the machine
 learning problem of classifying incoming messages as spam. We define:
 \begin{itemize}
-    \item $ A_1= $ message fails rDNS (reverse DNS lookup) check (i.e. the "from" domain doesn't match)
+    \item $ A_1= $ message fails rDNS (reverse DNS lookup) check (i.e.\ the ``from'' domain doesn't match)
     \item $ A_2= $ message is sent to over $ 100 $ people
-    \item $ A_3= $ message contains a link with the URL not matching the alt 
+    \item $ A_3= $ message contains a link with the URL not matching the alt
 \end{itemize}
 
 We will assume that the $ A_i $'s are independent events, given that a message
@@ -35,21 +35,21 @@ We use Bayes' Theorem:
 
 $ P(\text{Spam}\mid A_1A_2A_3)= $
 \begin{align*}
-    &=\frac{P(A_1A_2A_3\mid\text{Spam})P(\text{Spam})}
+     & =\frac{P(A_1A_2A_3\mid\text{Spam})P(\text{Spam})}
     {P(A_1A_2A_3\mid\text{Spam})P(\text{Spam})+
-    P(A_1A_2A_3\mid\overline{\text{Spam}})P(\overline{\text{Spam}})}\\
-    &=\frac{P(A_1\mid\text{Spam}) P(A_2\mid\text{Spam}) P(A_3\mid\text{Spam}) P(\text{Spam})}
+    P(A_1A_2A_3\mid\overline{\text{Spam}})P(\overline{\text{Spam}})}                                                             \\
+     & =\frac{P(A_1\mid\text{Spam}) P(A_2\mid\text{Spam}) P(A_3\mid\text{Spam}) P(\text{Spam})}
     {P(A_1\mid\text{Spam}) P(A_2\mid\text{Spam}) P(A_3\mid\text{Spam})P(\text{Spam})+
-    P(A_1\mid\overline{\text{Spam}}) P(A_2\mid\overline{\text{Spam}}) P(A_3\mid\overline{\text{Spam}})P(\overline{\text{Spam}})}\\
-    &=\frac{(0.3)(0.2)(0.1)(0.25)}{(0.3)(0.2)(0.1)(0.25)+(0.005)(0.04)(0.05)(0.75)} \\
-    &\approx 0.9950
+    P(A_1\mid\overline{\text{Spam}}) P(A_2\mid\overline{\text{Spam}}) P(A_3\mid\overline{\text{Spam}})P(\overline{\text{Spam}})} \\
+     & =\frac{(0.3)(0.2)(0.1)(0.25)}{(0.3)(0.2)(0.1)(0.25)+(0.005)(0.04)(0.05)(0.75)}                                            \\
+     & \approx 0.9950
 \end{align*}
 Remember that $ A_1 $, $ A_2 $, and $ A_3 $ are NOT independent!
 They are only conditionally independent, given the type of email.
 
-\textbf{\textbf{Chapter 5: Random Variables}}
+\chapter{Random Variables}
 
-\textbf{5.1 Random Variables and Probability Functions}
+\section{Random Variables and Probability Functions}
 \begin{defbox}
     \subsection{Definition (Random Variable)}
     A \emph{random variable} is a function that assigns a real number to each point in
@@ -76,7 +76,7 @@ roll a fair $ 6 $-sided die $ 3 $ times.
     \item Let $ X= $ sum on the three die. $range(X) =\{3,\ldots ,18\} $.
     \item Let $ Y= $ product on the three die. $range(Y) =\{1,\ldots ,216\} $.
     \item Let $ Z= $ number on the first die. $range(Z) =\{1,\ldots ,6\} $
-    \item Let $ \bar{X}= $ average. $range(\bar{X}) =\{1,\nicefrac{4}{3},\ldots ,6\} $
+    \item Let $ \bar{X}= $ average. $range(\bar{X}) =\{1,\sfrac{4}{3},\ldots ,6\} $
     \item Let $ W= $ \# of dice that are $ 1 $. $range(W)= \{0,1,2,3\} $
 \end{itemize}
 
@@ -90,19 +90,19 @@ Examples of continuous random variables include:
 For Chapter 5, we will focus on discrete random variables.
 \begin{defbox}
     \subsection{Definition (Probability Function, Probability Distribution)}
-    Let $X$ be a discrete random variable with $range(X)$ = $A$. 
+    Let $X$ be a discrete random variable with $range(X)$ = $A$.
     The \emph{probability function} of $X$ is the function
     \[ f(x)=P(X=x) \]
     for all $ x\in A $.
 
     The set of pairs $ \{(x,f(x)):x\in A\} $ is called the \emph{probability
-    distribution} of $ X $.
+        distribution} of $ X $.
 \end{defbox}
 
 \begin{thmbox}
     \subsection{Theorem (Properties of Probability Functions)}
     All probability functions must have the two properties:
-    
+
     1. $0\le f(x)\le 1 $ for all $ x\in A $
 
     2. $ \sum\limits_{\text{all }x\in A} f(x)=1 $
@@ -114,8 +114,8 @@ Let $ X= $ \# of dice that are $ 1 $.
 
 \begin{tabular}{| *{5}{>{\centering\arraybackslash}p{1.5cm} |}}
     \hline
-    $x$ & $0$ & $1$ & $2$ & $3$\\
+    $x$    & $0$                & $1$                        & $2$                      & $3$                \\
     \hline
-    $f(x)$ & $\nicefrac{5^3}{6^3}$ & $\nicefrac{3\times 5^2}{6^2}$ & $\nicefrac{3\times 5}{6^3}$ & $\nicefrac{1^3}{6^3}$ \\
+    $f(x)$ & $\sfrac{5^3}{6^3}$ & $\sfrac{3\times 5^2}{6^2}$ & $\sfrac{3\times 5}{6^3}$ & $\sfrac{1^3}{6^3}$ \\
     \hline
 \end{tabular}

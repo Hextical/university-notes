@@ -19,8 +19,10 @@ Advice: keep fields \code{private}
 \begin{itemize}
     \item standalone functions
     \item need to access fields
-          \subitem Option 1: provide provide accessors/mutators
-          \subitem Option 2: make I/O operators \code{friend}s
+          \begin{itemize}
+              \item Option 1: provide provide accessors/mutators
+              \item Option 2: make I/O operators \code{friend}s
+          \end{itemize}
 \end{itemize}
 
 \begin{lstlisting}
@@ -34,26 +36,34 @@ Advice: keep fields \code{private}
 \begin{itemize}
     \item identifying main entities (what are the main classes in the program)
     \item relationship between entities
-    \item UML: Unified Modelling Language
+    \item UML\@: Unified Modelling Language
 \end{itemize}
 
-A class in UML: (box with three sections)
-\begin{enumerate}[(1)]
+A class in UML\@: (box with three sections)
+\begin{enumerate}[label=(\arabic*)]
     \item Class
-          \subitem \code{Vec}
     \item (Optional) Fields
-          \subitem -\code{x}: Integer
-          \subitem -\code{y}: Integer
     \item (Optional) Methods
-          \subitem +\code{getX()}: Integer
-          \subitem +\code{setX(Integer)}
 \end{enumerate}
+An example of a class in UML is the following.
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \umlclass{Vec}{
+            - x : integer\\
+            - y : integer
+        }{
+            + getX() : integer\\
+            + setX() : integer
+        }
+    \end{tikzpicture}
+\end{figure}
 Constructors and the Big 5 are not shown.
 
 \emph{Note}:
 \begin{itemize}
-    \item \code{-} $ \rightarrow $ private
-    \item \code{+} $ \rightarrow $ public
+    \item \code{-} \textrightarrow{} private
+    \item \code{+} \textrightarrow{} public
 \end{itemize}
 
 Relationship 1: Composition (OWNS-A)
@@ -73,8 +83,8 @@ Relationship 1: Composition (OWNS-A)
 \end{lstlisting}
 
 Basis is composed of 2 \code{Vec} objects. Instead, we write:
-`Basis OWNS-A \code{Vec}'. Typically, if A OWNS-A B:
-\begin{enumerate}[(1)]
+`Basis OWNS-A \code{Vec}'. Typically, if A OWNS-A B\@:
+\begin{enumerate}[label=(\arabic*)]
     \item copying \code{A} copies \code{B} (deep)
     \item destroying \code{A} destroys \code{B}
 \end{enumerate}
@@ -87,14 +97,23 @@ Basis is composed of 2 \code{Vec} objects. Instead, we write:
 
 \code{Basis} OWNS-A \code{Vec}:
 
-TODO: Diamond is shaded
-$ \diamond\longrightarrow^2_{\code{v1}, \code{v2}} $
-\begin{itemize}
-    \item Draw a diamond from \code{Basis} with the arrow head
-          pointing \code{Vec}
-    \item Above the arrow, write the number of how many objects are owned
-    \item Below the arrow, write the objects that are owned
-\end{itemize}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \umlclass{Vec}{
+            - x : integer\\
+            - y : integer
+        }{
+            + getX() : integer\\
+            + setX() : integer
+        }
+        \umlclass[x=-4,y=0]{Basis}{
+            - v1 : integer\\
+            - v2 : integer
+        }{}
+        \umlunicompo[arg=v1{,}v2,mult=2,pos=0.5]{Basis}{Vec}
+    \end{tikzpicture}
+\end{figure}
 
 Relationship 2: Aggregation (HAS-A)
 
@@ -108,46 +127,30 @@ Same drawing as OWNS-A, but diamond is not shaded.
 
 Relationship 3: Inheritance (IS-A)
 
-Three classes:
-\begin{enumerate}[(1)]
-    \item Class
-          \subitem \code{Book}
-    \item Fields
-          \subitem -\code{title}: String
-          \subitem -\code{author}: String
-          \subitem -\code{numPages}: Integer
-\end{enumerate}
-
-\begin{enumerate}[(1)]
-    \item Class
-          \subitem \code{Text}
-    \item Fields
-          \subitem -\code{title}: String
-          \subitem -\code{author}: String
-          \subitem -\code{numPages}: Integer
-          \subitem -\code{topic}: String
-\end{enumerate}
-
-\begin{enumerate}[(1)]
-    \item Class
-          \subitem \code{Comic}
-    \item Fields
-          \subitem -\code{title}: String
-          \subitem -\code{author}: String
-          \subitem -\code{numPages}: Integer
-          \subitem -\code{hero}: String
-\end{enumerate}
-
-Observe:
-\begin{itemize}
-    \item \code{Text} IS-A \code{Book} with an additional \code{topic} field
-    \item \code{Comic} IS-A \code{Book} with an additional \code{hero} field
-\end{itemize}
-
-We represent \code{Text} IS-A \code{Book} by drawing an arrow from \code{Text}
-with the head pointing to \code{Book}. Similarly, \code{Comic}.
-The new \code{Text} and \code{Comic} class will only have the class name
-with the extra field.
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \umlclass[x=0,y=0]{Book}{
+            - title : string\\
+            - author : string\\
+            - numPages : integer
+        }{}
+        \umlclass[x=-3,y=-3]{Text}{
+            - title : string\\
+            - author : string\\
+            - numPages : integer\\
+            - topic : string
+        }{}
+        \umlclass[x=3,y=-3]{Comic}{
+            - title : string\\
+            - author : string\\
+            - numPages : integer\\
+            - hero: string
+        }{}
+        \umluniassoc{Text}{Book}
+        \umluniassoc{Comic}{Book}
+    \end{tikzpicture}
+\end{figure}
 
 We refer to the \code{Book} class as a:
 \begin{itemize}
@@ -202,7 +205,7 @@ members from \code{Book}.
 \end{itemize}
 
 \textbf{Steps of Object Construction}:
-\begin{enumerate}[(1)]
+\begin{enumerate}[label=(\arabic*)]
     \item Space is allocated
     \item Superclass part is constructed
     \item Subclass' field initialization/MIL
@@ -221,7 +224,9 @@ Visibility: \code{protected} (UML \#)
     \item members that are \code{protected} are visible to the class
           and its subclasses.
     \item breaks encapsulation
-          \subitem child classes can break invariants
+          \begin{itemize}
+              \item child classes can break invariants
+          \end{itemize}
 \end{itemize}
 Compromise: keep fields \code{private} but provide \code{protected}
 accessors and mutators.

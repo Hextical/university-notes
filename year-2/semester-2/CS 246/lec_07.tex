@@ -22,7 +22,7 @@ File: \code{readIntsSS.cc}
 \end{lstlisting}
 \begin{itemize}
     \item Difference: ignores entire string if read fails, e.g. \code{he1lo}
-    would ignore \code{helo}, but \code{readIntsSS.cc} discards entire string
+          would ignore \code{helo}, but \code{readIntsSS.cc} discards entire string
 \end{itemize}
 \subsection{Default Arguments}
 \begin{lstlisting}
@@ -38,26 +38,28 @@ File: \code{readIntsSS.cc}
 \end{lstlisting}
 \begin{itemize}
     \item Default arguments must come last, e.g. \code{void test(int x = 0, string str);}
-    $ \rightarrow $  illegal because \code{string} has no default value but comes last
-    \item \code{void test(int x = 0, string str = ``hello'');} $ \rightarrow $ legal,
-    can be called in three different ways as denoted ``legal'' below.
+          \textrightarrow{}  illegal because \code{string} has no default value but comes last
+    \item \code{void test(int x = 0, string str = ``hello'');} \textrightarrow{} legal,
+          can be called in three different ways as denoted ``legal'' below.
     \item When calling the function, we can use default values for the last
-    $ N $ parameters, e.g. $ \rightarrow $ 
-    \subitem \code{test();} $ \rightarrow $ legal;
-    \subitem \code{test(s);} $ \rightarrow $ legal;
-    \subitem \code{test(s, ``bla'');} $ \rightarrow $ legal;
-    \subitem \code{test( ,``bla'')} $ \rightarrow $ illegal;
-    \subitem \code{test(``bla'');} $ \rightarrow $ illegal;
+          $ N $ parameters, e.g. \textrightarrow{}
+          \begin{itemize}
+              \item \code{test();} \textrightarrow{} legal;
+              \item \code{test(s);} \textrightarrow{} legal;
+              \item \code{test(s, ``bla'');} \textrightarrow{} legal;
+              \item \code{test(\textvisiblespace,``bla'')} \textrightarrow{} illegal;
+              \item \code{test(``bla'');} \textrightarrow{} illegal;
+          \end{itemize}
     \item We cannot implement \code{void test();}, or \code{void test(int);}, or
-    \code{void test(int, string)}
+          \code{void test(int, string)}
     \item In C, function names must be unique. In C++, we can have functions with
-    the same name, but they must differ in the number of types of parameters,
-    called \textbf{function overloading}. 
+          the same name, but they must differ in the number of types of parameters,
+          called \textbf{function overloading}.
     \item \textbf{Signature}: name of function, types and number of parameters.
     \item The return type of a function is \textbf{not} part of the signature.
-    \item A new function: \code{void test(int, int);} $ \rightarrow $ legal,
-    does not conflict with \code{test(int, string);}
-    \item A new function: \code{void test(string);} $ \rightarrow $ legal
+    \item A new function: \code{void test(int, int);} \textrightarrow{} legal,
+          does not conflict with \code{test(int, string);}
+    \item A new function: \code{void test(string);} \textrightarrow{} legal
 \end{itemize}
 
 \begin{lstlisting}
@@ -69,10 +71,10 @@ File: \code{readIntsSS.cc}
     \item left shift operator (bit shift): multiply by $ 2^b $;
     \item right sift operator: divide by $ 2^b $
     \item \code{<{}<} is a overloaded operator. Overloading is a type of function
-    Overloading.
+          Overloading.
     \item C++ allows us to define the meaning of operators for user-define types
-    (all types not built-in); \code{istream} $ \rightarrow $ \code{iostream}
-    header.
+          (all types not built-in); \code{istream} \textrightarrow{} \code{iostream}
+          header.
 \end{itemize}
 \begin{lstlisting}
     int x;
@@ -82,9 +84,9 @@ File: \code{readIntsSS.cc}
 \end{lstlisting}
 \begin{itemize}
     \item these operators are \textbf{overloaded}, because \code{<{}<} can work
-    differently for \code{string} and \code{int}
+          differently for \code{string} and \code{int}
     \item example of function overloading since \code{int x}
-    and \code{string s} call different functions 
+          and \code{string s} call different functions
 \end{itemize}
 \begin{lstlisting}
     int a, b;
@@ -107,7 +109,7 @@ In C,
 \end{lstlisting}
 \begin{itemize}
     \item In C++, you don't have to write \code{struct} before \code{Node} after defining
-    \code{Node} as a struct
+          \code{Node} as a struct
     \item Can remove the \code{=} before \{\} for uniform initialization
     \item Discouraged to use \code{NULL} constant, use \code{nullptr} instead
 \end{itemize}
@@ -116,9 +118,9 @@ In C,
 \code{const int MAX = 10;}
 \begin{itemize}
     \item Constants must always be initialized
-    \item \code{const Node n\{3, nullptr\}} $ \rightarrow $ \code{3} data,
-    \code{nullptr} next
-    \item \code{n.data} or \code{n.next} $ \rightarrow $ illegal
+    \item \code{const Node n\{3, nullptr\}} \textrightarrow{} \code{3} data,
+          \code{nullptr} next
+    \item \code{n.data} or \code{n.next} \textrightarrow{} illegal
 \end{itemize}
 \begin{lstlisting}
     int n = 5;
@@ -126,17 +128,21 @@ In C,
 \end{lstlisting}
 \begin{itemize}
     \item \code{p} is a pointer to an \code{int} which is \code{const}; pointer
-    is not \code{constant}
-    \subitem \code{p = \&m;} $ \rightarrow $ legal
-    \subitem \code{*p = 10;} $ \rightarrow $ illegal, but can still do \code{n = 10;}
-    \item \code{int *const q = \&n;} $ \rightarrow $ \code{q} is a \code{const}
-    ptr to an \code{int}
-    \subitem \code{q = \&m;} $ \rightarrow $ illegal
-    \subitem \code{*q = 10;} $ \rightarrow $ legal
-    \item \code{const int *const r = \& n;} $ \rightarrow $ r is a \code{const int}
-    to a ptr that is \code{const}
-    \item \code{const} applies to the ``thing'' on the left, unless there is 
-    nothing to the left, in which case it applies to the right
+          is not \code{constant}
+          \begin{itemize}
+              \item \code{p = \&m;} \textrightarrow{} legal
+              \item \code{*p = 10;} \textrightarrow{} illegal, but can still do \code{n = 10;}
+          \end{itemize}
+    \item \code{int *const q = \&n;} \textrightarrow{} \code{q} is a \code{const}
+          ptr to an \code{int}
+          \begin{itemize}
+              \item \code{q = \&m;} \textrightarrow{} illegal
+              \item \code{*q = 10;} \textrightarrow{} legal
+          \end{itemize}
+    \item \code{const int *const r = \& n;} \textrightarrow{} r is a \code{const int}
+          to a ptr that is \code{const}
+    \item \code{const} applies to the ``thing'' on the left, unless there is
+          nothing to the left, in which case it applies to the right
 \end{itemize}
 \subsection{Parameter Passing}
 \begin{lstlisting}
@@ -158,19 +164,19 @@ Passing pointers:
 \end{lstlisting}
 \begin{tabular}{|c|c|}
     \hline
-    \code{scanf("\%d, \&x");} & \code{cin >{}> x;}\\
+    \code{scanf(``\%d, \&x'');} & \code{cin >{}> x;}             \\
     \hline
-    & \code{operator >{}> (cin, x);}\\
-    & pass by reference
+                                & \code{operator >{}> (cin, x);} \\
+                                & pass by reference
 \end{tabular}
 \subsection{Lvalue References}
 Informally, an \textbf{lvalue} is anything that can appear on the left hand side of
 an assignment.
 \begin{itemize}
-    \item \code{x = 5;} $ \rightarrow $ \code{x} is an lvalue
-    \item \code{5 = 7} $ \rightarrow $ not an lvalue
-    \item \code{x + y = 5} $ \rightarrow $ not an lvalue
-    \item \code{str[i] = '3';} $ \rightarrow $ \code{str[i]} lvalue
+    \item \code{x = 5;} \textrightarrow{} \code{x} is an lvalue
+    \item \code{5 = 7} \textrightarrow{} not an lvalue
+    \item \code{x + y = 5} \textrightarrow{} not an lvalue
+    \item \code{str[i] = '3';} \textrightarrow{} \code{str[i]} lvalue
 \end{itemize}
 Formally, an \textbf{lvalue} is a storage location, something whose addresses we
 can obtain.
@@ -181,19 +187,19 @@ can obtain.
 \begin{itemize}
     \item \code{z} is an lvalue reference to \code{y}
     \item \code{z} acts as a constant pointer to \code{y} with
-    \textbf{automatic dereferencing}
-    \item \code{z = 20;} $ \rightarrow $ automatically dereferencing,
-    don't need \code{*z} (actually a compile error); changes \code{y} to \code{20}
+          \textbf{automatic dereferencing}
+    \item \code{z = 20;} \textrightarrow{} automatically dereferencing,
+          don't need \code{*z} (actually a compile error); changes \code{y} to \code{20}
     \item \code{z} becomes an alias to \code{y}
-    \item \code{int *p = \&z} $ \rightarrow $ gets \code{y}'s address
+    \item \code{int *p = \&z} \textrightarrow{} gets \code{y}'s address
     \item \code{z} behaves like \code{y}
     \item \code{int \&} is a type, \textbf{not} an address
 \end{itemize}
 References must be initialized to lvalues.
 \begin{itemize}
-    \item \code{int \&z;} $ \rightarrow $ illegal
-    \item \code{int \&z = 3;} $ \rightarrow $ illegal
-    \item \code{int \&z = a + b;} $ \rightarrow $ illegal
+    \item \code{int \&z;} \textrightarrow{} illegal
+    \item \code{int \&z = 3;} \textrightarrow{} illegal
+    \item \code{int \&z = a + b;} \textrightarrow{} illegal
 \end{itemize}
 \begin{itemize}
     \item Cannot create a pointer to a reference.
@@ -208,4 +214,4 @@ References must be initialized to lvalues.
     inc(x); // x is passed by reference
     cout << x; // prints 6
 \end{lstlisting}
-\code{cin >{}> x} $ \rightarrow $ \code{x} is passed by reference
+\code{cin >{}> x} \textrightarrow{} \code{x} is passed by reference

@@ -1,50 +1,78 @@
-\documentclass[oneside]{book}
-\usepackage[dvipsnames]{xcolor}
-\usepackage[margin=1in]{geometry}
 
-\usepackage{amsmath, amssymb, amsthm}
-\usepackage{xfrac}
+% -----------------------------------------------------------------------------
+
+% Class
+\documentclass[oneside]{book}
+% Must load first
+\usepackage[dvipsnames]{xcolor}
+
+% -----------------------------------------------------------------------------
+
 % Fonts
 \usepackage{lmodern}
 \usepackage{XCharter}
+\usepackage{anyfontsize}
+\usepackage{microtype}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{array}
+
+% -----------------------------------------------------------------------------
+
+% CS 246
+\usepackage{float}
+\usepackage{tikz-uml}
+\usepackage{soulutf8}
+\usepackage{listings}
+
+\definecolor{light-gray}{gray}{0.95}
+\newcommand{\code}[1]{\sethlcolor{light-gray}\hl{\texttt{#1}}}
+
+% -----------------------------------------------------------------------------
+
+% CO 250
 \usepackage{tkz-berge}
-\usepackage{hyperref}
-\usepackage{enumerate}
-\usepackage{tocbibind}
-\usepackage[ruled,linesnumbered,vlined,dotocloa]{algorithm2e}
+
+% -----------------------------------------------------------------------------
+
+% Core Packages
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{bm}
+\usepackage{xfrac}
+\usepackage[margin=1in]{geometry}
+\usepackage{array}
+\usepackage[unicode]{hyperref}
+\usepackage{enumitem}
 \usepackage[parfill]{parskip}
 \usepackage[most]{tcolorbox}
 \usepackage{graphicx}
-\usepackage{bm}
-\usepackage{contour}
-\usepackage[normalem]{ulem}
-\usepackage{esvect}
-\usepackage{stackengine}
-\usepackage{listings}
-\usepackage[explicit]{titlesec}
-\usepackage{xhfill}
-\usepackage{varwidth}
+\usepackage[ruled,linesnumbered,vlined,dotocloa]{algorithm2e}
+
+% -----------------------------------------------------------------------------
+
+% Better Tables
 \usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+
+% -----------------------------------------------------------------------------
+
+% Intervals
+\usepackage{interval}
+\intervalconfig{
+    soft open fences,
+    separator symbol={,}
+}
+
+% -----------------------------------------------------------------------------
+
 \graphicspath{ {./figures/} }
 
-% input multiple
-\usepackage{multido}
-\newcommand{\forLoop}[4][1]{\multido{\i=#2+#1}{#3}{#4}}
-\definecolor{light-gray}{gray}{0.95}
-\newcommand{\code}[1]{\colorbox{light-gray}{\texttt{#1}}}
-
-\author{Cameron Roopnarine}
-\date{Last updated: \today}
-
 \DeclareMathOperator{\rank}{rank}
-\DeclareMathOperator{\du}{Discrete Uniform}
-\DeclareMathOperator{\uniform}{Uniform}
+\DeclareMathOperator{\du}{\mathcal{U}}
+\DeclareMathOperator{\uniform}{\mathcal{U}}
 \DeclareMathOperator{\bin}{Binomial}
-\DeclareMathOperator{\hyp}{Hypergeometric}
-\DeclareMathOperator{\nb}{Negative Binomial}
+\DeclareMathOperator{\hyp}{Hyp}
+\DeclareMathOperator{\nb}{NB}
 \DeclareMathOperator{\geo}{Geometric}
 \DeclareMathOperator{\poi}{Poisson}
 \DeclareMathOperator{\exponential}{Exponential}
@@ -60,17 +88,18 @@
 \newcommand{\Var}[1]{\bm{\mathrm{Var}}\left[#1\right]}
 \newcommand{\Corr}[1]{\bm{\mathrm{Corr}}\left[#1\right]}
 \newcommand{\Cov}[1]{\bm{\mathrm{Cov}}\left[#1\right]}
+
+% -----------------------------------------------------------------------------
+
+% Table of Contents
+\author{Cameron Roopnarine}
+\date{Last updated: \today}
 \hypersetup{colorlinks, linkcolor=[rgb]{0,0.5,1}}
+
+% -----------------------------------------------------------------------------
 
 % Definitions
 \definecolor{myyellow}{RGB}{255,255,168}
-% Examples
-\definecolor{mygreen}{RGB}{216,255,216}
-% Theorems
-\definecolor{mypurple}{RGB}{216,216,255}
-% Algorithms
-\definecolor{mygray}{RGB}{232,232,232}
-
 \newtcolorbox{defbox}[1][]{
     colback=myyellow,
     boxrule=0pt,
@@ -78,6 +107,8 @@
     #1
 }
 
+% Theorems
+\definecolor{mypurple}{RGB}{216,216,255}
 \newtcolorbox{thmbox}[1][]{
     colback=mypurple,
     boxrule=0pt,
@@ -85,6 +116,17 @@
     #1
 }
 
+% Algorithms
+\definecolor{mygray}{RGB}{232,232,232}
+\newtcolorbox{algbox}[1][]{
+    colback=mygray,
+    boxrule=0pt,
+    sharp corners,
+    #1
+}
+
+% Examples
+\definecolor{mygreen}{RGB}{216,255,216}
 \newtcolorbox{exbox}[1][]{
     breakable,
     colback=mygreen,
@@ -93,17 +135,9 @@
     #1
 }
 
-\newtcolorbox{algbox}[1][]{
-    colback=mygray,
-    boxrule=0pt,
-    sharp corners,
-    #1
-}
+% -----------------------------------------------------------------------------
 
-\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-
+% Amsthm
 \theoremstyle{plain}
 \newtheorem{theorem}{THEOREM}[section] % reset theorem numbering for each chapter
 \newtheorem{corollary}[theorem]{COROLLARY} % reset theorem numbering for each chapter
@@ -114,13 +148,18 @@
 \newtheorem{example}[theorem]{EXAMPLE} % definition numbers are dependent on theorem numbers
 \newtheorem{remark}[theorem]{REMARK}
 
+% -----------------------------------------------------------------------------
+
+% Heading Dates
 \newcommand{\makeheading}[1]
 {
-    \begin{center}
+    \begin{figure}[H]
+        \centering
         \rule{\columnwidth}{1pt}\\
         {\large \scshape{#1}}\\[-0.6\baselineskip]
         \rule{\columnwidth}{1pt}
-    \end{center}
+        \vspace*{-20pt}
+    \end{figure}
 }
 
-\pagestyle{headings}
+% -----------------------------------------------------------------------------

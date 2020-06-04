@@ -1,7 +1,7 @@
 \makeheading{2020-02-12}
 \begin{algbox}
     \begin{algorithm}[H]
-        \DontPrintSemicolon
+        \DontPrintSemicolon{}
         \caption{Decoding Algorithm for $ C_{24} $}
         \SetKwInOut{Input}{Input}
         \SetKwInOut{Output}{Output}
@@ -11,18 +11,18 @@
         and received vector $ \bm{r}=(\bm{x},\bm{y}) $}
         \Output{Decoded vector}
         $ \bm{s}_1\gets G\bm{r}^\top $\;
-        \If {$ \bm{s}_1=\bm{0} $} {
+        \If{$ \bm{s}_1=\bm{0} $} {
             \Return{$ \bm{r} $}
         }
-        \If {$ w(\bm{s}_1)\leqslant 3 $} {
-            \For {$ i $ \KwTo $ 12 $} {
+        \If{$ w(\bm{s}_1)\leqslant 3 $} {
+            \For{$ i $ \KwTo{} $ 12 $} {
                 $ \bm{x}^\prime \gets $ corrected $ \bm{x} $ in each position
                 corresponding to $ 1 $'s in $ \bm{s}_1 $\;
                 \Return{$ (\bm{x}^\prime,\bm{y}) $}
             }
         }
-        \For{$ i\gets 0 $ \KwTo $ 24 $} {
-            \If {$ \bm{g}_i $ differs in position $ j $ or
+        \For{$ i\gets 0 $ \KwTo{} $ 24 $} {
+            \If{$ \bm{g}_i $ differs in position $ j $ or
                 positions $ j $ and $ k $ from $ \bm{s}_1 $} {
                 $ \bm{x}^\prime\gets(x_1,\ldots ,x_{12}) $ where $ x_j\gets\overline{x}_j $ or
                 $ x_j\gets\overline{x}_j $ and $ x_k\gets\overline{x}_k $\;
@@ -31,13 +31,13 @@
             }
         }
         $ \bm{s}_2\gets\tilde{G}\bm{r}^\top $\;
-        \If {$ w(\bm{s}_2)\leqslant 3 $} {
+        \If{$ w(\bm{s}_2)\leqslant 3 $} {
             $ \bm{y}^\prime \gets $ corrected $ \bm{y} $ in each position
             corresponding to $ 1 $'s in $ \bm{s}_2 $\;
             \Return{$ (\bm{x},\bm{y}^\prime) $}
         }
-        \For{$ i\gets 0 $ \KwTo $ 24 $} {
-            \If {$ \tilde{\bm{g}_i} $ differs in position $ j $ or
+        \For{$ i\gets 0 $ \KwTo{} $ 24 $} {
+            \If{$ \tilde{\bm{g}_i} $ differs in position $ j $ or
                 positions $ j $ and $ k $ from $ \bm{s}_2 $} {
                 $ \bm{y}^\prime \gets (y_1,\ldots ,y_{12}) $ where $ y_j\gets\overline{y}_j $ or
                 $ y_j\gets\overline{y}_j $ and $ y_k\gets\overline{y}_k $\;
@@ -45,7 +45,7 @@
                 \Return{$ (\bm{x}^\prime,\bm{y}^\prime) $}\;
             }
         }
-        \Return
+        \Return{}
     \end{algorithm}
 \end{algbox}
 
@@ -64,18 +64,18 @@
 
         \textbf{Solution.} Compute $ \bm{s}_1=\left[ \; I_{12}\mid B \; \right]\bm{r}^\top=
             (1011\; 1110\; 1011)^\top $. Note that $ w(\bm{s}_1)>3 $. Comparing $ \bm{s}_1 $
-        with the rows of $ B $, we see that $ \bm{s}_1 $ differs in poisitions $ 6 $
+        with the rows of $ B $, we see that $ \bm{s}_1 $ differs in positions $ 6 $
         and $ 7 $ from row $ 4 $ of $ B $. Hence we set $ \bm{e}=(0000\; 0110\; 0000\; 0001\; 0000\; 0000) $
         and decode $ \bm{r} $ to
         \[ \bm{c}=\bm{r}-\bm{e}=(1000\; 0100\; 0000\; 1001\; 1101\; 0010) \]
 
-        NOTE: In both examples we should check out answers by verifying that $ H\bm{c}^\top=\bm{0} $
+        NOTE\@: In both examples we should check out answers by verifying that $ H\bm{c}^\top=\bm{0} $
         (i.e., $ \bm{c} $ is indeed a codeword).
     \end{example}
 \end{exbox}
 
 \textbf{Note:}
-\begin{enumerate}[(1)]
+\begin{enumerate}[label=(\arabic*)]
     \item If $ w(\bm{e})\leqslant 3 $, then the algorithm makes the correct decision.
     \item No storage is needed:
           \[ \bm{s}_1=\left[ \; I_{12}\mid B\; \right]\bm{r}^\top=\left[ \; I_{12}\mid B\; \right]
@@ -98,15 +98,15 @@
 \end{itemize}
 
 \begin{center}
-    \begin{tabular}{| *{5}{>{\centering\arraybackslash}p{3cm} |}}
+    \begin{tabular}{| *{5}{>{\centering\arraybackslash}p{2.5cm} |}}
         \hline
-        $ p $     & $ (1-p)^{12} $ & $ 1-P_{C_{24}} $        & $ 1-P_T $                           & $ 1-P_H $                             \\
+        $ p $     & $ (1-p)^{12} $ & $ 1-P_{C_{24}} $     & $ 1-P_T $                        & $ 1-P_H $                          \\
         \hline
-        $ 0.1 $   & $ 0.28243 $    & $ 0.785738      $       & $ 0.71121      $                    & $ 0.549043       $                    \\
-        $ 0.01 $  & $ 0.886385 $   & $ 0.999909      $       & $ 0.99643      $                    & $ 0.99037       $                     \\
-        $ 0.001 $ & $ 0.988066 $   & $ \approx 1    $        & $ 0.999964     $                    & $ 0.999896        $                   \\
+        $ 0.1 $   & $ 0.28243 $    & $ 0.785738      $    & $ 0.71121      $                 & $ 0.549043       $                 \\
+        $ 0.01 $  & $ 0.886385 $   & $ 0.999909      $    & $ 0.99643      $                 & $ 0.99037       $                  \\
+        $ 0.001 $ & $ 0.988066 $   & $ \approx 1    $     & $ 0.999964     $                 & $ 0.999896        $                \\
         \hline
-        Rate      & $ 1        $   & $ \nicefrac{1}{2}=0.5 $ & $ \nicefrac{1}{3}=0.3\overline{3} $ & $ \nicefrac{11}{15}= 0.7\overline{3}$ \\
+        Rate      & $ 1        $   & $ \sfrac{1}{2}=0.5 $ & $ \sfrac{1}{3}=0.3\overline{3} $ & $ \sfrac{11}{15}= 0.7\overline{3}$ \\
         \hline
     \end{tabular}\\
 \end{center}

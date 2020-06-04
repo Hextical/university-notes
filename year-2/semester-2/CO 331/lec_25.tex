@@ -1,7 +1,7 @@
 \makeheading{2020-03-09}
 \textbf{Recall}: Let $ C $ be an $ (n,k) $ code with generator polynomial
 $ g(x) $. Suppose $ C $ is a $ t $-c.b.e.c.c. So, $ t\leqslant n-k $.
-\[ H=\left[ \; I_{n-k}\mid -R^\top \right] \]
+\[ H= \Bigl[\; I_{n-k}\mid -R^\top \;\Bigr] \]
 is a PCM for $ C $; $ s(x)=r(x)\mod g(x) $.
 
 \textbf{Idea}: Suppose $ e $ is a cyclic burst of length at most $ t $.
@@ -19,19 +19,19 @@ each $ i\in[1,n-1] $ where $ s_0=r(x)\mod g(x) $.
 
 \begin{algbox}
     \begin{algorithm}[H]
-        \DontPrintSemicolon
+        \DontPrintSemicolon{}
         \caption{Error Trapping}
 
-        \For{$ i=0$ \KwTo $ n-1 $} {
-            Compute $ s_i(x) $ with \ref{syndrome calculation}.
+        \For{$ i=0$ \KwTo{} $ n-1 $} {
+            Compute $ s_i(x) $ with~\ref{syndrome calculation}.
 
             \If{$ s_i(x) $ is a non-cyclic burst of length at most $ t $} {
                 $ e_i(x)\gets(s_i(x),0) $\;
                 $ e(x)\gets x^{n-i}e_i(x) $\;
-                \Return $ r(x)-e(x) $
+                \Return{$ r(x)-e(x) $}
             }
         }
-        \Return
+        \Return{}
     \end{algorithm}
 \end{algbox}
 

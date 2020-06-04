@@ -6,10 +6,10 @@ $ c_e\geqslant  0 $ $ \forall e\in E $, we want to find a shortest path from $s$
 
 \begin{defbox}
     \begin{definition}
-            Let $ G=(V,E) $ be a graph, and let $ U\subseteq V $. We
-            let $ \delta(U) $ denote the set of edges that have exactly
-            one endpoint in $ U $. That is,
-            \[ \delta(U)=\{uv\in E:u\in U,\,v\in U\} \]
+        Let $ G=(V,E) $ be a graph, and let $ U\subseteq V $. We
+        let $ \delta(U) $ denote the set of edges that have exactly
+        one endpoint in $ U $. That is,
+        \[ \delta(U)=\{uv\in E:u\in U,\,v\in U\} \]
     \end{definition}
 \end{defbox}
 
@@ -68,7 +68,7 @@ $ c_e\geqslant  0 $ $ \forall e\in E $, we want to find a shortest path from $s$
     By construction, there exists and $s$-$u$ path $Q$ that is contained in $ S $.
     Then the path obtained from $ Q $ by adding an edge $ uu^\prime $ is
     an $s$-$u^\prime$ path contained in $ S $. By definition of $ U $,
-    we have that $ u^\prime\in U $, contradiction. 
+    we have that $ u^\prime\in U $, contradiction.
 \end{proof}
 
 \begin{figure}
@@ -80,18 +80,18 @@ $ c_e\geqslant  0 $ $ \forall e\in E $, we want to find a shortest path from $s$
 Suppose $ G $ contains an $s$-$t$ path. Let $ S\subseteq E $ be a set of edges that contains
 at least one edge from every $s$-$t$ cut. Then such $ S $ contains an $s$-$t$ path.
 \[ x_e:=
-\begin{cases}
-    1,\,\text{if edge $e$ is in the shortest $s$-$t$ path}\\
-    0,\,\text{otherwise}
-\end{cases} \]
-(IP) \[ \min \sum\limits_{e\in E}^{} c_ex_e \]
+    \begin{cases}
+        1,\,\text{if edge $e$ is in the shortest $s$-$t$ path} \\
+        0,\,\text{otherwise}
+    \end{cases} \]
+(IP) \[ \min \sum\limits_{e\in E}^{} c_e x_e \]
 subject to
 \[
-\begin{array}{cccc}
-    \sum\limits_{e\in\delta(U)} x_e & \geqslant  & 1 & (U\subseteq V,\,s\in U,\,t\notin U)\\
-    x_e  & \geqslant  & 0 & (e\in E)\\
-    x_e & \in & \mathbb{Z} & (e\in E)
-\end{array}
+    \begin{array}{cccc}
+        \sum\limits_{e\in\delta(U)} x_e & \geqslant & 1          & (U\subseteq V,\,s\in U,\,t\notin U) \\
+        x_e                             & \geqslant & 0          & (e\in E)                            \\
+        x_e                             & \in       & \mathbb{Z} & (e\in E)
+    \end{array}
 \]
 If $ c_e>0$ $(e\in E)$ then optimal solutions of this IP correspond to
 shortest $s$-$t$ paths. If some $ c_e=0 $ $(e\in E)$, then some optimal solutions will
@@ -102,23 +102,23 @@ $ 0\leqslant x_e\leqslant 1$ $ (e\in E) $). Write down the dual of (P):
 (D)
 \[ \max \sum(y_U:\delta(U)\text{ is an $s$-$t$ cut})  \]
 subject to
-\[ 
-\begin{array}{cccc}
-    \sum(y_U:\delta(U)\text{ is an $s$-$t$ cut containing $ e $}) & \leqslant & c_e & (e\in E)\\
-    y_U & \geqslant  & 0 & (U\subseteq V,\,s\in U,\,t\notin U)
-\end{array} \]
+\[
+    \begin{array}{cccc}
+        \sum(y_U:\delta(U)\text{ is an $s$-$t$ cut containing $ e $}) & \leqslant & c_e & (e\in E)                            \\
+        y_U                                                           & \geqslant & 0   & (U\subseteq V,\,s\in U,\,t\notin U)
+    \end{array} \]
 
 A consequence of Complementary Slackness for a shortest path problem is:
 Let $ \mathcal{P} $ be an $s$-$t$ path (as set of edges) and let
 $ \bar{y} $ be a feasible solution of (D). Suppose
 \begin{itemize}
-    \item every edge in $ \mathcal{P} $ corresponds to an equality edge 
-    $ \Sigma(\bar{y}_U:\delta(U)\text{ is an $st$-cut containing $ e $ })=c_e $
+    \item every edge in $ \mathcal{P} $ corresponds to an equality edge
+          $ \Sigma(\bar{y}_U:\delta(U)\text{ is an $st$-cut containing $ e $ })=c_e $
     \item for every active cut (i.e. $st$-cut $ \delta(U) $ such that
-    $ \bar{y}_U>0 $, $ \mathcal{P} $ must contain at least one edge from
-    that $ st $- cut.
+          $ \bar{y}_U>0 $, $ \mathcal{P} $ must contain at least one edge from
+          that $ st $- cut)
 \end{itemize}
-Then $ \mathcal{P} $ is a shortest $s$-$t$ path. 
+Then $ \mathcal{P} $ is a shortest $s$-$t$ path.
 
 \begin{remark}
     $ \bar{y}_U:=0 $ for all $s$-$t$ cuts $ \delta(U) $ gives a feasible
@@ -140,19 +140,19 @@ $s$-$t$ cuts using $ e $.
         \Input{Graph $G=(V,E)$, costs $c_e\geqslant  0$ for all $e\in E$, $ s,t\in V $, where $ s\neq t $.}
         \Output{A shortest $s$-$t$ path $ \mathcal{P} $.}
         $ y_w := 0 $ for all $s$-$t$ cuts $ \delta(W) $. Set $ U:=\{s\} $
-    
+
         \While{$ t\notin U $} {
             Let $ ab $ be an edge in $ \delta(U) $ of smallest slack for $ y $
             where $ a\in U $, $ b\notin U $
-    
+
             $ y_U:=\slack_y(ab) $
-    
+
             $ U:=U\cup \{b\} $
-    
-            change edge $ ab $ into an arc $ \vv{ab} $
+
+            change edge $ ab $ into an arc $ \vec{ab} $
         }
-    
-        \Return A directed $s$-$t$ path $ \mathcal{P} $.
+
+        \Return{A directed $s$-$t$ path $ \mathcal{P} $.}
     \end{algorithm}
 \end{algbox}
 

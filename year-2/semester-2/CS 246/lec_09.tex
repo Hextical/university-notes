@@ -1,11 +1,11 @@
 \section{2020-02-04}
 \subsection{Preprocessor, Separate Compilation}
-Source code $ \rightarrow $ Preprocessor $ \rightarrow $ Compiler
-$ \rightarrow $ \code{a.out} executable
+Source code \textrightarrow{} Preprocessor \textrightarrow{} Compiler
+\textrightarrow{} \code{a.out} executable
 
 \code{\#include} is a direct copy/paste for the preprocessor directive
 
-\code{\#include} with quotes $ \rightarrow $ look in current directory,
+\code{\#include} with quotes \textrightarrow{} look in current directory,
 e.g. \code{\# include ``file''}
 
 \code{g++ -E FILE} shows what the \code{include} copy/pastes
@@ -15,16 +15,18 @@ e.g. \code{\# include ``file''}
 File: \code{hello.cc}
 
 \begin{itemize}
-    \item \code{\#define VAR VALUE} $ \rightarrow $ searches and replaces
-    \code{VAR} with \code{VALUE}
-    \subitem \code{\#define MAX 10} $ \rightarrow $ replaces \code{MAX} with \code{10}
-    \subitem Obsolete because now we have \code{const}
+      \item \code{\#define VAR VALUE} \textrightarrow{} searches and replaces
+            \code{VAR} with \code{VALUE}
+            \begin{itemize}
+                  \item \code{\#define MAX 10} \textrightarrow{} replaces \code{MAX} with \code{10}
+                  \item Obsolete because now we have \code{const}
+            \end{itemize}
 \end{itemize}
 
 \subsection{Conditional Compilation}
 File: \code{course.cc}
 
-\code{g++14 -D VAR=VALUE FILE} $ \rightarrow $ changes type in command-line
+\code{g++14 -D VAR=VALUE FILE} \textrightarrow{} changes type in command-line
 for \code{course.cc}
 
 Preprocessor comment; nests perfectly:
@@ -49,16 +51,16 @@ Block comments (less powerful):
 
 File: \code{debug.cc}
 
-\code{g++14 -DDEBUG debug.cc} $ \rightarrow $ defines \code{DEBUG}, so
+\code{g++14 -DDEBUG debug.cc} \textrightarrow{} defines \code{DEBUG}, so
 one can see full verbose due to the \code{\#ifdef}s in \code{debug.cc}
 
 Note: \code{-D} can be used to define multiple variables
 
 \subsection{Separate Compilation}
 \begin{itemize}
-    \item Header files (\code{.h}): Declarations of functions, Global Variables,
-    and Type Definitions
-    \item Implementation files (\code{.cc}): Definitions of functions
+      \item Header files (\code{.h}): Declarations of functions, Global Variables,
+            and Type Definitions
+      \item Implementation files (\code{.cc}): Definitions of functions
 \end{itemize}
 
 \code{1201/lectures/c++/5-separate}
@@ -67,14 +69,14 @@ File: \code{example1}
 
 Compile the files with either:
 \begin{itemize}
-    \item \code{g++14 main.cc vec.cc}
-    \item \code{g++14 *.cc}
+      \item \code{g++14 main.cc vec.cc}
+      \item \code{g++14 *.cc}
 \end{itemize}
 Notes:
 \begin{itemize}
-    \item Implementation files (\code{.cc}) are never \code{include}d
-    \item Implementation files (\code{.cc}) are compiled
-    \item Header (\code{.h}) files are \textbf{never compiled}, they are \code{include}d
+      \item Implementation files (\code{.cc}) are never \code{include}d
+      \item Implementation files (\code{.cc}) are compiled
+      \item Header (\code{.h}) files are \textbf{never compiled}, they are \code{include}d
 \end{itemize}
 
 Want to compile each file separately to produce a position of the executable,
@@ -82,10 +84,10 @@ then finally merge these positions.
 
 By default, \code{g++} will compile and link to produce the executable.
 
-\code{g++14 -c vec.cc}, \code{g++14 -c main.cc} $ \rightarrow $ compiles each
+\code{g++14 -c vec.cc}, \code{g++14 -c main.cc} \textrightarrow{} compiles each
 separately, without the executable (\code{.o} (Object) files are produced).
 
-\code{g++14 main.o vec.o -o myprog} $ \rightarrow $ merges them into
+\code{g++14 main.o vec.o -o myprog} \textrightarrow{} merges them into
 the \code{myprog} executable
 
 \subsection{Build Tools}
@@ -99,20 +101,22 @@ Specify dependencies in a \code{Makefile}.
 
 File: \code{example1}
 \begin{itemize}
-    \item \code{.PHONY} $ \rightarrow $ specifies that \code{clean} is not a file, but
-    a command
-    \subitem \code{clean} $ \rightarrow $ \code{make clean} will delete any \code{.o} files
-    in the current directory
+      \item \code{.PHONY} \textrightarrow{} specifies that \code{clean} is not a file, but
+            a command
+            \begin{itemize}
+                  \item \code{clean} \textrightarrow{} \code{make clean} will delete any \code{.o} files
+                        in the current directory
+            \end{itemize}
 \end{itemize}
 
 File: \code{example2}
 \begin{itemize}
-    \item Uses variables for compilation
-    \item \code{-Wall} $ \rightarrow $ warn all, compiler will give errors for warnings
+      \item Uses variables for compilation
+      \item \code{-Wall} \textrightarrow{} warn all, compiler will give errors for warnings
 \end{itemize}
 
 File: \code{example3}
 \begin{itemize}
-    \item \code{main.o}, \code{vec.o}, \code{myprog} within
-    the Makefile is all one needs to change for A2Q5
+      \item \code{main.o}, \code{vec.o}, \code{myprog} within
+            the Makefile is all one needs to change for A2Q5
 \end{itemize}

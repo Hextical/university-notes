@@ -88,18 +88,18 @@ If new fails (no more heap memory), next becomes a dangling pointer.
 
 \textbf{Trace of} \code{node.cc}
 
-\code{Node n{...};}
-\begin{enumerate}[(1)]
+\code{Node n\{\textellipsis\};}
+\begin{enumerate}[label=(\arabic*)]
     \item Create linked list with two nodes. The basic constructor is called twice
-    as there are two nodes.
+          as there are two nodes.
 \end{enumerate}
 
 \code{Node n2{plusOne(n)};}
-\begin{enumerate}[(1)]
+\begin{enumerate}[label=(\arabic*)]
     \item Evaluate \code{plusOne(n)}, which takes \code{n} by value; that is
-    the copy constructor is called twice as \code{n} is passed by value.
+          the copy constructor is called twice as \code{n} is passed by value.
     \item \code{plusOne(n)} is returned \code{n2} is constructed, the copy constructor
-    is called twice again.
+          is called twice again.
     \item \code{Node n2} calls the copy constructor twice for \code{plusOne(n)}'s value.
 \end{enumerate}
 
