@@ -7,7 +7,7 @@ All my university notes done in LaTeX.
 | :------: | :--------: | :----: |
 | MATH 137 |     1%     |        |
 
-### Semester 1
+### Semester 2
 N/A
 
 ## Year 2
