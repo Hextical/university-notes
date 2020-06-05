@@ -1,5 +1,7 @@
 \makeheading{ 2020-01-27 }
 
+
+
 \begin{exbox}
     \begin{example}
         Consider a $ \underbrace{\text{binary}}_{F=GF(2)=\mathbb{Z}_2} $
@@ -9,31 +11,26 @@
         $ C=\langle \underbrace{10010}_{v_1},\underbrace{01011}_{v_2},\underbrace{00101}_{v_3} \rangle$.
 
         \[ G=
-            \left[\begin{array}{ccc|cc}
-                    1 & 0 & 0 & 1 & 0 \\
-                    0 & 1 & 0 & 1 & 1 \\
-                    0 & 0 & 1 & 0 & 1
-                \end{array}\right]_{3\times{} 5} \]
+            \spalignaugmatn{2}{
+                1 0 0 1 0; 0 1 0 1 1; 0 0 1 0 1}_{3\times{}5}
+        \]
         $ \rank(G)=3 $, thus $ G $ is a generator matrix for $ C $.
 
-        \begin{center}
-            \[
-                \begin{array}{|c|}
-                    \hline
-                    M\text{ (source messages)} \rightarrow C\text{ (codewords) } \\
-                    \hline
-                    000 \rightarrow 00000                                        \\
-                    001 \rightarrow 00101                                        \\
-                    010 \rightarrow 01011                                        \\
-                    011 \rightarrow 01110                                        \\
-                    100 \rightarrow 10010                                        \\
-                    101 \rightarrow 10111                                        \\
-                    110 \rightarrow 11001                                        \\
-                    111 \rightarrow 11100                                        \\
-                    \hline
-                \end{array}
-            \]
-        \end{center}
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{@{}ccc@{}}
+                Messages $ (M) $ & \textrightarrow{} & Codewords $ (C) $ \\
+                \midrule
+                000              & \textrightarrow{} & 00000             \\
+                001              & \textrightarrow{} & 00101             \\
+                010              & \textrightarrow{} & 01011             \\
+                011              & \textrightarrow{} & 01110             \\
+                100              & \textrightarrow{} & 10010             \\
+                101              & \textrightarrow{} & 10111             \\
+                110              & \textrightarrow{} & 11001             \\
+                111              & \textrightarrow{} & 11100
+            \end{tabular}
+        \end{table}
         $ d(C)=2 $, $ e=0 $.
     \end{example}
 \end{exbox}
@@ -54,26 +51,20 @@ for $ C $, but yields a different encoding rule.
         $ C=\langle 100011,101010,100110\rangle $
         is a non-systematic $ (6,3) $-code.
         Some generator matrices are:
-        \[ G_1=\left[
-                \begin{array}{ccc|ccc}
-                    1 & 0 & 0 & 0 & 1 & 1 \\
-                    1 & 0 & 1 & 0 & 1 & 0 \\
-                    1 & 0 & 0 & 1 & 1 & 0
-                \end{array} \right] \]
+        \[ G_1=\spalignaugmatn{3}{
+                1 0 0 0 1 1 ;
+                1 0 1 0 1 0 ;
+                1 0 0 1 1 0} \]
         $ R_2+R_1 $:
-        \[ G_2= \left[
-                \begin{array}{ccc|ccc}
-                    1 & 0 & 0 & 0 & 1 & 1 \\
-                    0 & 0 & 1 & 0 & 0 & 0 \\
-                    1 & 0 & 0 & 1 & 1 & 0
-                \end{array} \right] \]
+        \[ G_2=\spalignaugmatn{3}{
+                1 0 0 0 1 1 ;
+                0 0 1 0 0 1 ;
+                1 0 0 1 1 0} \]
         $ R_3+R_1 $:
-        \[ G_3=\left[
-                \begin{array}{ccc|ccc}
-                    1 & 0 & 0 & 0 & 1 & 1 \\
-                    0 & 0 & 1 & 0 & 0 & 0 \\
-                    0 & 0 & 0 & 1 & 0 & 1
-                \end{array} \right] \]
+        \[ G_3=\spalignaugmatn{3}{
+                1 0 0 0 1 1 ;
+                0 0 1 0 0 1 ;
+                0 0 0 1 0 1} \]
         Clearly $ C $ is not systematic. However, if every codeword
         is permuted by moving the second bit to the fourth bit, we get $ C^{\prime} $
         that is linear and has the same length, dimension, and distance as $ C $.
