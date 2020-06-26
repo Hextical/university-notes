@@ -1,49 +1,48 @@
 \chapter{Some Special Linear Codes}
 \makeheading{2020-02-07}
-\begin{defbox}
-    \begin{definition}
-        A linear code $ C $ is \textbf{self-orthogonal} if $ C\subseteq C^{\perp} $.
-    \end{definition}
-\end{defbox}
-\begin{defbox}
-    \begin{definition}
-        A linear code $ C $ is \textbf{self-dual} if $ C=C^{\perp} $.
-    \end{definition}
-\end{defbox}
+
+\begin{Definition}{Self-orthogonal}{self-orthogonal}
+    A linear code $ C $ is \textbf{self-orthogonal} if $ C\subseteq C^{\perp} $.
+\end{Definition}
+
+\begin{Definition}{Self-dual}{self-dual}
+    A linear code $ C $ is \textbf{self-dual} if $ C=C^{\perp} $.
+\end{Definition}
+
 For a binary $ (n,k) $-code $ C $, the syndrome table has
 size $ 2^{n-k}\times n $ which is exponentially large.
 
 \textbf{Goal}: Design decoding algorithm which require
 very little space.
 
-\begin{exbox}
-    \begin{example}
-        Use only the PCM $ H $ which is $ (n-k)\times n $ bits.
-    \end{example}
-\end{exbox}
+\begin{Example}{}{}
+    Use only the PCM $ H $ which is $ (n-k)\times n $ bits.
+\end{Example}
 
 \section{The Binary Golay Code C23 (1949)}
-Let
-\[
-    \hat{B}=
-    \left[
-        \begin{array}{cccccccccccc}
-            1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
-            1 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 0 \\
-            1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 1 \\
-            0 & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 \\
-            1 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 0 \\
-            1 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 0 & 1 \\
-            1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 0 & 1 & 1 \\
-            0 & 0 & 0 & 1 & 0 & 1 & 1 & 0 & 1 & 1 & 1 \\
-            0 & 0 & 1 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 0 \\
-            0 & 1 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 0 \\
-            1 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 \\
-            0 & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 1
-        \end{array}
-        \right]_{12\times{} 11} \]
-Then, $ \hat{G}=\left[\; I_{12}\mid \hat{B}\; \right]_{12\times 23} $
-is a generator matrix for a $ (23,12) $-binary code called $ C_{23} $.
+\begin{Definition}{$\bm{C_{23}}$}{c23}
+    Let
+    \[
+        \hat{B}=
+        \left[
+            \begin{array}{cccccccccccc}
+                1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+                1 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 0 \\
+                1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 1 \\
+                0 & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 \\
+                1 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 0 \\
+                1 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 0 & 1 \\
+                1 & 0 & 0 & 0 & 1 & 0 & 1 & 1 & 0 & 1 & 1 \\
+                0 & 0 & 0 & 1 & 0 & 1 & 1 & 0 & 1 & 1 & 1 \\
+                0 & 0 & 1 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 0 \\
+                0 & 1 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 0 \\
+                1 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 \\
+                0 & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 1
+            \end{array}
+            \right]_{12\times{} 11} \]
+    Then, $ \hat{G}=\spalignaugmat{I_{12} \hat{B}}_{12\times 23} $
+    is a generator matrix for a $ (23,12) $-binary code called $ \bm{C_{23}} $.
+\end{Definition}
 
 \textbf{Note}: In $ \hat{B} $,
 \begin{itemize}
@@ -51,15 +50,13 @@ is a generator matrix for a $ (23,12) $-binary code called $ C_{23} $.
     \item $ R_3 $ to $ R_{12} $ are left cyclic shifts of $ R_2 $.
 \end{itemize}
 
-\begin{thmbox}
-    \begin{theorem}
-        Facts:
-        \begin{enumerate}
-            \item $ d(C_{23})=7 $.
-            \item $ C_{23} $ is perfect.
-        \end{enumerate}
-    \end{theorem}
-\end{thmbox}
+\begin{Theorem}{}{}
+    Facts:
+    \begin{enumerate}
+        \item $ d(C_{23})=7 $.
+        \item $ C_{23} $ is perfect.
+    \end{enumerate}
+\end{Theorem}
 
 \begin{proof}
     We know that $ e=3 $, so
@@ -68,31 +65,34 @@ is a generator matrix for a $ (23,12) $-binary code called $ C_{23} $.
 \end{proof}
 
 \section{The Extended Golay Code C24}
-Let
-\[ B=\spalignaugmatn{1}{
-        {\begin{matrix}
-                    0 \\
-                    \mathds{1}
-                \end{matrix}}
-        \hat{B}}_{12\times{} 12}
-\]
-where $ \mathds{1} $ is the column vector $ (\underbrace{1,\ldots ,1}_{11\text{ times}})^\top $.
+\begin{Definition}{$ \bm{C_{24}} $}{c24}
+    Let
+    \[ B=\spalignaugmatn{1}{
+            {\begin{matrix}
+                        0 \\
+                        \mathds{1}
+                    \end{matrix}}
+            \hat{B}}_{12\times{} 12}
+    \]
+    where $ \mathds{1} $ is the column vector $ (\underbrace{1,\ldots ,1}_{11\text{ times}})^\top $.
 
-Then, $ G=\left[\; I_{12}\mid B \;\right]_{12\times 24} $ is a generator
-matrix for a $ (24,12) $-binary code called $ C_{24} $.
+    Then, $ G=\spalignaugmat{I_{12} B}_{12\times 24} $ is a generator
+    matrix for a $ (24,12) $-binary code called $ \bm{C_{24}} $.
+\end{Definition}
 
 Notes:
-\begin{enumerate}[label=(\roman*)]
-    \item $ C_{24} $ is a $ (24,12,8) $-binary code ($ e=3 $)
-    \item $ GG^\top=\bm{0} $
-    \item $ C_{24}\subseteq C_{24}^\perp $, $ C_{24} $ is a self-orthogonal code.
-    \item $ \dim (C_{24})=12 $ and $ d(C^{\perp})=12 $, so
-          $ C_{24}=C_{24}^\perp $ ($ C_{24} $ is a self-dual code)
-    \item $ B $ is symmetric
-    \item PCM for $ C_{24} $ is $ H=\left[ -B ^\top \mid I_{12} \right]=
-              \left[ B\mid I_{12} \right] $
-    \item Since $ C_{24}=C_{24}^\perp $, $ H $ is also a GM for $ C_{24} $.
-    \item $ G $ is also a PCM for $ C_{24}^\perp $.
+\begin{enumerate}[label=(\arabic*)]
+    \item $ C_{24} $ is a $ (24,12,8) $-binary code.
+    \item $ GG^\top=0 $.
+    \item $ C_{24}\subseteq C_{24}^\perp $,
+          so $ C_{24} $ is a self-orthogonal code.
+    \item $ \dim{C_{24}}=12=\dim{C_{24}^\perp} $, so
+          $ C_{24}=C_{24}^\perp $, therefore $ C_{24} $ is a self-dual code.
+    \item $ B $ is symmetric.
+    \item A PCM for $ C_{24} $ is $ H=\spalignaugmat{{-B^\top} I_{12}}=
+              \spalignaugmat{B I_{12}} $.
+    \item $ C_{24}=C_{24}^\perp $, thus $ H $ is also a GM and PCM for $ C_{24} $.
+    \item $ G $ is also a GM and PCM for $ C_{24}^\perp $.
 \end{enumerate}
 
 \subsection{Decoding Algorithm for C24}
@@ -111,25 +111,23 @@ $ w(\bm{e})\leqslant 3 $,
     \item $ w(\bm{e}_1)=1 $, $ w(\bm{e}_2)=1 $ or $ 2 $
 \end{enumerate}
 
-\begin{thmbox}
-    \begin{theorem}
-        Let $ C $ be an $ (n,k,d) $-code over $ GF(q) $. Let $ \bm{x}=
-            V_n(GF(q)) $ with $ w(\bm{x})\leqslant \lfloor \frac{d-1}{2} \rfloor $.
-        Then $ \bm{x} $ is the unique vector of minimum weight in the coset
-        of $ C $ containing $ \bm{x} $ (so, it must be a coset leader).
-    \end{theorem}
-\end{thmbox}
+\begin{Theorem}{}{}
+    Let $ C $ be an $ (n,k,d) $-code over $ GF(q) $. Let $ \bm{x}=
+        V_n(GF(q)) $ with $ w(\bm{x})\leqslant \lfloor \frac{d-1}{2} \rfloor $.
+    Then $ \bm{x} $ is the unique vector of minimum weight in the coset
+    of $ C $ containing $ \bm{x} $ (so, it must be a coset leader).
+\end{Theorem}
 
 \begin{proof}
     Suppose for a contradiction that
     $ \bm{y} $ is a vector in the same coset of $ C $ as $ \bm{x} $
     with $ \bm{y}\neq \bm{x} $ and
     \[ w(\bm{y})\leqslant w(\bm{x})\leqslant \left\lfloor \frac{d-1}{2} \right\rfloor \]
-    Then, $ \bm{y}-\bm{x}\neq 0 $, $ \bm{x}\equiv \bm{y}\mod C $,
-    and so $ \bm{x}-\bm{y}\in C $. Now,
+    Then, $ \bm{y}-\bm{x}\neq \bm{0} $, $ \bm{x}\equiv \bm{y}\pmod{C} \iff
+        (\bm{x}-\bm{y})\in C $. Now,
     \begin{align*}
         w(\bm{x}-\bm{y})=w(\bm{x}+(-\bm{y}))
-         & \leqslant w(\bm{x})+w(\bm{y})                                                                 \\
+         & \leqslant w(\bm{x})+w(-\bm{y})                                                                \\
          & =w(\bm{x})+w(\bm{y})                                                                          \\
          & \leqslant \left\lfloor \frac{d-1}{2} \right\rfloor + \left\lfloor \frac{d-1}{2} \right\rfloor \\
          & \leqslant d-1

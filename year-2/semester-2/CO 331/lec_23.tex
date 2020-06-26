@@ -31,65 +31,56 @@ Another generator matrix for $ C $ is:
 where $ x^{n-k+i}=\ell_i(x)g(x)+r_i(x)\implies -r_i(x)+x^{n-k+i}=\ell_i(x)g(x) $ for each $ i\in[0,k-1] $.
 Then, another PCM for $ C $ is: $ H=\left[ \; I_{n-k}\mid -R^\top \; \right]_{(n-k)\times n} $. So,
 \[ H^\top=
-    \begin{bmatrix}
-        I_{n-k} \\
-        -R
-    \end{bmatrix}_{n\times (n-k)}
+    \spalignmat{I_{n-k}; -R}_{n\times (n-k)}
     =
     \begin{bmatrix}
-        x^0\mod g(x)       \\
-        x \mod g(x)        \\
-        \vdots             \\
-        x^{n-k-1}\mod g(x) \\
-        x^{n-k}\mod g(x)   \\
-        x^{n-k+1}\mod g(x) \\
-        x^{n-1}\mod g(x)
+        x^0\pmod{g(x)}       \\
+        x \pmod{g(x)}        \\
+        \vdots               \\
+        x^{n-k-1}\pmod{g(x)} \\
+        x^{n-k}\pmod{g(x)}   \\
+        x^{n-k+1}\pmod{g(x)} \\
+        x^{n-1}\pmod{g(x)}
     \end{bmatrix} \]
-Hence, if $ r=(r_0,r_1,\ldots ,r_{n-1})\in V_{n-1}(F) $, then
+Hence, if $ \bm{r}=(r_0,r_1,\ldots ,r_{n-1})\in V_{n-1}(F) $, then
 \begin{align*}
     \bm{s}
-     & =H\bm{r}^\top                                        \\
-     & =(r_0 x^0\mod g(x))+\cdots+(r_{n-1}x^{n-1}\mod g(x)) \\
-     & =(r_0x^0+r_1x+\cdots+r_{n-1}x^{n-1})\mod g(x)        \\
-     & =r(x)\mod g(x)
+     & =H\bm{r}^\top                                            \\
+     & =(r_0 x^0\pmod{g(x)})+\cdots+(r_{n-1}x^{n-1}\pmod{g(x)}) \\
+     & =(r_0x^0+r_1x+\cdots+r_{n-1}x^{n-1})\pmod{g(x)}          \\
+     & =r(x)\pmod{g(x)}
 \end{align*}
 
-\begin{thmbox}
-    \begin{theorem}
-        Let $ C $ be a cyclic code with generator polynomial $ g(x) $, and $ \bm{r}\in V_n(F) $.
-        Then, the syndrome of $ \bm{r} $ with respect to the previous PCM is:
-        \[ s(x)=r(x)\mod g(x) \]
-    \end{theorem}
-\end{thmbox}
+\begin{Theorem}{}{}
+    Let $ C $ be a cyclic code with generator polynomial $ g(x) $, and $ \bm{r}\in V_n(F) $.
+    Then, the syndrome of $ \bm{r} $ with respect to the previous PCM is:
+    \[ s(x)=r(x)\pmod{g(x)} \]
+\end{Theorem}
 
-\begin{exbox}
-    \begin{example}
-        $ g(x)=1+x+x^2+x^3+x^6 $ is the generator polynomial for a $ (15,9) $-binary cyclic code.
-        Check $ g(x)\mid (x^{15}-1) $ over $ GF(2) $. Compute the syndrome of
-        $ \bm{r}=(1110\; 1110\; 1100\; 000) $.
+\begin{Example}{}{}
+    $ g(x)=1+x+x^2+x^3+x^6 $ is the generator polynomial for a $ (15,9) $-binary cyclic code.
+    Check $ g(x)\mid (x^{15}-1) $ over $ GF(2) $. Compute the syndrome of
+    $ \bm{r}=(1110\; 1110\; 1100\; 000) $.
 
-        \textbf{Solution.} Long division of $ (x^9+x^8+x^6+x^5+x^4+x^2+x+1)/(x^6+x^3+x^2+x+1) $
-        gives $ x^5+x^4+x+1 $ as the remainder. Thus,
-        \[ s(x)=1+x+x^4+x^5\implies \bm{s}=(110011) \]
-    \end{example}
-\end{exbox}
+    \textbf{Solution.} Long division of $ (x^9+x^8+x^6+x^5+x^4+x^2+x+1)/(x^6+x^3+x^2+x+1) $
+    gives $ x^5+x^4+x+1 $ as the remainder. Thus,
+    \[ s(x)=1+x+x^4+x^5\implies \bm{s}=(110011) \]
+\end{Example}
 
-\begin{remark}
+\begin{Remark}{}{}
     Given the syndrome $ \bm{s} $ of $ \bm{r} $, the syndromes of cyclic shifts of $ \bm{r} $
     can be easily computed.
-\end{remark}
+\end{Remark}
 
-\begin{thmbox}
-    \begin{theorem}\label{syndrome calculation}
-        Let $ \bm{r}\in V_n(F) $, and $ s(x) \equiv r(x)\mod g(x) $ where
-        $ s(x) = s_0+xs_1+\cdots+s_{n-k-1}x^{n-k-1} $.
-        Then the syndrome of $ xr(x) $ is:
-        \begin{enumerate}[label=(\roman*)]
-            \item $ xs(x) $, if $ s_{n-k-1}=0 $
-            \item $ xs(x)-s_{n-k-1}g(x) $, if $ s_{n-k-1}\neq 0 $
-        \end{enumerate}
-    \end{theorem}
-\end{thmbox}
+\begin{Theorem}{}{syndrome calculation}
+    Let $ \bm{r}\in V_n(F) $, and $ s(x) \equiv r(x)\pmod{g(x)} $ where
+    $ s(x) = s_0+xs_1+\cdots+s_{n-k-1}x^{n-k-1} $.
+    Then the syndrome of $ xr(x) $ is:
+    \begin{enumerate}[label=(\roman*)]
+        \item $ xs(x) $, if $ s_{n-k-1}=0 $
+        \item $ xs(x)-s_{n-k-1}g(x) $, if $ s_{n-k-1}\neq 0 $
+    \end{enumerate}
+\end{Theorem}
 
 \begin{proof}
     We have

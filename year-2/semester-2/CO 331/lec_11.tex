@@ -1,15 +1,13 @@
 \makeheading{ 2020-01-29 }
 
-\begin{defbox}
-    \begin{definition}
-        If $ \bm{x},\bm{y}\in V_n(F) $ and $ \bm{x}\cdot \bm{y}=0 $, then $ x $ and $ y $
-        are \textbf{orthogonal}.
-    \end{definition} \end{defbox}
+\begin{Definition}{Orthogonal}{orthogonal}
+    If $ \bm{x},\bm{y}\in V_n(F) $ and $ \bm{x}\cdot \bm{y}=0 $, then
+    $ \bm{x} $ and $ \bm{y} $ are \textbf{orthogonal}.
+\end{Definition}
 
-\begin{thmbox}
-    \begin{theorem}
-        If $ C $ is a linear code, then $ (C^{\perp})^{\perp}=C $.
-    \end{theorem} \end{thmbox}
+\begin{Theorem}{}{}
+    If $ C $ is a linear code, then $ (C^{\perp})^{\perp}=C $.
+\end{Theorem}
 
 \begin{proof}
     Let $ C $ be an $ (n,k) $-code. Then $ C^{\perp} $ is an $ (n,n-k) $-code.
@@ -19,31 +17,19 @@
     and $ |(C^{\perp})^{\perp}|=q^k $. Thus, $ C=(C^{\perp})^{\perp} $.
 \end{proof}
 
-\begin{thmbox}
-    \begin{theorem}
-        Let $ C $ be an $ (n,k) $-code with standard form $ k\times n $ generator matrix.
-        Then, a generator matrix for $ C^{\perp} $ is
-        \[ H=\left[ \,-A^{\top}\mid I_{n-k}\, \right]_{(n-k)\times n} \]
-    \end{theorem} \end{thmbox}
+\begin{Theorem}{}{}
+    Let $ C $ be an $ (n,k) $-code with standard form $ k\times n $ generator matrix.
+    Then, a generator matrix for $ C^{\perp} $ is
+    \[ H=\spalignaugmat{-A^{\top} I_{n-k}}_{(n-k)\times n} \]
+\end{Theorem}
 
 \begin{proof}
     $ \rank(H)=n-k $, so $ H $ is indeed a generator matrix for some $ (n,n-k) $-code
     $ \overline{C} $. Now,
     \begin{align*}
         GH^{\top}
-         & =\left[ \,I_k\mid A\, \right]
-        \begin{bmatrix}
-            -A \\
-            I_{n-k}
-        \end{bmatrix}        \\
-         & =-A+A                         \\
-         & =0
-    \end{align*}
-
-    \begin{align*}
-        GH^{\top}
-         & = \spalignaugmatn{1}{I_{k} A}\spalignmat[c]{-A; I_{n-k}} \\
-         & =-A+A                                                    \\
+         & = \spalignaugmat{I_k A}_{k\times n}\spalignmat[c]{-A; I_{n-k}}_{n\times(n-k)} \\
+         & =-A+A                                                                         \\
          & =0
     \end{align*}
 
@@ -55,59 +41,57 @@
 
 \section{The Parity-Check Matrix}
 
-\begin{defbox}
-    \begin{definition}
-        A generator matrix for $ C^{\perp} $ is called a \textbf{parity-check matrix}
-        (PCM) for $ C $.
-    \end{definition} \end{defbox}
+\begin{Definition}{Parity-check matrix}{parity-check_matrix}
+    A generator matrix for $ C^{\perp} $ is called a \textbf{parity-check matrix}
+    (PCM) for $ C $.
+\end{Definition}
 
-\begin{exbox}
-    \begin{example}
-        Consider a $ (5,2) $-code $ C $ over $ \mathbb{Z}_3 $ with generator matrix
-        \[ G=
-            \begin{bmatrix}
-                2 & 0 & 2 & 1 & 0 \\
-                1 & 1 & 0 & 0 & 1
-            \end{bmatrix}
-            \begin{matrix}
-                \leftarrow c_1 \\
-                \leftarrow c_2
-            \end{matrix} \]
+\begin{Example}{}{}
+    Consider a $ (5,2) $-code $ C $ over $ \mathbb{Z}_3 $ with generator matrix
+    \[ G=
+        \begin{bmatrix}
+            2 & 0 & 2 & 1 & 0 \\
+            1 & 1 & 0 & 0 & 1
+        \end{bmatrix}
+        \begin{matrix}
+            \leftarrow \bm{c}_1 \\
+            \leftarrow \bm{c}_2
+        \end{matrix} \]
 
-        Find the length, dimension, order, number of codewords, codewords,
-        distance, weight and errors that can be corrected for $ C $.
+    Find the length, dimension, order, number of codewords, codewords,
+    distance, weight and errors that can be corrected for $ C $.
 
-        \textbf{Solution.}
-        \begin{itemize}
-            \item Length: $ n=5 $ ($ (n,k) $-code)
-            \item Dimension: $ k=2 $ ($ (n,k) $-code)
-            \item Order: $ q=3 $ ($ \mathbb{Z}_3 $)
-            \item Number of codewords: $ M=q^k=3^2=9 $
-            \item Codewords: $ C=\{00000,20210,10120,11001,22002,01211,12212,21121,02122\} $
-            \item Distance: $ d(C)=w(C)=3 $
-            \item Error-correcting capability: $ e=1 $
-        \end{itemize}
+    \textbf{Solution.}
+    \begin{itemize}
+        \item Length: $ n=5 $ ($ (n,k) $-code)
+        \item Dimension: $ k=2 $ ($ (n,k) $-code)
+        \item Order: $ q=3 $ ($ \mathbb{Z}_3 $)
+        \item Number of codewords: $ M=q^k=3^2=9 $
+        \item Codewords: $ C=\{00000,20210,10120,11001,22002,01211,12212,21121,02122\} $
+        \item Distance: $ d(C)=w(C)=3 $
+        \item Error-correcting capability: $ e=1 $
+    \end{itemize}
 
-        Find a generator matrix for $ C^{\perp} $.
+    Find a generator matrix for $ C^{\perp} $.
 
-        \textbf{Solution.}
-        \[\begin{bmatrix}
-                2 & 0 & 2 & 1 & 0 \\
-                1 & 1 & 0 & 0 & 1
-            \end{bmatrix}\rightarrow
-            \begin{bmatrix}
-                1 & 0 & 1 & 2 & 0 \\
-                0 & 1 & 2 & 1 & 1
-            \end{bmatrix}\]
-        So,
-        \[ H=
-            \spalignaugmatn{3}{
-                2 1 1 0 0;
-                1 2 0 1 0;
-                0 2 0 0 1
-            }
-        \]
-        is a generator matrix for $ C^{\perp} $ which is a $ (5,3) $-code
-        over $ \mathbb{Z}_3 $. $ M=3^3=27 $.
-    \end{example}
-\end{exbox}
+    \textbf{Solution.}
+    \[\begin{bmatrix}
+            2 & 0 & 2 & 1 & 0 \\
+            1 & 1 & 0 & 0 & 1
+        \end{bmatrix}\rightarrow
+        \begin{bmatrix}
+            1 & 0 & 1 & 2 & 0 \\
+            0 & 1 & 2 & 1 & 1
+        \end{bmatrix}\]
+    So,
+    \[ H=
+        \spalignaugmatn{3}{
+            2 1 1 0 0;
+            1 2 0 1 0;
+            0 2 0 0 1
+        }
+    \]
+    is a generator matrix for $ C^{\perp} $ which is a $ (5,3) $-code
+    over $ \mathbb{Z}_3 $. $ M=3^3=27 $.
+\end{Example}
+

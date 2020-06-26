@@ -11,12 +11,10 @@ We proved $ (i)-(iii) $ last class. We now prove $ (iv) $.
         m_\alpha(x)\mid f(x). \]
 \end{proof}
 
-\begin{thmbox}
-    \begin{theorem}
-        Let $ \alpha\in GF(q^m) $. Then, $ \alpha\in GF(q) $ if and only if
-        $ \alpha^q=\alpha $.
-    \end{theorem}
-\end{thmbox}
+\begin{Theorem}{}{}
+    Let $ \alpha\in GF(q^m) $. Then, $ \alpha\in GF(q) $ if and only if
+    $ \alpha^q=\alpha $.
+\end{Theorem}
 
 \begin{proof}
     Since $ \alpha^q=\alpha $ for all $ \alpha\in GF(q) $, the elements of $ GF(q) $
@@ -25,32 +23,28 @@ We proved $ (i)-(iii) $ last class. We now prove $ (iv) $.
     if and only if $ \alpha^q=\alpha $.
 \end{proof}
 
-\begin{defbox}
-    \begin{definition}
-        Let $ \alpha\in GF(q^m) $. Let $ t $ be the smallest positive integer such that
-        $ \alpha^{q^t}=\alpha $ (note that $ t\leqslant m $). Then,
-        \textbf{the set of conjugates of $ \bm{\alpha} $ with respect to $ \bm{GF(q)} $} is
-        \[ C(\alpha)=\{\alpha,\alpha^q,\alpha^{q^2},\ldots,\alpha^{q^{t-1}}\} \]
+\begin{Definition}{Set of conjugates of $ \bm{\alpha} $ with respect to $ \bm{GF(q)} $}{
+        set_of_conjugates
+    }
+    Let $ \alpha\in GF(q^m) $. Let $ t $ be the smallest positive integer such that
+    $ \alpha^{q^t}=\alpha $ (note that $ t\leqslant m $). Then, the
+    \textbf{set of conjugates of $ \bm{\alpha} $ with respect to $ \bm{GF(q)} $} is
+    \[ C(\alpha)=\{\alpha,\alpha^q,\alpha^{q^2},\ldots,\alpha^{q^{t-1}}\} \]
 
-        Note that the elements of $ C(\alpha) $ are distinct.
-    \end{definition}
-\end{defbox}
+    Note that the elements of $ C(\alpha) $ are distinct.
+\end{Definition}
 
-\begin{thmbox}
-    \begin{theorem}
-        Let $ \alpha\in GF(q^m) $. Then the minimal polynomial of $ \alpha $ over
-        $ GF(q) $ is
-        \begin{align*}
-            m_\alpha(x)
-             & =\prod_{\beta\in C(\alpha)}(x-\beta)                               \\
-             & =(x-\alpha)(x-\alpha^q)(x-\alpha^{q^2})\cdots(x-\alpha^{q^{t-1}}).
-        \end{align*}
-    \end{theorem}
-\end{thmbox}
+\begin{Theorem}{}{}
+    Let $ \alpha\in GF(q^m) $. Then the minimal polynomial of $ \alpha $ over
+    $ GF(q) $ is
+    \begin{align*}
+        m_\alpha(x)
+         & =\prod_{\beta\in C(\alpha)}(x-\beta)                               \\
+         & =(x-\alpha)(x-\alpha^q)(x-\alpha^{q^2})\cdots(x-\alpha^{q^{t-1}}).
+    \end{align*}
+\end{Theorem}
 
-\begin{proof}
-    $ \; $
-
+\begin{proof} \;
     \begin{enumerate}[label=(\roman*)]
         \item Clearly, $ m_\alpha(x) $ is monic.
         \item Clearly, $ m_\alpha(\alpha)=0 $.
@@ -88,51 +82,50 @@ We proved $ (i)-(iii) $ last class. We now prove $ (iv) $.
     \end{enumerate}
 \end{proof}
 
-\begin{exbox}
-    \begin{example}[Finding the Minimal Polynomial\label{min. poly}]
-        Consider $ GF(2^4)=\mathbb{Z}_2[x]/(x^4+x+1) $. Find the minimal
-        polynomial of $ \beta=x^2+x^3 $ over $ \mathbb{Z}_2 $.
-        (In this example, we have $ q=2 $ and $ m=4 $)
+\begin{Example}{Finding the Minimal Polynomial\label{min. poly}}{}
+    Consider $ GF(2^4)=\mathbb{Z}_2[x]/(x^4+x+1) $. Find the minimal
+    polynomial of $ \beta=x^2+x^3 $ over $ \mathbb{Z}_2 $.
+    (In this example, we have $ q=2 $ and $ m=4 $)
 
-        \textbf{Solution.} When doing computations by hand, it will help to
-        have a generator $ \alpha $ of $ GF(2^4)^* $, and a table
-        of powers of $ \alpha $. It turns out that $ \alpha=x $ is a generator
-        as the following table shows.
-        \begin{center}
-            \begin{multicols}{4}
-                $ \alpha^0=1 $                             \\
-                $ \alpha^1=\alpha $                        \\
-                $ \alpha^2=\alpha^2 $                      \\
-                $ \alpha^3=\alpha^3 $                      \\
-                $ \alpha^4=1+\alpha $                      \\
-                $ \alpha^5=\alpha+\alpha^2 $               \\
-                $ \alpha^6=\alpha^2+\alpha^3 $             \\
-                $ \alpha^7=1+\alpha+\alpha^3 $             \\
-                $ \alpha^8=1+\alpha^2 $                    \\
-                $ \alpha^9=\alpha+\alpha^3 $               \\
-                $ \alpha^{10}=1+\alpha+\alpha^2 $          \\
-                $ \alpha^{11}=\alpha+\alpha^2+\alpha^3 $   \\
-                $ \alpha^{12}=1+\alpha+\alpha^2+\alpha^3 $ \\
-                $ \alpha^{13}=1+\alpha^2+\alpha^3 $        \\
-                $ \alpha^{14}=1+\alpha^3 $                 \\
-                $ \alpha^{15}=1 $                          \\
-            \end{multicols}
-        \end{center}
-        Now, $ \beta=\alpha^6 $. Hence,
-        $ C(\beta)=C(\alpha^6)=\{\alpha^6,\alpha^{12},\alpha^9=\alpha^{24},
-            \alpha^3=\alpha^{18}\} $. Therefore,
-        \begin{align*}
-            m_\beta(y)
-             & =(y-\alpha^{6})(y-\alpha^{12})(y-\alpha^{9})(y-\alpha^3)                                 \\
-             & =[(y-\alpha^{6})(y-\alpha^{12})][(y-\alpha^{9})(y-\alpha^3)]                             \\
-             & =[y^2+(\alpha^6+\alpha^{12})y+\alpha^3][y^2+(\alpha^9+\alpha^3)y+\alpha^{12}]            \\
-             & =[y^2+\alpha^4 y+\alpha^3][y^2+\alpha y+\alpha^{12}]                                     \\
-             & =y^4+(\alpha+\alpha^4)y^3+(\alpha^{12}+\alpha^3+\alpha^5)y^2+(\alpha^{16}+\alpha^{4})y+1 \\
-             & =y^4+y^3+y^2+y+1\in \mathbb{Z}_2
-        \end{align*}
-        Note that the coefficients of $ m_\beta(y) $ are indeed in $ GF(2) $.
+    \textbf{Solution.} When doing computations by hand, it will help to
+    have a generator $ \alpha $ of $ GF(2^4)^* $, and a table
+    of powers of $ \alpha $. It turns out that $ \alpha=x $ is a generator
+    as the following table shows.
+    \begin{center}
+        \begin{multicols}{4}
+            $ \alpha^0=1 $                             \\
+            $ \alpha^1=\alpha $                        \\
+            $ \alpha^2=\alpha^2 $                      \\
+            $ \alpha^3=\alpha^3 $                      \\
+            $ \alpha^4=1+\alpha $                      \\
+            $ \alpha^5=\alpha+\alpha^2 $               \\
+            $ \alpha^6=\alpha^2+\alpha^3 $             \\
+            $ \alpha^7=1+\alpha+\alpha^3 $             \\
+            $ \alpha^8=1+\alpha^2 $                    \\
+            $ \alpha^9=\alpha+\alpha^3 $               \\
+            $ \alpha^{10}=1+\alpha+\alpha^2 $          \\
+            $ \alpha^{11}=\alpha+\alpha^2+\alpha^3 $   \\
+            $ \alpha^{12}=1+\alpha+\alpha^2+\alpha^3 $ \\
+            $ \alpha^{13}=1+\alpha^2+\alpha^3 $        \\
+            $ \alpha^{14}=1+\alpha^3 $                 \\
+            $ \alpha^{15}=1 $                          \\
+        \end{multicols}
+    \end{center}
+    Now, $ \beta=\alpha^6 $. Hence,
+    $ C(\beta)=C(\alpha^6)=\{\alpha^6,\alpha^{12},\alpha^9=\alpha^{24},
+        \alpha^3=\alpha^{18}\} $. Therefore,
+    \begin{align*}
+        m_\beta(y)
+         & =(y-\alpha^{6})(y-\alpha^{12})(y-\alpha^{9})(y-\alpha^3)                                 \\
+         & =[(y-\alpha^{6})(y-\alpha^{12})][(y-\alpha^{9})(y-\alpha^3)]                             \\
+         & =[y^2+(\alpha^6+\alpha^{12})y+\alpha^3][y^2+(\alpha^9+\alpha^3)y+\alpha^{12}]            \\
+         & =[y^2+\alpha^4 y+\alpha^3][y^2+\alpha y+\alpha^{12}]                                     \\
+         & =y^4+(\alpha+\alpha^4)y^3+(\alpha^{12}+\alpha^3+\alpha^5)y^2+(\alpha^{16}+\alpha^{4})y+1 \\
+         & =y^4+y^3+y^2+y+1\in \mathbb{Z}_2
+    \end{align*}
+    Note that the coefficients of $ m_\beta(y) $ are indeed in $ GF(2) $.
 
-        Note also that we simplified terms such as $ \alpha^3+\alpha^6 $ to $ \alpha^2 $
-        by using the table powers of $ \alpha $.
-    \end{example}
-\end{exbox}
+    Note also that we simplified terms such as $ \alpha^3+\alpha^6 $ to $ \alpha^2 $
+    by using the table powers of $ \alpha $.
+\end{Example}
+

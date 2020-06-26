@@ -23,12 +23,13 @@ Same as IMLD, except ties are broken arbitrarily.
 
 \textbf{Question:} Is IMLD a reasonable strategy?
 
-\begin{thmbox}
-    \begin{theorem}
-        IMLD selects the codeword $ \bm{c} $ that maximizes $ P(\bm{r}\mid \bm{c})$; that is,
-        it maximizes the probability $ \bm{r} $ is received, given $ \bm{c} $ was sent.
-    \end{theorem} \end{thmbox}
+\begin{Theorem}{}{}
+    IMLD selects the codeword $ \bm{c} $ that maximizes $ P(\bm{r}\mid \bm{c})$; that is,
+    it maximizes the probability $ \bm{r} $ is received, given $ \bm{c} $ was sent.
+\end{Theorem}
+
 We actually want to maximize $ P(\bm{c}\mid \bm{r}) $, but we will ignore that for now.
+
 \begin{proof}
     Suppose $ \bm{c}_1,\bm{c}_2\in C $ with $ d(\bm{c}_1,\bm{r})=d_1 $
     and $ d(\bm{c}_2,\bm{r})=d_2 $.
@@ -57,30 +58,30 @@ We actually want to maximize $ P(\bm{c}\mid \bm{r}) $, but we will ignore that f
 The ideal strategy is to correct $ \bm{r} $ to $ \bm{c}\in C $ such that
 $ P(\bm{c}\mid \bm{r}) $ is maximized. This is \textbf{Minimum Error Decoding (MED)}.
 
-\begin{exbox}
-    \begin{example}[IMLD != MED]
-        Let $ C=\{\underbrace{000}_{\bm{c}_1},\underbrace{111}_{\bm{c}_2}\},\,
-            P(\bm{c}_1)=0.1,\, P(\bm{c}_2)=0.9,\, p=\sfrac{1}{4} $, and $ \bm{r}=100 $.
 
-        \textbf{IMLD} $ \bm{r} $ is decoded to to $ \bm{c}_1 = 000 $.
+\begin{Example}{IMLD $ \neq $ MED}{}
+    Let $ C=\{\underbrace{000}_{\bm{c}_1},\underbrace{111}_{\bm{c}_2}\},\,
+        P(\bm{c}_1)=0.1,\, P(\bm{c}_2)=0.9,\, p=\sfrac{1}{4} $, and $ \bm{r}=100 $.
 
-        \textbf{MED}
-        \begin{align*}
-            P(\bm{c}_1\mid \bm{r})
-             & =\frac{P(\bm{r}\mid \bm{c}_1)P(\bm{c}_1)}{P(\bm{r})} \\
-             & =\frac{p(1-p)^2(0.1)}{P(\bm{r})}                     \\
-             & =\frac{0.0140625}{P(\bm{r})}
-        \end{align*}
-        \begin{align*}
-            P(\bm{c}_2\mid \bm{r})
-             & =\frac{P(\bm{r}\mid \bm{c}_2)P(\bm{c}_2)}{P(\bm{r})} \\
-             & =\frac{p^2(1-p)(0.9)}{P(\bm{r})}                     \\
-             & =\frac{0.0421875}{P(\bm{r})}
-        \end{align*}
-        Since $ P(\bm{c}_1\mid \bm{r})<P(\bm{c}_2\mid \bm{r}) $,
-        $ \bm{r} $ is decoded to $ \bm{c}_2=111 $.
-    \end{example}
-\end{exbox}
+    \textbf{IMLD} $ \bm{r} $ is decoded to to $ \bm{c}_1 = 000 $.
+
+    \textbf{MED}
+    \begin{align*}
+        P(\bm{c}_1\mid \bm{r})
+         & =\frac{P(\bm{r}\mid \bm{c}_1)P(\bm{c}_1)}{P(\bm{r})} \\
+         & =\frac{p(1-p)^2(0.1)}{P(\bm{r})}                     \\
+         & =\frac{0.0140625}{P(\bm{r})}
+    \end{align*}
+    \begin{align*}
+        P(\bm{c}_2\mid \bm{r})
+         & =\frac{P(\bm{r}\mid \bm{c}_2)P(\bm{c}_2)}{P(\bm{r})} \\
+         & =\frac{p^2(1-p)(0.9)}{P(\bm{r})}                     \\
+         & =\frac{0.0421875}{P(\bm{r})}
+    \end{align*}
+    Since $ P(\bm{c}_1\mid \bm{r})<P(\bm{c}_2\mid \bm{r}) $,
+    $ \bm{r} $ is decoded to $ \bm{c}_2=111 $.
+\end{Example}
+
 
 \textbf{Notes:}
 \begin{enumerate}[label=(\roman*)]

@@ -6,9 +6,9 @@
         \SetKwInOut{Input}{Input}
         \SetKwInOut{Output}{Output}
 
-        \Input{$ G=\left[ \;I_{12}\mid B\; \right]=(\bm{g}_1,\ldots ,\bm{g}_{24})^\top $,
-        and $ \tilde{G}=\left[ \;B\mid I_{12} \;\right]=(\tilde{\bm{g}}_1,\ldots, \tilde{\bm{g}}_{24})^\top $,
-        and received vector $ \bm{r}=(\bm{x},\bm{y}) $}
+        \Input{$ G=\spalignaugmat{I_{12} B}=(\bm{g}_1,\ldots ,\bm{g}_{24})^\top $,
+            and $ \tilde{G}=\spalignaugmat{B I_{12}}=(\tilde{\bm{g}}_1,\ldots, \tilde{\bm{g}}_{24})^\top $,
+            and received vector $ \bm{r}=(\bm{x},\bm{y}) $}
         \Output{Decoded vector}
         $ \bm{s}_1\gets G\bm{r}^\top $\;
         \If{$ \bm{s}_1=\bm{0} $} {
@@ -49,36 +49,35 @@
     \end{algorithm}
 \end{algbox}
 
-\begin{exbox}
-    \begin{example}[Decoding Algorithm for C24]
-        $ \; $
+\begin{Example}{Decoding Algorithm for C24}{}
+    \begin{enumerate}
+        \item Decode $ \bm{r}=(1000\; 1000\; 0000\; 1001\; 0001\; 1101) $.
 
-        (i) Decode $ \bm{r}=(1000\; 1000\; 0000\; 1001\; 0001\; 1101) $.
+              \textbf{Solution.} Compute $ \bm{s}_1=\spalignaugmat{I_{12} B}\bm{r}^\top=
+                  (0100\; 1000\; 0000) $. Since $ w(\bm{s}_1)\leqslant 3 $, we set
+              $ \bm{e}=(\bm{s}_1,0) $ and decode $ \bm{r} $ to
+              \[ \bm{c}=\bm{r}-\bm{e}=(1100\; 0000\; 0000\; 1001\; 0001\; 1101) \]
 
-        \textbf{Solution.} Compute $ \bm{s}_1=\left[ \; I_{12}\mid B \; \right]\bm{r}^\top=
-            (0100\; 1000\; 0000)^\top $. Since $ w(\bm{s}_1)\leqslant 3 $, we set
-        $ \bm{e}=(\bm{s}_1^\top,0) $ and decode $ \bm{r} $ to
-        \[ \bm{c}=\bm{r}-\bm{e}=(1100\; 0000\; 0000\; 1001\; 0001\; 1101) \]
+        \item Decode $ \bm{r}=(1000\; 0010\; 0000\; 1000\; 1101\; 0010) $.
 
-        (ii) Decode $ \bm{r}=(1000\; 0010\; 0000\; 1000\; 1101\; 0010) $.
+              \textbf{Solution.} Compute $ \bm{s}_1=\spalignaugmat{I_{12} B}\bm{r}^\top=
+                  (1011\; 1110\; 1011) $. Note that $ w(\bm{s}_1)>3 $. Comparing $ \bm{s}_1 $
+              with the rows of $ B $, we see that $ \bm{s}_1 $ differs in positions $ 6 $
+              and $ 7 $ from row $ 4 $ of $ B $. Hence we set $ \bm{e}=(0000\; 0110\; 0000\; 0001\; 0000\; 0000) $
+              and decode $ \bm{r} $ to
+              \[ \bm{c}=\bm{r}-\bm{e}=(1000\; 0100\; 0000\; 1001\; 1101\; 0010) \]
+    \end{enumerate}
 
-        \textbf{Solution.} Compute $ \bm{s}_1=\left[ \; I_{12}\mid B \; \right]\bm{r}^\top=
-            (1011\; 1110\; 1011)^\top $. Note that $ w(\bm{s}_1)>3 $. Comparing $ \bm{s}_1 $
-        with the rows of $ B $, we see that $ \bm{s}_1 $ differs in positions $ 6 $
-        and $ 7 $ from row $ 4 $ of $ B $. Hence we set $ \bm{e}=(0000\; 0110\; 0000\; 0001\; 0000\; 0000) $
-        and decode $ \bm{r} $ to
-        \[ \bm{c}=\bm{r}-\bm{e}=(1000\; 0100\; 0000\; 1001\; 1101\; 0010) \]
+    NOTE\@: In both examples we should check out answers by verifying that $ H\bm{c}^\top=\bm{0} $
+    (i.e., $ \bm{c} $ is indeed a codeword).
+\end{Example}
 
-        NOTE\@: In both examples we should check out answers by verifying that $ H\bm{c}^\top=\bm{0} $
-        (i.e., $ \bm{c} $ is indeed a codeword).
-    \end{example}
-\end{exbox}
 
 \textbf{Note:}
 \begin{enumerate}[label=(\arabic*)]
     \item If $ w(\bm{e})\leqslant 3 $, then the algorithm makes the correct decision.
     \item No storage is needed:
-          \[ \bm{s}_1=\left[ \; I_{12}\mid B\; \right]\bm{r}^\top=\left[ \; I_{12}\mid B\; \right]
+          \[ \bm{s}_1=\spalignaugmat{I_{12} B}\bm{r}^\top=\spalignaugmat{I_{12} B}
               \begin{bmatrix}
                   \bm{x} \\
                   \bm{y}

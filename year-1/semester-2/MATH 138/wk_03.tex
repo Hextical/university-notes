@@ -1,0 +1,353 @@
+\chapter{Techniques of Integration}
+\section{Trigonometric Substitution}
+Sometimes, changing $ x $ into a trigonometric function can
+simplify an integral!
+
+There are three situations where this is useful: say $ \alpha\in\mathbb{R} $.
+
+\begin{tabularx}{0.9\linewidth}{@{}YYY@{}}
+    If you see:        & Try substituting:   & Range for $ \theta $                                                         \\
+    \midrule
+    $ \sqrt{a^2-x^2} $ & $ x=a\sin(\theta) $ & $ \theta\in\interval[open]{-\sfrac{\pi}{2}}{\sfrac{\pi}{2}} $                \\
+    $ \sqrt{a^2+x^2} $ & $ x=a\tan(\theta) $ & $ \theta\in\interval[open]{-\sfrac{\pi}{2}}{\sfrac{\pi}{2}} $                \\
+    $ \sqrt{x^2-a^2} $ & $ x=a\sec(\theta) $ & $ \theta\in\interval{0}{\sfrac{\pi}{2}}\cup\interval{\pi}{\sfrac{3\pi}{2}} $
+\end{tabularx}
+
+\begin{Remark}{}{}
+    \begin{itemize}
+        \item The range for $ \theta $ is important to ensure that
+              $ \sin(\theta)/\tan(\theta)/\sec(\theta) $ are invertible (so we can
+              solve for $ \theta $ in terms of $ x $, if need be).
+        \item No, you don't need to state the range for $ \theta $ each time.
+        \item The integrand may need to be simplified before a trigonometric substitution
+              can be made.
+        \item Don't forget to change back to $ x $ in an indefinite integral.
+    \end{itemize}
+\end{Remark}
+
+\begin{Example}{}{}
+    \begin{align*}
+        \int \frac{1}{\sqrt{x^2+4}} \, d{x}
+         & =\int \frac{1}{\sqrt{4\tan^2(\theta)+4}}\cdot 2\sec^2(\theta) \, d{\theta}
+         &                                                                            & x=2\tan(\theta)\iff dx=2\sec^2(\theta)\,d\theta                               \\
+         & =\int \frac{\sec^2(\theta)}{\sqrt{\tan^2(\theta+1)}} \, d{\theta}                                                                                          \\
+         & =\int \frac{\sec^2(\theta)}{\sqrt{\sec^2(\theta)}} \, d{\theta}                                                                                            \\
+         & =\int \frac{\sec^2(\theta)}{\abs{\sec(\theta)}} \, d{\theta}                                                                                               \\
+         & =\int \sec(\theta)\, d{\theta}                                             &                                                 & \text{since }\sec(\theta)>0 \\
+         & =\ln\abs{\sec{\theta}+\tan(\theta)}+C                                      &                                                                               \\
+         & =\ln\abs*{\frac{\sqrt{x^2+y}}{2}+\frac{x}{2}}+C
+    \end{align*}
+
+    Where we substituted $ x=2\tan(\theta)\iff \tan(\theta)=\frac{x}{2}\implies
+        \sec(\theta)=\frac{\sqrt{x^2+4}}{2} $ in the last step.
+\end{Example}
+
+\begin{Remark}{}{}
+    When using a trigonometric substitution, the absolute values will \textbf{always}
+    go away due to the choice of $ \theta $'s!
+\end{Remark}
+
+\begin{Example}{}{}
+    \begin{enumerate}[label=(\roman*)]
+        \item \begin{align*}
+                  \int \frac{\sqrt{9-4x^2}}{x^2} \, d{x}
+                                                                                     & =2 \int \frac{\sqrt{\sfrac{9}{4}-x^2}}{x^2} \, d{x}                                                              \\
+                                                                                     & =2 \int \frac{\sqrt{\sfrac{9}{4}-\sfrac{9}{4}\sin^2(\theta)}\cdot
+                  \sfrac{3}{2}\cos(\theta)}{\sfrac{9}{4}\sin^2(\theta)} \, d{\theta} &                                                                                 & x=\sfrac{3}{2}\sin(\theta)\iff
+                  dx=\sfrac{3}{2}\cos(\theta)\,d\theta                                                                                                                                                  \\
+                                                                                     & =2\cdot \frac{3}{2} \cdot \frac{3}{2} \cdot \frac{4}{9}
+                  \int \frac{\sqrt{1-\sin^2(\theta)}\cos(\theta)}{\sin^2(\theta)} \, d{\theta}                                                                                                          \\
+                                                                                     & =2 \int \frac{\abs{\cos(\theta)}\cos(\theta)}{\sin^2(\theta)} \, d{\theta}                                       \\
+                                                                                     & =2 \int \frac{\cos^2(\theta)}{\sin^2(\theta)} \, d{\theta}                                                       \\
+                                                                                     & =2 \int \cot^2(\theta)\, d{\theta}                                                                               \\
+                                                                                     & =2[-\cot(\theta)-\theta]+C                                                                                       \\
+                                                                                     & =2\left[ -\frac{\sqrt{9-4x^2}}{2x}-\arcsin\left( \frac{2x}{3} \right) \right]+C
+              \end{align*}
+              Where we substituted $ x=\sfrac{3}{2}\iff \sfrac{2x}{3}=\sin(\theta)\implies
+                  \theta=\arcsin\left( \sfrac{2x}{3} \right) $ and $ \cot(\theta)=
+                  \sfrac{\sqrt{9-4x^2}}{2x} $ in the last step.
+        \item \begin{align*}
+                  \int \frac{1}{x^2\sqrt{x^2-4}} \, d{x}
+                   & =\int \frac{2\sec(\theta)\tan(\theta)}{4\sec^2(\theta)\sqrt{4\sec^2(\theta)-4}} \, d{\theta} &  & x=2\sec(\theta)\iff dx=2\sec(\theta)\tan(\theta)\,d\theta \\
+                   & =\frac{1}{4} \int \frac{\tan(\theta)}{\sec(\theta)\sqrt{\sec^2(\theta)-1}}\, d{\theta}                                                                      \\
+                   & =\frac{1}{4} \int \frac{\tan(\theta)}{\sec(\theta)\tan(\theta)} \, d{\theta}                                                                                \\
+                   & =\frac{1}{4} \int \frac{\tan(\theta)}{\sec(\theta)+\tan(\theta)} \, d{\theta}                                                                               \\
+                   & =\frac{1}{4} \int \frac{1}{\sec(\theta)} \, d{\theta}                                                                                                       \\
+                   & =\frac{1}{4} \int \cos(\theta)\, d{\theta}                                                                                                                  \\
+                   & =\frac{\sin(\theta)}{4} +C                                                                                                                                  \\
+                   & =\frac{\sqrt{x^2-4}}{4x} +C
+              \end{align*}
+              Where we substituted $ x=2\sec(\theta)\implies \sin(\theta)=\frac{x^2-4}{x} $
+              in the last step.
+        \item \begin{align*}
+                  \int x\sqrt{x^2-9}\, d{x}
+                   & =\int \frac{x\sqrt{u}}{2x} \, d{u}                &  & u=x^2-9\iff du=2x\,dx \\
+                   & =\frac{1}{2} \int \sqrt{u}\, d{u}                                            \\
+                   & =\frac{1}{2} \cdot \frac{2}{3} u^{\sfrac{3}{2}}+C                            \\
+                   & =\frac{1}{3}\left( x^2-9 \right)^{\sfrac{3}{2}}+C
+              \end{align*}
+        \item \begin{align*}
+                  \int_{0}^{3} \frac{x}{(1+x^2)^2} \, d{x}
+                   & =\int_{0}^{\sfrac{\pi}{3}}
+                  \frac{\tan(\theta)\sec^2(\theta)}{\left[ 1+\tan^2(\theta) \right]^2} \, d{\theta}
+                   &                                                                                              & x=\tan(\theta)\iff dx=\sec^2(\theta)\,d\theta                                               \\
+                   & =\int_{0}^{\sfrac{\pi}{3}} \frac{\tan(\theta)\sec^2(\theta)}{\sec^4(\theta)} \, d{\theta}                                                                                                  \\
+                   & =\int_{0}^{\sfrac{\pi}{3}} \frac{\tan(\theta)}{\sec^2(\theta)} \, d{\theta}                                                                                                                \\
+                   & =\int_{0}^{\sfrac{\pi}{3}} \frac{\sin(\theta)}{\cos(\theta)}\cdot \cos^2(\theta)\, d{\theta}                                                                                               \\
+                   & =\int_{0}^{\sfrac{\pi}{3}}\sin(\theta)\cos(\theta)\, d{\theta}                               &                                               & u=\sin(\theta)\iff du=\cos(\theta)\,d\theta \\
+                   & =\int_{0}^{\sqrt{\sfrac{3}{2}}} u\, d{u}                                                                                                                                                   \\
+                   & =\left[\frac{u^2}{2} \right]^{\sfrac{3}{2}}_0                                                                                                                                              \\
+                   & =\frac{3}{4}
+              \end{align*}
+    \end{enumerate}
+\end{Example}
+Exercise: $ 3-2x-x^2=4-(x+1)^2 $.
+\begin{Example}{}{}
+    Substitution: $ x+1=2\sin(\theta)\iff dx=2\cos(\theta)\,d\theta $.
+    \begin{align*}
+        \int \frac{x}{(3-2x-x^2)^{\sfrac{3}{2}}} \, d{x}
+         & =\int \frac{x}{\left[ 4-(x+1)^2 \right]^{\sfrac{3}{2}}} \, d{x}                                               \\
+         & =\int \frac{[2\sin(\theta)-1]\cdot 2\cos(\theta)}{\left[4-4\sin^2(\theta)\right]^{\sfrac{3}{2}}} \, d{\theta} \\
+         & =\frac{1}{4} \int \frac{[2\sin(\theta)-1]\cdot \cos(\theta)}{\cos^2(\theta)^{\sfrac{3}{2}}} \, d{\theta}      \\
+         & =\frac{1}{4} \int \frac{2\sin(\theta)}{\cos^2(\theta)}-\frac{1}{\cos^2(\theta)} \, d{\theta}                  \\
+         & =\frac{1}{4} \int 2\tan(\theta)\sec(\theta)-\sec^2(\theta)\, d{\theta}                                        \\
+         & =\frac{1}{4} \left[ 2\sec(\theta)-\tan(\theta) \right]+C                                                      \\
+         & =\frac{1}{4} \left[ \frac{4}{\sqrt{4-(x+1)^2}}-\frac{(x+1)}{\sqrt{4-(x+1)^2}} \right]+C
+    \end{align*}
+    Where we substituted $ x+1=2\sin(\theta)\iff \sin(\theta)=\sfrac{(x+1)}{2}\implies
+        \sec(\theta)=\sfrac{2}{\sqrt{4-(x+1)^2}} $ and $ \tan(\theta)=\sfrac{(x+1)}{\sqrt{4-(x+1)^2}} $
+    in the last step.
+\end{Example}
+
+\section{Integration by Parts}
+Let $ u $ and $ v $ be functions of $ x $. From the product rule, we know
+\[ \frac{d}{dx}[uv]=u \frac{dv}{dx}+v \frac{du}{dx} \]
+Integrating both sides gives:
+\[ \int \frac{d}{dx} [uv]\, d{x}=\int u \frac{dv}{dx} \, d{x}+
+    \int v \frac{du}{dx} \, d{x}   \]
+Omit $ dx $'s to make
+\[ uv=\int u\, {dv} -\int v\, d{u} \]
+So, we get
+\[ \int u\, d{v} =uv-\int v\, d{u} \]
+Strategy: When integrating the product of two functions, pick one to
+integrate (call it $ dv $), and one to differentiate (call it $ u $).
+\begin{itemize}
+    \item Pick $ dv $ to be the most difficult function you know how to integrate.
+    \item Pick $ u $ so that it gets simpler when differentiated.
+\end{itemize}
+Or, use ILATE\@: Pick $ u= $ the first function in the list:
+\begin{itemize}
+    \item I\@: Inverse trigonometric functions
+    \item L\@: Logarithmic functions
+    \item A\@: Algebraic functions (powers of $ x $)
+    \item T\@: Trigonometric functions
+    \item E\@: Exponential functions
+\end{itemize}
+
+\begin{Example}{}{}
+    \begin{enumerate}[label=(\roman*)]
+        \item Let $ u=\ln(x) $ and $ dv=x^2\,dx $, so we have
+              $ du=\sfrac{1}{x} \,dx $ and $ v=\sfrac{x^3}{3} $.
+              \begin{align*}
+                  \int x^2\ln(x)\, d{x}
+                   & =\frac{x^3}{3} \ln(x)-\int \frac{x^3}{3} \cdot \frac{1}{x} \, d{x} \\
+                   & =\frac{x^3}{3} \ln(x)-\int \frac{x^2}{3}\, d{x}                    \\
+                   & =\frac{x^3}{3} \ln(x)-\frac{x^3}{9} +C
+              \end{align*}
+        \item Let $ u=x $ and $ dv=e^x\,dx $, so we have $ du=dx $ and $ v=e^x $.
+              \begin{align*}
+                  \int x e^x\, d{x}
+                   & =x e^x-\int e^x\, d{x} \\
+                   & =x e^x-e^x+C
+              \end{align*}
+        \item Let $ u=x $ and $ du=dx $, so we have $ du=\cos(x)\,dx $ and $ v=\sin(x) $.
+              \begin{align*}
+                  \int_{0}^{\pi} x\cos(x)\, d{x}
+                   & =\bigl[x\sin(x)\bigr]^{\pi}_{0}-\int_{0}^{\pi} \sin(x)\, d{x} \\
+                   & =\bigl[\cos(x)\bigr]^{\pi}_{0}                                \\
+                   & =\cos(\pi)-\cos(0)                                            \\
+                   & =-1-1                                                         \\
+                   & =-2
+              \end{align*}
+        \item Sometimes, we don't want to integrate any part! Let $ u=\ln(x) $
+              and $ dv=dx $, so we have $ du=\sfrac{1}{x}\,dx $ and $ v=x $.
+              \begin{align*}
+                  \int \ln(x)\, d{x}
+                   & =x\ln(x)-\int \frac{x}{x} \, d{x} \\
+                   & =x\ln(x)-x+C
+              \end{align*}
+        \item We may need to apply it more than once! Let $ u=x^2 $ and $ dv=\cos(x)\,dx $,
+              so we have $ du=2x\,dx $ and $ v=\sin(x) $.
+              \begin{align*}
+                  \int x^2\cos(x)\, d{x}
+                   & =x^2\sin(x)-\int 2x\sin(x)\, d{x} \\
+              \end{align*}
+              Let $ u=2x $ and $ dv=\sin(x)\,dx $, so we have $ du=2\,dx $ and $ v=-\cos(x) $.
+              \begin{align*}
+                   & =x^2\sin(x)-\left[-2x\cos(x)-\int -2\cos(x)\, d{x} \right] \\
+                   & =x^2\sin(x)+2x\cos(x)-\int 2\cos(x)\, d{x}                 \\
+                   & =x^2\sin(x)+2x\cos(x)-2\sin(x)+C
+              \end{align*}
+        \item And sometimes, we don't integrate at all! Let $ u=\cos(x) $
+              and $ dv=e^x\,dx $, so we have $ du=-\sin(x)\,dx $ and $ v=e^x $.
+              \begin{align*}
+                  I & =\int e^x\cos(x)\, d{x}            \\
+                    & =e^x\cos(x)+\int e^x\sin(x)\, d{x}
+              \end{align*}
+              Let $ u=\sin(x) $ and $ dv=e^x\,dx $, so we have $ du=\cos(x)\,dx $ and $ v=e^x $.
+              \begin{align*}
+                   & =e^x\cos(x)+e^x\sin(x)-\int e^x\cos(x)\, d{x} \\
+                   & =e^x\cos(x)+e^x\sin(x)-I
+              \end{align*}
+              So, $ 2I=e^x\cos(x)+e^x\sin(X) $, therefore
+              \[ I=\frac{e^x\cos(x)+e^x\sin(x)}{2} +C \]
+              Neat!
+        \item Sometimes, a combination of methods is needed.
+              \begin{align*}
+                  \int x^3\cos(x^2)\, d{x}
+                   & =\int x^2\cos(u)\frac{1}{2x} \, d{u} &  & u=x^2\iff du=2x\,dx \\
+                   & =\frac{1}{2} \int x^2\cos(u)\, d{u}                           \\
+                   & =\frac{1}{2} \int u\cos(u)\, d{u}                             \\
+              \end{align*}
+              Now, do integration by parts with some unfortunate (but fine) letter
+              choices! Let $ u=u $ and $ dv=\cos(u)\,du $, so we have $ du=du $
+              and $ v=\sin(u) $.
+              \begin{align*}
+                   & =\frac{1}{2} u\sin(u)-\frac{1}{2} \int \sin(u)\, d{u} \\
+                   & =\frac{1}{2} u\sin(u)+\frac{1}{2} \cos(u)+C           \\
+                   & =\frac{1}{2} x^2\sin(x^2)+\frac{1}{2} \cos(x^2)+C
+              \end{align*}
+    \end{enumerate}
+\end{Example}
+
+\section{Partial Fractions}
+Partial fractions are useful for evaluating $ \int \frac{p(x)}{q(x)} \, d{x} $
+where $ p $ and $ q $ are polynomials.
+
+Overall idea: break a difficult integrand into many easy ones!
+\begin{Remark}{}{}
+    We will assume the degree of the denominator is \textbf{larger} than the
+    degree of the numerator. If not, use long division first!
+\end{Remark}
+
+\begin{table}[!htbp]
+    \caption{How to Break up Fractions: The Rules}
+    \begin{tabularx}{\linewidth}{@{}YY@{}}
+        \toprule
+        If the denominator has:                      & Then we write:                      \\
+        \midrule
+        (I) Distinct linear factors                  & One constant per factor             \\
+        (II) A repeated linear factor                & One constant per power              \\
+        (III) Distinct irreducible quadratic factors & One \textbf{linear term} per factor \\
+        (IV) Repeated irreducible quadratic factors  & One linear term per power
+    \end{tabularx}
+\end{table}
+
+\begin{Example}{Decomposition Practice}{}
+    \begin{enumerate}[label=(\roman*)]
+        \item \[ \frac{1}{(x+1)(x+2)}=\frac{A}{x+1}+\frac{B}{x+2} \]
+        \item \[ \frac{1}{x^2(x-1)}=\frac{A}{x} +\frac{B}{x^2}+\frac{C}{x-1} \]
+        \item \[ \frac{x^3+x+7}{x^2(x+1)^2(x^2+1)}=\frac{A}{x} +\frac{B}{x^2}+\frac{C}{x+1}
+                  +\frac{D}{(x+1)^2}+\frac{Ex+F}{x^2+1} \]
+        \item \[ \frac{x^2+7}{(x-1)^3(x^2+3)^2}
+                  =\frac{A}{x-1} +\frac{B}{(x-1)^2}+\frac{C}{(x-1)^3}+\frac{Dx+E}{x^2+3}
+                  +\frac{Fx+G}{(x^2+3)^3} \]
+        \item \[ \frac{x^{10}+5}{(x+1)^3(x^2+1)}=\cdots\text{use long division first, not partial
+                      fractions} \]
+    \end{enumerate}
+\end{Example}
+
+\begin{Remark}{What integrals could we be left with after partial fractions?}{}
+    \begin{enumerate}[label=C\arabic*]
+        \item \[ \int \frac{A}{ax+b} \, d{x} =\frac{A}{a}\ln\abs{ax+b}+C \]
+        \item \[ \int \frac{A}{(ax+b)^n} \, d{x} =\frac{A}{a}\cdot \frac{(ax+b)^{-n+1}}{-n+1} \]
+              where $ n\neq 0,1 $.
+        \item \[ \frac{Ax+B}{ax^2+bx+c} =\int \frac{Ax}{ax^2+bx+c} +\frac{B}{ax^2+bx+c} \, d{x}  \]
+        \item \[ \frac{Ax+B}{\left( ax^2+bx+c \right)^n} \]
+    \end{enumerate}
+    Note for C3 and C4, you may want to complete the square and use a trigonometric
+    substitution. A regular substitution may also work.
+\end{Remark}
+
+\begin{Example}{Partial Fractions (Easy)}{}
+    Using partial fractions, compute
+    \[ \int \frac{x}{x^2-4x-5} \, d{x} \]
+    First, we break it up with partial fractions.
+    \[ \frac{x}{x^2-4x-5} =\frac{x}{(x+1)(x-5)}=\frac{A}{x+1} +\frac{B}{x-5} \]
+    Multiply both sides by the LHS denominator to get the following.
+    \begin{align*}
+        x & =(x+1)(x-5)\left[ \frac{A}{x+1} +\frac{B}{x-5}  \right] \\
+        x & =A(x-5)+B(x+1)
+    \end{align*}
+    There are two ways we can solve for $ A $ and $ B $.
+    \begin{enumerate}[label=(\roman*)]
+        \item Linear Algebra!
+              \[ x=Ax-5A+Bx+B=(A+B)x+(-5A+B) \]
+              Therefore, $ A+B = 1 $ and $ B-5A=0 $. Thus, $ A=\sfrac{1}{6} $
+              and $ B=\sfrac{5}{6} $.
+        \item Substitute in ``nice'' values for $ x $.
+              \begin{align*}
+                  x & =5\colon \quad 5   =A(0)+B(6)  \\
+                  x & =1\colon \quad -1  =A(-6)+B(0)
+              \end{align*}
+              Thus, $ A=\sfrac{1}{6} $ and $ B=\sfrac{5}{6} $.
+    \end{enumerate}
+    Either way, we get
+    \[ \frac{x}{(x+1)(x-5)}=\frac{\sfrac{1}{6}}{x+1}+\frac{\sfrac{5}{6}}{x-5}  \]
+    So,
+    \begin{align*}
+        \int \frac{x}{x^2-4x-5}\, d{x}
+         & =\frac{1}{6} \int \frac{1}{x+1}\, d{x} +\frac{5}{6} \int \frac{1}{x-5} \, d{x} \\
+         & =\frac{1}{6} \ln\abs{x+1}+\frac{5}{6} \ln\abs{x-5}+C
+    \end{align*}
+\end{Example}
+
+\begin{Example}{Partial Fractions (Slightly Difficult)}{}
+    \[ \int \frac{x+3}{x^4+9x^2} \, d{x}  \]
+    First, we break up with partial fractions.
+    \[ \frac{x+3}{x^4+9x^2} =\frac{x+3}{x^2(x^2+9)}=\frac{A}{x}+\frac{B}{x^2} +\frac{Cx+D}{x^2+9}  \]
+    Multiply both sides by $ x^2(x^2+9) $ to get the following.
+    \begin{align*}
+        x+3 & =x(x^2+9)A+(x^2+9)B+x^2(Cx+D) \\
+        x+3 & =Ax^3+9Ax+Bx^2+9B+Cx^3+Dx^2   \\
+        x+3 & =(A+C)x^3+(B+D)x^2+9Ax+9B
+    \end{align*}
+    Therefore, $ A+C=0 $, $ B+D=0 $, $ 9A=1 $, and $ 9B=3 $. Thus,
+    $ A=\sfrac{1}{9} $, $ B=\sfrac{1}{3} $, $ C=-\sfrac{1}{9} $,
+    and $ D=-\sfrac{1}{3} $. So,
+    \begin{align*}
+        \int \frac{x+3}{x^4+9x^2} \, d{x}
+         & =\frac{1}{9} \int \frac{1}{x} \, d{x} +\frac{1}{3} \int \frac{1}{x^2} \, d{x}
+        -\frac{1}{9} \int \frac{x}{x^2+9} \, d{x} -\frac{1}{3} \int \frac{1}{x^2+9} \, d{x} \\
+         & =\frac{1}{9}\ln\abs{x}-\frac{1}{3x}-\frac{1}{9} \int \frac{x}{x^2+9}\, d{x}
+        -\frac{1}{3} \left[ \frac{1}{3}\arctan\left( \frac{x}{3}  \right) \right]           \\
+    \end{align*}
+    where we computed $ \int \frac{1}{x^3+3}\,d{x} $ with \cref{remark:arctan_identity}.
+    For $ \int \frac{x}{x^2+9} \, d{x}  $, use a substitution: $ u=x^2+9\iff du=2x\,dx $.
+    \begin{align*}
+        \int \frac{x}{x^2+9} \, d{x}
+         & =\int \frac{x}{u} \frac{1}{2x} \, d{u} \\
+         & =\frac{1}{2} \int \frac{1}{u} \, d{u}  \\
+         & =\frac{\ln\abs{u}}{2} +C               \\
+         & =\frac{\ln\abs*{x^2+9}}{2} +C
+    \end{align*}
+    So, the final answer is:
+    \[ \frac{1}{9}\ln\abs{x}-\frac{1}{3x}-\frac{1}{18}\ln\abs*{x^2+9}
+        -\frac{1}{9} \arctan\left( \frac{x}{3}  \right)+C \]
+\end{Example}
+
+\begin{Remark}{Useful Identity}{arctan_identity}
+    \[ \int \frac{1}{x^2+k^2} \, d{x}=\frac{1}{k} \arctan\left( \frac{x}{k}  \right)+C  \]
+\end{Remark}
+
+\begin{Example}{Partial Fractions (Long Division)}{}
+    \[ \int \frac{x^3-2x}{x^2+3x+2} \, d{x}  \]
+    Using long division, we get
+    \[ \int x-3+\frac{5x+6}{x^2+3x+2} \, d{x}  \]
+    Now,
+    \[ \frac{5x+6}{x^2+3x+2} =\frac{5x+6}{(x+1)(x+2)} =\frac{A}{x+1} +\frac{B}{x+2} \]
+    Therefore, $ 5x+6=A(x+2)+B(x+1) $. Substituting $ x=-2 $, we get $ B=-4 $.
+    Substituting $ x=-1 $, we get $ A=1 $. Thus, the integral is:
+    \[ \int x-3+\frac{1}{x+1} +\frac{4}{x+2} \, d{x} =\frac{x^2}{2} -3x+\ln\abs{x+1}
+        +4\ln\abs{x+2}+C \]
+\end{Example}

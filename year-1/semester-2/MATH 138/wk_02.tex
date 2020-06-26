@@ -1,0 +1,373 @@
+\section{The Fundamental Theorem of Calculus Part 1}
+The FTC is, essentially, a simple derivative rule. But
+its consequences are very valuable. The reason is that it
+provides the link between integral calculus and
+differential calculus!
+
+We start with integral functions: let $ f $ be
+continuous on $ \interval{a}{b} $.
+
+Define
+\[ G(x)=\int_{a}^{x} f(t)\, d{t}  \]
+for $ x\in\interval{a}{b} $.
+
+What is $ G(x) $? it's the function that returns the signed
+area under $ f $ from $ a $ to $ x $.
+
+\begin{Example}{}{}
+    $ f(x)=x $ on $ \interval{0}{5} $.
+    \begin{align*}
+        G(x)
+         & =\int_{0}^{x} t\, d{t}                   \\
+         & =\frac{1}{2}(\text{base})(\text{height}) \\
+         & =\frac{1}{2}(x)(x)                       \\
+         & =\frac{x^2}{2}
+    \end{align*}
+    Wait a minute! $ G^\prime(x)=x=f(x) $! Is this always true?!
+\end{Example}
+
+\begin{Theorem}{Fundamental Theorem of Calculus I (FTC I)}{FTC_I}
+    If $ f $ is continuous on an open interval $ I $ containing
+    $ x=a $, and if
+    \[ G(x)=\int_{a}^{x} f(t)\, d{t}  \]
+    Then $ G $ is differentiable for all $ x\in I $ and
+    $ G^\prime(x)=f(x) $; that is,
+    \[ \frac{d}{dx}\int_{a}^{x} f(t)\, d{t}=f(x) \]
+\end{Theorem}
+
+\begin{Proof}{\ref{thm:FTC_I}}{}
+    Let $ f $ be continuous on $ I $, $ G(x)=\int_{a}^{x} f(t)\, d{t} $,
+    and fix $ x_0\in I $.
+
+    Let $ \varepsilon>0 $ be given. Since $ f $ is continuous at $ x_0 $,
+    there exists a $ \delta>0 $ such that if $ 0<\abs{c-x_0}<\delta $, then
+    \[ \abs{f(c)-f(x_0)}<\varepsilon \]
+    Let $ 0<\abs{x-x_0}<\delta $. Then,
+    \begin{align*}
+        \frac{G(x)-G(x_0)}{x-x_0}
+         & =\frac{\int_{a}^{x} f(t)\, d{t} -\int_{a}^{x_0} f(t)\, d{t} }
+        {x-x_0}                                                           \\
+         & =\frac{\int_{a}^{x_0} f(t)\, d{t} +\int_{x_0}^{x} f(t)\, d{t}-
+        \int_{a}^{x_0} f(t)\, d{t} }{x-x_0}                               \\
+         & =\frac{1}{x-x_0} \int_{x_0}^{x} f(t)\, d{t}
+    \end{align*}
+    The AVT says there exists $ c $ between $ x $ and $ x_0 $ such that
+    \[ f(c)=\frac{1}{x-x_0} \int_{x_0}^{x} f(t)\, d{t}  \]
+    Since $ 0<\abs{x-x_0}<\delta $, we get $ 0<\abs{c-x_0}<\delta $ too,
+    so
+    \[
+        \abs*{\frac{G(x)-G(x_0)}{x-x_0}-f(x_0)}=\abs{f(c)-f(x_0)}<\varepsilon
+    \]
+    This says
+    \[ G^\prime(x_0)=\lim\limits_{{x} \to {x_0}} \frac{G(x)-G(x_0)}{x-x_0}=f(x_0) \]
+\end{Proof}
+
+\begin{Example}{}{}
+    \[ \frac{d}{dx}\int_{5}^{x} \sin(t^2)\, d{t}
+        =\sin(x^2) \]
+    since $ f(t)=\sin(t^2) $ is continuous by FTC I.
+\end{Example}
+
+\begin{Example}{}{}
+    If
+    \[ G(x)=\frac{d}{dx}\int_{5}^{x^2} \sin(t^2)\, d{t} \]
+    then
+    \[ \int_{5}^{x^2} \sin(t^2)\, d{t}=G(x^2) \]
+    so
+    \begin{align*}
+        \frac{d}{dx} \int_{5}^{x^2} \sin(t^2)\, d{t}
+         & =\frac{d}{dx} G(x^2)   \\
+         & =G^\prime(x^2)\cdot 2x \\
+         & =f(x^2)\cdot 2x        \\
+         & =\sin(x^4)\cdot 2x     \\
+    \end{align*}
+\end{Example}
+
+We will see a more general formula next week!
+
+\section{The Fundamental Theorem of Calculus Part 2}
+It seems like integrating is the opposite operation to
+differentiation, and it is! We can use antiderivatives
+to evaluate integrals as we will see. But first, let's
+quickly recap what we know about antidifferentiation.
+
+\begin{Definition}{Anti-derivative}{}
+    Given a function $ f $, an \textbf{antiderivative} of
+    $ f $ is a function $ F $ such that $ F^\prime(x)=f(x) $.
+\end{Definition}
+
+\begin{Remark}{}{}
+    Antiderivatives are not unique!
+\end{Remark}
+
+\begin{Example}{}{}
+    For $ f(x)=2x $,
+    \begin{itemize}
+        \item $ F_1(x)=x^2 $
+        \item $ F_2(x)=x^2+4 $
+        \item $ F_3(x)=x^2-\pi $
+    \end{itemize}
+    are all antiderivatives of $ f(x) $.
+\end{Example}
+
+\begin{Definition}{Indefinite integral}{}
+    The collection of all antiderivatives of $ f(x) $ is denoted
+    by $ \int f(x)\, d{x} $ and
+    \[ \int f(x)\, d{x} =F(x)+C \]
+    where $ C\in\mathbb{R} $ and $ F $ is any antiderivative.
+    This is called the \textbf{indefinite integral}.
+\end{Definition}
+
+\begin{Remark}{}{}
+    By the antiderivative theorem, we know any two antiderivatives
+    of $ f $ differ by a constant.
+\end{Remark}
+
+Here are a bunch of antiderivatives:
+\begin{itemize}
+    \item $ \int x^n\, d{x}=\frac{x^{n+1}}{n+1}+C $ if $ n\neq -1 $
+    \item $ \int \frac{1}{x}\, d{x}=\ln\abs{x}+C $
+    \item $ \int e^x\,d{x}=e^x+C $
+    \item $ \int \sin(x)\,d{x}=-\cos(x)+C $
+    \item $ \int \cos(x)\,d{x}=\sin(x)+C $
+    \item $ \int \sec^2(x)\,d{x}=\tan(x)+C $
+    \item $ \int \frac{1}{1+x^2}\,d{x}=\arctan{x}+C $
+    \item $ \int \frac{1}{\sqrt{1-x^2}}\,d{x}=\arcsin(x)+C $
+    \item $ \int -\frac{1}{\sqrt{1-x^2}}\, d{x}=\arccos(x)+C $
+    \item $ \int \sec(x)\tan(x)\,d{x}=\sec(x)+C $
+    \item $ \int a^x\,d{x}=\frac{a^x}{\ln(a)}+C $ for $ a>0 $
+\end{itemize}
+
+By FTC I, we know every continuous function has an antiderivative,
+but how can we use them to actually evaluate definite integrals?
+Well\textellipsis{}
+
+\begin{Theorem}{Fundamental Theorem of Calculus II (FTC II)}{FTC_II}
+    If $ f $ is continuous on $ \interval{a}{b} $ and $ F $
+    is any antiderivative of $ f $, then
+    \[ \int_{a}^{b} f(x)\, d{x} =F(b)-F(a)
+        =\bigl[F(x)\bigr]_{a}^b \]
+\end{Theorem}
+
+\begin{Proof}{\ref{thm:FTC_II}}{}
+    Let $ F $ be any antiderivative of $ f $ and define
+    \[ G(x)=\int_{a}^{x} f(t)\, d{t} \]
+    By FTC I, we know $ G^\prime(x)=f(x) $ as well, so by the
+    antiderivative theorem, $ G(x)=F(x)+C $ for some $ C\in\mathbb{R} $.
+
+    But then,
+    \[ G(b)-G(a)=[F(b)+C]-[F(a)+C]=F(b)-F(a) \]
+    Also,
+    \begin{align*}
+        \int_{a}^{b} f(t)\, d{t}
+         & =G(b)                                    \\
+         & =G(b)-G(a) & \quad & \text{since }G(a)=0 \\
+         & =F(b)-F(a)
+    \end{align*}
+\end{Proof}
+
+Now, we can evaluate definite integrals without Riemann Sums!
+
+\begin{Example}{}{}
+    \begin{enumerate}[label=(\roman*)]
+        \item \begin{align*}
+                  \int_{1}^{3} x^2+x\, d{x}
+                   & =\left[\frac{x^3}{3}+\frac{x^2}{2}\right]_{1}^3                                      \\
+                   & = \left( \frac{3^3}{3} +\frac{3^2}{2} \right)-\left( \frac{1}{3}+\frac{1}{2} \right) \\
+                   & =\frac{27}{2} -\frac{5}{6}                                                           \\
+                   & =\frac{38}{3}
+              \end{align*}
+        \item \begin{align*}
+                  \int_{0}^{2\pi} \sin(x)\, d{x}
+                   & =\bigl[-\cos(x)\bigr] \\
+                   & =-\cos(2\pi)+\cos(0)  \\
+                   & =1+1                  \\
+                   & =0
+              \end{align*}
+              This makes sense since the signed area is zero.
+        \item \begin{align*}
+                  \int_{2}^{8} \frac{x^2+2x+1}{x} \, d{x}
+                   & =\int_{2}^{8} x+2+\frac{1}{x}\, d{x}              \\
+                   & =\left[\frac{x^2}{2} +2x+\ln\abs{x} \right]_{2}^8 \\
+                   & =[32+16+\ln(8)]-[2+4+\ln(2)]                      \\
+                   & =42+\ln(8)-\ln(2)                                 \\
+                   & =42+\ln(4)
+              \end{align*}
+    \end{enumerate}
+\end{Example}
+
+This is fantastic! We are only limited by our ability to find antiderivatives!
+As we will see, finding antiderivatives is hard in general, but in the next couple of
+weeks we will learn a few techniques.
+
+But first, let's look at the extended version of FTC I\@:
+
+\begin{Corollary}{Extended Version of the Fundamental Theorem of Calculus}{ftc_ext}
+    If $ f $ is continuous, and $ g, h $ are both differentiable, then
+    \[ \frac{d}{dx}\Bigr[\int_{g(x)}^{h(x)} f(t)\, d{t} \Bigl]
+        =f(h(x))h^\prime(x)-f(g(x))g^\prime(x) \]
+    (also called the Leibniz Formula).
+\end{Corollary}
+
+\begin{Proof}{\ref{cor:ftc_ext}}{}
+    Let $ F $ be an antiderivative of $ f $, then by FTC II\@:
+    \[ \int_{g(x)}^{h(x)} f(t)\, d{t}=F(h(x))-F(g(x)) \]
+    for each $ x $. So,
+    \begin{align*}
+        \frac{d}{dx}\Bigr[\int_{g(x)}^{h(x)} f(t)\, d{t} \Bigl]
+         & =\frac{d}{dx}\bigl[F(h(x))-F(g(x))\bigr]             \\
+         & =F^\prime(h(x))h^\prime(x)-F^\prime(g(x))g^\prime(x) \\
+         & =f(h(x))h^\prime(x)-f(g(x))g^\prime(x)
+    \end{align*}
+\end{Proof}
+
+\begin{Example}{}{}
+    \[ \frac{d}{dx}\int_{5x}^{\ln(x)} \cos(t^2-3t)\, d{t}
+        =\cos\bigl[\ln(x)^2-3\ln(x)\bigr]\cdot\frac{1}{x}-\cos(25x^2-15x)\cdot 5 \]
+\end{Example}
+
+\section{Change of Variable}
+The first integration technique we will examine is the reverse chain rule:
+Change of Variable, also called Substitution.
+
+The rule is:
+\[ \int f(g(x))g^\prime(x)\, d{x}=\int f(u)\, d{u}  \]
+that is, we ``substitute'' $ u=g(x) $.
+
+\begin{Proof}{Change of Variable (Sketch)}
+    Let $ f $ and $ g $ be functions and let $ h $ be an antiderivative of $ f $,
+    so $ h^\prime(x)=f(x) $.
+
+    Let $ H(x)=h(g(x)) $, so
+    \[ H^\prime(x)=h^\prime(g(x))g^\prime(x)=f(g(x))g^\prime(x) \]
+    so $ h(g(x)) $ is an antiderivative of $ f(g(x))g^\prime(x) $.
+
+    Therefore,
+    \begin{align*}
+        \int f(g(x))g^\prime(x)d{x}\,
+         & =h(g(x))+C        &  & \text{for some }c\in\mathbb{R} \\
+         & =h(u)+C           &  & \text{if }u=g(x)               \\
+         & =\int f(u)\, d{u} &  & \text{if }u=g(x)
+    \end{align*}
+    So, if $ u=g(x) $, then $ du=g^\prime(x)\,dx $.
+\end{Proof}
+
+General strategy: let $ u=\ldots $, $ du=\ldots\,d(x) $, then solve for
+$ dx $, substitute in $ u $ and $ dx $, try to transform the integral into one
+in terms of only $ u $.
+
+\textbf{Good choices for $ \bm{u} $}:
+\begin{itemize}
+    \item $ u= $ a function whose derivative is present.
+    \item $ u= $ base of an ugly power
+    \item $ u= $ function inside another function (that is, inside $ \sin/\cos/\ln $,
+          or in the exponent of $ e $).
+\end{itemize}
+
+\begin{Example}{}{}
+    \begin{enumerate}[label=(\roman*)]
+        \item \begin{align*}
+                  \int \frac{\ln(x)}{x} \, d{x}
+                   & =\int \frac{u}{x} x\, d{u} &  & u=\ln(x)\iff du=\frac{1}{x}\, dx \\
+                   & =\int u\, d{u}                                                   \\
+                   & =\frac{u^2}{2} +C                                                \\
+                   & =\frac{[\ln(x)]^2}{2} +C
+              \end{align*}
+        \item \begin{align*}
+                  \int \frac{\cos(\sqrt{x})}{\sqrt{x}} \, d{x}
+                   & = \int \frac{\cos(u)}{u}2u \, d{u} &  & u=\sqrt{x}\iff du=\frac{1}{2\sqrt{x}}\, dx \\
+                   & =2 \int \cos(u)\, d{u}                                                             \\
+                   & =2\sin(u)+C                                                                        \\
+                   & =2\sin(\sqrt{x})+C
+              \end{align*}
+        \item Don't forget to eliminate all of the $ x $'s!
+              \begin{align*}
+                  \int \frac{x^2}{\sqrt{x+1}} \, d{x}
+                   & =\int \frac{(u-1)^2}{\sqrt{u}} \, d{u}                                                     &  & u=x+1\iff du=dx \\
+                   & =\int \frac{u^2-2u+1}{\sqrt{u}} \, d{u}                                                                         \\
+                   & =\int u^{\sfrac{3}{2}}-2u^{\sfrac{1}{2}}+u^{-\sfrac{1}{2}}\, d{u}                                               \\
+                   & =\frac{2}{5} u^{\sfrac{5}{2} }-\frac{4}{3}u^{\sfrac{3}{2}}+2u^{\sfrac{1}{2}}+C                                  \\
+                   & =\frac{2}{5} (x+1)^{\sfrac{5}{2} }-\frac{4}{3}(x+1)^{\sfrac{3}{2}}+2(x+1)^{\sfrac{1}{2}}+C
+              \end{align*}
+        \item \begin{align*}
+                  \int \sin^6(x)\cos(x)\, d{x}
+                   & =\int u^6\, d{u}        &  & u=\sin(x)\iff du=\cos(x)\,dx \\
+                   & =\frac{u^7}{7}+C                                          \\
+                   & =\frac{\sin^7(x)}{7} +C
+              \end{align*}
+        \item \begin{align*}
+                  \int x e^{5x^2}\, d{x}
+                   & =\int \frac{xe^u}{10x} \, d{u} &  & u=5x^2\iff du=10x\,dx \\
+                   & =\frac{1}{10} \int e^u\, d{u}                             \\
+                   & =\frac{e^u}{10} +C                                        \\
+                   & =\frac{e^{5x^2}}{10} +C
+              \end{align*}
+    \end{enumerate}
+\end{Example}
+
+\subsection{Substitution and Definite Integrals}
+Q\@: What should we do with the limits of integration when making a substitution?
+
+A\@: We should change them as well!
+
+\begin{Theorem}{Change of Variable}{ch_of_var}
+    If $ g^\prime(x) $ is continuous on $ \interval{a}{b} $ and $ f(x) $
+    is continuous between $ g(a) $ and $ g(b) $, then
+    \[ \int_{x=a}^{x=b} f(g(x))g^\prime(x)\, d{x} =
+        \int_{u=g(a)}^{u=g(b)} f(u)\, d{u}  \]
+\end{Theorem}
+
+\begin{Proof}{\ref{thm:ch_of_var}}{}
+    Let $ h(u) $ be an antiderivative of $ f(u) $. Then $ h(g(x)) $
+    is an antiderivative of $ f(g(x))g^\prime(x) $.
+
+    By FTC II,
+    \[ \int_{a}^{b} f(g(x))g^\prime(x)\, d{x} =h(g(b))-h(g(a)) \]
+    But also,
+    \[ \int_{g(a)}^{g(b)} f(u)\, d{u} =h(g(b))-h(g(a)) \]
+    so we get
+    \[ \int_{a}^{b} f(g(x))g^\prime(x)\, d{x} =\int_{g(a)}^{g(b)} f(u)\, d{u} \]
+\end{Proof}
+
+\begin{Example}{}{}
+    \begin{enumerate}[label=(\roman*)]
+        \item \begin{align*}
+                  \int_{0}^{1} e^x\cos(e^x)\, d{x}
+                   & =\int_{1}^{e}\frac{u\cos(u)}{u} \, d{u} &  & u=e^x\iff du=e^x\,dx \\
+                   & =\int_{1}^{e} \cos(u)\, d{u}                                      \\
+                   & =\bigl[\sin(u)\bigr]_{1}^e                                        \\
+                   & =\sin(e)-\sin(1)
+              \end{align*}
+        \item \begin{align*}
+                  \int_{0}^{1} \frac{x^3}{1+x^4} \, d{x}
+                   & =\int_{1}^{2} \frac{x^3}{u\cdot4x^3}\, d{u}   &  & u=1+x^4\iff du=4x^3\,dx \\
+                   & =\frac{1}{4} \int_{1}^{2} \frac{1}{u} \, d{u}                              \\
+                   & =\left[ \frac{\ln\abs{u}}{4}  \right]_{1}^2                                \\
+                   & =\frac{\ln(2)}{4} -\frac{\ln(1)}{4}                                        \\
+                   & =\frac{\ln(2)}{4}
+              \end{align*}
+    \end{enumerate}
+\end{Example}
+
+\begin{Remark}{}{}
+    You can also leave the limits of integration in terms of $ x $ as long as
+    you make it clear and don't forget to switch back to $ x $ at the end before
+    plugging numbers in!
+\end{Remark}
+
+\begin{Example}{Tricky Change of Variable}{tricky_change_of_var}
+    \begin{align*}
+        \int \sec(x)\, d{x}
+         & =\int \sec(x)\frac{\sec(x)+\tan(x)}{\sec(x)+\tan(x)}\, d{x}    \\
+         & =\int \frac{\sec^2(x)+\sec(x)\tan(x)}{\sec(x)+\tan(x)} \, d{x} \\
+         & =\int \frac{1}{u}\, d{u}                                       \\
+         & =\ln\abs{u}+C                                                  \\
+         & =\ln\abs{\sec(x)+\tan(x)}+C
+    \end{align*}
+    We made the substitution $ u=\sec(x)+\tan(x)\iff du=\sec(x)\tan(x)+\sec^2(x)\,dx $.
+\end{Example}
+
+\begin{Remark}{}{}
+    The trick used in~\Cref{ex:tricky_change_of_var} only works for $ \sec(x) $ and
+    $ \csc(x) $, so it's not useful to memorize.
+\end{Remark}

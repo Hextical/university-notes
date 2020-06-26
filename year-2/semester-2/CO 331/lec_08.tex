@@ -1,35 +1,29 @@
 \makeheading{ 2020-01-22 }
 
-\begin{exbox}
-    \begin{example}
-        Construct $ GF(2^4=16) $.
+\begin{Example}{}{}
+    Construct $ GF(2^4=16) $.
 
-        \textbf{Solution.} Take $ f(x)=x^4+x+1\in\mathbb{Z}_2[x] $.
-        \begin{itemize}
-            \item $ f $ has no roots in $ \mathbb{Z}_2 $ and hence no linear factors
-            \item long division shows that $ x^2+x+1\nmid x^4+x+1 $, so $ f $
-                  has no irreducible quadratic factors
-            \item $ f $ is irreducible over $ \mathbb{Z}_2 $.
-        \end{itemize}
-        Thus, $ GF(16)=\mathbb{Z}_2[x]/(x^4+x+1) $.
-    \end{example}
-\end{exbox}
+    \textbf{Solution.} Take $ f(x)=x^4+x+1\in\mathbb{Z}_2[x] $.
+    \begin{itemize}
+        \item $ f $ has no roots in $ \mathbb{Z}_2 $ and hence no linear factors
+        \item long division shows that $ x^2+x+1\nmid x^4+x+1 $, so $ f $
+              has no irreducible quadratic factors
+        \item $ f $ is irreducible over $ \mathbb{Z}_2 $.
+    \end{itemize}
+    Thus, $ GF(16)=\mathbb{Z}_2[x]/(x^4+x+1) $.
+\end{Example}
 
 \section{Properties of Finite Fields}
 
-\begin{thmbox}
-    \begin{prop}\label{CAD}
-        $ \dagger $ For all integers $ a $, $ b $ and $ c $, if $ c\mid ab $
-        and $ \gcd(a,c)=1 $, then $ c\mid b $.
-    \end{prop}
-\end{thmbox}
+\begin{Proposition}{Coprimeness and Divisiblity (CAD)}{CAD}
+    $ \dagger $ For all integers $ a $, $ b $ and $ c $, if $ c\mid ab $
+    and $ \gcd(a,c)=1 $, then $ c\mid b $.
+\end{Proposition}
 
-\begin{thmbox}
-    \begin{lemma}\label{p divides p choose k}
-        $ \dagger $ For each integer $ k\in[1,p-1] $,
-        \[ p\mid \binom{p}{k} \]
-    \end{lemma}
-\end{thmbox}
+\begin{Lemma}{}{p_divides_p_choose_k}
+    $ \dagger $ For each integer $ k\in[1,p-1] $,
+    \[ p\mid \binom{p}{k} \]
+\end{Lemma}
 
 \begin{proof}
     We know that $ \binom{p}{k}\in\mathbb{Z} $ and
@@ -40,21 +34,19 @@
 
     We note that $ p\mid p(p-1)\cdots(p-k+1) $ and therefore
     $ p\mid k!\binom{p}{k} $. Since $ p $ is prime and $ p>k $,
-    then $ \gcd(p,k!)=1 $. Therefore, by~\ref{CAD}
+    then $ \gcd(p,k!)=1 $. Therefore, by~\ref{prop:CAD}
     \[ p\mid \binom{p}{k} \]
 \end{proof}
 
-\begin{thmbox}
-    \begin{theorem}[Frosh's Dream\label{Frosh's Dream}]
-        Let $ \alpha,\beta\in GF(q) $ where $ \ch(GF(q))=p $.
-        \[ (\alpha + \beta)^p=\alpha^p+\beta^p \]
-    \end{theorem}
-\end{thmbox}
+\begin{Theorem}{Frosh's Dream}{froshs_dream}
+    Let $ \alpha,\beta\in GF(q) $ where $ \ch(GF(q))=p $.
+    \[ (\alpha + \beta)^p=\alpha^p+\beta^p \]
+\end{Theorem}
 
 \begin{proof}
     \[ (\alpha + \beta)^p=\alpha^p+\sum\limits_{k=1}^{p-1}
         \binom{p}{k}\alpha^k\beta^{p-k}+\beta^p \]
-    By~\ref{p divides p choose k},
+    By~\ref{lem:p_divides_p_choose_k},
     \[ p\mid \binom{p}{k}\implies p\lambda_k=\binom{p}{k} \]
     where $ \lambda_k\in\mathbb{Z} $ for each $ k\in[1,p-1] $. Hence,
     \begin{align*}
@@ -66,13 +58,11 @@
     Thus, $ (\alpha + \beta)^p=\alpha^p+\beta^p $.
 \end{proof}
 
-\begin{thmbox}
-    \begin{corollary}
-        Let $ \alpha,\beta\in GF(q) $ where $ \ch(GF(q))=p $.
-        \[ (\alpha+\beta)^{p^m}=\alpha^{p^m}+\beta^{p^m} \]
-        for all $ m\in\mathbb{Z}_{\geqslant 1} $.
-    \end{corollary}
-\end{thmbox}
+\begin{Corollary}{}{}
+    Let $ \alpha,\beta\in GF(q) $ where $ \ch(GF(q))=p $.
+    \[ (\alpha+\beta)^{p^m}=\alpha^{p^m}+\beta^{p^m} \]
+    for all $ m\in\mathbb{Z}_{\geqslant 1} $.
+\end{Corollary}
 
 \begin{proof} $ \dagger $
     We prove this result by induction on $ m $, where $ P(m) $ is the statement
@@ -80,7 +70,7 @@
 
     \textbf{Base Case}: The statement $ P(1) $ is given by
     \[ (\alpha+\beta)^{p}=\alpha^p+\beta^p \]
-    which is clearly true by~\ref{Frosh's Dream}.
+    which is clearly true by~\ref{thm:froshs_dream}.
 
     \textbf{Inductive Hypothesis}: Assume
     \[ (\alpha+\beta)^{p^k}=\alpha^{p^k}+\beta^{p^k} \]
@@ -93,9 +83,9 @@
     we obtain
     \[ \begin{aligned}
             (\alpha+\beta)^{p^{k+1}}
-             & =\left[ (\alpha+\beta)^{p} \right]^{p^{k}}                                         \\
-             & =\left( \alpha^p+\beta^p \right)^{p^k}     & \quad & \text{by~\ref{Frosh's Dream}} \\
-             & = (\alpha^p)^{p^k}+(\beta^p)^{p^k}         &       & \text{by IH}                  \\
+             & =\left[ (\alpha+\beta)^{p} \right]^{p^{k}}                                            \\
+             & =\left( \alpha^p+\beta^p \right)^{p^k}     & \quad & \text{by~\ref{thm:froshs_dream}} \\
+             & = (\alpha^p)^{p^k}+(\beta^p)^{p^k}         &       & \text{by IH}                     \\
              & =\alpha^{p^{k+1}}+\beta^{p^{k+1}}
         \end{aligned}
     \]
@@ -103,12 +93,10 @@
     by the Principle of Mathematical Induction.
 \end{proof}
 
-\begin{thmbox}
-    \begin{theorem}
-        Let $ \alpha\in GF(q) $. Then
-        \[ \alpha^q=\alpha \]
-    \end{theorem}
-\end{thmbox}
+\begin{Theorem}{}{}
+    Let $ \alpha\in GF(q) $. Then
+    \[ \alpha^q=\alpha \]
+\end{Theorem}
 
 \begin{proof}
     If $ \alpha=0 $, then $ \alpha^q=0=\alpha $.
@@ -131,60 +119,50 @@
     Thus, since $ \alpha\neq 0 $ we have $ \alpha^q=\alpha $.
 \end{proof}
 
-\begin{defbox}
-    \begin{definition}
-        Let $ GF(q)^*=GF(q)/\{0\} $.
-    \end{definition}
-\end{defbox}
+\begin{Definition}{}{}
+    Let $ GF(q)^*=GF(q)/\{0\} $.
+\end{Definition}
 
-\begin{defbox}
-    \begin{definition}
-        The \textbf{order of $\alpha\in GF(q)^*$}, denoted
-        $ \ord(\alpha) $, is the smallest positive integer $ t $ such that
-        $ \alpha^t=1 $.
-    \end{definition}
-\end{defbox}
+\begin{Definition}{Order of $\alpha\in GF(q)^*$}{order_of_alpha_in_gf(q)}
+    The \textbf{order of $\bm{\alpha\in GF(q)^*}$}, denoted
+    $ \ord(\alpha) $, is the smallest positive integer $ t $ such that
+    $ \alpha^t=1 $.
+\end{Definition}
 
-\begin{exbox}
-    \begin{example}
-        How many elements of order $ 1 $ are there in $ GF(q) $?
+\begin{Example}{}{}
+    How many elements of order $ 1 $ are there in $ GF(q) $?
 
-        \textbf{Solution.} $ \alpha=1 $
-    \end{example}
-\end{exbox}
+    \textbf{Solution.} $ \alpha=1 $
+\end{Example}
 
-\begin{exbox}
-    \begin{example}
-        Find $ \ord(x) $ in $ GF(16)=\mathbb{Z}_2/(x^4+x+1) $.
+\begin{Example}{}{}
+    Find $ \ord(x) $ in $ GF(16)=\mathbb{Z}_2/(x^4+x+1) $.
 
-        \textbf{Solution.}
-        \begin{itemize}
-            \item $ x^1=x $
-            \item $ x^2=x^2 $
-            \item $ x^3=x^3 $
-            \item $ x^4=x+1 $
-            \item $ x^5=x^2+x $
-            \item $ x^6=x^3+x^2 $
-            \item $ x^7=x^3+x+1 $
-            \item $ x^8=x^2+1 $
-            \item $ x^9=x^3+x $
-            \item $ x^{10}=x^2+x+1 $
-            \item $ x^{11}=x^3+x^2+x $
-            \item $ x^{12}=x^3+x^2+x+1 $
-            \item $ x^{13}=x^3+x^2+1 $
-            \item $ x^{14}=x^3+1 $
-            \item $ x^{15}\equiv 1\mod x^4+x+1 $
-        \end{itemize}
-        Since $ \ord(x)\neq 1,3,5 $ $ \ord(x)\mid 15 $, so we have $ \ord(x)=15 $.
-    \end{example}
-\end{exbox}
+    \textbf{Solution.}
+    \begin{itemize}
+        \item $ x^1=x $
+        \item $ x^2=x^2 $
+        \item $ x^3=x^3 $
+        \item $ x^4=x+1 $
+        \item $ x^5=x^2+x $
+        \item $ x^6=x^3+x^2 $
+        \item $ x^7=x^3+x+1 $
+        \item $ x^8=x^2+1 $
+        \item $ x^9=x^3+x $
+        \item $ x^{10}=x^2+x+1 $
+        \item $ x^{11}=x^3+x^2+x $
+        \item $ x^{12}=x^3+x^2+x+1 $
+        \item $ x^{13}=x^3+x^2+1 $
+        \item $ x^{14}=x^3+1 $
+        \item $ x^{15}\equiv 1\pmod{x^4+x+1} $
+    \end{itemize}
+    Since $ \ord(x)\neq 1,3,5 $ $ \ord(x)\mid 15 $, so we have $ \ord(x)=15 $.
+\end{Example}
 
-\begin{thmbox}
-    \begin{lemma}
-        Let $ \alpha\in GF(q)^* $, $ \ord(\alpha)=t $ and $ s\in\mathbb{Z} $.
-        \[ \alpha^s=1\iff t\mid s \]
-    \end{lemma}
-\end{thmbox}
+\begin{Lemma}{}{}
+    Let $ \alpha\in GF(q)^* $, $ \ord(\alpha)=t $ and $ s\in\mathbb{Z} $.
+    \[ \alpha^s=1\iff t\mid s \]
+\end{Lemma}
 
 \begin{proof}
     Let $ s\in\mathbb{Z} $. By the division algorithm for integers,
@@ -194,35 +172,30 @@
     So,
     \begin{align*}
         \alpha^s=1 & \iff a^r=1                                             \\
-                   & \iff r=0 \qquad\text{since } 0\leqslant 1\leqslant t-1 \\
+                   & \iff r=0 \qquad\text{since } 0\leqslant r\leqslant t-1 \\
                    & \iff t\mid s
     \end{align*}
 \end{proof}
 
-\begin{thmbox}
-    \begin{corollary}
-        If $ \alpha\in GF(q)^* $, then $ \ord(\alpha)\mid (q-1) $.
-    \end{corollary}
-\end{thmbox}
+\begin{Corollary}{}{}
+    If $ \alpha\in GF(q)^* $, then $ \ord(\alpha)\mid (q-1) $.
+\end{Corollary}
 
 \begin{proof}
     We know $ \alpha^{q-1}=1 $, so $ \ord(\alpha)\mid (q-1) $ by
     the previous Lemma.
 \end{proof}
 
-\begin{defbox}
-    \begin{definition}
-        An element $ \alpha\in GF(q) $ is a \textbf{generator} of
-        $ GF(q)^* $ if
-        \[ \{\alpha^i:i\geqslant 0\}=GF(q)^* \]
-        That is, $ \alpha $ generates all the non-zero field elements.
-        $ \ord(\alpha)=q-1 $.
-    \end{definition}
-\end{defbox}
+\begin{Definition}{Generator}{generator}
+    An element $ \alpha\in GF(q) $ is a \textbf{generator} of
+    $ GF(q)^* $ if
+    \[ \{\alpha^i:i\geqslant 0\}=GF(q)^* \]
+    That is, $ \alpha $ generates all the non-zero field elements.
+    $ \ord(\alpha)=q-1 $.
+\end{Definition}
 
-\begin{thmbox}
-    \begin{theorem}
-        If $ \alpha $ is a generator of $ GF(q)^* $, then
-        \[ \{\alpha^1,\ldots ,\alpha^{q-1}\}=GF(q)^* \]
-    \end{theorem}
-\end{thmbox}
+\begin{Theorem}{}{}
+    If $ \alpha $ is a generator of $ GF(q)^* $, then
+    \[ \{\alpha^1,\ldots ,\alpha^{q-1}\}=GF(q)^* \]
+\end{Theorem}
+

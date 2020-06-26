@@ -1,0 +1,139 @@
+\section{Improper Integrals}
+So far, we have only examined integrals of continuous, or at
+least bounded functions. Let's see how to deal with a more general
+collection of functions!
+
+In particular, we will examine two types:
+\begin{enumerate}[label=\arabic*)]
+    \item Continuous functions over infinite intervals
+    \item Functions with infinite discontinuities
+\end{enumerate}
+
+In particular:
+\begin{itemize}
+    \item Type I: Infinite Intervals. Integrals of the form
+          \[ \int_{-\infty}^{a} f(x)\, d{x},\,\int_{a}^{\infty} f(x)\, d{x},\,
+              \int_{-\infty}^{\infty} f(x)\, d{x} \]
+    \item Type II: Infinite Discontinuity. For example,
+          \[ \int_{-1}^{1} \frac{1}{x} \, d{x}  \]
+          as there is an issue at $ x=0 $.
+\end{itemize}
+
+In all cases, the idea is to replace the problematic point with a
+letter and take a limit.
+
+Let's see them in more detail now!
+
+\subsection{Type I}
+We replace the infinite endpoint with a letter and take a limit
+\begin{itemize}
+    \item \[ \int_{-\infty}^{a} f(x)\, d{x} =\lim\limits_{{b} \to {-\infty}}
+              \int_{b}^{a} f(x)\, d{x} \]
+    \item \[ \int_{\infty}^{a} f(x)\, d{x} =\lim\limits_{{b} \to {\infty}}
+              \int_{a}^{b} f(x)\, d{x} \]
+    \item \[ \int_{-\infty}^{\infty} f(x)\, d{x}=
+              \lim\limits_{{b_1} \to {-\infty}} \int_{b_1}^{0} f(x)\, d{x}+
+              \lim\limits_{{b_2} \to {\infty}} \int_{0}^{b_2} f(x)\, d{x}  \]
+\end{itemize}
+Don't use
+\[ \int_{-\infty}^{\infty} f(x)\, d{x}=\lim\limits_{{b} \to {\infty}}
+    \int_{-b}^{b} f(x)\, d{x}  \]
+This is called the ``Cauchy Principal Value'' and it is something else!
+
+We say that the integral \textbf{converges} if all the limits exist
+(and are finite). The integral \textbf{diverges} if even one limit does
+not exist (or is $ \pm\infty $).
+
+\begin{Example}{Type I Integrals}{}
+    Evaluate the following or show they diverge.
+    \begin{enumerate}[label=(\roman*)]
+        \item \begin{align*}
+                  \int_{2}^{\infty} \frac{1}{x^2} \, d{x}
+                   & =\lim\limits_{{b} \to {\infty}} \int_{2}^{b} \frac{1}{x^2} \, d{x}       \\
+                   & = \lim\limits_{{b} \to {\infty}} \left[-\frac{1}{x}  \right]_{2}^b       \\
+                   & =\lim\limits_{{b} \to {\infty}} \left( -\frac{1}{b} +\frac{1}{2} \right) \\
+                   & =\frac{1}{2}
+              \end{align*}
+              Thus, the integral converges.
+        \item \begin{align*}
+                  \int_{-\infty}^{\infty} \sin(x)\, d{x}
+                   & =\lim\limits_{{b_1} \to {-\infty}} \int_{b_1}^{0} \sin(x)\, d{x}
+                  +\lim\limits_{{b_2} \to {\infty}} \int_{0}^{b_2} \sin(x)\, d{x}
+              \end{align*}
+              Let's evaluate the first one:
+              \[ \lim\limits_{{b_1} \to {-\infty}}\int_{b_1}^{0} \sin(x)\, d{x}
+                  = \lim\limits_{{b_1} \to {-\infty}}\bigl[-\cos(x) \bigr]_{b_1}^0
+                  =\lim\limits_{{b_1} \to {-\infty}} \left[-\cos(0)+\cos(b_1)\right] \]
+              which does not exist. Therefore, this integral
+              diverges, there is no need to check the second limit!
+        \item \begin{align*}
+                  \int_{0}^{\infty} \frac{1}{1+x^2}\, d{x}
+                   & =\lim\limits_{{b} \to {\infty}} \int_{0}^{b} \frac{1}{1+x^2} \, d{x} \\
+                   & = \lim\limits_{{b} \to {\infty}} \bigl[\arctan(x) \bigr]_{0}^b       \\
+                   & =\lim\limits_{{b} \to {\infty}} \left[\arctan(b)-\arctan(0) \right]  \\
+                   & =\frac{\pi}{2} -0                                                    \\
+                   & =\frac{\pi}{2}
+              \end{align*}
+              Thus, the integral converges.
+    \end{enumerate}
+\end{Example}
+Question: For which $ p\in\mathbb{R} $ does $ \int_{1}^{\infty} \frac{1}{x^p} \, d{x} $
+converge?
+
+Let's find out!
+\begin{enumerate}[label=C\arabic*]
+    \item $ p>1 $.
+          \begin{align*}
+              \lim\limits_{{b} \to {\infty}} \int_{1}^{b} x^{-p}\, d{x}
+               & = \lim\limits_{{b} \to {\infty}} \left[\frac{x^{-p+1}}{p+1}  \right]_{1}^b \\
+               & =\lim\limits_{{b} \to {\infty}} \left( \frac{b^{-p+1}}{-p+1}-
+              \frac{1^{-p+1}}{-p+1}  \right)                                                \\
+               & =\frac{1}{p-1}
+          \end{align*}
+          since $ -p+1<0 $, so $ b^{-p+1}\to 0 $. So, the integral converges if $ p>1 $.
+    \item $ p<1 $. The calculation is the same as C1, until:
+          \[ \lim\limits_{{b} \to {\infty}} \left( \frac{b^{-p+1}}{-p+1} -\frac{1}{-p+1} =\infty \right) \]
+          since $ -p+1>0 $, so $ b^{-p+1}\to\infty $. So, the integral diverges if $ p<1 $.
+    \item $ p=1 $.
+          \begin{align*}
+              \lim\limits_{{b} \to {\infty}} \int_{1}^{b} \frac{1}{x} \, d{x}
+               & =\lim\limits_{{b} \to {\infty}} \bigl[\ln\abs{x}\bigr]_{1}^b         \\
+               & =\lim\limits_{{b} \to {\infty}} \left( \ln\abs{b}-\ln\abs{1} \right) \\
+               & =\infty
+          \end{align*}
+          So, the integral diverges if $ p=1 $.
+\end{enumerate}
+Therefore, we have proven:
+
+\begin{Theorem}{$p$-Integrals}{}
+    The improper integral
+    \[ \int_{1}^{\infty} \frac{1}{x^p} \, d{x} \]
+    converges if and only if $ p>1 $.
+
+    If $ p>1 $,
+    \[ \int_{1}^{\infty} \frac{1}{x^p} \, d{x} =\frac{1}{p-1} \]
+\end{Theorem}
+
+Next, let's examine some properties of Type I improper integrals.
+
+\begin{Theorem}{Properties of Type I Improper Integrals}{}
+    Suppose $ \int_{a}^{\infty} f(x)\, d{x}  $ and $ \int_{a}^{\infty} g(x)\, d{x}  $
+    both converge.
+    \begin{enumerate}[label=(\arabic*)]
+        \item $ \int_{a}^{\infty} cf(x)\, d{x} $
+              converges for any $ c\in\mathbb{R} $, and
+              \[ \int_{a}^{\infty} cf(x)\, d{x} =c \int_{a}^{\infty} f(x)\, d{x} \]
+        \item $ \int_{a}^{\infty} f(x)+g(x)\, d{x} $
+              converges, and
+              \[ \int_{a}^{\infty} f(x)+g(x)\, d{x}=
+                  \int_{a}^{\infty} f(x)\, d{x} +\int_{a}^{\infty} g(x)\, d{x} \]
+        \item If $ f(x)\leqslant g(x) $ for all $ x\geqslant a $, then
+              \[ \int_{a}^{\infty} f(x)\, d{x} \leqslant \int_{a}^{\infty} g(x)\, d{x} \]
+        \item If $ a<c<\infty $, then $ \int_{c}^{\infty} f(x)\, d{x} $ converges, and
+              \[ \int_{a}^{\infty} f(x)\, d{x}=
+                  \int_{a}^{c} f(x)\, d{x} +\int_{c}^{\infty} f(x)\, d{x} \]
+    \end{enumerate}
+\end{Theorem}
+Evaluating integrals in general is hard, and determining if an improper integral converges
+may be even harder! However, we do have a way of comparing a difficult
+integral to a simpler one (for example, a $ p $-Integral!)

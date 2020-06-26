@@ -1,77 +1,77 @@
 \makeheading{2020-02-07}
 \section{Decoding Linear Codes}
-Let $ C $ be an $ (n,k) $-code over $ F=GF(q) $ with PCM $ H $.
 
-\begin{defbox}
-    \begin{definition}
-        We write $ \bm{x}\equiv \bm{y} \mod C $, where $ \bm{x},\bm{y}\in V_n(F) $
-        if $ \bm{x}-\bm{y}\in C $.
-    \end{definition}
-\end{defbox}
+\begin{Definition}{}{}
+    Let $ C $ be an $ (n,k) $-code over $ F=GF(q) $ with PCM $ H $.
+    We write $ \bm{x}\equiv \bm{y} \pmod{C} $, where $ \bm{x},\bm{y}\in V_n(F) $
+    if $ (\bm{x}-\bm{y})\in C $.
+\end{Definition}
 
 \textbf{Notes}:
 \begin{enumerate}[label=(\arabic*)]
-    \item $ \equiv\mod C $ is an equivalence relation.
+    \item Congruence is an equivalence relation. That is, it has the
+          following three properties:
+          \begin{enumerate}[label=(\roman*)]
+              \item Reflexivity
+              \item Symmetry
+              \item Transitivity
+          \end{enumerate}
     \item The set of equivalence classes partitions $ V_n(F) $.
     \item The equivalence classes containing $ \bm{x}\in V_n(F) $
           is called a \textbf{coset} of $ V_n(F) $. This class is:
           \begin{align*}
-              \{\bm{y}\in V_n(F):\bm{y}\equiv \bm{x}\mod C\}
+              \{\bm{y}\in V_n(F):\bm{y}\equiv \bm{x}\pmod{C}\}
                & =\{\bm{x}+\bm{c}:\bm{c}\in C\} \\
                & =C+\bm{x}
           \end{align*}
           We call $ C+\bm{x} $ the coset of $ C $ represented by $ \bm{x} $.
 \end{enumerate}
 
-\begin{exbox}
-    \begin{example}[Cosets]
-        Consider a $ (5,2) $-binary code with generator matrix
-        \[ G=\begin{bmatrix}
-                1 & 0 & 1 & 1 & 1 \\
-                0 & 1 & 1 & 1 & 0
-            \end{bmatrix}_{2\times 5} \]
-        with $ d(C)=3 $. Find all cosets of $ C $.
+\begin{Example}{Cosets}{}
+    Consider a $ (5,2) $-binary code with generator matrix
+    \[ G=\begin{bmatrix}
+            1 & 0 & 1 & 1 & 1 \\
+            0 & 1 & 1 & 1 & 0
+        \end{bmatrix}_{2\times 5} \]
+    with $ d(C)=3 $. Find all cosets of $ C $.
 
-        \textbf{Solution.} The cosets of $ C $ are:
-        \begin{enumerate}[label=(\arabic*)]
-            \item $ C+00000=\{00000,10111,01110,11001\}=\{\bm{0},R_1,R_2, R_1+R_2\}
-                      = C+10111 = C+01110 = C + 11001 $
-            \item $ C+10000=\{10000,00111,11110,01001\} $
-            \item $ C+01000=\{01000,11111,00000,10001\} $
-            \item $ C+00100=\{00100,10011,01010,11101\} $
-            \item $ C+00010=\{00010,10101,01100,11011\} $
-            \item $ C+00001=\{00001,10110,01111,11000\} $
-            \item $ C+00011=\{00011,10100,01101,11010\} $
-            \item $ C+11100=\{11100,01011,10010,00101\} $
-        \end{enumerate}
-        In total, there are $ 8 $ cosets.
-    \end{example}
-\end{exbox}
+    \textbf{Solution.} The cosets of $ C $ are:
+    \begin{enumerate}[label=(\arabic*)]
+        \item $ C+00000=\{00000,10111,01110,11001\}=\{\bm{0},R_1,R_2, R_1+R_2\}
+                  = C+10111 = C+01110 = C + 11001 $
+        \item $ C+10000=\{10000,00111,11110,01001\} $
+        \item $ C+01000=\{01000,11111,00000,10001\} $
+        \item $ C+00100=\{00100,10011,01010,11101\} $
+        \item $ C+00010=\{00010,10101,01100,11011\} $
+        \item $ C+00001=\{00001,10110,01111,11000\} $
+        \item $ C+00011=\{00011,10100,01101,11010\} $
+        \item $ C+11100=\{11100,01011,10010,00101\} $
+    \end{enumerate}
+    In total, there are $ 8 $ cosets.
+\end{Example}
 
 \textbf{Notes}:
 \begin{enumerate}[label=(\arabic*)]
-    \item $ C+\bm{0}=C $
+    \item $ C+\bm{0}=C $.
     \item If $ \bm{y}\in C+\bm{x} $, then $ C+\bm{y}=C+\bm{x} $ by definition
-          of equivalence.
+          of equivalence relation---more specifically symmetry.
     \item The number of cosets is $ \sfrac{q^n}{q^k}=q^{n-k} $.
 \end{enumerate}
 
 \textbf{Recall}: If $ \bm{x}\in V_n(F) $, then it's syndrome is
 \[ \bm{s}=H\bm{r}^\top\in V_{n-k}(F) \]
 
-\begin{thmbox}
-    \begin{theorem}
-        Let $ \bm{x},\bm{y}\in V_n(F) $. Then $ \bm{x}\equiv \bm{y}\mod C $
-        if and only if $ H\bm{x}^\top=H\bm{y}^\top $.
-    \end{theorem}
-\end{thmbox}
+\begin{Theorem}{}{}
+    Let $ \bm{x},\bm{y}\in V_n(F) $. Then $ \bm{x}\equiv \bm{y}\pmod{C} $
+    if and only if $ H\bm{x}^\top=H\bm{y}^\top $.
+\end{Theorem}
 
 \begin{proof}
     \begin{align*}
-        \bm{x}\equiv \bm{y}\mod C
-         & \iff \bm{x}-\bm{y}\in C           \\
+        \bm{x}\equiv \bm{y}\pmod{C}
+         & \iff (\bm{x}-\bm{y})\in C         \\
          & \iff H(\bm{x}-\bm{y})^\top=\bm{0} \\
-         & \iff H\bm{x}^\top=\bm{y}^\top
+         & \iff H\bm{x}^\top=H\bm{y}^\top
     \end{align*}
 \end{proof}
 So, cosets are characterized by their syndromes.
@@ -80,7 +80,7 @@ So, cosets are characterized by their syndromes.
 \begin{itemize}
     \item $ \bm{c}\in C $ is sent.
     \item $ \bm{r}\in V_n(F) $ is received.
-    \item $ \bm{e}=\bm{r}-\bm{c}\in V_n(F) $
+    \item $ \bm{e}=(\bm{r}-\bm{c})\in V_n(F) $
     \item $ H\bm{r}^\top=H\bm{e}^\top $.
 \end{itemize}
 So, $ \bm{r} $ and $ \bm{e} $ belong to the same coset of $ C $.
@@ -93,19 +93,18 @@ syndrome as $ \bm{r} $. Then, decode $ \bm{r} $ to $ \bm{c}=\bm{r}-\bm{e} $.
 
 \textbf{IMLD}
 
-Find the unique vector $ \bm{e} $ of smallest weight having the same syndrome
-as $ \bm{r} $. If no such $ \bm{e} $ exists, then reject $ \bm{r} $.
+Find the unique vector $ \bm{e} $ of smallest weight in $ C+\bm{r} $
+having the same syndrome as $ \bm{r} $.
+If no such $ \bm{e} $ exists, then reject $ \bm{r} $.
 Otherwise, decode $ \bm{r} $ to $ \bm{c}=\bm{r}-\bm{e} $.
 
 \section{Syndrome Decoding Algorithm}
 Given a PCM $ H $ for an $ (n,k) $-code $ C $ over $ F=GF(q) $.
 
-\begin{defbox}
-    \begin{definition}
-        A vector of smallest weight is a coset of $ C $ is distinguished and called
-        a \textbf{coset leader} (of that coset).
-    \end{definition}
-\end{defbox}
+\begin{Definition}{Coset leader}{coset leader}
+    A vector of smallest weight is a coset of $ C $ is distinguished and called
+    a \textbf{coset leader} (of that coset).
+\end{Definition}
 
 \begin{algbox}
     \begin{algorithm}[H]
@@ -122,51 +121,54 @@ Given a PCM $ H $ for an $ (n,k) $-code $ C $ over $ F=GF(q) $.
     \end{algorithm}
 \end{algbox}
 
-\begin{exbox}
-    \begin{example}[Syndrome Decoding]
-        \[ G=\begin{bmatrix}
-                1 & 0 & 1 & 1 & 1 \\
-                0 & 1 & 1 & 1 & 0
-            \end{bmatrix}_{2\times 5} \]
-        \[ H=\begin{bmatrix}
-                1 & 1 & 1 & 0 & 0 \\
-                1 & 1 & 0 & 1 & 0 \\
-                1 & 0 & 0 & 0 & 1
-            \end{bmatrix}_{3\times 5} \]
-        \underline{Table of Cosets}
-        \begin{center}
-            \begin{multicols}{2}
-                $ C+00000=\{00000,10111,01110,11001\} $\\
-                $ C+10000=\{10000,00111,11110,01001\} $\\
-                $ C+01000=\{01000,11111,00000,10001\} $\\
-                $ C+00100=\{00100,10011,01010,11101\} $\\
-                $ C+00010=\{00010,10101,01100,11011\} $\\
-                $ C+00001=\{00001,10110,01111,11000\} $\\
-                $ C+00011=\{00011,10100,01101,11010\} $\\
-                $ C+11100=\{11100,01011,10010,00101\} $
-            \end{multicols}
-        \end{center}
-        There are $ q^{n-k}=2^{5-2}=2^3=8 $ cosets in total.
 
-        Coset Leaders $ \rightarrow $ Syndromes:
-        \begin{itemize}
-            \item $ 00000 \rightarrow 000 $
-            \item $ 10000 \rightarrow 111 $
-            \item $ 01000 \rightarrow 110 $
-            \item $ 00100 \rightarrow 100 $
-            \item $ 00010 \rightarrow 010 $
-            \item $ 00001 \rightarrow 001 $
-            \item $ 00011 \rightarrow 011 $
-            \item $ 10010 \rightarrow 101 $
-        \end{itemize}
-        Suppose $ \bm{r}=10111 $ is received. Decode $ \bm{r} $.
+\begin{Example}{Syndrome Decoding}{}
+    \[ G=\begin{bmatrix}
+            1 & 0 & 1 & 1 & 1 \\
+            0 & 1 & 1 & 1 & 0
+        \end{bmatrix}_{2\times 5} \]
+    \[ H=\begin{bmatrix}
+            1 & 1 & 1 & 0 & 0 \\
+            1 & 1 & 0 & 1 & 0 \\
+            1 & 0 & 0 & 0 & 1
+        \end{bmatrix}_{3\times 5} \]
+    \begin{table}[H]
+        \centering
+        \caption{Table of Cosets}
+        \begin{multicols}{2}
+            $ C+00000=\{00000,10111,01110,11001\} $\\
+            $ C+10000=\{10000,00111,11110,01001\} $\\
+            $ C+01000=\{01000,11111,00000,10001\} $\\
+            $ C+00100=\{00100,10011,01010,11101\} $\\
+            $ C+00010=\{00010,10101,01100,11011\} $\\
+            $ C+00001=\{00001,10110,01111,11000\} $\\
+            $ C+00011=\{00011,10100,01101,11010\} $\\
+            $ C+11100=\{11100,01011,10010,00101\} $
+        \end{multicols}
+    \end{table}
+    There are $ q^{n-k}=2^{5-2}=2^3=8 $ cosets in total.
+    \begin{table}[H]
+        \centering
+        \begin{tabularx}{0.5\linewidth}{@{}YY@{}}
+            Coset Leaders & Syndromes \\
+            \midrule
+            00000         & 000       \\
+            10000         & 111       \\
+            01000         & 110       \\
+            00100         & 100       \\
+            00010         & 010       \\
+            00001         & 001       \\
+            00011         & 011       \\
+            10010         & 101
+        \end{tabularx}
+    \end{table}
+    Suppose $ \bm{r}=(10111) $ is received. Decode $ \bm{r} $.
 
-        \textbf{Solution.}
+    \textbf{Solution.}
 
-        Compute $ \bm{s}=H\bm{r}^\top=(000)^\top $.
+    Compute $ \bm{s}=H\bm{r}^\top=(000)^\top $.
 
-        The closest leader corresponding to $ \bm{s}=(000)^\top $ is $ \bm{\ell}=00000 $.
+    The closest leader corresponding to $ \bm{s}=(000) $ is $ \bm{\ell}=(00000) $.
 
-        Thus, we get the decoded vector $ \bm{r}-\bm{\ell}=10111 $.
-    \end{example}
-\end{exbox}
+    Thus, we get the decoded vector $ \bm{r}-\bm{\ell}=(10111) $.
+\end{Example}

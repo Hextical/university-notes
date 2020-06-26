@@ -4,7 +4,7 @@
 % Class
 \documentclass[oneside]{book}
 % Must load first
-\usepackage[dvipsnames]{xcolor}
+\usepackage{xcolor}
 
 % -----------------------------------------------------------------------------
 
@@ -43,11 +43,13 @@
 \usepackage[unicode]{hyperref}
 \usepackage{enumitem}
 \usepackage[parfill]{parskip}
-\usepackage[most]{tcolorbox}
+\usepackage[theorems,breakable]{tcolorbox}
 \usepackage{graphicx}
 \usepackage[ruled,linesnumbered,vlined,dotocloa]{algorithm2e}
 \usepackage[delims=\lbrack\rbrack]{spalign}
 \usepackage{dsfont}
+\usepackage{mathtools}
+\usepackage{cleveref}
 
 % -----------------------------------------------------------------------------
 
@@ -167,3 +169,71 @@
 }
 
 % -----------------------------------------------------------------------------
+
+\tcbset{
+    common/.style={
+            fonttitle=\bfseries,
+            coltitle=black,
+            boxrule=0pt
+        },
+    theorem/.style={
+            common,
+            colback=mypurple,
+            colframe=mypurple!95!black,
+            fontupper=\itshape{}
+        },
+}
+
+\definecolor{mycyan}{RGB}{204,229,229}
+\newtcbtheorem[number within=section, crefname={definition}{definitions}]
+{Definition}{DEFINITION}{
+    common,
+    colback=myyellow,
+    colframe=myyellow!95!black
+}{def}
+
+\newtcbtheorem[use counter from=Definition, crefname={example}{examples}]
+{Example}{EXAMPLE}{
+    common,
+    colback=mygreen,
+    colframe=mygreen!95!black,
+    breakable
+}{ex}
+
+\newtcbtheorem[use counter from=Definition, crefname={remark}{remarks}]
+{Remark}{REMARK}{
+    common,
+    colback=mycyan,
+    colframe=mycyan!95!black,
+}{remark}
+
+\newtcbtheorem[use counter from=Definition, crefname={theorem}{theorems}]
+{Theorem}{THEOREM}{
+    theorem,
+}{thm}
+
+\newtcbtheorem[use counter from=Definition, crefname={proposition}{propositions}]
+{Proposition}{PROPOSITION}{
+    theorem,
+}{prop}
+
+\newtcbtheorem[use counter from=Definition, crefname={corollary}{corollaries}]
+{Corollary}{COROLLARY}{
+    theorem,
+}{cor}
+
+\newtcbtheorem[use counter from=Definition, crefname={lemma}{lemmas}]
+{Lemma}{LEMMA}{
+    theorem,
+}{lem}
+
+\newtcbtheorem[no counter]
+{Proof}{Proof of}{
+    common,
+    colframe=black!10,
+    breakable
+}{pf}
+
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\set{\{}{\}}

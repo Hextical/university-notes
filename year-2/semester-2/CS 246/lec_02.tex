@@ -3,55 +3,55 @@ It's strongly recommend that you \textbf{do not} memorize these commands present
 you should try them out on your own to see what the output is.
 
 \begin{itemize}
-    \item \code{CTRL + C} \textrightarrow{} send kill signal
-    \item \code{CTRL + D} \textrightarrow{} send EOF (end-of-file)
-    \item NAME\@: \code{cat} \textrightarrow{} concatenate files and print on the standard output
-          \begin{itemize}
-              \item SYNOPSIS\@: \code{cat [OPTION]\textellipsis{} [FILE]}
-              \item DESCRIPTION\@: Concatenate FILE(s) to standard output.
-                    With no \code{FILE}, or when \code{FILE} is \code{-}, read standard input.
-          \end{itemize}
-    \item \code{>} \textrightarrow{} output redirection, overwrites files
-          \begin{itemize}
-              \item \code{cat > out.txt} \textrightarrow{} redirects output produced by
-                    \code{cat} to the file \code{out.txt}
-              \item \code{cat t1.txt > t2.txt} \textrightarrow{} redirects all text from
-                    \code{t1.txt} to \code{t2.txt}
-          \end{itemize}
-    \item \code{>{}>} \textrightarrow{} appends at the end of the file instead of overwriting like
-          \code{>}
-    \item \code{<} \textrightarrow{} input redirection
-          \begin{itemize}
-              \item \code{cat < sample.txt} \textrightarrow{}
-                    input redirection, the shell handles this
-              \item \code{cat sample.txt} \textrightarrow{}
-                    \code{cat} handles this
-              \item \code{cat -n < in > out} \textrightarrow{}
-                    \code{-n} numbers all output lines. Input redirect from file \code{in} to
-                    \code{cat}, then output redirect with numbered lines to file \code{out}.
-          \end{itemize}
+      \item \code{CTRL + C} \textrightarrow{} send kill signal
+      \item \code{CTRL + D} \textrightarrow{} send EOF (end-of-file)
+      \item NAME\@: \code{cat} \textrightarrow{} concatenate files and print on the standard output
+            \begin{itemize}
+                  \item SYNOPSIS\@: \code{cat [OPTION]\textellipsis{} [FILE]}
+                  \item DESCRIPTION\@: Concatenate FILE(s) to standard output.
+                        With no \code{FILE}, or when \code{FILE} is \code{-}, read standard input.
+            \end{itemize}
+      \item \code{>} \textrightarrow{} output redirection, overwrites files
+            \begin{itemize}
+                  \item \code{cat > out.txt} \textrightarrow{} redirects output produced by
+                        \code{cat} to the file \code{out.txt}
+                  \item \code{cat t1.txt > t2.txt} \textrightarrow{} redirects all text from
+                        \code{t1.txt} to \code{t2.txt}
+            \end{itemize}
+      \item \code{>{}>} \textrightarrow{} appends at the end of the file instead of overwriting like
+            \code{>}
+      \item \code{<} \textrightarrow{} input redirection
+            \begin{itemize}
+                  \item \code{cat < sample.txt} \textrightarrow{}
+                        input redirection, the shell handles this
+                  \item \code{cat sample.txt} \textrightarrow{}
+                        \code{cat} handles this
+                  \item \code{cat -n < in > out} \textrightarrow{}
+                        \code{-n} numbers all output lines. Input redirect from file \code{in} to
+                        \code{cat}, then output redirect with numbered lines to file \code{out}.
+            \end{itemize}
 \end{itemize}
 
 \subsection{Linux Streams}
 
 \begin{itemize}
-    \item \textbf{1. Standard input (stdin)}
-          \begin{itemize}
-              \item keyboard
-              \item use \code{<} to change to file
-          \end{itemize}
-    \item \textbf{2. Standard output (stdout)}
-          \begin{itemize}
-              \item terminal
-              \item use \code{1>} to change to file; the \code{1} before the \code{>} is optional
-              \item buffered
-          \end{itemize}
-    \item \textbf{3. Standard error (stderr)}
-          \begin{itemize}
-              \item terminal
-              \item use \code{2>} to change to file
-              \item non-buffered
-          \end{itemize}
+      \item \textbf{1. Standard input (stdin)}
+            \begin{itemize}
+                  \item keyboard
+                  \item use \code{<} to change to file
+            \end{itemize}
+      \item \textbf{2. Standard output (stdout)}
+            \begin{itemize}
+                  \item terminal
+                  \item use \code{1>} to change to file; the \code{1} before the \code{>} is optional
+                  \item buffered
+            \end{itemize}
+      \item \textbf{3. Standard error (stderr)}
+            \begin{itemize}
+                  \item terminal
+                  \item use \code{2>} to change to file
+                  \item non-buffered
+            \end{itemize}
 \end{itemize}
 
 We use the non-buffered stream when we immediately want to output an error
@@ -81,11 +81,11 @@ Count the number of words in the first 15 lines of \code{sample.txt}.
 \textbf{Solution.}
 
 \begin{itemize}
-    \item \code{wc -w} \textrightarrow{} print number of words in entire text
-    \item \code{head -15 sample.txt} \textrightarrow{} get only the first 15 lines
-          of \code{sample.txt}
-    \item \code{head -15 sample.txt > temp.txt wc -w temp.txt} \textrightarrow{}
-          doing both, with output in a \code{temp.txt} file.
+      \item \code{wc -w} \textrightarrow{} print number of words in entire text
+      \item \code{head -15 sample.txt} \textrightarrow{} get only the first 15 lines
+            of \code{sample.txt}
+      \item \code{head -15 sample.txt > temp.txt wc -w temp.txt} \textrightarrow{}
+            doing both, with output in a \code{temp.txt} file.
 \end{itemize}
 
 What if we didn't want \code{temp.txt} to be produced? We use Linux pipes.

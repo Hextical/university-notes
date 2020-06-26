@@ -1,137 +1,130 @@
 \makeheading{ 2020-01-27 }
 
+\begin{Example}{}{}
+    Consider a $ \underbrace{\text{binary}}_{F=GF(2)=\mathbb{Z}_2} $
+    $ (\underbrace{5}_{n},\underbrace{3}_{k}) $-code $ C $
+    where
+    $ C=\{\underbrace{10010}_{\bm{v}_1},\underbrace{01011}_{\bm{v}_2},\underbrace{00101}_{\bm{v}_3}\} $.
 
+    A possible generator matrix of a $ C $ is the following.
+    \[ G=
+        \spalignaugmatn{2}{
+            1 0 0 1 0; 0 1 0 1 1; 0 0 1 0 1}_{3\times{}5}
+    \]
+    $ \rank(G)=3 $, thus $ G $ is a generator matrix for $ C $.
 
-\begin{exbox}
-    \begin{example}
-        Consider a $ \underbrace{\text{binary}}_{F=GF(2)=\mathbb{Z}_2} $
-        $ (\underbrace{5}_{n},\underbrace{3}_{k}) $-code $ C $. Then
-        $ M=q^k=2^3 $ and $ R=\frac{k}{n} =\frac{3}{5} $.
-
-        $ C=\langle \underbrace{10010}_{v_1},\underbrace{01011}_{v_2},\underbrace{00101}_{v_3} \rangle$.
-
-        \[ G=
-            \spalignaugmatn{2}{
-                1 0 0 1 0; 0 1 0 1 1; 0 0 1 0 1}_{3\times{}5}
-        \]
-        $ \rank(G)=3 $, thus $ G $ is a generator matrix for $ C $.
-
-        \begin{table}[H]
-            \centering
-            \begin{tabular}{@{}ccc@{}}
-                Messages $ (M) $ & \textrightarrow{} & Codewords $ (C) $ \\
-                \midrule
-                000              & \textrightarrow{} & 00000             \\
-                001              & \textrightarrow{} & 00101             \\
-                010              & \textrightarrow{} & 01011             \\
-                011              & \textrightarrow{} & 01110             \\
-                100              & \textrightarrow{} & 10010             \\
-                101              & \textrightarrow{} & 10111             \\
-                110              & \textrightarrow{} & 11001             \\
-                111              & \textrightarrow{} & 11100
-            \end{tabular}
-        \end{table}
-        $ d(C)=2 $, $ e=0 $.
-    \end{example}
-\end{exbox}
+    Using the encoding rule, we can determine some possible codewords in $ C $.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{@{}ccc@{}}
+            Message $ (\bm{m}) $ & \textrightarrow{} & Codeword $ (\bm{c}) $ \\
+            \midrule
+            000                  & \textrightarrow{} & 00000                 \\
+            001                  & \textrightarrow{} & 00101                 \\
+            010                  & \textrightarrow{} & 01011                 \\
+            011                  & \textrightarrow{} & 01110                 \\
+            100                  & \textrightarrow{} & 10010                 \\
+            101                  & \textrightarrow{} & 10111                 \\
+            110                  & \textrightarrow{} & 11001                 \\
+            111                  & \textrightarrow{} & 11100
+        \end{tabular}
+    \end{table}
+    \begin{itemize}
+        \item $ M=q^k=2^3 $
+        \item $ R=\sfrac{k}{n}=\sfrac{3}{5} $
+        \item $ d(C)=2 $
+        \item $ e=0 $
+    \end{itemize}
+\end{Example}
 
 \textbf{Note:} Any matrix equivalent to $ G $ is also a generator matrix
 for $ C $, but yields a different encoding rule.
 
-\begin{defbox}
-    \begin{definition}
-        Let $ \left[\, I_k\mid A \,\right]_{k\times n} $ be a generator matrix
-        for an $ (n,k) $-code $ C $. If an $ (n,k) $-code has a generator
-        matrix of this form, then $ C $ is \textbf{systematic}, and the generator
-        matrix is in \textbf{standard form}.
-    \end{definition} \end{defbox}
+\begin{Definition}{Systematic, Standard form}{systematic_standard_form}
+    Let $ \spalignaugmat{I_k A}_{k\times n} $ be a generator matrix
+    for an $ (n,k) $-code $ C $. If an $ (n,k) $-code has a generator
+    matrix of this form, then $ C $ is \textbf{systematic} and the generator
+    matrix is in \textbf{standard form}.
+\end{Definition}
 
-\begin{exbox}
-    \begin{example}
-        $ C=\langle 100011,101010,100110\rangle $
-        is a non-systematic $ (6,3) $-code.
-        Some generator matrices are:
-        \[ G_1=\spalignaugmatn{3}{
-                1 0 0 0 1 1 ;
-                1 0 1 0 1 0 ;
-                1 0 0 1 1 0} \]
-        $ R_2+R_1 $:
-        \[ G_2=\spalignaugmatn{3}{
-                1 0 0 0 1 1 ;
-                0 0 1 0 0 1 ;
-                1 0 0 1 1 0} \]
-        $ R_3+R_1 $:
-        \[ G_3=\spalignaugmatn{3}{
-                1 0 0 0 1 1 ;
-                0 0 1 0 0 1 ;
-                0 0 0 1 0 1} \]
-        Clearly $ C $ is not systematic. However, if every codeword
-        is permuted by moving the second bit to the fourth bit, we get $ C^{\prime} $
-        that is linear and has the same length, dimension, and distance as $ C $.
-    \end{example}
-\end{exbox}
+\begin{Example}{}{}
+    $ C=\{100011,101010,100110\} $
+    is a non-systematic $ (6,3) $-code.
 
-\begin{defbox}
-    \begin{definition}
-        Let $ C $ be an $ (n,k) $-code. If $ \pi $ is a permutation on
-        $ \{1,\ldots ,n\} $. Then $ \pi(C) $ (that is, apply $ \pi $ to each
-        codeword) is an $ (n,k) $-code which is said to be an \textbf{equivalent code}
-        for $ C $.
-    \end{definition} \end{defbox}
+    Some generator matrices are:
+    \[ G_1=\spalignaugmatn{3}{
+            1 0 0 0 1 1 ;
+            1 0 1 0 1 0 ;
+            1 0 0 1 1 0} \]
+    $ G_1: R_2+R_1 $
+    \[ G_2=\spalignaugmatn{3}{
+            1 0 0 0 1 1 ;
+            0 0 1 0 0 1 ;
+            1 0 0 1 1 0} \]
+    $ G_2: R_3+R_1 $
+    \[ G_3=\spalignaugmatn{3}{
+            1 0 0 0 1 1 ;
+            0 0 1 0 0 1 ;
+            0 0 0 1 0 1} \]
+    Clearly $ C $ is not systematic. However, if every codeword
+    is permuted by moving the second bit to the fourth bit, we get $ C^{\prime} $
+    that is linear and has the same length, dimension, and distance as $ C $.
+\end{Example}
 
-\begin{thmbox}
-    \begin{theorem}
-        \begin{enumerate}[label=(\arabic*)]
-            \item If $ C $ and $ C^{\prime} $ are equivalent codes, then
-                  \[ d(C)=d(C^{\prime}) \]
-            \item Every linear code is equivalent to a systematic code.
-        \end{enumerate}
-    \end{theorem} \end{thmbox}
+\begin{Definition}{Equivalent code}{equivalent_code}
+    Let $ C $ be an $ (n,k) $-code. If $ \pi $ is a permutation on
+    $ \{1,\ldots ,n\} $. Then $ \pi(C) $ (that is, apply $ \pi $ to each
+    codeword) is an $ (n,k) $-code which is said to be an \textbf{equivalent code}
+    for $ C $.
+\end{Definition}
+
+\begin{Theorem}{}{}
+    \begin{enumerate}[label=(\arabic*)]
+        \item If $ C $ and $ C^{\prime} $ are equivalent codes, then
+              \[ d(C)=d(C^{\prime}) \]
+        \item Every linear code is equivalent to a systematic code.
+    \end{enumerate}
+\end{Theorem}
 
 \begin{proof}
     Let $ C $ be an $ (n,k) $ code. Let $ G $ be a generator matrix for $ C $
     in RREF\@. Then, one can permute the columns of $ G $ to get a matrix
-    $ G^{\prime}=\left[ \,I_k\mid A\, \right] $ in standard form. Then,
+    $ G^{\prime}=\spalignaugmat{I_k A} $ in standard form. Then,
     $ G^{\prime} $ is a generator matrix for a code $ C^{\prime} $ that is
     equivalent to $ C $.
 \end{proof}
 
-\begin{defbox}
-    \begin{definition}
-        Let $ \bm{x},\bm{y}\in V_n(F) $. The \textbf{inner product}
-        of $ \bm{x} $ and $ \bm{y} $ is
-        \[ \bm{x}\cdot \bm{y}=\sum\limits_{i=1}^{n} x_i y_i\in F \]
-    \end{definition} \end{defbox}
+\begin{Definition}{Inner product}{inner_product}
+    Let $ \bm{x},\bm{y}\in V_n(F) $. The \textbf{inner product}
+    of $ \bm{x} $ and $ \bm{y} $ is
+    \[ \bm{x}\cdot \bm{y}=\sum\limits_{i=1}^{n} x_i y_i\in F \]
+\end{Definition}
 
-\begin{thmbox}
-    \begin{theorem}
-        If $ \bm{x},\bm{y},\bm{z}\in V_n(F) $ and $ \lambda\in F $, then
-        \begin{enumerate}[label=(\arabic*)]
-            \item $ \bm{x}\cdot \bm{y}=\bm{y}\cdot \bm{x} $
-            \item $ \bm{x}\cdot (\bm{y}+\bm{z})=\bm{x}\cdot \bm{y}+\bm{x}\cdot \bm{z} $
-            \item $ (\lambda x)\cdot \bm{y}=\lambda(\bm{x}\cdot \bm{y}) $
-            \item $ \bm{x}\cdot \bm{x}=\bm{0}$ does \textbf{not} imply $ \bm{x}=\bm{0} $
-        \end{enumerate}
-    \end{theorem} \end{thmbox}
+\begin{Theorem}{}{}
+    If $ \bm{x},\bm{y},\bm{z}\in V_n(F) $ and $ \lambda\in F $, then
+    \begin{enumerate}[label=(\arabic*)]
+        \item $ \bm{x}\cdot \bm{y}=\bm{y}\cdot \bm{x} $
+        \item $ \bm{x}\cdot (\bm{y}+\bm{z})=\bm{x}\cdot \bm{y}+\bm{x}\cdot \bm{z} $
+        \item $ (\lambda \bm{x})\cdot \bm{y}=\lambda(\bm{x}\cdot \bm{y}) $
+        \item $ \bm{x}\cdot \bm{x}=\bm{0}$ does \textbf{not} imply $ \bm{x}=\bm{0} $
+    \end{enumerate}
+\end{Theorem}
 
-\begin{exbox}
-    \begin{example}
-        Consider $ V_2(\mathbb{Z}_2) $. Then, $ (1,1)\cdot(1,1)=0 $.
-    \end{example}
-\end{exbox}
+\begin{Example}{}{}
+    Consider $ V_2(\mathbb{Z}_2) $. Then,
+    $ \spalignmat{1 1}_{1\times 2}\cdot\spalignmat{1 1}_{1\times 2}=0 $.
+\end{Example}
 
-\begin{defbox}
-    \begin{definition}
-        Let $ C $ be an $ (n,k) $-code over $ F $. The \textbf{dual code}
-        of $ C $ is
-        \[ C^{\perp}=\left\{ \bm{x}\in V_n(F):\bm{x}\cdot \bm{c}=\bm{0}\,\forall \bm{c}\in C\right\} \]
-    \end{definition} \end{defbox}
+\begin{Definition}{Dual code}{dual_code}
+    Let $ C $ be an $ (n,k) $-code over $ F $. The \textbf{dual code}
+    of $ C $ is
+    \[ C^{\perp}=\left\{ \bm{x}\in V_n(F):\bm{x}\cdot \bm{c}=\bm{0}\quad\forall \bm{c}\in C\right\} \]
+\end{Definition}
 
-\begin{thmbox}
-    \begin{theorem}
-        Let $ \bm{x}\in V_n(F) $.
-        \[ \bm{x}\in C^{\perp}\iff \bm{v}_1\cdot \bm{x}=\cdots =\bm{v}_k\cdot \bm{x}=0 \]
-    \end{theorem} \end{thmbox}
+\begin{Theorem}{}{}
+    Let $ \bm{x}\in V_n(F) $.
+    \[ \bm{x}\in C^{\perp}\iff \bm{v}_1\cdot \bm{x}=\cdots =\bm{v}_k\cdot \bm{x}=0 \]
+\end{Theorem}
 
 \begin{proof}
     $ (\implies) $ If $ \bm{x}\in C^{\perp} $, then $ \bm{x}\cdot \bm{c}=0 $ for all
@@ -146,18 +139,17 @@ for $ C $, but yields a different encoding rule.
     Hence, $ \bm{x}\in C^{\perp} $.
 \end{proof}
 
-\begin{thmbox}
-    \begin{theorem}
-        If $ C $ is an $ (n,k) $-code over $ F $, then $ C^{\perp} $ is an
-        $ (n,n-k) $-code over $ F $.
-    \end{theorem} \end{thmbox}
+\begin{Theorem}{}{}
+    If $ C $ is an $ (n,k) $-code over $ F $, then $ C^{\perp} $ is an
+    $ (n,n-k) $-code over $ F $.
+\end{Theorem}
 
 \begin{proof}
     Consider
     \[ G=\begin{bmatrix}
-            v_1    \\
-            \vdots \\
-            v_k
+            \bm{v}_1 \\
+            \vdots   \\
+            \bm{v}_k
         \end{bmatrix}_{k\times n} \]
     Then, $ \bm{x}\in C^{\perp} $ if and only if $ G \bm{x}^{\top}=\bm{0} $. So, $ C^{\perp} $
     is the nullspace of $ G $. Hence, $ C^{\perp} $ is an

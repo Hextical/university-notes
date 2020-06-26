@@ -3,13 +3,13 @@
 \[
     \begin{array}{ccc}
         V_n(F)                                      & \longleftrightarrow & R=F[x]/(x^n-1)                      \\
-        a=(a_0,a_1\ldots ,a_{n-1})\in V_n(F)        & \longleftrightarrow & a_0+a_1x+\cdots+a_{n-1}x^{n-1}\in R \\
+        \bm{a}=(a_0,a_1\ldots ,a_{n-1})\in V_n(F)   & \longleftrightarrow & a_0+a_1x+\cdots+a_{n-1}x^{n-1}\in R \\
         C: \text{ cyclic subspace, with } \dim(C)=k & \longleftrightarrow & I:\text{ ideal in } R               \\
-                                                    &                     & g(x) \text{ with } \deg(g)=n-k      \\
-        \text{GM for } C: G \text{ in terms of } g(x)                                                           \\
-        \text{Encoding: } mG                        & \longleftrightarrow & m(x)g(x)                            \\
+                                                    &                     & g(x) \text{ with } \deg(g)=n-k
+        \text{, if GM for $ C $ in terms of $ g(x)$}                                                            \\
+        \text{Encoding: $ \bm{m}G $}                & \longleftrightarrow & m(x)g(x)                            \\
         C^{\perp}                                   & \longleftrightarrow & h^*(x)                              \\
-        \text{PCM for } C: H                        & \longleftrightarrow & s(x)\equiv r(x)\mod g(x)
+        \text{PCM for } C: H                        & \longleftrightarrow & s(x)\equiv r(x)\pmod{g(x)}
     \end{array}
 \]
 To find $ h^*(x) $, we need $ h(x)=(x^n-1)/(g(x)) $ where $ \deg(h)=k $. Then,
@@ -20,29 +20,25 @@ $ h^*(x) $.
 code and specifically select $ g(x) $ to give a lower bound on
 $ d(C) $.
 
-\begin{thmbox}
-    \begin{lemma}
-        Let $ g(x) $ be a monic divisor with $ \deg(g)=n-k $ of
-        $ x^n-1 $ in $ F[x] $. In fact,
-        \[ \langle g(x) \rangle = \{g(x)\overline{a}(x):\deg(\overline{a})<k\} \]
-    \end{lemma}
-\end{thmbox}
+\begin{Lemma}{}{}
+    Let $ g(x) $ be a monic divisor with $ \deg(g)=n-k $ of
+    $ x^n-1 $ in $ F[x] $. In fact,
+    \[ \langle g(x) \rangle = \{g(x)\overline{a}(x):\deg(\overline{a})<k\} \]
+\end{Lemma}
 
 \begin{proof}
-    Let $ h(x)=g(x)a(x)\mod x^n-1 $ where $ \deg(a)<n $. So,
-    \[ h(x)-g(x)=\ell(x)(x^n-1) \]
+    Let $ h(x)=g(x)a(x)\pmod{x^n-1} $ for some $ a(x) $ where $ \deg(a)<n $. So,
+    \[ h(x)-g(x)a(x)=\ell(x)(x^n-1) \]
     for some $ \ell \in F[x] $. Therefore, $ g\mid h $.
     So, $ h(x)=g(x)\overline{a}(x) $, for some $ \overline{a}\in F[x] $
     with $ \deg(\overline{a})\leqslant k-1 $.
 \end{proof}
 
-\begin{thmbox}
-    \begin{theorem}
-        Let $ g(x) $ be a monic divisor of $ x^n-1 $ with $ \deg(g)=n-k $ of
-        $ x^n-1 $ in $ F[x] $. Then, the cyclic code $ C $ generated
-        by $ g(x) $ has dimension $ k $.
-    \end{theorem}
-\end{thmbox}
+\begin{Theorem}{}{}
+    Let $ g(x) $ be a monic divisor of $ x^n-1 $ with $ \deg(g)=n-k $ of
+    $ x^n-1 $ in $ F[x] $. Then, the cyclic code $ C $ generated
+    by $ g(x) $ has dimension $ k $.
+\end{Theorem}
 
 \begin{proof}
     We'll show that
@@ -60,11 +56,12 @@ $ d(C) $.
 
     We now show $ B $ spans $ C $. Let $ h(x)\in \langle g(x)\rangle $.
     By Lemma, we can write
-    \[ h(x)=\underbrace{g(x)}_{\deg = n-k}\underbrace{a(x)}_{\deg = k-1} \]
-    for some $ a\in F[x] $ where $ \deg(a)\leqslant k-1 $. Let
-    \[ a(x)=\sum\limits_{i=0}^{k-1} a_i \]
+    \[ h(x)=g(x)a(x) \]
+    for some $ a\in F[x] $ where $ \deg(g)=n-k $ and $ \deg(a)\leqslant k-1 $. Let
+    \[ a(x)=\sum\limits_{i=0}^{k-1} a_i x_i \]
     where $ a_i\in F $ for each $ i\in[0,k-1] $. Then,
-    \[ h(x)=g(x)a(x)=\sum\limits_{i=0}^{k-1} a_i(x^i g(x)) \]
+    \[ h(x)=g(x)a(x)=g(x)\sum\limits_{i=0}^{k-1} a_i x_i=
+        \sum\limits_{i=0}^{k-1} a_i x_i g(x) \]
     Thus, $ \dim(C)=k $.
 \end{proof}
 
@@ -81,18 +78,19 @@ Therefore, a generator matrix for $ C $ is:
     \end{bmatrix}_{k\times n}
     =
     \begin{bmatrix}
-        g(x) & 0      & \cdots & 0      & 0           \\
-        0    & xg(x)  & 0      & \cdots & 0           \\
-             &        & \vdots                        \\
-        0    & \cdots & 0      & 0      & x^{k-1}g(x)
+        g(x)   & 0      & \cdots & 0           & 0           \\
+        0      & xg(x)  & 0      & \cdots      & 0           \\
+        \vdots &        & \ddots &             & \vdots      \\
+        0      & \cdots & 0      & x^{k-2}g(x) & 0           \\
+        0      & 0      & \cdots & 0           & x^{k-1}g(x)
     \end{bmatrix}_{k\times n}
 \]
 \textbf{Note:} $ G $ is a non-systematic generator matrix for $ C $.
 
 \textbf{Encoding}
 \begin{align*}
-    c
-     & =mG                                \\
+    \bm{c}
+     & =\bm{m}G                           \\
      & =(m_0,\ldots,m_{k-1})
     \begin{bmatrix}
         g(x)   \\
@@ -105,30 +103,29 @@ Therefore, a generator matrix for $ C $ is:
      & \implies c(x)=m(x)g(x)
 \end{align*}
 
-\begin{exbox}
-    \begin{example}
-        Construct a cyclic $ (7,4) $-code over $ \mathbb{Z}_2 $.
+\begin{Example}{}{}
+    Construct a cyclic $ (7,4) $-code over $ \mathbb{Z}_2 $.
 
-        \textbf{Solution.} We need a monic divisor
-        of degree $ 3 $ of $ x^7-1 $ in $ \mathbb{Z}_2[x] $. Using
-        Table 3 on page 157:
-        \[ (x^7-1)=(1+x)(1+x+x^3)(1+x^2+x^3) \]
-        Let's take $ g(x)=1+x+x^3 $. Then, $ \langle g(x)\rangle $ is a
-        $ (7,4) $-cyclic code over $ \mathbb{Z}_2 $. A generator matrix
-        for $ C $ is:
-        \[ G=
-            \begin{bmatrix}
-                1 & 1 & 0 & 1 & 0 & 0 & 0 \\
-                0 & 1 & 1 & 0 & 1 & 0 & 0 \\
-                0 & 0 & 1 & 1 & 0 & 1 & 0 \\
-                0 & 0 & 0 & 1 & 1 & 0 & 1
-            \end{bmatrix}_{4\times 7} \]
+    \textbf{Solution.} We need a monic divisor
+    of degree $ 3 $ of $ x^7-1 $ in $ \mathbb{Z}_2[x] $. Using
+    Table 3 on page 157:
+    \[ (x^7-1)=(1+x)(1+x+x^3)(1+x^2+x^3) \]
+    Let's take $ g(x)=1+x+x^3 $. Then, $ \langle g(x)\rangle $ is a
+    $ (7,4) $-cyclic code over $ \mathbb{Z}_2 $. A generator matrix
+    for $ C $ is:
+    \[ G=
+        \begin{bmatrix}
+            1 & 1 & 0 & 1 & 0 & 0 & 0 \\
+            0 & 1 & 1 & 0 & 1 & 0 & 0 \\
+            0 & 0 & 1 & 1 & 0 & 1 & 0 \\
+            0 & 0 & 0 & 1 & 1 & 0 & 1
+        \end{bmatrix}_{4\times 7} \]
 
-        Encode $ m=(1011) $.
+    Encode $ \bm{m}=(1011) $.
 
-        \textbf{Solution.}
+    \textbf{Solution.}
 
-        \[ c=mG=(1111111) \]
-        \[ \implies c(x)=m(x)g(x)=(1+x+x^3)(1+x+x^3)=(1+x+\cdots+x^6)=c \]
-    \end{example}
-\end{exbox}
+    \[ \bm{c}=\bm{m}G=(1111111) \]
+    \[ \implies c(x)=m(x)g(x)=(1+x+x^3)(1+x+x^3)=(1+x+\cdots+x^6)=\bm{c} \]
+\end{Example}
+
