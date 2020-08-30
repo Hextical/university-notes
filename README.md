@@ -2,10 +2,10 @@
 All my university notes done in LaTeX.
 
 ## Year 1
-### Semester 1
+### Semester 2
 |  Course  | Completion | Online |
 | :------: | :--------: | :----: |
-| MATH 137 |     1%     |        |
+| MATH 138 |    100%    |        |
 
 ### Semester 2
 N/A

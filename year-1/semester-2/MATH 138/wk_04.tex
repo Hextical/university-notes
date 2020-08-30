@@ -4,17 +4,17 @@ least bounded functions. Let's see how to deal with a more general
 collection of functions!
 
 In particular, we will examine two types:
-\begin{enumerate}[label=\arabic*)]
+\begin{enumerate}[label=(\arabic*)]
     \item Continuous functions over infinite intervals
     \item Functions with infinite discontinuities
 \end{enumerate}
 
 In particular:
 \begin{itemize}
-    \item Type I: Infinite Intervals. Integrals of the form
+    \item Type I\@: Infinite Intervals. Integrals of the form
           \[ \int_{-\infty}^{a} f(x)\, d{x},\,\int_{a}^{\infty} f(x)\, d{x},\,
               \int_{-\infty}^{\infty} f(x)\, d{x} \]
-    \item Type II: Infinite Discontinuity. For example,
+    \item Type II\@: Infinite Discontinuity. For example,
           \[ \int_{-1}^{1} \frac{1}{x} \, d{x}  \]
           as there is an issue at $ x=0 $.
 \end{itemize}
@@ -136,4 +136,278 @@ Next, let's examine some properties of Type I improper integrals.
 \end{Theorem}
 Evaluating integrals in general is hard, and determining if an improper integral converges
 may be even harder! However, we do have a way of comparing a difficult
-integral to a simpler one (for example, a $ p $-Integral!)
+integral to a simpler one (for example, a $ p $-Integral!).
+
+\begin{Theorem}{Comparison Test for Type I Improper Integrals}{}
+    Assume $ 0\leqslant g(x)\leqslant f(x) $ for all $ x\geqslant a $
+    and that both $ f $ and $ g $ are continuous on $ \interval[open right]{a}{\infty} $.
+    \begin{enumerate}[label=(\arabic*)]
+        \item If $ \int_a^{\infty}f(x)\, d{x} $ converges, then so does
+              $ \int_a^{\infty}g(x)\, d{x} $.
+        \item If $ \int_a^{\infty}f(x)\, d{x} $ diverges, then so does
+              $ \int_a^{\infty}g(x)\, d{x} $.
+    \end{enumerate}
+\end{Theorem}
+\begin{Example}{}{}
+    Determine if the following integrals converge or diverge.
+    $ \int_0^\infty e^{-x^2}\, d{x} $. Note for $ x>1 $,
+    $ 0\leqslant e^{-x^2} <e^{-x} $, by comparison since
+    $ \int_{0}^{\infty} e^{-x^2}\, d{x} $ converges, so does
+    $ \int_{0}^{\infty} e^{-x^2}\, d{x} $.
+\end{Example}
+\begin{Remark}{}{}
+    It doesn't matter that the inequality doesn't hold for $ 0\leqslant x<1 $,
+    since $ \int_{0}^{1}e^{-x^2} \, d{x} $ is not improper and so converges.
+\end{Remark}
+
+\begin{Example}{}{}
+    \begin{enumerate}[label=(\roman*)]
+        \item $ \int_{1}^{\infty} \frac{x}{(x^2+2)^2}\, d{x} $. Note that
+              \[ 0\leqslant \frac{x}{(x^2+2)^2}\leqslant \frac{x}{x^4}=\frac{1}{x^3}  \]
+              for $ x\geqslant 1 $. Since $ \int_{1}^{\infty} \frac{1}{x^3} \, d{x}  $
+              converges ($ p $-integral), so does $ \int_{1}^{\infty} \frac{x}{(x^2+2)^2} \, d{x} $,
+              by comparison.
+        \item $ \int_{1}^{\infty} \frac{2x^2}{x^3-x+1} \, d{x}  $. Note that
+              \[ \frac{2x^2}{x^3-x+1} \geqslant \frac{2x^2}{x^3+1} \geqslant \frac{2x^2}{x^3+x^3}=
+                  \frac{2}{2x} =\frac{1}{x}\geqslant 0 \]
+              for $ x\geqslant 1 $. Since $ \int_{1}^{\infty} \frac{1}{x} \, d{x}  $
+              diverges ($ p $-integral), so does $ \int_{1}^{\infty} \frac{2x}{x^3-x+1} \, d{x} $,
+              by comparison.
+        \item $ \int_{1}^{\infty} \frac{1+e^{-x}}{x} \, d{x} $. Note that
+              \[ \frac{1+e^{-x}}{x} \geqslant \frac{1}{x} \geqslant 0 \]
+              for $ x\geqslant 1 $. Since $ \int_{1}^{\infty} \frac{1}{x} \, d{x}  $ diverges,
+              so does $ \int_{1}^{\infty} \frac{1+e^{-x}}{x} \, d{x}  $, by comparison.
+        \item $ \int_{0}^{\infty} \frac{e^x}{e^{2x}+3} \, d{x}  $. Note that
+              \[ 0\leqslant \frac{e^{x}}{e^{2x}+3} \leqslant \frac{e^{x}}{e^{2x}} =e^{-x} \]
+              for $ x\geqslant 0 $. Since $ \int_{0}^{\infty} e^{-x}\, d{x}  $ converges,
+              so does $ \int_{0}^{\infty} \frac{e^{x}}{e^{2x}+3} \, d{x}  $, by comparison.
+    \end{enumerate}
+\end{Example}
+
+The comparison theorem is fantastic, but it only works on non-negative functions. How
+can we deal with negative functions?
+
+We can use absolute values!
+
+\begin{Definition}{Absolute Convergence}{}
+    Let $ f $ be integrable on $ \interval[open right]{a}{b} $ for all $ b\geqslant a $.
+    We say that the improper integral $ \int_{a}^{\infty} f(x)\, d{x} $
+    \textbf{converges absolutely} if
+    \[ \int_{a}^{\infty} \abs{f(x)}\, d{x}  \]
+    converges.
+\end{Definition}
+
+\begin{Theorem}{Absolute Convergence Theorem}{act}
+    Let $ f $ be integrable on $ \interval{a}{b} $ for all $ b>a $.
+    Then $ \abs{f} $ is also integrable on $ \interval{a}{b} $ for all $ b>a $.
+    Moreover, if we assume that
+    \[ \int_{a}^{\infty} \abs{f(x)}\, d{x} \]
+    converges, then so does
+    \[ \int_{a}^{\infty} f(x)\, d{x}. \]
+    In particular, if $ 0\leqslant \abs{f(x)}\leqslant g(x) $ for all $ x\geqslant a $,
+    both $ f $ and $ g $ are integrable on $ \interval{a}{b} $ for all $ b\geqslant a $,
+    and if $ \int_{a}^{\infty} g(x)\, d{x}  $ converges, then so does
+    \[ \int_{a}^{\infty} f(x)\, d{x}. \]
+\end{Theorem}
+
+\begin{Proof}{\ref{thm:act}}{}
+    Suppose $ \int_{a}^{\infty} \abs{f(x)}\, d{x} $ converges. Then so does
+    \[ \int_{a}^{\infty} 2\abs{f(x)}\, d{x}. \]
+    Note that
+    \[ 0\leqslant f(x)+\abs{f(x)}\leqslant 2\abs{f(x)}, \]
+    so by comparison,
+    \[ \int_{a}^{\infty} f(x)+\abs{f(x)}\, d{x} \]
+    converges. But
+    \[ \int_{a}^{\infty} f(x)\, d{x} =\int_{a}^{\infty} f(x)+\abs{f(x)}\, d{x} -
+        \int_{a}^{\infty} \abs{f(x)}\, d{x}  \]
+    converges, since both components do.
+\end{Proof}
+
+\begin{Example}{}{}
+    \[ \int_{1}^{\infty} \frac{\sin(x)}{x^2+1} \, d{x} \]
+    We can't use comparison directly since $ \sin(x)<0 $ sometimes. But,
+    \[ 0\leqslant \abs*{\frac{\sin(x)}{x^2+1} }\leqslant \frac{1}{x^2+1} \leqslant \frac{1}{x^2} \]
+    for $ x\geqslant 1 $, and $ \int_{1}^{\infty} \frac{1}{x^2} \, d{x}  $ converges. So by
+    ACT, $ \int_{1}^{\infty} \frac{\sin(x)}{1+x^2} \, d{x}  $ converges.
+\end{Example}
+
+Now, let's switch to type II improper integrals. We will see how to deal with them, but we won't
+go as deeply into them.
+
+\subsection{Type II}
+Consider $ \int_{a}^{b} f(x)\, d{x}  $.
+\begin{itemize}
+    \item If $ f $ has an infinite discontinuity at $ x=a $, then we use
+          \[ \int_{a}^{b} f(x)\, d{x} =\lim\limits_{{t} \to {a^+}} \int_{t}^{b} f(x)\, d{x} \]
+    \item If $ f $ has an infinite discontinuity at $ x=b $, then we use
+          \[ \int_{a}^{b} f(x)\, d{x} =\lim\limits_{{t} \to {b^-}} \int_{t}^{b} f(x)\, d{x} \]
+    \item If $ f $ is not continuous at $ c $, $ a<c<b $, then we write
+          \[  \int_{a}^{b} f(x)\, d{x} =\int_{a}^{c} f(x)\, d{x} +\int_{c}^{b} f(x)\, d{x} \]
+          and use the limits as the previous cases.
+\end{itemize}
+Again, if all limit(s) exist, then we say the integral \textbf{converges}. If even one
+limit does not exist, then the integral diverges.
+
+\begin{Example}{}{}
+    \begin{enumerate}[label=(\roman*)]
+        \item $ \int_{0}^{1} \frac{1}{\sqrt{1-x}} \, d{x} $, there is a problem at $ x=1 $. So,
+              \begin{align*}
+                   & =\lim\limits_{{t} \to {1^-}} \int_{0}^{t} \frac{1}{\sqrt{1-x}} \, d{x} \\
+                   & =\lim\limits_{{t} \to {1^-}}\bigl[-2\sqrt{1-x}\bigr]_0^t               \\
+                   & =\lim\limits_{{t} \to {1^-}}[-2\sqrt{1-t}+2\sqrt{1}]                   \\
+                   & =2
+              \end{align*}
+              Thus, the integral converges.
+        \item $ \int_{2}^{3} \frac{x}{(x^2-4)^2}\, d{x}  $, there is a problem at $ x=2 $,
+              but let's make a substitution first! Let $ u=x^2-4 $, so $ du=2x\,dx $. If $ x=2 $,
+              $ u=0 $, and if $ x=3 $, $ u=5 $. So,
+              \begin{align*}
+                   & =\int_{0}^{5} \frac{x}{u^2} \frac{1}{2x} \, d{u}                           \\
+                   & =\lim\limits_{{t} \to {0^+}} \frac{1}{2} \int_{t}^{5} \frac{1}{u^2}\, d{u} \\
+                   & =\lim\limits_{{t} \to {0^+}}\left[-\frac{1}{2u} \right]_t^5                \\
+                   & =\lim\limits_{{t} \to {0^+}}\left[ -\frac{1}{10} +\frac{1}{2t} \right]     \\
+                   & =\infty
+              \end{align*}
+              Thus, the integral diverges.
+        \item $ \int_{0}^{3} \frac{1}{(x-2)^{\sfrac{1}{3} }}\, d{x}  $, there is a problem at $ x=2 $.
+              \begin{align*}
+                   & =\int_{0}^{2} \frac{1}{(x-2)^{\sfrac{1}{3}}} \, d{x}+\int_{2}^{3} \frac{1}{(x-2)^{\sfrac{1}{3} }} \, d{x} \\
+                   & =\lim\limits_{{t_1} \to {2^-}} \int_{0}^{t_1} \frac{1}{(x-2)^{\sfrac{1}{3}}}  \, d{x} +
+                  \lim\limits_{{t_2} \to {2^+}} \int_{t_2}^{3} \frac{1}{(x-2)^{\sfrac{1}{3}}} \, d{x}                          \\
+                   & =\lim\limits_{{t_1} \to {2^-}} \left[ \frac{3}{2}(x-2)^{\sfrac{2}{3}}\right]_0^{t_1}+
+                  \lim\limits_{{t_2} \to {2^+}}\left[ \frac{3}{2}(x-2)^{\sfrac{2}{3}}\right]_{t_2}^{3}                         \\
+                   & =\lim\limits_{{t_1} \to {2^-}} \frac{3}{2} \left[ (t_1-2)^{\sfrac{2}{3}} -(0-2)^{\sfrac{2}{3}}\right]
+                  +\lim\limits_{{t_2} \to {2^+}} \frac{3}{2} \left[ (3-2)^{\sfrac{2}{3}}-(t_2-2)^{\sfrac{2}{3}} \right]        \\
+                   & =-\frac{3}{2} (-2)^{\sfrac{2}{3}}+\frac{3}{2}
+              \end{align*}
+              Thus, the integral converges.
+    \end{enumerate}
+\end{Example}
+
+Exercise: Show $ \int_{0}^{1} \frac{1}{x^p} \, d{x}  $ converges if and only if $ p<1 $.
+
+\chapter{Applications of Integration}
+\section{Area Between Curves}
+Suppose we want to calculate the area of the region between $ f $ and $ g $.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %Straight Lines [id:da28604046841758335] 
+        \draw [color={rgb, 255:red, 65; green, 117; blue, 5 }  ,draw opacity=1 ] (190,32) -- (190,227) ;
+        %Straight Lines [id:da9682060697644969] 
+        \draw [color={rgb, 255:red, 65; green, 117; blue, 5 }  ,draw opacity=1 ] (275,48.8) -- (275,211) ;
+        %Shape: Axis 2D [id:dp044696932049605675] 
+        \draw  (2.5,192.6) -- (518.5,192.6)(54.1,0) -- (54.1,214) (511.5,187.6) -- (518.5,192.6) -- (511.5,197.6) (49.1,7) -- (54.1,0) -- (59.1,7)  ;
+        %Shape: Rectangle [id:dp19922766124111613] 
+        \draw  [color={rgb, 255:red, 196; green, 196; blue, 196 }  ,draw opacity=1 ][fill={rgb, 255:red, 196; green, 196; blue, 196 }  ,fill opacity=1 ]
+        (235,38) -- (235,221.87) -- (225,221.87) -- (225,38) -- cycle ;
+        %Shape: Sine Wave Form [id:dp22033114506939577] 
+        \draw  [color={rgb, 255:red, 0; green, 0; blue, 255 }  ,draw opacity=1 ] (53.5,53.95) .. controls (150.75,24.25) and (196.61,24.09) .. (292.47,53.95) .. controls (388.39,83.82) and (433.34,84) .. (531.5,53.95) ;
+        %Shape: Sine Wave Form [id:dp021759591227149766] 
+        \draw  [color={rgb, 255:red, 255; green, 0; blue, 0 }  ,draw opacity=1 ] (55,205.14) .. controls (152.25,234.84) and (198.11,235) .. (293.97,205.14) .. controls (389.89,175.28) and (434.84,175.09) .. (533,205.14) ;
+
+        % Text Node
+        \draw (193.5,195.4) node [anchor=north west][inner sep=0.75pt]    {$a$};
+        % Text Node
+        \draw (262.5,194.4) node [anchor=north west][inner sep=0.75pt]    {$b$};
+        % Text Node
+        \draw (393,54.4) node [anchor=north west][inner sep=0.75pt]    {$f(x)$};
+        % Text Node
+        \draw (399,160.4) node [anchor=north west][inner sep=0.75pt]    {$g(x)$};
+        % Text Node
+        \draw (230,34.6) node [anchor=south] [inner sep=0.75pt]    {$dx$};
+        % Text Node
+        \draw (219.85,90) node [anchor=north west][inner sep=0.75pt]  [font=\LARGE,rotate=-38.03] [align=left] {Area};
+    \end{tikzpicture}
+\end{figure}
+
+
+This is the area under $ f $ \textbf{minus} the area ``under'' (between $ g $ and the
+$ x $-axis) $ g $!
+
+Using the same ideas as before, we divide the region into infinitely many infinitely thin
+rectangles (each with width $ dx\approx \Delta x $) and integrate!
+
+So, for $ f\geqslant g $, the area bounded by $ f $ and $ g $ from
+$ x=a $ to $ x=b $ is
+\[ \int_{a}^{b} f(x)-g(x)\, d{x} \]
+
+\begin{Example}{}{}
+    Find the area between $ f(x)=x^2 $ and $ g(x)=x $ from $ x=1 $ to $ x=3 $.
+
+    \textbf{Solution.} Since $ x^2\geqslant x $ for $ x\in\interval{1}{3} $, we get
+    \[ \text{Area}=\int_{1}^{3} x^2-x\, d{x} =
+        \left[ \frac{x^3}{3} -\frac{x^2}{2} \right]_1^3
+        =\left( \frac{27}{3} -\frac{9}{2}  \right)-\left( \frac{1}{3}-\frac{1}{2}  \right)
+        =\frac{14}{3} \]
+\end{Example}
+
+You should always get a positive answer! If your answer is negative you should go check
+your work!
+
+Note that the ``upper'' curve may change over the interval.
+
+\textbf{Actual Formula:} Area between $ f $ and $ g $ from $ x=a $ to $ x=b $ is
+\[ \int_{a}^{b} \abs{f(x)-g(x)}\, d{x}  \]
+
+So, we should split up the interval $ \interval{a}{b} $ to eliminate
+the absolute value.
+
+Remember, $ \int_{a}^{b} \text{``upper''}-\text{``lower''}\, d{x} $.
+
+\begin{Example}{}{}
+    Find the area enclosed by $ f(x)=1-x^2 $ and $ g(x)=x^2 $.
+
+    \textbf{Solution.} First, we need to find the intersection points:
+    \[ 1-x^2=x^2\iff 1=2x^2\iff x=\pm \frac{1}{\sqrt{2}} \]
+    If $ x\in\left[ -\frac{1}{\sqrt{2}},\frac{1}{\sqrt{2}} \right] $, then $ 1-x^2\geqslant x^2 $,
+    so we get:
+    \begin{align*}
+        \text{Area} & =
+        \int_{-\sfrac{1}{\sqrt{2}}}^{\sfrac{1}{\sqrt{2}}}(1-x^2)-x^2 \, d{x}                                \\
+                    & =\int_{-\sfrac{1}{\sqrt{2}}}^{\sfrac{1}{\sqrt{2}}}1-2x^2 \, d{x}                      \\
+                    & =\left[ x-\frac{2}{3} x^3 \right]_{-\sfrac{1}{\sqrt{2}}}^{\sfrac{1}{\sqrt{2}}}        \\
+                    & =\left( \frac{1}{\sqrt{2}}-\frac{2}{3} \left( \frac{1}{\sqrt{2}}  \right)^3  \right)-
+        \left( -\frac{1}{\sqrt{2}}-\frac{2}{3} \left( -\frac{1}{\sqrt{2}}  \right)^3  \right)               \\
+                    & =\frac{2}{\sqrt{2}}-\frac{4}{3} \left( \frac{1}{\sqrt{2}}  \right)^3                  \\
+                    & =\frac{2}{\sqrt{2}}-\frac{2}{3\sqrt{2}}                                               \\
+                    & =\frac{4}{3\sqrt{2}}
+    \end{align*}
+\end{Example}
+
+\begin{Example}{}{}
+    Find the area between $ f(x)=\sin(x) $ and $ g(x)=\cos(x) $ from $ x=0 $ to $ x=\pi $.
+
+    \textbf{Solution.} From $ x=0 $ to $ x=\sfrac{\pi}{4} $: $ \cos(x)\geqslant \sin(x) $.
+    From $ \sfrac{\pi}{4} $ to $ x=\pi $: $ \sin(x)\geqslant \cos(x) $. So, the area is:
+    \begin{align*}
+        A
+         & =\int_{0}^{\sfrac{\pi}{4}} \cos(x)-\sin(x)\, d{x} +
+        \int_{\sfrac{\pi}{4} }^{\pi} \sin(x)-\cos(x)\, d{x}                                                  \\
+         & =\bigl[\sin(x)+\cos(x)\bigr]_0^{\sfrac{\pi}{4}}+\bigl[-\cos(x)-\sin(x)\bigr]_{\sfrac{\pi}{4}}^\pi \\
+         & =\sin\left( \frac{\pi}{4} \right)+\cos\left( \frac{\pi}{4}  \right)-\sin(0)-\cos(0)
+        -\cos(\pi)-\sin(\pi)+\cos\left( \frac{\pi}{4}  \right)+\sin\left( \frac{\pi}{4}  \right)             \\
+         & =\frac{\sqrt{2}}{2} +\frac{\sqrt{2}}{2}-1+1+\frac{\sqrt{2}}{2}+\frac{\sqrt{2}}{2}                 \\
+         & =2\sqrt{2}
+    \end{align*}
+\end{Example}
+
+We can use the same ideas to compute areas when $ x $ is a function of $ y $, except we use
+\[ \text{``outer''}-\text{``inner''}\text{ or }\text{``right''}-\text{``left''}\]
+
+\begin{Example}{}{}
+    Find the area between $ x=y^2+1 $ and $ y=x $ from $ y=0 $ to $ y=2 $.
+
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{diagram.pdf}
+    \end{center}
+
+    \textbf{Solution.} For $ y\in\interval{0}{2} $: $ y^2+1\geqslant y $, so:
+    \begin{align*}
+        A & =\int_{0}^{2} y^2+1-y\, d{y}                       \\
+          & =\left[ \frac{y^3}{3} +y-\frac{y^2}{2} \right]_0^2 \\
+          & =\frac{8}{3} +2-2                                  \\
+          & =\frac{8}{3}
+    \end{align*}
+\end{Example}

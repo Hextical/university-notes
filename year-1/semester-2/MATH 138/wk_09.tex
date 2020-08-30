@@ -1,0 +1,481 @@
+\chapter{Power Series}
+\section{Introduction to Power Series}
+\begin{Definition}{Power series}{}
+    A \textbf{power series} is a series of the form
+    \[ \sum\limits_{n=0}^{\infty} a_n x^n=a_0+a_1x+a_2x^2+\cdots\text{ center}=0 \]
+    or
+    \[ \sum\limits_{n=0}^{\infty} a_n (x-a)^n=a_0+a_1(x-a)+a_2(x-a)^2+\cdots\text{ center}=a \]
+    where $ a_i\in\mathbb{R} $ for all $ i $.
+\end{Definition}
+\begin{Definition}{Domain}{}
+    The \textbf{domain} of a power series is the collection of all
+    $ x\in\mathbb{R} $ for which the power series converges.
+\end{Definition}
+
+\begin{Remark}{}{}
+    The domain is never empty! The series will always converge (to $ a_0 $)
+    at $ x= $ centre.
+\end{Remark}
+\underline{Conventions}: To simplify notation, we will use the following
+conventions in this section for $ \sum\limits_{n=0}^{\infty} a_n(x-a)^n $:
+\begin{enumerate}
+    \item When $ n=0 $, the term is $ a_0 $ for all $ x $, including $ x=a $
+          (so $ 0^0=1 $ here!)
+    \item If the first few coefficients are zero; that is, $ a_0=a_1=\cdots=a_k=0 $,
+          then $ \sum\limits_{n=0}^{\infty} a_n(x-a)^n=\sum\limits_{n=k+1}^{\infty} a_n(x-a)^n $.
+          In other words, if a coefficient is zero, regardless of what power
+          $ (x-a) $ has, that term is zero and you can discard it.
+\end{enumerate}
+
+\begin{Example}{}{}
+    Find the domain of $ \displaystyle \sum\limits_{n=0}^{\infty} \frac{x^n}{n!} $.
+
+    \textbf{Solution.} Use the Ratio Test:
+    \[ \lim\limits_{{n} \to {\infty}} \abs*{\frac{a_{n+1}}{a_n}}
+        =\lim\limits_{{n} \to {\infty}} \abs*{\left( \frac{x^{n+1}}{(n+1)!} \right)
+            \left( \frac{n!}{x^n} \right)}
+        =\lim\limits_{{n} \to {\infty}} \abs*{\frac{x}{n+1}}
+        =0
+        <1 \]
+    for all $ x\in\mathbb{R} $. So, the series converges for all $ x\in\mathbb{R} $,
+    which means the domain is $ \mathbb{R} $.
+\end{Example}
+
+\begin{Example}{}{}
+    Find the domain of $ \displaystyle \sum\limits_{n=0}^{\infty} (x-7)^n $.
+
+    \textbf{Solution.} Ratio (or Root) Test:
+    \[ \lim\limits_{{n} \to {\infty}} \abs*{\frac{(x-7)^{n+1}}{(x-7)^n}}
+        =\lim\limits_{{n} \to {\infty}} \abs{x-7}
+        =\abs{x-7} \]
+    To guarantee the series converges, we need $ \abs{x-7}<1 $,
+    or $ 6<x<8 $. However, the Ratio Test fails if $ \abs{x-7}=1 $; that is,
+    $ x=6 $ or $ x=8 $, so let's check these separately!
+    \begin{itemize}
+        \item If $ x=6 $: $ \sum\limits_{n=0}^{\infty} (6-7)^n=\sum\limits_{n=0}^{\infty} (-1)^n $
+              diverges.
+        \item If $ x=8 $: $ \sum\limits_{n=0}^{\infty} (8-7)^n=\sum\limits_{n=0}^{\infty}1^n $
+              diverges.
+    \end{itemize}
+    So, the domain in this case is $ \interval[open]{6}{8} $.
+    In fact, the domain will always be an interval!
+\end{Example}
+
+\begin{Theorem}{}{}
+    For a given power series $ \sum\limits_{n=0}^{\infty} a_n(x-a)^n $, there are
+    three possibilities:
+    \begin{enumerate}
+        \item The series converges only when $ x=a $.
+        \item The series converges for all $ x\in\mathbb{R} $.
+        \item There exists $ R\in\mathbb{R} $ such that the series converges
+              absolutely for $ \abs{x-a}<R $, diverges if $ \abs{x-a}>R $, and may converge
+              or diverge if $ \abs{x-a}=R $.
+    \end{enumerate}
+\end{Theorem}
+
+\begin{Proof}{}{}
+    For simplicity, let's work with $ \sum\limits_{n=0}^{\infty} a_n x^n $ (center 0),
+    we can shift everything to $ x=a $ if needed. We will show that if the power series
+    $ \sum\limits_{n=0}^{\infty} a_n x^n $ converges at $ x=x_0 $ and $ \abs{x_1}<\abs{x_0} $,
+    then $ \sum\limits_{n=0}^{\infty} \abs*{a_n x_1^n} $ converges too.
+
+    Since
+    $ \sum\limits_{n=0}^{\infty} a_n x_0^n $ converges, $ \lim\limits_{{n} \to {\infty}}
+        \abs*{a_n x_0^n}=0 $ by the Divergence Test. Therefore $ \abs{a_n x^n}<1 $ eventually.
+
+    Next, we can see that
+    \[ \abs*{a_n x_1^n}=\abs*{a_n x_0^n}\abs*{\frac{x_1^n}{x_0^n}}\leqslant \abs*{\frac{x_1^n}{x_0^n}} \]
+    eventually. But $ \sum\limits_{n=0}^{\infty} \abs*{\sfrac{x_1}{x_0}}^n $ converges
+    (geometric series $ \abs{r}=\abs*{\sfrac{x_1}{x_0}}<1 $), so $ \sum\limits_{n=0}^{\infty}
+        \abs{a_n x_1^n} $
+    converges.
+\end{Proof}
+
+\begin{Definition}{Radius of convergence}{}
+    The $ R $ in the theorem is called \textbf{radius of convergence}
+    of the power series.
+    \begin{enumerate}
+        \item $ \implies R=0 $
+        \item $ \implies R=\infty $
+        \item $ \implies R\in\interval[open]{0}{\infty} $. In this case,
+              the endpoints must be checked separately (without Ratio Test).
+    \end{enumerate}
+\end{Definition}
+
+\begin{Definition}{Interval of convergence}{}
+    The \textbf{interval of convergence} is the interval on which the power
+    series converges. So, the interval could be:
+    \begin{itemize}
+        \item $ I=\left\{ a\right\} $;
+              $ R=0 $
+        \item $ I=\mathbb{R} $;
+              $ R=\infty $
+        \item $ I=\interval[open]{a-R}{a+R} $;
+              $ R\in\interval[open]{0}{\infty} $
+        \item $ I=\interval[open right]{a-R}{a+R} $;
+              $ R\in\interval[open]{0}{\infty} $
+        \item $ I=\interval[open left]{a-R}{a+R} $;
+              $ R\in\interval[open]{0}{\infty} $
+        \item $ I=\interval{a-R}{a+R} $;
+              $ R\in\interval[open]{0}{\infty} $
+    \end{itemize}
+\end{Definition}
+
+\begin{Remark}{}{}
+    The series converges absolutely on $ I $ except maybe at the endpoints.
+\end{Remark}
+To find the radius, use the Ratio Test! Note that the Ratio Test limit
+may not exist! See example 6 in section 6.1. For our assignments and exams it will though.
+
+\begin{Example}{}{}
+    Find the radius and interval of convergence for the following power series.
+    \begin{enumerate}
+        \item $ \displaystyle \sum\limits_{n=1}^{\infty} \frac{3^n(x+4)^n}{\sqrt{n}} $.
+
+              \textbf{Solution.} Ratio Test:
+              \[ \lim\limits_{{n} \to {\infty}}
+                  \abs*{\left( \frac{3^{n+1}(x+4)^{n+1}}{\sqrt{n+1}} \right)
+                      \left( \frac{\sqrt{n}}{3^n(x+4)^n} \right) }
+                  =\lim\limits_{{n} \to {\infty}} \frac{\sqrt{n}}{\sqrt{n+1}}\left( 3\abs{x+4} \right)
+                  =3\abs{x+4} \]
+              We need $ 3\abs{x+4}<1 $, so $ \abs{x+4}<\sfrac{1}{3} $. So $ R=\sfrac{1}{3} $.
+
+              The \emph{open} interval (before checking endpoints) is:
+              \[ \interval[open, scaled]{-4-\frac{1}{3}}{-4+\frac{1}{3}}=
+                  \interval[open, scaled]{-\frac{13}{3}}{-\frac{11}{3}} \]
+
+              \underline{Check Endpoints}
+
+              $ x=-\dfrac{13}{3} $:
+              $ \displaystyle \sum\limits_{n=1}^{\infty}
+                  \frac{3^n\left( -\sfrac{13}{3}+4 \right)^n}{\sqrt{n}}
+                  =\sum\limits_{n=1}^{\infty} \frac{3^n\left( -\sfrac{1}{3} \right)^n}{\sqrt{n}}
+                  =\sum\limits_{n=1}^{\infty} \frac{(-1)^n}{\sqrt{n}} $ converges by AST\@.
+
+              $ x=-\dfrac{11}{3} $:
+              $ \displaystyle \sum\limits_{n=1}^{\infty}
+                  \frac{3^n\left( -\sfrac{11}{3} +4 \right)^n}{\sqrt{n}}
+                  =\sum\limits_{n=1}^{\infty} \frac{3^n\left( \sfrac{1}{3} \right)^n}{\sqrt{n}}
+                  =\sum\limits_{n=1}^{\infty} \frac{1}{\sqrt{n}}  $ diverges
+              ($ p $-series, $ p=\sfrac{1}{2}<1 $).
+
+              So, the interval of convergence is
+              $ \interval[open right, scaled]{-\sfrac{13}{3}}{-\sfrac{11}{3}} $.
+
+        \item $ \displaystyle\sum\limits_{n=0}^{\infty} n!x^n $.
+
+              \textbf{Solution.} Ratio Test:
+              \[ \lim\limits_{{n} \to {\infty}} \abs*{\frac{(n+1)!x^{n+1}}{n!x^n} }
+                  =\lim\limits_{{n} \to {\infty}} (n+1)\abs{x}=
+                  \begin{cases}
+                      \infty & \text{if } x\neq 0 \\
+                      0      & \text{if }x=0
+                  \end{cases} \]
+              So the series diverges unless $ x=0\implies R=0 $, $ I=\{0\} $.
+        \item $ \displaystyle \sum\limits_{n=2}^{\infty} \frac{(-1)^n x^n}{4^n\ln(n)} $
+
+              \textbf{Solution.} Ratio Test:
+              \[ \lim\limits_{{n} \to {\infty}}
+                  \abs*{\left( \frac{(-1)^{n+1}x^{n+1}}{4^{n+1}\ln(n+1)} \right)
+                  \left( \frac{4^n\ln(n)}{(-1)^n x^n}  \right)}
+                  =\lim\limits_{{n} \to {\infty}} \frac{\ln(n)}{\ln(n+1)} \left( \frac{1}{4} \right)
+                  \abs{x}
+                  =\lim\limits_{{n} \to {\infty}} \frac{\sfrac{1}{n}}{\sfrac{1}{(n+1)}}
+                  \left( \frac{\abs{x}}{4} \right)
+                  =\frac{\abs{x}}{4} \]
+              Need $ \sfrac{\abs{x}}{4}<1\implies \abs{x}<4  $. So, $ R=4 $,
+              open interval is $ \interval[open]{-4}{4} $.
+
+              \underline{Check Endpoints}
+
+              $ x=-4 $: $ \displaystyle \sum\limits_{n=2}^{\infty} \frac{(-1)^n(-4)^n}{4^n\ln(n)}
+                  =\sum\limits_{n=2}^{\infty} \frac{1}{\ln(n)} $. Note that $ \dfrac{1}{\ln(n)}
+                  \geqslant \dfrac{1}{n} $ for $ n\geqslant 2 $, so
+              since $ \sum\limits_{n=2}^{\infty} \sfrac{1}{n} $ diverges (Harmonic Series), so does
+              $ \sum\limits_{n=2}^{\infty} \sfrac{1}{\ln(n)} $ diverges by comparison.
+
+              $ x=4 $: $ \displaystyle
+                  \sum\limits_{n=2}^{\infty} \frac{(-1)^n4^n}{4^n\ln(n)}=\sum\limits_{n=2}^{\infty}
+                  \frac{(-1)^n}{\ln(n)}  $ converges by AST\@.
+
+              So, the interval of convergence is $ \interval[open left]{-4}{4} $.
+    \end{enumerate}
+\end{Example}
+
+\section{Representing Functions as Power Series}
+A power series, $ \sum\limits_{n=0}^{\infty} a_n(x-a)^n $ is a function whose domain is its
+interval of convergence.
+
+We already know one function as a series: Geometric Series!
+
+\[ \boxed{\frac{1}{1-x}=\sum\limits_{n=0}^{\infty} x^n} \]
+for $ \abs{x}<1 $. $ R=1 $ and $ I=\interval[open]{-1}{1} $.
+
+Let's see what we can say about power series!
+
+\begin{Theorem}{Abel's Theorem}{}
+    If $ f(x)=\sum\limits_{n=0}^{\infty} a_n(x-a)^n $ has interval of convergence
+    $ I $, then $ f $ is continuous on $ I $.
+\end{Theorem}
+
+\begin{Proof}{}{}
+    Beyond the scope of this course.
+\end{Proof}
+
+While this is interesting, soon we will see that we can say a lot more!
+
+We can also use known power series to get power series for other functions. Let's
+examine the rules first.
+
+Say $ f(x)=\sum\limits_{n=0}^{\infty} a_n(x-a)^n $ and $ g(x)=\sum\limits_{n=0}^{\infty} b_n(x-a)^n $
+with radii of convergence $ R_f $ and $ R_g $ and intervals of convergence
+$ I_f $ and $ I_g $, respectively.
+
+\begin{enumerate}
+    \item $ f(x)\pm g(x)=\sum\limits_{n=0}^{\infty} (a_n\pm b_n)(x-a)^n $. If $ R_f\neq R_g $,
+          then the radius of convergence is $ R=\min\left\{ R_f,R_g\right\} $
+          and the interval is $ I_f\cap I_g $. If $ R_f=R_g $, then $ R>R_f $.
+    \item $ (x-a)^k f(x)=\sum\limits_{n=0}^{\infty} a_n(x-a)^{n+k} $ where the radius
+          is $ R_f $ and the interval is $ I_f $; that is, there is no change.
+    \item If $ c\in\mathbb{R} $ with $ c\neq 0 $, and $ a=0 $,
+          then $ f(cx^k)=\sum\limits_{n=0}^{\infty} a_n c^n x^{nk} $, where we get the radius,
+          $ R $, by solving $
+              \displaystyle \abs*{cx^k}<R_f\implies \abs{x}<\sqrt[k]{\frac{R_f}{\abs{c}}} $,
+          so the new radius is
+          $ \displaystyle R=\sqrt[k]{\dfrac{R_f}{\abs{c}}} $. If $ R_f=\infty $
+          then $ R=\infty $. The interval is $ I=\left\{\,x\in\mathbb{R}\mid cx^k\in I_f\,\right\} $.
+
+          Point is: we can substitute into a known series to form a new one.
+\end{enumerate}
+
+\begin{Example}{}{}
+    Find a power series for $ f(x)=\dfrac{1}{3-x} $ about $ x=0 $.
+
+    \textbf{Solution.}
+    \[ \frac{1}{3-x}
+        =\frac{1}{3} \left( \frac{1}{1-\sfrac{x}{3}}  \right)
+        =\frac{1}{3}\sum\limits_{n=0}^{\infty} \left( \frac{x}{3} \right)^n
+        =\sum\limits_{n=0}^{\infty} \frac{x^n}{3^{n+1}}  \]
+    which is valid for $ \abs*{\sfrac{x}{3}}<1\implies \abs{x}<3 $ so $ R=3 $
+    and $ I=\interval[open]{-3}{3} $.
+\end{Example}
+
+\begin{Remark}{}{}
+    We don't need to check endpoints for geometric series.
+\end{Remark}
+
+\begin{Example}{}{}
+    Find a power series for $ f(x)=\dfrac{x^2}{x+7} $ centred at $ x=0 $.
+
+    \textbf{Solution.}
+    \[ \frac{x^2}{x+7}
+        =\frac{x^2}{7} \left( \frac{1}{1+\sfrac{x}{7}} \right)
+        =\frac{x^2}{7} \left[ \frac{1}{1-\left( -\sfrac{x}{7}  \right)}  \right]
+        =\frac{x^2}{7} \sum\limits_{n=0}^{\infty}\left( -\frac{x}{7} \right)^n
+        =\sum\limits_{n=0}^{\infty} \frac{(-1)^n x^{n+2}}{7^{n+1}}  \]
+    for $ \abs*{-\sfrac{x}{7}}<1\implies
+        \abs{x}<7 $ so $ R=7 $ and $ I=\interval[open]{-7}{7} $.
+\end{Example}
+
+
+\begin{Example}{}{}
+    Find a power series for $ f(x)=\dfrac{1}{4-x^2} $ about $ x=0 $.
+
+    \textbf{Solution.}
+    \[ \frac{1}{4-x^2}=
+        \frac{1}{4} \left( \frac{1}{1-\sfrac{x^2}{4}}  \right)
+        =\frac{1}{4} \sum\limits_{n=0}^{\infty}
+        \left( \frac{x^2}{4} \right)^n
+        =\sum\limits_{n=0}^{\infty} \frac{x^{2n}}{4^{n+1}} \]
+    for $ \abs*{\sfrac{x^2}{4}}<1\implies \abs{x}<2 $ so $ R=2 $
+    and $ I=\interval[open]{-2}{2} $.
+\end{Example}
+
+What about not centred at $ x=0 $?
+
+\begin{Example}{}{}
+    Find a series representation for $ f(x)=\dfrac{1}{x} $
+    centred at $ x=3 $.
+
+    \textbf{Solution.} The trick is to add and subtract 3.
+    \[ \frac{1}{x} =
+        \frac{1}{(x-3)+3}
+        =\frac{1}{3} \left[ \frac{1}{1+\left( \frac{x-3}{3} \right)}  \right]
+        =\frac{1}{3} \left[ \frac{1}{1-\left( -\frac{(x-3)}{3} \right)}  \right]
+        =\frac{1}{3} \sum\limits_{n=0}^{\infty} \left[ -\frac{(x-3)}{3} \right]^n
+        =\sum\limits_{n=0}^{\infty} \frac{(-1)^n (x-3)^n}{3^{n+1}}  \]
+    for $ \abs*{-\frac{(x-3)}{3}}<1\implies \abs{x-3}<3 $
+    so $ R=3 $ and $ I=\interval[open]{0}{6} $.
+\end{Example}
+
+\section{Differentiation and Integration}
+Given a power series $ \sum\limits_{n=0}^{\infty} a_n(x-a)^n $,
+we can differentiate or integrate \textbf{term-by-term}:
+\begin{Theorem}{}{}
+    If $ f(x)=\sum\limits_{n=0}^{\infty} c_n(x-a)^n $ with radius of convergence
+    $ R>0 $, then $ f(x) $ is differentiable (hence continuous and integrable)
+    on $ \interval[open]{a-R}{a+R} $, and:
+    \begin{enumerate}
+        \item $ \displaystyle f^\prime(x)=\sum\limits_{n=1}^{\infty} n a_n(x-a)^{n-1} $
+        \item $ \displaystyle\int f(x)\, d{x} =\sum\limits_{n=0}^{\infty} \left[
+                      \frac{a_n(x-a)^{n+1}}{n+1}
+                      \right]+C $
+    \end{enumerate}
+    Both have radius of convergence $ R $.
+\end{Theorem}
+
+\begin{Remark}{}{}
+    In 1.\ always want to change the starting index since if $ n=0 $, the term is $ 0 $.
+\end{Remark}
+
+\begin{Remark}{}{}
+    While the radius doesn't change, the interval \emph{may change}! We need to check the endpoints
+    if we integrate/differentiate.
+\end{Remark}
+
+\begin{Proof}{}{}
+    Beyond the scope of this course.
+\end{Proof}
+
+\begin{Example}{}{}
+    Find a power series for $ \ln\abs{1+x} $ about $ x=0 $.
+
+    \textbf{Solution.} We know $ \dfrac{1}{1-x}=\sum\limits_{n=0}^{\infty} x^n $
+    for $ \abs{x}<1 $, so $ R=1 $. Then, we get
+    $ \displaystyle \frac{1}{1+x} =\frac{1}{1-(-x)}=
+        \sum\limits_{n=0}^{\infty} (-x)^n=\sum\limits_{n=0}^{\infty}
+        (-1)^n x^n $. Integrate:
+    \[ \ln\abs{1+x}=\sum\limits_{n=0}^{\infty} \left[ \frac{(-1)^n x^{n+1}}{n+1} \right]
+        +C \]
+    First, we can find $ C $ by subbing into $ x= 0 $ (the centre)
+    (since we want a series for $ \ln\abs{1+x} $ explicitly, not the indefinite
+    integral)
+    \[ \ln\abs{1+0}=\sum\limits_{n=0}^{\infty} \frac{(-1)^n 0^{n+1}}{n+1} +C\implies 0=C \]
+    So, $ \displaystyle \ln\abs{1+x}=\sum\limits_{n=0}^{\infty} \frac{(-1)^n x^{n+1}}{n+1}  $,
+    $ R=1 $. What about the interval of convergence? The open interval is $ \interval[open]{-1}{1} $,
+    but since we integrated we need to check the endpoints.
+
+    \underline{Check Endpoints}
+
+    At $ x=1 $: $ \displaystyle \sum\limits_{n=0}^{\infty} \frac{(-1)^n (1)^{n+1}}{n+1}
+        =\sum\limits_{n=0}^{\infty} \frac{(-1)^n}{n+1} $ converges by AST\@.
+
+    Note that this shows
+    \[ \boxed{\ln(2)=\sum\limits_{n=0}^{\infty}\frac{(-1)^n}{n+1}=\sum\limits_{n=1}^{\infty}
+            \frac{(-1)^{n-1}}{n}} \]
+    At $ x=-1 $: $ \displaystyle \sum\limits_{n=0}^{\infty}
+        \frac{(-1)^n(-1)^{n+1}}{n+1} =\sum\limits_{n=0}^{\infty} -\frac{1}{n+1}   $
+    diverges (Harmonic Series). So $ I=\interval[open left]{-1}{1} $.
+\end{Example}
+
+\begin{Example}{}{}
+    Find a power series for $ f(x)=\dfrac{1}{(1-x)^3} $ about $ x=0 $.
+
+    \textbf{Solution.} We know $ \displaystyle \frac{1}{1-x} =\sum\limits_{n=0}^{\infty} x^n $
+    for $ \abs{x}<1 $ ($ R=1 $).
+
+    So differentiate: $ \displaystyle
+        \frac{1}{(1-x)^2} =\sum\limits_{n=1}^{\infty} n x^{n-1} $ ($ R=1 $).
+
+    Do it again: $ \displaystyle \frac{2}{(1-x)^3} =\sum\limits_{n=2}^{\infty} n(n-1)x^{n-2} $
+    ($ R=1 $).
+
+    Then we get $ \displaystyle\frac{1}{(1-x)^3}=\frac{1}{2}\sum\limits_{n=2}^{\infty} n(n-1)x^{n-2} $
+    with $ R=1 $.
+
+    \underline{Check Endpoints}
+
+    At $ x=1 $: $ \displaystyle \frac{1}{2} \sum\limits_{n=0}^{\infty} n(n-1) $
+    diverges by the divergence test.
+
+    At $ x=-1 $: $ \displaystyle \frac{1}{2}\sum\limits_{n=0}^{\infty} n(n-1)(-1)^{n-2} $
+    diverges by the divergence test.
+
+    So, $ I=\interval[open]{-1}{1} $.
+\end{Example}
+
+\begin{Example}{}{}
+    Find a power series for $ f(x)=\arctan(x) $ about $ x=0 $.
+
+    \textbf{Solution.} We will first find a series for $ \dfrac{1}{1+x^2} $,
+    then integrate!
+
+    \[ \frac{1}{1+x^2} =\frac{1}{1-(-x^2)} =
+        \sum\limits_{n=0}^{\infty} (-x^2)^n
+        =\sum\limits_{n=0}^{\infty} (-1)^n x^{2n} \]
+    for $ \abs{-x^2}<1\implies \abs{x}<1 $ ($ R=1 $).
+
+    So $ \displaystyle\arctan(x)=\int \frac{1}{1+x^2} \, d{x} =
+        \sum\limits_{n=0}^{\infty} \left[ \frac{(-1)^n x^{2n+1}}{2n+1}  \right] +C $.
+
+    Sub in $ x=0 $ to get $ C $: $ \arctan(0)=0+C\implies C=0 $.
+
+    So $ \displaystyle \arctan(x)=\sum\limits_{n=0}^{\infty} \frac{(-1)^n x^{2n+1}}{2n+1}  $,
+    $ R=1 $.
+
+    \underline{Check Endpoints}
+
+    At $ x=-1 $: $ \displaystyle \sum\limits_{n=0}^{\infty} \frac{(-1)^n(-1)^{2n+1}}{2n+1}
+        =\sum\limits_{n=0}^{\infty} \frac{(-1)^{n+1}}{2n+1}  $ converges by AST\@.
+
+    At $ x=1 $: $ \displaystyle \sum\limits_{n=0}^{\infty} \frac{(-1)^n}{2n+1}  $
+    converges by AST\@.
+
+    So $ I=\interval{-1}{1} $.
+\end{Example}
+
+\begin{Example}{}{}
+    Evaluate $ \displaystyle \int \frac{1}{2-x^5} \, d{x}  $
+    as a power series about $ x=0 $.
+
+    \textbf{Solution.} First, find a series for $ \dfrac{1}{2-x^5} $:
+    \[ \frac{1}{2-x^5}
+        =\frac{1}{2} \left( \frac{1}{1-\sfrac{x^5}{2}} \right)
+        =\frac{1}{2} \sum\limits_{n=0}^{\infty} \left( \frac{x^5}{2}  \right)^n
+        =\sum\limits_{n=0}^{\infty} \frac{x^{5n}}{2^{n+1}}  \]
+    for $ \abs*{\sfrac{x^5}{2} }<1\implies \abs{x}<2^{\sfrac{1}{5}} $ ($ R=2^{\sfrac{1}{5}} $).
+
+    Then integrate:
+    \[ \int \frac{1}{2-x^5} \, d{x} =
+        \int \sum\limits_{n=0}^{\infty} \frac{x^{5n}}{2^{n+1}} \, d{x}
+        =\sum\limits_{n=0}^{\infty} \left[ \frac{x^{5n+1}}{2^{n+1}(5n+1)}  \right]+C \]
+    with $ R=2^{\sfrac{1}{5}} $. We won't find $ C $ since we are evaluating an
+    indefinite integral! The open interval is $ \interval[open]{-2^{\sfrac{1}{5}}}{2^{\sfrac{1}{5}  }} $.
+
+    \underline{Check Endpoints}
+
+    At $ x=2^{\sfrac{1}{5}} $: $ \displaystyle \sum\limits_{n=0}^{\infty}
+        \frac{(2^{\sfrac{1}{5}})^{5n+1}}{2^{n+1}(5n+1)}=
+        \sum\limits_{n=0}^{\infty} \frac{2^n 2^{\sfrac{1}{5}}}{2^{n+1}(5n+1)}
+        =\sum\limits_{n=0}^{\infty} \left[ \left( \frac{2^{\sfrac{1}{5} }}{2} \right)
+            \left( \frac{1}{5n+1} \right) \right]  $ diverges,
+    use LCT with $ \sum\limits_{n=1}^{\infty} \frac{1}{n} $ (exercise).
+
+    At $ x=-2^{\sfrac{1}{5} } $:
+    $ \displaystyle \sum\limits_{n=0}^{\infty}
+        \left[(-1)^{5n+1}\left( \frac{2^{\sfrac{1}{5} }}{2}  \right)
+            \left( \frac{1}{5n+1}  \right)\right] $ converges by AST\@.
+
+    So $ I=\interval[open right]{-2^{\sfrac{1}{5} }}{2^{\sfrac{1}{5}}} $.
+\end{Example}
+
+Using differentiation, we can find another series for $ e^x $.
+
+\begin{Proposition}{}{}
+    $ \displaystyle e^x=\sum\limits_{n=0}^{\infty} \frac{x^n}{n!} $
+    for all $ x\in\mathbb{R} $.
+\end{Proposition}
+
+\begin{Proof}{}{}
+    We know $ R=\infty $ for that series. Let $ g(x)=\displaystyle \sum\limits_{n=0}^{\infty}
+        \frac{x^n}{n!} $. Then,
+    \[ g^\prime(x)=\sum\limits_{n=1}^{\infty} \frac{n x^{n-1}}{n!}
+        =\sum\limits_{n=1}^{\infty} \frac{x^{n-1}}{(n-1)!}
+        =\sum\limits_{n=0}^{\infty} \frac{x^n}{n!}=g(x) \]
+    So $ g^\prime(x)=g(x) $.
+
+    Solve this ODE and we get $ g(x)=Ce^x $, but by definition $ g(0)=1 $,
+    so $ C=1 $ and therefore $ g(x)=e^x $.
+\end{Proof}
+
+We will come back and explore this and other functions soon!

@@ -1,0 +1,477 @@
+\section{Separable Differential Equations}
+In this course, we will consider first-order ODEs that can be written
+in the form
+\[ y^\prime=f(x,y) \]
+That is, we can solve for $ y^\prime $.
+
+\begin{Definition}{Separable}{}
+    A separable ODE is a first-order ODE that can be written as
+    \[ \frac{dy}{dx} =g(y)h(x), \]
+    that is, we can factor the RHS into a product of functions, one containing
+    only $ x $'s and one containing only $ y $'s.
+\end{Definition}
+To solve a separable ODE, move $ g(y) $ to the LHS and integrate both sides with respect
+to $ x $.
+\begin{align*}
+    \frac{dy}{dx} =g(y)h(x)
+     & \implies \frac{1}{g(y)}\frac{dy}{dx} =h(x)                          \\
+     & \implies \int \frac{1}{g(y)}\frac{dy}{dx} \, d{x} =\int h(x)\, d{x} \\
+     & \implies \int \frac{1}{g(y)} \, d{y} =\int h(x)\, d{x}              \\
+\end{align*}
+Now, integrate each side!
+\begin{Remark}{}{}
+    What is going on in the last step? A substitution! Say $ y=f(x) $,
+    then $ dy=f^\prime(x)\,dx $. Therefore, the LHS is:
+    \[ \int \frac{1}{g(f(x))} f^\prime(x)\, d{x} =\int \frac{1}{g(y)} \, d{y} \]
+\end{Remark}
+
+\begin{Example}{}{}
+    Solve
+    \[ \frac{dy}{dx} =\frac{x}{y}, \]
+    find the general solution.
+
+    \textbf{Solution.}
+    \begin{align*}
+        \frac{dy}{dx} =\frac{x}{y}
+         & \implies \int y\, d{y} =\int x\, d{x}   \\
+         & \implies \frac{y^2}{2} =\frac{x^2}{2}+C
+    \end{align*}
+    Solve for $ y $ if possible: $ y=\pm\sqrt{x^2+2C} $ or $ y=\pm\sqrt{x^2+C_1} $
+\end{Example}
+
+\begin{Example}{}{}
+    Find the particular solution to the following IVP\@.
+    \[ \frac{dy}{dx} =\frac{3x^2+4x+2}{2y-2} \]
+    with $ y(0)=-1 $.
+
+    \textbf{Solution.}
+    \[ \int 2y-2\, d{y} =\int 3x^2+4x+2\, d{x} \implies y^2-2y=x^3+2x^2+2x+C \]
+    Next, get $ C $ by using $ y(0)=-1 $.
+    \[ (-1)^2-2(-1)=0+0+0+C\implies C=3 \]
+    So, $ y^2-2y=x^3+2x^2+2x+3 $. We can solve for $ y $ if we complete the square
+    on the LHS\@:
+    \begin{align*}
+        y^2-2y    & =  x^3+2x^2+2x+3           \\
+        (y-1)^2-1 & = x^3+2x^2+2x+3            \\
+        y         & = 1\pm\sqrt{x^3+2x^2+2x+4}
+    \end{align*}
+    but, only one satisfies $ y(0)=-1 $:
+    \[ y=1-\sqrt{x^3+2x^2+2x+4} \]
+\end{Example}
+
+\begin{Remark}{}{}
+    Watch out for dividing by zero! If you see a possible divide
+    by zero (with $ y $), then deal with that case separately.
+\end{Remark}
+
+\begin{Example}{}{}
+    Find the general solution to
+    \[ \frac{dy}{dx}=\frac{y\cos(x)}{1+2y^2} \]
+    \textbf{Solution.} We get
+    \[ \int \frac{1+2y^2}{y} \, d{y} =\int \cos(x)\, d{x} \]
+    if $ y\not\equiv 0 $ ``not identically'' meaning not the constant function $ 0 $.
+    \[ \int \frac{1}{y} +2y\, d{y} =\sin(x)+C\implies \ln(y)+y^2=\sin(x)+C \]
+    (can't solve for $ y $).
+
+    But what if $ y\equiv 0 $? Then, $ \frac{dy}{dx} =0 $, and the ODE becomes
+    $ 0=0 $ which is true for all $ x $! So, $ y\equiv 0 $ is also a solution.
+
+    Therefore, the general solution is
+    \[ \ln(y)+y^2=\sin(x)+C \text{ or }y\equiv 0 \]
+    Note that the $ y\equiv 0 $ solution (which is an equilibrium solution) is also
+    called a \textbf{singular solution} since you can't get it by choosing $ C $.
+\end{Example}
+
+\begin{Example}{}{}
+    Find a particular solution for the IVP
+    \[ \frac{dy}{dx} =xy \]
+    with $ y(0)=1 $.
+
+    \textbf{Solution.}
+    \[ \int \frac{1}{y} \, d{y} =\int x\, d{x} \]
+    if $ y\not\equiv 0 $, but note that $ y(0)=1 $, so $ y\not\equiv 0 $!
+    \begin{align*}
+        \ln\abs{y} & =\frac{x^2}{2} +C                                                    \\
+        \abs{y}    & =e^{\sfrac{x^2}{2}}+C=e^C e^{\sfrac{x^2}{2}}                         \\
+        y          & =\pm e^C e^{\sfrac{x^2}{2}}                  & \text{say } A=\pm e^C \\
+        y          & =Ae^{\sfrac{x^2}{2}}
+    \end{align*}
+    Use $ y(0)=1 $ to get $ A $: $ 1=Ae^0=A $, so $ y=e^{\sfrac{x^2}{2}} $.
+\end{Example}
+
+Sometimes an ODE isn't separable, but a substitution will make it separable.
+
+Common substitutions: $ V=y+x $, $ V=\sfrac{y}{x} $, $ V=y^\prime $, etc.
+
+\begin{Example}{}{}
+    Solve
+    \[ \frac{dy}{dx} =(x+y)^2-1 \]
+
+    \textbf{Solution.} This ODE is not separable, but let $ V=x+y $, so
+    $ V^\prime=1+y^\prime $ or $ y^\prime=V^\prime-1 $. So,
+    \[ V^\prime-1=V^2-1\implies V^\prime=V^2 \]
+    Now it's separable! Therefore,
+    \[ \int \frac{1}{V^2} \, d{V} =\int \, d{x} \]
+    if $ V\not\equiv 0 $.
+    \[ -\frac{1}{V} =x+C\implies V=-\frac{1}{x+C} \]
+    but $ V=x+y $, so
+    \[ x+y=-\frac{1}{x+C} \]
+    so we get
+    \[ y=-x-\frac{1}{x+C} \]
+    What if $ V\equiv 0 $? Then $ y=-x $, and $ \sfrac{dy}{dx}=-1, $ the ODE becomes
+    $ -1=-1 $ which is true for all $ x $! So, $ y=-x $ is another solution. Thus,
+    \[ y=-x\text{ or }y=-x-\frac{1}{x+C} \]
+\end{Example}
+
+\subsection*{Application: Mixing Problems}
+Suppose a tank has 1000 L of salt water at an initial concentration of
+0.1 kg/L.
+
+Salt water of concentration 0.3 kg/L flows in at a rate of 10 L/min. The solution is
+kept well-mixed, and drains out at the same rate.
+
+Let $ X(t)= $ the amount of salt in the tank at time $ t $.
+
+Then,
+\begin{align*}
+    \frac{dx}{dt}
+     & =(\text{rate in})-(\text{rate out})                                         \\
+     & =(10\text{ L/min})(0.3\text{kg/L})-(\text{conc.\ in tank})(10\text{ L/min}) \\
+\end{align*}
+Therefore,
+\begin{align*}
+    (\text{conc.\ in tank})
+     & =\frac{\text{Amount of salt}}{\text{volume}}                                      \\
+     & =\frac{x}{1000}                              & \text{since volume doesn't change}
+\end{align*}
+So,
+\begin{align*}
+    \frac{dx}{dt}
+     & =3-\frac{x}{100}                       \\
+     & =\frac{300-x}{100} & \text{separable!} \\
+\end{align*}
+\[ \int \frac{1}{300-x} \, d{x}=\int \frac{1}{100} \, d{t} \implies -\ln\abs{300-x}=\frac{t}{100} +C \]
+What is $ X(0) $? Starts at 100 L at 0.1 kg/L, so $ X(0) $ = 100 kg.
+
+Find $ C $: \[ -\ln\abs{300-100}=C\implies C=-\ln(200) \]
+So,
+\[ -\ln\abs{300-x}=\frac{t}{100}-\ln(200) \]
+Solve for $ x $:
+\[ \abs{300-x}=200e^{-\sfrac{t}{100}} \]
+but $ 300-x\geqslant 0 $ since $ X(0)=100 $ and $ x $ is increasing
+to 300. So, we get:
+\[ X(t)=300-200e^{-\sfrac{t}{100}} \]
+
+\section{Linear First-Order Differential Equations}
+The general form for a linear first-order ODE is
+\[ A(x)y^\prime+B(x)y=C(x) \]
+where $ A(x)\not\equiv 0 $. Or, dividing by $ A(x) $, we can write it as:
+\[ y^\prime+P(x)y=Q(x) \]
+\begin{Example}{Preliminary Example}{}
+    \[ \frac{dy}{dx} +\frac{1}{x} y=1 \]
+    The trick is: multiply by $ x $!
+    \[ x \frac{dy}{dx} +y=x \]
+    Notice that now the LHS is the derivative of $ xy $. So,
+    \[ \frac{d}{dx} (xy)=x \]
+    Now, integrate both sides!
+    \[ xy=\int x\, d{x}=\frac{x^2}{2} +C \]
+    Thus,
+    \[ y=\frac{x}{2} +\frac{C}{x} \]
+\end{Example}
+This is the general strategy: find a clever function to multiply
+the ODE by so that the LHS collapses into the derivative of a product.
+colour
+Then, we just need to integrate both sides and solve for $ y $.
+
+Let's find the useful function:
+
+Say the ODE is
+\[ \frac{dy}{dx} +P(x)y=Q(x) \]
+and the desired function is $ \mu(x) $. Multiplying, we get
+\[ \mu(x)\frac{dy}{dx} +\mu(x)P(x)y=\mu(x)Q(x) \]
+We \textbf{want} the LHS to be
+\[ \frac{d}{dx} \left[ \mu(x)y \right]=\mu^\prime(x)y+\mu(x)\frac{dy}{dx}  \]
+Solving, we get:
+\[ \mu(x)\frac{dy}{dx} +\mu(x)P(x)y=\mu(x)\frac{dy}{dx}+\mu^\prime(x)y \]
+\begin{align*}
+     & \implies \mu(x)P(x)y=\mu^\prime(x)y & \text{should hold for all } y \\
+     & \implies \mu(x)P(x)=\mu^\prime(x)
+\end{align*}
+or
+\[ \mu(x)P(x)=\frac{d\mu}{dx}  \]
+which is separable!
+\[ \int \frac{1}{\mu} \, d{\mu} =\int P(x)\, d{x}\implies \ln\abs{\mu}=\int P(x)\, d{x} \]
+Thus, the final form is
+\[ \mu=e^{\int P(x)\, d{x}} \]
+\begin{Remark}{}{}
+    We can ignore the ``$ +C $'' and absolute values since we only need to find one $ \mu $
+    that works, not all of them.
+\end{Remark}
+So, we get an algorithm to solve a linear first-order ODE\@:
+\begin{enumerate}
+    \item Write it in the form
+          \[ \frac{dy}{dx}=P(x)y=Q(x) \]
+    \item Find
+          \[ \mu(x)=e^{\int P(x)\, d{x}} \]
+    \item Multiply the ODE by $ \mu $, collapse LHS into a product rule.
+    \item Integrate both sides (add $ +C $) and solve for $ y $.
+\end{enumerate}
+
+\begin{Example}{}{}
+    Solve
+    \[ \frac{dy}{dx} +2xy=x \]
+    \textbf{Solution.}
+    \[ \mu(x)=e^{\int P(x)\, d{x}}=e^{\int 2x\, d{x}}=e^{x^2} \]
+    Multiply by $ e^{x^2} $:
+    \[ e^{x^2}\frac{dy}{dx} +2xe^{x^2}y=xe^{x^2} \]
+    \[ \implies \frac{d}{dx} \left[ e^{x^2}y \right]=xe^{x^2} \]
+    Integrate:
+    \begin{align*}
+        e^{x^2}y
+         & =\int x e^{x^2}\, d{x}       & u=x^2\iff du=2x\,dx \\
+         & =\frac{1}{2} \int e^u\, d{u}                       \\
+         & =\frac{1}{2} e^{u}+C                               \\
+         & =\frac{1}{2}e^{x^2}+C
+    \end{align*}
+    So,
+    \[ e^{x^2}y=\frac{1}{2} e^{x^2}+C\implies y=\frac{1}{2} +\frac{C}{e^{x^2}} \]
+\end{Example}
+
+\begin{Example}{}{}
+    Find a particular solution to
+    \[ x \frac{dy}{dx} +2xy=1 \]
+    with $ y(1)=0 $.
+
+    \textbf{Solution.} It's not in the correct form! First, divide by $ x^2 $:
+    \[ \frac{dy}{dx} +\frac{2}{x} y=\frac{1}{x^2}  \]
+    Now,
+    \begin{align*}
+        \mu(x)
+         & =e^{\int \sfrac{2}{x} \, d{x} } \\
+         & =e^{2\ln\abs{x}}                \\
+         & =e^{\ln(x)^2}                   \\
+         & =x^2
+    \end{align*}
+    So multiply by $ x^2 $, so our original ODE was actually what we wanted! Cool!
+    \[ x^2 \frac{dy}{dx} +2xy=1 \]
+    \[ \frac{d}{dx} \left[ x^2y \right]=1 \]
+    Integrating gives
+    \begin{align*}
+        x^2 y=x+C \\
+        y=\frac{1}{x} +\frac{C}{x^2}
+    \end{align*}
+    Finally, we know $ y(1)=0 $, so $ 0=1+C\implies C=-1 $. Thus,
+    \[ y=\frac{1}{x} -\frac{1}{x^2} \]
+\end{Example}
+
+\begin{Remark}{}{}
+    There is a formula you can use as well! The solution to
+    \[ \frac{dy}{dx}+P(x)y=Q(x) \]
+    is
+    \[ y=\frac{1}{\mu(x)}\Bigl[\int \mu(x)Q(x)\, d{x} \Bigr]  \]
+    where
+    \[ \mu(x)=e^{\int P(x)\, d{x}} \]
+\end{Remark}
+
+\begin{Example}{}{}
+    \[ x \frac{dy}{dx} +2xe^x y=xe^x \]
+    First, divide by $ x $:
+    \[ \frac{dy}{dx}+2e^x y=e^x \]
+    \[ \mu(x)=e^{\int 2e^x\, d{x}}=e^{2e^x} \]
+    Now, using the formula:
+    \begin{align*}
+        y
+         & =\frac{1}{\mu(x)}\int \mu(x)Q(x)\, d{x}                 \\
+         & =\frac{1}{e^{2e^x}}\Bigl[\int e^{2e^x}e^x\, d{x} \Bigr] \\
+         & =\frac{1}{e^{2e^x}} \Bigl[e^{2u}\Bigr]                  \\
+         & =\frac{1}{e^{2e^x}}\left( \frac{e^{2u}}{2} +C \right)   \\
+         & =\frac{1}{e^{2e^x}}\left( \frac{e^{2e^x}}{2} +C \right) \\
+         & =\frac{1}{2} +\frac{C}{e^{2e^x}}
+    \end{align*}
+\end{Example}
+
+There is an important result regarding these ODEs:
+\begin{Theorem}{}{}
+    Assume $ P $ and $ Q $ are continuous functions on an interval $ I $.
+    Then, for each $ x_0\in I $ and any $ y_o\in\mathbb{R} $, the IVP
+    \[ y^\prime +P(x)y=Q(x) \]
+    with $ y(x_0)=y_0 $ has exactly one solution on $ I $.
+\end{Theorem}
+
+\begin{Remark}{}{}
+    This is not true for other IVPs, some have no solutions, and some have more than
+    one (some even have $ \infty $-many!).
+\end{Remark}
+
+\setcounter{section}{6}
+\section{Newton's Law of Cooling}
+The law states that an object's temperature changes at a rate that is proportional
+to the difference between the temperature of
+the object and the ambient temperature; that is, the temperature of the room,
+$ T_{\text{room}} $. The formula is:
+\[ \frac{dT}{dt}=-K\left( T-T_{\text{room}} \right)  \]
+where
+\begin{itemize}
+    \item $ \sfrac{dT}{dt} = $ rate of change of temperature
+    \item $ -K =$ a constant
+    \item $ T= $ temperature at time $ t $
+    \item $ T_{\text{room}}= $ temperature of surroundings (constant)
+\end{itemize}
+Q\@: Why is the constant negative?
+
+A\@: If $ T>T_{\text{room}} $, we would expect the object to be \underline{cooling},
+so $ \sfrac{dT}{dt} <0 $. This means the coefficient needs to be negative since
+$ T-T_{\text{room}}>0 $. On the other hand, if $ T<T_{\text{room}} $,
+then the object is heating up, so $ \sfrac{dT}{dt}>0 $, but
+$ T-T_{\text{room}}<0 $, so again we need a negative constant.
+
+\underline{Exercise}: The solution to this separable and linear ODE is
+\[ T(t)=Ce^{-Kt}+T_{\text{room}} \]
+for $ C,K\in\mathbb{R} $. Also, $ K $ can be determined with extra info.
+
+Notice that $ \lim\limits_{{t} \to {\infty}} T(t)=T_{\text{room}} $,
+as expected.
+
+\begin{Example}{}{}
+    For
+    \[ \frac{dT}{dt}=-K(T-25)  \]
+    if the object was initially at $ 0^\circ C $, and after
+    10 minutes it was at $ 5^\circ C $, solve the ODE\@. Here,
+    $ T $ is in $ ^\circ C $ and $ t $ is in minutes.
+
+    \textbf{Solution.} We know $ T=Ce^{-Kt}+25 $, and $ T(0)=0 $,
+    $ T(10)=5 $. First, $ T(0)=0\implies 0=C+25 $, so $ C=-25 $.
+    Therefore,
+    \[ T=-25e^{-Kt}+25 \]
+    Next,
+    \begin{align*}
+         & T(10)=5                                               \\
+         & \implies \frac{-20}{-25} =e^{-10K}                    \\
+         & \implies \frac{4}{5} =e^{-10K}                        \\
+         & \implies K=-\frac{1}{10}\ln\left( \frac{4}{5} \right)
+    \end{align*}
+    So,
+    \[ T=-25e^{\sfrac{1}{10} \ln\left( \sfrac{4}{5} \right)t}+25 \]
+\end{Example}
+
+\section{Models of Population Growth}
+The two models we will examine are:
+\begin{itemize}
+    \item Natural Growth (Exponential Growth)
+    \item Logistic Growth
+\end{itemize}
+\textbf{Natural Growth}: It makes sense to assume that
+population grows at a rate proportional to the size of the population.
+So, if $ P= $ population, and $ t= $ time, then
+\[ \frac{dP}{dt}=kP  \]
+where $ k= $ constant, roughly equal to $ \text{birth rate}-\text{death rate} $.
+
+It's separable! If $ p\not\equiv 0 $:
+\[ \int \frac{1}{P} \, d{P}=\int k\, d{t}  \]
+\begin{align*}
+     & \implies \ln\abs{P}=kt+C    \\
+     & \implies \abs{P}=e^C e^{kt} \\
+     & \implies P=\pm e^{C}e^{kt}
+\end{align*}
+Say $ \pm e^C =A\in\mathbb{R} $, then
+\[ P=Ae^{kt} \]
+Note that $ P(0)=Ae^0=A $, so $ A=\text{initial population} $. So,
+the solution to the IVP $ \sfrac{dP}{dt} =kP $ with $ P(0)=P_0 $ is
+\[ P=P_0 e^{kt} \]
+
+Is natural growth a good model? Say we have 1000 bacteria in a petri
+dish, and we observe that 300 new bacteria are formed after 1 hour.
+It is reasonable to assume that 2000 bacteria would spawn 600 in one hour,
+isn't it? Well, yes! That is, until they run out of food!
+
+Shouldn't we also take the environment into account? After
+a certain population, there won't be enough food/space to
+support any more growth. So it seems like natural growth is fine
+as long as there are lots of resources (that is, for small populations).
+But once population nears its limit, it won't be a good model any more.
+
+This limit is called the Carrying Capacity; that is, the maximum population
+that the environment can support in the long run.
+
+Denote the carrying capacity by $ M $.
+
+\begin{Definition}{}{}
+    The \textbf{logistical differential equation} is
+    \[ \frac{dP}{dt}=kP\left( 1-\frac{P}{M}  \right) \]
+    where $ k =$ same constant as in natural growth.
+\end{Definition}
+\begin{Remark}{}{}
+    Sometimes written
+    \[ \frac{dP}{dt}=kP(M-P)  \]
+    but $ K $ is different here.
+\end{Remark}
+
+Let's examine some cases:
+\begin{enumerate}
+    \item If $ P\ll M $, then $ 1-\sfrac{P}{M}\approx 1 $, so $ \sfrac{dP}{dt} \approx kP $
+          (natural growth!)
+    \item If $ P\approx M $, then $ 1-\sfrac{P}{M}\approx 0 $, so $ \sfrac{dP}{dt}\approx 0 $,
+          which makes sense as population has reached its limit.
+    \item If $ P>M $, then $ \sfrac{dP}{dt} <0 $, as expected. (The population
+          shrinks as there are not enough resources).
+\end{enumerate}
+So, this equation appears to be a good model! Let's solve it
+\[ \sfrac{dP}{dt} =kP(1-\sfrac{P}{M}) \]
+with $ P(0)=P_0 $. It's separable!
+\[ \int \frac{1}{P(1-\sfrac{P}{M})} \, d{P}=\int k\, d{t} =kt+C \]
+Use partial fractions! Notice
+\[ \frac{1}{P(1-\sfrac{P}{M})}=\frac{M}{P(M-P)} =\frac{1}{P} +\frac{1}{M-P} \]
+So we get
+\begin{align*}
+    \int \frac{1}{P} +\frac{1}{M-P} \, d{P} & =kt+C                                                   \\
+    \implies  \ln\abs{P}-\ln{M-P}           & =kt+C                                                   \\
+    \implies  \ln\abs*{\frac{P}{M-P}}       & =kt+C                                                   \\
+    \implies \ln\abs*{\frac{M-P}{P}}        & =-kt-C                                                  \\
+    \implies  \abs*{\frac{M-P}{P}}          & =e^{-kt-C}=e^{-C}e^{-kt}                                \\
+    \implies  \frac{M-P}{P}                 & =\pm e^{-C}e^{-kt}=Ae^{-kt} & \text{where }A=\pm e^{-C} \\
+    \implies  \frac{M}{P} -1                & =Ae^{-kt}                                               \\
+    \implies  P                             & =\frac{M}{1+Ae^{-kt}}
+\end{align*}
+Next, use $ P(0)=P_0 $ to get $ A $:
+\[ P_0=\frac{M}{1+A}\implies 1+A=\frac{M}{P_0}\implies A=\frac{M-P_0}{P_0}  \]
+So, the solution to $ \sfrac{dP}{dt}=kP\left( 1-\sfrac{P}{M} \right) $, $ P(0)=P_0 $
+is
+\[ P=\frac{M}{1+Ae^{-kt}}  \]
+where $ A=\sfrac{(M-P_0)}{P_0} $.
+
+\begin{Example}{}{}
+    Scientists took 100 wolves and let them go in a walled-off nature preserve. They
+    estimated the carrying capacity to be 1500, and after one year, there were 150 wolves.
+
+    Assuming logistic growth, find $ P(t) $.
+
+    \textbf{Solution.}
+    \[ \frac{dP}{dt}=kP\left(1-\frac{P}{1500}\right)  \]
+    $ P(0)=100 $, and $ P(1)=150 $. So,
+    \[ P=\frac{1500}{1+Ae^{-kt}}  \]
+    with $ A=\sfrac{(1500-100)}{100}=14  $. So,
+    \[ P=\frac{1500}{1+14e^{-kt}}  \]
+    Lastly, use $ P(1)=150 $ to get $ k $.
+    \[ 150=\frac{1500}{1+14e^{-k}}\implies 1+14e^{-k}=10\implies e^{-k}=\frac{9}{14} \implies
+        -k=\ln\left( \frac{9}{14} \right) \]
+    So,
+    \[ P=\frac{1500}{1+14e^{\ln\left( \sfrac{9}{14}  \right)t}} =\frac{1500}{1+14\left( \sfrac{9}{14}  \right)^t} \]
+    Q\@: How long until there are 1000 wolves?
+
+    A\@: Find $ t $:
+    \[ 1000=\frac{1500}{1+14\left( \sfrac{9}{14}  \right)^t}
+        \implies \frac{3}{2} =1+14\left( \frac{9}{14}  \right)^t
+        \implies \frac{1}{28} =\left( \frac{9}{14} \right)^t
+        \implies t=\frac{\ln\left( \sfrac{1}{28}  \right)}{\ln\left( \sfrac{9}{14}\right)}
+        \approx 754\text{ years}\]
+\end{Example}
+
+\underline{For Fun}: There are other models too:
+\begin{enumerate}
+    \item Taking harvesting/hunting into account:
+          \[ \frac{dP}{dt}=kP\left( 1-\frac{P}{M} \right)-C \]
+          where $ C $ is the harvesting constant.
+    \item If a population is \textbf{too sparse}, they may go extinct:
+          \[ \frac{dP}{dt}=kP\left( 1-\frac{P}{M} \right)\left( 1-\frac{N}{P}  \right)  \]
+          where $ N= $ minimum population to prevent extinction.
+\end{enumerate}
