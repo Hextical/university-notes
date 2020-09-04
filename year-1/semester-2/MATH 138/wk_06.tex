@@ -1,7 +1,7 @@
 \chapter{Numerical Series}
 \section{Introduction to Series}
 \begin{Definition}{Infinite series}{}
-    Let $ \left\{ a_n\right\}_{n=1}^\infty $ be a sequence. An
+    Let $ \set{a_n}_{n=1}^\infty $ be a sequence. An
     \textbf{infinite series} is an expression of the form
     \[ a_1+a_2+a_3+a_4+\cdots=\sum\limits_{n=1}^{\infty}a_n \]
     This is a formal expression since we don't know what this means numerically.
@@ -23,7 +23,7 @@ Well, we need to somehow convert a series to a sequence, which we know how to ta
 
 \begin{Definition}{Sequence of Partial Sums}{}
     If $ \sum\limits_{n=1}^{\infty} a_n $ is a series, define its
-    \textbf{sequence of partial sums}, $ \left\{ S_n\right\} $, as $ S_n=a_1+a_2+\cdots+a_n $
+    \textbf{sequence of partial sums}, $ \set{S_n} $, as $ S_n=a_1+a_2+\cdots+a_n $
 \end{Definition}
 
 \begin{Example}{}{}
@@ -38,11 +38,14 @@ Now, we can define convergence/divergence.
     if $ \lim\limits_{{n} \to {\infty}} S_n=S $. Here $ S $ is called the \textbf{sum}
     of the series.
 
-    If $ \left\{ S_n\right\} $ diverges, we say the series \textbf{diverges}.
+    If $ \set{S_n} $ diverges, we say the series \textbf{diverges}.
 \end{Definition}
 
 \begin{Example}{}{}
-    $ \sum_{n=0}^{\infty}(-1)^n $ has partial sums
+    Using partial sums, determine if $ \displaystyle \sum_{n=0}^{\infty}(-1)^n $ converges
+    or diverges.
+
+    \textbf{Solution.} Partial sums:
     \begin{itemize}
         \item $ S_1=1 $
         \item $ S_2=0 $
@@ -55,15 +58,19 @@ Now, we can define convergence/divergence.
 \end{Example}
 
 \begin{Example}{}{}
-    \[ \sum\limits_{n=1}^{\infty} \frac{1}{n} -\frac{1}{n+1}  \]
-    write out some partial sums:
+    Using partial sums, determine if $ \displaystyle
+        \sum\limits_{n=1}^{\infty} \left[\frac{1}{n} -\frac{1}{n+1}\right] $ converges
+    or diverges.
+
+    \textbf{Solution.} Partial sums:
     \begin{itemize}
         \item $ S_1=1-\sfrac{1}{2} $
         \item $ S_2=1-\sfrac{1}{2} +\sfrac{1}{2}-\sfrac{1}{3}=1-\sfrac{1}{3} $
         \item $ S_3=1-\sfrac{1}{2} +\sfrac{1}{2} -\sfrac{1}{3} -\sfrac{1}{3} -\sfrac{1}{4}=1-\sfrac{1}{4} $
     \end{itemize}
-    There's a pattern! $ S_n=1-\sfrac{1}{(n+1)} $, so $ \lim\limits_{{n} \to {\infty}} S_n=
-        \lim\limits_{{n} \to {\infty}} 1-\sfrac{1}{(n+1)}=1 $. Therefore, the series
+    There's a pattern! $ S_n=1-\dfrac{1}{n+1} $, so $
+        \lim\limits_{{n} \to {\infty}} S_n=
+        \lim\limits_{{n} \to {\infty}} \left[1-\dfrac{1}{n+1}\right]=1 $. Therefore, the series
     converges to 1.
 \end{Example}
 
@@ -79,7 +86,7 @@ Does it converge or diverge? Say it converges to $ S $, so
      & =\sum\limits_{n=1}^{\infty} \frac{1}{n}                                              \\
      & =\left( 1+\frac{1}{2} \right)+\left( \frac{1}{3} +\frac{1}{4} \right)+
     \left( \frac{1}{5} +\frac{1}{6} \right)+\left( \frac{1}{7} +\frac{1}{8}  \right)+\cdots \\
-     & >\left( \frac{1}{2} +\frac{1}{2}  \right)+\left( \frac{1}{4}  \right) +
+     & >\left( \frac{1}{2} +\frac{1}{2}  \right)+\left( \frac{1}{4}+\frac{1}{4}  \right) +
     \left( \frac{1}{6}+\frac{1}{6} \right)+\left( \frac{1}{8} +\frac{1}{8}  \right)+\cdots  \\
      & =1+\frac{1}{2} +\frac{1}{3} +\frac{1}{3} +\frac{1}{4} +\cdots                        \\
      & =S
@@ -90,6 +97,10 @@ So $ S>S $, a contradiction. Thus, the series diverges.
     There are many proofs that the Harmonic series diverges, but this is my favourite.
     First published in 1976!
 \end{Remark}
+It turns out that finding sums of series is hard in general. The partial
+sum method rarely works, but it does work for telescoping series, as we saw.
+
+It also works for \emph{geometric series}, let's explore these now!
 
 \section{Geometric Series}
 \begin{Definition}{Geometric Series}{}
@@ -100,7 +111,7 @@ So $ S>S $, a contradiction. Thus, the series diverges.
 Let's figure out where the series converges!
 
 \underline{Case 1}: $ r=1 $. Then the series is
-\[ \sum\limits_{n=0}^{\infty} 1=1+1+1+1+\cdots \]
+$ \sum\limits_{n=0}^{\infty} 1=1+1+1+1+\cdots $.
 So $ S_n=n $, and $ \lim\limits_{{n} \to {\infty}} S_n =\infty $, so the series
 diverges in this case.
 
@@ -113,34 +124,37 @@ and
 \[ rS_n=r+r^2+\cdots+r^{n+1} \]
 So, $ S_n-rS_n=1-r^{n+1} $, therefore
 \[ S_n=\frac{1-r^{n+1}}{1-r} \]
-So $ \lim\limits_{{n} \to {\infty}} S_n=\frac{1}{1-r} 1-r^{n+1} $.
-Clearly, $ \lim\limits_{{n} \to {\infty}} 1-r^{n+1} $ diverges if $ \abs{r}>1 $,
-but if $ \abs{r}<1 $ then $ \lim\limits_{{n} \to {\infty}} 1-r^{n+1}=1 $.
+Thus, $ \lim\limits_{{n} \to {\infty}} S_n=\lim\limits_{{n} \to {\infty}} \dfrac{1-r^{n+1}}{1-r}
+    =
+    \left( \dfrac{1}{1-r} \right) \lim\limits_{{n} \to {\infty}} \left[1-r^{n+1}\right] $.
+
+Clearly, $ \lim\limits_{{n} \to {\infty}} \left[1-r^{n+1}\right] $ diverges if $ \abs{r}>1 $,
+but if $ \abs{r}<1 $ then $ \lim\limits_{{n} \to {\infty}} \left[1-r^{n+1}\right]=1 $.
 Thus,
-\[ \sum\limits_{n=0}^{\infty} r^n=\frac{1}{1-r} \]
-if $ \abs{r}<1 $ and diverges otherwise.
+\[ \boxed{ \sum\limits_{n=0}^{\infty} r^n=\frac{1}{1-r}} \]
+if $ \boxed{\abs{r}<1} $ and diverges otherwise.
 
 \section{Arithmetic of Series}
 Before we explore geometric series further, let's look at some
 of the arithmetic properties of series.
 
-\begin{Theorem}{}{}
+\begin{Theorem}{}{sum_properties}
     Suppose $ \sum\limits_{n=1}^{\infty} a_n=A $ and $ \sum\limits_{n=1}^{\infty} b_n=B $
     and $ k\in\mathbb{R} $.
-    \begin{enumerate}
+    \begin{enumerate}[label=(\arabic*)]
         \item $ \sum\limits_{n=1}^{\infty} ka_n=kA $
         \item $ \sum\limits_{n=1}^{\infty} a_n\pm b_n=A\pm B $
     \end{enumerate}
 \end{Theorem}
 
-\begin{Proof}{}{}
+\begin{Proof}{\ref{thm:sum_properties}}{}
     Follows from limit properties.
 \end{Proof}
 
 Also, if we know something about the tail of a series, then we can draw conclusions about
 the whole series!
 
-\begin{Theorem}{}{}
+\begin{Theorem}{}{convergence_tail}
     If $ \sum\limits_{n=1}^{\infty} a_n $ converges, then $ \sum\limits_{n=j}^{\infty} a_n $
     also converges for each $ j\geqslant 1 $.
 
@@ -148,7 +162,7 @@ the whole series!
     then $ \sum\limits_{n=1}^{\infty} a_n $ converges.
 \end{Theorem}
 
-\begin{Proof}{}{}
+\begin{Proof}{\ref{thm:convergence_tail}}{}
     \[ \sum\limits_{n=1}^{\infty} a_n=a_1+a_2+\cdots+a_{j-1}+\sum\limits_{n=j}^{\infty} a_n \]
     and $ a_1+a_2+\cdots+a_{j-1}\in\mathbb{R} $, does not affect convergence.
     So, convergence only depends on the tail! Changing finitely many terms will not
@@ -192,7 +206,7 @@ the whole series!
     \end{enumerate}
 \end{Example}
 
-\section*{Interesting Application: Decimals to Fractions}
+\subsection*{Interesting Application: Decimals to Fractions}
 We can use geometric series to write an infinite repeating decimal as a fraction!
 
 \begin{Example}{}{}
@@ -210,7 +224,7 @@ We can use geometric series to write an infinite repeating decimal as a fraction
     \end{align*}
 \end{Example}
 
-\section*{A Real-World Application}
+\subsection*{A Real-World Application}
 Suppose a spaceship is firing a laser beam at a planet with two layers of shields. These shields reflect
 one-third of the beam, absorb five-ninths of the beam, and transmit one-ninth of the beam.
 If the beam has initial intensity $ I $, what fraction is transmitted to the other side?
@@ -228,18 +242,18 @@ Finding sums of series, in general, is hard. While we can do it for geometric
 series and telescoping series, we can't usually get a nice formula for $ S_n $,
 the partial sums
 
-Soon, we will prove that $ \sum\limits_{n=1}^{\infty} \frac{1}{n^2}  $ converges,
+Soon, we will prove that $ \displaystyle \sum\limits_{n=1}^{\infty} \frac{1}{n^2}  $ converges,
 but what is the sum?
 
 First a few partial sums:
 \begin{itemize}
     \item $ S_1=1 $
-    \item $ S_2=1+\frac{1}{4} =1.25 $
-    \item $ S_3=1+\frac{1}{4} +\frac{1}{9} =1.36111\cdots $
-    \item $ S_4=1.4236\cdots $
+    \item $ S_2=1+\sfrac{1}{4} =1.25 $
+    \item $ S_3=1+\sfrac{1}{4} +\sfrac{1}{9} =1.36111\ldots $
+    \item $ S_4=1.4236\ldots $
 \end{itemize}
 Sum? $ 1.75 $? $ 2 $? $ \sfrac{\pi^2}{6} $? Yes!
-\[ \sum\limits_{n=1}^{\infty} \frac{1}{n^2} =\frac{\pi^2}{6} \]
+\[ \boxed{\sum\limits_{n=1}^{\infty} \frac{1}{n^2} =\frac{\pi^2}{6}} \]
 
 This is difficult to prove though!
 
@@ -251,13 +265,13 @@ Let's start developing some tests for convergence/divergence.
 
 \section{Divergence Test}
 First, let us  prove a theorem:
-\begin{Theorem}{}{}
+\begin{Theorem}{}{div_test_contrapositive}
     If $ \sum\limits_{n=1}^{\infty} a_n $ converges, then $ \lim\limits_{{n} \to {\infty}} a_n=0 $.
 \end{Theorem}
-\begin{Proof}{}{}
+\begin{Proof}{\ref{thm:div_test_contrapositive}}{}
     Suppose $ \sum\limits_{n=1}^{\infty} a_n $ converges, say $ \sum\limits_{n=1}^{\infty} a_n=S $.
 
-    Let $ \left\{ S_n\right\} $ be a sequence of partial sums, so
+    Let $ \set{S_n} $ be a sequence of partial sums, so
     $ S_n=a_1+a_2+\cdots+a_n $
     and $ \lim\limits_{{n} \to {\infty}} S_n=S $. By sequence of limit properties we get
     $ \lim\limits_{{n} \to {\infty}} S_{n-1}=S $ too, and $ S_n-S_{n-1}=a_n $. Thus,
@@ -281,10 +295,10 @@ The Divergence Test is the contrapositive of the above theorem:
     \end{itemize}
 \end{Remark}
 
-Q\@: Can you think of a series such that $ \sum\limits_{n=1}^{\infty} a_n $ diverges,
-even though $ \lim\limits_{{n} \to {\infty}} a_n=0 $?
+Q\@: Can you think of a series such that $ \displaystyle \sum\limits_{n=1}^{\infty} a_n $ diverges,
+even though $ \displaystyle \lim\limits_{{n} \to {\infty}} a_n=0 $?
 
-A\@: Yes! The Harmonic Series $ \sum\limits_{n=1}^{\infty}\sfrac{1}{n} $.
+A\@: Yes! The Harmonic Series $ \displaystyle \sum\limits_{n=1}^{\infty}\frac{1}{n} $.
 
 So, be careful!
 
@@ -292,17 +306,29 @@ When to use the Divergence Test: First! It is a good idea to see if the test wor
 moving on to more complicated tests!
 
 \begin{Example}{}{}
+    Use Divergence Test to draw a conclusion
+    for the following series.
     \begin{enumerate}[label=(\roman*)]
-        \item $ \displaystyle\sum\limits_{n=1}^{\infty} \frac{n}{n+1} $, since
-              $ \lim\limits_{{n} \to {\infty}} \frac{n}{n+1} =1\neq 0 $, so the series diverges
+        \item $ \displaystyle\sum\limits_{n=1}^{\infty} \frac{n}{n+1} $
+
+              \textbf{Solution.}
+
+              $ \displaystyle \lim\limits_{{n} \to {\infty}} \frac{n}{n+1} =1\neq 0 $, so the series diverges
               by the Divergence Test.
-        \item $ \displaystyle\sum\limits_{n=1}^{\infty} \frac{2^{n}+3^n}{2^n} $,
-              \[ \lim\limits_{{n} \to {\infty}} \frac{2^n+3^n}{2^n} =\lim\limits_{{n} \to {\infty}}
-                  \left[ 1+\left( \frac{3}{2} \right)^n  \right]=\infty\neq 0 \]
+        \item $ \displaystyle\sum\limits_{n=1}^{\infty} \frac{2^{n}+3^n}{2^n} $
+
+              \textbf{Solution.}
+              $ \displaystyle  \lim\limits_{{n} \to {\infty}} \frac{2^n+3^n}{2^n} =\lim\limits_{{n} \to {\infty}}
+                  \left[ 1+\left( \frac{3}{2} \right)^n  \right]=\infty\neq 0 $,
               so the series diverges by the Divergence Test.
-        \item $ \displaystyle\sum\limits_{n=1}^{\infty} \frac{1}{n^2} $, $ \lim\limits_{{n} \to {\infty}}
-                  \dfrac{1}{n^2} =0 $, so the Divergence Test fails!
-        \item $ \displaystyle\sum\limits_{n=1}^{\infty} \arctan(n) $, $ \lim\limits_{{n} \to {\infty}}
+        \item $ \displaystyle\sum\limits_{n=1}^{\infty} \frac{1}{n^2} $
+
+              \textbf{Solution.}
+              $ \displaystyle \lim\limits_{{n} \to {\infty}}
+                  \frac{1}{n^2} =0 $, so the Divergence Test fails!
+        \item $ \displaystyle\sum\limits_{n=1}^{\infty} \arctan(n) $
+
+              \textbf{Solution.} $ \displaystyle \lim\limits_{{n} \to {\infty}}
                   \arctan(n)=\frac{\pi}{2}\neq 0 $, so the series diverges
               by the Divergence Test.
     \end{enumerate}

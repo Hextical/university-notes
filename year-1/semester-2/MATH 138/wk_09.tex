@@ -2,9 +2,9 @@
 \section{Introduction to Power Series}
 \begin{Definition}{Power series}{}
     A \textbf{power series} is a series of the form
-    \[ \sum\limits_{n=0}^{\infty} a_n x^n=a_0+a_1x+a_2x^2+\cdots\text{ center}=0 \]
+    \[ \sum\limits_{n=0}^{\infty} a_n x^n=a_0+a_1x+a_2x^2+\cdots\text{ (centre $ =0$)} \]
     or
-    \[ \sum\limits_{n=0}^{\infty} a_n (x-a)^n=a_0+a_1(x-a)+a_2(x-a)^2+\cdots\text{ center}=a \]
+    \[ \sum\limits_{n=0}^{\infty} a_n (x-a)^n=a_0+a_1(x-a)+a_2(x-a)^2+\cdots\text{ (centre=$a$)} \]
     where $ a_i\in\mathbb{R} $ for all $ i $.
 \end{Definition}
 \begin{Definition}{Domain}{}
@@ -18,11 +18,12 @@
 \end{Remark}
 \underline{Conventions}: To simplify notation, we will use the following
 conventions in this section for $ \sum\limits_{n=0}^{\infty} a_n(x-a)^n $:
-\begin{enumerate}
+\begin{enumerate}[label=(\Roman*)]
     \item When $ n=0 $, the term is $ a_0 $ for all $ x $, including $ x=a $
           (so $ 0^0=1 $ here!)
     \item If the first few coefficients are zero; that is, $ a_0=a_1=\cdots=a_k=0 $,
-          then $ \sum\limits_{n=0}^{\infty} a_n(x-a)^n=\sum\limits_{n=k+1}^{\infty} a_n(x-a)^n $.
+          then
+          \[ \sum\limits_{n=0}^{\infty} a_n(x-a)^n=\sum\limits_{n=k+1}^{\infty} a_n(x-a)^n \]
           In other words, if a coefficient is zero, regardless of what power
           $ (x-a) $ has, that term is zero and you can discard it.
 \end{enumerate}
@@ -61,20 +62,20 @@ conventions in this section for $ \sum\limits_{n=0}^{\infty} a_n(x-a)^n $:
     In fact, the domain will always be an interval!
 \end{Example}
 
-\begin{Theorem}{}{}
+\begin{Theorem}{}{power_series_thm}
     For a given power series $ \sum\limits_{n=0}^{\infty} a_n(x-a)^n $, there are
     three possibilities:
-    \begin{enumerate}
-        \item The series converges only when $ x=a $.
-        \item The series converges for all $ x\in\mathbb{R} $.
-        \item There exists $ R\in\mathbb{R} $ such that the series converges
+    \begin{enumerate}[label=(\arabic*)]
+        \item\label{power_1} The series converges only when $ x=a $.
+        \item\label{power_2} The series converges for all $ x\in\mathbb{R} $.
+        \item\label{power_3} There exists $ R\in\mathbb{R} $ such that the series converges
               absolutely for $ \abs{x-a}<R $, diverges if $ \abs{x-a}>R $, and may converge
               or diverge if $ \abs{x-a}=R $.
     \end{enumerate}
 \end{Theorem}
 
-\begin{Proof}{}{}
-    For simplicity, let's work with $ \sum\limits_{n=0}^{\infty} a_n x^n $ (center 0),
+\begin{Proof}{\ref{thm:power_series_thm}}{}
+    For simplicity, let's work with $ \sum\limits_{n=0}^{\infty} a_n x^n $ (centre 0),
     we can shift everything to $ x=a $ if needed. We will show that if the power series
     $ \sum\limits_{n=0}^{\infty} a_n x^n $ converges at $ x=x_0 $ and $ \abs{x_1}<\abs{x_0} $,
     then $ \sum\limits_{n=0}^{\infty} \abs*{a_n x_1^n} $ converges too.
@@ -85,7 +86,7 @@ conventions in this section for $ \sum\limits_{n=0}^{\infty} a_n(x-a)^n $:
 
     Next, we can see that
     \[ \abs*{a_n x_1^n}=\abs*{a_n x_0^n}\abs*{\frac{x_1^n}{x_0^n}}\leqslant \abs*{\frac{x_1^n}{x_0^n}} \]
-    eventually. But $ \sum\limits_{n=0}^{\infty} \abs*{\sfrac{x_1}{x_0}}^n $ converges
+    eventually. But $ \displaystyle \sum\limits_{n=0}^{\infty} \abs*{\frac{x_1}{x_0}}^n $ converges
     (geometric series $ \abs{r}=\abs*{\sfrac{x_1}{x_0}}<1 $), so $ \sum\limits_{n=0}^{\infty}
         \abs{a_n x_1^n} $
     converges.
@@ -93,20 +94,20 @@ conventions in this section for $ \sum\limits_{n=0}^{\infty} a_n(x-a)^n $:
 
 \begin{Definition}{Radius of convergence}{}
     The $ R $ in the theorem is called \textbf{radius of convergence}
-    of the power series.
-    \begin{enumerate}
-        \item $ \implies R=0 $
-        \item $ \implies R=\infty $
-        \item $ \implies R\in\interval[open]{0}{\infty} $. In this case,
+    of the power series.~\ref{thm:power_series_thm}:
+    \begin{itemize}
+        \item Case~\ref{power_1} $ \implies R=0 $
+        \item Case~\ref{power_2} $ \implies R=\infty $
+        \item Case~\ref{power_3} $ \implies R\in\interval[open]{0}{\infty} $. In this case,
               the endpoints must be checked separately (without Ratio Test).
-    \end{enumerate}
+    \end{itemize}
 \end{Definition}
 
 \begin{Definition}{Interval of convergence}{}
     The \textbf{interval of convergence} is the interval on which the power
     series converges. So, the interval could be:
     \begin{itemize}
-        \item $ I=\left\{ a\right\} $;
+        \item $ I=\set{a} $;
               $ R=0 $
         \item $ I=\mathbb{R} $;
               $ R=\infty $
@@ -129,7 +130,7 @@ may not exist! See example 6 in section 6.1. For our assignments and exams it wi
 
 \begin{Example}{}{}
     Find the radius and interval of convergence for the following power series.
-    \begin{enumerate}
+    \begin{enumerate}[label=(\roman*)]
         \item $ \displaystyle \sum\limits_{n=1}^{\infty} \frac{3^n(x+4)^n}{\sqrt{n}} $.
 
               \textbf{Solution.} Ratio Test:
@@ -171,7 +172,7 @@ may not exist! See example 6 in section 6.1. For our assignments and exams it wi
                       \infty & \text{if } x\neq 0 \\
                       0      & \text{if }x=0
                   \end{cases} \]
-              So the series diverges unless $ x=0\implies R=0 $, $ I=\{0\} $.
+              So the series diverges unless $ x=0\implies R=0 $, $ I=\set{0} $.
         \item $ \displaystyle \sum\limits_{n=2}^{\infty} \frac{(-1)^n x^n}{4^n\ln(n)} $
 
               \textbf{Solution.} Ratio Test:
@@ -191,8 +192,8 @@ may not exist! See example 6 in section 6.1. For our assignments and exams it wi
               $ x=-4 $: $ \displaystyle \sum\limits_{n=2}^{\infty} \frac{(-1)^n(-4)^n}{4^n\ln(n)}
                   =\sum\limits_{n=2}^{\infty} \frac{1}{\ln(n)} $. Note that $ \dfrac{1}{\ln(n)}
                   \geqslant \dfrac{1}{n} $ for $ n\geqslant 2 $, so
-              since $ \sum\limits_{n=2}^{\infty} \sfrac{1}{n} $ diverges (Harmonic Series), so does
-              $ \sum\limits_{n=2}^{\infty} \sfrac{1}{\ln(n)} $ diverges by comparison.
+              since $ \displaystyle \sum\limits_{n=2}^{\infty} \frac{1}{n} $ diverges (Harmonic Series), so does
+              $ \displaystyle \sum\limits_{n=2}^{\infty} \frac{1}{\ln(n)} $ diverges by comparison.
 
               $ x=4 $: $ \displaystyle
                   \sum\limits_{n=2}^{\infty} \frac{(-1)^n4^n}{4^n\ln(n)}=\sum\limits_{n=2}^{\infty}
@@ -213,12 +214,12 @@ for $ \abs{x}<1 $. $ R=1 $ and $ I=\interval[open]{-1}{1} $.
 
 Let's see what we can say about power series!
 
-\begin{Theorem}{Abel's Theorem}{}
+\begin{Theorem}{Abel's Theorem}{abel}
     If $ f(x)=\sum\limits_{n=0}^{\infty} a_n(x-a)^n $ has interval of convergence
     $ I $, then $ f $ is continuous on $ I $.
 \end{Theorem}
 
-\begin{Proof}{}{}
+\begin{Proof}{\ref{thm:abel}}{}
     Beyond the scope of this course.
 \end{Proof}
 
@@ -231,9 +232,9 @@ Say $ f(x)=\sum\limits_{n=0}^{\infty} a_n(x-a)^n $ and $ g(x)=\sum\limits_{n=0}^
 with radii of convergence $ R_f $ and $ R_g $ and intervals of convergence
 $ I_f $ and $ I_g $, respectively.
 
-\begin{enumerate}
+\begin{enumerate}[label=(\Roman*)]
     \item $ f(x)\pm g(x)=\sum\limits_{n=0}^{\infty} (a_n\pm b_n)(x-a)^n $. If $ R_f\neq R_g $,
-          then the radius of convergence is $ R=\min\left\{ R_f,R_g\right\} $
+          then the radius of convergence is $ R=\min\set{R_f,R_g} $
           and the interval is $ I_f\cap I_g $. If $ R_f=R_g $, then $ R>R_f $.
     \item $ (x-a)^k f(x)=\sum\limits_{n=0}^{\infty} a_n(x-a)^{n+k} $ where the radius
           is $ R_f $ and the interval is $ I_f $; that is, there is no change.
@@ -243,7 +244,7 @@ $ I_f $ and $ I_g $, respectively.
               \displaystyle \abs*{cx^k}<R_f\implies \abs{x}<\sqrt[k]{\frac{R_f}{\abs{c}}} $,
           so the new radius is
           $ \displaystyle R=\sqrt[k]{\dfrac{R_f}{\abs{c}}} $. If $ R_f=\infty $
-          then $ R=\infty $. The interval is $ I=\left\{\,x\in\mathbb{R}\mid cx^k\in I_f\,\right\} $.
+          then $ R=\infty $. The interval is $ I=\set{x\in\mathbb{R}\mid cx^k\in I_f} $.
 
           Point is: we can substitute into a known series to form a new one.
 \end{enumerate}
@@ -311,13 +312,13 @@ What about not centred at $ x=0 $?
 \section{Differentiation and Integration}
 Given a power series $ \sum\limits_{n=0}^{\infty} a_n(x-a)^n $,
 we can differentiate or integrate \textbf{term-by-term}:
-\begin{Theorem}{}{}
+\begin{Theorem}{}{thm_int}
     If $ f(x)=\sum\limits_{n=0}^{\infty} c_n(x-a)^n $ with radius of convergence
     $ R>0 $, then $ f(x) $ is differentiable (hence continuous and integrable)
     on $ \interval[open]{a-R}{a+R} $, and:
-    \begin{enumerate}
-        \item $ \displaystyle f^\prime(x)=\sum\limits_{n=1}^{\infty} n a_n(x-a)^{n-1} $
-        \item $ \displaystyle\int f(x)\, d{x} =\sum\limits_{n=0}^{\infty} \left[
+    \begin{enumerate}[label=(\arabic*)]
+        \item\label{thm_int_1} $ \displaystyle f^\prime(x)=\sum\limits_{n=1}^{\infty} n a_n(x-a)^{n-1} $
+        \item\label{thm_int_2} $ \displaystyle\int f(x)\, d{x} =\sum\limits_{n=0}^{\infty} \left[
                       \frac{a_n(x-a)^{n+1}}{n+1}
                       \right]+C $
     \end{enumerate}
@@ -325,7 +326,7 @@ we can differentiate or integrate \textbf{term-by-term}:
 \end{Theorem}
 
 \begin{Remark}{}{}
-    In 1.\ always want to change the starting index since if $ n=0 $, the term is $ 0 $.
+    In~\ref{thm_int_1} always want to change the starting index since if $ n=0 $, the term is $ 0 $.
 \end{Remark}
 
 \begin{Remark}{}{}
@@ -333,7 +334,7 @@ we can differentiate or integrate \textbf{term-by-term}:
     if we integrate/differentiate.
 \end{Remark}
 
-\begin{Proof}{}{}
+\begin{Proof}{\ref{thm:thm_int}}{}
     Beyond the scope of this course.
 \end{Proof}
 
@@ -386,10 +387,10 @@ we can differentiate or integrate \textbf{term-by-term}:
     \underline{Check Endpoints}
 
     At $ x=1 $: $ \displaystyle \frac{1}{2} \sum\limits_{n=0}^{\infty} n(n-1) $
-    diverges by the divergence test.
+    diverges by the Divergence Test.
 
     At $ x=-1 $: $ \displaystyle \frac{1}{2}\sum\limits_{n=0}^{\infty} n(n-1)(-1)^{n-2} $
-    diverges by the divergence test.
+    diverges by the Divergence Test.
 
     So, $ I=\interval[open]{-1}{1} $.
 \end{Example}
@@ -461,12 +462,12 @@ we can differentiate or integrate \textbf{term-by-term}:
 
 Using differentiation, we can find another series for $ e^x $.
 
-\begin{Proposition}{}{}
+\begin{Proposition}{}{ex_1}
     $ \displaystyle e^x=\sum\limits_{n=0}^{\infty} \frac{x^n}{n!} $
     for all $ x\in\mathbb{R} $.
 \end{Proposition}
 
-\begin{Proof}{}{}
+\begin{Proof}{\ref{prop:ex_1}}{}
     We know $ R=\infty $ for that series. Let $ g(x)=\displaystyle \sum\limits_{n=0}^{\infty}
         \frac{x^n}{n!} $. Then,
     \[ g^\prime(x)=\sum\limits_{n=1}^{\infty} \frac{n x^{n-1}}{n!}

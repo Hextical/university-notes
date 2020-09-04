@@ -12,10 +12,11 @@ In particular, we will examine two types:
 In particular:
 \begin{itemize}
     \item Type I\@: Infinite Intervals. Integrals of the form
-          \[ \int_{-\infty}^{a} f(x)\, d{x},\,\int_{a}^{\infty} f(x)\, d{x},\,
-              \int_{-\infty}^{\infty} f(x)\, d{x} \]
+          $ \displaystyle \int_{-\infty}^{a} f(x)\, d{x},\,
+              \int_{a}^{\infty} f(x)\, d{x},\text{ or }
+              \int_{-\infty}^{\infty} f(x)\, d{x} $.
     \item Type II\@: Infinite Discontinuity. For example,
-          \[ \int_{-1}^{1} \frac{1}{x} \, d{x}  \]
+          $ \displaystyle \int_{-1}^{1} \frac{1}{x} \, d{x} $
           as there is an issue at $ x=0 $.
 \end{itemize}
 
@@ -24,21 +25,24 @@ letter and take a limit.
 
 Let's see them in more detail now!
 
-\subsection{Type I}
+\subsection*{Type I}
 We replace the infinite endpoint with a letter and take a limit
 \begin{itemize}
-    \item \[ \int_{-\infty}^{a} f(x)\, d{x} =\lim\limits_{{b} \to {-\infty}}
-              \int_{b}^{a} f(x)\, d{x} \]
-    \item \[ \int_{\infty}^{a} f(x)\, d{x} =\lim\limits_{{b} \to {\infty}}
-              \int_{a}^{b} f(x)\, d{x} \]
-    \item \[ \int_{-\infty}^{\infty} f(x)\, d{x}=
+    \item $ \displaystyle \int_{-\infty}^{a} f(x)\, d{x} =\lim\limits_{{b} \to {-\infty}}
+              \int_{b}^{a} f(x)\, d{x} $
+    \item $ \displaystyle \int_{\infty}^{a} f(x)\, d{x} =\lim\limits_{{b} \to {\infty}}
+              \int_{a}^{b} f(x)\, d{x} $
+    \item $ \displaystyle  \int_{-\infty}^{\infty} f(x)\, d{x}=
               \lim\limits_{{b_1} \to {-\infty}} \int_{b_1}^{0} f(x)\, d{x}+
-              \lim\limits_{{b_2} \to {\infty}} \int_{0}^{b_2} f(x)\, d{x}  \]
+              \lim\limits_{{b_2} \to {\infty}} \int_{0}^{b_2} f(x)\, d{x} $
 \end{itemize}
-Don't use
-\[ \int_{-\infty}^{\infty} f(x)\, d{x}=\lim\limits_{{b} \to {\infty}}
-    \int_{-b}^{b} f(x)\, d{x}  \]
-This is called the ``Cauchy Principal Value'' and it is something else!
+\begin{Remark}{}{}
+    Don't use
+    $ \displaystyle \int_{-\infty}^{\infty} f(x)\, d{x}=\lim\limits_{{b} \to {\infty}}
+        \int_{-b}^{b} f(x)\, d{x} $.
+    This is called the ``Cauchy Principal Value'' and it is something else!
+\end{Remark}
+
 
 We say that the integral \textbf{converges} if all the limits exist
 (and are finite). The integral \textbf{diverges} if even one limit does
@@ -47,26 +51,34 @@ not exist (or is $ \pm\infty $).
 \begin{Example}{Type I Integrals}{}
     Evaluate the following or show they diverge.
     \begin{enumerate}[label=(\roman*)]
-        \item \begin{align*}
+        \item $ \displaystyle \int_{2}^{\infty} \frac{1}{x^2} \, d{x} $
+
+              \textbf{Solution.}
+              \[
                   \int_{2}^{\infty} \frac{1}{x^2} \, d{x}
-                   & =\lim\limits_{{b} \to {\infty}} \int_{2}^{b} \frac{1}{x^2} \, d{x}       \\
-                   & = \lim\limits_{{b} \to {\infty}} \left[-\frac{1}{x}  \right]_{2}^b       \\
-                   & =\lim\limits_{{b} \to {\infty}} \left( -\frac{1}{b} +\frac{1}{2} \right) \\
-                   & =\frac{1}{2}
-              \end{align*}
+                  =\lim\limits_{{b} \to {\infty}} \int_{2}^{b} \frac{1}{x^2} \, d{x}       \\
+                  = \lim\limits_{{b} \to {\infty}} \left[-\frac{1}{x}  \right]_{2}^b       \\
+                  =\lim\limits_{{b} \to {\infty}} \left( -\frac{1}{b} +\frac{1}{2} \right) \\
+                  =\frac{1}{2}
+              \]
               Thus, the integral converges.
-        \item \begin{align*}
+        \item $ \displaystyle \int_{-\infty}^{\infty} \sin(x)\, d{x} $
+
+              \textbf{Solution.}
+              \[
                   \int_{-\infty}^{\infty} \sin(x)\, d{x}
-                   & =\lim\limits_{{b_1} \to {-\infty}} \int_{b_1}^{0} \sin(x)\, d{x}
+                  =\lim\limits_{{b_1} \to {-\infty}} \int_{b_1}^{0} \sin(x)\, d{x}
                   +\lim\limits_{{b_2} \to {\infty}} \int_{0}^{b_2} \sin(x)\, d{x}
-              \end{align*}
+              \]
               Let's evaluate the first one:
               \[ \lim\limits_{{b_1} \to {-\infty}}\int_{b_1}^{0} \sin(x)\, d{x}
                   = \lim\limits_{{b_1} \to {-\infty}}\bigl[-\cos(x) \bigr]_{b_1}^0
                   =\lim\limits_{{b_1} \to {-\infty}} \left[-\cos(0)+\cos(b_1)\right] \]
               which does not exist. Therefore, this integral
               diverges, there is no need to check the second limit!
-        \item \begin{align*}
+        \item $ \displaystyle \int_{0}^{\infty} \frac{1}{1+x^2}\, d{x} $
+
+              \textbf{Solution.}\begin{align*}
                   \int_{0}^{\infty} \frac{1}{1+x^2}\, d{x}
                    & =\lim\limits_{{b} \to {\infty}} \int_{0}^{b} \frac{1}{1+x^2} \, d{x} \\
                    & = \lim\limits_{{b} \to {\infty}} \bigl[\arctan(x) \bigr]_{0}^b       \\
@@ -77,53 +89,57 @@ not exist (or is $ \pm\infty $).
               Thus, the integral converges.
     \end{enumerate}
 \end{Example}
-Question: For which $ p\in\mathbb{R} $ does $ \int_{1}^{\infty} \frac{1}{x^p} \, d{x} $
+Question: For which $ p\in\mathbb{R} $ does $ \displaystyle \int_{1}^{\infty} \frac{1}{x^p} \, d{x} $
 converge?
 
 Let's find out!
-\begin{enumerate}[label=C\arabic*]
-    \item $ p>1 $.
-          \begin{align*}
-              \lim\limits_{{b} \to {\infty}} \int_{1}^{b} x^{-p}\, d{x}
-               & = \lim\limits_{{b} \to {\infty}} \left[\frac{x^{-p+1}}{p+1}  \right]_{1}^b \\
-               & =\lim\limits_{{b} \to {\infty}} \left( \frac{b^{-p+1}}{-p+1}-
-              \frac{1^{-p+1}}{-p+1}  \right)                                                \\
-               & =\frac{1}{p-1}
-          \end{align*}
-          since $ -p+1<0 $, so $ b^{-p+1}\to 0 $. So, the integral converges if $ p>1 $.
-    \item $ p<1 $. The calculation is the same as C1, until:
-          \[ \lim\limits_{{b} \to {\infty}} \left( \frac{b^{-p+1}}{-p+1} -\frac{1}{-p+1} =\infty \right) \]
-          since $ -p+1>0 $, so $ b^{-p+1}\to\infty $. So, the integral diverges if $ p<1 $.
-    \item $ p=1 $.
-          \begin{align*}
-              \lim\limits_{{b} \to {\infty}} \int_{1}^{b} \frac{1}{x} \, d{x}
-               & =\lim\limits_{{b} \to {\infty}} \bigl[\ln\abs{x}\bigr]_{1}^b         \\
-               & =\lim\limits_{{b} \to {\infty}} \left( \ln\abs{b}-\ln\abs{1} \right) \\
-               & =\infty
-          \end{align*}
-          So, the integral diverges if $ p=1 $.
-\end{enumerate}
+
+\begin{Proof}{\ref{thm:p-int}}{}
+    \underline{Case 1}: $ p>1 $.
+    \[
+        \lim\limits_{{b} \to {\infty}} \int_{1}^{b} x^{-p}\, d{x}
+        = \lim\limits_{{b} \to {\infty}} \left[\frac{x^{-p+1}}{-p+1}  \right]_{1}^b
+        =\lim\limits_{{b} \to {\infty}} \left( \frac{b^{-p+1}}{-p+1}-
+        \frac{1^{-p+1}}{-p+1}  \right)
+        =\frac{1}{p-1}
+    \]
+    since $ -p+1<0 $, so $ b^{-p+1}\to 0 $. So, the integral converges if $ p>1 $.
+
+    \underline{Case 2}: $ p<1 $. The calculation is the same as Case 1, until:
+    \[ \lim\limits_{{b} \to {\infty}} \left( \frac{b^{-p+1}}{-p+1} -\frac{1}{-p+1}\right) =\infty  \]
+    since $ -p+1>0 $, so $ b^{-p+1}\to\infty $. So, the integral diverges if $ p<1 $.
+
+    \underline{Case 3}: $ p=1 $.
+    \[
+        \lim\limits_{{b} \to {\infty}} \int_{1}^{b} \frac{1}{x} \, d{x}
+        =\lim\limits_{{b} \to {\infty}} \bigl[\ln\abs{x}\bigr]_{1}^b
+        =\lim\limits_{{b} \to {\infty}} \left( \ln\abs{b}-\ln\abs{1} \right)
+        =\infty
+    \]
+    So, the integral diverges if $ p=1 $.
+\end{Proof}
+
 Therefore, we have proven:
 
-\begin{Theorem}{$p$-Integrals}{}
+\begin{Theorem}{$p$-Integrals}{p-int}
     The improper integral
-    \[ \int_{1}^{\infty} \frac{1}{x^p} \, d{x} \]
+    $ \displaystyle \int_{1}^{\infty} \frac{1}{x^p} \, d{x}  $
     converges if and only if $ p>1 $.
-
     If $ p>1 $,
-    \[ \int_{1}^{\infty} \frac{1}{x^p} \, d{x} =\frac{1}{p-1} \]
+    $ \displaystyle \int_{1}^{\infty} \frac{1}{x^p} \, d{x} =\frac{1}{p-1} $.
 \end{Theorem}
 
 Next, let's examine some properties of Type I improper integrals.
 
 \begin{Theorem}{Properties of Type I Improper Integrals}{}
-    Suppose $ \int_{a}^{\infty} f(x)\, d{x}  $ and $ \int_{a}^{\infty} g(x)\, d{x}  $
+    Suppose $ \displaystyle \int_{a}^{\infty} f(x)\, d{x}  $ and
+    $ \displaystyle \int_{a}^{\infty} g(x)\, d{x}  $
     both converge.
     \begin{enumerate}[label=(\arabic*)]
-        \item $ \int_{a}^{\infty} cf(x)\, d{x} $
+        \item $ \displaystyle \int_{a}^{\infty} cf(x)\, d{x} $
               converges for any $ c\in\mathbb{R} $, and
               \[ \int_{a}^{\infty} cf(x)\, d{x} =c \int_{a}^{\infty} f(x)\, d{x} \]
-        \item $ \int_{a}^{\infty} f(x)+g(x)\, d{x} $
+        \item $ \displaystyle \int_{a}^{\infty} f(x)+g(x)\, d{x} $
               converges, and
               \[ \int_{a}^{\infty} f(x)+g(x)\, d{x}=
                   \int_{a}^{\infty} f(x)\, d{x} +\int_{a}^{\infty} g(x)\, d{x} \]
@@ -138,22 +154,24 @@ Evaluating integrals in general is hard, and determining if an improper integral
 may be even harder! However, we do have a way of comparing a difficult
 integral to a simpler one (for example, a $ p $-Integral!).
 
+\subsubsection{The Comparison Theorem (For Type I)}
 \begin{Theorem}{Comparison Test for Type I Improper Integrals}{}
     Assume $ 0\leqslant g(x)\leqslant f(x) $ for all $ x\geqslant a $
     and that both $ f $ and $ g $ are continuous on $ \interval[open right]{a}{\infty} $.
     \begin{enumerate}[label=(\arabic*)]
-        \item If $ \int_a^{\infty}f(x)\, d{x} $ converges, then so does
-              $ \int_a^{\infty}g(x)\, d{x} $.
-        \item If $ \int_a^{\infty}f(x)\, d{x} $ diverges, then so does
-              $ \int_a^{\infty}g(x)\, d{x} $.
+        \item If $ \displaystyle \int_a^{\infty}f(x)\, d{x} $ converges, then so does
+              $ \displaystyle \int_a^{\infty}g(x)\, d{x} $.
+        \item If $ \displaystyle \int_a^{\infty}f(x)\, d{x} $ diverges, then so does
+              $ \displaystyle \int_a^{\infty}g(x)\, d{x} $.
     \end{enumerate}
 \end{Theorem}
 \begin{Example}{}{}
-    Determine if the following integrals converge or diverge.
-    $ \int_0^\infty e^{-x^2}\, d{x} $. Note for $ x>1 $,
+    Determine if $ \displaystyle \int_0^\infty e^{-x^2}\, d{x} $ converges or diverges.
+
+    \textbf{Solution.} Note for $ x>1 $,
     $ 0\leqslant e^{-x^2} <e^{-x} $, by comparison since
-    $ \int_{0}^{\infty} e^{-x^2}\, d{x} $ converges, so does
-    $ \int_{0}^{\infty} e^{-x^2}\, d{x} $.
+    $ \displaystyle \int_{0}^{\infty} e^{-x^2}\, d{x} $ converges, so does
+    $ \displaystyle \int_{0}^{\infty} e^{-x^2}\, d{x} $.
 \end{Example}
 \begin{Remark}{}{}
     It doesn't matter that the inequality doesn't hold for $ 0\leqslant x<1 $,
@@ -161,26 +179,43 @@ integral to a simpler one (for example, a $ p $-Integral!).
 \end{Remark}
 
 \begin{Example}{}{}
+    Determine of the following integrals converge or diverge.
     \begin{enumerate}[label=(\roman*)]
-        \item $ \int_{1}^{\infty} \frac{x}{(x^2+2)^2}\, d{x} $. Note that
-              \[ 0\leqslant \frac{x}{(x^2+2)^2}\leqslant \frac{x}{x^4}=\frac{1}{x^3}  \]
-              for $ x\geqslant 1 $. Since $ \int_{1}^{\infty} \frac{1}{x^3} \, d{x}  $
-              converges ($ p $-integral), so does $ \int_{1}^{\infty} \frac{x}{(x^2+2)^2} \, d{x} $,
+        \item $ \displaystyle \int_{1}^{\infty} \frac{x}{(x^2+2)^2}\, d{x} $.
+
+              \textbf{Solution.} Note that
+              $ \displaystyle  0\leqslant \frac{x}{(x^2+2)^2}\leqslant \frac{x}{x^4}=\frac{1}{x^3} $,
+              for $ x\geqslant 1 $.
+
+              Since $ \displaystyle \int_{1}^{\infty} \frac{1}{x^3} \, d{x}  $
+              converges ($ p $-integral), so does $ \displaystyle \int_{1}^{\infty} \frac{x}{(x^2+2)^2} \, d{x} $,
               by comparison.
-        \item $ \int_{1}^{\infty} \frac{2x^2}{x^3-x+1} \, d{x}  $. Note that
-              \[ \frac{2x^2}{x^3-x+1} \geqslant \frac{2x^2}{x^3+1} \geqslant \frac{2x^2}{x^3+x^3}=
-                  \frac{2}{2x} =\frac{1}{x}\geqslant 0 \]
-              for $ x\geqslant 1 $. Since $ \int_{1}^{\infty} \frac{1}{x} \, d{x}  $
-              diverges ($ p $-integral), so does $ \int_{1}^{\infty} \frac{2x}{x^3-x+1} \, d{x} $,
+        \item $ \displaystyle \int_{1}^{\infty} \frac{2x^2}{x^3-x+1} \, d{x}  $.
+
+              \textbf{Solution.} Note that
+              $ \displaystyle \frac{2x^2}{x^3-x+1} \geqslant \frac{2x^2}{x^3+1} \geqslant \frac{2x^2}{x^3+x^3}=
+                  \frac{2}{2x} =\frac{1}{x}\geqslant 0 $,
+              for $ x\geqslant 1 $.
+
+              Since $ \displaystyle \int_{1}^{\infty} \frac{1}{x} \, d{x}  $
+              diverges ($ p $-integral), so does $ \displaystyle \int_{1}^{\infty} \frac{2x}{x^3-x+1} \, d{x} $,
               by comparison.
-        \item $ \int_{1}^{\infty} \frac{1+e^{-x}}{x} \, d{x} $. Note that
-              \[ \frac{1+e^{-x}}{x} \geqslant \frac{1}{x} \geqslant 0 \]
-              for $ x\geqslant 1 $. Since $ \int_{1}^{\infty} \frac{1}{x} \, d{x}  $ diverges,
-              so does $ \int_{1}^{\infty} \frac{1+e^{-x}}{x} \, d{x}  $, by comparison.
-        \item $ \int_{0}^{\infty} \frac{e^x}{e^{2x}+3} \, d{x}  $. Note that
-              \[ 0\leqslant \frac{e^{x}}{e^{2x}+3} \leqslant \frac{e^{x}}{e^{2x}} =e^{-x} \]
-              for $ x\geqslant 0 $. Since $ \int_{0}^{\infty} e^{-x}\, d{x}  $ converges,
-              so does $ \int_{0}^{\infty} \frac{e^{x}}{e^{2x}+3} \, d{x}  $, by comparison.
+        \item $ \displaystyle \int_{1}^{\infty} \frac{1+e^{-x}}{x} \, d{x} $.
+
+              \textbf{Solution.} Note that
+              $ \displaystyle \frac{1+e^{-x}}{x} \geqslant \frac{1}{x} \geqslant 0 $,
+              for $ x\geqslant 1 $.
+
+              Since $ \displaystyle \int_{1}^{\infty} \frac{1}{x} \, d{x}  $ diverges,
+              so does $ \displaystyle \int_{1}^{\infty} \frac{1+e^{-x}}{x} \, d{x}  $, by comparison.
+        \item $ \displaystyle \int_{0}^{\infty} \frac{e^x}{e^{2x}+3} \, d{x}  $.
+
+              \textbf{Solution.} Note that
+              $ \displaystyle  0\leqslant \frac{e^{x}}{e^{2x}+3} \leqslant \frac{e^{x}}{e^{2x}} =e^{-x} $,
+              for $ x\geqslant 0 $.
+
+              Since $ \displaystyle \int_{0}^{\infty} e^{-x}\, d{x}  $ converges,
+              so does $ \displaystyle \int_{0}^{\infty} \frac{e^{x}}{e^{2x}+3} \, d{x}  $, by comparison.
     \end{enumerate}
 \end{Example}
 
@@ -189,28 +224,29 @@ can we deal with negative functions?
 
 We can use absolute values!
 
-\begin{Definition}{Absolute Convergence}{}
+\begin{Definition}{Absolute convergence}{}
     Let $ f $ be integrable on $ \interval[open right]{a}{b} $ for all $ b\geqslant a $.
-    We say that the improper integral $ \int_{a}^{\infty} f(x)\, d{x} $
+    We say that the improper integral $ \displaystyle \int_{a}^{\infty} f(x)\, d{x} $
     \textbf{converges absolutely} if
-    \[ \int_{a}^{\infty} \abs{f(x)}\, d{x}  \]
+    $ \displaystyle \int_{a}^{\infty} \abs{f(x)}\, d{x} $
     converges.
 \end{Definition}
 
-\begin{Theorem}{Absolute Convergence Theorem}{act}
-    Let $ f $ be integrable on $ \interval{a}{b} $ for all $ b>a $.
-    Then $ \abs{f} $ is also integrable on $ \interval{a}{b} $ for all $ b>a $.
+\begin{Theorem}{Absolute Convergence Theorem (ACT)}{act_int}
+    Let $ f $ be integrable on $ \interval{a}{b} $ for all $ b\geqslant a $.
+    Then $ \abs{f} $ is also integrable on $ \interval{a}{b} $ for all $ b\geqslant a $.
     Moreover, if we assume that
-    \[ \int_{a}^{\infty} \abs{f(x)}\, d{x} \]
+    $ \displaystyle \int_{a}^{\infty} \abs{f(x)}\, d{x} $
     converges, then so does
-    \[ \int_{a}^{\infty} f(x)\, d{x}. \]
-    In particular, if $ 0\leqslant \abs{f(x)}\leqslant g(x) $ for all $ x\geqslant a $,
+    $ \displaystyle  \int_{a}^{\infty} f(x)\, d{x} $.
+
+    In particular, if $ \abs{f(x)}\leqslant g(x) $ for all $ x\geqslant a $,
     both $ f $ and $ g $ are integrable on $ \interval{a}{b} $ for all $ b\geqslant a $,
-    and if $ \int_{a}^{\infty} g(x)\, d{x}  $ converges, then so does
-    \[ \int_{a}^{\infty} f(x)\, d{x}. \]
+    and if $ \displaystyle \int_{a}^{\infty} g(x)\, d{x}  $ converges, then so does
+    $ \displaystyle \int_{a}^{\infty} f(x)\, d{x} $.
 \end{Theorem}
 
-\begin{Proof}{\ref{thm:act}}{}
+\begin{Proof}{\ref{thm:act_int}}{}
     Suppose $ \int_{a}^{\infty} \abs{f(x)}\, d{x} $ converges. Then so does
     \[ \int_{a}^{\infty} 2\abs{f(x)}\, d{x}. \]
     Note that
@@ -224,18 +260,22 @@ We can use absolute values!
 \end{Proof}
 
 \begin{Example}{}{}
-    \[ \int_{1}^{\infty} \frac{\sin(x)}{x^2+1} \, d{x} \]
+    Determine if $ \displaystyle \int_{1}^{\infty} \frac{\sin(x)}{x^2+1} \, d{x} $
+    converges or diverges.
+
+    \textbf{Solution.}
     We can't use comparison directly since $ \sin(x)<0 $ sometimes. But,
-    \[ 0\leqslant \abs*{\frac{\sin(x)}{x^2+1} }\leqslant \frac{1}{x^2+1} \leqslant \frac{1}{x^2} \]
-    for $ x\geqslant 1 $, and $ \int_{1}^{\infty} \frac{1}{x^2} \, d{x}  $ converges. So by
-    ACT, $ \int_{1}^{\infty} \frac{\sin(x)}{1+x^2} \, d{x}  $ converges.
+    \[ \displaystyle  0\leqslant \abs*{\frac{\sin(x)}{x^2+1} }\leqslant \frac{1}{x^2+1}
+        \leqslant \frac{1}{x^2} \]
+    for $ x\geqslant 1 $, and $ \displaystyle \int_{1}^{\infty} \frac{1}{x^2} \, d{x}  $ converges. So by
+    ACT, $ \displaystyle \int_{1}^{\infty} \frac{\sin(x)}{1+x^2} \, d{x}  $ converges.
 \end{Example}
 
-Now, let's switch to type II improper integrals. We will see how to deal with them, but we won't
+Now, let's switch to Type II improper integrals. We will see how to deal with them, but we won't
 go as deeply into them.
 
-\subsection{Type II}
-Consider $ \int_{a}^{b} f(x)\, d{x}  $.
+\subsection*{Type II}
+Consider $ \displaystyle \int_{a}^{b} f(x)\, d{x}  $.
 \begin{itemize}
     \item If $ f $ has an infinite discontinuity at $ x=a $, then we use
           \[ \int_{a}^{b} f(x)\, d{x} =\lim\limits_{{t} \to {a^+}} \int_{t}^{b} f(x)\, d{x} \]
@@ -246,31 +286,39 @@ Consider $ \int_{a}^{b} f(x)\, d{x}  $.
           and use the limits as the previous cases.
 \end{itemize}
 Again, if all limit(s) exist, then we say the integral \textbf{converges}. If even one
-limit does not exist, then the integral diverges.
+limit does not exist, then the integral \textbf{diverges}.
 
 \begin{Example}{}{}
+    Determine of the following integrals converge or diverge.
     \begin{enumerate}[label=(\roman*)]
-        \item $ \int_{0}^{1} \frac{1}{\sqrt{1-x}} \, d{x} $, there is a problem at $ x=1 $. So,
-              \begin{align*}
-                   & =\lim\limits_{{t} \to {1^-}} \int_{0}^{t} \frac{1}{\sqrt{1-x}} \, d{x} \\
-                   & =\lim\limits_{{t} \to {1^-}}\bigl[-2\sqrt{1-x}\bigr]_0^t               \\
-                   & =\lim\limits_{{t} \to {1^-}}[-2\sqrt{1-t}+2\sqrt{1}]                   \\
-                   & =2
-              \end{align*}
+        \item $ \displaystyle \int_{0}^{1} \frac{1}{\sqrt{1-x}} \, d{x} $.
+
+              \textbf{Solution.} There is a problem at $ x=1 $. So,
+              \[ \int_{0}^{1} \frac{1}{\sqrt{1-x}} \, d{x}
+                  =\lim\limits_{{t} \to {1^-}} \int_{0}^{t} \frac{1}{\sqrt{1-x}} \, d{x}
+                  =\lim\limits_{{t} \to {1^-}}\bigl[-2\sqrt{1-x}\bigr]_0^t
+                  =\lim\limits_{{t} \to {1^-}}[-2\sqrt{1-t}+2\sqrt{1}]
+                  =2
+              \]
               Thus, the integral converges.
-        \item $ \int_{2}^{3} \frac{x}{(x^2-4)^2}\, d{x}  $, there is a problem at $ x=2 $,
+        \item $ \displaystyle \int_{2}^{3} \frac{x}{(x^2-4)^2}\, d{x}  $
+
+              \textbf{Solution.} There is a problem at $ x=2 $,
               but let's make a substitution first! Let $ u=x^2-4 $, so $ du=2x\,dx $. If $ x=2 $,
               $ u=0 $, and if $ x=3 $, $ u=5 $. So,
-              \begin{align*}
-                   & =\int_{0}^{5} \frac{x}{u^2} \frac{1}{2x} \, d{u}                           \\
-                   & =\lim\limits_{{t} \to {0^+}} \frac{1}{2} \int_{t}^{5} \frac{1}{u^2}\, d{u} \\
-                   & =\lim\limits_{{t} \to {0^+}}\left[-\frac{1}{2u} \right]_t^5                \\
-                   & =\lim\limits_{{t} \to {0^+}}\left[ -\frac{1}{10} +\frac{1}{2t} \right]     \\
-                   & =\infty
-              \end{align*}
+              \[ \int_{2}^{3} \frac{x}{(x^2-4)^2}\, d{x}
+                  =\int_{0}^{5} \frac{x}{u^2} \frac{1}{2x} \, d{u}
+                  =\lim\limits_{{t} \to {0^+}} \frac{1}{2} \int_{t}^{5} \frac{1}{u^2}\, d{u}
+                  =\lim\limits_{{t} \to {0^+}}\left[-\frac{1}{2u} \right]_t^5
+                  =\lim\limits_{{t} \to {0^+}}\left[ -\frac{1}{10} +\frac{1}{2t} \right]
+                  =\infty
+              \]
               Thus, the integral diverges.
-        \item $ \int_{0}^{3} \frac{1}{(x-2)^{\sfrac{1}{3} }}\, d{x}  $, there is a problem at $ x=2 $.
+        \item $ \displaystyle \int_{0}^{3} \frac{1}{(x-2)^{\sfrac{1}{3} }}\, d{x}  $.
+
+              \textbf{Solution.} There is a problem at $ x=2 $.
               \begin{align*}
+                  \int_{0}^{3} \frac{1}{(x-2)^{\sfrac{1}{3} }}\, d{x}
                    & =\int_{0}^{2} \frac{1}{(x-2)^{\sfrac{1}{3}}} \, d{x}+\int_{2}^{3} \frac{1}{(x-2)^{\sfrac{1}{3} }} \, d{x} \\
                    & =\lim\limits_{{t_1} \to {2^-}} \int_{0}^{t_1} \frac{1}{(x-2)^{\sfrac{1}{3}}}  \, d{x} +
                   \lim\limits_{{t_2} \to {2^+}} \int_{t_2}^{3} \frac{1}{(x-2)^{\sfrac{1}{3}}} \, d{x}                          \\
@@ -284,11 +332,13 @@ limit does not exist, then the integral diverges.
     \end{enumerate}
 \end{Example}
 
-Exercise: Show $ \int_{0}^{1} \frac{1}{x^p} \, d{x}  $ converges if and only if $ p<1 $.
+\begin{Exercise}{}{}
+    Show $ \displaystyle \int_{0}^{1} \frac{1}{x^p} \, d{x}  $ converges if and only if $ p<1 $.
+\end{Exercise}
 
 \chapter{Applications of Integration}
 \section{Area Between Curves}
-Suppose we want to calculate the area of the region between $ f $ and $ g $.
+Suppose we want to calculate the area of the region \emph{between} $ f $ and $ g $.
 
 \begin{figure}[H]
     \centering
@@ -323,8 +373,8 @@ Suppose we want to calculate the area of the region between $ f $ and $ g $.
 \end{figure}
 
 
-This is the area under $ f $ \textbf{minus} the area ``under'' (between $ g $ and the
-$ x $-axis) $ g $!
+This is the area under $ f $ \emph{minus} the area ``under'' (between $ g $ and the
+$ x $-axis) $ g $.
 
 Using the same ideas as before, we divide the region into infinitely many infinitely thin
 rectangles (each with width $ dx\approx \Delta x $) and integrate!
@@ -343,25 +393,28 @@ $ x=a $ to $ x=b $ is
         =\frac{14}{3} \]
 \end{Example}
 
-You should always get a positive answer! If your answer is negative you should go check
-your work!
+\begin{Remark}{}{}
+    You should always get a positive answer! If your answer is negative you should go check
+    your work!
 
-Note that the ``upper'' curve may change over the interval.
+    Note that the ``upper'' curve may change over the interval.
+\end{Remark}
 
-\textbf{Actual Formula:} Area between $ f $ and $ g $ from $ x=a $ to $ x=b $ is
+\underline{Actual Formula}: Area between $ f $ and $ g $ from $ x=a $ to $ x=b $ is
 \[ \int_{a}^{b} \abs{f(x)-g(x)}\, d{x}  \]
 
 So, we should split up the interval $ \interval{a}{b} $ to eliminate
 the absolute value.
 
-Remember, $ \int_{a}^{b} \text{``upper''}-\text{``lower''}\, d{x} $.
+Remember, $ \displaystyle \int_{a}^{b} \text{``upper''}-\text{``lower''}\, d{x} $.
 
 \begin{Example}{}{}
     Find the area enclosed by $ f(x)=1-x^2 $ and $ g(x)=x^2 $.
 
     \textbf{Solution.} First, we need to find the intersection points:
-    \[ 1-x^2=x^2\iff 1=2x^2\iff x=\pm \frac{1}{\sqrt{2}} \]
-    If $ x\in\left[ -\frac{1}{\sqrt{2}},\frac{1}{\sqrt{2}} \right] $, then $ 1-x^2\geqslant x^2 $,
+    $ \displaystyle 1-x^2=x^2\iff 1=2x^2\iff x=\pm \frac{1}{\sqrt{2}} $.
+
+    If $ \displaystyle  x\in\left[ -\frac{1}{\sqrt{2}},\frac{1}{\sqrt{2}} \right] $, then $ 1-x^2\geqslant x^2 $,
     so we get:
     \begin{align*}
         \text{Area} & =

@@ -4,18 +4,18 @@
 To begin with, our goal is to develop methods for determining the area under a curve.
 
 We know we can approximate the area using rectangles (or other geometric shapes), but
-we want the \textbf{exact} area. For this, we will need \textbf{Riemann sums}.
+we want the \emph{exact} area. For this, we will need \emph{Riemann sums}.
 
 \begin{Definition}{Partition}{partition}
     A \textbf{partition}, $P$, for the interval $ \interval{a}{b} $ is a finite
     sequence of increasing numbers of the form
-    \[ a=t_0<\cdots<t_{n-1}=b \]
+    \[ a=t_0<5_1<t_2\cdots<t_{n-1}<t_n=b \]
     This partition subdivides the interval $ \interval{a}{b} $ into $ n $ subintervals:
     \[ \interval{t_0}{t_1},\ldots,\interval{t_{n-1}}{t_n} \]
 \end{Definition}
 
 \begin{Remark}{}{}
-    These subintervals may \textbf{not} all have the same length.
+    These subintervals may \emph{not} all have the same length.
 \end{Remark}
 
 \begin{Definition}{Length}{length}
@@ -28,45 +28,46 @@ we want the \textbf{exact} area. For this, we will need \textbf{Riemann sums}.
     \[ \norm{P}=\max(\Delta t_1,\dots,\Delta t_{n}) \]
 \end{Definition}
 
-\begin{Definition}{Riemann Sum}{riemann_Sum}
+\begin{Definition}{Riemann sum}{riemann_Sum}
     Given a bounded function $ f $ on $ \interval{a}{b} $,
     a partition $ P $ of $ \interval{a}{b} $, and a set
-    $ \set{c_1,\dots,c_n} $ where $ c_i\in\interval{t_{i-1}}{t_i} $, then a
-    \textbf{Riemann Sum} for $ f $ with respect to $ P $ is
+    $ \set{c_1,\dots,c_n} $, where $ c_i\in\interval{t_{i-1}}{t_i} $, then a
+    \textbf{Riemann sum} for $ f $ with respect to $ P $ is
     \[ S=\sum\limits_{i=1}^{n} f(c_i)\Delta t_i \]
 \end{Definition}
 
-Again, we want the \textbf{exact} area, and for that we will need to use infinitely
+Again, we want the \emph{exact} area, and for that we will need to use infinitely
 many points!
 
 But we do need to make sure that the norm of our partitions is getting smaller,
-and that the area we get doesn't depend on the choice of Riemann Sum.
+and that the area we get doesn't depend on the choice of Riemann sum.
 
-\begin{Definition}{Integrable}{integrable}
+\begin{Definition}{Integrable, Integral of $ f $}{integrable}
     We say that $ f $ is \textbf{integrable} on $ \interval{a}{b} $ if there exists a unique number
     $ I\in\mathbb{R} $ such that if whenever $ \set{P_n} $ is a sequence of partitions with
     $ \lim\limits_{{n} \to {\infty}}\norm{P_n}=0 $ and $ \set{S_n} $ is any sequence of
-    Riemann Sums associated to the $ P_n $'s, we have $ \lim\limits_{{n} \to {\infty}} S_n=I $.
+    Riemann sums associated to the $ P_n $'s, we have $ \lim\limits_{{n} \to {\infty}} S_n=I $.
+
+    In this case, we call $ I $ the \textbf{integral of $ f $} over $ \interval{a}{b} $
+    and denote it by
+    \[ \int_{a}^{b} f(x)\, dx \]
+    where $ a,b $ are the bounds of integration, $ f(x) $ is the integrand, $ x $ is the
+    variable of integration. The complete object is called a definite integral.
+
+    It represents the exact (signed) area under $ f $.
 \end{Definition}
 
-In this case, we call $ I $ the \textbf{integral of $ \bm{f} $ over $ \interval{a}{b} $}
-and denote it by
-\[ \int_{a}^{b} f(x)\, dx \]
-where $ a,b $ are the bounds of integration, $ f(x) $ is the integrand, $ x $ is the
-variable of integration. The complete object is called a definite integral.
-
-It represents the exact (signed) area under $ f $.
-
 \begin{Remark}{}{}
-    The variable of integration is a \textbf{dummy variable} since we can change it into
-    whatever we wand and it won't change the value of the integral; that is,
+    The variable of integration is a \emph{dummy variable} since we can change it into
+    whatever we want and it won't change the value of the integral; that is,
     \[
         \int_{a}^{b} f(x)\,dx =
-        \int_{a}^{b} f(t) \,d{t} = \text{etc.}
+        \int_{a}^{b} f(t) \,d{t}=
+        \int_{a}^{b} f(\cdot)\, d{\cdot}
     \]
 \end{Remark}
 
-This looks \textbf{horrible} to compute in practice (and it is). The good news is if
+This looks \emph{horrible} to compute in practice (and it is). The good news is if
 $ f $ is continuous, it's not so bad! (still bad though)
 
 \begin{Theorem}{Integrability Theorem for Continuous Functions}{integrability_thm}
@@ -78,34 +79,34 @@ $ f $ is continuous, it's not so bad! (still bad though)
     Beyond the scope of this course.
 \end{Proof}
 
-This is fantastic! This means that we can \textbf{choose} any collection of Riemann Sums
+This is fantastic! This means that we can \emph{choose} any collection of Riemann sums
 we want when computing the integral of a continuous function!
 
 Let's examine a ``nice'' choice: one where the partition is regular and where we just
 pick the $ c_i $'s to be the right-hand endpoints!
 
-\begin{Definition}{Regular n-partition}{regular_partition}
+\begin{Definition}{Regular $n$-partition}{regular_partition}
     For the interval $ \interval{a}{b} $, the \textbf{regular $ \bm{n} $-partition}
     where all $ n $ subintervals
     have the same length; that is,
     \[ \Delta t=\frac{b-a}{n} \quad\text{and}\quad  t_i=t_0+i\Delta t \]
 \end{Definition}
 
-\begin{Definition}{Regular right-hand Riemann Sum}{right_hand_reimann}
-    Using this, we define the \textbf{regular right-hand Riemann Sum} by taking $ c_i=t_i $ for
+\begin{Definition}{Regular right-hand Riemann sum}{right_hand_reimann}
+    Using this, we define the \textbf{regular right-hand Riemann sum} by taking $ c_i=t_i $ for
     all $ i $:
-    \[ S_n=\sum\limits_{i=1}^{n} f(t_i)\Delta t=\sum\limits_{i}^{n} f(t_i)\left(\frac{b-a}{n}\right) \]
+    \[ S_n=\sum\limits_{i=1}^{n} f(t_i)\Delta t=\sum\limits_{i=1}^{n} f(t_i)\left(\frac{b-a}{n}\right) \]
 \end{Definition}
 
 \begin{Remark}{}{}
-    We can also define the regular left-hand Riemann Sum.
+    We can also define the regular left-hand Riemann sum.
 \end{Remark}
 
 Now, we can write a nicer formula for integrating continuous functions!
 
 If $ f $ is continuous, then
-\[ \int_{a}^{b} f(x)\, d{x} =
-    \lim\limits_{{n} \to {\infty}} \sum\limits_{i=1}^{n} f(t_i)\left(\frac{b-a}{n}\right) \]
+\[ \boxed{\int_{a}^{b} f(x)\, d{x} =
+        \lim\limits_{{n} \to {\infty}} \sum\limits_{i=1}^{n} f(t_i)\left(\frac{b-a}{n}\right)} \]
 
 \begin{Example}{}{}
     Evaluate
@@ -114,9 +115,9 @@ If $ f $ is continuous, then
     \textbf{Solution.}
     Since $ f(x)=x+x^3 $ is continuous, we can use the above formula.
 
-    In our case: $ \frac{b-a}{n} = \frac{4}{n} $, and $ t_i = 0+\frac{4i}{n} = \frac{4i}{n} $.
+    In our case: $ \dfrac{b-a}{n} = \dfrac{4}{n} $, and $ t_i = 0+\dfrac{4i}{n} = \dfrac{4i}{n} $.
 
-    So, $ f(t_i) = \frac{4i}{n} + \frac{64i^3}{n^3} $.
+    So, $ f(t_i) = \dfrac{4i}{n} + \dfrac{64i^3}{n^3} $.
     Then, we get:
     \begin{align}
         \int_{0}^{4} x+x^3\, d{x}
@@ -124,15 +125,15 @@ If $ f $ is continuous, then
         \left( \frac{4i}{n} +\frac{64i^3}{n^3} \right)\left( \frac{4}{n} \right)                  \\
          & = \lim\limits_{{n} \to {\infty}} \frac{16}{n^2} \sum\limits_{i=1}^{n} i +
         \frac{256}{n^4} \sum\limits_{i=1}^{n} i^3 \label{1.2_reimann}                             \\
-         & = \lim\limits_{{n} \to {\infty}} \frac{16}{n^2} \left( \frac{n(n+1)}{2} \right) +
-        \frac{256}{n^4} \left( \frac{n^2(n+1)^2}{4} \right) \label{1.3_reimann}                   \\
+         & = \lim\limits_{{n} \to {\infty}} \frac{16}{n^2} \left[ \frac{n(n+1)}{2} \right] +
+        \frac{256}{n^4} \left[ \frac{n^2(n+1)^2}{4} \right] \label{1.3_reimann}                   \\
          & = \lim\limits_{{n} \to {\infty}} \frac{8n+8}{n} +64 \left(\frac{n^2+2n+1}{n^2} \right) \\
          & = 8+64                                                                                 \\
          & =72
     \end{align}
     where from~\ref{1.2_reimann} to~\ref{1.3_reimann} we used both of the following:
-    \[ \sum\limits_{i=1}^{n} i=\frac{n(n+1)}{2} \]
-    \[ \sum\limits_{i=1}^{n} i^3=\frac{n^2(n+1)^2}{4} \]
+    \[ \sum\limits_{i=1}^{n} i=\frac{n(n+1)}{2} \text{ and }
+        \sum\limits_{i=1}^{n} i^3=\frac{n^2(n+1)^2}{4} \]
 \end{Example}
 
 \begin{Remark}{}{}
@@ -179,10 +180,10 @@ Since a definite integral is the limit of a sequence, many limit laws also hold!
     We will now prove~\ref{property_integral_3}.
 
     Suppose $ m\le f(x)\le M $ and partition the interval
-    \[ a=t_0<\cdots<t_n=b \]
+    $ a=t_0<\cdots<t_n=b $.
 
     Note that
-    \[ \sum\limits_{i=1}^{n} \Delta t=\frac{b-a}{n}(n)=b-a \]
+    $ \displaystyle\sum\limits_{i=1}^{n} \Delta t=\frac{b-a}{n}(n)=b-a $
     Then, since $ m\le f(x)\le M $, we get
     \[ m(b-a)=\sum\limits_{i=1}^{n} m\Delta t\le \sum\limits_{i=1}^{n} f(t_i)\Delta t
         \le \sum\limits_{i=1}^{n} M\Delta t=M(b-a) \]
@@ -190,17 +191,17 @@ Since a definite integral is the limit of a sequence, many limit laws also hold!
     \[ m(b-a)\le \int_{a}^{b} f(x)\,d{x} \le M(b-a) \]
 \end{Proof}
 
-\begin{Definition}{More Properties}{more_properties}
+\begin{Definition}{More properties}{more_properties}
     \begin{enumerate}[label=(\Roman*)]
         \item If $ f(a) $ is defined, then
-              \[ \int_{a}^{a} f(x)\, d{x} =0 \]
+              $ \displaystyle\int_{a}^{a} f(x)\, d{x} =0 $
         \item If $ f $ is integrable on $ \interval{a}{b} $, then
-              \[ \int_{a}^{b} f(x)\, d{x}=-\int_{b}^{a} f(x)\, d{x} \]
+              $ \displaystyle\int_{a}^{b} f(x)\, d{x}=-\int_{b}^{a} f(x)\, d{x} $
     \end{enumerate}
 \end{Definition}
 
 \begin{Theorem}{}{extra_integ_property}
-    If $ f $ is integrable on an interval $ I $ containing $ a,b,c $, then
+    If $ f $ is integrable on an interval $ I $ containing $ a,b $, and $ c $, then
     \[ \int_{a}^{b} f(x)\, d{x}=\int_{a}^{c} f(x)\, d{x}+\int_{c}^{b} f(x)\, d{x} \]
 \end{Theorem}
 
@@ -209,16 +210,16 @@ Since a definite integral is the limit of a sequence, many limit laws also hold!
 \end{Proof}
 
 \begin{Remark}{}{}
-    $ c $ does \textbf{not} need to be between $ a $ and $ b $!
+    $ c $ does \emph{not} need to be between $ a $ and $ b $!
 \end{Remark}
 
-\subsection{Geometric Interpretation of the Integral}
+\subsection*{Geometric Interpretation of the Integral}
 So far, we have only examined positive functions, but we should note that $ \int_{a}^{b} f(x)\,dx $
-returns the \textbf{signed} area between $ f $ and the $ x $-axis. That is, if $ f(x)\le 0 $, then
+returns the \emph{signed} area between $ f $ and the $ x $-axis. That is, if $ f(x)\le 0 $, then
 $ \int_{a}^{b} f(x)\,dx\le 0 $ too.
 
-So, in general, $ \int_{a}^{b} $ is the area under $ f $ that
-lies above the $ x $-axis \textbf{minus} the area above the graph of
+So, in general, $ \int_{a}^{b} f(x)\,dx $ is the area under $ f $ that
+lies above the $ x $-axis \emph{minus} the area above the graph of
 $ f $ that lies below the $ x $-axis.
 
 \begin{Example}{}{}
@@ -256,17 +257,17 @@ $ f $ that lies below the $ x $-axis.
 
 \section{Average Value of a Function}
 
-\begin{Definition}{Average Value}{avg_value}
+\begin{Definition}{Average value}{avg_value}
     If $ f $ is continuous on $ \interval{a}{b} $, the \textbf{average value} of $ f $
     on $ \interval{a}{b} $ is defined as
-    \[ \frac{1}{b-a} \int_{a}^{b} f(x)\,dx \]
+    $ \displaystyle \frac{1}{b-a} \int_{a}^{b} f(x)\,dx $.
 \end{Definition}
 
-\subsection{Geometric Interpretation}
+\subsection*{Geometric Interpretation}
 \begin{Proof}{\ref{thm:avt}}{}
     If $ f $ is continuous on $ \interval{a}{b} $, EVT says there exists $ m,M\in\mathbb{R} $ such that
-    \[m\le f(x) \le M\]
-    for $ x\in\interval{a}{b} $ and $ f(c_1)=m $, $ f(c_2)=M $ for some $ c_1,c_2\in\interval{a}{b} $.
+    $ \displaystyle m\le f(x) \le M $
+    for $ x\in\interval{a}{b} $, and $ f(c_1)=m $, $ f(c_2)=M $ for some $ c_1,c_2\in\interval{a}{b} $.
 
     Also, we know
     \begin{align*}
@@ -281,7 +282,7 @@ $ f $ that lies below the $ x $-axis.
 \begin{Theorem}{Average Value Theorem (AVT)}{avt}
     Assume $ f $ is continuous on $ \interval{a}{b} $.
     There exists $ c\in\interval{a}{b} $ such that
-    \[ f(c)=\frac{1}{b-a} \int_{a}^{b} f(x) d{x} \]
+    $ \displaystyle f(c)=\frac{1}{b-a} \int_{a}^{b} f(x) d{x} $.
 \end{Theorem}
 
 \begin{Remark}{}{}
@@ -294,7 +295,7 @@ $ f $ that lies below the $ x $-axis.
 \end{Remark}
 
 The big problem we face now is that evaluating $ \int_{a}^{b} f(x)\, d{x} $ is
-monstrously difficult for all but the simplest of functions\textellipsis{}
+monstrously difficult for all but the simplest of functions.
 
 IF ONLY THERE WAS A BETTER WAY\@!
 

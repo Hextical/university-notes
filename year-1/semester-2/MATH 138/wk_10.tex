@@ -34,7 +34,7 @@ To estimate the size of the error we use:
 \setcounter{section}{6}
 \section{Taylor Series and Convergence}
 Last week we examined how to obtain power series representations
-for certain functions (functions related to $ \sfrac{1}{(1-x)} $),
+for certain functions, e.g.\ functions related to $ \dfrac{1}{1-x} $,
 but is there a more general method? Let's see!
 
 Suppose $ f(x)=\sum\limits_{n=0}^{\infty} a_n(x-a)^n=a_0+a_1(x-a)+a_2(x-a)^2+\cdots $
@@ -43,7 +43,7 @@ for $ \abs{x-a}<R $, $ R>0 $. What are the $ a_n $'s?
 First, at $ x=a $: $ f(a)=a_0 $. Next: differentiate!
 \[ f^\prime(x)=a_1+2a_2(x-a)+3a_3(x-a)^2+\cdots \]
 at $ x=a $: $ f^\prime(a)=a_1 $. Keep going!
-\[ f^{\prime\prime}=2a_2+6a_3(x-a)+\cdots\implies f^{\prime\prime}(a)=2a_2 \]
+\[ f^{\prime\prime}(x)=2a_2+6a_3(x-a)+\cdots\implies f^{\prime\prime}(a)=2a_2 \]
 Therefore $ a_2=\dfrac{f^{\prime\prime}(a)}{2} $.
 
 Another iteration gives $ a_3=\dfrac{f^{(3)}(a)}{6}=\dfrac{f^{(3)}(a)}{3!}  $, etc.
@@ -124,7 +124,7 @@ its size, and we do!
     for $ \abs{x-a}<d $.
 \end{Theorem}
 With this, we establish the convergence theorem!
-\begin{Theorem}{Convergence Theorem for Taylor Series}{}
+\begin{Theorem}{Convergence Theorem for Taylor Series}{conv_thm}
     Assume $ f $ has derivatives of all orders on an interval
     $ I $ containing $ x=a $.
 
@@ -135,7 +135,7 @@ With this, we establish the convergence theorem!
     for $ x\in I $.
 \end{Theorem}
 
-\begin{Proof}{}{}
+\begin{Proof}{\ref{thm:conv_thm}}{}
     First, if $ x=a $ then $ \displaystyle \sum\limits_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!}(a-a)^n
         =f(a) $, so we only need to prove it for $ x\neq a $. Say $ x_0\in I $,
     $ x_0\neq a $. Taylor's Inequality says that since $ \abs{f^{(n+1)}(x)}\leqslant M $,
@@ -147,11 +147,11 @@ With this, we establish the convergence theorem!
     $ \lim\limits_{{n} \to {\infty}} \abs{R_{n,a}(x_0)}=0 $, as desired.
 \end{Proof}
 
-\begin{Corollary}{}{}
-    \[ e^x=\sum\limits_{n=0}^{\infty}\frac{x^n}{n!}  \]
+\begin{Corollary}{}{ex_2}
+    $ \displaystyle  e^x=\sum\limits_{n=0}^{\infty}\frac{x^n}{n!} $
     for all $ x\in\mathbb{R} $.
 \end{Corollary}
-\begin{Proof}{}{}
+\begin{Proof}{\ref{cor:ex_2}}{}
     Fix $ B>0 $, then for $ f(x)=e^x $, $ \abs{f^{(n+1)}(x)}=e^x\leqslant e^B $
     for all $ x\in\interval{-B}{B} $. Therefore, by the Convergence
     Theorem, $ \displaystyle e^x=\sum\limits_{n=0}^{\infty} \frac{x^n}{n!}  $ for $ x\in\interval{-B}{B} $.
@@ -159,12 +159,12 @@ With this, we establish the convergence theorem!
     for all $ x\in\mathbb{R} $.
 \end{Proof}
 
-\begin{Corollary}{}{}
+\begin{Corollary}{}{sin_cos}
     Both $ \sin(x) $ and $ \cos(x) $ are equal to their Maclaurin
     series for all $ x\in\mathbb{R} $.
 \end{Corollary}
 
-\begin{Proof}{}{}
+\begin{Proof}{\ref{cor:sin_cos}}{}
     Both functions are infinitely differentiable on
     $ \mathbb{R} $, and their derivatives (namely $ \pm \sin(x) $ or $ \pm\cos(x) $)
     are bounded above by 1. So, by the Convergence Theorem,
@@ -195,7 +195,7 @@ series for $ \cos(x) $.
 \[ \sin(x)=\int \cos(x)\, d{x} =
     \int \sum\limits_{n=0}^{\infty} \frac{(-1)^n x^{2n}}{(2n)!} \, d{x}
     =\sum\limits_{n=0}^{\infty} \left[ \frac{(-1)^n x^{2n+1}}{(2n)!(2n+1)} \right]+C  \]
-But $ \sin(0)=0\implies 0=0+c\implies C=0 $. So, for all $ x\in\mathbb{R} $,
+But $ \sin(0)=0\implies 0=0+C\implies C=0 $. So, for all $ x\in\mathbb{R} $,
 \[ \sin(x)=\sum\limits_{n=0}^{\infty} \frac{(-1)^n x^{2n+1}}{(2n+1)!}  \]
 
 The point is: we can use whatever methods we want to find a Taylor/Maclaurin
@@ -222,14 +222,14 @@ series, we don't always need to use the formula!
 \end{Example}
 
 \begin{Example}{}{}
-    Find the Taylor series about $ x=\sfrac{\pi}{2} $ for $ f(x)=\sin(x) $.
+    Find the Taylor series about $ x=\dfrac{\pi}{2} $ for $ f(x)=\sin(x) $.
 
     \textbf{Solution.}
     \begin{align*}
         \sin(x) & = \sin\left[ \left(x-\frac{\pi}{2}\right)+\frac{\pi}{2} \right]                                                                                                   \\
                 & =\sin\left( x-\frac{\pi}{2}  \right)\cos\left( \frac{\pi}{2} \right) +\cos\left( x-\frac{\pi}{2} \right)\sin\left( \frac{\pi}{2} \right) & \text{trig.\ identity} \\
                 & =\cos\left( x-\frac{\pi}{2} \right)                                                                                                                               \\
-                & =\sum\limits_{n=0}^{\infty} \frac{(-1)^n \left( x-\frac{\pi}{2} \right)^{2n}}{(2n)!}
+                & =\sum\limits_{n=0}^{\infty} \frac{(-1)^n \left( x-\dfrac{\pi}{2} \right)^{2n}}{(2n)!}
     \end{align*}
     for all $ x\in\mathbb{R} $ with $ R=\infty $.
 \end{Example}
