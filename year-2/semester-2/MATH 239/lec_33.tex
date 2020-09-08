@@ -1,13 +1,13 @@
 \makeheading{2020-03-03}
 \section{König's Theorem}
-\begin{thmbox}
-    \begin{theorem}[\label{konig}König's Theorem]
-        If $ G $ is a bipartite graph, then
-        \[ |\text{maximum matching of }G|=|\text{minimum cover of }G| \]
-    \end{theorem}
-\end{thmbox}
+
+\begin{Theorem}{König's Theorem}{konig}
+    If $ G $ is a bipartite graph, then
+    \[ |\text{maximum matching of }G|=|\text{minimum cover of }G| \]
+\end{Theorem}
+
 Let's first look at few more examples of matchings and covers since they will form the
-base case of~\ref{konig}.
+base case of~\Cref{thm:konig}.
 
 \underline{Cycles}: Let $ C_n $ be the $ n $-cycle.
 
@@ -83,7 +83,7 @@ It is easy to see that
         \end{cases}\right)
 \end{align*}
 For even cycles, (every other vertex) is a cover of size $ \frac{n}{2} $, so
-is a minimum cover by~\ref{equality cover}.
+is a minimum cover by~\Cref{prop:equality cover}.
 For odd cycles, the minimum cover has size $ \lceil \frac{n}{2} \rceil $
 because $ \lfloor \frac{n}{2} \rfloor  $ is not enough since every vertex has
 degree $ 2 $.
@@ -164,48 +164,48 @@ Thus,
 It follows that, if $ G $ is a bipartite graph where every component is a path or cycle,
 then
 \[ |\text{maximum matching of }G|=|\text{minimum cover of }G|  \]
-\begin{proof}
+\begin{Proof}{}{}
     A maximum matching of $ G $ consists of a maximum matching for each component. Same for
     the minimum cover. Since we know $ |\text{maximum matching}|=|\text{minimum cover}| $
     for each component, the same is true for $ G $.
-\end{proof}
+\end{Proof}
 
-\begin{thmbox}
-    \begin{prop}
-        Let $ G $ be a graph with no vertices of degree $ 3 $ or more. Then
-        every component of $ G $ is a path or cycle.
-    \end{prop}
-\end{thmbox}
-\begin{proof}
+
+\begin{Proposition}{}{}
+    Let $ G $ be a graph with no vertices of degree $ 3 $ or more. Then
+    every component of $ G $ is a path or cycle.
+\end{Proposition}
+
+\begin{Proof}{}{}
     Let $ C $ be a component of $ G $. Let $ P $ be a longest path
     in $ C $. Let $ u $ and $ v $ be the ends of $ P $. Since every vertex
     of $ P $ has degree $ \geqslant 2 $, the only possible edge in $ C $ that is
     not in $ P $ is the edge from $ u $ to $ v $. Therefore, either
     $ P=C $, or $ C $ is a cycle. So every component is a path or cycle.
-\end{proof}
+\end{Proof}
 
-\begin{thmbox}
-    \begin{prop}\label{equality matching}
-        If $ M $ is a matching of $ G $ and $ C $ is a cover of $ G $ with $ |M|=|C| $,
-        then every vertex in $ C $ is the end of an edge in $ M $.
-    \end{prop}
-\end{thmbox}
-\begin{proof}
+
+\begin{Proposition}{}{equality matching}
+    If $ M $ is a matching of $ G $ and $ C $ is a cover of $ G $ with $ |M|=|C| $,
+    then every vertex in $ C $ is the end of an edge in $ M $.
+\end{Proposition}
+
+\begin{Proof}{}{}
     Since $ C $ is a cover, every edge in $ M $ has an end in $ C $; since $ M $
     is a matching, these ends are all different, so there is nothing else in $ C $.
-\end{proof}
-We can now prove~\ref{konig}.
-\begin{thmbox}
-    \begin{theorem}[König's Theorem (1931)]
-        If $ G $ is a bipartite graph, then
-        \[ |\text{maximum matching of }G|=|\text{minimum cover of }G| \]
-    \end{theorem}
-\end{thmbox}
+\end{Proof}
+We can now prove~\Cref{thm:konig}.
+
+\begin{Theorem}{König's Theorem (1931)}{}
+    If $ G $ is a bipartite graph, then
+    \[ |\text{maximum matching of }G|=|\text{minimum cover of }G| \]
+\end{Theorem}
+
 The proof in course notes is longer since it is used for the algorithm:
 a maximum matching in a bipartite graph, that is usually within this course,
 but due to the lack of time, we will not present it here, and hence the proof presented
 will be different.
-\begin{proof}
+\begin{Proof}{}{}
     Rizzi (1999). We use strong induction.
     The theorem is obvious for graphs with no edges; let $ G $
     be a bipartite graph with $ m>0 $ edges, and suppose that the theorem holds
@@ -220,7 +220,7 @@ will be different.
     $ G-v $ has a cover $ C_1 $ of size $ \leqslant k-1 $. So $ C_1\cup \{v\} $
     is a cover of $ G $ of size $ \leqslant k $. Since $ k $ is the size of a matching of
     $ G $, we have $ |C_1\cup \{v\}|\geqslant k $, so $ C_1 \cup \{v\} $ is a cover
-    of the same size as a matching of $ G $, so by~\ref{equality matching},
+    of the same size as a matching of $ G $, so by~\Cref{prop:equality matching},
     we have
     \[ |\text{maximum matching}|=|\text{minimum cover}| \]
     \underline{Case 2}: The graph $ G-v $ does have a matching of size $ k $. Let
@@ -228,10 +228,10 @@ will be different.
     Let $ f $ be an edge not in $ M $, that is incident with $ u $ but not $ v $.
     Since $ G-f $ is bipartite and has fewer edges than $ G $, and has a matching $ M $
     of size $ k $, inductively $ G-f $ has a cover $ C_2 $ of size $ k $. Since
-    $ |C_2|=|M| $ every vertex in $ C_2 $ is saturated by $ M $ by~\ref{equality matching},
+    $ |C_2|=|M| $ every vertex in $ C_2 $ is saturated by $ M $ by~\Cref{prop:equality matching},
     so $ v\notin C_2 $. Since $ C_2 $ contains $ \geqslant 1 $ end of the edge $ uv $,
     we have $ u\in C_2 $. So, $ C_2 $ contains an end of $ f $, and an end of every edge in
     $ G-f $. So $ C_2 $ is a cover of $ G $ of size $ k = |\text{maximum matching}| $.
     So $ C_2 $ is a minimum cover; thus
     \[ |\text{maximum matching}|=|\text{minimum cover}| \]
-\end{proof}
+\end{Proof}

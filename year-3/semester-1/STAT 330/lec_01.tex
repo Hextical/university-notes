@@ -1,0 +1,226 @@
+\setcounter{chapter}{1}
+\chapter{Random Variable}
+Review of:
+\begin{itemize}
+    \item Probability
+    \item Random variables (discrete and continuous)
+    \item Expectation and variance
+    \item Moment generating function
+\end{itemize}
+
+\section{Probability Model}
+\begin{Definition}{Probability model}{}
+    A \textbf{probability model} is used for a random
+    experiment, which consists of three components:
+    \begin{enumerate}[label=(\Roman*)]
+        \item Sample space
+        \item Event
+        \item Probability function
+    \end{enumerate}
+\end{Definition}
+
+\begin{Definition}{Sample space}{}
+    A \textbf{sample space} $ S $ is a set of all the distinct outcomes
+    for a random experiment, with the property that in a single trial,
+    one and only one of these outcomes occurs.
+\end{Definition}
+
+\begin{Example}{}{}
+    Toss a coin twice. This is a random experiment because
+    we do not know the outcome before we toss the coin twice.
+    \begin{itemize}
+        \item $ S=\left\{ (H,H),(H,T),(T,H),(T,T)\right\} $
+    \end{itemize}
+    Define $ A $: First toss is an $ H $.
+
+    Clearly, $ A=\left\{ (H,H),(H,T)\right\}\subseteq S $, so $ A $ is an event.
+\end{Example}
+
+\begin{Definition}{$ \dagger $ Sigma algebra}{}
+    A collection of subsets of a set $ S $ is called \textbf{sigma algebra},
+    denoted by $ \beta $, if it satisfies the following properties:
+    \begin{enumerate}[label=(\Roman*)]
+        \item $ \varnothing\in \beta $
+        \item If $ A\in\beta $, then $ \bar{A}\in\beta $
+        \item If $ A_1,A_2,\ldots\in \beta $, then $ \bigcup\limits_{i=1}^{\infty}A_i\in \beta $
+    \end{enumerate}
+\end{Definition}
+
+\begin{Definition}{Probability set function}{psf_def}
+    Let $ \beta $ be a sigma algebra associated with the sample space $ S $.
+    A \textbf{probability set function} is a function $ P $
+    with domain $ \beta $ that satisfies the following axioms:
+    \begin{enumerate}[label=(\Roman*)]
+        \item\label{psf_def_1} $ P(A)\geqslant 0 $ for all $ A\in \beta $
+        \item\label{psf_def_2} $ P(S)=1 $
+        \item\label{psf_def_3} \emph{Additivity property}: If $ A_1,A_2,A_3,\ldots\in \beta $
+              are pairwise mutually exclusive events; that is, $ A_i\cap A_j=\varnothing $
+              for all $ i\neq j $, then
+              \[ P\biggl( \bigcup_{i=1}^{\infty}A_i \biggr)=\sum\limits_{i=1}^{\infty} P(A_i) \]
+    \end{enumerate}
+\end{Definition}
+
+\begin{Example}{}{}
+    Toss a coin twice, given one event $ A $,
+    \[ P(A)=\frac{\text{\# of outcomes in }A}{4}  \]
+    since $ |S|= 4 $. $ P $ satisfies the three properties,
+    therefore $ P $ is a probability function.
+\end{Example}
+
+\begin{Proposition}{Additional Properties of the Probability Set Function}{add_prop_psf}
+    Let $ \beta $ be a sigma algebra associated with the sample space $ S $
+    and let $ P $ be a probability set function with domain $ \beta $.
+    If $ A,B\in \beta $, then:
+    \begin{enumerate}[label=(\arabic*)]
+        \item\label{add_prop_psf_1} $ P(\varnothing)=0 $
+        \item\label{add_prop_psf_2} If $ A $ and $ B $ are mutually exclusive events, then $ P(A\cup B)=P(A)+P(B) $
+        \item\label{add_prop_psf_3} $ P(\bar{A})=1-P(A) $
+        \item\label{add_prop_psf_4} If $ A\subset B $, then $ P(A)\leqslant P(B) $
+    \end{enumerate}
+\end{Proposition}
+Note for~\ref{add_prop_psf_4}, $ A\subset B $ means $ a\in A $ implies $ a\in B $.
+\begin{Proof}{\ref{prop:add_prop_psf}}{}
+    Proof of~\ref{add_prop_psf_1}: Let $ A_1=S $ and $ A_i=\varnothing $ for $ i=2,3,\ldots $.
+    Since $ \bigcup\limits_{i=1}^{\infty}A_i=S $, then by~\ref{psf_def_3}
+    it follows that
+    \[ P(S)=P(S)+\sum\limits_{i=2}^{\infty} P(\varnothing) \]
+    and by~\ref{psf_def_2} we have
+    \[ 1=1+\sum\limits_{i=2}^{\infty} \]
+    By~\ref{psf_def_1} the right side is a series of non-negative numbers which must converge to
+    the left side which is 1 which is finite which results in a contradiction
+    unless $ P(\varnothing)=0 $ as required.
+
+    Proof of~\ref{add_prop_psf_2}: Let $ A_1=A $, $ A_2=B $, and $ A_i=\varnothing $ for
+    $ i=3,4,\ldots $. Since $ \bigcup\limits_{i=1}^\infty A_i=A\cup B $, then by~\ref{psf_def_3}
+    \[ P(A\cup B)=P(A)+P(B)+\sum\limits_{i=3}^{\infty} P(\varnothing) \]
+    and since $ P(\varnothing)=0 $ by the result of~\ref{add_prop_psf_1} it follows that
+    \[ P(A\cup B)=P(A)+P(B) \]
+    Proof of~\ref{add_prop_psf_3}: Since $ S=A\cup \bar{A} $ and $ A\cap \bar{A}=\varnothing $
+    then by~\ref{psf_def_2} and by~\ref{add_prop_psf_2} it follows that
+    \[ 1=P(S)=P(A\cup\bar{A})=P(A)+P(\bar{A}) \]
+    as required.
+
+    Proof of~\ref{add_prop_psf_4}: Since
+    \[ B=(A\cap B)\cup (\bar{A}\cap B)=A\cup(\bar{A}\cap B) \]
+    and $ A\cap(\bar{A}\cap B)=\varnothing $ then by~\ref{add_prop_psf_2}
+    \[ P(B)=P(A)+P(\bar{A}\cap B) \]
+    But by~\ref{psf_def_1}, $ P(\bar{A}\cap B)\geqslant 0 $, so the result now follows.
+\end{Proof}
+
+\begin{Exercise}{}{}
+    Let $ \beta $ be a sigma algebra associated with the sample space $ S $
+    and let $ P $ be a probability set function with domain $ \beta $.
+    If $ A,B\in\beta $ then prove the following:
+    \begin{enumerate}
+        \item $ 0\leqslant P(A)\leqslant 1 $
+        \item $ P(A\cap\bar{B})=P(A)-P(A\cap B) $
+        \item $ P(A\cup B)=P(A)+P(B)-P(A\cap B) $
+    \end{enumerate}
+\end{Exercise}
+\begin{enumerate}
+    \item $ P(A)\geqslant 0 $ follows from~\ref{psf_def_1}. From~\ref{add_prop_psf_3}
+          we have $ P(\bar{A})=1-P(A) $. But from~\ref{psf_def_1} $ P(\bar{A})\geqslant 0 $
+          and therefore $ P(A)\leqslant 1 $.
+    \item Since $ A=(A\cap B)\cup (A\cap \bar{B}) $ and $ =(A\cap B)\cap (A\cap \bar{B})
+              =\varnothing $, then by~\ref{add_prop_psf_2}
+          \[ P(A)=P(A\cap B)+P(A\cap\bar{B}) \]
+          as required.
+    \item $ P(A\cup B)=(A\cap \bar{B})+ P(A\cap B)+P(\bar{A}\cap B) $. By the previous
+          result,
+          \[ P(A\cap \bar{B})=P(A)-P(A\cap B) \text{ and } P(\bar{A}\cap B)=P(B)-P(A\cap B)\]
+          Therefore,
+          \begin{align*}
+              P(A\cup B) & =(P(A)-P(A\cap B))+P(A\cap B)+(P(B)-P(A\cap B)) \\
+                         & =P(A)+P(B)-P(A\cap B)
+          \end{align*}
+          as required.
+\end{enumerate}
+
+\begin{Definition}{Conditional probability}{}
+    Let $ \beta $ be a sigma algebra associated with the sample space
+    $ S $ and suppose $ A,B\in\beta $ with
+    $ P(B)>0 $. Then the \textbf{conditional probability}
+    of $ A $ given that $ B $ has occurred is
+    \[ P(A\mid B)=\frac{P(A\cap B)}{P(B)} \]
+\end{Definition}
+
+\begin{Definition}{Independent events}{}
+    Let $ \beta $ be a sigma algebra associated with the sample space
+    $ S $ and suppose $ A,B\in\beta $. $ A $ and
+    $ B $ are \textbf{independent events} if
+    \[ P(A\cap B)=P(A)P(B) \]
+\end{Definition}
+
+Clearly, $ P(A\mid B)=P(A) $ if $ A $ and $ B $ are independent since
+\[ P(A\mid B)=\frac{P(A\cap B)}{P(B)}=\frac{P(A)P(B)}{P(B)}=P(A)  \]
+
+\begin{Example}{}{}
+    Toss a coin twice.
+    \begin{itemize}
+        \item $ A $: First toss is $ H $
+        \item $ B $: Second toss is $ T $
+    \end{itemize}
+    \[ P(A)=\frac{\text{\# of outcomes in }A}{4}=\frac{2}{4}  \]
+    also
+    \[ P(B)=\frac{2}{4} \]
+    \[ P(A\cap B)=\frac{1}{4}=P(A)P(B) \]
+    therefore $ A $ and $ B $ are independent.
+\end{Example}
+
+\section{Random Variable}
+
+\begin{Definition}{Random variable}{}
+    A \textbf{random variable} $ X $
+    is a function from a sample space $ S $ to the real numbers $ \mathbb{R} $; that is,
+    \[ X:S\to \mathbb{R} \] satisfies for any given $ x\in\mathbb{R} $
+    $ \set{X\leqslant x} $ is an event.
+    \[ \set{X\leqslant x}=\set{\omega\in S:X(\omega)\leqslant x}
+        \subseteq S \]
+\end{Definition}
+
+\begin{Example}{}{}
+    Toss a coin twice. $ X $: \# of $ H $ in two tosses
+
+    Possible values of $ X $: $ 0,1,2 $. Given $ x\in\mathbb{R} $.
+
+    \[ \set{X\leqslant x} \]
+    \begin{itemize}
+        \item $ x<0 $ then $ \set{X\leqslant x}= \varnothing $
+        \item $ 0\leqslant x<1 $ then
+    \end{itemize}
+    then
+    \[ \set{X\leqslant x}=\set{X=0}=\set{(T,T)}\subseteq S \]
+    therefore $ X $ is a random variable.
+\end{Example}
+
+\begin{Definition}{Cumulative distribution function}{}
+    The \textbf{cumulative distribution function} (c.d.f.) of a random variable
+    $ X $ is defined by
+    \[ F(x)=P(X\leqslant x) \]
+    for all $ x\in\mathbb{R} $. Note that the c.d.f.\ is defined for all $ \mathbb{R} $
+\end{Definition}
+
+\begin{Definition}{Properties of the cumulative distribution function}{}
+    \begin{enumerate}[label=(\arabic*)]
+        \item $ F $ is a non-decreasing function; that is, if $ x_1\leqslant x_2 $,
+              then $ F(x_1)\leqslant F(x_2) $.
+
+              By looking at:
+              $ \set{X\leqslant x_1}\subseteq \set{X\leqslant x_2} $
+              if $ x_1\leqslant x_2 $.
+        \item $ \lim\limits_{{x} \to {\infty}} F(x)=1 $
+              and $ \lim\limits_{{x} \to {-\infty}} F(x)=0 $.
+
+              By looking at:
+              $ x\to\infty $: $ \set{X\leqslant x}\to S $
+              $ x\to-\infty $: $ \set{X\leqslant x}\to \varnothing $
+        \item $ F(x) $ is a right continuous function; that is,
+              for any $ a\in\mathbb{R} $,
+              \[ \lim\limits_{{x} \to {a^+}} F(a)=F(a) \]
+        \item For all $ a<b $
+              \[ P(a<X\leqslant b)=P(X\leqslant b)-P(X\leqslant a)=F(b)-F(a) \]
+        \item For all $ b $
+              \[ P(X=b)=P(\text{jump at }b)=\lim\limits_{{t} \to {b^+}} F(t)-
+                  \lim\limits_{{t} \to {b^-}} F(t)=F(b)-\lim\limits_{{t} \to {b^-}} F(t) \]
+    \end{enumerate}
+\end{Definition}

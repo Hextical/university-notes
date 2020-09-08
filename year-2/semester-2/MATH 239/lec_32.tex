@@ -73,30 +73,30 @@ We can model this situation with a graph (where the set of dotted lines is a pos
 the vertices are $ S\cup J $, and we include an edge between student $ s $ and job $ j $
 if and only if they are `compatible'.
 
-\begin{defbox}
-    \begin{definition}
-        A \textbf{\emph{matching}} in a graph $ G $ is a set $ M $ of edges of $ G $
-        so that no two edges in $ M $ have an end in common.
-    \end{definition}
-\end{defbox}
+
+\begin{Definition}{}{}
+    A \textbf{\emph{matching}} in a graph $ G $ is a set $ M $ of edges of $ G $
+    so that no two edges in $ M $ have an end in common.
+\end{Definition}
+
 Asking for as many job assignments as possible is equivalent to asking for a largest
 possible matching in the graph.
 
-\begin{defbox}
-    \begin{definition}
-        Let $ G=(V,E) $ be a graph, and $ M $ be a matching of G
-        \begin{itemize}
-            \item A vertex $ v $ of $ G $ is \textbf{\emph{saturated}} by $ M $
-                  if some edge in $ M $ has $ v $ as an end. Otherwise it is \textbf{\emph{unsaturated}}
-                  (exposed). \underline{Note}: A matching of size $ k $ has $ 2k $ saturated vertices.
-            \item $ M $ is a \textbf{\emph{maxim\underline{um} matching}} of $ G $ if $ G $ has no matching
-                  larger than $ M $.
-            \item $ M $ is a \textbf{\emph{maxim\underline{al} matching}} if $ M $ is contained in no larger
-                  matching of $ G $. \underline{Note}: Maximum $ \implies $ Maximal, but the converse is not true.
-        \end{itemize}
 
-    \end{definition}
-\end{defbox}
+\begin{Definition}{}{}
+    Let $ G=(V,E) $ be a graph, and $ M $ be a matching of G
+    \begin{itemize}
+        \item A vertex $ v $ of $ G $ is \textbf{\emph{saturated}} by $ M $
+              if some edge in $ M $ has $ v $ as an end. Otherwise it is \textbf{\emph{unsaturated}}
+              (exposed). \underline{Note}: A matching of size $ k $ has $ 2k $ saturated vertices.
+        \item $ M $ is a \textbf{\emph{maxim\underline{um} matching}} of $ G $ if $ G $ has no matching
+              larger than $ M $.
+        \item $ M $ is a \textbf{\emph{maxim\underline{al} matching}} if $ M $ is contained in no larger
+              matching of $ G $. \underline{Note}: Maximum $ \implies $ Maximal, but the converse is not true.
+    \end{itemize}
+
+\end{Definition}
+
 
 \begin{figure}[H]
     \centering
@@ -129,31 +129,31 @@ possible matching in the graph.
     \end{tikzpicture}
     \caption{Maximal, but not maximum matching.}
 \end{figure}
-\begin{defbox}
-    \begin{definition}
-        Let $ P $ be a path in a graph $ G=(V,E) $ and $ M $ be a matching of $ G $. Let
-        $ e_1,e_2,\ldots ,e_k $ be the edges of $ P $ occurring in order. If $ M\cap E(P) $
-        is either $ \{e_1,e_3,e_5,\ldots \} $ or $ \{e_2,e_4,e_6,\ldots\} $ then $ P $
-        is an \textbf{\emph{$ \bm{M} $-alternating path}}. That is, the edges in $ P $
-        alternate between being matching and non-matching edges. $ P $
-        is an \textbf{\emph{$ \bm{M} $-augmenting path}} if $ M\cap E(P)=\{e_2,e_4,e_6,\ldots \} $,
-        and also both ends of $ P $ are unsaturated vertices.
-    \end{definition}
-\end{defbox}
+
+\begin{Definition}{}{}
+    Let $ P $ be a path in a graph $ G=(V,E) $ and $ M $ be a matching of $ G $. Let
+    $ e_1,e_2,\ldots ,e_k $ be the edges of $ P $ occurring in order. If $ M\cap E(P) $
+    is either $ \{e_1,e_3,e_5,\ldots \} $ or $ \{e_2,e_4,e_6,\ldots\} $ then $ P $
+    is an \textbf{\emph{$ \bm{M} $-alternating path}}. That is, the edges in $ P $
+    alternate between being matching and non-matching edges. $ P $
+    is an \textbf{\emph{$ \bm{M} $-augmenting path}} if $ M\cap E(P)=\{e_2,e_4,e_6,\ldots \} $,
+    and also both ends of $ P $ are unsaturated vertices.
+\end{Definition}
+
 We can use an $ M $-augmenting path in a graph $ G $ to make a matching $ M^\prime $
 of $ G $ that is larger than $ M $.
 
-\begin{thmbox}
-    \begin{prop}
-        If $ M $ is a matching in $ G $ and $ P $ is an $ M $-augmenting path, then $ M $
-        is not a maximum matching of $ G $.
-    \end{prop}
-\end{thmbox}
-\begin{proof}
+
+\begin{Proposition}{}{}
+    If $ M $ is a matching in $ G $ and $ P $ is an $ M $-augmenting path, then $ M $
+    is not a maximum matching of $ G $.
+\end{Proposition}
+
+\begin{Proof}{}{}
     Replace $ M $ with
     \[ \left( M\setminus (M\cap E(P)) \right)\cup (E(P)\setminus M) \]
     to get a larger matching than $ M $.
-\end{proof}
+\end{Proof}
 
 \begin{figure}[H]
     \centering
@@ -223,49 +223,49 @@ of $ G $ that is larger than $ M $.
 Clearly, it is not possible to have a matching of size $ 6 $ here.
 The matching above covers all edges of the graph.
 \section{Covers}
-\begin{defbox}
-    \begin{definition}
-        A (vertex) \textbf{\emph{cover}} of a graph $ G $ is a set $ C\subseteq V(G) $ such that
-        every edge of $ G $ has at least one end in $ C $.
-    \end{definition}
-\end{defbox}
 
-\begin{thmbox}
-    \begin{prop}\label{cover prop}
-        If $ C $ is a cover of $ G $ and $ M $ is a matching of $ G $, then
-        \[ |M|\leqslant |C| \]
-    \end{prop}
-\end{thmbox}
-\begin{proof}
+\begin{Definition}{}{}
+    A (vertex) \textbf{\emph{cover}} of a graph $ G $ is a set $ C\subseteq V(G) $ such that
+    every edge of $ G $ has at least one end in $ C $.
+\end{Definition}
+
+
+
+\begin{Proposition}{}{cover prop}
+    If $ C $ is a cover of $ G $ and $ M $ is a matching of $ G $, then
+    \[ |M|\leqslant |C| \]
+\end{Proposition}
+
+\begin{Proof}{}{}
     We use the pigeonhole principle. Each edge in $ M $ has an end in $ C $ by the definition
     of a cover. Since $ M $ is a matching, these ends are distinct. So
     \[ |C|\geqslant |M| \]
-\end{proof}
+\end{Proof}
 
-\begin{thmbox}
-    \begin{prop}\label{equality cover}
-        If $ C $ is a cover of $ G $ and $ M $ is a matching of $ G $ with $ |M|=|C| $,
-        then $ M $ is a maximum matching of $ G $, and $ C $ is a minimum (smallest possible)
-        cover of $ G $.
-    \end{prop}
-\end{thmbox}
-\begin{proof}
+
+\begin{Proposition}{}{equality cover}
+    If $ C $ is a cover of $ G $ and $ M $ is a matching of $ G $ with $ |M|=|C| $,
+    then $ M $ is a maximum matching of $ G $, and $ C $ is a minimum (smallest possible)
+    cover of $ G $.
+\end{Proposition}
+
+\begin{Proof}{}{}
     Let $ M_0 $ be a maximum matching, and $ C_0 $ be a minimum cover. Then,
     \begin{equation}
         \begin{aligned}
             |M| & \leqslant |M_0| & M_0\text{ is a maximum matching} \\
-                & \leqslant |C_0| & \text{by~\ref{cover prop}}       \\
+                & \leqslant |C_0| & \text{by~\Cref{prop:cover prop}} \\
                 & \leqslant |C|   & C_0 \text{ is a minimum cover}   \\
                 & =|M|            & \text{by assumption}
         \end{aligned}
     \end{equation}
     Equality holds throughout, so $ |M|=|M_0| $, which means that $ M $ is a maximum
     matching and $ |C|=|C_0| $ means that $ C $ is a minimum cover.
-\end{proof}
+\end{Proof}
 $ \dagger $\underline{Note}: Usually, $ \nu(G) = $ size of a maximum matching of $ G $,
 and $ \tau(G) = $ size of a minimum cover of $ G $.
 
-~\ref{cover prop} states that, for any $ G $,
+~\Cref{prop:cover prop} states that, for any $ G $,
 \[ |\text{maximum matching of }G|\leqslant |\text{minimum cover of }G| \]
 
 \begin{figure}[H]
