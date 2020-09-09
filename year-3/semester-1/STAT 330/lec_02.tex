@@ -1,0 +1,168 @@
+\makeheading{Lecture 2 | 2020-09-09}
+\section{Discrete Random Variables}
+\begin{Definition}{Discrete}{}
+    If a random variable $ X $ can only take
+    finite or countable values, $ X $
+    is a \textbf{discrete random variable}.
+\end{Definition}
+In this case, $ F(x) $ is a right-continuous
+step function.
+
+Comments:
+\begin{itemize}
+    \item Countable: something you can enumerate ($ \mathbb{Z} $,
+          $ \mathbb{N}^+ $)
+    \item Probability function (pf)
+          or probability mass function:
+          \[ f(x)=
+              \begin{cases}
+                  P(X=x) & \text{ if } X\text{ can take value of }x    \\
+                  0      & \text{ if } X\text{ cannot take value of }x
+              \end{cases} \]
+    \item Support of $ X $
+          \[ A=\set{x:f(x)>0} \]
+          All possible values $ X $ can take
+    \item Property of probability function:
+          \begin{itemize}
+              \item $ f(x)\geqslant 0 $
+              \item $ \sum\limits_{x\in A}f(x)=1 $
+          \end{itemize}
+\end{itemize}
+
+Review some commonly used discrete random variables:
+\begin{itemize}
+    \item Bernoulli random variable. $ X \thicksim \text{Bernoulli}(p) $
+          where $ X $ can only take two possible values 0 (failure) or 1 (success).
+          \[ P(X=1)=p\text{ and }P(X=0)=1-p \]
+          Example: Toss a coin twice. Let $ X $ be the number of heads.
+          Then $ X \thicksim \text{Bernoulli}(p) $
+    \item Binomial random variable. $ X \thicksim \bin(n,p) $
+          \begin{itemize}
+              \item We run $ n $ trials
+              \item Each trial is independent of each other
+              \item Each trial has two possible outcomes: 0 (failure), 1 (success)
+          \end{itemize}
+          \[ P(X=1)=p \]
+          Let $ X $ be the number of success across these $ n $ trials
+          where $ p $ is the success probability for a single trial.
+          \[ X=\sum\limits_{i=1}^{n} X_i \]
+          $ X_i $ is the outcome of the $ i $th trial.
+          \[ P(X_i=1)=p \]
+          where $ X_i \thicksim \text{Bernoulli}(p) $
+    \item Geometric random variable. $ X \thicksim \geo(p) $.
+          Let $ X $ be the number of failures before the first success.
+          $ X $ can take values $ 0,1,2,\ldots $.
+          \[ P(X=x)=(1-p)^x p \]
+          if $ x=0,1,2,\ldots $.
+          Example. $ X = $ number of tails before you get the first
+          head.
+          \begin{itemize}
+              \item $ f(x)\geqslant 0 $
+              \item $ \sum\limits_{x\in A}f(x)=1 $
+          \end{itemize}
+    \item Negative Binomial random variable. $ X \thicksim \nb(r,p) $.
+          where $ X $ is the number of failures before you get $ r $ success.
+          Example. $ X= $ number of tails before you get the $ r $th head.
+          \begin{itemize}
+              \item $ X $ can take $ 0,1,2,\ldots $
+              \item $ f(x)=P(X=x)=\binom{x+r-1}{x}(1-p)^x p^{r-1}p $
+          \end{itemize}
+    \item Poisson random variable. $ X \thicksim \poi(\mu) $
+          where $ X = 0,1,\ldots $.
+          \[ P(X=x)=\frac{\mu^x}{x!} e^{-\mu} \]
+          where $ x=0,1,2,\ldots $.
+          \begin{itemize}
+              \item $ f(x)\geqslant 0 $. $ f(x)=0 $ if $ x\notin\mathbb{Z} $.
+              \item $ \sum\limits_{x=0}^{\infty} f(x) =1 $
+                    using Taylor expansion of exponential function.
+          \end{itemize}
+\end{itemize}
+
+\section{Continuous Random Variable}
+\begin{Definition}{}{}
+    If the possible values of $ X $ is an interval or real line,
+    $ X $ is a continuous random variable.
+\end{Definition}
+Note: not a rigorous definition, but used in this course.
+
+In this case, $ F(x) $ (cdf of $ X $) is a continuous random variable
+and it's differentiable almost everywhere. (It's not differentiable
+for at most countable set of points)
+
+\begin{Definition}{Probability density function}{}
+    \[ f(x)=\begin{cases}
+            F^\prime(x) & \text{if }F(x)\text{ is differentiable at }x \\
+            0           & \text{otherwise}
+        \end{cases} \]
+\end{Definition}
+Support of $ X $:
+\[ A=\set{x:f(x)>0} \]
+Continuous case: $ f(x)\neq P(X=x) $
+\[ P(x<X\leqslant x+\delta)\approx f(x)\delta \]
+since
+\[ \lim\limits_{{\delta} \to {0}}\frac{F(x+\delta)-F(x)}{\delta}=F^\prime(x)=f(x) \]
+Property of pdf $ f(x) $
+\begin{itemize}
+    \item $ f(x)\geqslant 0 $
+    \item $ \int_{-\infty}^{\infty} f(x)\, d{x} =1 $
+    \item $ F(x)=\int_{-\infty}^{x} f(t)\, d{t} $
+          since $ F(-\infty)=0 $.
+    \item $ f(x)=F^\prime(x) $
+    \item $ P(X=x)=0\neq f(x) $
+    \item $ P(a\leqslant X\leqslant b)=P(a<X<b)=P(a\leqslant X<b)=F(b)-F(a)
+              =\int_{a}^{b} f(x)\, d{x}  $
+\end{itemize}
+
+\begin{Example}{}{}
+    Suppose the cdf of $ X $ is
+    \[ F(x)=\begin{cases}
+            0                & x\leqslant a \\
+            \dfrac{x-a}{b-a} & a<x<b        \\
+            1                & x\geqslant b
+        \end{cases} \]
+    Find pdf.
+
+    \[ f(x)=
+        \begin{cases}
+            \dfrac{1}{b-a} & a<x<b            \\
+            0              & \text{otherwise}
+        \end{cases} \]
+    $ X \thicksim \text{uniform}(a,b) $
+\end{Example}
+
+\begin{Example}{}{}
+    \[ f(x)=\begin{cases}
+            \frac{\theta}{x^{\theta+1}} & x\geqslant 1 \\
+            0                           & x<1
+        \end{cases} \]
+    \begin{enumerate}
+        \item For what values of $ \theta $ is $ f $ a pdf.
+        \item Find $ F(x) $.
+        \item Find $ P(-2<X<3) $
+    \end{enumerate}
+    1. \[ \frac{\theta}{x^{\theta+1}} \geqslant 0 \]
+    Case 1: $ \theta=0 $. $ f(x)\equiv 0 $, then $ f $
+    cannot be a pdf since $ \int_{-\infty}^{\infty} f(x)\, d{x}=0\neq 1 $
+
+    Case 2: $ \theta>0 $.
+    \[ \int_{-\infty}^{\infty} f(x)\, d{x}=\int_{-\infty}^{1} f(x)\, d{x}
+        +\int_{1}^{\infty} f(x)\, d{x}=\int_{1}^{\infty} \frac{\theta}{x^{\theta+1}}\, d{x}
+        =\left[ -x^{-\theta} \right]_1^\infty=1 \]
+    so $ f $ is a pdf.
+
+    2. $ F(x)=P(X\leqslant x) $
+    \begin{enumerate}
+        \item $ x\leqslant 1 $. $ P(X\leqslant x)=\int_{-\infty}^{x} f(t)\, d{t} =0 $
+        \item $ x>1 $. $ P(X\leqslant x)=\int_{-\infty}^{x} f(t)\, d{t}
+                  =\int_{-\infty}^{1} f(t)\, d{t} +\int_{1}^{x} f(t)\, d{t}
+                  =\int_{1}^{x} \frac{\theta}{t^{\theta+1}} \, d{t}=\left[ -t^{-\theta} \right]_1^x=
+                  1-x^{-\theta}  $
+    \end{enumerate}
+    3. $ P(-2<X<3) $. Either use cdf or pdf.
+    cdf: $ F(3)-F(-2)=(1-3^{-\theta}) $
+
+    pdf: $ \int_{-2}^{3} f(x)\, d{x}=
+        \int_{-2}^{1} f(x)\, d{x} +\int_{1}^{3} f(x)\, d{x}
+        =\int_{1}^{3} f(x)\, d{x} $
+
+\end{Example}

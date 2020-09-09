@@ -1,0 +1,88 @@
+\makeheading{Lecture 2 | 2020-09-09}
+\section{Simple linear regression}
+A linear model with response variable ($ Y $)
+and \emph{one} explanatory variable ($ x $); that is,
+\[ \bar{Y}=\beta_0+\beta_1x+\varepsilon \]
+Data consists of pairs $ (x_i,y_i) $
+where $ i=1,\ldots,n $.
+
+Before fitting any model, we might
+\begin{itemize}
+    \item make a scatterplot to visualize if there
+    is a linear relationship between $ x $ and $ y $
+    \item calculate \emph{correlation}
+\end{itemize}
+If $ X $ and $ Y $ are random variables,
+then
+\[ \rho=\Corr{X,Y}=\frac{\Cov{X,Y}}{sd(x)sd(y)}  \]
+Based on $ (x_i,y_i) $, the estimated correlation is
+\begin{align*}
+    r
+    &=\frac{\frac{1}{n-1} \sum\limits_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}
+{\sqrt{\frac{1}{n-1}\sum\limits_{i=1}^{n} (x_i-\bar{x})^2}
+\sqrt{\frac{1}{n-1}\sum\limits_{i=1}^{n}(y_i-\bar{y})}}\\
+&=\frac{\sum\limits_{i=1}^{n} (x_i-\bar{x})(y_i-\bar{y})}{
+    \sqrt{\sum\limits_{i=1}^{n} (x_i-\bar{x})^2}
+    \sqrt{\sum\limits_{i=1}^{n} (y_i-\bar{y})^2}
+}\\
+&=\frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}} 
+\end{align*}
+Measures the strength and direction of \emph{linear} relationship
+between $ x $ and $ y $.
+\begin{itemize}
+    \item $ \abs{r}\approx 1 $ strong linear relationship
+    \item $ \abs{r}\approx 0 $ lack of linear relationship
+    \item $ r>0 $ positive relationship
+    \item $ r<0 $ negative relationship
+    \item $ -1\leqslant r\leqslant 1 $
+\end{itemize}
+But does not tell us how to predict $ Y $ from $ x $. To do so,
+we need to estimate $ \beta_0 $ and $ \beta_1 $.
+
+For data $ (x_i,y_i) $ for $ i=1,\ldots,n $, the
+simple linear regression model is
+\[ Y_i=\beta_0+\beta_1x_i+\varepsilon_i \]
+Assume $ \varepsilon\stackrel{\text{iid}}{\sim}N(0,\sigma^2) $
+Therefore, $ Y_i\sim N(\beta_0+\beta_1x_i,\sigma^2) $.
+In other words, $ \E{Y_i}=\mu_i=\beta_0+\beta_1x_i $
+and $ \Var{Y_i}=\sigma^2 $. Note that the $ Y_i $'s
+are independent, but they are \emph{not} independently distributed.
+
+Use the \emph{Least Squares} (LS) to estimate $ \beta_0 $ and $ \beta_1 $.
+\[ \min_{\beta_0,\beta_1}\sum\limits_{i=1}^{n} 
+\left[ y_i-(\beta_0+\beta_1 x_i) \right]^2=S(\beta_0,\beta_1) \]
+LS is equivalent to MLE when $ \varepsilon_i $'s are iid and Normal.
+
+Taking partial derivatives:
+\[ \frac{dS}{d\beta_0}=2
+\sum\limits_{i=1}^{n} \left[ y_i-(\beta_0+\beta_1x_i) \right](-1)  \]
+\[ \frac{dS}{d\beta_1}=2
+\sum\limits_{i=1}^{n} \left[ y_i-(\beta_0+\beta_1x_i) \right](-x_i)  \]
+Now,
+\[ \frac{dS}{d\beta_0}=0
+\iff \sum\limits_{i=1}^{n}y_i-n\beta_0-
+\beta_1 \sum\limits_{i=1}^{n} x_i=0
+\iff \beta_0=\bar{y}-\beta_1\bar{x}  \]
+\begin{align*}
+\frac{dS}{d\beta_1}=0
+&\stackrel{\text{plug }\beta_0}{\iff}
+\sum\limits_{i=1}^{n} \left[ y_i-\bar{y}+\beta_1\bar{x}-\beta_1 x_i \right]x_i=0\\
+&\iff \sum\limits_{i=1}^{n} x_i(y_i-\bar{y})-\beta_1
+\sum\limits_{i=1}^{n} x_i(x_i-\bar{x})=0\\
+&\iff \beta_1=\frac{\sum\limits_{i=1}^{n} x_i(y_i-\bar{y})}{\sum\limits_{i=1}^{n}
+x_i 
+(x_i-\bar{x})} 
+\end{align*}
+We can also show that
+\[ \beta_1=\frac{\sum\limits_{i=1}^{n} (x_i-\bar{x})(y_i-\bar{x})}{
+    \sum\limits_{i=1}^{n} (x_i-\bar{x})^2
+}  \]
+Notationally, we use hats to show that they are estimates
+\[ \hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x} \]
+\[ \hat{\beta}_1=
+\frac{\sum\limits_{i=1}^{n} (x_i-\bar{x})(y_i-\bar{y})}{
+    \sum\limits_{i=1}^{n} (x_i-\bar{x})^2
+}  \]
+
+Call $ \hat{\mu}_i=\hat{\beta}_0+\hat{\beta}_1x_i $ the \textbf{fitted values}
+and $ e_i=y_i-\hat{\mu}_i $ the \textbf{residual}.
