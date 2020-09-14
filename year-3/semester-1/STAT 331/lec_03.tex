@@ -1,0 +1,139 @@
+Model: $ Y_i \sim N(\beta_0+\beta_1x_i,\sigma^2) $
+
+Equation of fitted line: $ y=\hat{\beta}_0+\hat{\beta}_1x $
+
+Interpretation:
+\begin{itemize}
+    \item $ \hat{\beta}_0 $ is the estimate
+          of the expected response when $ x=0 $ (but not always
+          meaningful if outside range of $ x_i $'s in data)
+    \item $ \hat{\beta}_1 $ is the estimate of
+          expected change in response for unit increase in $ x $
+          \[ \hat{\beta}_1=\frac{\sum\limits_{i=1}^{n}(x_i-\bar{x})
+                  \sum\limits_{i=1}^{n} (y_i-\bar{y})}{
+                  \sum\limits_{i=1}^{n} (x_i-\bar{x})^2
+              }=\frac{S_{xy}}{\sqrt{S_{xx}}}   \]
+    \item $ \sigma^2 $
+          ``variability around line''
+          recall $ \sigma^2=\Var{\varepsilon_i}=\Var{Y_i} $
+          How to estimate $ \sigma^2 $?
+          \[ \varepsilon_i=Y_i-(\beta_0+\beta_1x_i) \]
+          \[ e_i=y_i-(\hat{\beta}_0+\hat{\beta}_1x_i) \]
+          Intuition: use variability in residuals to estimate
+          $ \sigma^2 $.
+
+          We use \[ \hat{\sigma}^2
+              =\frac{\sum\limits_{i=1}^{n} (e_i-\bar{e})^2}{n-2} \]
+          which looks looks like sample variance of $ e_i $'s. Therefore,
+          \[ \hat{\sigma}^2=\frac{\sum\limits_{i=1}^{n} e_i^2}{n-2}=
+              \frac{SS(\text{Res})}{n-2} \]
+          since
+          \[ \bar{e}=\bar{y}-(\hat{\beta}_0+\hat{\beta}_1\bar{x})=0 \]
+          The $ n-2 $ will be looked are more carefully later, but for now
+          it suffices to say that $ n-2= $ d.f. $ = $ number of parameters
+          estimated. It allows $ \hat{\sigma}^2 $ to be an unbiased estimator
+          for the true value of $ \sigma^2 $; that is,
+          \[ \E{\hat{\sigma}^2}=\sigma^2 \]
+          whenever $ \hat{\sigma}^2 $ is viewed as a random variable.
+\end{itemize}
+
+Is there a statistically significant relationship?
+
+Fact (proved using mgf in STAT 330): Suppose $ Y_i \thicksim N(\mu_i,\sigma_i^2) $
+are all independent. Then,
+\[ \sum\limits_{i=1}^{n} a_i Y_i \thicksim N
+    \biggl( \sum\limits_{i=1}^{n} a_i\mu_i,\sum\limits_{i=1}^{n} a_i^2\sigma_i^2 \biggr) \]
+for any constant $ a_i $.
+
+``Linear combination of Normal is Normal''
+
+\[ \hat{\beta}_1=\frac{\sum\limits_{i=1}^{n} (x_i-\bar{x})
+        \sum\limits_{i=1}^{n} (Y_i-\bar{Y})}{
+        \sum\limits_{i=1}^{n} (x_i-\bar{x})^2
+    }
+    \frac{\sum\limits_{i=1}^{n} (x_i-\bar{x})Y_i-
+        \bar{Y}\sum\limits_{i=1}^{n} (x_i-\bar{x})}{
+        \sum\limits_{i=1}^{n} (x_i-\bar{x})x_i-\bar{x}
+        \sum\limits_{i=1}^{n} (x_i-\bar{x})
+    } =
+    \frac{\sum\limits_{i=1}^{n} (x_i-\bar{x})Y_i}{
+        \sum\limits_{i=1}^{n} (x_i-\bar{x})x_i
+    }  \]
+So,
+\[ \hat{\beta}_1=\sum\limits_{i=1}^{n} a_iY_i \]
+where $ a_i=\frac{x_i-\bar{x}}{\sum\limits_{i=1}^{n} x_i(x_i-\bar{x})}  $
+\[ \E{\hat{\beta}_1}=
+    \sum\limits_{i=1}^{n} a_i\E{Y_i}=
+    \sum\limits_{i=1}^{n}(\beta_0+\beta_1x_i)
+    =\frac{\sum\limits_{i=1}^{n}(x_i-\bar{x})(\beta_0+\beta_1x_i)}{
+        \sum\limits_{i=1}^{n} x_i(x_i-\bar{x})
+    }
+    =\frac{\beta_0 \sum\limits_{i=1}^{n}(x_i-\bar{x})+
+        \beta_1\sum\limits_{i=1}^{n} x_i(x_i-\bar{x})}{
+        \sum\limits_{i=1}^{n} x_i(x_i-\bar{x})
+    }=
+    \beta_1   \]
+On average, $ \hat{\beta}_1 $ is an unbiased estimator for $ \beta_1 $.
+
+\underline{Variance}
+\begin{align*}
+    \Var{\hat{\beta}_1}
+     & =\sum\limits_{i=1}^{n} a_i^2\Var{Y_i}                   \\
+     & =\sigma^2
+    \frac{\sum\limits_{i=1}^{n} (x_i-\bar{x})^2}{
+        \left[ \sum\limits_{i=1}^{n} x_i(x_i-\bar{x}) \right]^2
+    }                                                          \\
+     & =\sigma^2 \frac{\sum\limits_{i=1}^{n} (x_i-\bar{x})^2}{
+        \left[ \sum\limits_{i=1}^{n} (x_i-\bar{x})^2 \right]^2
+    }                                                          \\
+     & =\frac{\sigma^2}{S_{xx}}
+\end{align*}
+So, since $ \hat{\beta}_1 $ is a linear combination of Normals,
+\[ \hat{\beta}_1\sim
+    N\left( \beta_1,\frac{\sigma^2}{S_{xx}}  \right) \]
+In a similar manner,
+\[ \hat{\beta}_0
+    \sim N\left( \beta_0,\sigma^2
+    \left(\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}\right)  \right) \]
+That is, $ \hat{\beta}_0 $ and $ \hat{\beta}_1 $ are
+unbiased estimates.
+
+Then,
+\[ \frac{\hat{\beta}_1-\beta_1}{\sigma/\sqrt{S_{xx}}} \thicksim N(0,1)  \]
+however, $ \sigma $ is unknown, so need to estimate
+with $ \hat{\sigma} $
+\[ \frac{\hat{\beta}_1}{\hat{\sigma}/\sqrt{S_{xx}}}
+    \thicksim t_{n-2}  \]
+Since $ \text{sd}(\hat{\beta}_1)=\sigma^2/S_{xx} $,
+we say the standard error of $ \hat{\beta}_1 $ is
+$ \text{SE}(\hat{\beta}_1)=\sigma/\sqrt{S_{xx}} $
+
+\[ T=\frac{Z}{\sqrt{\sfrac{U}{k}}} \thicksim t_k \]
+where $ Z \thicksim N(0,1) $ $ U \thicksim \chi^2_k $.
+
+Fact: for SLR
+\[ \frac{\hat{\sigma}^2(n-2)}{\sigma^2}=\frac{SS(Res)}{\sigma^2}
+    \thicksim \chi^2_{n-2}  \]
+
+\[ \frac{\hat{\beta}_1-\beta-1}{\hat{\sigma}/\sqrt{S_{xx}}}
+    =\frac{\frac{\hat{\beta}_1-\beta_1}{\sqrt{\sigma/S_{xx}}}}{
+    \sqrt{\frac{\hat{\sigma}^2(n-2)}{\sigma^2}\frac{1}{n-2}}
+    } \sim t_{n-2}  \]
+A $ (1-\alpha) $ confidence interval for $ \beta_1 $ is
+\[ \hat{\beta}_1\pm c\text{SE}(\hat{\beta}_1) \]
+where $ c $ is the $ 1-\frac{\alpha}{2} $ quantile
+of $ t_{n-2} $, i.e. $ P(\abs{T}\leqslant c)=1-\alpha $
+or $ P(T\leqslant c)=1-\frac{\alpha}{2} $ $ T \sim t_{n-2} $,
+
+\underline{Hypothesis test}: $ H_0 $: $ \beta=0 $ vs $ H_A $: $ \beta_1\neq 0 $.
+
+If $ H_0 $ is true, then
+\[ \frac{\hat{\beta}_1-\beta_1}{\text{SE}(\hat{\beta}_1)}
+    =\frac{\hat{\beta}_1}{\text{SE}(\hat{\beta}_1)} \thicksim t_{n-2}   \]
+so calculate
+\[ t=\frac{\hat{\beta}_1}{\text{SE}(\hat{\beta}_1)}  \]
+and reject $ H_0 $ at level $ \alpha $ if $ \abs{t}>c $
+where $ c $ is $ 1-\frac{\alpha}{2} $ quantile of $ t_{n-2} $
+
+\[ p\text{-value}=P(\abs{T}\geqslant \abs{t})
+    =2P(T\geqslant \abs{t}) \]

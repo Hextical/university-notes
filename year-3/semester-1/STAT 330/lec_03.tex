@@ -1,0 +1,234 @@
+\makeheading{Lecture 3 | 2020-09-14}
+We first introduce a function that will be used.
+
+Gamma function: $ T(\alpha) $ where $ \alpha>0 $.
+\[ \Gamma(\alpha)=\int_{0}^{\infty} x^{\alpha-1}e^{-x}\, d{x}  \]
+Properties:
+\begin{Proposition}{Properties of the Gamma Function}{}
+    \begin{enumerate}[label=(\roman*)]
+        \item $ \Gamma(\alpha)=(\alpha-1)\Gamma(\alpha-1) $ for $ \alpha>1 $
+        \item $ \Gamma(n)=(n-1)! $ when $ n\geqslant 1 $ is a positive integer
+        \item $ \Gamma\left( \frac{1}{2} \right)=\sqrt{\pi} $
+    \end{enumerate}
+\end{Proposition}
+(1) IBP.
+
+\begin{Example}{}{}
+    The probability density function is given by
+    \[ f(x)=\begin{dcases}
+            \frac{x^{\alpha-1}e^{-\sfrac{x}{\beta}}}{\Gamma(\alpha)\beta^\alpha} & x>0          \\
+            0                                                                    & x\leqslant 0
+        \end{dcases}
+    \]
+    when $ \alpha>0 $ and $ \beta>0 $. Verify that $ f(x) $
+    is a p.d.f.
+
+    \textbf{Solution.} Showing $ f(x)\geqslant 0 $ is trivial. Now,
+    \[ \int_{-\infty}^{\infty} f(x)\, d{x} =
+        \int_{0}^{\infty} \frac{x^{\alpha-1}e^{-\sfrac{x}{\beta}}}{\Gamma(\alpha)
+        \beta^{\alpha}} \, d{x}  \]
+    Let $ y=\sfrac{x}{\beta}\implies x=y\beta $ and $ dx=\beta\,dy $.
+    Therefore,
+    \[ =\int_{0}^{\infty}
+        \frac{y^{\alpha-1}\beta^{\alpha-1}e^{-y}}{\Gamma(\alpha)\beta^\alpha}\beta  \, d{y}
+        =\frac{1}{\Gamma(\alpha)}\int_{0}^{\infty} y^{\alpha-1}e^{-y}\, d{y}=1    \]
+    $ X $ follows $ \text{GAM}(\alpha,\beta)=(\text{scale param.}, \text{shape param.}) $
+\end{Example}
+
+\begin{Example}{}{}
+    Suppose the probability function is given by
+    \[ f(x)=\begin{dcases}
+            \frac{\beta}{\theta^\beta}x^{\beta-1}e^{-\left( \sfrac{x}{\theta}  \right)^\beta} & x>0          \\
+            0                                                                                 & x\leqslant 0
+        \end{dcases} \]
+    Then, $ X \sim \text{Weibull}(\theta,\beta) $. Verify that $ f(x) $ is a p.d.f.
+
+    \textbf{Solution.} $ f(x)\geqslant 0 $ for every $ x\in\mathbb{R} $. Now,
+    \[ \displaystyle \int_{-\infty}^{\infty} f(x)\, d{x} =
+        \int_{0}^{\infty} \frac{\beta}{\theta^\beta}x^{\beta-1}e^{-\left( \sfrac{x}{\theta}  \right)^\beta} \, d{x} \]
+    Let $ y=\left( \frac{x}{\theta}  \right)^\beta \implies
+        x=\theta y^{\sfrac{1}{\beta}} $ and $ dx=\frac{\theta}{\beta} y^{\frac{1}{\beta}-1}\,dy $.
+    Therefore,
+    \[ =\int_{0}^{\infty} \frac{\beta}{\theta^\beta} \theta^{\beta-1}
+        y^{\frac{\beta-1}{\beta}}e^{-y}\frac{\theta}{\theta} y^{\frac{1}{\beta} -1}\, d{y}
+        =\int_{0}^{\infty} e^{-y}\, d{y}=\Gamma(1)=1  \]
+\end{Example}
+
+\begin{Example}{Normal}{}
+    The probability function is given by
+    \[ \frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{(x-\mu)^2}{2\sigma^2} \right\}  \]
+    $ x\in\mathbb{R} $, $ -\infty<\mu<\infty $, $ \sigma^2>0 $.
+    Verify that $ f(x) $ is a p.d.f.
+
+    \textbf{Solution.}
+
+    $ f(x)\geqslant 0 $ obviously.
+
+    \underline{Case 1}: $ \mu=0 $ and $ \sigma^2=1 $, then
+    we say $ X $ follows a \textbf{standard normal} distribution.
+    Show that
+    \[ \int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{x^2}{2} \right\} \, d{x}=1  \]
+
+    \[ =2\int_{0}^{\infty} \frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{x^2}{2} \right\} \, d{x}  \]
+    since the distribution is symmetric. Let $ y=\frac{x^2}{2}\implies x=\sqrt{2y} $
+    and $ dx=\frac{\sqrt{2}}{2} y^{-\frac{1}{2}}\,dy $. Therefore,
+    \[ =\frac{2}{\sqrt{2\pi}}\int_{0}^{\infty} e^{-y}\frac{\sqrt{2}}{2} y^{-\frac{1}{2}}\, d{y}
+        =\frac{1}{\sqrt{\pi}}\int_{0}^{\infty} y^{\frac{1}{2}-1}e^{-y}\, d{y}=
+        \left( \frac{1}{\sqrt{\pi}}  \right)\Gamma\left( \frac{1}{2} \right)=1    \]
+    For general $ \mu $ and $ \sigma^2 $,
+    \[ \int_{-\infty}^{\infty}  \frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{(x-\mu)^2}{2\sigma^2} \right\} \, d{x}=1 \]
+    Let $ z=\frac{x-\mu}{\sigma}\implies x=\mu+\sigma z  $
+    and $ dx=\sigma\,dz $. Therefore,
+    \[ =\int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}\sigma}
+        \exp\left\{ -\frac{z^2}{2}\right\}\sigma \, d{z}=
+        \int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{z^2}{2} \right\} \, d{z}=1   \]
+    using Case 1.
+\end{Example}
+
+\begin{Definition}{Expectation of discrete random variable}{}
+    Suppose $ X $ is a discrete random variable with support
+    $ A $ and probability function $ f(x) $. Then,
+    \[ \E{X}=\sum\limits_{x\in A}x f(x)  \]
+    if $ \sum\limits_{x\in A}\abs{x}f(x) < \infty $ (finite).
+    If $ \sum\limits_{x\in A}\abs{x}f(x) =\infty $ (infinite), then
+    $ \E{X} $ does not exist.
+\end{Definition}
+
+\begin{Definition}{Expectation of continuous random variable}{}
+    Suppose $ X $ is a continuous random variable with support $ A $
+    and p.d.f. $ f(x) $. Then,
+    \[ \E{x}=\int_{-\infty}^{\infty} x f(x)\, d{x}  \]
+    if $ \displaystyle \int_{-\infty}^{\infty} \abs{x}f(x)\, d{x} <\infty $
+    (finite). Similarly,
+    if $ \displaystyle \int_{-\infty}^{\infty} \abs{x}f(x)\, d{x} =\infty $
+    (infinite),
+    then $ \E{x} $ does not exist.
+\end{Definition}
+
+\begin{Example}{Discrete}{}
+    Suppose
+    \[ f(x)=\frac{1}{x(x+1)}=\frac{1}{x} -\frac{1}{x+1}  \]
+    for $ x=1,2,\ldots $. The support $ A=\set{1,2,\ldots} $.
+
+    $ f(x)\geqslant 0 $
+    \[ \sum\limits_{x\in A}f(x)=\sum\limits_{x=1}^{\infty}
+        \left( \frac{1}{x} -\frac{1}{x+1} \right)=
+        1-\frac{1}{2} +\frac{1}{2} -\frac{1}{3} +\cdots=1  \]
+    Find $ \E{X} $.
+    \[ \sum\limits_{x\in A}\abs{x}f(x)=\sum\limits_{x=1}^{\infty}
+        x\left( \frac{1}{x} -\frac{1}{x+1} \right)
+        =\sum\limits_{x=1}^{\infty} \frac{1}{x+1} =\infty  \]
+    $ \E{X} $ does not exist!
+\end{Example}
+
+\begin{Example}{Continuous}{}
+    \[ f(x)=\frac{1}{x^2+1} \]
+    $ x\in\mathbb{R} $ Cauchy distribution
+    (student $ t $ distribution of 1 d.f.). Find $ \E{X} $.
+    \[ \int_{-\infty}^{\infty} \abs{x}f(x)\, d{x} =
+        \int_{-\infty}^{\infty} \abs{x}\frac{1}{x^2+1} \, d{x}=
+        2 \int_{0}^{\infty} \frac{x}{x^2+1} \, d{x} =
+        \bigl[\ln\abs{x^2+1}\bigr]_0^\infty=\infty \]
+    $ \E{X} $ does not exist! The following is wrong:
+    \[ \E{x}=\int_{-\infty}^{\infty}x f(x)\, d{x}=
+        \int_{-\infty}^{\infty} \frac{x}{1+x^2} \, d{x}=0  \]
+    since the integral above with $ \abs{x} $ is infinite.
+\end{Example}
+
+\begin{Example}{Bernoulli and Binomial Random Variable}{}
+    $ \text{Bernoulli}(p) $.
+    \[ P(X=1)=p\text{ and }P(X=0)=1-p \]
+    $ \E{X}=(1)P(X=1)+(0)P(X=0)=p $
+
+    $ X \thicksim \bin(n,p) $.
+    \[ \E{x}=\sum\limits_{x\in A}x f(x)=\sum\limits_{x=0}^{n} x
+        \binom{n}{x}p^x(1-p)^{n-x}  \]
+    This is hard to do. But, we know we can use the Bernoulli random variable
+    so,
+    \[ X=\sum\limits_{i=1}^{n} X_i \]
+    Therefore,
+    \[ E(X)=\biggl(\sum\limits_{i=1}^{n} X_i\biggr)=\sum\limits_{i=1}^{n}
+        E(X_i)=np \]
+\end{Example}
+\begin{Example}{}{}
+    Suppose $ X $: p.d.f. is given by
+    \[ f(x)=\frac{\theta}{x^{\theta+1}}  \]
+    for $ x\geqslant 1 $ and $ 0 $. Assume $ \theta>0 $.
+    Find $ \E{X} $ and for what values of $ \theta $,
+    does $ \E{X} $ exist.
+
+    \textbf{Solution.}
+    \[ \int_{-\infty}^{\infty} \abs{x}f(x)\, d{x}=
+        \int_{1}^{\infty} x \frac{\theta}{x^{\theta+1}} \, d{x}
+        =\theta \int_{1}^{\infty} \frac{1}{x^{\theta}} \, d{x} <\infty
+        \iff \theta>1 \]
+    from MATH 138. So, if $ \theta>1 $ then $ \E{X} $ exists.
+
+    Note
+    \[ \E{X}=\int_{-\infty}^{\infty} xf(x)\, d{x}=
+        \int_{1}^{\infty} \frac{\theta x}{x^{\theta+1}} \, d{x}
+        =\theta \int_{1}^{\infty} \frac{1}{x^{\theta}} \, d{x}
+        =\frac{\theta}{\theta-1}   \]
+
+\end{Example}
+
+Expectation of a function of a random variable.
+
+If $ X $ is a random variable.
+What's the $ \E{g(x)} $ for a real-valued function $ g(x) $?
+
+\underline{Case 1}: $ X $ is discrete
+\[ \E{g(x)}=\sum\limits_{x\in A}g(x)f(x) \]
+if $ \sum\limits_{x\in A}\abs{g(x)}f(x)<\infty $
+
+\underline{Case 2}: $ X $ is continuous.
+\[ \E{g(x)}=\int_{-\infty}^{\infty} g(x)f(x)\, d{x} \]
+if $ \int_{-\infty}^{\infty} \abs{g(x)}f(x)\, d{x} <\infty $
+
+Linearity property.
+\[ \E{a g(x)+b h(x)}=a\E{g(x)}+b\E{h(x)} \]
+Variance
+\begin{Definition}{Variance}{}
+    \[ \Var{X}=\E{(X-\mu)^2} \]
+    where $ \mu=\E{X} $.
+    \[ =\E{X^2}-\mu^2 \]
+    Variance of $ X $ exists if $ \E{X^2}<\infty $
+\end{Definition}
+Moments.
+\begin{enumerate}
+    \item $ k $th moment about $ 0 $: $ \E{X^k} $
+    \item $ k $th moment about mean: $ \E{(X-\mu)^k} $
+          with $ \mu=\E{X} $
+\end{enumerate}
+
+\begin{Example}{}{}
+    Suppose $ X \thicksim \poi(\theta) $,
+    \[ f(x)=\frac{\theta^x}{x!} e^{-\theta} \]
+    for $ x=0,1,2,\ldots $. Find $ \E{X} $ and $ \Var{X} $.
+
+    \textbf{Solution.}
+    \[ \E{X}=\sum\limits_{x=0}^{\infty} \abs{x}f(x)<\infty \]
+    \[ =\sum\limits_{x=0}^{\infty} x \frac{\theta^x}{x!} e^{-\theta}
+        =\sum\limits_{x=1}^{\infty} \frac{x}{x!} \theta^x e^{-\theta}
+        =\theta \sum\limits_{x=1}^{\infty} \frac{\theta^{x-1}}{(x-1)!}
+        e^{-\theta}  \]
+    Let $ y=x-1 $, then
+    \[ = \sum\limits_{y=0}^{\infty} \frac{\theta^y}{y!} e^{-\theta} \]
+    We know $ e^{\theta}=\sum\limits_{y=0}^{\infty} \frac{\theta^y}{y!} $,
+    so $ \E{X}= \theta $.
+
+    \[ \Var{X}=\E{X^2}-\mu^2 \]
+    Let's find $ \E{X^2} $:
+    \[ \E{X^2}=\sum\limits_{x=0}^{\infty} x^2 \frac{\theta^x}{x!} e^{-\theta}
+        =\sum\limits_{x=1}^{\infty} \frac{x}{(x-1)!}\theta^xe^{-\theta}
+        =\sum\limits_{x=1}^{\infty} \frac{(x-1)+1}{(x-1)!} \theta^x e^{-\theta}
+        =\sum\limits_{x=1}^{\infty} \frac{x-1}{(x-1)!}\theta^x e^{-\theta}+
+        \sum\limits_{x=1}^{\infty} \frac{1}{(x-1)!}\theta^x e^{-\theta}    \]
+    Looking at the first sum:
+    \[ \sum\limits_{x=2}^{\infty} \frac{\theta^2}{(x-2)!} \theta^{x-2}e^{-\theta}+\theta \]
+    Let $ y=x-2 $:
+    \[ \sum\limits_{y=0}^{\infty}\frac{\theta^2\theta^y}{y!}e^{-\theta}+\theta=
+        \theta^2+\theta   \]
+    Therefore,
+    \[ \Var{X}=\theta^2+\theta-\theta^2=\theta \]
+\end{Example}
