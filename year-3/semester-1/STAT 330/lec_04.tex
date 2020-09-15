@@ -1,0 +1,250 @@
+\makeheading{Lecture 4 | 2020-09-14}
+\begin{Example}{}{}
+    If $ X \sim \text{Gamma}(\alpha,\beta) $, prove that
+    \[ \E{X^p}=\frac{\beta^p\Gamma(\alpha+p)}{\Gamma(\alpha)}  \]
+    for $ p>-\alpha $.
+
+    \textbf{Solution.} Recall that
+    \[ f(x)=\begin{dcases}
+            \frac{x^{\alpha-1}e^{-x/\beta}}{\Gamma(\alpha)\beta^\alpha} & x>0          \\
+            0                                                           & x\leqslant 0
+        \end{dcases} \]
+    So,
+    \[ \E{X^p}=\int_{-\infty}^{\infty} x^p f(x)\, d{x}
+        =\int_{0}^{\infty} x^p \frac{x^{\alpha-1}e^{-x/\beta}}{\Gamma(\alpha)\beta^\alpha}\, d{x}
+    \]
+    There are two methods to solve this integral:
+
+    \underline{Method 1}: Rewrite the function as the p.d.f.\ of a gamma
+    distribution.
+    \[ =\int_{0}^{\infty} \frac{x^{p+\alpha-1}e^{-x/\beta}}{\Gamma(\alpha)\beta^\alpha} \, d{x}  \]
+    which is close to the p.d.f.\ of $ \text{Gamma}(p+\alpha,\beta) $.
+    \[ =\int_{0}^{\infty} \frac{x^{p+\alpha-1}e^{-x/\beta}}{\Gamma(\alpha+p)\beta^{\alpha+p}}\times
+        \underbrace{\frac{\Gamma(\alpha+p)\beta^{\alpha+p}}{\Gamma(\alpha)\beta^\alpha}}_{\text{constant}}  \, d{x}=
+        \frac{\Gamma(\alpha+p)\beta^p}{\Gamma(\alpha)}\times 1   \]
+    \underline{Method 2}: Rewrite the function as a gamma function.
+    \[ \E{X^p}=\int_{0}^{\infty} \frac{x^{(p+\alpha)-1} e^{-x/\beta}}{\Gamma(\alpha)\beta^\alpha} \, d{x} \]
+    Let $ y=x/\beta \implies x=\beta y$ and $ dx=\beta\,dy $. Therefore,
+    \[ =\int_{0}^{\infty} \frac{\beta^{p+\alpha-1}y^{(p+\alpha)-1}e^{-y}}{\Gamma(\alpha)\beta^\alpha} (\beta)\, d{y}
+        =\frac{\beta^p}{\Gamma(\alpha)}\int_{0}^{\infty} y^{(p+\alpha)-1}e^{-y}\, d{y}
+        =\frac{\Gamma(p+\alpha)}{\Gamma(\alpha)}\beta^p     \]
+    Additionally,
+    \begin{itemize}
+        \item $ \displaystyle \E{X}= \frac{\beta\Gamma(\alpha+1)}{\Gamma(\alpha)} =\alpha\beta $
+        \item $ \displaystyle \E{X^2}= \frac{\beta^2\Gamma(\alpha+2)}{\Gamma(\alpha)}=\frac{\beta^2(\alpha+1)\Gamma(\alpha+1)}{\Gamma(\alpha)}=
+                  \alpha(\alpha+1)\beta^2   $
+        \item $ \Var{X}=\E{X^2}-\mu^2=\alpha(\alpha+1)\beta^2-\alpha^2\beta^2=\alpha\beta^2 $
+    \end{itemize}
+\end{Example}
+\setcounter{section}{9}
+\section{Moment Generating Functions}
+\begin{Definition}{Moment generating function}{}
+    Suppose $ X $ is a random variable, then
+    \[ M(t)=\E{e^{tX}} \]
+    is called the \textbf{moment generating function} (m.g.f.) of $ X $
+    if $ M(t) $ exists for $ \interval[open]{-h}{h} $ with some $ h>0 $.
+\end{Definition}
+\begin{Remark}{}{}
+    If we are able to find some $ h>0 $ such that for any
+    $ t\in\interval[open]{-h}{h} $,
+    \[ \E{e^{tX}}<\infty \]
+    say $ M(t) $ is the m.g.f.\ of $ X $.
+\end{Remark}
+
+\begin{Example}{}{}
+    Suppose $ X \sim \text{Gamma}(\alpha,\beta) $. Find $ M(t) $.
+    Recall the p.d.f.\ is
+    \[ f(x)=\begin{dcases}
+            \frac{x^{\alpha-1}e^{-x/\beta}}{\Gamma(\alpha)\beta^\alpha} & x>0          \\
+            0                                                           & x\leqslant 0
+        \end{dcases}
+    \]
+    \textbf{Solution.}
+    \begin{align*}
+        M(t)
+         & =\E{e^{tX}}                                                                                     \\
+         & =\int_{-\infty}^{\infty} e^{tx}f(x)\, d{x}                                                      \\
+         & =\int_{0}^{\infty} e^{tx}\cdot \frac{x^{\alpha-1}e^{-x/\beta}}{
+        \Gamma(\alpha)\beta^\alpha
+        } \, d{x}                                                                                          \\
+         & =\int_{0}^{\infty} \frac{x^{\alpha-1}e^{-x\left( \frac{1}{\beta} -t \right)}}{
+        \Gamma(\alpha)\beta^\alpha
+        } \, d{x}                                                                                          \\
+         & = \int_{0}^{\infty} \frac{x^{\alpha-1}e^{-x/\tilde{\beta}}}{\Gamma(\alpha)\beta^\alpha} \, d{x}
+    \end{align*}
+    where
+    \[ \tilde{\beta}=\dfrac{1}{\left(\dfrac{1}{\beta}-t\right)}  \]
+    Continuing,
+    \begin{align*}
+         & =\int_{0}^{\infty} \frac{x^{\alpha-1}e^{-x/\tilde{\beta}}}{\Gamma(\alpha)
+        \tilde{\beta}^\alpha}\cdot \frac{\tilde{\beta}^\alpha}{\beta^\alpha}  \, d{x} \\
+         & =\frac{\tilde{\beta}^\alpha}{\beta^\alpha} \times 1                        \\
+         & =\left( 1-\beta t \right)^{-\alpha}
+    \end{align*}
+    The moment generating function must be non-negative since
+    $ 1-\beta t>0 $ and therefore, $ t<1/\beta $. Take $ h=1/\beta $.
+\end{Example}
+
+\begin{Example}{}{}
+    If $ X \sim \poi(\theta) $, the p.d.f.\ is given by
+    $ f(x)=\dfrac{\theta^x e^{-\theta}}{x!} $
+    for $ x=0,1,2,\ldots $. Find $ M(t) $.
+
+    \textbf{Solution.}
+    \begin{align*}
+        M(t)
+         & =\E{e^{Xt}}                                                                    \\
+         & =\sum\limits_{x=0}^{\infty} e^{tx} \frac{\theta^x e^{-\theta}}{x!}             \\
+         & =\sum\limits_{x=0}^{\infty} \frac{\left( e^t \theta \right)^x e^{-\theta}}{x!} \\
+         & =e^{-\theta}\sum\limits_{x=0}^{\infty} \frac{\left( e^t \theta \right)^x}{x!}  \\
+         & =e^{-\theta} \exp\left\{e^t \theta\right\}                                     \\
+         & =\exp\left\{\theta\left( e^t-1 \right)\right\}
+    \end{align*}
+    for all $ t\in\mathbb{R} $.
+\end{Example}
+Three important properties of $ M(t) $.
+
+\begin{Theorem}{Moment Generating Function of a Linear Function}{mgf_linear}
+    Suppose the random variable $ X $ has moment generating function
+    $ M_X(t) $ defined for $ t\in\interval[open]{-h}{h} $ for some $ h>0 $.
+    Let $ Y=aX+b $ where $ a,b\in\mathbb{R} $ and $ a\neq 0 $. Then,
+    the moment generating function of $ Y $ is
+    \[ M_Y(t)=e^{bt}M_X(at) \]
+    for $ \abs{t}<\dfrac{h}{\abs{a}} $.
+\end{Theorem}
+
+\begin{Proof}{\ref{thm:mgf_linear}}{}
+    \begin{align*}
+        M_Y(t)
+         & =\E{e^{tY}}                                                       \\
+         & =\E{e^{t(aX+b)}}                                                  \\
+         & =e^{bt}\E{e^{atX}} & \quad & \text{exists for }\abs{at}<h         \\
+         & =e^{bt}M_X(at)     &       & \text{for }\abs{t}<\frac{h}{\abs{a}}
+    \end{align*}
+    as required.
+\end{Proof}
+
+\begin{Example}{}{}
+    \begin{enumerate}[label=(\roman*)]
+        \item If $ Z \sim N(0,1) $, find $ M_Z(t) $.
+        \item If $ X \sim N(\mu,\sigma^2) $, find $ M_X(t) $.
+    \end{enumerate}
+    \textbf{Solution.}
+    \begin{enumerate}[label=(\roman*)]
+        \item \begin{align*}
+                  M_Z(t)
+                                                                     & =\E{e^{tZ}}                                                                             \\
+                                                                     & =\int_{-\infty}^{\infty} e^{tx}\cdot \frac{1}{\sqrt{2\pi}}
+                  \exp\left\{ -\frac{x^2}{2} \right\} \, d{x}                                                                                                  \\
+                                                                     & =\int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}}
+                  \exp\left\{ -\frac{x^2-2tx}{2} \right\} \, d{x}                                                                                              \\
+                                                                     & =\int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}}
+                  \exp\left\{ -\frac{(x-t)^2-t^2}{2}\right\} \, d{x} & \quad                                                      & \text{complete the square} \\
+                                                                     & =\exp\left\{ \frac{t^2}{2}\right\}
+                  \int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}}
+                  \exp\left\{ -\frac{(x-t)^2}{2} \right\} \, d{x}
+              \end{align*}
+              where the integral is the p.d.f.\ of $ N(\mu=t,\sigma^2=1) $. Therefore,
+              \[ \E{e^{tZ}}=\exp\left\{ \frac{t^2}{2}\right\} \]
+
+        \item $ X=\sigma Z+\mu $ where $ Z \sim N(0,1) $.
+              \begin{align*}
+                  M_X(t)
+                   & =e^{\mu t}M_Z(\sigma t)                                                  \\
+                   & =e^{\mu t}\cdot \exp\left\{ \frac{\left( \sigma t \right)^2}{2} \right\} \\
+                   & =\exp\left\{ \frac{(\sigma t)^2}{2} +\mu t\right\}
+              \end{align*}
+    \end{enumerate}
+\end{Example}
+
+\begin{Theorem}{Moments from Moment Generating Function}{m_mgf}
+    Suppose the random variable $ X $ has moment generating
+    function $ M(t) $ defined for $ t\in\interval[open]{-h}{h} $
+    for some $ h>0 $. Then, $ M(0)=1 $ and
+    \[ M^{(k)}(0)=\E{X^k} \]
+    for $ k=1,2,\ldots $ where
+    \[ M^{(k)}(t)=\frac{d^k}{dt^k} \left[ M(t) \right] \]
+    is the $ k $th derivative of $ M(t) $.
+\end{Theorem}
+\begin{Proof}{\ref{thm:m_mgf}}{}
+    Omitted from the lecture and hence these notes.
+    See Course Notes for most of the proof.
+\end{Proof}
+
+\begin{Example}{}{}
+    $ \text{Gamma}(\alpha,\beta) $ has m.g.f.\
+    $ \displaystyle  M(t)=(1-\beta t)^{-\alpha} $
+    for $ t<1/\beta $. What is $ \E{X} $ and $ \Var{X} $?
+
+    \textbf{Solution.} For $ \E{X} $ we find $ M^\prime(t) $.
+    \[ M^\prime(t)=(-\alpha)(1-\beta t)^{-\alpha-1}(-\beta)=
+        (\alpha \beta)(1-\beta t)^{-\alpha-1} \]
+    We know,
+    \[ \E{X}=M^\prime(0)=\alpha\beta \]
+
+    For $ \Var{X} $ we find $ M^{\prime\prime}(t) $.
+    \[ M^{\prime\prime}(t)=(\alpha\beta)(-\alpha-1)(-\beta)(1-\beta t)^{-\alpha-2} \]
+    Now, $ M^{\prime\prime}(0)=\alpha\beta^2(\alpha+1) =\E{X^2} $. Therefore,
+    \[ \Var{X}=\E{X^2}-\mu^2=\alpha\beta^2(\alpha+1)-(\alpha\beta)^2=\alpha\beta^2 \]
+\end{Example}
+
+\begin{Example}{}{}
+    The m.g.f.\ of $ \poi(\theta) $ is $ \displaystyle  M(t)=\exp\left\{ \theta(e^t-1)\right\} $.
+    Find $ \E{X} $ and $ \Var{X} $.
+
+    \textbf{Solution.}
+    \[ M^\prime(t)=\exp\left\{ \theta(e^t-1)\right\}\theta e^t \]
+    Therefore,
+    \[ \E{X}=M^\prime(0)=\theta \]
+    Now,
+    \[ M^{\prime\prime}(t)=
+        \exp\left\{ \theta(e^t-1)\right\}\theta^2 e^{2t}+\theta e^t
+        \exp\left\{ e^\theta(e^t-1)\right\} \]
+    Therefore,
+    \[ M^{\prime\prime}(0)=\E{X^2}=\theta^2+\theta \]
+    So,
+    \[ \Var{X}=\E{X^2}-\mu^2=\theta^2+\theta-(\theta)^2=\theta \]
+\end{Example}
+
+\begin{Theorem}{Uniqueness Theorem for Moment Generating Functions}{}
+    Suppose the random variable $ X $ has moment generating function
+    $ M_X(t) $ and the random variable $ Y $ has
+    moment generating function $ M_Y(t) $.
+    $ M_X(t) = M_Y(t) $ for all $ t\in\interval[open]{-h}{h} $
+    for some $ h>0 $ if and only if $ X $ and $ Y $ have the same distribution;
+    that is,
+    \[ P(X\leqslant s)=F_X(s)=F_Y(s)=P(Y\leqslant s) \]
+    for all $ s\in\mathbb{R} $.
+\end{Theorem}
+
+\begin{Example}{}{}
+    Suppose $ X $ has m.g.f.\ $ \displaystyle  M_X(t)=\exp\left\{ \frac{t^2}{2} \right\} $.
+    \begin{enumerate}[label=(\roman*)]
+        \item Find m.g.f.\ of $ Y=2X-1 $
+        \item Find $ \E{Y} $ and $ \Var{Y} $
+        \item What is the distribution of $ Y $.
+    \end{enumerate}
+
+    \textbf{Solution.}
+    \begin{enumerate}[label=(\roman*)]
+        \item $ \displaystyle  M_Y(t)=e^{-t}\exp\left\{ \frac{(2t)^2}{2}\right\}=
+                  \exp\left\{ 2t^2-t\right\} $.
+
+        \item \begin{align*}
+                  M^\prime_Y(t)=\exp\left\{ 2t^2-t\right\}(4t-1)
+              \end{align*}
+              Therefore,
+              \[ \E{Y}=M^\prime_Y(0)=-1 \]
+              Also,
+              \[ M^{\prime\prime}_Y(t)=\exp\left\{ 2t^2-t\right\}(4t-1)^2+4
+                  \exp\left\{ 2t^2-t\right\} \]
+              and
+              \[ \E{Y^2}=M_Y^{\prime\prime}(0)=1+4=5 \]
+              Therefore,
+              \[ \Var{Y}=\E{Y^2}-\mu^2=5-1=4 \]
+        \item $ M_Y(t)=\exp\left\{ 2t^2-t\right\} $ is the m.g.f.\
+              of $ N(-1,4) $ since
+              if $ X \sim N(\mu,\sigma^2) $, then (by previous example)
+              \[ M_X(t)=e^{\mu t}\exp\left\{ \frac{\sigma^2 t^2}{2} \right\} \]
+    \end{enumerate}
+\end{Example}
