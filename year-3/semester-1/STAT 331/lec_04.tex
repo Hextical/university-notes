@@ -1,0 +1,119 @@
+\makeheading{2020-09-16}
+\underline{Prediction for SLR}: Suppose
+we want to predict the response $ y $
+for a new value of $ x $. Say $ x=x_0 $. Then,
+SLR model says
+\[ Y_0 \sim N(\beta_0+\beta_1 x_0,\sigma^2) \]
+where $ Y_0 $ is a r.v.\ for response when $ x=x_0 $.
+
+The fitted model predicts the \emph{value} of $ y $
+to be
+\[ \hat{y}_0=\hat{\beta}_0+\hat{\beta}_1x_0 \]
+As a random variable,
+\[ \hat{Y}_0=\hat{\beta}_0+\hat{\beta}_1x_0 \]
+then,
+\[ \E{\hat{Y}_0}=\E{\hat{\beta}_0}+x_0\E{\hat{\beta}_1}=
+    \beta_0+\beta_1x_0=\E{Y_0} \]
+since $ \hat{\beta}_i $ for $ i=0,1 $ are unbiased.
+We can say that $ \hat{Y}_0 $ is an unbiased estimate
+of the random variable for the prediction: $ Y_0 $.
+
+We claim that:
+\[  \Var{\hat{Y}_0}=\sigma^2\left( \frac{1}{n} +\frac{(x_0-\bar{x})^2}{S_{xx}}  \right) \]
+by expressing $ \hat{Y}_0=\sum\limits_{i=1}^{n} a_i Y_i $. This implies
+that,
+\[ \hat{Y}_0 \sim N\left( \beta_0+\beta_1x_0,
+    \sigma^2\left( \frac{1}{n} +\frac{\left( x_0-\bar{x} \right)^2}{S_{xx}}  \right) \right) \]
+The random variable for prediction error is
+\[ Y_0-\hat{Y}_0 \]
+where $ Y_0 $ and $ \hat{Y}_0 $ are independent.
+\[ \E{Y_0-\bar{Y}_0}=\E{Y_0}-\E{\hat{Y}_0}=0 \]
+\[ \Var{Y_0-\bar{Y}_0}=\Var{Y_0}+(-1)^2\Var{\hat{Y}_0}
+    =\sigma^2+\sigma^2\left( \frac{1}{n} +\frac{\left( x_0-\bar{x} \right)^2}{S_{xx}} \right)
+\]
+Again, we have a linear combination of independent Normals, so
+\[ Y_0-\hat{Y}_0
+    \sim N\left( 0,\sigma^2\left( 1+\frac{1}{n}+\frac{\left( x_0-\bar{x} \right)^2}{S_{xx}}  \right) \right) \]
+Since $ \sigma $ is unknown, we use $ \hat{\sigma} $ and get the following:
+\[ \frac{Y_0-\hat{Y}_0}{
+        \hat{\sigma}\sqrt{1+\dfrac{1}{n}+\dfrac{(x_0-\bar{x})^2}{S_{xx}}}
+    } \sim t(n-2) \]
+Intuition for prediction error composed of 2 terms:
+\begin{itemize}
+    \item $ \Var{Y_0} $: random error of new observation
+    \item $ \Var{\hat{Y}_0} $ (predictor): estimating $ \beta_0 $ and $ \beta_1 $
+\end{itemize}
+Those are 2 sources of uncertainty.
+
+\underline{Note}: Be careful that the prediction may not make sense if
+$ x_0 $ is outside the range of the $ x_i $'s in the data.
+
+$ (1-\alpha) $ prediction interval for $ y_0 $:
+\[ \hat{y}_0\pm c \hat{\sigma}\sqrt{1+\dfrac{1}{n}+\dfrac{(x_0-\bar{x})^2}{S_{xx}}}
+\]
+where $ c $ is the $ 1-\dfrac{\alpha}{2} $ quantile of $ t(n-2) $.
+
+\underline{Orange production 2018 in FL}
+\begin{itemize}
+    \item $ x $: acres
+    \item $ y $: \# boxes of oranges (thousands)
+    \item $ (x_i,y_i) $ recorded for each of 25 FL counties
+    \item $ r=0.964 $
+    \item $ \bar{x}=16133 $
+    \item $ \bar{y}=1798 $
+    \item $ S_{xx}=1.245\times 10^{10} $
+    \item $ S_{xy}=1.453\times 10^9 $
+\end{itemize}
+\[ \hat{\beta}_1=\frac{S_{xy}}{S_{xx}}=0.1167 \]
+which is a positive slope (positive correlation between $ x $ and $ y $).
+The expected number of boxes produced is estimated to be about 117
+higher per an additional acre.
+\[ \hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x}=-85.3 \]
+Not meaningful to interpret, since it
+is the expected production if there were 0 acres
+(outside the range of $ x_i $) as no county has $ x=0 $.
+
+Now suppose
+\[ \Ss{\text{Res}}=1.31\times 10^7 \]
+the residuals are the differences between $ y_i $ and the fitted regression
+line.
+\begin{itemize}
+    \item $ \hat{\sigma}^2=\dfrac{\sum\limits_{i=1}^{n} e_i^2}{n-2}=
+              \dfrac{1.31\times 10^7}{25-2}=5.7\times 10^5 $
+    \item $ \Se{\hat{\beta}_1}=\dfrac{\hat{\sigma}}{\sqrt{S_{xx}}}=0.00676 $
+    \item To test $ H_0 $: $ \beta_1 =0 $,
+          calculate
+          \[ t=\frac{\hat{\beta}_1-0}{\Se{\hat{\beta}_0}}=\frac{0.1167}{0.00676}
+              \approx 17.3 \]
+          Select the $ 0.975 $ quantile (for demonstration purposes) of $ t(23) $
+          is $ 2.07 $.
+    \item Note that $ 17.3 $ is very unlikely to see in $ t(23) $.
+\end{itemize}
+Since $ 17.3>2.07 $, we reject $ H_0 $ at $ \alpha=0.05 $
+level, conclude there's a significant linear relationship between
+acres and oranges produced.
+
+The $ 95\% $ confidence interval for $ \beta_1 $ is
+\[ 0.1167\pm 2.07(0.00676) \]
+which does not contain $ 0 $.
+
+\[ p\text{-value}=P(\abs{t_{23}}\geqslant 17.3)=
+    2P(t_{23}\geqslant 17.3)\approx 1.2\times 10^{-14} \]
+Predict the \# of boxes in thousands produced if we had
+10000 acres to grow oranges.
+\[ \hat{\beta}_0+\hat{\beta}_1x_0=-85.3+(0.1167)(10000)\approx 1082 \]
+The 95\% prediction interval is:
+\[ 1082\pm 2.07\sqrt{5.69\times 10^5}\sqrt{1+\frac{1}{25}+
+        \frac{(6133)^2}{1.245\times 10^{10}} } \]
+\underline{Note}: \textbf{not} trying to establish causation.
+
+\underline{Check LEARN for \code{florange.csv}}.
+
+Is $ \sigma $ the same for all values of $ y $?
+
+It appears to be violated, can consider taking the $ \log $.
+
+Are the error terms plausibly independent? (e.g.\
+does knowing one $ e_i $ help predict $ e_j $
+for a different county?)
+
