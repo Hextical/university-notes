@@ -3,7 +3,7 @@ We first introduce a function that will be used.
 
 \begin{Definition}{Gamma function}{}
     The \textbf{gamma function},
-    denoted $ T(\alpha) $ for all $ \alpha>0 $, is given by
+    denoted $ \Gamma(\alpha) $ for all $ \alpha>0 $, is given by
     \[ \Gamma(\alpha)=\int_{0}^{\infty} x^{\alpha-1}e^{-x}\, d{x}  \]
 \end{Definition}
 \begin{Proposition}{Properties of the Gamma Function}{prop_gamma}
@@ -71,8 +71,8 @@ syllabus is usually labelled with a dagger ($ \dagger $).
         \beta^{\alpha}} \, d{x}  \]
     Let $ y=x/\beta\implies x=y\beta $ and $ dx=\beta\,dy $.
     Therefore,
-    \[ =\int_{0}^{\infty}
-        \frac{y^{\alpha-1}\beta^{\alpha-1}e^{-y}}{\Gamma(\alpha)\beta^\alpha}\beta  \, d{y}
+    \[\int_{-\infty}^{\infty} f(x)\, d{x} =\int_{0}^{\infty}
+        \frac{y^{\alpha-1}\beta^{\alpha-1}e^{-y}}{\Gamma(\alpha)\beta^\alpha}(\beta)  \, d{y}
         =\frac{1}{\Gamma(\alpha)}\int_{0}^{\infty} y^{\alpha-1}e^{-y}\, d{y}=1    \]
 \end{Example}
 
@@ -87,12 +87,12 @@ syllabus is usually labelled with a dagger ($ \dagger $).
     Verify that $ f(x) $ is a p.d.f.
 
     \textbf{Solution.} $ f(x)\geqslant 0 $ for every $ x\in\mathbb{R} $. Now,
-    \[ \displaystyle \int_{-\infty}^{\infty} f(x)\, d{x} =
+    \[ \int_{-\infty}^{\infty} f(x)\, d{x} =
         \int_{0}^{\infty} \frac{\beta}{\theta^\beta}x^{\beta-1}e^{-\left( x/\theta  \right)^\beta} \, d{x} \]
-    Let $ y=\left( \frac{x}{\theta}  \right)^\beta \implies
-        x=\theta y^{1/\beta} $ and $ dx=\frac{\theta}{\beta} y^{(1/\beta)-1}\,dy $.
+    Let $ y=(x/\theta)^\beta \implies
+        x=\theta y^{1/\beta} $ and $ dx=(\theta/\beta) y^{(1/\beta)-1}\,dy $.
     Therefore,
-    \[ =\int_{0}^{\infty} \frac{\beta}{\theta^\beta} \theta^{\beta-1}
+    \[ \int_{-\infty}^{\infty} f(x)\, d{x}=\int_{0}^{\infty} \frac{\beta}{\theta^\beta} \theta^{\beta-1}
         y^{(\beta-1)/\beta}e^{-y}\frac{\theta}{\beta} y^{(1/\beta)-1}\, d{y}
         =\int_{0}^{\infty} e^{-y}\, d{y}=\Gamma(1)=1  \]
 \end{Example}
@@ -100,7 +100,7 @@ syllabus is usually labelled with a dagger ($ \dagger $).
 \begin{Example}{Normal}{}
     The p.d.f.\ is given by
     \[ f(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{(x-\mu)^2}{2\sigma^2} \right\}  \]
-    $ x\in\mathbb{R} $, $ -\infty<\mu<\infty $, $ \sigma^2>0 $.
+    for $ x\in\mathbb{R} $, $ \mu\in\mathbb{R} $, $ \sigma^2>0 $.
     Verify that $ f(x) $ is a p.d.f.
 
     \textbf{Solution.}
@@ -201,7 +201,7 @@ syllabus is usually labelled with a dagger ($ \dagger $).
     so,
     \[ X=\sum\limits_{i=1}^{n} X_i \]
     Therefore,
-    \[ \E{X}=\biggl(\sum\limits_{i=1}^{n} X_i\biggr)=\sum\limits_{i=1}^{n}
+    \[ \E{X}=\E[\bigg]{\sum\limits_{i=1}^{n} X_i}=\sum\limits_{i=1}^{n}
         \E{X_i}=np \]
 \end{Example}
 \begin{Example}{}{}
@@ -248,7 +248,7 @@ syllabus is usually labelled with a dagger ($ \dagger $).
     Suppose $ X $ is a random variable with probability (density)
     function $ f(x) $, and $ a $ and $ b $ are real constants,
     and $ g(x) $ and $ h(x) $ are real-valued functions. Then,
-    \[ \E{aX+b}=a\E{x}+b \]
+    \[ \E{aX+b}=a\E{X}+b \]
     \[ \E{a g(X)+b h(X)}=a\E{g(X)}+b\E{h(X)} \]
 \end{Theorem}
 \begin{Proof}{\ref{thm:exp_linear_op}}{}
@@ -279,7 +279,7 @@ syllabus is usually labelled with a dagger ($ \dagger $).
     If $ X $ is a random variable, then
     \[ \Var{X}=\E{X^2}-\mu^2 \]
     where $ \mu=\E{X} $. Note that the
-    variance of $ X $ exists if $ \E{X^2}<\infty $
+    variance of $ X $ exists if $ \E{X^2}<\infty $.
 \end{Theorem}
 \begin{Proof}{\ref{thm:prop_var}}{}
     Omitted from the lecture and hence these notes.
