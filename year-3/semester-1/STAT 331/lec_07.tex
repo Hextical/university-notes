@@ -1,0 +1,132 @@
+\makeheading{Lecture 7 | 2020-09-28}
+Recall:
+\[ \symbf{Y}=X\symbf{\beta}+\symbf{\varepsilon}
+    \sim \text{MVN}(X\symbf{\beta},\sigma^2 I) \]
+\begin{itemize}
+    \item Estimates: $ \hat{\symbf{\beta}}=(X^\top X)^{-1}X^\top \symbf{Y} $
+    \item Fitted values: $ \hat{\symbf{\mu}}=X\hat{\symbf{\beta}} $
+    \item Residuals: $ \symbf{e}=\symbf{y}-\hat{\symbf{\mu}} $
+\end{itemize}
+Geometric interpretation of data.
+Constants: $ X=\begin{bmatrix}
+        \symbf{1} & \symbf{x}_1 & \cdots & \symbf{x}_p
+    \end{bmatrix}_{n\times(p+1)} $
+
+Values of responses: $
+    \symbf{y}=\begin{bmatrix}
+        y_1    \\
+        y_2    \\
+        \vdots \\
+        y_n
+    \end{bmatrix}\in\mathbb{R}^n $
+
+Recall: $ \text{Span}(X)=
+    \set{b_0\symbf{1}+b_1\symbf{x}_1+\cdots+b_p\symbf{x}_p:b_0,\ldots,b_p\in\mathbb{R}}
+    \subset \mathbb{R}^n $
+which is all linear combinations of columns of $ X $ which is a subspace
+of $ \mathbb{R}^n $. Recall, by assumption
+$ \rank(X)=p+1 $.
+
+We can say $ \text{Span}(X) $ represents all possible vector
+values $ X\symbf{b} $ where $ \symbf{b}=(b_0,b_1,\ldots,b_p)^\top $.
+
+Generally, $ \symbf{y}\notin\text{Span}(X) $, so since
+the linear model is an approximation, $ \symbf{\varepsilon} $
+variability not explained by model.
+
+Intuitively, it makes sense to choose an estimate
+$ \hat{\symbf{\beta}} $ so that $ X\hat{\symbf{\beta}} $
+is as close to $ \symbf{y} $ as possible. Therefore,
+$ \symbf{e} $ must be orthogonal to $ \text{Span}(X)
+    \iff \symbf{e} $ is orthogonal to all columns of $ X $.
+\begin{align*}
+    \symbf{1}^\top\cdot(\symbf{y}-\hat{\symbf{\mu}})   & =      0 \\
+    \symbf{x}_1^\top\cdot(\symbf{y}-\hat{\symbf{\mu}}) & =      0 \\
+    \vdots                                                        \\
+    \symbf{x}_p^\top\cdot(\symbf{y}-\hat{\symbf{\mu}}) & =      0
+\end{align*}
+which is the same as LS estimates.
+
+\[ \hat{\symbf{\mu}}=X\hat{\symbf{\beta}},
+    \quad \symbf{e}=\symbf{y}-\hat{\symbf{\mu}} \]
+Define the \textbf{hat matrix} as
+\[ H=X(X^\top X)^{-1}X^{\top} \]
+Properties of $ H $
+\begin{enumerate}[label=(\arabic*)]
+    \item $ H $ is symmetric.
+    \item $ H $ is idempotent.
+    \item $ I-H $ is symmetric idempotent.
+\end{enumerate}
+\[ H^\top=[X(X^\top X)^{-1}X^\top]^\top=X(X^\top X)^{-1}X^\top=H \]
+\[ HH=X(X^\top X)^{-1}(X^\top X)(X^\top X)^{-1}X^\top=H \]
+
+Let's view $ \hat{\symbf{\mu}} $ and $ \symbf{e} $
+as random vectors
+\[ \hat{\symbf{\mu}}=X\hat{\symbf{\beta}}=
+    X(X^\top X)^{-1}X^\top \symbf{Y}=H\symbf{Y} \]
+\[ \symbf{e}=\symbf{Y}-\hat{\symbf{\mu}}=I\symbf{Y}-H\symbf{Y}=
+    (I-H)\symbf{Y} \]
+\[ \E{\hat{\symbf{\mu}}}=\E{H\symbf{Y}}=H\E{\symbf{Y}}=
+    X(X^\top X)^{-1}X^\top \Uunderbracket{X\symbf{\beta}}_{\E{\symbf{Y}}}
+    =X\symbf{\beta}
+\]
+\[ \Var{\hat{\symbf{\mu}}}=\Var{H\symbf{Y}}=
+    H\Var{\symbf{Y}}H^\top=H\sigma^2I H^\top=\sigma^2(HH^\top)=\sigma^2H \]
+\[ \E{ \symbf{e}}=
+    \E{(I-H)\symbf{Y}}=\E{\symbf{Y}}-\E{H\symbf{Y}}=X\symbf{\beta}-X\symbf{\beta}=0 \]
+\[ \Var{\symbf{e}}=
+    (I-H)\Var{I-H}^\top=\sigma^2(I-H)(I-H)^\top=\sigma^2(I-H) \]
+So since $ \hat{\symbf{\mu}} $ and $ \symbf{e} $
+are linear transformations of $ \symbf{Y} $
+\[ \hat{\symbf{\mu}}\sim\text{MVN}(X\symbf{\beta},\sigma^2 H) \]
+\[ \hat{\symbf{e}}\sim\text{MVN}(0,\sigma^2(I-H)) \]
+Prediction: Suppose we want to predict response for
+(the first 1 represents the intercept)
+\[ \symbf{x}_0=\begin{bmatrix}
+        1 & x_{01} & x_{02} & \cdots & x_{0p}
+    \end{bmatrix}_{1\times (p+1)} \]
+Let $ Y_0 $ random variable representing the response
+associated with $ \symbf{x}_0 $. The MLR says
+\[ Y_0 \sim N(\beta_0+\beta_1x_{01}+\beta_p x_{0p},\sigma^2) \]
+So we predict the value
+\[ \hat{y}_0=\hat{\beta}_0+\hat{\beta}_1x_{01}+\cdots+
+    \hat{\beta}_p x_{0p}=\symbf{x}_0\hat{\symbf{\beta}} \]
+which represents the estimated mean response given
+$ x_{01},x_{02},\ldots,x_{0p} $. Corresponding distribution
+has
+\[ \E{\hat{Y}_0}=\symbf{x}_0\E{\hat{\symbf{\beta}}}=\symbf{x}_0\symbf{\beta}
+    =\E{Y_0} \]
+\[ \Var{\hat{Y}_0}=\symbf{x}_0\Var{\hat{\symbf{\beta}}}\symbf{x}_0^\top=
+    \symbf{x}_0\sigma^2(X^\top X)^{-1}\symbf{x}_0^\top \]
+Therefore,
+\[ \hat{Y}_0 \sim N(\symbf{x}_0\symbf{\beta},\sigma^2\symbf{x}_0(X^\top X)^{-1}
+    \symbf{x}_0^\top) \]
+\[ \frac{\hat{Y}_0-\symbf{x}_0\symbf{\beta}}{\sigma\sqrt{
+            \symbf{x}_0(X^\top X)^{-1}\symbf{x}_0^\top
+        }}\sim N(0,1)  \]
+
+\[ \frac{\hat{Y}_0-\symbf{x}_0\symbf{\beta}}{\hat{\sigma}\sqrt{
+            \symbf{x}_0(X^\top X)^{-1}\symbf{x}_0^\top
+        }}\sim t(n-(p+1))=t(n-p-1)  \]
+A $ (1-\alpha) $ confidence interval for the mean
+response given $ \symbf{x}_0 $,
+\[ \hat{y}_0\pm c \hat{\sigma}\sqrt{
+        \symbf{x}_0(X^\top X)^{-1}\symbf{x}_0^\top} \]
+where $ c $ is the $ 1-\alpha/2 $ quantile of $ t(n-p-1) $.
+
+Prediction error: $ Y_0-\hat{Y}_0 $ which are independent
+since $ Y_0 $ is a random variable with variance $ \sigma^2 $
+and $ \hat{Y}_0 $ is a function of $ Y_1,\ldots,Y_n $. Therefore,
+\[ \E{Y_0-\hat{Y}_0}=\symbf{x}_0\symbf{\beta}-\symbf{x}_0\symbf{\beta}=0 \]
+\[ \Var{Y_0-\hat{Y}_0}=\Var{Y_0}+(-1)^2\Var{\hat{Y}_0}=
+    \sigma^2+\sigma^2(\symbf{x}_0(X^\top X)^{-1}\symbf{x}_0^\top) \]
+Therefore,
+\[ Y_0-\hat{Y}_0 \sim N(
+    0,\sigma^2(1+\symbf{x}_0(X^\top X)^{-1}\symbf{x}_0^\top)
+    ) \]
+A $ (1-\alpha) $ prediction interval for $ y_0 $
+\[ \hat{y}_0\pm c\hat{\sigma}\sqrt{1+\symbf{x}_0(X^\top X)^{-1}\symbf{x}_0^\top} \]
+where $ c $ is the $ 1-\alpha/2 $ quantile of $ t(n-p-1) $.
+
+Intuition: prediction interval wider than CI for mean. Estimating
+an average is ``easier'' than an individual response.

@@ -1,26 +1,28 @@
 \makeheading{Lecture 5 | 2020-09-21}
-\section{Multiple Linear Regression (MLR)}
+\underline{Multiple Linear Regression (MLR)}
+
 $ p $ explanatory variables which can be categorical,
 continuous, etc.
 
 \underline{Rocket}
 \begin{itemize}
-    \item $ x_1 $: nozzle area (large or small)
+    \item $ x_1 $: nozzle area (large or small, 0 or 1)
     \item $ x_2 $: mixture in propellent, ratio oxidized fuel
     \item $ Y $: thrust
 \end{itemize}
-Want to develop linear relationship between $ y $
+Want to develop linear relationship between response $ y $
 and $ x_1,x_2,\ldots,x_p $.
 
 \underline{Data}
-$ n $ observations each consists of
+$ n $ observations, each consists of
 response and $ p $ explanatory variables ($ y_i , x_{i1},x_{i2},\ldots,x_{ip} $).
 Then,
 \[ Y_i \sim N(
     \underbrace{\beta_0+\beta_1x_{i1}+
         \beta_2x_{i2}+\cdots +\beta_p x_{ip}}_{\E{Y_i}=
         \mu_i},\sigma^2) \]
-or $ Y_i=\mu_i+\varepsilon_i $ where $ \varepsilon_i \sim N(0,\sigma^2) $.
+or $ Y_i=\mu_i+\varepsilon_i $ where $ \varepsilon_i \stackrel{\text{iid}}{\sim}
+    N(0,\sigma^2) $.
 
 We can write in vector/matrix form
 \[ \begin{bmatrix}
@@ -40,34 +42,25 @@ We can write in vector/matrix form
         \varepsilon_2 \\
         \vdots        \\
         \varepsilon_n
-    \end{bmatrix} \]
+    \end{bmatrix}_{n\times 1} \]
 Which we can write as
 \[ \symbf{Y}=X\symbf{\beta}+\symbf{\varepsilon} \]
 where
-\[ \symbf{Y}=\begin{bmatrix}
-        Y_1    \\
-        \vdots \\
-        Y_{n}
-    \end{bmatrix}_{n\times 1},\,
+\[
     X=
     \begin{bmatrix}
-        1 & x_{11} & x_{12} & \cdots & x_{1p} \\
-        1 & x_{21} & x_{22} & \cdots & x_{2p} \\
-          &        & \vdots                   \\
-        1 & x_{n1} & x_{n2} & \cdots & x_{np}
+        1      & x_{11}     & x_{12}     & \cdots & x_{1(p-1)}     & x_{1p}     \\
+        1      & x_{21}     & x_{22}     & \cdots & x_{2(p-1)}     & x_{2p}     \\
+        \vdots &            &            & \ddots &                & \vdots     \\
+        1      & x_{(n-1)1} & x_{(n-1)2} & \cdots & x_{(n-1)(p-1)} & x_{(n-1)p} \\
+        1      & x_{n1}     & x_{n2}     & \cdots & x_{n(p-1)}     & x_{np}     \\
     \end{bmatrix}_{n\times(p+1)},\,
     \symbf{\beta}=
     \begin{bmatrix}
         \beta_0 \\
         \vdots  \\
         \beta_p
-    \end{bmatrix}_{(p+1)\times 1},\,
-    \symbf{\varepsilon}=
-    \begin{bmatrix}
-        \varepsilon_1 \\
-        \vdots        \\
-        \varepsilon_n
-    \end{bmatrix}_{n\times 1} \]
+    \end{bmatrix}_{(p+1)\times 1} \]
 We call $ \symbf{Y}=(Y_1,Y_2,\ldots,Y_{n})^\top $
 a \textbf{random vector} (vector of r.v.'s), analogue of
 expectation and variance properties.
@@ -88,12 +81,12 @@ expectation and variance properties.
                   \Cov{Y_n,Y_1}     & \Cov{Y_n,Y_2}     & \cdots & \Cov{Y_n,Y_{n-1}} & \Var{Y_n}
               \end{bmatrix} \]
           \begin{itemize}
-              \item symmetric since $ \Cov{Y_i,Y_j}=\Cov{Y_j,Y_i} $
+              \item symmetric since $ \Cov{Y_i,Y_j}=\Cov{Y_j,Y_i} $; that is $ \Var{\symbf{Y}}^\top=\Var{\symbf{Y}} $.
               \item positive semi-definite since
                     $ \symbf{a}^\top\Var{\symbf{Y}}\symbf{a}\geqslant 0 $
                     for all $ \symbf{a}\in\mathbb{R}^n $.
               \item $ \Var{\symbf{Y}}=
-                        \E{\left( \symbf{Y}-\E{\symbf{Y}} \right)\left( \symbf{Y}-\E{\symbf{Y}} \right)^\top} $
+                        \E{\left( \symbf{Y}-\E{\symbf{Y}} \right)\left( \symbf{Y}-\E{\symbf{Y}} \right)^\top}=\E{\symbf{Y}\symbf{Y}^\top}-\E{\symbf{Y}}\E{\symbf{Y}}^\top $
           \end{itemize}
 \end{itemize}
 Properties of random vector: let $ \symbf{a} $ be a $ 1\times n $
@@ -157,6 +150,7 @@ Let's do the first two,
     \end{bmatrix}=1(3)-1(1)+2(2)=6 \]
 \begin{align*}
     \Var{\symbf{a}\symbf{Y}}
+     & = \symbf{a}\Var{\symbf{Y}}\symbf{a}^\top \\
      & =
     \begin{bmatrix}
         1 & -1 & 2
@@ -170,7 +164,7 @@ Let's do the first two,
         1  \\
         -1 \\
         2
-    \end{bmatrix}     \\
+    \end{bmatrix}                  \\
      & =
     \begin{bmatrix}
         1 & -1 & 2
@@ -179,7 +173,7 @@ Let's do the first two,
         4(1)+(1/2)(-1)-2(2) \\
         (1/2)(1)+1(-1)+0(2) \\
         -2(1)+0(-1)+3(2)
-    \end{bmatrix}     \\
+    \end{bmatrix}                  \\
      & =\begin{bmatrix}
         1 & -1 & 2
     \end{bmatrix}
@@ -187,14 +181,14 @@ Let's do the first two,
         -1/2 \\
         -1/2 \\
         4
-    \end{bmatrix}     \\
-     & =1(-1/2)-1(-1/2)+2(4)       \\
+    \end{bmatrix}                  \\
+     & =1(-1/2)-1(-1/2)+2(4)                    \\
      & =8
 \end{align*}
 Multivariate normal distribution (MVN):
 We say that $ \symbf{Y} \sim \text{MVN}(\symbf{\mu},\Sigma) $
 where $ \symbf{\mu}= $ mean vector and $ \Sigma= $
-covariance matrix. Suppose $ Y=(Y_1,\ldots,Y_n)^\top $.
+covariance matrix. Suppose $ \symbf{Y}=(Y_1,\ldots,Y_n)^\top $.
 \[ f(\symbf{y};\symbf{\mu},\Sigma)=
     \frac{1}{(2\pi)^{n/2}\abs{\Sigma}^{1/2}}
     \exp\left\{ -\frac{1}{2}(\symbf{y}-\symbf{\mu})^\top
@@ -204,7 +198,7 @@ and $ \abs{\Sigma} $ is the determinant of $ \Sigma $.
 
 \underline{Properties of MVN}:
 Suppose $ \symbf{Y}=(Y_1,\ldots,Y_n)^\top \sim \text{MVN}(\symbf{\mu},\Sigma) $
-and $ \symbf{a} $ is a $ 1\times n $ constant
+and $ \symbf{a} $ is a $ 1\times n $ row vector of constants
 and $ A $ is an $ n\times n  $ matrix of constants.
 \begin{enumerate}
     \item Linear transformations of MVN is MVN, so

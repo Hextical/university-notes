@@ -16,7 +16,7 @@ then,
     \beta_0+\beta_1x_0=\E{Y_0} \]
 since $ \hat{\beta}_i $ for $ i=0,1 $ are unbiased.
 We can say that $ \hat{Y}_0 $ is an unbiased estimate
-of the random variable for the prediction: $ Y_0 $.
+of the random variable for the mean of $ Y_0 $.
 
 We claim that:
 \[  \Var{\hat{Y}_0}=\sigma^2\left( \frac{1}{n} +\frac{(x_0-\bar{x})^2}{S_{xx}}  \right) \]
@@ -26,7 +26,8 @@ that,
     \sigma^2\left( \frac{1}{n} +\frac{\left( x_0-\bar{x} \right)^2}{S_{xx}}  \right) \right) \]
 The random variable for prediction error is
 \[ Y_0-\hat{Y}_0 \]
-where $ Y_0 $ and $ \hat{Y}_0 $ are independent.
+where $ Y_0 $ and $ \hat{Y}_0 $ are independent
+and $ \hat{Y}_0 $ is a function of $ Y_1,\ldots,Y_n $.
 \[ \E{Y_0-\hat{Y}_0}=\E{Y_0}-\E{\hat{Y}_0}=0 \]
 \[ \Var{Y_0-\hat{Y}_0}=\Var{Y_0}+(-1)^2\Var{\hat{Y}_0}
     =\sigma^2+\sigma^2\left( \frac{1}{n} +\frac{\left( x_0-\bar{x} \right)^2}{S_{xx}} \right)
@@ -83,7 +84,7 @@ line.
     \item $ \Se{\hat{\beta}_1}=\dfrac{\hat{\sigma}}{\sqrt{S_{xx}}}=0.00676 $
     \item To test $ H_0 $: $ \beta_1 =0 $,
           calculate
-          \[ t=\frac{\hat{\beta}_1-0}{\Se{\hat{\beta}_0}}=\frac{0.1167}{0.00676}
+          \[ t=\frac{\hat{\beta}_1-0}{\Se{\hat{\beta}_1}}=\frac{0.1167}{0.00676}
               \approx 17.3 \]
           Select the $ 0.975 $ quantile (for demonstration purposes) of $ t(23) $
           is $ 2.07 $.
@@ -109,11 +110,21 @@ The 95\% prediction interval is:
 
 \underline{Check LEARN for \code{florange.csv}}.
 
-Is $ \sigma $ the same for all values of $ y $?
+Q\@: Is $ \sigma $ the same for all values of $ y $?
 
-It appears to be violated, can consider taking the $ \log $.
+A\@: It appears to not in the sense that the variance
+appears to be higher with respect to higher acres.
+Sigma will be smaller when there's less acres.
+Later, this will be testing equal variance or homoscedastic
+assumption. Later, when we talk about variable
+transformations we can consider taking the $ \log $.
 
-Are the error terms plausibly independent? (e.g.\
-does knowing one $ e_i $ help predict $ e_j $
-for a different county?)
+Q\@: Are the error terms plausibly independent?
+In other words,
+does knowing one $ e_i $ (residual) help predict $ e_j $
+(another residual) for a different county?
+
+A\@: There's diagnostics for checking this. However,
+intuitively there could be some common factors
+at play when two counties are geographically close.
 
