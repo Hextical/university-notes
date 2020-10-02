@@ -1,0 +1,250 @@
+
+% -----------------------------------------------------------------------------
+
+% Class
+\documentclass{article}
+% Must load first
+\usepackage{xcolor}
+
+% -----------------------------------------------------------------------------
+
+% Fonts
+\usepackage{fontspec}
+\setmainfont{XCharter}
+\usepackage{anyfontsize}
+\usepackage{microtype}
+\usepackage[math-style=ISO,bold-style=ISO]{unicode-math}
+
+% -----------------------------------------------------------------------------
+
+% CS 246
+\usepackage{float}
+\usepackage{soulutf8}
+\usepackage{listings}
+
+\definecolor{light-gray}{gray}{0.95}
+\newcommand{\code}[1]{\sethlcolor{light-gray}\hl{\texttt{#1}}}
+
+% -----------------------------------------------------------------------------
+
+% CO 250
+\usepackage{tkz-berge}
+
+% -----------------------------------------------------------------------------
+
+% Core Packages
+\usepackage{amsmath, amsthm}
+\swapnumbers{}
+\usepackage{bm}
+\usepackage{xfrac}
+\usepackage[margin=1in]{geometry}
+\usepackage{array}
+\usepackage[unicode]{hyperref}
+\usepackage{enumitem}
+\usepackage[parfill]{parskip}
+\usepackage[theorems,breakable]{tcolorbox}
+\usepackage{graphicx}
+\usepackage[ruled,linesnumbered,vlined,dotocloa]{algorithm2e}
+\usepackage[delims=\lbrack\rbrack]{spalign}
+\usepackage{dsfont}
+\usepackage{mathtools}
+\usepackage{cleveref}
+\usetikzlibrary{patterns}
+
+% -----------------------------------------------------------------------------
+
+% Better Tables
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{tabularx}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+% -----------------------------------------------------------------------------
+
+% Intervals
+\usepackage{interval}
+\intervalconfig{
+    soft open fences,
+    separator symbol={,}
+}
+
+% -----------------------------------------------------------------------------
+
+\graphicspath{ {./figures/} }
+
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\du}{\mathcal{U}}
+\DeclareMathOperator{\uniform}{\mathcal{U}}
+\DeclareMathOperator{\bin}{Binomial}
+\DeclareMathOperator{\hyp}{Hyp}
+\DeclareMathOperator{\nb}{NB}
+\DeclareMathOperator{\geo}{Geometric}
+\DeclareMathOperator{\poi}{Poisson}
+\DeclareMathOperator{\exponential}{Exponential}
+\DeclareMathOperator{\mult}{Multinomial}
+\DeclareMathOperator{\slack}{slack}
+\DeclareMathOperator{\row}{row}
+\DeclareMathOperator{\cone}{cone}
+\DeclareMathOperator{\nullspace}{Null}
+\DeclareMathOperator{\ch}{char}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\lcm}{lcm}
+
+% Statistics
+\DeclarePairedDelimiterXPP{\E}[1]{\symsfup{E}}[]{}{#1}
+\DeclarePairedDelimiterXPP{\Var}[1]{\symsfup{Var}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Corr}[1]{\symsfup{Corr}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Cov}[1]{\symsfup{Cov}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Sd}[1]{\symsfup{Sd}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Se}[1]{\symsfup{Se}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Ss}[1]{\symsfup{Ss}}(){}{#1}
+
+% -----------------------------------------------------------------------------
+
+% Table of Contents
+\author{Cameron Roopnarine}
+\date{Last updated: \today}
+\hypersetup{colorlinks, linkcolor=[rgb]{0,0.5,1}}
+
+% -----------------------------------------------------------------------------
+
+% Definitions
+\definecolor{myyellow}{RGB}{255,255,168}
+\newtcolorbox{defbox}[1][]{
+    colback=myyellow,
+    boxrule=0pt,
+    sharp corners,
+    #1
+}
+
+% Theorems
+\definecolor{mypurple}{RGB}{216,216,255}
+\newtcolorbox{thmbox}[1][]{
+    colback=mypurple,
+    boxrule=0pt,
+    sharp corners,
+    #1
+}
+
+% Algorithms
+\definecolor{mygray}{RGB}{232,232,232}
+\newtcolorbox{algbox}[1][]{
+    colback=mygray,
+    boxrule=0pt,
+    sharp corners,
+    #1
+}
+
+% Examples
+\definecolor{mygreen}{RGB}{216,255,216}
+\newtcolorbox{exbox}[1][]{
+    breakable,
+    colback=mygreen,
+    boxrule=0pt,
+    sharp corners,
+    #1
+}
+
+\definecolor{myred}{RGB}{255,216,216}
+
+% -----------------------------------------------------------------------------
+
+\newtheorem{theorem}{Theorem}[section] % reset theorem numbering for each chapter
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition} % definition numbers are dependent on theorem numbers
+\newtheorem{example}[theorem]{Example} % same for example numbers
+\newtheorem{remark}[theorem]{Note}
+
+% -----------------------------------------------------------------------------
+
+% Heading Dates
+\newcommand{\makeheading}[1]
+{
+    \begin{figure}[H]
+        \centering
+        \rule{\columnwidth}{1pt}\\
+        {\large \scshape{#1}}\\[-0.6\baselineskip]
+        \rule{\columnwidth}{1pt}
+        \vspace*{-20pt}
+    \end{figure}
+}
+
+% -----------------------------------------------------------------------------
+
+\tcbset{
+    common/.style={
+            fonttitle=\bfseries,
+            coltitle=black,
+            boxrule=0pt
+        },
+    theorem/.style={
+            common,
+            colback=mypurple,
+            colframe=mypurple!95!black,
+            fontupper=\itshape{}
+        },
+}
+
+\definecolor{mycyan}{RGB}{204,229,229}
+\newtcbtheorem[number within=section, crefname={definition}{definitions}]
+{Definition}{DEFINITION}{
+    common,
+    colback=myyellow,
+    colframe=myyellow!95!black
+}{def}
+
+\newtcbtheorem[use counter from=Definition, crefname={example}{examples}]
+{Example}{EXAMPLE}{
+    common,
+    colback=mygreen,
+    colframe=mygreen!95!black,
+    breakable
+}{ex}
+
+\newtcbtheorem[use counter from=Definition, crefname={exercise}{exercises}]
+{Exercise}{EXERCISE}{
+    common,
+    colback=myred,
+    colframe=myred!95!black,
+    breakable
+}{ex}
+
+\newtcbtheorem[use counter from=Definition, crefname={remark}{remarks}]
+{Remark}{REMARK}{
+    common,
+    colback=mycyan,
+    colframe=mycyan!95!black,
+}{remark}
+
+\newtcbtheorem[use counter from=Definition, crefname={theorem}{theorems}]
+{Theorem}{THEOREM}{
+    theorem,
+}{thm}
+
+\newtcbtheorem[use counter from=Definition, crefname={proposition}{propositions}]
+{Proposition}{PROPOSITION}{
+    theorem,
+}{prop}
+
+\newtcbtheorem[use counter from=Definition, crefname={corollary}{corollaries}]
+{Corollary}{COROLLARY}{
+    theorem,
+}{cor}
+
+\newtcbtheorem[use counter from=Definition, crefname={lemma}{lemmas}]
+{Lemma}{LEMMA}{
+    theorem,
+}{lem}
+
+\newtcbtheorem[no counter]
+{Proof}{Proof of}{
+    common,
+    colframe=black!10,
+    breakable
+}{pf}
+
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\set{\{}{\}}
