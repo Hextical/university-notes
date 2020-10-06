@@ -35,17 +35,19 @@
          & =\frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}}
     \end{align*}
 \end{definition}
-The sample correlation measures the strength and direction of
-the linear relationship between $ X $ and $ Y $.
-\begin{itemize}
-    \item $ \abs{r}\approx 1 $ strong linear relationship
-    \item $ \abs{r}\approx 0 $ lack of linear relationship
-    \item $ r>0 $ positive relationship
-    \item $ r<0 $ negative relationship
-    \item $ -1\leqslant r\leqslant 1 $
-\end{itemize}
-It does not tell us how to predict $ Y $ from $ X $. To do so,
-we need to estimate $ \beta_0 $ and $ \beta_1 $.
+\begin{remark}
+    The sample correlation measures the strength and direction of
+    the linear relationship between $ X $ and $ Y $. Note
+    that $ -1\leqslant r\leqslant 1 $.
+    If $ \abs{r}\approx 1 $, then
+    there is a strong linear relationship, and if
+    $ \abs{r}\approx 0 $
+    then there is a lack of linear relationship. Also, if $ r>0 $,
+    then there is a positive relationship, and if $ r<0 $
+    then there is a negative relationship.
+    It does not tell us how to predict $ Y $ from $ X $. To do so,
+    we need to estimate $ \beta_0 $ and $ \beta_1 $.
+\end{remark}
 
 \begin{definition}
     For data $ (x_i,y_i) $ for $ i=1,\ldots,n $, the
@@ -77,30 +79,33 @@ we need to estimate $ \beta_0 $ and $ \beta_1 $.
         }=\frac{S_{xy}}{S_{xx}}   \]
 \end{theorem}
 \begin{proof}
-    Taking partial derivatives:
-    \[ \frac{\partial S}{\partial\beta_0}=2
+    $ \displaystyle \frac{\partial S}{\partial\beta_0}=2
         \sum\limits_{i=1}^{n} \left[ y_i-(\beta_0+\beta_1x_i) \right](-1)
-        \quad\text{and}\quad
+    $ and $ \displaystyle
         \frac{\partial S}{\partial\beta_1}=2
-        \sum\limits_{i=1}^{n} \left[ y_i-(\beta_0+\beta_1x_i) \right](-x_i)  \]
+        \sum\limits_{i=1}^{n} \left[ y_i-(\beta_0+\beta_1x_i) \right](-x_i) $.
+
     Now,
     \[ \frac{dS}{d\beta_0}\coloneq 0
         \iff \sum\limits_{i=1}^{n}y_i-n\beta_0-
         \beta_1 \sum\limits_{i=1}^{n} x_i=0
         \iff \beta_0=\bar{y}-\beta_1\bar{x} \]
     \begin{align*}
-        \frac{dS}{d\beta_1}=0
+        \frac{dS}{d\beta_1}\coloneq 0
          & \stackrel{\text{plug }\beta_0}{\iff}
-        \sum\limits_{i=1}^{n} \left[ y_i-\bar{y}+\beta_1\bar{x}-\beta_1 x_i \right]x_i=0    \\
+        \sum\limits_{i=1}^{n} \left[ y_i-\bar{y}+\beta_1\bar{x}-\beta_1 x_i \right]x_i=0 \\
          & \iff \sum\limits_{i=1}^{n} x_i(y_i-\bar{y})-\beta_1
-        \sum\limits_{i=1}^{n} x_i(x_i-\bar{x})=0                                            \\
-         & \iff \beta_1=\frac{\sum\limits_{i=1}^{n} x_i(y_i-\bar{y})}{\sum\limits_{i=1}^{n}
+        \sum\limits_{i=1}^{n} x_i(x_i-\bar{x})=0                                         \\
+         & \iff \beta_1=\frac{\sum_{i=1}^{n} x_i(y_i-\bar{y})}{\sum_{i=1}^{n}
             x_i
-            (x_i-\bar{x})}
+            (x_i-\bar{x})}=\frac{S_{xy}}{S_{xx}}
     \end{align*}
 \end{proof}
 \begin{remark}
     We use a hat on the $ \beta $'s to show that they are estimates.
 \end{remark}
-Call $ \hat{\mu}_i=\hat{\beta}_0+\hat{\beta}_1x_i $ the \textbf{fitted values}
-and $ e_i=y_i-\hat{\mu}_i $ the \textbf{residual}.
+\begin{definition}
+    We call
+    $ \hat{\mu}_i=\hat{\beta}_0+\hat{\beta}_1x_i $ the \textbf{fitted values},
+    and $ e_i=y_i-\hat{\mu}_i $ the \textbf{residuals}.
+\end{definition}
