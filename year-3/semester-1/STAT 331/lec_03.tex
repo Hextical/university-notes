@@ -1,158 +1,187 @@
 \makeheading{Lecture 3 | 2020-09-14}
-Model: $ Y_i \sim N(\beta_0+\beta_1x_i,\sigma^2) $
-
-Equation of fitted line: $ y=\hat{\beta}_0+\hat{\beta}_1x $
-
-Interpretation:
+For $ Y_i \sim N(\beta_0+\beta_1x_i,\sigma^2) $,
+the equation of fitted line
+is given by $ y=\hat{\beta}_0+\hat{\beta}_1x $. Our
+interpretation of the parameters is as follows.
 \begin{itemize}
     \item $ \hat{\beta}_0 $ is the estimate
           of the expected response when $ x=0 $ (but not always
           meaningful if outside range of $ x_i $'s in data)
     \item $ \hat{\beta}_1 $ is the estimate of
           expected change in response for unit increase in $ x $
-          \[ \hat{\beta}_1=\frac{\sum\limits_{i=1}^{n}(x_i-\bar{x})
-                  (y_i-\bar{y})}{
-                  \sum\limits_{i=1}^{n} (x_i-\bar{x})^2
-              }=\frac{S_{xy}}{S_{xx}}   \]
     \item $ \sigma^2 $ is the
-          ``variability around the line.''
-
-          Recall that $ \sigma^2=\Var{\varepsilon_i}=\Var{Y_i} $
+          ``variability around the line''
+          where $ \sigma^2=\Var{\varepsilon_i}=\Var{Y_i} $
 \end{itemize}
-Q\@: How to estimate $ \sigma^2 $?
-\[ \varepsilon_i=Y_i-(\beta_0+\beta_1x_i) \]
-\[ e_i=y_i-(\hat{\beta}_0+\hat{\beta}_1x_i) \]
-Intuition: use variability in residuals to estimate
-$ \sigma^2 $.
-
-We use \[ \hat{\sigma}^2
-    =\frac{\sum\limits_{i=1}^{n} (e_i-\bar{e})^2}{n-2} \]
-which looks looks like sample variance of $ e_i $'s. Therefore,
-\[ \hat{\sigma}^2=\frac{\sum\limits_{i=1}^{n} e_i^2}{n-2}=
-    \frac{\Ss{\text{Res}}}{n-2} \]
-Note that ``Square Sum'' is abbreviated as ``Ss''. Now,
-\[ \bar{e}=\bar{y}-(\hat{\beta}_0+\hat{\beta}_1\bar{x})=0 \]
-The $ n-2 $ will be looked are more carefully later, but for now
-it suffices to say that $ n-2= $ d.f. $ = n- \text{number of parameters
-        estimated}$. It allows $ \hat{\sigma}^2 $ to be an unbiased estimator
-for the true value of $ \sigma^2 $; that is,
-\[ \E{\hat{\sigma}^2}=\sigma^2 \]
-whenever $ \hat{\sigma}^2 $ is viewed as a random variable.
-
-Q\@: Is there a statistically significant relationship?
-
-Fact (proved using mgf in STAT 330): Suppose $ Y_i \sim N(\mu_i,\sigma_i^2) $
-are all independent. Then,
-\[ \sum\limits_{i=1}^{n} a_i Y_i \sim N
-    \biggl( \sum\limits_{i=1}^{n} a_i\mu_i,\sum\limits_{i=1}^{n} a_i^2\sigma_i^2 \biggr) \]
-for any constant $ a_i $.
-
-In words,
-\begin{quote}
-    ``Linear combination of Normal is Normal.''
-\end{quote}
+Q\@: How should we estimate $ \sigma^2 $?
+\[ \varepsilon_i=Y_i-(\beta_0+\beta_1x_i)
+    \quad\text{ and }\quad e_i=y_i-(\hat{\beta}_0+\hat{\beta}_1x_i) \]
+Our intuition tells us to use variability in the residuals to estimate
+$ \sigma^2 $, so we use
+\[ \hat{\sigma}^2
+    =\frac{\sum_{i=1}^{n} (e_i-\bar{e})^2}{n-2}=
+    \frac{\sum_{i=1}^{n} e_i^2}{n-2}  \]
+where the first term looks like sample variance of $ e_i $'s.
+The second equality follows since
+$ \bar{e}=\bar{y}-(\hat{\beta}_0+\hat{\beta}_1\bar{x})=0 $
+by definition of our $ \beta_0 $ estimate.
+\begin{definition}
+    $ \text{SSE}=\Ss{\text{Res}}=
+        \sum_{i=1}^{n} (y_i-\hat{\mu}_i)^2=
+        \sum_{i=1}^{n} e_i^2 $,
+    is known as the \textbf{residual} (\textbf{error})
+    \textbf{sum of squares}.
+\end{definition}
+\begin{remark}
+    The $ n-2 $ will be looked at in more detail later, but for now
+    it suffices to say that the degrees of freedom
+    is $ n-2 $ or equivalently, $ n- \text{number of parameters
+            estimated}$. It allows $ \hat{\sigma}^2 $ to be an unbiased estimator
+    for the true value of $ \sigma^2 $; that is,
+    $ \E{\hat{\sigma}^2}=\sigma^2 $
+    whenever $ \hat{\sigma}^2 $ is viewed as a random variable.
+\end{remark}
+\begin{theorem}[Linear Combination of Independent Normal Random Variables]
+    If $ Y_i \sim N(\mu_i,\sigma^2) $, $ i=1,\ldots,n $
+    independently, then
+    \[ \sum_{i=1}^{n} a_i Y_i \sim N
+        \biggl( \sum_{i=1}^{n} a_i\mu_i,\sum_{i=1}^{n} a_i^2\sigma_i^2 \biggr) \]
+\end{theorem}
+\begin{proof}
+    The proof is completed in STAT 330 with moment generating functions.
+\end{proof}
 Viewing $ \hat{\beta}_1 $ as a random variable:
-\[ \hat{\beta}_1=\frac{\sum\limits_{i=1}^{n} (x_i-\bar{x})
+\[ \hat{\beta}_1=\frac{\sum_{i=1}^{n} (x_i-\bar{x})
         (Y_i-\bar{Y})}{
-        \sum\limits_{i=1}^{n} (x_i-\bar{x})^2
+        \sum_{i=1}^{n} (x_i-\bar{x})^2
     }
     =
-    \frac{\sum\limits_{i=1}^{n} (x_i-\bar{x})Y_i-
-        \bar{Y}\sum\limits_{i=1}^{n} (x_i-\bar{x})}{
-        \sum\limits_{i=1}^{n} (x_i-\bar{x})x_i-\bar{x}
-        \sum\limits_{i=1}^{n} (x_i-\bar{x})
+    \frac{\sum_{i=1}^{n} (x_i-\bar{x})Y_i-
+        \bar{Y}\Uoverbracket{\sum_{i=1}^{n} (x_i-\bar{x})}^{0}}{
+        \sum_{i=1}^{n} (x_i-\bar{x})x_i-\bar{x}
+        \Uunderbracket{\sum_{i=1}^{n} (x_i-\bar{x})}_{0}
     }
     =
-    \frac{\sum\limits_{i=1}^{n} (x_i-\bar{x})Y_i}{
-        \sum\limits_{i=1}^{n} (x_i-\bar{x})x_i
-    }  \]
-So,
-\[ \hat{\beta}_1=\sum\limits_{i=1}^{n} a_i Y_i \]
-where $ a_i=\dfrac{x_i-\bar{x}}{\sum\limits_{i=1}^{n} x_i(x_i-\bar{x})}  $.
-\begin{align*}
+    \frac{\sum_{i=1}^{n} (x_i-\bar{x})Y_i}{
+        \sum_{i=1}^{n} (x_i-\bar{x})x_i
+    }=\sum_{i=1}^{n} a_i Y_i  \]
+where $ a_i=\dfrac{x_i-\bar{x}}{\sum_{i=1}^{n} x_i(x_i-\bar{x})}  $.
+Therefore,
+\[
     \E{\hat{\beta}_1}
-     & = \sum\limits_{i=1}^{n} a_i\E{Y_i}                                  \\
-     & =\sum\limits_{i=1}^{n}a_i(\beta_0+\beta_1x_i)                       \\
-     & =\frac{\sum\limits_{i=1}^{n}(x_i-\bar{x})(\beta_0+\beta_1x_i)}{
-        \sum\limits_{i=1}^{n} x_i(x_i-\bar{x})
-    }                                                                      \\
-     & =\frac{\beta_0 \overbrace{\sum\limits_{i=1}^{n}(x_i-\bar{x})}^{=0}+
-        \beta_1\sum\limits_{i=1}^{n} x_i(x_i-\bar{x})}{
-        \sum\limits_{i=1}^{n} x_i(x_i-\bar{x})
-    }                                                                      \\
-     & =
+    = \sum_{i=1}^{n} a_i\E{Y_i}
+    =\frac{\sum_{i=1}^{n}(x_i-\bar{x})(\beta_0+\beta_1x_i)}{
+        \sum_{i=1}^{n} x_i(x_i-\bar{x})
+    }
+    =\frac{\beta_0 \Uoverbracket{\sum_{i=1}^{n}(x_i-\bar{x})}^{0}+
+        \beta_1\sum_{i=1}^{n} x_i(x_i-\bar{x})}{
+        \sum_{i=1}^{n} x_i(x_i-\bar{x})
+    }
+    =
     \beta_1
-\end{align*}
-On average, $ \hat{\beta}_1 $ is an unbiased estimator for $ \beta_1 $.
-
+\]
 Now, we calculate the variance of $ \hat{\beta}_1 $:
-\begin{align*}
+\[
     \Var{\hat{\beta}_1}
-     & =\sum\limits_{i=1}^{n} a_i^2\Var{Y_i}                   \\
-     & =\sigma^2
-    \frac{\sum\limits_{i=1}^{n} (x_i-\bar{x})^2}{
-        \left[ \sum\limits_{i=1}^{n} x_i(x_i-\bar{x}) \right]^2
-    }                                                          \\
-     & =\sigma^2 \frac{\sum\limits_{i=1}^{n} (x_i-\bar{x})^2}{
-        \left[ \sum\limits_{i=1}^{n} (x_i-\bar{x})^2 \right]^2
-    }                                                          \\
-     & =\frac{\sigma^2}{S_{xx}}
-\end{align*}
-So, since $ \hat{\beta}_1 $ is a linear combination of Normals,
-\[ \hat{\beta}_1\sim
-    N\left( \beta_1,\frac{\sigma^2}{S_{xx}}  \right) \]
-In a similar manner,
-\[ \hat{\beta}_0
-    \sim N\left( \beta_0,\sigma^2
-    \left(\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}\right)  \right) \]
-That is, $ \hat{\beta}_0 $ and $ \hat{\beta}_1 $ are
-unbiased estimates.
+    =\sum_{i=1}^{n} a_i^2\Var{Y_i}
+    =\sigma^2
+    \frac{\sum_{i=1}^{n} (x_i-\bar{x})^2}{
+        \left[ \sum_{i=1}^{n} x_i(x_i-\bar{x}) \right]^2
+    }
+    =\sigma^2 \frac{\sum_{i=1}^{n} (x_i-\bar{x})^2}{
+        \left[ \sum_{i=1}^{n} (x_i-\bar{x})^2 \right]^2
+    }
+    =\frac{\sigma^2}{S_{xx}}
+\]
+Using our calculations from $ \hat{\beta}_1 $,
+and viewing $ \hat{\beta}_0 $ as a random variable:
+\[ \E{\hat{\beta}_0}=
+    \E{\bar{Y}}-\bar{x}\E{\hat{\beta}_1}=
+    \E*{\frac{\sum_{i=1}^{n}Y_i}{n}}-\bar{x}\beta_1=
+    \frac{\sum_{i=1}^{n}(\beta_0+\beta_1x_i)}{n}-
+    \beta_1\bar{x}=\beta_0+\beta_1\bar{x}-\beta_1\bar{x}=\beta_0
+\]
+Now, we calculate the variance of $ \hat{\beta}_0 $:
+\[
+    \Var{\hat{\beta}_1}
+    =\Var{\bar{Y}-\beta_1\bar{x}}
+    =\Var{\bar{Y}}+(-\bar{x}^2)\Var{\beta_1}
+    =\Var*{\frac{\sum_{i=1}^{n} Y_i}{n}}+\bar{x}^2\left( \frac{\sigma^2}{S_{xx}} \right)
+    =\frac{n\sigma^2}{n^2}+\frac{\sigma^2 x^2}{S_{xx}}
+\]
+Also, since $ \hat{\beta}_1 $ and $ \hat{\beta}_0 $
+are linear combination of Normal random variables,
+they follow a Normal distribution. Therefore, we get the following theorem.
+\begin{theorem}[Distribution of LSEs]
+    The distribution of the least square estimates are given by
+    \[ \hat{\beta}_1\sim
+        N\left( \beta_1,\frac{\sigma^2}{S_{xx}}  \right)\quad\text{ and }\quad
+        \hat{\beta}_0
+        \sim N\left( \beta_0,\sigma^2
+        \left(\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}\right)  \right) \]
+\end{theorem}
+Since $ \E{\hat{\beta}_1}=\beta_1 $,
+we say $ \hat{\beta}_1 $ is an unbiased
+estimator of $ \beta_1 $. This implies
+that when the experiment is repeated a large
+number of times, the average
+of the estimates $ \hat{\beta}_1 $; that is,
+$ \E{\hat{\beta}_1} $ coincides with the true
+value of $ \beta_1 $. A similar argument can be made for $ \beta_0 $.
 
-Then,
-\[ \frac{\hat{\beta}_1-\beta_1}{\sigma/\sqrt{S_{xx}}} \sim N(0,1)  \]
-However, $ \sigma $ is unknown, so need to estimate
-with $ \hat{\sigma} $:
-\[ \frac{\hat{\beta}_1}{\hat{\sigma}/\sqrt{S_{xx}}}
-    \sim t(n-2)  \]
-Since $ \Sd{\hat{\beta}_1}=\hat{\sigma}^2/S_{xx} $,
-we say the standard error of $ \hat{\beta}_1 $ is
-$ \Se{\hat{\beta}_1}=\hat{\sigma}/\sqrt{S_{xx}} $
-\begin{Definition}{Student's T-distribution}{}
-    $ T $ is said to follow a \textbf{Student's T-distribution} with
-    $ k $ degrees of freedom, denoted $ T \sim t(k) $, if
-    \[ T=\frac{Z}{\sqrt{U/k}}  \]
-    where $ Z \sim N(0,1) $ and $ U \sim \chi^2(k) $.
-\end{Definition}
-
-\underline{Fact}\@: For the simple linear regression model,
-\[ \frac{\hat{\sigma}^2(n-2)}{\sigma^2}=\frac{\Ss{\text{Res}}}{\sigma^2}
-    \sim \chi^2(n-2)  \]
-
+Then, $ \dfrac{\hat{\beta}_1-\beta_1}{\sigma/\sqrt{S_{xx}}} \sim N(0,1) $,
+but $ \sigma $ is unknown, so need to use $ \hat{\sigma} $
+to get
+$ \dfrac{\hat{\beta}_1-\beta_1}{\hat{\sigma}/\sqrt{S_{xx}}}
+    \sim t(n-2) $.
+\begin{definition}
+    The \textbf{standard deviation} of $ \hat{\beta}_1 $
+    is defined as $ \Sd{\hat{\beta}_1}=\sigma/\sqrt{S_{xx}} $.
+    The \textbf{estimated} standard deviation of $ \hat{\beta}_1 $
+    is also referred to as the \textbf{standard error}
+    of the estimate $ \hat{\beta}_1 $, and
+    we write $ \Se{\hat{\beta}_1}=\hat{\sigma}/\sqrt{S_{xx}} $.
+\end{definition}
+\begin{definition}
+    Suppose $ Z \sim N(0,1) $ and $ U \sim \chi^2(\nu) $,
+    with $ Z $ and $ U $ independent. Then,
+    $ T=Z/\sqrt{U/\nu} $ has a \textbf{Student $t$ distribution}
+    with $ \nu $ degrees of freedom.
+\end{definition}
+\begin{theorem}
+    For a simple linear regression model,
+    \[ \frac{\hat{\sigma}^2(n-2)}{\sigma^2}=\frac{\Ss{\text{Res}}}{\sigma^2}
+        \sim \chi^2(n-2) \]
+\end{theorem}
+\begin{proof}
+    Too hard probably.
+\end{proof}
+Using the theorem stated, we justify
+the fact that replacing $ \sigma $ with $ \hat{\sigma} $
+gives us a $ t(n-2) $ distribution.
 \[ \frac{\hat{\beta}_1-\beta_1}{\hat{\sigma}/\sqrt{S_{xx}}}
     =\dfrac{\dfrac{\hat{\beta}_1-\beta_1}{\sigma/\sqrt{S_{xx}}}}{
         \sqrt{\dfrac{\hat{\sigma}^2(n-2)}{\sigma^2}\left( \dfrac{1}{n-2} \right)}
-    } \sim t(n-2)  \]
+    }=
+    \frac{Z}{\sqrt{U/\nu}}=T \sim t(n-2)  \]
+where $ \dfrac{\hat{\sigma}^2(n-2)}{\sigma^2}=U $,
+$ \nu=n-2 $, and $ Z=\dfrac{\hat{\beta}_1-\beta_1}{\hat{\sigma}/\sqrt{S_{xx}}} $.
 A $ (1-\alpha) $ confidence interval for $ \beta_1 $ is
-\[ \hat{\beta}_1\pm (c)\Se{\hat{\beta}_1} \]
+\[ \hat{\beta}_1\pm c\,\Se{\hat{\beta}_1} \]
 where $ c $ is the $ 1-\dfrac{\alpha}{2} $ quantile
 of $ t(n-2) $; that is,
-\begin{itemize}
-    \item $ P(\abs{T}\leqslant c)=1-\alpha $, or
-    \item $ P(T\leqslant c)=1-\dfrac{\alpha}{2} $
-\end{itemize}
+$ P(\abs{T}\leqslant c)=1-\alpha $ or
+$ P(T\leqslant c)=1-\dfrac{\alpha}{2} $
 where $ T \sim t(n-2) $.
 
 \underline{Hypothesis test}:
 $ H_0 $: $ \beta=0 $ versus
 $ H_A $: $ \beta_1\neq 0 $.
-
-If $ H_0 $ is true, then
-\[ \frac{\hat{\beta}_1-\beta_1}{\Se{\hat{\beta}_1}}
-    =\frac{\hat{\beta}_1}{\Se{\hat{\beta}_1}} \sim t(n-2)  \]
-so calculate
-\[ t=\frac{\hat{\beta}_1}{\Se{\hat{\beta}_1}}  \]
+If $ H_0 $ is true, then $ \hat{\beta}_1/\Se{\hat{\beta}_1} \sim t(n-2) $,
+so calculate the \textbf{t statistic}
+$ t=\hat{\beta}_1/\Se{\hat{\beta}_1} $,
 and reject $ H_0 $ at level $ \alpha $ if $ \abs{t}>c $
 where $ c $ is $ 1-\dfrac{\alpha}{2} $ quantile of $ t(n-2) $.
-
-\[ p\text{-value}=P(\abs{T}\geqslant \abs{t})
-    =2P(T\geqslant \abs{t}) \]
+Therefore,
+$ p\text{-value}=P(\abs{T}\geqslant \abs{t})
+    =2P(T\geqslant \abs{t}) $.
