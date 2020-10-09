@@ -40,15 +40,15 @@ Set $ \displaystyle \frac{\partial S}{\partial \beta_0}=0 $
 and $ \displaystyle \frac{\partial S}{\partial \beta_j}=0 $ for $ j=1,\ldots,p $.
 
 \[ \begin{dcases}
-        \sum\limits_{i=1}^{n} (y_i-\mu_i)\iff \symbf{1}_{n\times n}^\top(\symbf{y}-\symbf{\mu})=0 \\
+        \sum\limits_{i=1}^{n} (y_i-\mu_i)=0\iff \symbf{1}_{n\times n}^\top(\symbf{y}-\symbf{\mu})=0 \\
         \sum\limits_{i=1}^{n} (y_i-\mu_i)x_{ij}=0\iff \symbf{x}_{j}^\top
         (\symbf{y}-\symbf{\mu})=0 & j=1,\ldots,p
     \end{dcases} \]
 since we recall that
 \[ X=\begin{bmatrix}
-        1 & x_{11} x_{12} & \cdots & x_{1p}          \\
-        \vdots                                       \\
-        1 & x_{n1}        & x_{n2} & \cdots & x_{np}
+        1 & x_{11} & x_{12} & \cdots & x_{1p} \\
+        \vdots                                \\
+        1 & x_{n1} & x_{n2} & \cdots & x_{np}
     \end{bmatrix}=
     \begin{bmatrix}
         \symbf{1}_{n\times 1} & \symbf{x}_1 & \cdots & \symbf{x}_{p-1} & \symbf{x}_p
@@ -59,15 +59,16 @@ Therefore,
     X^\top X \symbf{B}=X^\top \symbf{y}\iff
     \symbf{B}=(X^\top X)^{-1}X^\top \symbf{y} \]
 assuming $ X^\top X $ is invertible (full rank of $ p+1 $, or linearly
-independent columns).
+independent columns). So, the LS solution for $ \symbf{B} $ is given by
+$ \hat{\symbf{B}}=(X^\top X)^{-1}X^\top \symbf{y} $.
 
 Define residuals:
 \[ e_i=y_i-(\Uunderbracket{\hat{\beta}_0+\hat{\beta}_1x_{i1}+\cdots\hat{\beta}_p x_{ip}
     }_{\text{fitted value }\mu_i}) \]
 or equivalently,
-\[ \hat{\symbf{\mu}}=X\hat{\symbf{B}},\quad \symbf{e}=\symbf{y}-\symbf{\mu} \]
+\[ \hat{\symbf{\mu}}=X\hat{\symbf{B}},\quad \symbf{e}=\symbf{y}-\hat{\symbf{\mu}} \]
 and estimate $ \sigma^2 $ based on $ e_i $'s
-\[ \sigma^2=\frac{\Ss{\text{Res}}}{n-(p+1)}=
+\[ \hat{\sigma}^2=\frac{\Ss{\text{Res}}}{n-(p+1)}=
     \frac{\sum\limits_{i=1}^{n} e_i^2}{n-p-1}=\frac{\symbf{e}^\top\symbf{e}}{n-p-1}  \]
 since d.f.\ is $ n-(\text{no.\ estimated parameters}) $. When viewed
 as a random variable,
@@ -88,10 +89,10 @@ $ \symbf{Y} $ is a random vector, and
 That is, $ \E{\hat{\beta}_0},\ldots,\E{\hat{\beta}_p}=\beta_p $
 all unbiased.
 \begin{align*}
-    \Var{(X^\top X)^{-1}X^\top}
+    \Var{(X^\top X)^{-1}X^\top\symbf{Y}}
      & =(X^\top X)^{-1}X^{\top}\Var{\symbf{Y}}\left[ (X^\top X)^{-1}X^\top \right]^\top                              \\
      & =(X^\top X)^{-1}X^\top \sigma^2 I(X^\top)^\top\left[ (X^\top X)^{-1} \right]^\top & X^\top X\text{ symmetric} \\
-     & =\sigma^2(X^\top X)^{-1}(X^\top)(X^\top X)(X^\top X)^{-1}
+     & =\sigma^2(X^\top X)^{-1}(X^\top X)(X^\top X)^{-1}
 \end{align*}
 $ \hat{\symbf{\beta}} $ is a linear transformation of $ \symbf{Y} $, so
 \[ \hat{\symbf{\beta}} \sim \text{MVN}(\symbf{\beta},\sigma^2
@@ -117,7 +118,7 @@ $ p $-value is $ 2P(T\geqslant \abs{t}) $ where $ T \sim t(n-p-1) $.
 Interpretation of $ \hat{\symbf{\beta}} $: fitted linear
 regression model says $ \widehat{\E{Y}} $
 (estimate of the expected response) is
-$ \hat{\beta}_0+\cdots+\beta_1x_1+\hat{\beta}_p x_p $.
+$ \hat{\beta}_0+\hat{\beta}_1x_1+\cdots+\hat{\beta}_p x_p $.
 \begin{itemize}
     \item $ \hat{\beta}_0 $ is the estimate of expected response
           when all explanatory variables are equal to 0.
