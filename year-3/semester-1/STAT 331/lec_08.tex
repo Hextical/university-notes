@@ -21,7 +21,7 @@ Extract a few variables:
     \begin{tabularx}{0.7\linewidth}{@{}YYY@{}}
           & Acidity & Method             \\
         \midrule
-        1 & 8.7     & Wet-wet            \\
+        1 & 8.7     & Washed-wet         \\
         2 & 8.3     & Washed-wet         \\
         3 & 8.2     & Natural-dry        \\
         4 & 8.4     & Semi-washed/pulped
@@ -51,8 +51,8 @@ Therefore,
 \[ X=\begin{bmatrix}
         1 & 8.7 & 0 & 1 \\
         1 & 8.3 & 0 & 1 \\
-        3 & 8.2 & 0 & 0 \\
-        4 & 8.4 & 1 & 0 \\
+        1 & 8.2 & 0 & 0 \\
+        1 & 8.4 & 1 & 0 \\
     \end{bmatrix} \]
 Why not $ x_{i4}=\begin{cases*}
         1 & dry\\
@@ -61,15 +61,15 @@ Why not $ x_{i4}=\begin{cases*}
 \[ X=\begin{bmatrix}
         1 & 8.7 & 0 & 1 & 0 \\
         1 & 8.3 & 0 & 1 & 0 \\
-        3 & 8.2 & 0 & 0 & 1 \\
-        4 & 8.4 & 1 & 0 & 0 \\
+        1 & 8.2 & 0 & 0 & 1 \\
+        1 & 8.4 & 1 & 0 & 0 \\
     \end{bmatrix} \]
 This has linearly dependent columns since
 $ \symbf{x}_4=\symbf{1}-\symbf{x}_2-\symbf{x}_3 $.
 There is no new information and $ X $
 would not have full rank.
 
-Model: $ Y_i=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}\varepsilon_i $.
+Model: $ Y_i=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}+\varepsilon_i $.
 
 Interpretation:
 \begin{itemize}
@@ -90,7 +90,7 @@ Interpretation:
 $ \hat{\symbf{\beta}}\sim \text{MVN}(\symbf{\beta},\sigma^2 V) $
 where $ V=(X^\top X)^{-1} $.
 \begin{itemize}
-    \item We know $ \hat{\symbf{\beta}}_j \sim N(\beta_j,\sigma^2 V) $
+    \item We know $ \hat{\symbf{\beta}}_j \sim N(\beta_j,\sigma^2 V_{jj}) $
           with $ \Se{\hat{\sigma}\sqrt{V_{jj}}} $
     \item What about $ \beta_2-\beta_3 $?
           \[ \Var{\hat{\beta}_2-\hat{\beta}_3}=
