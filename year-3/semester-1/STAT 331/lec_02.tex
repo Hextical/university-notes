@@ -1,6 +1,6 @@
 \section{Simple Linear Regression}
 \makeheading{Lecture 2 | 2020-09-09}
-\begin{definition}
+\begin{Definition}{Simple linear regression}{}
     A \textbf{simple linear regression}
     is a linear model that uses only one
     explanatory variable; that is,
@@ -8,34 +8,34 @@
     The \textbf{data}
     in a simple linear regression consists of pairs $ (x_i,y_i) $
     where $ i=1,\ldots,n $.
-\end{definition}
-\begin{remark}
+\end{Definition}
+\begin{Remark}{}{}
     Before fitting any model, we might want
     to make a scatterplot to visualize if there
     is a linear relationship between $ x $ and $ y $,
     or calculate the \emph{correlation}.
-\end{remark}
-\begin{definition}
+\end{Remark}
+\begin{Definition}{Correlation}{}
     The \textbf{correlation} of
     random variables $ X $ and $ Y $ is
     $ \rho_{XY}=\dfrac{\Cov{X,Y}}{\Sd{X}\Sd{Y}} $.
-\end{definition}
-\begin{definition}
+\end{Definition}
+\begin{Definition}{Sample correlation}{}
     The \textbf{sample correlation} of
     all pairs $ (x_i,y_i) $ is
     \begin{align*}
         r
          & =\frac{\frac{1}{n-1} \sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}
         {\sqrt{\frac{1}{n-1}\sum_{i=1}^{n} (x_i-\bar{x})^2}
-            \sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(y_i-\bar{y})}}              \\
+        \sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(y_i-\bar{y})}}                  \\
          & =\frac{\sum_{i=1}^{n} (x_i-\bar{x})(y_i-\bar{y})}{
             \sqrt{\sum_{i=1}^{n} (x_i-\bar{x})^2}
             \sqrt{\sum_{i=1}^{n} (y_i-\bar{y})^2}
         }                                                                 \\
          & =\frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}}
     \end{align*}
-\end{definition}
-\begin{remark}
+\end{Definition}
+\begin{Remark}{}{}
     The sample correlation measures the strength and direction of
     the linear relationship between $ X $ and $ Y $. Note
     that $ -1\leqslant r\leqslant 1 $.
@@ -47,9 +47,9 @@
     then there is a negative relationship.
     It does not tell us how to predict $ Y $ from $ X $. To do so,
     we need to estimate $ \beta_0 $ and $ \beta_1 $.
-\end{remark}
+\end{Remark}
 
-\begin{definition}
+\begin{Definition}{Simple linear regression model}{}
     For data $ (x_i,y_i) $ for $ i=1,\ldots,n $, the
     \textbf{simple linear regression model} is
     $ Y_i=\beta_0+\beta_1x_i+\varepsilon_i $
@@ -57,18 +57,18 @@
     $ \varepsilon_i\stackrel{\text{iid}}{\sim}N(0,\sigma^2) $.
     Therefore,
     $ Y_i\sim N(\mu_i=\beta_0+\beta_1x_i,\sigma^2) $.
-\end{definition}
-\begin{definition}
+\end{Definition}
+\begin{Definition}{Method of least squares}{}
     The method of estimating $ \beta_0 $
     and $ \beta_1 $ by minimizing
     $ S(\beta_0,\beta_1)=\sum_{i=1}^{n}(y_i-(\beta_0+\beta_1x_i))^2 $
     is referred to as the \textbf{method of least squares}.
-\end{definition}
-\begin{remark}
+\end{Definition}
+\begin{Remark}{}{}
     The least squares is equivalent to maximum likelihood estimate
     when $ \varepsilon_i\stackrel{\text{iid}}{\sim}N(0,\sigma^2) $.
-\end{remark}
-\begin{theorem}[Least Square Estimates (LSEs)]
+\end{Remark}
+\begin{Theorem}{Least Square Estimates (LSEs) for SLR}{}
     Minimizing $ S(\beta_0,\beta_1) $, gives the
     least square estimates
     \[ \hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x}\quad\text{and}
@@ -77,7 +77,7 @@
         \frac{\sum_{i=1}^{n} (x_i-\bar{x})(y_i-\bar{y})}{
             \sum_{i=1}^{n} (x_i-\bar{x})^2
         }=\frac{S_{xy}}{S_{xx}}   \]
-\end{theorem}
+\end{Theorem}
 \begin{proof}
     $ \displaystyle \frac{\partial S}{\partial\beta_0}=2
         \sum\limits_{i=1}^{n} \left[ y_i-(\beta_0+\beta_1x_i) \right](-1)
@@ -104,10 +104,10 @@
         }=\frac{S_{xy}}{S_{xx}}
     \end{align*}
 \end{proof}
-\begin{remark}
+\begin{Remark}{}{}
     We use a hat on the $ \beta $'s to show that they are estimates.
-\end{remark}
-\begin{definition}
+\end{Remark}
+\begin{Definition}{Fitted value, Residual}{}
     The expression
     $ \hat{\mu}_i=\hat{\beta}_0+\hat{\beta}_1x_i $
     is called the \textbf{fitted value}
@@ -119,4 +119,4 @@
     the vertical distance between the observation $ y_i $
     and the estimated line $ \hat{\mu}_i $
     evaluated at $ x_i $.
-\end{definition}
+\end{Definition}

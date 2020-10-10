@@ -1,21 +1,24 @@
+\section{Multiple Linear Regression}
 \makeheading{Lecture 5 | 2020-09-21}
-\underline{Multiple Linear Regression (MLR)}
+\begin{Definition}{Multiple linear regression}{}
+    A \textbf{multiple linear regression} (MLR) model is defined as
+    \[ Y=\beta_0+\beta_1 x_1+\cdots+\beta_p x_p+\varepsilon \]
+    which links a response variable $ y $ to several
+    independent explanatory variables $ x_1,x_2,\ldots,x_p $.
+\end{Definition}
+\begin{Example}{Rocket MLR}{}
+    \begin{itemize}
+        \item $ x_1 $: nozzle area (large or small, 0 or 1)
+        \item $ x_2 $: mixture in propellant, ratio oxidized fuel
+        \item $ Y $: thrust
+    \end{itemize}
+    Want to develop linear relationship between response $ y $
+    and $ x_1,x_2 $; that is, we want to develop a linear relationship
+    between thrust and both nozzle area and mixture in propellant.
+\end{Example}
 
-$ p $ explanatory variables which can be categorical,
-continuous, etc.
-
-\underline{Rocket}
-\begin{itemize}
-    \item $ x_1 $: nozzle area (large or small, 0 or 1)
-    \item $ x_2 $: mixture in propellent, ratio oxidized fuel
-    \item $ Y $: thrust
-\end{itemize}
-Want to develop linear relationship between response $ y $
-and $ x_1,x_2,\ldots,x_p $.
-
-\underline{Data}
-$ n $ observations, each consists of
-response and $ p $ explanatory variables ($ y_i , x_{i1},x_{i2},\ldots,x_{ip} $).
+In a MLR, there are $ n $ observations, where each consists of
+$ p $ response variables $ (y_i) $, and $ p $ explanatory variables $ (x_{i1},x_{i2},\ldots,x_{ip}) $.
 Then,
 \[ Y_i \sim N(
     \underbrace{\beta_0+\beta_1x_{i1}+
@@ -23,7 +26,6 @@ Then,
         \mu_i},\sigma^2) \]
 or $ Y_i=\mu_i+\varepsilon_i $ where $ \varepsilon_i \stackrel{\text{iid}}{\sim}
     N(0,\sigma^2) $.
-
 We can write in vector/matrix form
 \[ \begin{bmatrix}
         Y_1    \\
@@ -43,10 +45,13 @@ We can write in vector/matrix form
         \vdots        \\
         \varepsilon_n
     \end{bmatrix}_{n\times 1} \]
-Which we can write as
-\[ \symbf{Y}=X\symbf{\beta}+\symbf{\varepsilon} \]
-where
-\[
+Which we can more commonly write as $ \symbf{Y}=X\symbf{\beta}+\symbf{\varepsilon} $ where
+\[ \symbf{Y}=\begin{bmatrix}
+        Y_1    \\
+        Y_2    \\
+        \vdots \\
+        Y_n
+    \end{bmatrix}_{n\times 1}\,
     X=
     \begin{bmatrix}
         1      & x_{11}     & x_{12}     & \cdots & x_{1(p-1)}     & x_{1p}     \\
@@ -54,165 +59,185 @@ where
         \vdots &            &            & \ddots &                & \vdots     \\
         1      & x_{(n-1)1} & x_{(n-1)2} & \cdots & x_{(n-1)(p-1)} & x_{(n-1)p} \\
         1      & x_{n1}     & x_{n2}     & \cdots & x_{n(p-1)}     & x_{np}     \\
-    \end{bmatrix}_{n\times(p+1)},\,
+    \end{bmatrix}_{n\times(p+1)}\,
     \symbf{\beta}=
     \begin{bmatrix}
         \beta_0 \\
         \vdots  \\
         \beta_p
-    \end{bmatrix}_{(p+1)\times 1} \]
-We call $ \symbf{Y}=(Y_1,Y_2,\ldots,Y_{n})^\top $
-a \textbf{random vector} (vector of r.v.'s), analogue of
-expectation and variance properties.
-\begin{itemize}
-    \item Mean vector:
-          \[ \E{\symbf{Y}}=\begin{bmatrix}
-                  \E{Y_1} \\
-                  \E{Y_2} \\
-                  \vdots  \\
-                  \E{Y_n}
-              \end{bmatrix} \]
-    \item Covariance matrix (variance-covariance matrix):
-          \[ \Var{\symbf{Y}}=\begin{bmatrix}
-                  \Var{Y_1}         & \Cov{Y_1,Y_2}     & \cdots & \Cov{Y_1,Y_{n-1}} & \Cov{Y_1,Y_n}     \\
-                  \Cov{Y_2,Y_1}     & \Var{Y_2}         & \cdots & \Cov{Y_2,Y_{n-1}} & \Cov{Y_2,Y_n}     \\
-                  \vdots            & \vdots            & \ddots & \vdots            & \vdots            \\
-                  \Cov{Y_{n-1},Y_1} & \Cov{Y_{n-1},Y_2} & \cdots & \Var{Y_{n-1}}     & \Cov{Y_{n-1},Y_n} \\
-                  \Cov{Y_n,Y_1}     & \Cov{Y_n,Y_2}     & \cdots & \Cov{Y_n,Y_{n-1}} & \Var{Y_n}
-              \end{bmatrix} \]
-          \begin{itemize}
-              \item symmetric since $ \Cov{Y_i,Y_j}=\Cov{Y_j,Y_i} $; that is $ \Var{\symbf{Y}}^\top=\Var{\symbf{Y}} $.
-              \item positive semi-definite since
-                    $ \symbf{a}^\top\Var{\symbf{Y}}\symbf{a}\geqslant 0 $
-                    for all $ \symbf{a}\in\mathbb{R}^n $.
-              \item $ \Var{\symbf{Y}}=
-                        \E{\left( \symbf{Y}-\E{\symbf{Y}} \right)\left( \symbf{Y}-\E{\symbf{Y}} \right)^\top} $
-          \end{itemize}
-\end{itemize}
-Properties of random vector: let $ \symbf{a} $ be a $ 1\times n $
-matrix (row vector) of constants and $ A $ be an $ n\times n $
-matrix of constants.
-\[ \E{\symbf{a}\symbf{Y}}=\symbf{a}\symbf{Y} \]
-\[ \E{A\symbf{Y}}=A\E{\symbf{Y}} \]
-\[ \Var{\symbf{a}\symbf{Y}}=\symbf{a}\Var{\symbf{Y}}\symbf{a}^\top \]
-\[ \Var{A\symbf{Y}}=A\Var{\symbf{Y}}A^\top \]
-Derivation of (4):
-\begin{align*}
-    \Var{A\symbf{Y}}
-     & =\E{\left(A\symbf{Y}-\E{A\symbf{Y}}\right)
-        \left(A\symbf{Y}-\E{A\symbf{Y}}\right)^\top}                                                 \\
-     & =\E{\left( A\symbf{Y}-A\E{\symbf{Y}} \right)
-        \left( A\symbf{Y}-A\E{\symbf{Y}} \right)^\top}                                               \\
-     & =\E{A\left( \symbf{Y}-\E{\symbf{Y}} \right)
-        \left( A\left( \symbf{Y}-\E{\symbf{Y}} \right) \right)^\top}                                 \\
-     & =\E{A\left( \symbf{Y}-\E{\symbf{Y}} \right)
-        \left( \symbf{Y}-\E{\symbf{Y}} \right)^\top A^\top}                                          \\
-     & =A\E{\left( \symbf{Y}-\E{\symbf{Y}} \right)\left( \symbf{Y}-\E{\symbf{Y}} \right)^\top}A^\top \\
-     & =A\Var{\symbf{Y}}A^\top
-\end{align*}
-Numerical example: $ \symbf{Y}=(Y_1,Y_2,Y_3)^\top $. Suppose
-\[ \E{\symbf{Y}}=\begin{bmatrix}
-        3 \\
-        1 \\
-        2
-    \end{bmatrix} \]
-and
-\[ \Var{Y}=\begin{bmatrix}
-        4   & 1/2 & -2 \\
-        1/2 & 1   & 0  \\
-        -2  & 0   & 3
-    \end{bmatrix} \]
-and
-\[ \symbf{a}=\begin{bmatrix}
-        1 & -1 & 2
-    \end{bmatrix} \]
-and
-\[ A=\begin{bmatrix}
-        1 & 2 & 3 \\
-        4 & 5 & 6 \\
-        7 & 8 & 9
-    \end{bmatrix} \]
-\underline{Exercise}:
-\begin{itemize}
-    \item $ \E{\symbf{a}\symbf{Y}} $
-    \item $ \Var{\symbf{a}\symbf{Y}} $
-    \item $ \E{A\symbf{Y}} $
-    \item $ \Var{A\symbf{Y}} $
-\end{itemize}
-Let's do the first two,
-\[ \E{\symbf{a}\symbf{Y}}=\symbf{a}\E{\symbf{Y}}=
-    \begin{bmatrix}
-        1 & -1 & 2
-    \end{bmatrix}\begin{bmatrix}
-        3 \\
-        1 \\
-        2
-    \end{bmatrix}=1(3)-1(1)+2(2)=6 \]
-\begin{align*}
-    \Var{\symbf{a}\symbf{Y}}
-     & = \symbf{a}\Var{\symbf{Y}}\symbf{a}^\top \\
-     & =
-    \begin{bmatrix}
-        1 & -1 & 2
-    \end{bmatrix}
-    \begin{bmatrix}
-        4   & 1/2 & -2 \\
-        1/2 & 1   & 0  \\
-        -2  & 0   & 3
-    \end{bmatrix}
-    \begin{bmatrix}
-        1  \\
-        -1 \\
-        2
-    \end{bmatrix}                  \\
-     & =
-    \begin{bmatrix}
-        1 & -1 & 2
-    \end{bmatrix}
-    \begin{bmatrix}
-        4(1)+(1/2)(-1)-2(2) \\
-        (1/2)(1)+1(-1)+0(2) \\
-        -2(1)+0(-1)+3(2)
-    \end{bmatrix}                  \\
-     & =\begin{bmatrix}
-        1 & -1 & 2
-    \end{bmatrix}
-    \begin{bmatrix}
-        -1/2 \\
-        -1/2 \\
-        4
-    \end{bmatrix}                  \\
-     & =1(-1/2)-1(-1/2)+2(4)                    \\
-     & =8
-\end{align*}
-Multivariate normal distribution (MVN):
-We say that $ \symbf{Y} \sim \text{MVN}(\symbf{\mu},\Sigma) $
-where $ \symbf{\mu}= $ mean vector and $ \Sigma= $
-covariance matrix. Suppose $ \symbf{Y}=(Y_1,\ldots,Y_n)^\top $.
-\[ f(\symbf{y};\symbf{\mu},\Sigma)=
-    \frac{1}{(2\pi)^{n/2}\abs{\Sigma}^{1/2}}
-    \exp\left\{ -\frac{1}{2}(\symbf{y}-\symbf{\mu})^\top
-    \Sigma^{-1}(\symbf{y}-\symbf{\mu}) \right\}  \]
-where $ \Sigma^{-1} $ is the inverse of the covariance matrix
-and $ \abs{\Sigma} $ is the determinant of $ \Sigma $.
+    \end{bmatrix}_{(p+1)\times 1}\,
+    \symbf{\varepsilon}=\begin{bmatrix}
+        \varepsilon_1 \\
+        \varepsilon_2 \\
+        \vdots        \\
+        \varepsilon_n
+    \end{bmatrix}_{n\times 1} \]
+\begin{Definition}{Random vector}{}
+    We call $ \symbf{Y}=(Y_1,Y_2,\ldots,Y_{n})^\top $
+    a \textbf{random vector}.
+\end{Definition}
+\begin{Definition}{Mean vector}{}
+    The \textbf{mean vector} of $ \symbf{Y} $ is defined as
+    $ \E{\symbf{Y}}=(\E{Y_1},\E{Y_2},\ldots,\E{Y_n})^\top $.
+\end{Definition}
+\begin{Definition}{Covariance matrix}{}
+    The \textbf{covariance matrix} (or \textbf{variance-covariance matrix}) of $ \symbf{Y} $ is defined as
+    \[ \Var{\symbf{Y}}=\begin{bmatrix}
+            \Var{Y_1}         & \Cov{Y_1,Y_2}     & \cdots & \Cov{Y_1,Y_{n-1}} & \Cov{Y_1,Y_n}     \\
+            \Cov{Y_2,Y_1}     & \Var{Y_2}         & \cdots & \Cov{Y_2,Y_{n-1}} & \Cov{Y_2,Y_n}     \\
+            \vdots            & \vdots            & \ddots & \vdots            & \vdots            \\
+            \Cov{Y_{n-1},Y_1} & \Cov{Y_{n-1},Y_2} & \cdots & \Var{Y_{n-1}}     & \Cov{Y_{n-1},Y_n} \\
+            \Cov{Y_n,Y_1}     & \Cov{Y_n,Y_2}     & \cdots & \Cov{Y_n,Y_{n-1}} & \Var{Y_n}
+        \end{bmatrix}_{n\times n} \]
+\end{Definition}
+\begin{Proposition}{Properties of Covariance Matrix}{}
+    Let $ \symbf{Y} $ be a random vector and $ \symbf{a}\in\mathbb{R}^n $,
+    then the covariance matrix has the following properties.
+    \begin{enumerate}[label=(\arabic*)]
+        \item Symmetric since $ \Cov{Y_i,Y_j}=\Cov{Y_j,Y_i} $; that is $ \Var{\symbf{Y}}^\top=\Var{\symbf{Y}} $.
+        \item Positive semi-definite since
+              $ \symbf{a}^\top\Var{\symbf{Y}}\symbf{a}\geqslant 0 $
+              for all $ \symbf{a}\in\mathbb{R}^n $.
+        \item $ \Var{\symbf{Y}}=
+                  \E*{\left( \symbf{Y}-\E{\symbf{Y}} \right)\left( \symbf{Y}-\E{\symbf{Y}} \right)^\top} $
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    Trivial.
+\end{proof}
+\begin{Proposition}{Properties of Random Vector}
+    Let $ \symbf{a} $ be a $ 1\times n $ matrix (row vector)
+    of constants and $ A $ be an $ n\times n $ matrix of constants, then
+    the random vector has the following properties.
+    \begin{enumerate}[label=(\arabic*)]
+        \item $ \E{\symbf{a}\symbf{Y}}=\symbf{a}\symbf{Y} $
+        \item $ \E{A\symbf{Y}}=A\E{\symbf{Y}} $
+        \item $ \Var{\symbf{a}\symbf{Y}}=\symbf{a}\Var{\symbf{Y}}\symbf{a}^\top $
+        \item $ \Var{A\symbf{Y}}=A\Var{\symbf{Y}}A^\top $
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    We prove prove property (4) only.
+    \begin{align*}
+        \Var{A\symbf{Y}}
+         & =\E{\left(A\symbf{Y}-\E{A\symbf{Y}}\right)
+        \left(A\symbf{Y}-\E{A\symbf{Y}}\right)^\top}                                                     \\
+         & =\E{\left( A\symbf{Y}-A\E{\symbf{Y}} \right)
+        \left( A\symbf{Y}-A\E{\symbf{Y}} \right)^\top}                                                   \\
+         & =\E{A\left( \symbf{Y}-\E{\symbf{Y}} \right)
+        \left( A\left( \symbf{Y}-\E{\symbf{Y}} \right) \right)^\top}                                     \\
+         & =\E{A\left( \symbf{Y}-\E{\symbf{Y}} \right)
+        \left( \symbf{Y}-\E{\symbf{Y}} \right)^\top A^\top}                                              \\
+         & =A\E{\left( \symbf{Y}-\E{\symbf{Y}} \right)\left( \symbf{Y}-\E{\symbf{Y}} \right)^\top}A^\top \\
+         & =A\Var{\symbf{Y}}A^\top
+    \end{align*}
+\end{proof}
+\begin{Example}{Calculations with MLR Varaibles}{}
+    Let $ \symbf{Y}=(Y_1,Y_2,Y_3)^\top $. Suppose
+    $ \E{\symbf{Y}}= (3,1,2)^\top $. Let
+    $ \Var{Y}=\begin{bmatrix}
+            4   & 1/2 & -2 \\
+            1/2 & 1   & 0  \\
+            -2  & 0   & 3
+        \end{bmatrix} $
+    and
+    $ \symbf{a}=(1,-1,2) $
+    and
+    $ A=\begin{bmatrix}
+            1 & 2 & 3 \\
+            4 & 5 & 6 \\
+            7 & 8 & 9
+        \end{bmatrix} $. Note that $ \symbf{a} $ is a
+    $ 1\times 3 $ row vector. Compute the following.
 
-\underline{Properties of MVN}:
-Suppose $ \symbf{Y}=(Y_1,\ldots,Y_n)^\top \sim \text{MVN}(\symbf{\mu},\Sigma) $
-and $ \symbf{a} $ is a $ 1\times n $ row vector of constants
-and $ A $ is an $ n\times n  $ matrix of constants.
-\begin{enumerate}
-    \item Linear transformations of MVN is MVN, so
-          \[ \symbf{a}\symbf{Y}\sim \text{MVN}(\symbf{a}\symbf{\mu},\symbf{a}
-              \Sigma\symbf{a}^\top) \]
-          \[ A\symbf{Y} \sim \text{MVN}(A\symbf{\mu},A\Sigma A^\top) \]
-    \item Marginal distribution of $ Y_i $ is
-          Normal,
-          \[ Y_i \sim N(\mu_i,\Sigma_{ii}) \]
-          In fact, any subset of $ Y_i $'s is MVN
-    \item Conditional MVN is MVN, e.g. $ Y_1\mid Y_2,\ldots,Y_n $
-    \item Another property:
-          \[ \Cov{Y_i,Y_j}=0\iff Y_i,Y_j\text{ independent} \]
-          that is, $ Y_i $ and $ Y_j $ are uncorrelated.
-          \[ \Sigma_{ij}=0 \]
+    \begin{enumerate}[label=(\roman*)]
+        \item $ \E{\symbf{a}\symbf{Y}} $
+        \item $ \Var{\symbf{a}\symbf{Y}} $
+        \item $ \E{A\symbf{Y}} $
+        \item $ \Var{A\symbf{Y}} $
+    \end{enumerate}
 
-\end{enumerate}
+    \textbf{Solution.} We do the first two and leave the rest as an exercise.
+    \begin{enumerate}[label=(\roman*)]
+        \item $ \E{\symbf{a}\symbf{Y}}=\symbf{a}\E{\symbf{Y}}=
+                  \begin{bmatrix}
+                      1 & -1 & 2
+                  \end{bmatrix}\begin{bmatrix}
+                      3 \\
+                      1 \\
+                      2
+                  \end{bmatrix}=1(3)-1(1)+2(2)=6 $.
+        \item \begin{align*}
+                  \Var{\symbf{a}\symbf{Y}}
+                   & = \symbf{a}\Var{\symbf{Y}}\symbf{a}^\top \\
+                   & =
+                  \begin{bmatrix}
+                      1 & -1 & 2
+                  \end{bmatrix}
+                  \begin{bmatrix}
+                      4   & 1/2 & -2 \\
+                      1/2 & 1   & 0  \\
+                      -2  & 0   & 3
+                  \end{bmatrix}
+                  \begin{bmatrix}
+                      1  \\
+                      -1 \\
+                      2
+                  \end{bmatrix}                  \\
+                   & =
+                  \begin{bmatrix}
+                      1 & -1 & 2
+                  \end{bmatrix}
+                  \begin{bmatrix}
+                      4(1)+(1/2)(-1)-2(2) \\
+                      (1/2)(1)+1(-1)+0(2) \\
+                      -2(1)+0(-1)+3(2)
+                  \end{bmatrix}                  \\
+                   & =\begin{bmatrix}
+                      1 & -1 & 2
+                  \end{bmatrix}
+                  \begin{bmatrix}
+                      -1/2 \\
+                      -1/2 \\
+                      4
+                  \end{bmatrix}                  \\
+                   & =1(-1/2)-1(-1/2)+2(4)                    \\
+                   & =8
+              \end{align*}
+    \end{enumerate}
+\end{Example}
+\begin{Definition}{Multivariate normal distribution}{}
+    Let $ \symbf{Y}=(Y_1,\ldots,Y_n)^\top $
+    be a random vector. We say
+    that $ Y \sim \text{MVN}(\mu,\sigma) $; that is,
+    $ Y $ follows a \textbf{multivariate normal distribution} (MVN) when
+    \[ f(\symbf{y};\symbf{\mu},\Sigma)=
+        \frac{1}{(2\pi)^{n/2}\abs{\Sigma}^{1/2}}
+        \exp\left\{ -\frac{1}{2}(\symbf{y}-\symbf{\mu})^\top
+        \Sigma^{-1}(\symbf{y}-\symbf{\mu}) \right\}  \]
+    where $ \symbf{\mu} $ is defined as the \textbf{mean vector},
+    and $ \Sigma $ is defined as the \textbf{covariance matrix}.
+    Note that $ \Sigma^{-1} $ is the inverse of the covariance matrix
+    and $ \abs{\Sigma} $ is the determinant of $ \Sigma $.
+\end{Definition}
+
+\begin{Theorem}{Properties of Multivariate Normal Distribution}{}
+    Let $ \symbf{Y}=(Y_1,\ldots,Y_n)^\top \sim \text{MVN}(\symbf{\mu},\Sigma) $
+    and $ \symbf{a} $ be a $ 1\times n $ row vector of constants
+    and $ A $ be an $ n\times n  $ matrix of constants.
+    \begin{enumerate}[label=(\arabic*)]
+        \item Linear transformations of MVN is MVN, so
+              \[ \symbf{a}\symbf{Y}\sim \text{MVN}(\symbf{a}\symbf{\mu},\symbf{a}
+                  \Sigma\symbf{a}^\top) \]
+              \[ A\symbf{Y} \sim \text{MVN}(A\symbf{\mu},A\Sigma A^\top) \]
+        \item Marginal distribution of $ Y_i $ is
+              Normal,
+              \[ Y_i \sim N(\mu_i,\Sigma_{ii}) \]
+              In fact, any subset of $ Y_i $'s is MVN
+        \item Conditional MVN is MVN, e.g. $ Y_1\mid Y_2,\ldots,Y_n $
+        \item Another property:
+              \[ \Cov{Y_i,Y_j}=0\iff Y_i,Y_j\text{ independent} \]
+              that is, $ Y_i $ and $ Y_j $ are uncorrelated.
+              \[ \Sigma_{ij}=0 \]
+    \end{enumerate}
+\end{Theorem}

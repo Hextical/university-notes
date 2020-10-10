@@ -1,31 +1,24 @@
 \makeheading{Lecture 7 | 2020-09-28}
-Recall:
-\[ \symbf{Y}=X\symbf{\beta}+\symbf{\varepsilon}
-    \sim \text{MVN}(X\symbf{\beta},\sigma^2 I) \]
+Recall that $ \symbf{Y}=X\symbf{\beta}+\symbf{\varepsilon}
+    \sim \text{MVN}(X\symbf{\beta},\sigma^2 I) $, and
 \begin{itemize}
     \item Estimates: $ \hat{\symbf{\beta}}=(X^\top X)^{-1}X^\top \symbf{Y} $
     \item Fitted values: $ \hat{\symbf{\mu}}=X\hat{\symbf{\beta}} $
     \item Residuals: $ \symbf{e}=\symbf{y}-\hat{\symbf{\mu}} $
+    \item Constants: $ X=\begin{bmatrix}
+                  \symbf{1} & \symbf{x}_1 & \cdots & \symbf{x}_p
+              \end{bmatrix}_{n\times(p+1)} $
+    \item Values of responses: $
+              \symbf{y}=(y_1,y_2,\ldots,y_n)^\top \in\mathbb{R}^n $
 \end{itemize}
-Geometric interpretation of data.
-Constants: $ X=\begin{bmatrix}
-        \symbf{1} & \symbf{x}_1 & \cdots & \symbf{x}_p
-    \end{bmatrix}_{n\times(p+1)} $
+\underline{Author's Note}: Geometric interpretation of data is omitted in these notes because
+I'm simply too lazy.
 
-Values of responses: $
-    \symbf{y}=\begin{bmatrix}
-        y_1    \\
-        y_2    \\
-        \vdots \\
-        y_n
-    \end{bmatrix}\in\mathbb{R}^n $
-
-Recall: $ \text{Span}(X)=
+The span of $ X $ is $ \text{Span}(X)=
     \set{b_0\symbf{1}+b_1\symbf{x}_1+\cdots+b_p\symbf{x}_p:b_0,\ldots,b_p\in\mathbb{R}}
     \subset \mathbb{R}^n $
 which is all linear combinations of columns of $ X $ which is a subspace
-of $ \mathbb{R}^n $. Recall, by assumption
-$ \rank(X)=p+1 $.
+of $ \mathbb{R}^n $, and by assumption we know $ \rank(X)=p+1 $.
 
 We can say $ \text{Span}(X) $ represents all possible vector
 values $ X\symbf{b} $ where $ \symbf{b}=(b_0,b_1,\ldots,b_p)^\top $.
@@ -45,21 +38,30 @@ $ \symbf{e} $ must be orthogonal to $ \text{Span}(X)
     \vdots                                                        \\
     \symbf{x}_p^\top\cdot(\symbf{y}-\hat{\symbf{\mu}}) & =      0
 \end{align*}
-which is the same as LS estimates.
+which is the same as LS estimates. We also know
+$ \hat{\symbf{\mu}}=X\hat{\symbf{\beta}} $ and
+$ \symbf{e}=\symbf{y}-\hat{\symbf{\mu}} $.
+\begin{Definition}{Hat matrix}{}
+    The \textbf{hat matrix} is defined as
+    $ H=X(X^\top X)^{-1}X^{\top} $.
+\end{Definition}
 
-\[ \hat{\symbf{\mu}}=X\hat{\symbf{\beta}},
-    \quad \symbf{e}=\symbf{y}-\hat{\symbf{\mu}} \]
-Define the \textbf{hat matrix} as
-\[ H=X(X^\top X)^{-1}X^{\top} \]
-Properties of $ H $
-\begin{enumerate}[label=(\arabic*)]
-    \item $ H $ is symmetric.
-    \item $ H $ is idempotent.
-    \item $ I-H $ is symmetric idempotent.
-\end{enumerate}
-\[ H^\top=[X(X^\top X)^{-1}X^\top]^\top=X(X^\top X)^{-1}X^\top=H \]
-\[ HH=X(X^\top X)^{-1}(X^\top X)(X^\top X)^{-1}X^\top=H \]
-
+\begin{Proposition}{Properties of Hat Matrix}{}
+    Let $ H $ be a hat matrix, then $ H $ has the following properties.
+    \begin{enumerate}[label=(\arabic*)]
+        \item $ H $ is symmetric; that is, $ H=H^\top $.
+        \item $ H $ is idempotent; that is, $ H^2=HH=H $.
+        \item $ I-H $ is symmetric idempotent; that is,
+              $ (I-H)^2=(I-H)(I-H)=I-H $.
+    \end{enumerate}
+\end{Proposition}
+\begin{proof} We prove all three because it's easy.
+    \begin{enumerate}[label=(\arabic*)]
+        \item $ H^\top=[X(X^\top X)^{-1}X^\top]^\top=X(X^\top X)^{-1}X^\top=H $.
+        \item  $ HH=X(X^\top X)^{-1}(X^\top X)(X^\top X)^{-1}X^\top=H $.
+        \item  $ (I-H)(I-H)=I(I-H)-H(I-H)=II-IH-HI+HH=I-2H+HH=I-2H+H=I-H $.
+    \end{enumerate}
+\end{proof}
 Let's view $ \hat{\symbf{\mu}} $ and $ \symbf{e} $
 as random vectors
 \[ \hat{\symbf{\mu}}=X\hat{\symbf{\beta}}=
@@ -77,11 +79,14 @@ as random vectors
 \[ \Var{\symbf{e}}=
     (I-H)\Var{\symbf{Y}}(I-H)^\top=\sigma^2(I-H)(I-H)^\top=\sigma^2(I-H) \]
 So since $ \hat{\symbf{\mu}} $ and $ \symbf{e} $
-are linear transformations of $ \symbf{Y} $
-\[ \hat{\symbf{\mu}}\sim\text{MVN}(X\symbf{\beta},\sigma^2 H) \]
-\[ \hat{\symbf{e}}\sim\text{MVN}(0,\sigma^2(I-H)) \]
-Prediction: Suppose we want to predict response for
-(the first 1 represents the intercept)
+are linear transformations of $ \symbf{Y} $ we have proved the following theorem.
+\begin{Theorem}{Distribution of $ \hat{\symbf{\mu}} $ and $ \symbf{e} $}{}
+    $ \hat{\symbf{\mu}} $ and $ \symbf{e} $ have the following distribution.
+    \[ \hat{\symbf{\mu}}\sim\text{MVN}(X\symbf{\beta},\sigma^2 H) \]
+    \[ \hat{\symbf{e}}\sim\text{MVN}(0,\sigma^2(I-H)) \]
+\end{Theorem}
+Suppose we want to predict response for $ \symbf{x}_0 $
+where the first 1 represents the intercept in the row vector.
 \[ \symbf{x}_0=\begin{bmatrix}
         1 & x_{01} & x_{02} & \cdots & x_{0p}
     \end{bmatrix}_{1\times (p+1)} \]
@@ -98,9 +103,13 @@ has
     =\E{Y_0} \]
 \[ \Var{\hat{Y}_0}=\symbf{x}_0\Var{\hat{\symbf{\beta}}}\symbf{x}_0^\top=
     \symbf{x}_0\sigma^2(X^\top X)^{-1}\symbf{x}_0^\top \]
-Therefore,
-\[ \hat{Y}_0 \sim N(\symbf{x}_0\symbf{\beta},\sigma^2\symbf{x}_0(X^\top X)^{-1}
-    \symbf{x}_0^\top) \]
+We have proved the following theorem.
+\begin{Theorem}{Distribution of Predictor}{}
+    The distribution of $ \hat{Y}_0 $ which is a function
+    of $ Y_1,\ldots,Y_n $ is
+    \[ \hat{Y}_0 \sim N(\symbf{x}_0\symbf{\beta},\sigma^2\symbf{x}_0(X^\top X)^{-1}
+        \symbf{x}_0^\top) \]
+\end{Theorem}
 \[ \frac{\hat{Y}_0-\symbf{x}_0\symbf{\beta}}{\sigma\sqrt{
             \symbf{x}_0(X^\top X)^{-1}\symbf{x}_0^\top
         }}\sim N(0,1)  \]
@@ -109,7 +118,7 @@ Therefore,
             \symbf{x}_0(X^\top X)^{-1}\symbf{x}_0^\top
         }}\sim t(n-(p+1))=t(n-p-1)  \]
 A $ (1-\alpha) $ confidence interval for the mean
-response given $ \symbf{x}_0 $,
+response given $ \symbf{x}_0 $ is
 \[ \hat{y}_0\pm c \hat{\sigma}\sqrt{
         \symbf{x}_0(X^\top X)^{-1}\symbf{x}_0^\top} \]
 where $ c $ is the $ 1-\alpha/2 $ quantile of $ t(n-p-1) $.
@@ -120,13 +129,20 @@ and $ \hat{Y}_0 $ is a function of $ Y_1,\ldots,Y_n $. Therefore,
 \[ \E{Y_0-\hat{Y}_0}=\symbf{x}_0\symbf{\beta}-\symbf{x}_0\symbf{\beta}=0 \]
 \[ \Var{Y_0-\hat{Y}_0}=\Var{Y_0}+(-1)^2\Var{\hat{Y}_0}=
     \sigma^2+\sigma^2(\symbf{x}_0(X^\top X)^{-1}\symbf{x}_0^\top) \]
-Therefore,
-\[ Y_0-\hat{Y}_0 \sim N(
-    0,\sigma^2(1+\symbf{x}_0(X^\top X)^{-1}\symbf{x}_0^\top)
-    ) \]
-A $ (1-\alpha) $ prediction interval for $ y_0 $
+We have proved the following theorem.
+\begin{Theorem}{Distribution of Prediction Error}{}
+    The distribution of the prediction error is
+    \[ Y_0-\hat{Y}_0 \sim N(
+        0,\sigma^2(1+\symbf{x}_0(X^\top X)^{-1}\symbf{x}_0^\top)
+        ) \]
+\end{Theorem}
+
+A $ (1-\alpha) $ prediction interval for $ y_0 $ is given by
 \[ \hat{y}_0\pm c\hat{\sigma}\sqrt{1+\symbf{x}_0(X^\top X)^{-1}\symbf{x}_0^\top} \]
 where $ c $ is the $ 1-\alpha/2 $ quantile of $ t(n-p-1) $.
 
-Intuition: prediction interval wider than CI for mean. Estimating
-an average is ``easier'' than an individual response.
+\begin{Remark}{}{}
+    Our intuition tells us that the prediction interval wider than
+    confidence interval for mean. In other words, estimating
+    an average is ``easier'' than an individual response.
+\end{Remark}

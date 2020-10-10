@@ -25,14 +25,14 @@ where the first term looks like sample variance of $ e_i $'s.
 The second equality follows since
 $ \bar{e}=\bar{y}-(\hat{\beta}_0+\hat{\beta}_1\bar{x})=0 $
 by definition of our $ \beta_0 $ estimate.
-\begin{definition}
+\begin{Definition}{Residual sum of squares}{}
     $ \text{SSE}=\Ss{\text{Res}}=
         \sum_{i=1}^{n} (y_i-\hat{\mu}_i)^2=
         \sum_{i=1}^{n} e_i^2 $,
     is known as the \textbf{residual} (\textbf{error})
     \textbf{sum of squares}.
-\end{definition}
-\begin{remark}
+\end{Definition}
+\begin{Remark}{}{}
     The $ n-2 $ will be looked at in more detail later, but for now
     it suffices to say that the degrees of freedom
     is $ n-2 $ or equivalently, $ n- \text{number of parameters
@@ -40,13 +40,13 @@ by definition of our $ \beta_0 $ estimate.
     for the true value of $ \sigma^2 $; that is,
     $ \E{\hat{\sigma}^2}=\sigma^2 $
     whenever $ \hat{\sigma}^2 $ is viewed as a random variable.
-\end{remark}
-\begin{theorem}[Linear Combination of Independent Normal Random Variables]
+\end{Remark}
+\begin{Theorem}{Linear Combination of Independent Normal Random Variables}{}
     If $ Y_i \sim N(\mu_i,\sigma^2) $, $ i=1,\ldots,n $
     independently, then
     \[ \sum_{i=1}^{n} a_i Y_i \sim N
         \biggl( \sum_{i=1}^{n} a_i\mu_i,\sum_{i=1}^{n} a_i^2\sigma_i^2 \biggr) \]
-\end{theorem}
+\end{Theorem}
 \begin{proof}
     The proof is completed in STAT 330 with moment generating functions.
 \end{proof}
@@ -112,14 +112,14 @@ Now, we calculate the variance of $ \hat{\beta}_0 $:
 Also, since $ \hat{\beta}_1 $ and $ \hat{\beta}_0 $
 are linear combination of Normal random variables,
 they follow a Normal distribution. Therefore, we get the following theorem.
-\begin{theorem}[Distribution of LSEs]
+\begin{Theorem}{Distribution of LSEs}{}
     The distribution of the least square estimates are given by
     \[ \hat{\beta}_1\sim
         N\left( \beta_1,\frac{\sigma^2}{S_{xx}}  \right)\quad\text{ and }\quad
         \hat{\beta}_0
         \sim N\left( \beta_0,\sigma^2
         \left(\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}\right)  \right) \]
-\end{theorem}
+\end{Theorem}
 Since $ \E{\hat{\beta}_1}=\beta_1 $,
 we say $ \hat{\beta}_1 $ is an unbiased
 estimator of $ \beta_1 $. This implies
@@ -134,25 +134,25 @@ but $ \sigma $ is unknown, so need to use $ \hat{\sigma} $
 to get
 $ \dfrac{\hat{\beta}_1-\beta_1}{\hat{\sigma}/\sqrt{S_{xx}}}
     \sim t(n-2) $.
-\begin{definition}
+\begin{Definition}{Standard deviation and standard error of $ \hat{\beta}_1 $}{}
     The \textbf{standard deviation} of $ \hat{\beta}_1 $
     is defined as $ \Sd{\hat{\beta}_1}=\sigma/\sqrt{S_{xx}} $.
     The \textbf{estimated} standard deviation of $ \hat{\beta}_1 $
     is also referred to as the \textbf{standard error}
     of the estimate $ \hat{\beta}_1 $, and
     we write $ \Se{\hat{\beta}_1}=\hat{\sigma}/\sqrt{S_{xx}} $.
-\end{definition}
-\begin{definition}
+\end{Definition}
+\begin{Definition}{Student $ t $ distribution}{}
     Suppose $ Z \sim N(0,1) $ and $ U \sim \chi^2(\nu) $,
     with $ Z $ and $ U $ independent. Then,
     $ T=Z/\sqrt{U/\nu} $ has a \textbf{Student $t$ distribution}
     with $ \nu $ degrees of freedom.
-\end{definition}
-\begin{theorem}
+\end{Definition}
+\begin{Theorem}{}{}
     For a simple linear regression model,
     \[ \frac{\hat{\sigma}^2(n-2)}{\sigma^2}=\frac{\Ss{\text{Res}}}{\sigma^2}
         \sim \chi^2(n-2) \]
-\end{theorem}
+\end{Theorem}
 \begin{proof}
     Too hard probably.
 \end{proof}
