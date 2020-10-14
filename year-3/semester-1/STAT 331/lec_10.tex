@@ -1,0 +1,160 @@
+\makeheading{Lecture 10 | 2020-10-07}
+Hypothesis testing based on $ F $ distribution
+
+So far we've tested $ H_0 $: $ \beta_j=0 $
+vs $ H_A $: $ \beta_j\neq 0 $
+involving individual parameters,
+using $ t $ distribution.
+
+Now consider hypothesis test of the form $ H_0 $: $ A\symbf{\beta}=\symbf{0} $
+where $ A $ is a matrix of constraints specifying
+linear combinations of parameters.
+
+\begin{Example}{}{}
+    Coffee: $ Y_i=\beta_0+\beta_1x_{i1} $
+    where $ Y_i $ is the flavour and $ x_{i1} $
+    is the acidity. The full model is:
+    \[ Y_i=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}+\varepsilon_i \]
+    Example 1.
+    \begin{itemize}
+        \item $ H_0 $: $ \beta_1=\beta_2=\beta_3=0 $ versus
+        \item $ H_A $: at least one of $ \beta_1,\beta_2,\beta_3 $
+              not 0.
+        \item If $ H_0 $ is true, the model reduces to
+              $ Y_i=\beta_0+\varepsilon_i $.
+        \item This tests overall significance of regression
+              (whether any of predictors impact response)
+        \item $ A=\begin{bmatrix}
+                      0 & 1 & 0 & 0 \\
+                      0 & 0 & 1 & 0 \\
+                      0 & 0 & 0 & 1
+                  \end{bmatrix} $. Note that row $ i $ considers
+              the constraint of $ \beta_i=0 $ for $ i=1,2,3 $
+              in this example.
+    \end{itemize}
+    Example 2.
+    \begin{itemize}
+        \item $ H_0 $: $ \beta_2=\beta_3=0 $
+        \item If $ H_0 $ is true, $ Y_i=\beta_0+\beta_1x_{i1}+\varepsilon_i $
+        \item Q\@: Is reduced model with only acidity plausible?
+        \item $ A=\begin{bmatrix}
+                      0 & 0 & 1 & 0 \\
+                      0 & 0 & 0 & 1
+                  \end{bmatrix} $. Note that $ A\symbf{\beta}=\symbf{0}_{1\times 2} $
+    \end{itemize}
+    Example 3.
+    \begin{itemize}
+        \item $ H_0 $: $ \beta_2-\beta_3=0 $
+        \item $ H_A $: $ \beta_2\neq \beta_3 $
+        \item $ Y_i=\beta_0+\beta_1x_{i1}+\beta_2(x_{i2}+x_{i3})+\varepsilon_i $
+              where $ (x_{i2}+x_{i3}) $ is
+              $ 1 $ if semi/wet and $ 0 $ if dry.
+        \item Do the wet and semi methods have the same impact
+              on the response (holding acidity constant)?
+        \item $ A=\begin{bmatrix}
+                      0 & 0 & 1 & -1
+                  \end{bmatrix} $
+    \end{itemize}
+\end{Example}
+
+In general, with $ \ell $ constraints. $ A $
+is an $ \ell \times (p+1) $ matrix
+with rank $ \ell $. Recall
+that
+\[ \text{span}(X)=\set{\beta_0\symbf{1}+\beta_1\symbf{x}_1+
+        \cdots+\beta_p\symbf{x}_p} \]
+Let
+\[ \text{span}_A(X)=\set{\beta_0\symbf{1}+\beta_1\symbf{x}_1+
+        \cdots+\beta_p\symbf{x}_p:A\symbf{\beta}=0} \]
+which is a subspace of $ \text{span}(X) $
+since any vector in $ \text{span}_A(X) $
+is also in $ \text{span}(X) $.
+We call $ \text{span}_A(X) $ the
+$ \text{span}(X) $ with constraint $ A $ on $ \symbf{\beta} $.
+
+Let $ \hat{\symbf{\mu}}_A $
+denote the fitted values from fitting the reduced model.
+The residual if we hit the model with $ A\symbf{\beta}=\symbf{0} $
+is $ \symbf{e}_A=\symbf{y}-\hat{\symbf{\mu}}_A $.
+
+If $ A\symbf{\beta}=\symbf{0} $ is true, then
+$ \hat{\symbf{\mu}} $ and $ \hat{\symbf{\mu}}_A $ should be close;
+that is, the model makes similar predictions whether
+we set $ A\symbf{\beta}=\symbf{0} $ or not when fitting the model.
+
+So to assess whether $ H_0 $ is plausible,
+look at $ \norm{\hat{\symbf{\mu}}-\hat{\symbf{\mu}}_A} $
+which is Euclidean or $ L_2 $ norm. That is,
+\[ \norm{\hat{\symbf{\mu}}-\hat{\symbf{\mu}}_A}=
+    \sqrt{(\hat{\symbf{\mu}}-\hat{\symbf{\mu}}_A)^\top(\hat{\symbf{\mu}}-\hat{\symbf{\mu}}_A)} \]
+If it's ``large'' or ``small'' (close to 0)
+where large gives evidence against $ H_0 $
+and small gives evidence for $ H_0 $.
+
+By Pythagoras,
+\[ \norm{\symbf{y}-\hat{\symbf{\mu}}_A}^2=
+    \norm{\symbf{y}-\hat{\symbf{\mu}}}^2+
+    \norm{\hat{\symbf{\mu}}-\hat{\symbf{\mu}}_A}^2
+    \quad\text{ or }\quad
+    \norm{\symbf{e}_A}^2=\norm{\symbf{e}}^2+\norm{\hat{\symbf{\mu}}-
+        \hat{\symbf{\mu}}_A
+    }^2 \]
+or equivalently $ \symbf{e}_A^\top \symbf{e}_A=\symbf{e}^\top \symbf{e}
+    +\norm{\hat{\symbf{\mu}}-
+        \hat{\symbf{\mu}}_A
+    }^2 $
+where $ \symbf{e}_A^\top \symbf{e}_A $ is the sum of squares
+residual in the reduced model and $ \symbf{e}^\top \symbf{e} $
+is the sum of squares residual in the model.
+
+We define $ \symbf{e}_A^\top \symbf{e}_A=\Ss{\text{Res}}_A $
+and $ \symbf{e}^\top \symbf{e} =\Ss{\text{Res}} $.
+
+Thus, $ \norm{\hat{\symbf{\mu}}-\hat{\symbf{\mu}}_A}=
+    \Ss{\text{Res}}_A-\Ss{\text{Res}} \geqslant 0 $
+additional sum of squares explained by full model vs reduced
+one with constraints $ A $.
+
+Practical implications:
+\begin{itemize}
+    \item $ \Ss{Res} $ cannot decrease when constraints applied.
+    \item Equivalently, full model always has small (or equal)
+          $ \Ss{Res} $ for a fixed $ \Sss{Tot} $
+          and thus higher $ R^2 $ compared to a reduced model.
+\end{itemize}
+
+Define test statistic:
+\[ F=\frac{(\Sss{Res}_A-\Sss{Res})/\ell}{\Sss{Res}/(n-p-1)}  \]
+we know $ \Sss{Res}/(n-p-1)=\hat{\sigma}^2 $ in the full model.
+\begin{Definition}{}{}
+    If $ U \sim \chi^2(a) $ and $ V \sim \chi^2(b) $
+    are independent. We say $ F $ follows and
+    $ F $ distribution if
+    \[ F=\frac{U/a}{V/b} \]
+    and wite $ F \sim F(a,b) $.
+\end{Definition}
+Here, we have these facts when $ H_0 $ is true
+\[ V=\frac{\hat{\sigma}^2(n-p-1)}{\sigma^2}\sim \chi^2(n-p-1)  \]
+\[ U=\frac{\norm{\hat{\symbf{\mu}}-\hat{\symbf{\mu}}_A}^2}{\sigma^2}\sim \chi^2(\ell)  \]
+where $ U $ and $ V $ are independent. Therefore,
+\[ F=\dfrac{\dfrac{\norm{\hat{\symbf{\mu}}-\hat{\symbf{\mu}}_A}^2}{\sigma^2}
+        \left( \dfrac{1}{\ell} \right)}{\dfrac{\hat{\sigma}^2(n-p-1)}{\sigma^2}
+        \left( \dfrac{1}{n-p-1} \right)} \sim F(\ell,n-p-1)   \]
+when $ H_0 $ is true. Reject
+$ H_0 $: $ A\symbf{\beta}=\symbf{0} $ at level $ \alpha $
+if $ F $ is greater than $ (1-\alpha) $
+quantile of $ F(\ell,n-p-1) $
+and $ p $-value is $ P(Y\geqslant F) $ where $ Y \sim F(\ell,n-p-1) $.
+
+\underline{Relation to $ T $ distribution}:
+Say $ Y \sim t(a) $
+\[ Y=\frac{Z}{\sqrt{U/a}}  \]
+where $ Z \sim N(0,1) $ and $ U \sim \chi^2(a) $ are independent.
+Squaring everything,
+\[ Y^2=\frac{Z^2}{U/a} \]
+and we know $ Z^2 \sim \chi^2(1) $. Therefore,
+$ Y^2 \sim F(1,a) $ (we divide by 1 in the numerator).
+
+So, if our hypothesis test has one constraint,
+then $ H_0 $: $ \beta_1=0 $ versus $ H_A $: $ \beta_1\neq 0 $
+then $ F $ test is equal to $ t $ test of same hypothesis.
