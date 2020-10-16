@@ -1,0 +1,160 @@
+\makeheading{Lecture 8 | 2020-09-27}
+Independence:
+\begin{enumerate}[label=(\arabic*)]
+    \item Definition
+    \item Check independence: $ f(x,y)=f_1(x)f_2(y) $
+    \item If $ X $ and $ Y $ are independent, then
+          $ g(X) $ and $ h(Y) $ are independent. The converse
+          is \underline{not true}.
+    \item Factorization Theorem
+          \begin{enumerate}[label=(\roman*)]
+              \item $ f(x,y)=g(x)h(y) $
+              \item $ A $ is a rectangle, or equivalent statements.
+          \end{enumerate}
+          $ X $ and $ Y $ are independent if and only if
+          (i) and (ii) are satisfied.
+\end{enumerate}
+\section{Joint Expectation}
+This section: extend the definition of expectation
+from univariate to bivariate cases.
+\begin{Definition}{Joint exepectation}{}
+    Suppose $ h(x,y) $ is a real valued function, then
+    \[ \E{h(X,Y)}=\begin{dcases}
+            \sum_{x}\sum_{y}h(x,y)f(x,y) & X,Y\text{ are joint discrete}   \\
+            \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} h(x,y)f(x,y)\, d{x} \, d{y}
+                                         & X,Y\text{ are joint continuous}
+        \end{dcases} \]
+\end{Definition}
+\begin{Example}{}{}
+    \[ \E{XY}=\begin{dcases}
+            \sum_{x}\sum_{y}xy f(x,y)                                                 & X,Y\text{ are joint discrete}   \\
+            \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} x y f(x,y)\, d{x} \, d{y} & X,Y\text{ are joint continuous}
+        \end{dcases} \]
+    \[ \E{X}=\begin{dcases}
+            \sum_{x}\sum_{y}x f(x,y)                                                & X,Y\text{ are joint discrete}   \\
+            \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} x f(x,y)\, d{x} \, d{y} & X,Y\text{ are joint continuous}
+        \end{dcases} \]
+    Alternatively,
+    \[ \E{X}=\sum_{x}x f_1(x)=\sum_{x}x\biggl[\sum_{y}f(x,y) \biggr]   \]
+\end{Example}
+\begin{Theorem}{Properties}{}
+    \begin{enumerate}[label=(\arabic*)]
+        \item Linearity: exchange the order of summation and expectation
+              \[ \E{ag(X,Y)+bh(X,Y)}=a\E{g(X,Y)}+b\E{h(X,Y)} \]
+              \[ \E[\bigg]{\sum_{i=1}^{n} a_i X_i}=
+                  \sum_{i=1}^{n} a_i \E{X_i} \]
+        \item Independence: if $ X $ and $ Y $ are independent,
+              then $ \E{XY}=\E{X}\E{Y} $. More generally, we have
+              $ \E{g(X)h(Y)}=\E{g(X)}\E{h(Y)} $. Furthermore,
+              if $ X_1,\ldots,X_n $ are independent, then
+              \[ \E[\bigg]{\prod_{i=1}^n h(X_i)}=
+                  \prod_{i=1}^n \E{h(X_i)} \]
+    \end{enumerate}
+\end{Theorem}
+\begin{Definition}{Covariance}{}
+    The \textbf{covariance} of $ X $ and $ Y $ is defined as
+    \[ \Cov{X,Y}=\E{(X-\mu_X)(Y-\mu_Y)}=\E{XY}-\mu_X\mu_Y \]
+    where $ \mu_X=\E{X} $ and $ \mu_Y=\E{Y} $.
+\end{Definition}
+\begin{Proposition}{}{}
+    If $ X $ and $ Y $ are independent, then $ \E{XY}=\E{X}\E{Y}
+        \implies \Cov{X,Y}=0 $.
+\end{Proposition}
+\begin{Theorem}{Variance Formula}{}
+    \begin{enumerate}[label=(\arabic*)]
+        \item $ \Cov{X,X}=\Var{X} $
+        \item $ \Var{aX+bY}=a^2\Var{X}=b^2\Var{Y}+2ab\Cov{X,Y} $
+        \item $ \Cov{X+Y,Z}=\Cov{X,Z}+\Cov{Y,Z} $
+        \item \[ \Var[\bigg]{\sum_{i=1}^{n} a_i X_i}=
+                  \sum_{i=1}^{n} a_i^2 \Var{X_i}+\Uunderbracket{\sum_{i\neq j}a_i a_j\Cov{X_i,X_j}}_{\binom{n}{2}\text{ terms}}=
+                  \sum_{i=1}^{n} a_i^2\Var{X_i}
+                  +\Uunderbracket{2\sum_{i<j}a_i a_j\Cov{X_i,X_j}}_{\binom{n}{2}\text{ terms}} \]
+        \item If $ X_1,\ldots,X_n $ are independent, then
+              \[ \Var[\bigg]{\sum_{i=1}^{n} a_i X_i}=\sum_{i=1}^{n} a_i^2\Var{X_i} \]
+    \end{enumerate}
+\end{Theorem}
+\begin{Example}{}{}
+    Suppose the joint p.f.\ of $ X $ and $ Y $ is
+    $ \displaystyle f(x,y)=\frac{\theta^{x+y}e^{-2\theta}}{x!y!} $,
+    where $ x\in\mathbb{Z}_{\geqslant 0} $ and $ y\in\mathbb{Z}_{\geqslant 0} $.
+
+    Find $ \Var{2X+3Y} $.
+
+    \textbf{Solution.}
+    \[ f(x,y)=\Uunderbracket{\left( \frac{\theta^x e^{-\theta}}{x!} \right)}_{g(x)}
+        \Uunderbracket{\left( \frac{\theta^y e^{-\theta}}{y!} \right)}_{h(y)} \]
+    Thus, the range of $ X $ does not depend on $ Y $. Therefore,
+    $ X $ and $ Y $ are independent. In other words, we can write
+    \[ f_1(x)=C \frac{\theta^x e^{-\theta}}{x!} \quad x\in\mathbb{Z}_{\geqslant 0}\]
+    Since $ \displaystyle \sum_{x=0}^{\infty} \frac{\theta^x e^{-\theta}}{x!} =1 $
+    as it is Poisson we get that $ C=1 $. Also,
+    \[ f_2(y)=\frac{\theta^y e^{-\theta}}{y!}\quad y\in\mathbb{Z}_{\geqslant 0} \]
+    Thus, $ \Var{X}=\theta $ and $ \Var{Y}=\theta $. Finally,
+    \[ \Var{2X+3Y}=4\Var{X}+9\Var{Y}=13\theta \]
+\end{Example}
+\begin{Example}{}{}
+    The joint p.d.f.\ of $ X $ and $ Y $ is
+    $ f(x,y)=\begin{cases}
+            x+y & x\in\interval{0}{1},y\in\interval{0}{1} \\
+            0   & \text{otherwise}
+        \end{cases} $.
+
+    Find $ \Var{X+Y} $.
+
+    \textbf{Solution.} We know $ \Var{X+Y}=\Var{X}+\Var{Y}+2\Cov{X,Y} $. Recall
+    that
+    \[ f_1(x)=\begin{dcases}
+            x+\frac{1}{2} & x\in\interval{0}{1} \\
+            0             & \text{otherwise}
+        \end{dcases}\quad
+        f_2(y)=\begin{dcases}
+            y+\frac{1}{2} & y\in\interval{0}{1} \\
+            0             & \text{otherwise}
+        \end{dcases} \]
+    \[ \E{X}=\int_{0}^{1} x\left( x+\frac{1}{2}  \right)\, d{x} =
+        \frac{7}{12} \]
+    \[ \E{X^2}=\int_{0}^{1} x^2\left( x+\frac{1}{2}  \right)\, d{x}=
+        \frac{5}{12} \]
+    \[ \implies\Var{X}=\E{X^2}-\mu_X^2=\frac{5}{12}-\left( \frac{7}{12} \right)^2=\frac{11}{144}  \]
+    We know that $ \E{Y}=7/12 $, $ \Var{Y}=11/144 $. Now,
+    \[ \E{XY}=
+        \int_{0}^{1} \int_{0}^{1} x y(x+y)\, d{y}\, d{x}=\frac{1}{3}  \]
+    \[ \implies \Cov{X,Y}=\E{XY}-\mu_X\mu_Y=
+        \frac{1}{3} -\left( \frac{7}{12}  \right)\left( \frac{7}{12}  \right)=
+        -\frac{1}{144}  \]
+    Hence,
+    \[ \Var{X+Y}=\Var{X}+\Var{Y}+2\Cov{X,Y}=
+        \frac{11}{144} +\frac{11}{144} -\frac{2}{144} =\frac{20}{144}=\frac{5}{36} \]
+\end{Example}
+\begin{Definition}{Correlation coefficient}{}
+    The \textbf{correlation coefficient} of $ X $ and $ Y $ is defined as
+    \[ \rho(X,Y)=\frac{\Cov{X,Y}}{\sqrt{\Var{X}}\sqrt{\Var{Y}}}  \]
+\end{Definition}
+\begin{Remark}{}{}
+    $ \rho(X,Y) $ can only be used to characterize \textbf{linear} association
+    between $ X $ and $ Y $. For example, there might be exist some quadratic
+    relationship between $ X $ and $ Y $ but $ \rho(X,Y)\to 0 $.
+\end{Remark}
+\begin{Example}{}{}
+    $ Y=X^2 $ and $ X \sim N(0,1) $. Note that $ \rho(X,Y)=0 $,
+    but obviously there is some relationship between $ X $ and $ Y $.
+\end{Example}
+\begin{Theorem}{}{}
+    $ -1\leqslant \rho(X,Y)\leqslant 1 $.
+    \begin{enumerate}[label=(\arabic*)]
+        \item $ \rho(X,Y)=1\implies Y=aX+b $ with $ a>0 $.
+        \item $ \rho(X,Y)=-1\implies Y=aX+b $ with $ a<0 $.
+    \end{enumerate}
+\end{Theorem}
+\begin{Example}{}{}
+    Let $ \displaystyle f(x,y)=\begin{cases}
+            x+y & x\in\interval{0}{1},y\in\interval{0}{1} \\
+            0   & \text{otherwise}
+        \end{cases} $.
+    Find $ \rho(X,Y) $.
+
+    \textbf{Solution.} Recall that $ \Var{X}=\Var{Y}=11/144 $
+    and $ \Cov{X,Y}=-1/144 $. So,
+    \[ \rho(X,Y)=\frac{-1/144}{\sqrt{11/144}\sqrt{11/144}} =-\frac{1}{11}  \]
+
+\end{Example}
