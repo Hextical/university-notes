@@ -1,0 +1,103 @@
+\makeheading{Lecture 10 | 2020-10-04}
+Recall that
+$ \displaystyle  f_2(y\mid x)=\begin{cases*}
+        \text{p.f.} & $X$ and $Y$ are joint discrete\\
+        \text{p.f.} & $X$ and $Y$ are joint continuous
+    \end{cases*} $
+
+Therefore, we can define expectation of expectation
+based on $ f_2(y\mid x) $.
+\begin{Definition}{Conditional expectation}{}
+    The \textbf{conditional expectation} of $ g(Y) $
+    given $ X=x $ is defined as
+    \[ \E{g(Y)\given X=x}=
+        \begin{dcases*}
+            \sum_{y}g(y)f_2(y\mid x)& $Y$ is discrete\\
+            \int_{-\infty}^{\infty} g(y)f_2(y\mid x)\, d{y} & $Y$ is continuous
+        \end{dcases*} \]
+\end{Definition}
+\begin{Remark}{}{}
+    \begin{itemize}
+        \item Supplementary notes: $ \E{g(Y)\given X=x} $
+              is denoted by $ \E{g(Y)\given x} $.
+    \end{itemize}
+    We're interested in
+    \begin{enumerate}
+        \item $ \E{Y\given X=x} $, $ g(Y)=Y $.
+        \item $ \Var{Y\given X=x}=\E{Y^2\given X=x}-\left( \E{Y\given X=x} \right)^2 $.
+        \item $ \E{e^{tY}\given X=x} $, that is, $ g(Y)=e^{tY} $.
+    \end{enumerate}
+\end{Remark}
+\begin{Theorem}{Independence}{}
+    If $ X $ and $ Y $ are independent, then
+    \[ \E{g(Y)\given X=x}=\E{g(Y)}\quad\text{ and }\quad\E{h(X)\given Y=y}=\E{h(X)} \]
+    In other words, the conditional expression becomes an unconditional one.
+\end{Theorem}
+\begin{Example}{}{}
+    If $ X $ and $ Y $ are independent, then
+    \[ \E{Y\given X=x}=\E{Y}\quad\text{ and }\quad \Var{Y\given X=x}=\Var{Y} \]
+    Also, $ \Var{Y\given X=x}=\E{Y^2\given X=x}-\left( \E{Y\given X=x} \right)^2=
+        \E{Y^2}-\left( \E{Y} \right)^2 $
+\end{Example}
+\begin{Theorem}{Substitution Rule}{}
+    Let $ h $ be a bivariate function, then
+    \[ \E{h(X,Y)\given X=x}=\E{h(x,Y)\given X=x} \]
+\end{Theorem}
+\begin{Example}{}{}
+    \begin{itemize}
+        \item $ \E{X+Y\given X=x}=\E{x+Y\given X=x}=x+\E{Y\given X=x} $
+        \item $ \E{XY\given X=x}=\E{xY\given X=x}=x\E{Y\given X=x} $
+    \end{itemize}
+\end{Example}
+\begin{Theorem}{}{}
+    The conditional expectation has all properties of expectation like
+    linearity.
+\end{Theorem}
+\begin{Example}{}{}
+    $ \displaystyle f(x,y)=\begin{cases}
+            8 x y & 0<y<x<1          \\
+            0     & \text{otherwise}
+        \end{cases} $
+    We've found that $ f_1(x\mid y)=(2x)/(1-y)^2 $ for $ 0<y<1 $ and $ y<x<1 $.
+    \[ \E{X\given Y=y}=\int_{-\infty}^{\infty} x f_1(x\mid y)\, d{x}=
+        \int_{y}^{1} (x) \frac{2x}{1-y^2}\, d{x}=\left( \frac{2}{3} \right)
+        \frac{1-y^3}{1-y^2}=\left( \frac{2}{3}  \right)
+        \frac{y^2+y+1}{y+1}   \]
+    \[ \E{X^2\given Y=y}=\int_{y}^{1} (x^2)
+        \frac{2x}{1-y^2} \, d{y}=\left( \frac{2}{4} \right)
+        \frac{1-y^4}{1-y^2}=\left( \frac{1}{2}  \right)(y^2+1)\quad 0<y<1 \]
+    \[ \Var{X\given Y=y}=\left( \frac{1}{2} \right) (1+y^2)-
+        \left( \frac{4}{9}  \right)\frac{(1+y+y^2)^2}{(1+y)^2}\quad 0<y<1  \]
+\end{Example}
+\begin{Example}{}{}
+    Suppose $ Y \sim \poi(\theta) $ and $ X\mid Y=y \sim \bin(y,p) $. Then,
+    \[ \E{X\given Y=y}=yp\quad\text{ and }\quad\Var{X\given Y=y}=yp(1-p) \]
+\end{Example}
+\begin{Remark}{}{}
+    Note that $ \E{g(Y)\given X}\neq \E{g(Y)\given X=x} $.
+    $ \E{g(Y)\given X} $ is a random variable because it's a function
+    of $ X $, denoted by $ h(X) $. It's value is given by $ h(x)=
+        \E{g(Y)\given X=x} $ for $ X=x $.
+
+    How to get it? Two steps.
+    \begin{itemize}
+        \item Step 1: Find $ \E{g(Y)\given X=x}=h(x) $
+        \item Step 2: Replace $ x $ by $ X $ to get the random variable $ \E{g(Y)\given X}=h(X) $.
+    \end{itemize}
+\end{Remark}
+\begin{Example}{}{}
+    Suppose $ Y \sim \poi(\theta) $ and $ X\mid Y=y \sim \bin(y,p) $. Then,
+    \[ \E{X\given Y=y}=yp\implies \E{X\mid Y}=Yp \]
+\end{Example}
+These concepts lead to the Double Expectation Theorem.
+\begin{Theorem}{Double Expectation}{double_expectation}
+    $ \E{g(Y)}=\E{\E{g(Y)\given X}} $.
+    In particular, $ \E{Y}=\E{\E{Y\given X}} $.
+\end{Theorem}
+\begin{Example}{}{}
+    Suppose $ Y \sim \poi(\theta) $ and $ X\mid Y=y \sim \bin(y,p) $. Find $ \E{X} $.
+
+    \textbf{Solution.} By~\Cref{thm:double_expectation} we have
+    \[ \E{X}=\E{\E{X\given Y}}=\E{Yp}=p\E{Y}=p\theta \]
+    Recall that we've shown that $ X \sim \poi(p\theta)\implies \E{X}=p\theta $.
+\end{Example}
