@@ -3,11 +3,11 @@
 \section{Decoding Strategy}
 Suppose we have an $ [n,M] $-code $ C $ over $ A $ of distance $ d $.
 We need to adopt a strategy for the channel decoder (henceforth called the decoder).
-When the decoder receives an $ n $-tuple $ \bm{r}\in A^n $ it must make some decision.
+When the decoder receives an $ n $-tuple $ \symbf{r}\in A^n $ it must make some decision.
 This decision may be one of
 \begin{enumerate}[label=(\roman*)]
-    \item no errors have occurred; accept $ \bm{r} $ as a codeword.
-    \item errors have occurred; correct $ \bm{r} $ to a codeword $ \bm{c} $;
+    \item no errors have occurred; accept $ \symbf{r} $ as a codeword.
+    \item errors have occurred; correct $ \symbf{r} $ to a codeword $ \symbf{c} $;
           e.g. $ 0 \rightarrow 0000,\,1 \rightarrow 1111,\,r=0001 $ corrected to
           $ 0000 $.
     \item errors have occurred; no correction is possible.
@@ -15,32 +15,32 @@ This decision may be one of
 
 \section{Nearest Neighbour Decoding}
 \subsection*{Incomplete Maximum Likelihood Decoding (IMLD)}
-Correct $ \bm{r} $ to the unique codeword $ \bm{c} $ for which
-$ d(\bm{r},\bm{c}) $ is smallest.
-If $ \bm{c} $ is not unique, reject $ \bm{r} $.
+Correct $ \symbf{r} $ to the unique codeword $ \symbf{c} $ for which
+$ d(\symbf{r},\symbf{c}) $ is smallest.
+If $ \symbf{c} $ is not unique, reject $ \symbf{r} $.
 \subsection*{Complete Maximum Likelihood Decoding (CMLD)}
 Same as IMLD, except ties are broken arbitrarily.
 
 \textbf{Question:} Is IMLD a reasonable strategy?
 
 \begin{Theorem}{}{}
-    IMLD selects the codeword $ \bm{c} $ that maximizes $ P(\bm{r}\mid \bm{c})$; that is,
-    it maximizes the probability $ \bm{r} $ is received, given $ \bm{c} $ was sent.
+    IMLD selects the codeword $ \symbf{c} $ that maximizes $ P(\symbf{r}\mid \symbf{c})$; that is,
+    it maximizes the probability $ \symbf{r} $ is received, given $ \symbf{c} $ was sent.
 \end{Theorem}
 
-We actually want to maximize $ P(\bm{c}\mid \bm{r}) $, but we will ignore that for now.
+We actually want to maximize $ P(\symbf{c}\mid \symbf{r}) $, but we will ignore that for now.
 
-\begin{proof}
-    Suppose $ \bm{c}_1,\bm{c}_2\in C $ with $ d(\bm{c}_1,\bm{r})=d_1 $
-    and $ d(\bm{c}_2,\bm{r})=d_2 $.
+\begin{Proof}{}{}
+    Suppose $ \symbf{c}_1,\symbf{c}_2\in C $ with $ d(\symbf{c}_1,\symbf{r})=d_1 $
+    and $ d(\symbf{c}_2,\symbf{r})=d_2 $.
     Suppose $ d_1>d_2 $. Now,
 
-    $ P(\bm{r}\mid \bm{c}_1)=(1-p)^{n-d_1}\left( \frac{p}{q-1} \right)^{d_1} $ and
-    $ P(\bm{r}\mid \bm{c}_2)=(1-p)^{n-d_2}\left( \frac{p}{q-1} \right)^{d_2} $.
+    $ P(\symbf{r}\mid \symbf{c}_1)=(1-p)^{n-d_1}\left( \frac{p}{q-1} \right)^{d_1} $ and
+    $ P(\symbf{r}\mid \symbf{c}_2)=(1-p)^{n-d_2}\left( \frac{p}{q-1} \right)^{d_2} $.
 
     Hence,
     \begin{align*}
-        \frac{P(\bm{r}\mid \bm{c}_1)}{P(\bm{r}\mid \bm{c}_2)}
+        \frac{P(\symbf{r}\mid \symbf{c}_1)}{P(\symbf{r}\mid \symbf{c}_2)}
          & =(1-p)^{d_2-d_1}\left( \frac{p}{q-1}  \right)^{d_1-d_2} \\
          & =\left[ \frac{p}{(1-p)(q-1)}  \right]^{d_1-d_2}
     \end{align*}
@@ -52,49 +52,49 @@ We actually want to maximize $ P(\bm{c}\mid \bm{r}) $, but we will ignore that f
          & \implies p < (1-p)(q-1)           \\
          & \implies \frac{p}{(1-p)(q-1)} < 1
     \end{align*}
-    Since $ d_1>d_2 $, we get $ \frac{P(\bm{r}\mid \bm{c}_1)}{P(\bm{r}\mid \bm{c}_2)} < 1 $, and so
-    $ P(\bm{r}\mid \bm{c}_1)<P(\bm{r}\mid \bm{c}_2) $.
-\end{proof}
-The ideal strategy is to correct $ \bm{r} $ to $ \bm{c}\in C $ such that
-$ P(\bm{c}\mid \bm{r}) $ is maximized. This is \textbf{Minimum Error Decoding (MED)}.
+    Since $ d_1>d_2 $, we get $ \frac{P(\symbf{r}\mid \symbf{c}_1)}{P(\symbf{r}\mid \symbf{c}_2)} < 1 $, and so
+    $ P(\symbf{r}\mid \symbf{c}_1)<P(\symbf{r}\mid \symbf{c}_2) $.
+\end{Proof}
+The ideal strategy is to correct $ \symbf{r} $ to $ \symbf{c}\in C $ such that
+$ P(\symbf{c}\mid \symbf{r}) $ is maximized. This is \textbf{Minimum Error Decoding (MED)}.
 
 
 \begin{Example}{IMLD $ \neq $ MED}{}
-    Let $ C=\set{\underbrace{000}_{\bm{c}_1},\underbrace{111}_{\bm{c}_2}},\,
-        P(\bm{c}_1)=0.1,\, P(\bm{c}_2)=0.9,\, p=\sfrac{1}{4} $, and $ \bm{r}=100 $.
+    Let $ C=\set{\underbrace{000}_{\symbf{c}_1},\underbrace{111}_{\symbf{c}_2}},\,
+        P(\symbf{c}_1)=0.1,\, P(\symbf{c}_2)=0.9,\, p=\sfrac{1}{4} $, and $ \symbf{r}=100 $.
 
-    \textbf{IMLD} $ \bm{r} $ is decoded to to $ \bm{c}_1 = 000 $.
+    \textbf{IMLD} $ \symbf{r} $ is decoded to to $ \symbf{c}_1 = 000 $.
 
     \textbf{MED}
     \begin{align*}
-        P(\bm{c}_1\mid \bm{r})
-         & =\frac{P(\bm{r}\mid \bm{c}_1)P(\bm{c}_1)}{P(\bm{r})} \\
-         & =\frac{p(1-p)^2(0.1)}{P(\bm{r})}                     \\
-         & =\frac{0.0140625}{P(\bm{r})}
+        P(\symbf{c}_1\mid \symbf{r})
+         & =\frac{P(\symbf{r}\mid \symbf{c}_1)P(\symbf{c}_1)}{P(\symbf{r})} \\
+         & =\frac{p(1-p)^2(0.1)}{P(\symbf{r})}                     \\
+         & =\frac{0.0140625}{P(\symbf{r})}
     \end{align*}
     \begin{align*}
-        P(\bm{c}_2\mid \bm{r})
-         & =\frac{P(\bm{r}\mid \bm{c}_2)P(\bm{c}_2)}{P(\bm{r})} \\
-         & =\frac{p^2(1-p)(0.9)}{P(\bm{r})}                     \\
-         & =\frac{0.0421875}{P(\bm{r})}
+        P(\symbf{c}_2\mid \symbf{r})
+         & =\frac{P(\symbf{r}\mid \symbf{c}_2)P(\symbf{c}_2)}{P(\symbf{r})} \\
+         & =\frac{p^2(1-p)(0.9)}{P(\symbf{r})}                     \\
+         & =\frac{0.0421875}{P(\symbf{r})}
     \end{align*}
-    Since $ P(\bm{c}_1\mid \bm{r})<P(\bm{c}_2\mid \bm{r}) $,
-    $ \bm{r} $ is decoded to $ \bm{c}_2=111 $.
+    Since $ P(\symbf{c}_1\mid \symbf{r})<P(\symbf{c}_2\mid \symbf{r}) $,
+    $ \symbf{r} $ is decoded to $ \symbf{c}_2=111 $.
 \end{Example}
 
 
 \textbf{Notes:}
 \begin{enumerate}[label=(\roman*)]
-    \item IMLD selects $ \bm{c} $ such that $ P(\bm{r}\mid \bm{c}) $ is maximum.
-    \item MED selects $ \bm{c} $ such that $ P(\bm{c}\mid \bm{r}) $ is maximum.
-    \item MED has a drawback that it requires knowledge of $ P(\bm{c}_i) $ for
+    \item IMLD selects $ \symbf{c} $ such that $ P(\symbf{r}\mid \symbf{c}) $ is maximum.
+    \item MED selects $ \symbf{c} $ such that $ P(\symbf{c}\mid \symbf{r}) $ is maximum.
+    \item MED has a drawback that it requires knowledge of $ P(\symbf{c}_i) $ for
           each $ i\in [1,M] $.
     \item Suppose source messages are equally likely, so
-          $ P(\bm{c}_i)=\frac{1}{M} $ for each $ i\in[1,M] $.
+          $ P(\symbf{c}_i)=\frac{1}{M} $ for each $ i\in[1,M] $.
           Then,
-          \[ P(\bm{r}\mid \bm{c}_i)=\frac{P(\bm{c}_i\mid \bm{r})P(\bm{r})}{P(\bm{c}_i)}
-              =P(\bm{c}_i\mid \bm{r}) \underbrace{M P(r)}_{\text{constant}}\]
-          So, maximizing $ P(\bm{r}\mid \bm{c}_i) $ is the same as maximizing
-          $ P(\bm{c}_i\mid \bm{r}) $. Thus, IMLD is the same as MED in this case.
+          \[ P(\symbf{r}\mid \symbf{c}_i)=\frac{P(\symbf{c}_i\mid \symbf{r})P(\symbf{r})}{P(\symbf{c}_i)}
+              =P(\symbf{c}_i\mid \symbf{r}) \underbrace{M P(r)}_{\text{constant}}\]
+          So, maximizing $ P(\symbf{r}\mid \symbf{c}_i) $ is the same as maximizing
+          $ P(\symbf{c}_i\mid \symbf{r}) $. Thus, IMLD is the same as MED in this case.
 \end{enumerate}
 In the remainder of the course, we will use IMLD/CMLD\@.

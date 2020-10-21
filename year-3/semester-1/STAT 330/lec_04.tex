@@ -1,6 +1,6 @@
 \makeheading{Lecture 4 | 2020-09-13}
 \begin{Example}{}{}
-    If $ X \sim \text{Gamma}(\alpha,\beta) $, prove that
+    If $ X \sim \gam{\alpha,\beta}$, prove that
     \[ \E{X^p}=\frac{\beta^p\Gamma(\alpha+p)}{\Gamma(\alpha)}  \]
     for $ p>-\alpha $.
 
@@ -18,7 +18,7 @@
     \underline{Method 1}: Rewrite the function as the p.d.f.\ of a gamma
     distribution.
     \[ =\int_{0}^{\infty} \frac{x^{p+\alpha-1}e^{-x/\beta}}{\Gamma(\alpha)\beta^\alpha} \, d{x}  \]
-    which is close to the p.d.f.\ of $ \text{Gamma}(p+\alpha,\beta) $.
+    which is close to the p.d.f.\ of $ \gam{p+\alpha,\beta}$.
     \[ =\int_{0}^{\infty} \frac{x^{p+\alpha-1}e^{-x/\beta}}{\Gamma(\alpha+p)\beta^{\alpha+p}}\times
         \Uunderbracket{\frac{\Gamma(\alpha+p)\beta^{\alpha+p}}{\Gamma(\alpha)\beta^\alpha}}_{\text{constant}}  \, d{x}=
         \frac{\Gamma(\alpha+p)\beta^p}{\Gamma(\alpha)}\times 1   \]
@@ -36,15 +36,13 @@
         \item $ \Var{X}=\E{X^2}-\mu^2=\alpha(\alpha+1)\beta^2-\alpha^2\beta^2=\alpha\beta^2 $
     \end{itemize}
 \end{Example}
-\setcounter{section}{9}
 \section{Moment Generating Functions}
 \begin{Definition}{Moment generating function}{}
     Suppose $ X $ is a random variable, then
     \[ M(t)=\E{e^{tX}} \]
-    \[ M(t)=\symsfup{E}[e^{tX}] \]
 
     is called the \textbf{moment generating function} (m.g.f.) of $ X $
-    if $ M(t) $ exists for $ \interval[open]{-h}{h} $ with some $ h>0 $.
+    if $ M(t) $ exists for $ t\in\interval[open]{-h}{h} $ with some $ h>0 $.
 \end{Definition}
 \begin{Remark}{}{}
     If we are able to find some $ h>0 $ such that for any
@@ -54,7 +52,8 @@
 \end{Remark}
 
 \begin{Example}{}{}
-    Suppose $ X \sim \text{Gamma}(\alpha,\beta) $. Find $ M(t) $.
+    Suppose $ X \sim \gam{\alpha,\beta}$.
+    Find $ M(t) $.
     Recall the p.d.f.\ is
     \[ f(x)=\begin{dcases}
             \frac{x^{\alpha-1}e^{-x/\beta}}{\Gamma(\alpha)\beta^\alpha} & x>0          \\
@@ -88,7 +87,7 @@
 \end{Example}
 
 \begin{Example}{}{}
-    If $ X \sim \poi(\theta) $, the p.f.\ is given by
+    If $ X \sim \poi{\theta} $, the p.f.\ is given by
     $ f(x)=\dfrac{\theta^x e^{-\theta}}{x!} $
     for $ x=0,1,2,\ldots $. Find $ M(t) $.
 
@@ -174,7 +173,7 @@ Three important properties of $ M(t) $.
 \end{Proof}
 
 \begin{Example}{}{}
-    $ \text{Gamma}(\alpha,\beta) $ has m.g.f.\
+    $ \gam{\alpha,\beta}$ has m.g.f.\
     $ \displaystyle  M(t)=(1-\beta t)^{-\alpha} $
     for $ t<1/\beta $. What is $ \E{X} $ and $ \Var{X} $?
 
@@ -191,7 +190,7 @@ Three important properties of $ M(t) $.
 \end{Example}
 
 \begin{Example}{}{}
-    The m.g.f.\ of $ \poi(\theta) $ is $ \displaystyle  M(t)=\exp\left\{ \theta(e^t-1)\right\} $.
+    The m.g.f.\ of $ \poi{\theta} $ is $ \displaystyle  M(t)=\exp\left\{ \theta(e^t-1)\right\} $.
     Find $ \E{X} $ and $ \Var{X} $.
 
     \textbf{Solution.}
@@ -215,7 +214,7 @@ Three important properties of $ M(t) $.
     $ M_X(t) = M_Y(t) $ for all $ t\in\interval[open]{-h}{h} $
     for some $ h>0 $ if and only if $ X $ and $ Y $ have the same distribution;
     that is,
-    \[ P(X\leqslant s)=F_X(s)=F_Y(s)=P(Y\leqslant s) \]
+    \[ \Prob{X\leqslant s}=F_X(s)=F_Y(s)=\Prob{Y\leqslant s} \]
     for all $ s\in\mathbb{R} $.
 \end{Theorem}
 

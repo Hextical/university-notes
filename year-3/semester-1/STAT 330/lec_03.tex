@@ -58,7 +58,7 @@ syllabus is usually labelled with a dagger ($ \dagger $).
             0                                                           & x\leqslant 0
         \end{dcases}
     \]
-    when $ \alpha>0 $ and $ \beta>0 $. We say that $ X \sim \text{Gamma}(\alpha,\beta) $.
+    when $ \alpha>0 $ and $ \beta>0 $. We say that $ X \sim \gam{\alpha,\beta} $.
 
     We also say that $ \alpha $ is the scale parameter and $ \beta $ is the shape parameter
     for this distribution.
@@ -83,7 +83,7 @@ syllabus is usually labelled with a dagger ($ \dagger $).
             0                                                                        & x\leqslant 0
         \end{dcases} \]
     with $ \alpha>0 $ and $ \beta>0 $.
-    Then, $ X \sim \text{Weibull}(\theta,\beta) $.
+    Then, $ X \sim \weib{\theta,\beta} $.
     Verify that $ f(x) $ is a p.d.f.
 
     \textbf{Solution.} $ f(x)\geqslant 0 $ for every $ x\in\mathbb{R} $. Now,
@@ -127,7 +127,6 @@ syllabus is usually labelled with a dagger ($ \dagger $).
         \int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{z^2}{2} \right\} \, d{z}=1   \]
     using Case 1.
 \end{Example}
-\setcounter{section}{6}
 \section{Expectation}
 \begin{Definition}{Expectation of discrete random variable}{}
     Suppose $ X $ is a discrete random variable with support
@@ -186,12 +185,12 @@ syllabus is usually labelled with a dagger ($ \dagger $).
 \end{Example}
 
 \begin{Example}{Bernoulli and Binomial Random Variable}{}
-    Suppose $ X \sim \text{Bernoulli}(p) $.
-    \[ P(X=1)=p\text{ and }P(X=0)=1-p \]
-    We know $ \E{X}=(1)P(X=1)+(0)P(X=0)=p $
+    Suppose $ X \sim \bern{p} $.
+    \[ \Prob{X=1}=p\quad\text{ and }\quad \Prob{X=0}=1-p \]
+    We know $ \E{X}=(1)\Prob{X=1}+(0)\Prob{X=0}=p $
 
     Now suppose
-    $ X \sim \bin(n,p) $. Find $ \E{X} $.
+    $ X \sim \bin{n,p} $. Find $ \E{X} $.
 
     \textbf{Solution.}
     \[ \E{X}=\sum\limits_{x\in A}x f(x)=\sum\limits_{x=0}^{n} x
@@ -262,17 +261,10 @@ syllabus is usually labelled with a dagger ($ \dagger $).
 \end{Definition}
 \begin{Definition}{Special Expectations}{}
     \begin{enumerate}[label=(\Roman*)]
-        \item The mean of a random variable
-              \[ \E{X}=\mu \]
         \item The $ k $th moment (about the origin) of a random variable
               \[ \E{X^k} \]
         \item The $ k $th moment about the mean of a random variable
               \[ \E{(X-\mu)^k} \]
-        \item $ \dagger $~The $ k $th factorial of a random variable
-              \[ \E{X^{(k)}}=\E{X(X-1)\cdots(X-k+1)} \]
-        \item The variance of a random variable
-              \[ \Var{X}=\E{(X-\mu)^2}=\sigma^2 \]
-              where $ \mu=\E{X} $.
     \end{enumerate}
 \end{Definition}
 \begin{Theorem}{Properties of Variance}{prop_var}
@@ -287,12 +279,11 @@ syllabus is usually labelled with a dagger ($ \dagger $).
 \end{Proof}
 
 \begin{Example}{}{}
-    Suppose $ X \sim \poi(\theta) $, the p.f.\ is defined as
+    Suppose $ X \sim \poi{\theta} $, the p.f.\ is defined as
     $ f(x)=\dfrac{\theta^x}{x!} e^{-\theta} $
     for $ x=0,1,2,\ldots $. Find $ \E{X} $ and $ \Var{X} $.
 
-    \textbf{Solution.}
-    \[ \sum\limits_{x=0}^{\infty} \abs{x}f(x)<\infty \]
+    \textbf{Solution.} The support is non-negative, so $ \abs{x}=x $.
     Therefore,
     \[ \E{X}=\sum\limits_{x=0}^{\infty} x \frac{\theta^x}{x!} e^{-\theta}
         =\sum\limits_{x=1}^{\infty} \frac{x}{x!} \theta^x e^{-\theta}

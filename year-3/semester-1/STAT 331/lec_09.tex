@@ -5,15 +5,15 @@ response variable?
 
 Variability in response can be measured by
 ``total sum of squares:''
-\[ \Ss{Total} =
+\[ \SS{Total} =
     \sum\limits_{i=1}^{n} (y_i-\bar{y})^2 \]
 as seen in HW1, it's closely related to
 sample variance of $ y_1,\ldots,y_n $,
-which is $ \Ss{Total}/(n-1) $.
+which is $ \SS{Total}/(n-1) $.
 
-ANOVA decomposes $ \Ss{Total}=\Ss{Reg}+\Ss{Res} $
-where $ \Ss{Reg} $ is the regression sum of squares
-and $ \Ss{Res} $ is the residual sum of squares.
+ANOVA decomposes $ \SS{Total}=\SS{Reg}+\SS{Res} $
+where $ \SS{Reg} $ is the regression sum of squares
+and $ \SS{Res} $ is the residual sum of squares.
 
 The regression sum of squares is variation explained by
 the model
@@ -27,9 +27,9 @@ the observations $ y_i $ tend to be much closer to $ \hat{\mu}_i $.
 Note that $ \bar{y} $ is line a regression line with $ \beta_1=0 $.
 
 Mathematically,
-\[ \Uunderbracket{\sum\limits_{i=1}^{n} (y_i-\bar{y})^2}_{\Ss{Total}}
-    =\Uunderbracket{\sum\limits_{i=1}^{n} (\hat{\mu}_i-\bar{y})^2}_{\Ss{Reg}}+
-    \Uunderbracket{\sum\limits_{i=1}^{n} (y_i-\hat{\mu}_i)^2}_{\Ss{Res}} \]
+\[ \Uunderbracket{\sum\limits_{i=1}^{n} (y_i-\bar{y})^2}_{\SS{Total}}
+    =\Uunderbracket{\sum\limits_{i=1}^{n} (\hat{\mu}_i-\bar{y})^2}_{\SS{Reg}}+
+    \Uunderbracket{\sum\limits_{i=1}^{n} (y_i-\hat{\mu}_i)^2}_{\SS{Res}} \]
 since we showed that $ \sum\limits_{i=1}^{n}(\hat{\mu}_i-\bar{y})
     \Uunderbracket{(y_i-\hat{\mu}_i)}_{e_i}=0 $ in HW1 for SLR\@.
 It's also true for MLR since
@@ -41,29 +41,29 @@ and $ \hat{\symbf{\mu}}=X\hat{\symbf{\beta}} $ is in $ \Span{X} $,
 so $ \symbf{e} $ is orthogonal to $ \Span{X} $,
 so $ \hat{\symbf{\mu}}^\top\symbf{e}=0 $.
 
-\begin{table}[H]
+\begin{table}[ht]
     \centering
     \caption{ANOVA Table}
-    \begin{tabu} to 1\textwidth {Y[0.5]YYY[2]Y}
+    \begin{tabularx}{\linewidth}{@{}>{\hsize=0.5\hsize}Y>{\hsize=0.5\hsize}YYYY@{}}
         \toprule
         Source     & d.f.      & $ SS $         & Mean Square                         & $ F $                 \\
         \midrule
-        Regression & $ p $     & $ \Ss{Reg} $   & $ \Ss{Reg}/p $                      & $ \Ms{Reg}/\Ms{Res} $ \\
-        Residual   & $ n-p-1 $ & $ \Ss{Res} $   & $ \Ss{Res}/(n-p-1)=\hat{\sigma}^2 $                         \\
+        Regression & $ p $     & $ \SS{Reg} $   & $ \SS{Reg}/p $                      & $ \MS{Reg}/\MS{Res} $ \\
+        Residual   & $ n-p-1 $ & $ \SS{Res} $   & $ \SS{Res}/(n-p-1)=\hat{\sigma}^2 $                         \\
         \midrule
-        Total      & $ n-1 $   & $ \Ss{Total} $                                                               \\
+        Total      & $ n-1 $   & $ \SS{Total} $                                                               \\
         \bottomrule
-    \end{tabu}
+    \end{tabularx}
 \end{table}
 $ F $ is used to test the overall significance of regression (later).
 
 We call the \textbf{coefficient of determination}
-$ R^2 = \Ss{Reg}/\Ss{Total}=1-\Ss{Res}/\Ss{Total} $.
+$ R^2 = \SS{Reg}/\SS{Total}=1-\SS{Res}/\SS{Total} $.
 clearly, $ 0\leqslant R^2\leqslant 1 $. It is the proportion
 of variation (in our response variable) that is explained
 by the regression model. Larger $ R^2 $ means
 the fitted values are closer to the observations $ y_i $,
-which means the residuals are small; that is, smaller $ \Ss{Res} $.
+which means the residuals are small; that is, smaller $ \SS{Res} $.
 Note that (HW1) in SLR, $ R^2 $ is equivalent to the square of
 the sample correlation between $ x $ and $ y $
 based on $ (x_1,y_1),\ldots,(x_n,y_n) $.
@@ -71,7 +71,7 @@ based on $ (x_1,y_1),\ldots,(x_n,y_n) $.
 \begin{table}[H]
     \centering
     \caption{Rocket ANOVA Table}
-    \begin{tabu} to 0.9\textwidth {Y[0.5]YYY[2]Y}
+    \begin{tabularx}{\linewidth}{@{}YYYYY@{}}
         \toprule
         Source     & d.f.   & $ SS $     & Mean Square & $ F $  \\
         \midrule
@@ -80,7 +80,7 @@ based on $ (x_1,y_1),\ldots,(x_n,y_n) $.
         \midrule
         Total      & $ 11 $ & $ 909.62 $                        \\
         \bottomrule
-    \end{tabu}
+    \end{tabularx}
 \end{table}
 Response thrust
 $ R^2=846.2/909.62 \approx 0.93 $. $ R^2 $

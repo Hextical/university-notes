@@ -1,30 +1,11 @@
-
-% -----------------------------------------------------------------------------
-
-% Class
-\documentclass[oneside]{book}
-% Must load first
-\usepackage{xcolor}
-
-% -----------------------------------------------------------------------------
-
-% Fonts
-\usepackage{fontspec}
-\setmainfont{XCharter}
-\usepackage{anyfontsize}
-\usepackage{microtype}
-\usepackage[math-style=ISO,bold-style=ISO]{unicode-math}
-\usepackage{tabu}
-
 % -----------------------------------------------------------------------------
 
 % CS 246
 \usepackage{float}
-\usepackage{soulutf8}
 \usepackage{listings}
 
 \definecolor{light-gray}{gray}{0.95}
-\newcommand{\code}[1]{\sethlcolor{light-gray}\hl{\texttt{#1}}}
+\newcommand{\code}[1]{\texttt{#1}}
 
 % -----------------------------------------------------------------------------
 
@@ -34,11 +15,8 @@
 % -----------------------------------------------------------------------------
 
 % Core Packages
-\usepackage{amsmath, amsthm}
-\usepackage{bm}
 \usepackage{xfrac}
 \usepackage[margin=1in]{geometry}
-\usepackage{array}
 \usepackage[unicode]{hyperref}
 \usepackage{enumitem}
 \usepackage[parfill]{parskip}
@@ -46,7 +24,6 @@
 \usepackage{graphicx}
 \usepackage[ruled,linesnumbered,vlined,dotocloa]{algorithm2e}
 \usepackage[delims=\lbrack\rbrack]{spalign}
-\usepackage{dsfont}
 \usepackage{mathtools}
 \usepackage{cleveref}
 \usepackage{pdfpages}
@@ -75,15 +52,6 @@
 \graphicspath{ {./figures/} }
 
 \DeclareMathOperator{\rank}{rank}
-\DeclareMathOperator{\du}{\mathcal{U}}
-\DeclareMathOperator{\uniform}{\mathcal{U}}
-\DeclareMathOperator{\bin}{Binomial}
-\DeclareMathOperator{\hyp}{Hyp}
-\DeclareMathOperator{\nb}{NB}
-\DeclareMathOperator{\geo}{Geometric}
-\DeclareMathOperator{\poi}{Poisson}
-\DeclareMathOperator{\exponential}{Exponential}
-\DeclareMathOperator{\mult}{Multinomial}
 \DeclareMathOperator{\slack}{slack}
 \DeclareMathOperator{\row}{row}
 \DeclareMathOperator{\cone}{cone}
@@ -92,22 +60,43 @@
 \DeclareMathOperator{\ord}{ord}
 \DeclareMathOperator{\lcm}{lcm}
 
-% Statistics
+\usepackage{etoolbox}
+
+% Functions
 \providecommand\given{} % just to make sure it exists
-\DeclarePairedDelimiterXPP{\E}[1]{\symsfup{E}}[]{}{
+\DeclarePairedDelimiterXPP{\E}[1]{\mathbb{E}}[]{}{
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
     #1}
-\DeclarePairedDelimiterXPP{\fn}[1]{f}(){}{
+\DeclarePairedDelimiterXPP{\Var}[1]{\mathbb{V}}(){}{
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
     #1}
-\DeclarePairedDelimiterXPP{\Var}[1]{\symsfup{Var}}(){}{
+\DeclarePairedDelimiterXPP\Prob[1]{\mathbb{P}}(){}{
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
+    \ifblank{#1}{\:\cdot\:}
     #1}
 \DeclarePairedDelimiterXPP{\Corr}[1]{\symsfup{Corr}}(){}{#1}
 \DeclarePairedDelimiterXPP{\Cov}[1]{\symsfup{Cov}}(){}{#1}
 \DeclarePairedDelimiterXPP{\Sd}[1]{\symsfup{Sd}}(){}{#1}
 \DeclarePairedDelimiterXPP{\Se}[1]{\symsfup{Se}}(){}{#1}
-\DeclarePairedDelimiterXPP{\Ss}[1]{\symsfup{Ss}}(){}{#1}
+\let\SS=\relax
+\DeclarePairedDelimiterXPP{\SS}[1]{\text{SS}}(){}{\text{#1}}
+\DeclarePairedDelimiterXPP{\MS}[1]{\text{MS}}(){}{\text{#1}}
+\DeclarePairedDelimiterXPP{\Span}[1]{\text{Span}}(){}{#1}
+\DeclareMathOperator{\VIF}{VIF}
+
+% Distributions
+\DeclarePairedDelimiterXPP{\uniform}[1]{\text{Uniform}}[]{}{#1}
+\DeclarePairedDelimiterXPP{\hyp}[1]{\text{Hypergeometric}}(){}{#1}
+\DeclarePairedDelimiterXPP{\bern}[1]{\text{Bernoulli}}(){}{#1}
+\DeclarePairedDelimiterXPP{\bin}[1]{\text{Binomial}}(){}{#1}
+\DeclarePairedDelimiterXPP{\nb}[1]{\text{Negative Binomial}}(){}{#1}
+\DeclarePairedDelimiterXPP{\geo}[1]{\text{Geometric}}(){}{#1}
+\DeclarePairedDelimiterXPP{\poi}[1]{\text{Poisson}}(){}{#1}
+\DeclarePairedDelimiterXPP{\mult}[1]{\text{Multinomial}}(){}{#1}
+\DeclarePairedDelimiterXPP{\gam}[1]{\text{Gamma}}(){}{#1}
+\DeclarePairedDelimiterXPP{\weib}[1]{\text{Weibull}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Mvn}[1]{\text{MVN}}(){}{#1}
+\DeclarePairedDelimiterXPP{\exponential}[1]{\text{Exponential}}(){}{#1}
 
 % -----------------------------------------------------------------------------
 
@@ -115,60 +104,6 @@
 \author{Cameron Roopnarine}
 \date{Last updated: \today}
 \hypersetup{colorlinks, linkcolor=[rgb]{0,0.5,1}}
-
-% -----------------------------------------------------------------------------
-
-% Definitions
-\definecolor{myyellow}{RGB}{255,255,168}
-\newtcolorbox{defbox}[1][]{
-    colback=myyellow,
-    boxrule=0pt,
-    sharp corners,
-    #1
-}
-
-% Theorems
-\definecolor{mypurple}{RGB}{216,216,255}
-\newtcolorbox{thmbox}[1][]{
-    colback=mypurple,
-    boxrule=0pt,
-    sharp corners,
-    #1
-}
-
-% Algorithms
-\definecolor{mygray}{RGB}{232,232,232}
-\newtcolorbox{algbox}[1][]{
-    colback=mygray,
-    boxrule=0pt,
-    sharp corners,
-    #1
-}
-
-% Examples
-\definecolor{mygreen}{RGB}{216,255,216}
-\newtcolorbox{exbox}[1][]{
-    breakable,
-    colback=mygreen,
-    boxrule=0pt,
-    sharp corners,
-    #1
-}
-
-\definecolor{myred}{RGB}{255,216,216}
-
-% -----------------------------------------------------------------------------
-
-% Amsthm
-\theoremstyle{plain}
-\newtheorem{theorem}{THEOREM}[section] % reset theorem numbering for each chapter
-\newtheorem{corollary}[theorem]{COROLLARY} % reset theorem numbering for each chapter
-\newtheorem{lemma}[theorem]{LEMMA} % reset theorem numbering for each chapter
-\newtheorem{prop}[theorem]{PROPOSITION} % reset theorem numbering for each chapter
-\theoremstyle{definition}
-\newtheorem{definition}[theorem]{DEFINITION} % definition numbers are dependent on theorem numbers
-\newtheorem{example}[theorem]{EXAMPLE} % definition numbers are dependent on theorem numbers
-\newtheorem{remark}[theorem]{REMARK}
 
 % -----------------------------------------------------------------------------
 
@@ -186,6 +121,19 @@
 
 % -----------------------------------------------------------------------------
 
+% Definitions
+\definecolor{myyellow}{RGB}{255,255,168}
+% Theorems
+\definecolor{mypurple}{RGB}{216,216,255}
+% Algorithms
+\definecolor{mygray}{RGB}{232,232,232}
+% Examples
+\definecolor{mygreen}{RGB}{216,255,216}
+% Exercises
+\definecolor{myred}{RGB}{255,216,216}
+% Remarks
+\definecolor{mycyan}{RGB}{204,229,229}
+
 \tcbset{
     common/.style={
             fonttitle=\bfseries,
@@ -200,7 +148,7 @@
         },
 }
 
-\definecolor{mycyan}{RGB}{204,229,229}
+
 \newtcbtheorem[number within=section, crefname={definition}{definitions}]
 {Definition}{DEFINITION}{
     common,
@@ -261,3 +209,8 @@
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}
 \DeclarePairedDelimiter\set{\{}{\}}
+
+\AtBeginDocument{%
+    \let\mathbb\relax
+    \DeclareMathAlphabet{\mathbb}{U}{msb}{m}{n}%
+}

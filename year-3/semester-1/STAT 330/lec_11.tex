@@ -1,0 +1,173 @@
+\makeheading{Lecture 11 | 2020-10-18}
+Last lecture:
+\begin{itemize}
+    \item Conditional expectation: $ \E{g(Y)\given X=x} $
+    \item Properties:
+          \begin{enumerate}[label=(\arabic*)]
+              \item Independence
+              \item Substitution rule
+              \item Linearity
+          \end{enumerate}
+    \item Definition of $ \E{g(Y)\given X} $
+          \begin{itemize}
+              \item a random variable and function of $ X $, denoted as $ h(X) $
+              \item two step method to find $ h(X) $
+          \end{itemize}
+    \item Double expectation theorem: $ \E{g(Y)}=\E{\E{g(Y)\given X}} $
+\end{itemize}
+\begin{Theorem}{}{}
+    \[ \Var{Y}=\E{\Var{Y\given X}}+\Var{\E{Y\given X}} \]
+\end{Theorem}
+\begin{Remark}{}{}
+    $ \Var{Y\given X} $ is a random variable and function of $ X $.
+\end{Remark}
+Two steps:
+\begin{enumerate}
+    \item $ \Var{Y\given X=x}=\E{Y^2\given X=x}-(\E{Y\given X=x})^2 $
+    \item replace $ x $ with $ X $ to get $ \Var{Y\given X} $
+\end{enumerate}
+\begin{Example}{}{}
+    $ Y \sim \poi{\theta} $, $ X\mid Y=y \sim \bin{y,p} $. Find
+    $ \Var{X} $.
+
+    \textbf{Solution.} We know that $ X \sim \poi{p\theta} $,
+    then $ \Var{X}=p\theta $. But we can alternatively
+    use the Double Expectation Theorem.
+    \[ \Var{X}=\E{\Var{X\given Y}}+\Var{\E{X\given Y}} \]
+    To find $ \Var{X\given Y} $,
+    \[ \Var{X\given Y=y}=yp(1-p)\implies \Var{X\given Y}=Yp(1-p) \]
+    To find $ \E{X\given Y} $,
+    \[ \E{X\given Y=y}=yp\implies \E{X\given Y}=Yp \]
+    Therefore,
+    \[ \Var{X}=\E{Yp(1-p)}+\Var{pY}=p(1-p)\E{Y}+p^2\Var{Y}=
+        p(1-p)\theta+p^2\theta=p\theta \]
+\end{Example}
+\begin{Example}{}{}
+    Suppose $ X \sim \uniform{0,1} $ and
+    $ Y\mid X=x \sim \bin{10,x} $. Find $ \E{Y} $
+    and $ \Var{Y} $.
+    \[ \E{Y}=\E{\E{Y\given X}} \]
+    Two steps to find $ \E{Y\given X} $.
+    \[ \E{Y\given X=x}=10x\implies \E{Y\given X}=10X \]
+    \[ \E{Y}=\E{10X}=10\E{X}=10\left( \frac{1+0}{2} \right)=5 \]
+    \[ \Var{Y}=\E{\Var{Y\given X}}=\Var{\E{Y\given X}} \]
+    Two steps to find $ \Var{Y\given X} $.
+    \[ \Var{Y\given X=x}=10x(1-p)\implies\Var{Y\given X}=10X(1-X) \]
+    \begin{align*}
+        \Var{Y}
+         & =\E{10X(1-X)}+\Var{10X}                                                 \\
+         & =10\E{X}-10\E{X^2}+100\Var{X}                                           \\
+         & =10\left( \frac{1+0}{2} \right)-
+        10\left[ \Var{X}+(\E{X})^2 \right]+100\Var{X}                              \\
+         & =5-10\left[ \frac{(0-1)^2}{12}+\left( \frac{1+0}{2} \right)^2  \right]+
+        100\left[ \frac{(0-1)^2}{12} \right]                                       \\
+         & =5-10\left( \frac{1}{12} +\frac{1}{4}  \right)+
+        100\left( \frac{1}{12} \right)                                             \\
+         & =5-10\left( \frac{1}{3} \right)+\frac{100}{12}                          \\
+         & =10
+    \end{align*}
+\end{Example}
+\begin{Example}{}{}
+    Suppose $ Y \sim \poi{\theta} $ and $ X\mid Y=y \sim \bin{y,p} $.
+    Find the m.g.f.\ of $ X $ using the Double Expectation Theorem.
+        [We \emph{could} use the formula sheet to find $ M_X(t) $
+            since we already know $ X \sim \poi{p\theta} $]
+
+    \textbf{Solution.} By definition, the m.g.f.\ of $ X $ is
+    \[ M_X(t)=\E*{e^{tX}}=\E*{\E*{e^{tX}\given Y}} \]
+    Given $ Y=y $,
+    \begin{align*}
+        \E*{e^{tX}\given Y=y}
+         & =\sum_{x=0}^{y} e^{tx}\binom{y}{x}p^x(1-p)^{y-x} \\
+         & =\sum_{x=0}^{y}\binom{y}{x}(pe^t)^x(1-p)^{y-x}   \\
+         & =(1-p+pe^t)^y
+    \end{align*}
+    Therefore, $ \E*{e^{tX}\given Y}=(1-p+pe^t)^Y $. Therefore,
+    \begin{align*}
+        M_X(t)
+         & =\E*{(1-p+pe^t)^Y}                                                           \\
+         & =\sum_{y=0}^{\infty} (1-p+pe^t)^y \frac{\theta^y e^{-\theta}}{y!}            \\
+         & =e^{-\theta}\sum_{y=0}^{\infty} \frac{\left[ \theta(1-p+pe^t) \right]^y}{y!} \\
+         & =e^{-\theta}\exp\left\{ \theta(1-p+pe^t)\right\}                             \\
+         & =\exp\left\{ \theta p(e^t-1)\right\}
+    \end{align*}
+    Actually, this is the m.g.f.\ of $ \poi{\theta p} $.
+\end{Example}
+
+\section{Joint Moment Generating Functions}
+\begin{Definition}{Joint moment generating function}{}
+    If $ X $ and $ Y $ are two random variables, then
+    \[ M(t_1,t_2)=\E{e^{t_1X+t_2Y}} \]
+    is called the \textbf{joint moment generating function}
+    of $ X $ and $ Y $ if $ M(t_1,t_2) $ exists for
+    $ \abs{t_1}<h_1 $ and $ \abs{t_2}<h_2 $
+    for some $ h_1>0 $, $ h_2>0 $.
+\end{Definition}
+\begin{Remark}{}{}
+    In general, suppose $ X_1,\ldots,X_n $ are random variables,
+    then
+    \[ M(t_1,\ldots,t_n)=\E*{\exp\left\{ \sum_{i=1}^{n} t_i X_i\right\}} \]
+    is the \textbf{joint moment generating function}
+    if it exists for $ \abs{t_i}<h_i $ for $ i=1,\ldots,n $.
+\end{Remark}
+\begin{Remark}{Applications of Joint Moment Generating Functions}{}
+    \begin{enumerate}[label=(\arabic*)]
+        \item From joint m.g.f.\ to marginal m.g.f.\
+              Given $ M(t_1,t_2) $ for $ \abs{t_1}<h_1 $
+              and $ \abs{t_2}<h_2 $,
+              \[ M_X(t_1)=M(t_1,t_2=0)=\E{e^{t_1X}}\quad \abs{t_1}<h_1 \]
+              \[ M_Y(t_2)=M(0,t_2)=\E{e^{t_2Y}}\quad \abs{t_2}<h_2 \]
+        \item Independence Property. $ X $ and
+              $ Y $ are independent if and only if
+              \[ M(t_1,t_2)=M_X(t_1)M_Y(t_2) \]
+              More generally, if $ X_1,\ldots,X_n $ are
+              independent, then
+              \[ M(t_1,\ldots,t_n)=\prod_{i=1}^n M_{X_i}(t_i) \]
+    \end{enumerate}
+\end{Remark}
+\begin{Example}{}{}
+    Suppose $ f(x,y)=e^{-y} $ for $ 0<x<y $ is the joint p.d.f.\
+    of $ (X,Y) $. Find the joint m.g.f.\ of $ X $ and $ Y $.
+    Are they independent? Find the marginal p.d.f.\ of $ X $ and $ Y $.
+
+    \textbf{Solution.}
+    \begin{align*}
+        M(t_1,t_2)
+         & =\E{e^{t_1X+t_2Y}}                                                  \\
+         & =\int_{0}^{\infty}
+        \biggl[\int_{0}^{y} e^{t_1 x+ t_2 y}e^{-y}\, d{x} \biggr]\, d{y}       \\
+         & =\int_{0}^{\infty} e^{(t_2-1)y}
+        \left[ \frac{1}{t_1} e^{t_1 x} \right]_0^y \, d{y}                     \\
+         & =\frac{1}{t_1} \int_{0}^{\infty} e^{(t_2-1)y}(e^{t_1 y}-1)\, d{y}   \\
+         & =\frac{1}{t_1} \int_{0}^{\infty}
+        e^{(t_1+t_2-1)y}-e^{(t_2-1)y}\, d{y}                                   \\
+         & =\frac{1}{t_1} \left( \frac{1}{1-t_1-t_2} -\frac{1}{1-t_2}  \right) \\
+         & =\frac{1}{(1-t_1-t_2)(1-t_2)}
+    \end{align*}
+    with $ t_2-1<0 $ and $ t_1+t_2-1<0 $. Therefore,
+    $ t_2<1 $ and $ t_1+t_2<1 $.
+    \[ M_X(t_1)=M(t_1,t_2=0)=\frac{1}{1-t_1} \]
+    which is the m.g.f.\ of $ \exponential{1} $.
+    \[ M_Y(t_2)=M(t_1=0,t_2)=\frac{1}{(1-t_2)^2} \]
+    which is the m.g.f.\ of $ \gam{\alpha=2,\beta=1} $.
+    Note that the joint support is a triangle (not a rectangle),
+    so obviously $ M(t_1,t_2)\neq M_X(t_1)M_Y(t_2) $. Thus,
+    $ X $ and $ Y $ are not independent.
+\end{Example}
+\begin{Example}{Additivity of Poisson Random Variables}{}
+    Suppose $ X \sim \poi{\theta_1} $ and $ Y \sim \poi{\theta_2} $
+    with $ X $ and $ Y $ independent. Prove
+    that $ X+Y \sim \poi{\theta_1+\theta_2} $.
+
+    \textbf{Solution.} We can try to find the p.d.f. of $ X+Y $
+    (direct method). Alternatively, find $ M_{X+Y}(t) $.
+    \begin{align*}
+        M_{X+Y}(t)
+         & =\E{e^{tX+tY}}                                                                                                   \\
+         & =\E{e^{tX}e^{tY}}                                                       & \quad & \text{$X$ and $Y$ independent} \\
+         & =\E{e^{tX}}\E{e^{tY}}                                                                                            \\
+         & =\exp\left\{ \theta_1(e^t-1)\right\}\exp\left\{ \theta_2(e^t-1)\right\}                                          \\
+         & =\exp\left\{ (\theta_1+\theta_2)(e^t-1)\right\}
+    \end{align*}
+    which is the m.g.f.\ of $ \poi{\theta_1+\theta_2} $.
+\end{Example}

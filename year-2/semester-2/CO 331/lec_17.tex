@@ -1,87 +1,86 @@
 \makeheading{2020-02-12}
-\begin{algbox}
-    \begin{algorithm}[H]
-        \DontPrintSemicolon{}
-        \caption{Decoding Algorithm for $ C_{24} $}
-        \SetKwInOut{Input}{Input}
-        \SetKwInOut{Output}{Output}
+\newpage
+\begin{algorithm}[ht]
+    \DontPrintSemicolon{}
+    \caption{Decoding Algorithm for $ C_{24} $}
+    \SetKwInOut{Input}{Input}
+    \SetKwInOut{Output}{Output}
 
-        \Input{$ G=\spalignaugmat{I_{12} B}=(\bm{g}_1,\ldots ,\bm{g}_{24})^\top $,
-            and $ \tilde{G}=\spalignaugmat{B I_{12}}=(\tilde{\bm{g}}_1,\ldots, \tilde{\bm{g}}_{24})^\top $,
-            and received vector $ \bm{r}=(\bm{x},\bm{y}) $}
-        \Output{Decoded vector}
-        $ \bm{s}_1\gets G\bm{r}^\top $\;
-        \If{$ \bm{s}_1=\bm{0} $} {
-            \Return{$ \bm{r} $}
+    \Input{$ G=\spalignaugmat{I_{12} B}=(\symbf{g}_1,\ldots ,\symbf{g}_{24})^\top $,
+        and $ \tilde{G}=\spalignaugmat{B I_{12}}=(\tilde{\symbf{g}}_1,\ldots, \tilde{\symbf{g}}_{24})^\top $,
+        and received vector $ \symbf{r}=(\symbf{x},\symbf{y}) $}
+    \Output{Decoded vector}
+    $ \symbf{s}_1\gets G\symbf{r}^\top $\;
+    \If{$ \symbf{s}_1=\symbf{0} $} {
+        \Return{$ \symbf{r} $}
+    }
+    \If{$ w(\symbf{s}_1)\leqslant 3 $} {
+        \For{$ i $ \KwTo{} $ 12 $} {
+            $ \symbf{x}^\prime \gets $ corrected $ \symbf{x} $ in each position
+            corresponding to $ 1 $'s in $ \symbf{s}_1 $\;
+            \Return{$ (\symbf{x}^\prime,\symbf{y}) $}
         }
-        \If{$ w(\bm{s}_1)\leqslant 3 $} {
-            \For{$ i $ \KwTo{} $ 12 $} {
-                $ \bm{x}^\prime \gets $ corrected $ \bm{x} $ in each position
-                corresponding to $ 1 $'s in $ \bm{s}_1 $\;
-                \Return{$ (\bm{x}^\prime,\bm{y}) $}
-            }
+    }
+    \For{$ i\gets 0 $ \KwTo{} $ 24 $} {
+        \If{$ \symbf{g}_i $ differs in position $ j $ or
+            positions $ j $ and $ k $ from $ \symbf{s}_1 $} {
+            $ \symbf{x}^\prime\gets(x_1,\ldots ,x_{12}) $ where $ x_j\gets\overline{x}_j $ or
+            $ x_j\gets\overline{x}_j $ and $ x_k\gets\overline{x}_k $\;
+            $ \symbf{y}^\prime \gets(y_1,\ldots ,y_{12}) $ where $ y_i\gets\overline{y}_i $\;
+            \Return{$ (\symbf{x}^\prime,\symbf{y}^\prime) $}\;
         }
-        \For{$ i\gets 0 $ \KwTo{} $ 24 $} {
-            \If{$ \bm{g}_i $ differs in position $ j $ or
-                positions $ j $ and $ k $ from $ \bm{s}_1 $} {
-                $ \bm{x}^\prime\gets(x_1,\ldots ,x_{12}) $ where $ x_j\gets\overline{x}_j $ or
-                $ x_j\gets\overline{x}_j $ and $ x_k\gets\overline{x}_k $\;
-                $ \bm{y}^\prime \gets(y_1,\ldots ,y_{12}) $ where $ y_i\gets\overline{y}_i $\;
-                \Return{$ (\bm{x}^\prime,\bm{y}^\prime) $}\;
-            }
+    }
+    $ \symbf{s}_2\gets\tilde{G}\symbf{r}^\top $\;
+    \If{$ w(\symbf{s}_2)\leqslant 3 $} {
+        $ \symbf{y}^\prime \gets $ corrected $ \symbf{y} $ in each position
+        corresponding to $ 1 $'s in $ \symbf{s}_2 $\;
+        \Return{$ (\symbf{x},\symbf{y}^\prime) $}
+    }
+    \For{$ i\gets 0 $ \KwTo{} $ 24 $} {
+        \If{$ \tilde{\symbf{g}_i} $ differs in position $ j $ or
+            positions $ j $ and $ k $ from $ \symbf{s}_2 $} {
+            $ \symbf{y}^\prime \gets (y_1,\ldots ,y_{12}) $ where $ y_j\gets\overline{y}_j $ or
+            $ y_j\gets\overline{y}_j $ and $ y_k\gets\overline{y}_k $\;
+            $ \symbf{x}^\prime\gets(x_1,\ldots ,x_{12}) $ where $ x_i\gets\overline{x}_i $\;
+            \Return{$ (\symbf{x}^\prime,\symbf{y}^\prime) $}\;
         }
-        $ \bm{s}_2\gets\tilde{G}\bm{r}^\top $\;
-        \If{$ w(\bm{s}_2)\leqslant 3 $} {
-            $ \bm{y}^\prime \gets $ corrected $ \bm{y} $ in each position
-            corresponding to $ 1 $'s in $ \bm{s}_2 $\;
-            \Return{$ (\bm{x},\bm{y}^\prime) $}
-        }
-        \For{$ i\gets 0 $ \KwTo{} $ 24 $} {
-            \If{$ \tilde{\bm{g}_i} $ differs in position $ j $ or
-                positions $ j $ and $ k $ from $ \bm{s}_2 $} {
-                $ \bm{y}^\prime \gets (y_1,\ldots ,y_{12}) $ where $ y_j\gets\overline{y}_j $ or
-                $ y_j\gets\overline{y}_j $ and $ y_k\gets\overline{y}_k $\;
-                $ \bm{x}^\prime\gets(x_1,\ldots ,x_{12}) $ where $ x_i\gets\overline{x}_i $\;
-                \Return{$ (\bm{x}^\prime,\bm{y}^\prime) $}\;
-            }
-        }
-        \Return{}
-    \end{algorithm}
-\end{algbox}
+    }
+    \Return{}
+\end{algorithm}
 
 \begin{Example}{Decoding Algorithm for C24}{}
     \begin{enumerate}
-        \item Decode $ \bm{r}=(1000\; 1000\; 0000\; 1001\; 0001\; 1101) $.
+        \item Decode $ \symbf{r}=(1000\; 1000\; 0000\; 1001\; 0001\; 1101) $.
 
-              \textbf{Solution.} Compute $ \bm{s}_1=\spalignaugmat{I_{12} B}\bm{r}^\top=
-                  (0100\; 1000\; 0000) $. Since $ w(\bm{s}_1)\leqslant 3 $, we set
-              $ \bm{e}=(\bm{s}_1,0) $ and decode $ \bm{r} $ to
-              \[ \bm{c}=\bm{r}-\bm{e}=(1100\; 0000\; 0000\; 1001\; 0001\; 1101) \]
+              \textbf{Solution.} Compute $ \symbf{s}_1=\spalignaugmat{I_{12} B}\symbf{r}^\top=
+                  (0100\; 1000\; 0000) $. Since $ w(\symbf{s}_1)\leqslant 3 $, we set
+              $ \symbf{e}=(\symbf{s}_1,0) $ and decode $ \symbf{r} $ to
+              \[ \symbf{c}=\symbf{r}-\symbf{e}=(1100\; 0000\; 0000\; 1001\; 0001\; 1101) \]
 
-        \item Decode $ \bm{r}=(1000\; 0010\; 0000\; 1000\; 1101\; 0010) $.
+        \item Decode $ \symbf{r}=(1000\; 0010\; 0000\; 1000\; 1101\; 0010) $.
 
-              \textbf{Solution.} Compute $ \bm{s}_1=\spalignaugmat{I_{12} B}\bm{r}^\top=
-                  (1011\; 1110\; 1011) $. Note that $ w(\bm{s}_1)>3 $. Comparing $ \bm{s}_1 $
-              with the rows of $ B $, we see that $ \bm{s}_1 $ differs in positions $ 6 $
-              and $ 7 $ from row $ 4 $ of $ B $. Hence we set $ \bm{e}=(0000\; 0110\; 0000\; 0001\; 0000\; 0000) $
-              and decode $ \bm{r} $ to
-              \[ \bm{c}=\bm{r}-\bm{e}=(1000\; 0100\; 0000\; 1001\; 1101\; 0010) \]
+              \textbf{Solution.} Compute $ \symbf{s}_1=\spalignaugmat{I_{12} B}\symbf{r}^\top=
+                  (1011\; 1110\; 1011) $. Note that $ w(\symbf{s}_1)>3 $. Comparing $ \symbf{s}_1 $
+              with the rows of $ B $, we see that $ \symbf{s}_1 $ differs in positions $ 6 $
+              and $ 7 $ from row $ 4 $ of $ B $. Hence we set $ \symbf{e}=(0000\; 0110\; 0000\; 0001\; 0000\; 0000) $
+              and decode $ \symbf{r} $ to
+              \[ \symbf{c}=\symbf{r}-\symbf{e}=(1000\; 0100\; 0000\; 1001\; 1101\; 0010) \]
     \end{enumerate}
 
-    NOTE\@: In both examples we should check out answers by verifying that $ H\bm{c}^\top=\bm{0} $
-    (i.e., $ \bm{c} $ is indeed a codeword).
+    NOTE\@: In both examples we should check out answers by verifying that $ H\symbf{c}^\top=\symbf{0} $
+    (i.e., $ \symbf{c} $ is indeed a codeword).
 \end{Example}
 
 
 \textbf{Note:}
 \begin{enumerate}[label=(\arabic*)]
-    \item If $ w(\bm{e})\leqslant 3 $, then the algorithm makes the correct decision.
+    \item If $ w(\symbf{e})\leqslant 3 $, then the algorithm makes the correct decision.
     \item No storage is needed:
-          \[ \bm{s}_1=\spalignaugmat{I_{12} B}\bm{r}^\top=\spalignaugmat{I_{12} B}
+          \[ \symbf{s}_1=\spalignaugmat{I_{12} B}\symbf{r}^\top=\spalignaugmat{I_{12} B}
               \begin{bmatrix}
-                  \bm{x} \\
-                  \bm{y}
-              \end{bmatrix}=\bm{x}+B\bm{y} \]
+                  \symbf{x} \\
+                  \symbf{y}
+              \end{bmatrix}=\symbf{x}+B\symbf{y} \]
           where $ B $ is a left cyclic shift of the first row.
     \item The algorithm is very simple and efficient for hardware.
 \end{enumerate}
@@ -89,9 +88,9 @@
 \subsection*{Reliability of C24}
 \begin{itemize}
     \item $ p = $ symbol error probability
-    \item $ C=\set{\bm{c}_1,\ldots ,\bm{c}_M} $
+    \item $ C=\set{\symbf{c}_1,\ldots ,\symbf{c}_M} $
     \item $ w_i = $ probability that the decoding algorithm makes an incorrect
-          decision if $ \bm{c}_i $ is sent.
+          decision if $ \symbf{c}_i $ is sent.
     \item $ P_C=\frac{1}{M} \sum\limits_{i=1}^{M} w_i $ error probability of $ C $.
     \item $ 1-P_C $ = reliability of $ C $ (correct decision)
 \end{itemize}

@@ -18,7 +18,7 @@ step function.
     then the \textbf{probability function} (p.f.) of $ X $ is given by
     \[ f(x)=
         \begin{dcases}
-            P(X=x)=
+            \Prob{X=x}=
             F(x)-\lim\limits_{{\varepsilon} \to {0^+}}
             F(x-\varepsilon) & \text{ if } X\text{ can take value }x    \\
             0                & \text{ if } X\text{ cannot take value }x
@@ -27,7 +27,7 @@ step function.
 
 \begin{Definition}{Support set}{}
     The set $ A=\set{x:f(x)>0} $ is called the \textbf{support set}
-    of $ X $. These are all the positive values $ X $ can take.
+    of $ X $. These are all the possible values $ X $ can take.
 \end{Definition}
 
 \begin{Proposition}{Properties of the Probability Function}{ds_prob_prop}
@@ -39,51 +39,45 @@ step function.
 
 Review some commonly used discrete random variables:
 \begin{itemize}
-    \item \textbf{Bernoulli.} $ X \sim \text{Bernoulli}(p) $
+    \item \textbf{Bernoulli.} $ X \sim \bern{p} $
           where $ X $ can only take two possible values 0 (failure) or 1 (success).
           Let $ p $ be the probability of a success for a single trial. So,
-          \[ P(X=1)=p\text{ and }P(X=0)=1-p \]
+          \[ \Prob{X=1}=p\quad\text{ and }\quad \Prob{X=0}=1-p \]
           Therefore,
-          \[ f(x)=P(X=x)=p^x(1-p)^{1-x} \]
+          \[ f(x)=\Prob{X=x}=p^x(1-p)^{1-x} \]
           Example: Toss a coin twice. Let $ X $ be the number of heads.
-          Then $ X \sim \text{Bernoulli}(p) $
-    \item \textbf{Binomial.} $ X \sim \bin(n,p) $. Suppose
+          Then $ X \sim \bern{p} $
+    \item \textbf{Binomial.} $ X \sim \bin{n,p} $. Suppose
           we have \textbf{Bernoulli Trials}:
           \begin{itemize}
               \item We run $ n $ trials
               \item Each trial is independent of each other
               \item Each trial has two possible outcomes: 0 (failure), 1 (success)
           \end{itemize}
-          \[ P(X=1)=p \]
+          \[ \Prob{X=1}=p \]
           Let $ X $ be the number of success across these $ n $ trials
           and $ p $ be the success probability for a single trial.
           \[ X=\sum\limits_{i=1}^{n} X_i \]
           $ X_i $ is the outcome of the $ i $th trial.
-          \[ P(X_i=1)=p \]
-          where $ X_i \sim \text{Bernoulli}(p) $. Therefore,
-          \[ f(x)=P(X=x)=\binom{n}{x}p^x(1-p)^{n-x} \]
-    \item \textbf{Geometric.} $ X \sim \geo(p) $.
+          \[ \Prob{X_i=1}=p \]
+          where $ X_i \sim \bern{p} $. Therefore,
+          \[ f(x)=\Prob{X=x}=\binom{n}{x}p^x(1-p)^{n-x} \]
+    \item \textbf{Geometric.} $ X \sim \geo{p} $.
           Let $ X $ be the number of failures before the first success.
           $ X $ can take values $ 0,1,2,\ldots $.
-          \[ f(x)=P(X=x)=(1-p)^x p \]
+          \[ f(x)=\Prob{X=x}=(1-p)^x p \]
           Example. $ X = $ number of tails before you get the first
           head.
-    \item \textbf{Negative Binomial.} $ X \sim \nb(r,p) $.
+    \item \textbf{Negative Binomial.} $ X \sim \nb{r,p} $.
           Let $ X $ be the number of failures before you get $ r $ success.
           $ X $ can take values $ 0,1,2,\ldots $
-          \[ f(x)=P(X=x)=\binom{x+r-1}{x}(1-p)^x p^{r-1}p \]
+          \[ f(x)=\Prob{X=x}=\binom{x+r-1}{x}(1-p)^x p^{r-1}p \]
           Example. $ X= $ number of tails before you get the $ r $th head.
-    \item \textbf{Poisson.} $ X \sim \poi(\mu) $
+    \item \textbf{Poisson.} $ X \sim \poi{\mu} $
           where $ X = 0,1,\ldots $.
-          \[ f(x)=P(X=x)=\frac{\mu^x}{x!} e^{-\mu} \]
+          \[ f(x)=\Prob{X=x}=\frac{\mu^x}{x!} e^{-\mu} \]
           where $ x=0,1,2,\ldots $.
 \end{itemize}
-
-\begin{Exercise}{}{}
-    Verify all that all the probability models above are indeed
-    probability functions using~\Cref{prop:ds_prob_prop}.
-\end{Exercise}
-Solution. TODO
 
 \section{Continuous Random Variables}
 \begin{Definition}{Continuous random variable}{}
@@ -107,8 +101,8 @@ used in this course.
     of $ X $.
 \end{Definition}
 
-Continuous case: $ f(x)\neq P(X=x) $
-\[ P(x<X\leqslant x+\delta)\approx f(x)\delta \]
+Continuous case: $ f(x)\neq \Prob{X=x} $
+\[ \Prob{x<X\leqslant x+\delta}\approx f(x)\delta \]
 since
 \[ \lim\limits_{{\delta} \to {0}}\frac{F(x+\delta)-F(x)}{\delta}=F^\prime(x)=f(x) \]
 \begin{Definition}{Properties --- Probability Density Function}{}
@@ -121,10 +115,10 @@ since
                   \lim\limits_{{h} \to {0}} \dfrac{F(x+h)-F(x)}{h} $
         \item $ F(x)=\displaystyle \int_{-\infty}^{x} f(t)\, d{t} $
               since $ F(-\infty)=0 $.
-        \item $ P(a< X\leqslant b)=P(X\leqslant b)-
-                  P(X\leqslant a)=F(b)-F(a)
+        \item $ \Prob{a< X\leqslant b}=\Prob{X\leqslant b}-
+                  \Prob{X\leqslant a}=F(b)-F(a)
                   =\displaystyle \int_{a}^{b} f(x)\, d{x}  $
-        \item $ P(X=b)=F(b)-\lim\limits_{{a} \to {b^-}}
+        \item $ \Prob{X=b}=F(b)-\lim\limits_{{a} \to {b^-}}
                   F(a)=F(b)-F(b) =0\neq f(b) $ since $ F $ is continuous.
     \end{enumerate}
 \end{Definition}
@@ -144,7 +138,7 @@ since
             \dfrac{1}{b-a} & a<x<b            \\
             0              & \text{otherwise}
         \end{cases} \]
-    We note that $ X \sim \text{Uniform}(a,b) $
+    We note that $ X \sim \uniform{a,b} $
 \end{Example}
 
 \begin{Example}{}{}
@@ -156,7 +150,7 @@ since
     \begin{enumerate}[label=(\roman*)]
         \item For what values of $ \theta $ is $ f $ a p.d.f.
         \item Find $ F(x) $.
-        \item Find $ P(-2<X<3) $.
+        \item Find $ \Prob{-2<X<3} $.
     \end{enumerate}
     \textbf{Solution.}
 
@@ -174,17 +168,17 @@ since
 
               Therefore, $ f $ is a p.d.f.\ when $ \theta>0 $.
 
-        \item $ F(x)=P(X\leqslant x) $.
+        \item $ F(x)=\Prob{X\leqslant x} $.
 
               \underline{Case 1}: $ x<1 $.
-              \[ P(X\leqslant x)=\int_{-\infty}^{x} f(t)\, d{t} =0 \]
+              \[ \Prob{X\leqslant x}=\int_{-\infty}^{x} f(t)\, d{t} =0 \]
 
               \underline{Case 2}:  $ x\geqslant 1 $.
-              \[ P(X\leqslant x)=\int_{-\infty}^{x} f(t)\, d{t}
+              \[ \Prob{X\leqslant x}=\int_{-\infty}^{x} f(t)\, d{t}
                   =\int_{-\infty}^{1} f(t)\, d{t} +\int_{1}^{x} f(t)\, d{t}
                   =\int_{1}^{x} \frac{\theta}{t^{\theta+1}} \, d{t}=\left[ -t^{-\theta} \right]_1^x=
                   1-x^{-\theta}  \]
-        \item $ P(-2<X<3) $. Either use the c.d.f.\ we found or the p.d.f.
+        \item $ \Prob{-2<X<3} $. Either use the c.d.f.\ we found or the p.d.f.
 
               \underline{Using the c.d.f.} we have
               \[ F(3)-F(-2)=(1-3^{-\theta})-0 \]

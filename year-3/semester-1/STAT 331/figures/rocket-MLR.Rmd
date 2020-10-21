@@ -2,6 +2,8 @@
 output:
   pdf_document: default
   header-includes: \usepackage{amsmath}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r}
@@ -34,6 +36,9 @@ relationship vs thrust.
 # Fit MLR using lm
 m1 <- lm(thrust ~ nozzle + propratio, data = rocket)
 summary(m1)
+m2 <- lm(thrust ~ 0 + nozzle, data=rocket)
+summary(m2)
+anova(m1)
 ```
 On the left it's $Y$ (response variable) and on the
 right it's $x_1,x_2$ (explanatory variables).

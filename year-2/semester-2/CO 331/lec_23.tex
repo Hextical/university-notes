@@ -42,38 +42,38 @@ Then, another PCM for $ C $ is: $ H=\left[ \; I_{n-k}\mid -R^\top \; \right]_{(n
         x^{n-k+1}\pmod{g(x)} \\
         x^{n-1}\pmod{g(x)}
     \end{bmatrix} \]
-Hence, if $ \bm{r}=(r_0,r_1,\ldots ,r_{n-1})\in V_{n-1}(F) $, then
+Hence, if $ \symbf{r}=(r_0,r_1,\ldots ,r_{n-1})\in V_{n-1}(F) $, then
 \begin{align*}
-    \bm{s}
-     & =H\bm{r}^\top                                            \\
+    \symbf{s}
+     & =H\symbf{r}^\top                                         \\
      & =(r_0 x^0\pmod{g(x)})+\cdots+(r_{n-1}x^{n-1}\pmod{g(x)}) \\
      & =(r_0x^0+r_1x+\cdots+r_{n-1}x^{n-1})\pmod{g(x)}          \\
      & =r(x)\pmod{g(x)}
 \end{align*}
 
 \begin{Theorem}{}{}
-    Let $ C $ be a cyclic code with generator polynomial $ g(x) $, and $ \bm{r}\in V_n(F) $.
-    Then, the syndrome of $ \bm{r} $ with respect to the previous PCM is:
+    Let $ C $ be a cyclic code with generator polynomial $ g(x) $, and $ \symbf{r}\in V_n(F) $.
+    Then, the syndrome of $ \symbf{r} $ with respect to the previous PCM is:
     \[ s(x)=r(x)\pmod{g(x)} \]
 \end{Theorem}
 
 \begin{Example}{}{}
     $ g(x)=1+x+x^2+x^3+x^6 $ is the generator polynomial for a $ (15,9) $-binary cyclic code.
     Check $ g(x)\mid (x^{15}-1) $ over $ GF(2) $. Compute the syndrome of
-    $ \bm{r}=(1110\; 1110\; 1100\; 000) $.
+    $ \symbf{r}=(1110\; 1110\; 1100\; 000) $.
 
     \textbf{Solution.} Long division of $ (x^9+x^8+x^6+x^5+x^4+x^2+x+1)/(x^6+x^3+x^2+x+1) $
     gives $ x^5+x^4+x+1 $ as the remainder. Thus,
-    \[ s(x)=1+x+x^4+x^5\implies \bm{s}=(110011) \]
+    \[ s(x)=1+x+x^4+x^5\implies \symbf{s}=(110011) \]
 \end{Example}
 
 \begin{Remark}{}{}
-    Given the syndrome $ \bm{s} $ of $ \bm{r} $, the syndromes of cyclic shifts of $ \bm{r} $
+    Given the syndrome $ \symbf{s} $ of $ \symbf{r} $, the syndromes of cyclic shifts of $ \symbf{r} $
     can be easily computed.
 \end{Remark}
 
 \begin{Theorem}{}{syndrome calculation}
-    Let $ \bm{r}\in V_n(F) $, and $ s(x) \equiv r(x)\pmod{g(x)} $ where
+    Let $ \symbf{r}\in V_n(F) $, and $ s(x) \equiv r(x)\pmod{g(x)} $ where
     $ s(x) = s_0+xs_1+\cdots+s_{n-k-1}x^{n-k-1} $.
     Then the syndrome of $ xr(x) $ is:
     \begin{enumerate}[label=(\roman*)]
@@ -82,19 +82,19 @@ Hence, if $ \bm{r}=(r_0,r_1,\ldots ,r_{n-1})\in V_{n-1}(F) $, then
     \end{enumerate}
 \end{Theorem}
 
-\begin{proof}
-    We have
-    \[ r(x)=\ell (x)g(x)+s(x) \]
-    Multiply by $ x $,
-    \[ xr(x)=x\ell(x)g(x)+xs(x) \]
-    \underline{Case 1} If $ s_{n-k-1}=0 $, then $ \deg(s)\leqslant n-k-2 $,
-    so $ \deg(xs(x))\leqslant n-k-1 $. So, $ xs(x) $ is \textbf{the} remainder upon dividing
-    $ xr(x) $ by $ g(x) $. So, $ xs(x) $ is \textbf{the} syndrome of $ r(x) $.
+\begin{Proof}{}{}
+We have
+\[ r(x)=\ell (x)g(x)+s(x) \]
+Multiply by $ x $,
+\[ xr(x)=x\ell(x)g(x)+xs(x) \]
+\underline{Case 1} If $ s_{n-k-1}=0 $, then $ \deg(s)\leqslant n-k-2 $,
+so $ \deg(xs(x))\leqslant n-k-1 $. So, $ xs(x) $ is \textbf{the} remainder upon dividing
+$ xr(x) $ by $ g(x) $. So, $ xs(x) $ is \textbf{the} syndrome of $ r(x) $.
 
-    \underline{Case 2} If $ s_{n-k-1}\neq 0 $, then $ \deg(s)=n-k-1 $. Then
-    \[ xr(x)=x\ell(x)g(x)+xs(x)+s_{n-k-1}g(x)-s_{n-k-1}g(x) \]
-    \[ \implies xr(x)=(x\ell(x)+s_{n-k-1})g(x)+(xs(x)-s_{n-k-1}g(x)) \]
-    Now,
-    \[ xs(x)-s_{n-k-1}=(s_0+\cdots+s_{n-k-1}x^{n-k})-(\cdots+s_{n-k-1}x^{n-k})=xr(x) \]
-    So, $ xs(x)-s_{n-k-1}g(x) $ is \textbf{the} syndrome of $ xr(x) $.
-\end{proof}
+\underline{Case 2} If $ s_{n-k-1}\neq 0 $, then $ \deg(s)=n-k-1 $. Then
+\[ xr(x)=x\ell(x)g(x)+xs(x)+s_{n-k-1}g(x)-s_{n-k-1}g(x) \]
+\[ \implies xr(x)=(x\ell(x)+s_{n-k-1})g(x)+(xs(x)-s_{n-k-1}g(x)) \]
+Now,
+\[ xs(x)-s_{n-k-1}=(s_0+\cdots+s_{n-k-1}x^{n-k})-(\cdots+s_{n-k-1}x^{n-k})=xr(x) \]
+So, $ xs(x)-s_{n-k-1}g(x) $ is \textbf{the} syndrome of $ xr(x) $.
+\end{Proof}

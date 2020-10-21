@@ -3,30 +3,30 @@ It's strongly recommend that you \textbf{do not} memorize these commands present
 you should try them out on your own to see what the output is.
 
 \begin{itemize}
-      \item \code{CTRL + C} \textrightarrow{} send kill signal
-      \item \code{CTRL + D} \textrightarrow{} send EOF (end-of-file)
-      \item NAME\@: \code{cat} \textrightarrow{} concatenate files and print on the standard output
+      \item \code{CTRL + C} $ \rightarrow $ send kill signal
+      \item \code{CTRL + D} $ \rightarrow $ send EOF (end-of-file)
+      \item NAME\@: \code{cat} $ \rightarrow $ concatenate files and print on the standard output
             \begin{itemize}
                   \item SYNOPSIS\@: \code{cat [OPTION]\textellipsis{} [FILE]}
                   \item DESCRIPTION\@: Concatenate FILE(s) to standard output.
                         With no \code{FILE}, or when \code{FILE} is \code{-}, read standard input.
             \end{itemize}
-      \item \code{>} \textrightarrow{} output redirection, overwrites files
+      \item \code{>} $ \rightarrow $ output redirection, overwrites files
             \begin{itemize}
-                  \item \code{cat > out.txt} \textrightarrow{} redirects output produced by
+                  \item \code{cat > out.txt} $ \rightarrow $ redirects output produced by
                         \code{cat} to the file \code{out.txt}
-                  \item \code{cat t1.txt > t2.txt} \textrightarrow{} redirects all text from
+                  \item \code{cat t1.txt > t2.txt} $ \rightarrow $ redirects all text from
                         \code{t1.txt} to \code{t2.txt}
             \end{itemize}
-      \item \code{>{}>} \textrightarrow{} appends at the end of the file instead of overwriting like
+      \item \code{>{}>} $ \rightarrow $ appends at the end of the file instead of overwriting like
             \code{>}
-      \item \code{<} \textrightarrow{} input redirection
+      \item \code{<} $ \rightarrow $ input redirection
             \begin{itemize}
-                  \item \code{cat < sample.txt} \textrightarrow{}
+                  \item \code{cat < sample.txt} $ \rightarrow $
                         input redirection, the shell handles this
-                  \item \code{cat sample.txt} \textrightarrow{}
+                  \item \code{cat sample.txt} $ \rightarrow $
                         \code{cat} handles this
-                  \item \code{cat -n < in > out} \textrightarrow{}
+                  \item \code{cat -n < in > out} $ \rightarrow $
                         \code{-n} numbers all output lines. Input redirect from file \code{in} to
                         \code{cat}, then output redirect with numbered lines to file \code{out}.
             \end{itemize}
@@ -59,12 +59,14 @@ so that it does not take extra CPU cycles (extra material).
 
 Within the stream,
 
-\code{stdin} \textrightarrow{} program \textrightarrow{}
+\code{stdin} $ \rightarrow $ program $ \rightarrow $
 1. \code{stdout} and 2. \code{stderr}
 
-\code{prog arg1 < in > out 2>\&1} \textrightarrow{}
-\code{\&1} is the location of \code{stdout}, so any errors will be redirected to
-\code{stdout}.
+\code{program arg1 < in > out 2>\&1}
+\begin{itemize}
+      \item \code{\&1} is the location of \code{stdout}, so any errors will be redirected to
+            \code{stdout}.
+\end{itemize}
 
 \subsection{Wildcard Matching}
 $ \underbrace{\code{ls *.txt}}_{\text{globbing pattern}} \rightarrow{} $
@@ -81,10 +83,10 @@ Count the number of words in the first 15 lines of \code{sample.txt}.
 \textbf{Solution.}
 
 \begin{itemize}
-      \item \code{wc -w} \textrightarrow{} print number of words in entire text
-      \item \code{head -15 sample.txt} \textrightarrow{} get only the first 15 lines
+      \item \code{wc -w} $ \rightarrow $ print number of words in entire text
+      \item \code{head -15 sample.txt} $ \rightarrow $ get only the first 15 lines
             of \code{sample.txt}
-      \item \code{head -15 sample.txt > temp.txt wc -w temp.txt} \textrightarrow{}
+      \item \code{head -15 sample.txt > temp.txt wc -w temp.txt} $ \rightarrow $
             doing both, with output in a \code{temp.txt} file.
 \end{itemize}
 
@@ -93,7 +95,7 @@ What if we didn't want \code{temp.txt} to be produced? We use Linux pipes.
 \subsection{Linux Pipe}
 Connect \code{stdout} of prog1 to \code{stdin} of prog2.
 
-\code{head -15 sample.txt | wc -w} \textrightarrow{}
+\code{head -15 sample.txt | wc -w} $ \rightarrow $
 the first program, \code{head} runs with \code{sample.txt}, then the output is fed into
 the second program, \code{wc}.
 
@@ -105,10 +107,10 @@ a list of words sorted, with no duplicates from \code{words*.txt}.
 \textbf{Solution.}
 
 \code{cat words*.txt | sort -u} OR
-\code{cat words*.txt | sort | uniq} \textrightarrow{} \code{sort -u} will sort
+\code{cat words*.txt | sort | uniq} $ \rightarrow $ \code{sort -u} will sort
 and remove any duplicate words. \code{uniq} removes duplicates.
 
-\code{echo Today is \$(date)} \textrightarrow{}
+\code{echo Today is \$(date)} $ \rightarrow $
 \code{\$(date)} is embedding a command date
 
 Double quotes: does not suppress embedded commands

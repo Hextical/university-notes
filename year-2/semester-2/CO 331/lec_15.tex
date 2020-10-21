@@ -3,8 +3,8 @@
 
 \begin{Definition}{}{}
     Let $ C $ be an $ (n,k) $-code over $ F=GF(q) $ with PCM $ H $.
-    We write $ \bm{x}\equiv \bm{y} \pmod{C} $, where $ \bm{x},\bm{y}\in V_n(F) $
-    if $ (\bm{x}-\bm{y})\in C $.
+    We write $ \symbf{x}\equiv \symbf{y} \pmod{C} $, where $ \symbf{x},\symbf{y}\in V_n(F) $
+    if $ (\symbf{x}-\symbf{y})\in C $.
 \end{Definition}
 
 \textbf{Notes}:
@@ -17,14 +17,14 @@
               \item Transitivity
           \end{enumerate}
     \item The set of equivalence classes partitions $ V_n(F) $.
-    \item The equivalence classes containing $ \bm{x}\in V_n(F) $
+    \item The equivalence classes containing $ \symbf{x}\in V_n(F) $
           is called a \textbf{coset} of $ V_n(F) $. This class is:
           \begin{align*}
-              \set{\bm{y}\in V_n(F):\bm{y}\equiv \bm{x}\pmod{C}}
-               & =\set{\bm{x}+\bm{c}:\bm{c}\in C} \\
-               & =C+\bm{x}
+              \set{\symbf{y}\in V_n(F):\symbf{y}\equiv \symbf{x}\pmod{C}}
+               & =\set{\symbf{x}+\symbf{c}:\symbf{c}\in C} \\
+               & =C+\symbf{x}
           \end{align*}
-          We call $ C+\bm{x} $ the coset of $ C $ represented by $ \bm{x} $.
+          We call $ C+\symbf{x} $ the coset of $ C $ represented by $ \symbf{x} $.
 \end{enumerate}
 
 \begin{Example}{Cosets}{}
@@ -37,7 +37,7 @@
 
     \textbf{Solution.} The cosets of $ C $ are:
     \begin{enumerate}[label=(\arabic*)]
-        \item $ C+00000=\set{00000,10111,01110,11001}=\set{\bm{0},R_1,R_2, R_1+R_2}
+        \item $ C+00000=\set{00000,10111,01110,11001}=\set{\symbf{0},R_1,R_2, R_1+R_2}
                   = C+10111 = C+01110 = C + 11001 $
         \item $ C+10000=\set{10000,00111,11110,01001} $
         \item $ C+01000=\set{01000,11111,00000,10001} $
@@ -52,51 +52,51 @@
 
 \textbf{Notes}:
 \begin{enumerate}[label=(\arabic*)]
-    \item $ C+\bm{0}=C $.
-    \item If $ \bm{y}\in C+\bm{x} $, then $ C+\bm{y}=C+\bm{x} $ by definition
+    \item $ C+\symbf{0}=C $.
+    \item If $ \symbf{y}\in C+\symbf{x} $, then $ C+\symbf{y}=C+\symbf{x} $ by definition
           of equivalence relation---more specifically symmetry.
     \item The number of cosets is $ \sfrac{q^n}{q^k}=q^{n-k} $.
 \end{enumerate}
 
-\textbf{Recall}: If $ \bm{x}\in V_n(F) $, then it's syndrome is
-\[ \bm{s}=H\bm{r}^\top\in V_{n-k}(F) \]
+\textbf{Recall}: If $ \symbf{x}\in V_n(F) $, then it's syndrome is
+\[ \symbf{s}=H\symbf{r}^\top\in V_{n-k}(F) \]
 
 \begin{Theorem}{}{}
-    Let $ \bm{x},\bm{y}\in V_n(F) $. Then $ \bm{x}\equiv \bm{y}\pmod{C} $
-    if and only if $ H\bm{x}^\top=H\bm{y}^\top $.
+    Let $ \symbf{x},\symbf{y}\in V_n(F) $. Then $ \symbf{x}\equiv \symbf{y}\pmod{C} $
+    if and only if $ H\symbf{x}^\top=H\symbf{y}^\top $.
 \end{Theorem}
 
-\begin{proof}
+\begin{Proof}{}{}
     \begin{align*}
-        \bm{x}\equiv \bm{y}\pmod{C}
-         & \iff (\bm{x}-\bm{y})\in C         \\
-         & \iff H(\bm{x}-\bm{y})^\top=\bm{0} \\
-         & \iff H\bm{x}^\top=H\bm{y}^\top
+        \symbf{x}\equiv \symbf{y}\pmod{C}
+         & \iff (\symbf{x}-\symbf{y})\in C            \\
+         & \iff H(\symbf{x}-\symbf{y})^\top=\symbf{0} \\
+         & \iff H\symbf{x}^\top=H\symbf{y}^\top
     \end{align*}
-\end{proof}
+\end{Proof}
 So, cosets are characterized by their syndromes.
 
 \textbf{Decoding}
 \begin{itemize}
-    \item $ \bm{c}\in C $ is sent.
-    \item $ \bm{r}\in V_n(F) $ is received.
-    \item $ \bm{e}=(\bm{r}-\bm{c})\in V_n(F) $
-    \item $ H\bm{r}^\top=H\bm{e}^\top $.
+    \item $ \symbf{c}\in C $ is sent.
+    \item $ \symbf{r}\in V_n(F) $ is received.
+    \item $ \symbf{e}=(\symbf{r}-\symbf{c})\in V_n(F) $
+    \item $ H\symbf{r}^\top=H\symbf{e}^\top $.
 \end{itemize}
-So, $ \bm{r} $ and $ \bm{e} $ belong to the same coset of $ C $.
+So, $ \symbf{r} $ and $ \symbf{e} $ belong to the same coset of $ C $.
 
 \textbf{CMLD}
 
-Given $ \bm{r} $, find a vector $ \bm{e} $ of smallest weight in $ C+\bm{r} $
-or equivalently, find a vector $ \bm{e} $ of smallest weight with the same
-syndrome as $ \bm{r} $. Then, decode $ \bm{r} $ to $ \bm{c}=\bm{r}-\bm{e} $.
+Given $ \symbf{r} $, find a vector $ \symbf{e} $ of smallest weight in $ C+\symbf{r} $
+or equivalently, find a vector $ \symbf{e} $ of smallest weight with the same
+syndrome as $ \symbf{r} $. Then, decode $ \symbf{r} $ to $ \symbf{c}=\symbf{r}-\symbf{e} $.
 
 \textbf{IMLD}
 
-Find the unique vector $ \bm{e} $ of smallest weight in $ C+\bm{r} $
-having the same syndrome as $ \bm{r} $.
-If no such $ \bm{e} $ exists, then reject $ \bm{r} $.
-Otherwise, decode $ \bm{r} $ to $ \bm{c}=\bm{r}-\bm{e} $.
+Find the unique vector $ \symbf{e} $ of smallest weight in $ C+\symbf{r} $
+having the same syndrome as $ \symbf{r} $.
+If no such $ \symbf{e} $ exists, then reject $ \symbf{r} $.
+Otherwise, decode $ \symbf{r} $ to $ \symbf{c}=\symbf{r}-\symbf{e} $.
 
 \section{Syndrome Decoding Algorithm}
 Given a PCM $ H $ for an $ (n,k) $-code $ C $ over $ F=GF(q) $.
@@ -106,20 +106,18 @@ Given a PCM $ H $ for an $ (n,k) $-code $ C $ over $ F=GF(q) $.
     a \textbf{coset leader} (of that coset).
 \end{Definition}
 
-\begin{algbox}
-    \begin{algorithm}[H]
-        \DontPrintSemicolon{}
-        \caption{Syndrome Decoding Algorithm}
-        \SetKwInOut{Input}{Input}
-        \SetKwInOut{Output}{Output}
+\begin{algorithm}
+    \DontPrintSemicolon{}
+    \caption{Syndrome Decoding Algorithm}
+    \SetKwInOut{Input}{Input}
+    \SetKwInOut{Output}{Output}
 
-        \Input{Table of cosets, parity-check matrix $ H $, and received vector $ \bm{r} $}
-        \Output{Decoded vector}
-        $ \bm{s}\gets H\bm{r}^\top $\;
-        Look up the coset leader corresponding to $ \bm{s} $, say $ \bm{\ell} $.\;
-        \Return{$ \bm{r}-\bm{\ell} $}
-    \end{algorithm}
-\end{algbox}
+    \Input{Table of cosets, parity-check matrix $ H $, and received vector $ \symbf{r} $}
+    \Output{Decoded vector}
+    $ \symbf{s}\gets H\symbf{r}^\top $\;
+    Look up the coset leader corresponding to $ \symbf{s} $, say $ \symbf{\ell} $.\;
+    \Return{$ \symbf{r}-\symbf{\ell} $}
+\end{algorithm}
 
 
 \begin{Example}{Syndrome Decoding}{}
@@ -162,13 +160,13 @@ Given a PCM $ H $ for an $ (n,k) $-code $ C $ over $ F=GF(q) $.
             10010         & 101
         \end{tabularx}
     \end{table}
-    Suppose $ \bm{r}=(10111) $ is received. Decode $ \bm{r} $.
+    Suppose $ \symbf{r}=(10111) $ is received. Decode $ \symbf{r} $.
 
     \textbf{Solution.}
 
-    Compute $ \bm{s}=H\bm{r}^\top=(000)^\top $.
+    Compute $ \symbf{s}=H\symbf{r}^\top=(000)^\top $.
 
-    The closest leader corresponding to $ \bm{s}=(000) $ is $ \bm{\ell}=(00000) $.
+    The closest leader corresponding to $ \symbf{s}=(000) $ is $ \symbf{\ell}=(00000) $.
 
-    Thus, we get the decoded vector $ \bm{r}-\bm{\ell}=(10111) $.
+    Thus, we get the decoded vector $ \symbf{r}-\symbf{\ell}=(10111) $.
 \end{Example}

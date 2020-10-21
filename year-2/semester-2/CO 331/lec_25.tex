@@ -10,30 +10,28 @@ $ (n-k) $ positions. Then,
 \[ s_i(x)=e_i(x)\pmod{g_i(x)} \]
 and we can recognize such an $ s_i(x) $ since it is a non-cyclic burst of length
 at most $ t $. Them, $ e=x^{n-i}e_i $. How do we compute $ s_i(x) $? Recall,
-$ \bm{r}=\bm{c}+\bm{e} $. So, $ x^i \bm{r}=x^i\bm{c}+x^i\bm{e} $, so
-$ x^i \bm{r} $ and $ x^i\bm{e} $ have the same syndrome.
+$ \symbf{r}=\symbf{c}+\symbf{e} $. So, $ x^i \symbf{r}=x^i\symbf{c}+x^i\symbf{e} $, so
+$ x^i \symbf{r} $ and $ x^i\symbf{e} $ have the same syndrome.
 
 \section{Error Trapping Decoding (For Cyclic Burst Errors)}
 Let $ r(x)= $ received polynomial. Let $ s_i(x)= $ syndrome of $ x^i r(x) $ for
 each $ i\in[1,n-1] $ where $ s_0=r(x)\pmod{g(x)} $.
 
-\begin{algbox}
-    \begin{algorithm}[H]
-        \DontPrintSemicolon{}
-        \caption{Error Trapping}
+\begin{algorithm}
+    \DontPrintSemicolon{}
+    \caption{Error Trapping}
 
-        \For{$ i=0$ \KwTo{} $ n-1 $} {
-            Compute $ s_i(x) $ with~\Cref{thm:syndrome calculation}.
+    \For{$ i=0$ \KwTo{} $ n-1 $} {
+        Compute $ s_i(x) $ with~\Cref{thm:syndrome calculation}.
 
-            \If{$ s_i(x) $ is a non-cyclic burst of length at most $ t $} {
-                $ e_i(x)\gets(s_i(x),0) $\;
-                $ e(x)\gets x^{n-i}e_i(x) $\;
-                \Return{$ r(x)-e(x) $}
-            }
+        \If{$ s_i(x) $ is a non-cyclic burst of length at most $ t $} {
+            $ e_i(x)\gets(s_i(x),0) $\;
+            $ e(x)\gets x^{n-i}e_i(x) $\;
+            \Return{$ r(x)-e(x) $}
         }
-        \Return{}
-    \end{algorithm}
-\end{algbox}
+    }
+    \Return{}
+\end{algorithm}
 
 \begin{Example}{}{}
     $ g(x)=1+x+x^2+x^3+x^6 $ is the generator polynomial for $ (15,9) $-binary
@@ -60,10 +58,10 @@ each $ i\in[1,n-1] $ where $ s_0=r(x)\pmod{g(x)} $.
         \end{tabularx}
     \end{table}
 
-    \[ \implies \bm{e}_9=(101000\; 000000000) \]
-    \[ \implies \bm{e}=x^6 \bm{e}_9=(000000\; 101000\;000 ) \]
-    \[ \implies \bm{c}=\bm{r}-\bm{e}=(1110\;1100\;0100\;000) \]
-    Check: $ H\bm{c}^\top=\bm{0} $ (bad) OR $ g(x)\mid c(x) $ via long division.
+    \[ \implies \symbf{e}_9=(101000\; 000000000) \]
+    \[ \implies \symbf{e}=x^6 \symbf{e}_9=(000000\; 101000\;000 ) \]
+    \[ \implies \symbf{c}=\symbf{r}-\symbf{e}=(1110\;1100\;0100\;000) \]
+    Check: $ H\symbf{c}^\top=\symbf{0} $ (bad) OR $ g(x)\mid c(x) $ via long division.
 \end{Example}
 
 \section{Interleaving}

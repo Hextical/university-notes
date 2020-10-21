@@ -3,59 +3,57 @@
 Let $ H $ be a PCM for an $ (n,k) $-code $ C $ over $ GF(q) $
 with $ d\geqslant 3 $.
 \begin{align*}
-    H\bm{r}^\top
-     & =H(\bm{c}+\bm{e})^\top                                                                      \\
-     & =H\bm{c}^\top+H \bm{e}^\top                                                                 \\
-     & =H\bm{e}^\top               & \quad & \text{since $ \bm{c}^\top $ is in nullspace of $ H$ }
+    H\symbf{r}^\top
+     & =H(\symbf{c}+\symbf{e})^\top                                                                         \\
+     & =H\symbf{c}^\top+H \symbf{e}^\top                                                                    \\
+     & =H\symbf{e}^\top                  & \quad & \text{since $ \symbf{c}^\top $ is in nullspace of $ H$ }
 \end{align*}
 
 \begin{Definition}{Syndrome}{syndrome}
     Let $ H $ be a parity-check matrix for an $ (n,k) $-code.
-    The \textbf{syndrome} $ \bm{s} $ of $ \bm{r} $
-    is defined to be $ \bm{s}=H\bm{r}^\top $.
+    The \textbf{syndrome} $ \symbf{s} $ of $ \symbf{r} $
+    is defined to be $ \symbf{s}=H\symbf{r}^\top $.
 \end{Definition}
 
 Notes:
 \begin{enumerate}[label=(\arabic*)]
-    \item $ \bm{r} $ and $ \bm{e} $ have the same syndrome
-    \item If $ \bm{e}=\bm{0} $, then $ H\bm{e}^\top=\bm{0} $.
-    \item If $ w(\bm{e})=1 $, say $ \bm{e}=(0,\ldots,0,\alpha,0,\ldots,0) $
+    \item $ \symbf{r} $ and $ \symbf{e} $ have the same syndrome
+    \item If $ \symbf{e}=\symbf{0} $, then $ H\symbf{e}^\top=\symbf{0} $.
+    \item If $ w(\symbf{e})=1 $, say $ \symbf{e}=(0,\ldots,0,\alpha,0,\ldots,0) $
           where $ \alpha $ is in the $ i^{\text{th}} $ position with $ \alpha \neq 0 $,
-          then $ H\bm{e}^\top=\alpha h_i $ where $ h_i $ is the $ i^{\text{th}} $
+          then $ H\symbf{e}^\top=\alpha h_i $ where $ h_i $ is the $ i^{\text{th}} $
           column of $ H $.
     \item The converse of (2) and (3) are false.
 \end{enumerate}
 
-\begin{algbox}
-    \begin{algorithm}[H]
-        \DontPrintSemicolon{}
-        \caption{Decoding Algorithm for Single-Error Correcting Codes}\label{alg:Decoding Algorithm for Single-Error Correcting Codes}
-        \SetKwInOut{Input}{Input}
-        \SetKwInOut{Output}{Output}
+\begin{algorithm}
+    \DontPrintSemicolon{}
+    \caption{Decoding Algorithm for Single-Error Correcting Codes}\label{alg:Decoding Algorithm for Single-Error Correcting Codes}
+    \SetKwInOut{Input}{Input}
+    \SetKwInOut{Output}{Output}
 
-        \Input{Parity-check matrix $ H = (\bm{h}_1,\ldots ,\bm{h}_n)^\top $
-            and received vector $ \bm{r} $}
-        \Output{Decoded vector}
-        $ \bm{s}\gets H\bm{r}^\top $\;
-        \If{$ w(\bm{s})=0 $} {
-            \Return{$ \bm{r} $}
+    \Input{Parity-check matrix $ H = (\symbf{h}_1,\ldots ,\symbf{h}_n)^\top $
+        and received vector $ \symbf{r} $}
+    \Output{Decoded vector}
+    $ \symbf{s}\gets H\symbf{r}^\top $\;
+    \If{$ w(\symbf{s})=0 $} {
+        \Return{$ \symbf{r} $}
+    }
+    \For{$ i\gets 0$ \KwTo{} $ n $} {
+        \If{$ \symbf{s}=\alpha \symbf{h}_i $ with $ \alpha\neq 0 $} {
+            \Return{$ \symbf{r}-\symbf{e} $}
         }
-        \For{$ i\gets 0$ \KwTo{} $ n $} {
-            \If{$ \bm{s}=\alpha \bm{h}_i $ with $ \alpha\neq 0 $} {
-                \Return{$ \bm{r}-\bm{e} $}
-            }
-        }
-        \Return{}
-    \end{algorithm}
-\end{algbox}
+    }
+    \Return{}
+\end{algorithm}
 \begin{Remark}{}{}
-    $ \bm{h}_i $ are column vectors in the input for each $ i\in[1,n] $.
+    $ \symbf{h}_i $ are column vectors in the input for each $ i\in[1,n] $.
 \end{Remark}
 
-\textbf{Claim}: If $ w(\bm{e})\leqslant 1 $, then the decoding algorithm always
+\textbf{Claim}: If $ w(\symbf{e})\leqslant 1 $, then the decoding algorithm always
 makes the correct decision.
 
-\textbf{Note}: If $ H $ is a Hamming code and $ w(\bm{e})\geqslant 2 $,
+\textbf{Note}: If $ H $ is a Hamming code and $ w(\symbf{e})\geqslant 2 $,
 then this decoding algorithm will always make the wrong decision.
 
 \begin{Example}{Single-Error Decoding}{}
@@ -65,24 +63,24 @@ then this decoding algorithm will always make the wrong decision.
             0 & 1 & 1 & 0 & 0 & 1 & 1 \\
             0 & 0 & 0 & 1 & 1 & 1 & 1
         \end{bmatrix}_{3\times 7} \]
-    Decode $ \bm{r}=(0111110) $.
+    Decode $ \symbf{r}=(0111110) $.
 
     \textbf{Solution.}
     \begin{enumerate}
-        \item $ \bm{s}=H\bm{r}^\top=(011) $
-        \item $ \bm{s} $ is the 6th column of $ H $, so $ \bm{e}=(0000010) $
-        \item $ \bm{c}=\bm{r}-\bm{e}=(0111100) $.
+        \item $ \symbf{s}=H\symbf{r}^\top=(011) $
+        \item $ \symbf{s} $ is the 6th column of $ H $, so $ \symbf{e}=(0000010) $
+        \item $ \symbf{c}=\symbf{r}-\symbf{e}=(0111100) $.
     \end{enumerate}
-    Verify that $ H\bm{c}^\top=\bm{0} $.
+    Verify that $ H\symbf{c}^\top=\symbf{0} $.
 \end{Example}
 
 \textbf{General Decoding Problem for Binary Linear Codes}
 
 \textbf{Instance}: An $ (n-k)\times n $ matrix $ H $ over $ GF(2) $
-with $ \rank(H)=n-k $. $ \bm{r}\in V_n(GF(2)) $.
+with $ \rank(H)=n-k $. $ \symbf{r}\in V_n(GF(2)) $.
 
-\textbf{Find}: A vector $ \bm{e}\in V_n(GF(2)) $ of minimum weight
-with $ H\bm{r}^\top=H\bm{e}^\top $.
+\textbf{Find}: A vector $ \symbf{e}\in V_n(GF(2)) $ of minimum weight
+with $ H\symbf{r}^\top=H\symbf{e}^\top $.
 
 \textbf{Fact}: This problem is NP-hard.
 

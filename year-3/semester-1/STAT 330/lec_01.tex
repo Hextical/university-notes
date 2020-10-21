@@ -1,18 +1,13 @@
 \setcounter{chapter}{1}
 \chapter{Univariate Random Variable}
 \makeheading{Lecture 1 | 2020-09-09}
-Review of:
-\begin{itemize}
-    \item Probability
-    \item Random variables (discrete and continuous)
-    \item Expectation and variance
-    \item Moment generating function
-\end{itemize}
+Review probability model, random variable (r.v.),
+expectation, and moment generating function.
 
-\section{Probability}
+\section{Probability Model and Random Variable}
 \begin{Definition}{Probability model}{}
     A \textbf{probability model} is used for a random
-    experiment, which consists of three components:
+    experiment and consists of three components:
     \begin{enumerate}[label=(\Roman*)]
         \item Sample space
         \item Event
@@ -21,9 +16,13 @@ Review of:
 \end{Definition}
 
 \begin{Definition}{Sample space}{}
-    A \textbf{sample space} $ S $ is a set of all the distinct outcomes
-    for a random experiment, with the property that in a single trial,
-    one and only one of these outcomes occurs.
+    A \textbf{sample space} $ S $ is
+    the collection of all possible outcomes of one single
+    random experiment.
+\end{Definition}
+\begin{Definition}{Event}{}
+    An \textbf{event} is a subset of $ S $ and is denoted
+    by $ A $.
 \end{Definition}
 
 \begin{Example}{}{}
@@ -37,123 +36,107 @@ Review of:
     Clearly, $ A=\left\{ (H,H),(H,T)\right\}\subseteq S $, so $ A $ is an event.
 \end{Example}
 
-\begin{Definition}{$ \dagger $ Sigma algebra}{}
-    A collection of subsets of a set $ S $ is called \textbf{sigma algebra},
-    denoted by $ \beta $, if it satisfies the following properties:
+\begin{Definition}{Probability function}{psf_def}
+    A \textbf{probability function} $ \Prob{} $
+    is a function that satisfies the following axioms:
     \begin{enumerate}[label=(\Roman*)]
-        \item $ \varnothing\in \beta $
-        \item If $ A\in\beta $, then $ \bar{A}\in\beta $
-        \item If $ A_1,A_2,\ldots\in \beta $, then $ \bigcup\limits_{i=1}^{\infty}A_i\in \beta $
-    \end{enumerate}
-\end{Definition}
-
-\begin{Definition}{Probability set function}{psf_def}
-    Let $ \beta $ be a sigma algebra associated with the sample space $ S $.
-    A \textbf{probability set function} is a function $ P $
-    with domain $ \beta $ that satisfies the following axioms:
-    \begin{enumerate}[label=(\Roman*)]
-        \item\label{psf_def_1} $ P(A)\geqslant 0 $ for all $ A\in \beta $
-        \item\label{psf_def_2} $ P(S)=1 $
-        \item\label{psf_def_3} \emph{Additivity property}: If $ A_1,A_2,A_3,\ldots\in \beta $
+        \item\label{psf_def_1} $ \Prob{A}\geqslant 0 $ for any event $ A $
+        \item\label{psf_def_2} $ \Prob{S}=1 $
+        \item\label{psf_def_3} \emph{Additivity property}: If $ A_1,A_2,A_3,\ldots $
               are pairwise mutually exclusive events; that is, $ A_i\cap A_j=\varnothing $
               for all $ i\neq j $, then
-              \[ P\biggl( \bigcup_{i=1}^{\infty}A_i \biggr)=\sum\limits_{i=1}^{\infty} P(A_i) \]
+              \[ \Prob[\bigg]{\bigcup_{i=1}^{\infty}A_i}=\sum\limits_{i=1}^{\infty} \Prob{A_i} \]
     \end{enumerate}
 \end{Definition}
 
 \begin{Example}{}{}
     Toss a coin twice, given one event $ A $,
-    \[ P(A)=\frac{\text{\# of outcomes in }A}{4}  \]
-    since $ |S|= 4 $. $ P $ satisfies the three properties,
-    therefore $ P $ is a probability function.
+    \[ \Prob{A}=\frac{\text{\# of outcomes in }A}{4}  \]
+    since $ |S|= 4 $. $ \Prob{} $ satisfies the three properties,
+    therefore $ \Prob{} $ is a probability function.
 \end{Example}
 
 \begin{Proposition}{Additional Properties of the Probability Set Function}{add_prop_psf}
-    Let $ \beta $ be a sigma algebra associated with the sample space $ S $
-    and let $ P $ be a probability set function with domain $ \beta $.
-    If $ A,B\in \beta $, then:
+    Let $ A $ and $ B $ be events with sample space $ S $
+    and let $ \Prob{} $ be a probability function, then
     \begin{enumerate}[label=(\arabic*)]
-        \item\label{add_prop_psf_1} $ P(\varnothing)=0 $
-        \item\label{add_prop_psf_2} If $ A $ and $ B $ are mutually exclusive events, then $ P(A\cup B)=P(A)+P(B) $
-        \item\label{add_prop_psf_3} $ P(\bar{A})=1-P(A) $
-        \item\label{add_prop_psf_4} If $ A\subset B $, then $ P(A)\leqslant P(B) $
+        \item\label{add_prop_psf_1} $ \Prob{\varnothing}=0 $
+        \item\label{add_prop_psf_2} If $ A $ and $ B $ are mutually exclusive events, then $ \Prob{A\cup B}=\Prob{A}+\Prob{B} $
+        \item\label{add_prop_psf_3} $ \Prob{\bar{A}}=1-\Prob{A} $
+        \item\label{add_prop_psf_4} If $ A\subseteq B $, then $ \Prob{A}\leqslant \Prob{B} $
     \end{enumerate}
 \end{Proposition}
-Note for~\ref{add_prop_psf_4}, $ A\subset B $ means $ a\in A $ implies $ a\in B $.
 \begin{Proof}{\ref{prop:add_prop_psf}}{}
     Proof of~\ref{add_prop_psf_1}: Let $ A_1=S $ and $ A_i=\varnothing $ for $ i=2,3,\ldots $.
     Since $ \bigcup\limits_{i=1}^{\infty}A_i=S $, then by~\ref{psf_def_3}
     it follows that
-    \[ P(S)=P(S)+\sum\limits_{i=2}^{\infty} P(\varnothing) \]
+    \[ \Prob{S}=\Prob{S}+\sum\limits_{i=2}^{\infty} \Prob{\varnothing} \]
     and by~\ref{psf_def_2} we have
-    \[ 1=1+\sum\limits_{i=2}^{\infty}P(\varnothing) \]
+    \[ 1=1+\sum\limits_{i=2}^{\infty}\Prob{\varnothing} \]
     By~\ref{psf_def_1} the right side is a series of non-negative numbers which must converge to
     the left side which is 1 which is finite which results in a contradiction
-    unless $ P(\varnothing)=0 $ as required.
+    unless $ \Prob{\varnothing}=0 $ as required.
 
     Proof of~\ref{add_prop_psf_2}: Let $ A_1=A $, $ A_2=B $, and $ A_i=\varnothing $ for
     $ i=3,4,\ldots $. Since $ \bigcup\limits_{i=1}^\infty A_i=A\cup B $, then by~\ref{psf_def_3}
-    \[ P(A\cup B)=P(A)+P(B)+\sum\limits_{i=3}^{\infty} P(\varnothing) \]
-    and since $ P(\varnothing)=0 $ by the result of~\ref{add_prop_psf_1} it follows that
-    \[ P(A\cup B)=P(A)+P(B) \]
+    \[ \Prob{A\cup B}=\Prob{A}+\Prob{B}+\sum\limits_{i=3}^{\infty} \Prob{\varnothing} \]
+    and since $ \Prob{\varnothing}=0 $ by the result of~\ref{add_prop_psf_1} it follows that
+    \[ \Prob{A\cup B}=\Prob{A}+\Prob{B} \]
     Proof of~\ref{add_prop_psf_3}: Since $ S=A\cup \bar{A} $ and $ A\cap \bar{A}=\varnothing $
     then by~\ref{psf_def_2} and by~\ref{add_prop_psf_2} it follows that
-    \[ 1=P(S)=P(A\cup\bar{A})=P(A)+P(\bar{A}) \]
+    \[ 1=\Prob{S}=\Prob{A\cup\bar{A}}=\Prob{A}+\Prob{\bar{A}} \]
     as required.
 
     Proof of~\ref{add_prop_psf_4}: Since
     \[ B=(A\cap B)\cup (\bar{A}\cap B)=A\cup(\bar{A}\cap B) \]
     and $ A\cap(\bar{A}\cap B)=\varnothing $ then by~\ref{add_prop_psf_2}
-    \[ P(B)=P(A)+P(\bar{A}\cap B) \]
-    But by~\ref{psf_def_1}, $ P(\bar{A}\cap B)\geqslant 0 $, so the result now follows.
+    \[ \Prob{B}=\Prob{A}+\Prob{\bar{A}\cap B} \]
+    But by~\ref{psf_def_1}, $ \Prob{\bar{A}\cap B}\geqslant 0 $, so the result now follows.
 \end{Proof}
 
 \begin{Exercise}{}{}
-    Let $ \beta $ be a sigma algebra associated with the sample space $ S $
-    and let $ P $ be a probability set function with domain $ \beta $.
-    If $ A,B\in\beta $ then prove the following:
+    Let $ A $ and $ B $ be events with sample space $ S $
+    and let $ \Prob{} $ be a probability function, then prove the following:
     \begin{enumerate}
-        \item $ 0\leqslant P(A)\leqslant 1 $
-        \item $ P(A\cap\bar{B})=P(A)-P(A\cap B) $
-        \item $ P(A\cup B)=P(A)+P(B)-P(A\cap B) $
+        \item $ 0\leqslant \Prob{A}\leqslant 1 $
+        \item $ \Prob{A\cap\bar{B}}=\Prob{A}-\Prob{A\cap B} $
+        \item $ \Prob{A\cup B}=\Prob{A}+\Prob{B}-\Prob{A\cap B} $
     \end{enumerate}
 \end{Exercise}
 \begin{enumerate}
-    \item $ P(A)\geqslant 0 $ follows from~\ref{psf_def_1}. From~\ref{add_prop_psf_3}
-          we have $ P(\bar{A})=1-P(A) $. But from~\ref{psf_def_1} $ P(\bar{A})\geqslant 0 $
-          and therefore $ P(A)\leqslant 1 $.
+    \item $ \Prob{A}\geqslant 0 $ follows from~\ref{psf_def_1}. From~\ref{add_prop_psf_3}
+          we have $ \Prob{\bar{A}}=1-\Prob{A} $. But from~\ref{psf_def_1} $ \Prob{\bar{A}}=\geqslant 0 $
+          and therefore $ \Prob{A}\leqslant 1 $.
     \item Since $ A=(A\cap B)\cup (A\cap \bar{B}) $ and $ (A\cap B)\cap (A\cap \bar{B})
               =\varnothing $, then by~\ref{add_prop_psf_2}
-          \[ P(A)=P(A\cap B)+P(A\cap\bar{B}) \]
+          \[ \Prob{A}=\Prob{A\cap B}+\Prob{A\cap\bar{B}} \]
           as required.
-    \item $ P(A\cup B)=(A\cap \bar{B})+ P(A\cap B)+P(\bar{A}\cap B) $. By the previous
+    \item $ \Prob{A\cup B}=(A\cap \bar{B})+\Prob{A\cap B}+\Prob{\bar{A}\cap B} $. By the previous
           result,
-          \[ P(A\cap \bar{B})=P(A)-P(A\cap B) \text{ and } P(\bar{A}\cap B)=P(B)-P(A\cap B)\]
+          \[ \Prob{A\cap \bar{B}}=\Prob{A}-\Prob{A\cap B}\quad\text{ and }\quad\Prob{\bar{A}\cap B}=\Prob{B}-\Prob{A\cap B}\]
           Therefore,
           \begin{align*}
-              P(A\cup B) & =(P(A)-P(A\cap B))+P(A\cap B)+(P(B)-P(A\cap B)) \\
-                         & =P(A)+P(B)-P(A\cap B)
+              \Prob{A\cup B} & =(\Prob{A}-\Prob{A\cap B})+\Prob{A\cap B}+(\Prob{B}-\Prob{A\cap B}) \\
+                             & =\Prob{A}+\Prob{B}-\Prob{A\cap B}
           \end{align*}
           as required.
 \end{enumerate}
 
 \begin{Definition}{Conditional probability}{}
-    Let $ \beta $ be a sigma algebra associated with the sample space
-    $ S $ and suppose $ A,B\in\beta $ with
-    $ P(B)>0 $. Then the \textbf{conditional probability}
+    Suppose $ A $ and $ B $ are two events with
+    $ \Prob{B}>0 $. Then the \textbf{conditional probability}
     of $ A $ given that $ B $ has occurred is
-    \[ P(A\mid B)=\frac{P(A\cap B)}{P(B)} \]
+    \[ \Prob{A\given B}=\frac{\Prob{A\cap B}}{\Prob{B}} \]
 \end{Definition}
 
 \begin{Definition}{Independent events}{}
-    Let $ \beta $ be a sigma algebra associated with the sample space
-    $ S $ and suppose $ A,B\in\beta $. $ A $ and
-    $ B $ are \textbf{independent events} if
-    \[ P(A\cap B)=P(A)P(B) \]
+    Suppose $ A $ and $ B $ are two events. $ A $ and
+    $ B $ are \textbf{independent events} if and only if
+    \[ \Prob{A\cap B}=\Prob{A}\Prob{B} \]
 \end{Definition}
 
-Clearly, $ P(A\mid B)=P(A) $ if $ A $ and $ B $ are independent since
-\[ P(A\mid B)=\frac{P(A\cap B)}{P(B)}=\frac{P(A)P(B)}{P(B)}=P(A)  \]
+Clearly, $ \Prob{A\given B}=\Prob{A} $ if and only if $ A $ and $ B $ are independent since
+\[ \Prob{A\given B}=\frac{\Prob{A\cap B}}{\Prob{B}}=\frac{\Prob{A}\Prob{B}}{\Prob{B}}=\Prob{A}  \]
 
 \begin{Example}{}{}
     Toss a coin twice.
@@ -161,17 +144,14 @@ Clearly, $ P(A\mid B)=P(A) $ if $ A $ and $ B $ are independent since
         \item $ A $: First toss is $ H $
         \item $ B $: Second toss is $ T $
     \end{itemize}
-    \[ P(A)=\frac{\text{\# of outcomes in }A}{4}=\frac{2}{4}  \]
-    also
-    \[ P(B)=\frac{2}{4} \]
-    \[ P(A\cap B)=\frac{1}{4}=P(A)P(B) \]
+    \[ \Prob{A}=\frac{\text{\# of outcomes in }A}{4}=\frac{2}{4}\quad
+        \text{ and }\quad \Prob{B}=\frac{2}{4} \]
+    \[ \Prob{A\cap B}=\frac{1}{4}=\Prob{A}\Prob{B} \]
     therefore $ A $ and $ B $ are independent.
 \end{Example}
 
-\section{Random Variables}
-
 \begin{Definition}{Random variable}{}
-    A \textbf{random variable} $ X $
+    A \textbf{random variable} (r.v.) $ X $
     is a function from a sample space $ S $ to the real numbers $ \mathbb{R} $; that is,
     \[ X:S\to \mathbb{R} \] satisfies for any given $ x\in\mathbb{R} $
     $ \set{X\leqslant x} $ is an event.
@@ -200,7 +180,7 @@ Clearly, $ P(A\mid B)=P(A) $ if $ A $ and $ B $ are independent since
 \begin{Definition}{Cumulative distribution function}{}
     The \textbf{cumulative distribution function} (c.d.f.) of a random variable
     $ X $ is defined by
-    \[ F(x)=P(X\leqslant x) \]
+    \[ F(x)=\Prob{X\leqslant x} \]
     for all $ x\in\mathbb{R} $. Note that the c.d.f.\ is defined for all $ \mathbb{R} $.
 \end{Definition}
 
@@ -226,9 +206,9 @@ Clearly, $ P(A\mid B)=P(A) $ if $ A $ and $ B $ are independent since
               for any $ a\in\mathbb{R} $,
               \[ \lim\limits_{{x} \to {a^+}} F(a)=F(a) \]
         \item For all $ a<b $
-              \[ P(a<X\leqslant b)=P(X\leqslant b)-P(X\leqslant a)=F(b)-F(a) \]
+              \[ \Prob{a<X\leqslant b}=\Prob{X\leqslant b}-\Prob{X\leqslant a}=F(b)-F(a) \]
         \item For all $ b $
-              \[ P(X=b)=P(\text{jump at }b)=\lim\limits_{{t} \to {b^+}} F(t)-
+              \[ \Prob{X=b}=\Prob{\text{jump at }b}=\lim\limits_{{t} \to {b^+}} F(t)-
                   \lim\limits_{{t} \to {b^-}} F(t)=F(b)-\lim\limits_{{t} \to {b^-}} F(t) \]
     \end{enumerate}
 \end{Definition}
