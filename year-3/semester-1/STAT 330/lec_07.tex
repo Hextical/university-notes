@@ -4,19 +4,33 @@
     For any two random variables, we say $ X $ and $ Y $
     are \textbf{independent} if and only if
     \[ \Prob{X\in A,Y\in B}=\Prob{X\in A} \Prob{Y\in B} \]
-    for any two sets $ A $ and $ B $.
+    for any two sets $ A $ and $ B $ of real numbers.
 \end{Definition}
 
-\begin{Theorem}{}{}
-    For joint discrete random variables or joint continuous random variables.
-    Suppose $ X $ and $ Y $ are have joint p.f.\ (discrete)
-    or joint p.d.f.\ (continuous): $ f(x,y) $. Then
-    $ X $ and $ Y $ are independent if and only if
-    \[ f(x,y)=f_1(x)f_2(y) \]
-    \[ F(x,y)=F_1(x)F_2(y) \]
-    where $ F(x,y) $ is the joint c.d.f.\
-    and $ F_1(x) $ is the marginal c.d.f.\ of $ X $
-    and $ F_2(y) $ is the marginal c.d.f.\ of $ Y $.
+\begin{Theorem}{Independent Random Variables}{}
+    \begin{enumerate}[label=(\arabic*)]
+        \item Suppose $ X $ and $ Y $
+              are random variables with cumulative distribution
+              function $ F(x,y) $. Suppose also that
+              $ F_1(x) $ is the marginal cumulative distribution
+              function of $ X $ and $ F_2(y) $
+              is the marginal cumulative distribution function of $ Y $.
+              Then $ X $ and $ Y $ are independent random variables if and only
+              if
+              \[ F(x,y)=F_1(x)F_2(y)\quad\forall(x,y)\in\mathbb{R}^2 \]
+        \item Suppose $ X $ and $ Y $ are random variables with
+              joint probability (density) function $ f(x,y) $.
+              Suppose also that $ f_1(x) $ is the marginal
+              probability (density) function of $ X $
+              with support set $ A_1=\set{x:f_1(x)>0} $ and
+              $ f_2(y) $ is the marginal
+              probability (density) function of $ Y $
+              with support set $ A_2=\set{y:f_2(x)>0} $. Then
+              $ X $ and $ Y $ are independent random variables
+              if and only if
+              \[ f(x,y)=f_1(x)f_2(y)\quad \forall(x,y)\in A_1\times A_2 \]
+              where $ A_1\times A_2=\set{(x,y):x\in A_1,y\in A_2} $.
+    \end{enumerate}
 \end{Theorem}
 
 \begin{Theorem}{}{}
@@ -63,10 +77,10 @@
 
 \begin{Theorem}{Factorization Theorem for Independence}{}
     Suppose $ X $ and $ Y $ are random variables
-    with joint p.(d).f.\ $ f(x,y) $. Suppose
+    with joint probability (density) function $ f(x,y) $. Suppose
     also that $ A $ is the support set of $ (X,Y) $,
     $ A_1 $ is the support set of $ X $,
-    and $ A_2 $ is the support set of $ Y $. Then,
+    and $ A_2 $ is the support set of $ Y $. Then
     $ X $ and $ Y $ are independent random variables
     if and only if there exist non-negative functions
     $ g(x) $ and $ h(y) $ such that
@@ -85,10 +99,11 @@
 \begin{Example}{}{}
     $ \displaystyle f(x,y)=\frac{\theta^{x+y}e^{-2\theta}}{x!y!} $
     where $ x,y\in\mathbb{Z}_{\geqslant 0} $. Are $ X $ and $ Y $
-    independent or not?
+    independent or not? Find the marginal p.f.\ of $ X $ and $ Y $.
 
-    \textbf{Solution.} Find the marginal p.f.\ of $ X $ and $ Y $
-    \[ f(x,y)=\frac{\theta^x}{x!} e^{-\theta}\cdot \frac{\theta^y}{y!}e^{-\theta}  \]
+    \textbf{Solution.}
+    \[ f(x,y)=\Uunderbracket{\frac{\theta^x}{x!} e^{-\theta}}_{g(x)}
+        \Uunderbracket{\frac{\theta^y}{y!}e^{-\theta} }_{h(y)} \]
     The range of $ X $ does not depend on the value of $ y $. Therefore,
     $ X $ and $ Y $ are independent.
     \[ f_1(x)=\sum\limits_{y=0}^{\infty} f(x,y)=\frac{\theta^x e^{-\theta}}{x!}\quad x\in
@@ -103,22 +118,22 @@
 
 \begin{Example}{}{}
     If $ X $ and $ Y $ have joint p.d.f.\
-    \[ f(x,y)=\frac{3}{2} y(1-x^2) \]
+    $ \displaystyle  f(x,y)=\frac{3}{2} y(1-x^2) $
     where $ -1\leqslant x\leqslant 1 $ and $ 0\leqslant y\leqslant 1 $.
     Are $ X $ and $ Y $ independent? Find $ f_1(x) $ and $ f_2(y) $.
 
     \textbf{Solution.}
-    $ f(x,y)=\Uunderbracket{(1-x^2)}_{h(x)}\frac{3}{2} \Uunderbracket{y}_{g(y)} $.
-    and $A =\set{(x,y):-1\leqslant x\leqslant 1,0\leqslant y\leqslant 1} $
+    $ f(x,y)=\Uunderbracket{(1-x^2)}_{h(x)} \Uunderbracket{\frac{3}{2} y}_{g(y)} $
+    and $ A =\set{(x,y):-1\leqslant x\leqslant 1,0\leqslant y\leqslant 1} $
     is a rectangle. Therefore $ X $ and $ Y $ are independent. So,
-    \[ f_1(x)=C_1h(x)=C(1-x^2)\quad\text{for }-1\leqslant x\leqslant 1 \]
+    \[ f_1(x)=C_1h(x)=C_1(1-x^2)\quad\text{for }-1\leqslant x\leqslant 1 \]
     So, let's consider the integral:
     \[ \int_{-1}^{1} f_1(x)\, d{x} =C_1
         \int_{-1}^{1} (1-x^2)\, d{x} =1
         \implies C_1=\frac{3}{4} \]
     Using our previous result, we know that
     \[ f_2(y)=\frac{1}{C_1} h(y)=\frac{4}{3}\cdot \frac{3}{2} y=2y
-        \text{for }0\leqslant y\leqslant 1 \]
+        \quad 0\leqslant y\leqslant 1 \]
 \end{Example}
 
 \begin{Example}{Uniform Distribution on a Semicircle}{}
@@ -127,11 +142,11 @@
     is given by $ \pi/2 $. Are $ X $ and $ Y $ independent and find
     $ f_1(x) $ and $ f_2(y) $.
 
-    \textbf{Solution.} $ \displaystyle f(x,y)=\frac{2}{\pi} $
+    \textbf{Solution.} $ f(x,y)=2/\pi $.
     Take $ g(x)=1 $ and $ h(y)=2/\pi $. Also,
-    this is not a rectangle, so $ X $ and $ Y $ are not a rectangle.
-    Similarly, for a particular value of $ x=0 $
-    then $ -1\leqslant y\leqslant 1 $, so $ y $ depends on $ x $.
+    this is not a rectangle, so $ X $ and $ Y $ are not independent.
+    Similarly, for a particular value of $ x $
+    we can easily see that $ y $ depends on $ x $.
 
     The support of $ X $ is $ \interval{0}{1} $.
     \[ f_1(x)=\int\limits_{-\sqrt{1-x^2}}^{\sqrt{1-x^2}} \frac{2}{\pi} \, d{y}=

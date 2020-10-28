@@ -24,13 +24,16 @@ based on $ f_2(y\mid x) $.
     \end{itemize}
     We're interested in
     \begin{enumerate}
-        \item $ \E{Y\given X=x} $, $ g(Y)=Y $.
-        \item $ \Var{Y\given X=x}=\E{Y^2\given X=x}-\left( \E{Y\given X=x} \right)^2 $.
+        \item The conditional mean of $ Y $ given $ X=x $
+              is denoted $ \E{Y\given X=x} $ since $ g(Y)=Y $.
+        \item The conditional variance of $ Y $ given $ X=x $
+              is denoted by $ \Var{Y\given X=x} $ and is given by
+              \[ \Var{Y\given X=x}=\E{Y^2\given X=x}-\left( \E[\big]{Y\given X=x} \right)^2 \]
         \item $ \E{e^{tY}\given X=x} $, that is, $ g(Y)=e^{tY} $.
     \end{enumerate}
 \end{Remark}
 \begin{Theorem}{Independence}{}
-    If $ X $ and $ Y $ are independent, then
+    If $ X $ and $ Y $ are independent random variables then
     \[ \E{g(Y)\given X=x}=\E{g(Y)}\quad\text{ and }\quad\E{h(X)\given Y=y}=\E{h(X)} \]
     In other words, the conditional expression becomes an unconditional one.
 \end{Theorem}
@@ -41,7 +44,8 @@ based on $ f_2(y\mid x) $.
         \E{Y^2}-\left( \E{Y} \right)^2 $
 \end{Example}
 \begin{Theorem}{Substitution Rule}{}
-    Let $ h $ be a bivariate function, then
+    If $ X $ and $ Y $
+    be random variables and $ h:\mathbb{R}^2\to \mathbb{R} $ then
     \[ \E{h(X,Y)\given X=x}=\E{h(x,Y)\given X=x} \]
 \end{Theorem}
 \begin{Example}{}{}
@@ -76,6 +80,7 @@ based on $ f_2(y\mid x) $.
 \end{Example}
 \begin{Remark}{}{}
     Note that $ \E{g(Y)\given X}\neq \E{g(Y)\given X=x} $.
+
     $ \E{g(Y)\given X} $ is a random variable because it's a function
     of $ X $, denoted by $ h(X) $. It's value is given by $ h(x)=
         \E{g(Y)\given X=x} $ for $ X=x $.
@@ -83,16 +88,19 @@ based on $ f_2(y\mid x) $.
     How to get it? Two steps.
     \begin{itemize}
         \item Step 1: Find $ \E{g(Y)\given X=x}=h(x) $
-        \item Step 2: Replace $ x $ by $ X $ to get the random variable $ \E{g(Y)\given X}=h(X) $.
+        \item Step 2: Replace $ x $ with
+              $ X $ to get the random variable $ \E{g(Y)\given X}=h(X) $.
     \end{itemize}
 \end{Remark}
 \begin{Example}{}{}
     Suppose $ Y \sim \poi{\theta} $ and $ X\mid Y=y \sim \bin{y,p} $. Then,
     \[ \E{X\given Y=y}=yp\implies \E{X\mid Y}=Yp \]
 \end{Example}
-These concepts lead to the Double Expectation Theorem.
-\begin{Theorem}{Double Expectation}{double_expectation}
-    $ \E{g(Y)}=\E{\E{g(Y)\given X}} $.
+These concepts lead to the Double Expectation Theorem
+or more commonly known as the Law of Total Expectation.
+\begin{Theorem}{Double Expectation (Law of Total Expectation)}{double_expectation}
+    Suppose $ X $ and $ Y $ are random variables then
+    \[ \E{g(Y)}=\E{\E{g(Y)\given X}} \]
     In particular, $ \E{Y}=\E{\E{Y\given X}} $.
 \end{Theorem}
 \begin{Example}{}{}

@@ -15,17 +15,20 @@ Last lecture:
           \end{itemize}
     \item Double expectation theorem: $ \E{g(Y)}=\E{\E{g(Y)\given X}} $
 \end{itemize}
-\begin{Theorem}{}{}
+\begin{Theorem}{Law of Total Variance}{}
+    Suppose $ X $ and $ Y $ are random variables then
     \[ \Var{Y}=\E{\Var{Y\given X}}+\Var{\E{Y\given X}} \]
 \end{Theorem}
 \begin{Remark}{}{}
     $ \Var{Y\given X} $ is a random variable and function of $ X $.
+
+    How to get it? Two steps:
+    \begin{enumerate}
+        \item $ \Var{Y\given X=x}=\E{Y^2\given X=x}-(\E{Y\given X=x})^2 $.
+        \item Replace $ x $ with $ X $ to get
+              the random variable $ \Var{Y\given X} $.
+    \end{enumerate}
 \end{Remark}
-Two steps:
-\begin{enumerate}
-    \item $ \Var{Y\given X=x}=\E{Y^2\given X=x}-(\E{Y\given X=x})^2 $
-    \item replace $ x $ with $ X $ to get $ \Var{Y\given X} $
-\end{enumerate}
 \begin{Example}{}{}
     $ Y \sim \poi{\theta} $, $ X\mid Y=y \sim \bin{y,p} $. Find
     $ \Var{X} $.
@@ -96,27 +99,29 @@ Two steps:
 
 \section{Joint Moment Generating Functions}
 \begin{Definition}{Joint moment generating function}{}
-    If $ X $ and $ Y $ are two random variables, then
+    If $ X $ and $ Y $ are random variables, then
     \[ M(t_1,t_2)=\E{e^{t_1X+t_2Y}} \]
     is called the \textbf{joint moment generating function}
     of $ X $ and $ Y $ if $ M(t_1,t_2) $ exists for
     $ \abs{t_1}<h_1 $ and $ \abs{t_2}<h_2 $
-    for some $ h_1>0 $, $ h_2>0 $.
+    for some $ h_1,h_2>0 $.
 \end{Definition}
 \begin{Remark}{}{}
     In general, suppose $ X_1,\ldots,X_n $ are random variables,
     then
     \[ M(t_1,\ldots,t_n)=\E*{\exp\left\{ \sum_{i=1}^{n} t_i X_i\right\}} \]
     is the \textbf{joint moment generating function}
-    if it exists for $ \abs{t_i}<h_i $ for $ i=1,\ldots,n $.
+    if it exists for $ \abs{t_i}<h_i $
+    for some $ h_i>0 $ where $ i=1,\ldots,n $.
 \end{Remark}
 \begin{Remark}{Applications of Joint Moment Generating Functions}{}
     \begin{enumerate}[label=(\arabic*)]
         \item From joint m.g.f.\ to marginal m.g.f.\
               Given $ M(t_1,t_2) $ for $ \abs{t_1}<h_1 $
-              and $ \abs{t_2}<h_2 $,
-              \[ M_X(t_1)=M(t_1,t_2=0)=\E{e^{t_1X}}\quad \abs{t_1}<h_1 \]
-              \[ M_Y(t_2)=M(0,t_2)=\E{e^{t_2Y}}\quad \abs{t_2}<h_2 \]
+              and $ \abs{t_2}<h_2 $
+              with $ h_1,h_2>0 $,
+              \[ M_X(t_1)=M(t_1,t_2=0)=\E{e^{t_1X}} \]
+              \[ M_Y(t_2)=M(0,t_2)=\E{e^{t_2Y}} \]
         \item Independence Property. $ X $ and
               $ Y $ are independent if and only if
               \[ M(t_1,t_2)=M_X(t_1)M_Y(t_2) \]

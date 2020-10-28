@@ -5,7 +5,7 @@ used multivariate random variables.
 \begin{Definition}{Multinomial distribution}{}
     $ (X_1,\ldots,X_k) $ are joint discrete
     random variables with joint p.f.\ given by
-    \[ f(x_1,\ldots,x_k)=P(X_1=x_1,\ldots,X_k=x_k)=
+    \[ f(x_1,\ldots,x_k)=\Prob{X_1=x_1,\ldots,X_k=x_k}=
         \frac{n!}{x_1!x_2!\cdots x_k!}p_1^{x_1}\cdots p_k^{x_k} \]
     where $ x_i=0,1,\ldots,n $ ($ i=1,2,\ldots,k $). Furthermore,
     $ \sum_{i=1}^{k}x_i=n $, $ \sum_{i=1}^{k} p_i=1 $,
@@ -26,86 +26,121 @@ used multivariate random variables.
     \[ (X_1,\ldots,X_k) \sim \mult{n;p_1,\ldots,p_k} \]
     Note: if there are only two boxes, then $ X_1\sim \bin{n,p_1} $.
 \end{Example}
-\begin{Proposition}{Properties --- Multinomial Distribution}{}
-    Suppose that $ (X_1,\ldots,X_k) \sim \mult{n;p_1,\ldots,p_k} $.
+\begin{Proposition}{Properties --- Multinomial Distribution}{prop_multi}
+    If $ (X_1,\ldots,X_k) \sim \mult{n;p_1,\ldots,p_k} $, then
     \begin{enumerate}[label=(\arabic*)]
-        \item $ M(t_1,\ldots,t_k)=\E{e^{t_1 X_1+\cdots+t_k X_k}}=
+        \item\label{prop_multi1} $ M(t_1,\ldots,t_k)=\E{e^{t_1 X_1+\cdots+t_k X_k}}=
                   (p_1e^{t_1}+\cdots+p_k e^{t_k})^n $
               where $ \abs{t_i}<\infty $ for $ i=1,\ldots,k $.
-        \item Marginally, $ X_i \sim \bin{n,p_i} $
-              for $ i=1,\ldots,k $.
-        \item If $ T=X_i+X_j $, for $ i\neq j $. Then,
-              \[ T \sim \bin{n,p_i+p_j} \]
-        \item Joint moments:
-              \[ \E{X_i}=n p_i \]
-              \[ \Var{X_i}=np_i(1-p_i) \]
-              \[ \Var{X_j}=np_j(1-p_j) \]
-              Note: $ X_i+X_j \sim \bin{n,p_i+p_j} $, therefore
-              \[ \Var{X_i+X_j}=n(p_i+p_j)(1-p_i-p_j) \]
-              So,
-              \[ \Cov{X_i+X_j,X_i+X_j}=\Var{X_i}+\Var{X_j}+2\Cov{X_i,X_j} \]
-              \[ \implies n(p_i+p_j)(1-p_i-p_j)=np_i(1-p_i)+\Var{X_j}=np_j(1-p_j)
-                  +2\Cov{X_i,X_j} \]
-              Therefore,
-              \[ \Cov{X_i,X_j}=-n p_i p_j \]
-        \item $ X_i\mid X_j=x_j $. $ x_j $ outcomes
-              from the $ j^{\text{th}} $ category. There are
-              $ (n-x_j) $ balls chosen from the other $ (k-1) $ boxes.
-              \[ X_i\mid X_j=x_i \sim \bin*{n-x_j,
+        \item\label{prop_multi2} $ X_i \sim \bin{n,p_i} $ for $ i=1,\ldots,k $.
+        \item\label{prop_multi3} If $ T=X_i+X_j $ for $ i\neq j $, then
+              $ T \sim \bin{n,p_i+p_j} $
+        \item\label{prop_multi4} $ \Cov{X_i,X_j}=-n p_i p_j  $
+              for $ i\neq j $
+        \item\label{prop_multi5} The conditional probability
+              function of $ X_i $ given $ X_j=x_j $ for $ i\neq j $ is
+              \[ X_i\mid X_j=x_j \sim \bin*{n-x_j,
                       \frac{p_i}{1-p_j}} \]
-        \item $ X_i\mid X_i+X_j=t $.
+        \item\label{prop_multi6} The conditional distribution of $ X_i $
+              given $ T=X_i+X_j $ for $ i\neq j $ is
+              \[ X_i\mid X_i+X_j \sim \bin*{t,\frac{p_i}{p_i+p_j} } \]
     \end{enumerate}
 \end{Proposition}
+\begin{Proof}{\ref{prop:prop_multi}}{}
+    Proof of~\ref{prop_multi1}: Too long
+    for my poor soul to type. Proof requires the Multinomial Theorem.
 
+    Proof of~\ref{prop_multi2}: The moment
+    generating function of $ X_i $ for $ i=1,\ldots,k $ is
+    \[ M(0,\ldots,0,t,0,\ldots,0)=\left[ p_i e^{t_i}+(1-p_i) \right]^n
+        \quad t_i\in\mathbb{R} \]
+    which is the moment generating function of a
+    $ \bin{n,p_i} $ random variable. By~\ref{thm:uniq_mgf}
+    we have $ X_i \sim \bin{n,p_i} $ for $ i=1,\ldots,k $.
+
+    Proof of~\ref{prop_multi3}: The moment
+    generating function of $ T=X_i+X_j $ for $ i\neq j $ is
+    \begin{align*}
+        M_T(t)
+         & =\E*{e^{tT}}                                                                         \\
+         & =\E*{e^{t(X_i+X_j)}}                                                                 \\
+         & =\E*{e^{t X_i+t X_j}}                                                                \\
+         & =M(0,\ldots,0,t,0,\ldots,0,t,0,\ldots,0)                                             \\
+         & =(p_1+\cdots+p_i e^{t}+\cdots+p_j e^t+\cdots+p_{k-1}+p_k)^n & \quad & t\in\mathbb{R} \\
+         & =\left[ (p_i+p_j)e^t+(1-p_i-p_j) \right]^n                  &       & t\in\mathbb{R}
+    \end{align*}
+    which is the moment generating function of a
+    $ \bin{n,p_i+p_j} $ random variable. By~\ref{thm:uniq_mgf}
+    we have $ T \sim \bin{n,p_i+p_j} $ for $ i\neq j $.
+
+    Proof of~\ref{prop_multi4}:
+    By~\ref{prop_multi2} we have $ \E{X_i}=n p_i $, $ \Var{X_i}=np_i(1-p_i) $,
+    and $ \Var{X_j}=np_j(1-p_j) $. By~\ref{prop_multi3} we have
+    $ X_i+X_j \sim \bin{n,p_i+p_j} $, so
+    $ \Var{X_i+X_j}=n(p_i+p_j)(1-p_i-p_j) $.
+    Thus,
+    \[ \Cov{X_i+X_j,X_i+X_j}=\Var{X_i}+\Var{X_j}+2\Cov{X_i,X_j} \]
+    \[ \implies n(p_i+p_j)(1-p_i-p_j)=np_i(1-p_i)+np_j(1-p_j)
+        +2\Cov{X_i,X_j} \]
+    Therefore, $ \Cov{X_i,X_j}=-n p_i p_j $.
+
+    Proof of~\ref{prop_multi5}: There are $ x_j $ outcomes
+    from the $ j^{\text{th}} $ category. Therefore,
+    there are $ (n-x_j) $ balls chosen from the remaining $ (k-1) $
+    boxes. We are not allowed to choose from the $ j^{\text{th}} $ box,
+    we are only allowed to choose from the from the remaining $ (k-1) $
+    boxes. Therefore, proportionally we get the success probability
+    as $ p_i/(1-p_j) $.
+\end{Proof}
+\begin{Exercise}{}{}
+    Prove property~\ref{prop_multi6} from~\Cref{prop:prop_multi}.
+\end{Exercise}
 \section{Bivariate Normal Distribution}
 \begin{Definition}{Bivariate normal distribution}{}
     Suppose that $ X_1 $ and $ X_2 $
     are continuous random variables with joint probability
     density function
     \[ f(x_1,x_2)=\frac{1}{2\pi\abs*{\Sigma}^{1/2}}
-        \exp\left\{ -\frac{(\symbf{x}-\symbf{\mu})^\top \Sigma^{-1}(\symbf{x}-\symbf{\mu})^\top
-        }{2} \right\}  \]
-    with $ \abs{x_1},\abs{x_2}<\infty $. Here,
+        \exp\left\{ -\frac{1}{2}(\symbf{x}-\symbf{\mu})^\top \Sigma^{-1}(\symbf{x}-\symbf{\mu})
+        \right\}\quad(x_1,x_2)\in\mathbb{R}^2     \]
+    Also,
     \[ \symbf{x}=\begin{bmatrix}
             x_1 \\
             x_2
-        \end{bmatrix},\quad
+        \end{bmatrix}_{2\times 1},\quad
         \symbf{\mu}=\begin{bmatrix}
             \mu_1 \\
             \mu_2
-        \end{bmatrix},\quad
+        \end{bmatrix}_{2\times 1},\quad
         \Sigma=
         \begin{bmatrix}
             \sigma_1^2        & p\sigma_1\sigma_2 \\
             p\sigma_1\sigma_2 & \sigma_2^2
-        \end{bmatrix} \]
-    where $ \Sigma $ is positive definite. Also,
+        \end{bmatrix}_{k\times k} \]
+    and $ \Sigma $ is positive semi-definite. Also,
     $ \abs*{\Sigma} $ is the determinant of $ \Sigma $.
-    Then, $ \symbf{X}=(X_1,X_2) $ follows a bivariate normal distribution,
-    denoted as,
+    Then, $ \symbf{X}=(X_1,X_2) $ follows a \textbf{bivariate normal distribution},
+    and we write
     \[ \symbf{X}\sim\Bvn{\symbf{\mu},\Sigma}  \]
 \end{Definition}
-\begin{Remark}{}{}
+\begin{Remark}{$ \dagger $}{}
     Alternatively, we could write
-    \[ f(x_1,x_2)=\frac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}
+    \begin{align*}
+        f(x_1 & ,x_2)                                          \\
+              & =\frac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}
         \exp\left\{ -\frac{1}{2(1-\rho^2)}
         \left[ \left( \frac{x_1-\mu_1}{\sigma_1}  \right)^2+
             \left( \frac{x_2-\mu_2}{\sigma_2}  \right)^2-
-            2\left( \frac{\rho(x_1-\mu_1)(x_2-\mu_2)}{\sigma_1\sigma_2} \right) \right] \right\}  \]
-    as we found the determinant of $ \Sigma $ and calculated the quadratic form.
-    We do not need to know this in the course.
+            \frac{2\rho(x_1-\mu_1)(x_2-\mu_2)}{\sigma_1\sigma_2} \right] \right\}
+    \end{align*}
 \end{Remark}
 \begin{Proposition}{Properties --- Bivariate Normal Distribution}{}
     \begin{enumerate}[label=(\arabic*)]
-        \item Joint m.g.f.
+        \item $ X_1,X_2 $ has joint moment generating function
               \[ M(t_1,t_2)=\E{
                       e^{t_1X_1+t_2X_2}
                   }=\exp\left\{ \symbf{t}^\top \symbf{\mu}+\frac{1}{2}\symbf{t}^\top \Sigma
-                  \symbf{t} \right\} \]
-              where $ t=\begin{pmatrix}
-                      t_1 \\
-                      t_2
-                  \end{pmatrix}\in\mathbb{R}^2 $
+                  \symbf{t} \right\}\quad \forall t\in\mathbb{R}^2 \]
         \item Marginally,
               \[ M_{X_1}(t_1)=M(t_1,0)=\exp\left\{ t_1\mu_1+\frac{1}{2} t_1^2
                   \sigma_1^2\right\} \]
@@ -130,7 +165,7 @@ used multivariate random variables.
         \item $ \rho=0\iff X_1\text{ and }X_2 $ are independent.
         \item Linear transformations of bivariate
               normal are still normal.
-        \item $ (X-\symbf{\mu})^\top \Sigma^{-1}(X-\symbf{\mu})\sim \chi^2(2) $
+        \item $ (\symbf{X}-\symbf{\mu})^\top \Sigma^{-1}(\symbf{X}-\symbf{\mu})\sim \chi^2(2) $
     \end{enumerate}
 \end{Proposition}
 

@@ -11,17 +11,21 @@ Last lecture we talked about joint expectation, more specifically:
     \item Correlation
 \end{itemize}
 \section{Conditional Distributions}
-\begin{Definition}{Conditional probability function}{}
-    Suppose that $ X $ and $ Y $ have joint p.f.\ $ f(x,y) $
-    and marginal p.f.\ $ f_1(x) $ and $ f_2(y) $.
+\begin{Definition}{Conditional probability (density) function}{}
+    Suppose that $ X $ and $ Y $ have joint probability
+    (density) function $ f(x,y) $,
+    and marginal probability (density) functions
+    $ f_1(x) $ and $ f_2(y) $ respectively.
+    Suppose also that the support set
+    of $ (X,Y) $ is $ A=\set{(x,y):f(x,y)>0} $.
 
-    The \textbf{conditional probability function}
+    The \textbf{conditional probability (density) function}
     of $ X $ given $ Y=y $ is
-    \[ f_1(x\mid y)=\frac{f(x,y)}{f_2(y)}\quad\text{provided } f_2(y)>0 \]
-    The \textbf{conditional probability function} of $ Y $ given $ X=x $
-    \[ f_2(y\mid x)=\frac{f(x,y)}{f_1(x)}\quad\text{provided } f_1(x)>0 \]
+    \[ f_1(x\mid y)=\frac{f(x,y)}{f_2(y)}\quad\text{provided } f_2(y)>0\quad (x,y)\in A \]
+    The \textbf{conditional probability (density) function} of $ Y $ given $ X=x $
+    \[ f_2(y\mid x)=\frac{f(x,y)}{f_1(x)}\quad\text{provided } f_1(x)>0\quad (x,y)\in A \]
 \end{Definition}
-\begin{Proposition}{Properties of Conditional Probability Function}{}
+\begin{Proposition}{Properties --- Conditional Probability Function}{}
     $ f_1(x\mid y) $ and $ f_2(y\mid x) $ are both probability functions;
     that is,
     \[ f_1(x\mid y)\geqslant 0 \quad\text{ and }\quad
@@ -29,17 +33,7 @@ Last lecture we talked about joint expectation, more specifically:
     \[ f_2(y\mid x)\geqslant 0 \quad\text{ and }\quad
         \sum_{y}f_2(y\mid x)=1\implies f_2(y\mid x)\text{ is a p.f.}\]
 \end{Proposition}
-\begin{Definition}{Conditional probability density function}{}
-    Suppose that $ X $ and $ Y $ have joint p.d.f.\ $ f(x,y) $
-    and marginal p.d.f.\ $ f_1(x) $ and $ f_2(y) $.
-
-    The \textbf{conditional probability density function}
-    of $ X $ given $ Y=y $ is
-    \[ f_1(x\mid y)=\frac{f(x,y)}{f_2(y)}\quad\text{provided } f_2(y)>0  \]
-    The \textbf{conditional probability density function} of $ Y $ given $ X=x $
-    \[ f_2(y\mid x)=\frac{f(x,y)}{f_1(x)}\quad\text{provided } f_1(x)>0 \]
-\end{Definition}
-\begin{Proposition}{Properties of Conditional Probability Function}{}
+\begin{Proposition}{Properties --- Conditional Probability Function}{}
     $ f_1(x\mid y) $ and $ f_2(y\mid x) $ are both probability density functions;
     that is,
     \[ f_1(x\mid y)\geqslant 0 \quad\text{ and }\quad
@@ -97,16 +91,29 @@ Last lecture we talked about joint expectation, more specifically:
     \[ f_2(y\mid x)=\frac{f(x,y)}{f_1(x)}=qp^y=f_2(y) \]
     This is another way to show independence of $ X $ and $ Y $.
 \end{Example}
-\begin{Remark}{Applications of Conditional Distribution}{}
-    \begin{itemize}
-        \item Check independence. $ X $ and $ Y $ are independent
-              if and only if
-              \[ f_1(x\mid y)=f_1(x)\quad\text{ and }\quad f_2(y\mid x)=f_2(y) \]
-        \item We can use conditional distribution to find joint distribution.
-
-              Product rule: $ f(x,y)=f_1(x\mid y)f_2(y)=f_2(y\mid x)f_1(x) $.
-    \end{itemize}
-\end{Remark}
+\begin{Theorem}{}{}
+    Suppose $ X $ and $ Y $ are random variables
+    with marginal probability (density) functions
+    $ f_1(x) $ and $ f_2(y) $ respectively
+    and conditional probability (density) functions
+    $ f_1(x\mid y) $ and $ f_2(y\mid x) $.
+    Suppose also that $ A_1 $ is the support set of $ X $
+    and $ A_2 $ is the support set of $ Y $. Then
+    $ X $ and $ Y $ are independent random variables if and only if
+    either of the following holds
+    \[ f_1(x\mid y)=f_1(x) \quad \forall x\in A_1\]
+    or
+    \[ f_2(y\mid x)=f_2(y) \quad \forall y\in A_2 \]
+\end{Theorem}
+\begin{Theorem}{Product Rule}{}
+    Suppose $ X $ and $ Y $ are random variables
+    with joint probability (density) function
+    $ f(x,y) $, marginal probability (density) functions
+    $ f_1(x) $ and $ f_2(y) $ respectively
+    and conditional probability (density) functions
+    $ f_1(x\mid y) $ and $ f_2(y\mid x) $. Then
+    \[ f(x,y)=f_1(x\mid y)f_2(y)=f_2(y\mid x)f_1(x)  \]
+\end{Theorem}
 \begin{Example}{Product rule}{}
     Suppose $ Y \sim \poi{\theta} $ and $ X\mid Y=y \sim \bin{y,p} $.
     Find the marginal p.f.\ of $ X $.

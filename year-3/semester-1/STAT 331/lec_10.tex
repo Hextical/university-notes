@@ -10,11 +10,15 @@ Now consider hypothesis test of the form $ H_0 $: $ A\symbf{\beta}=\symbf{0} $
 where $ A $ is a matrix of constraints specifying
 linear combinations of parameters.
 
-\begin{Example}{}{}
-    Coffee: $ Y_i=\beta_0+\beta_1x_{i1} $
-    where $ Y_i $ is the flavour and $ x_{i1} $
-    is the acidity. The full model is:
+\begin{Example}{Coffee Continued}{}
+    The full model is:
     \[ Y_i=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}+\varepsilon_i \]
+    \begin{itemize}
+        \item $ Y_i $ is the flavour
+        \item $ x_{i1} $ is acidity
+        \item $ x_{i2} $ is 1 if semi, and 0 otherwise.
+        \item $ x_{i3} $ is 1 if wet, and 0 otherwise.
+    \end{itemize}
     Example 1.
     \begin{itemize}
         \item $ H_0 $: $ \beta_1=\beta_2=\beta_3=0 $ versus
@@ -77,14 +81,14 @@ denote the fitted values from fitting the reduced model.
 The residual if we hit the model with $ A\symbf{\beta}=\symbf{0} $
 is $ \symbf{e}_A=\symbf{y}-\hat{\symbf{\mu}}_A $.
 
-If $ A\symbf{\beta}=\symbf{0} $ is true, then
+If $ H_0 $: $ A\symbf{\beta}=\symbf{0} $ is true, then
 $ \hat{\symbf{\mu}} $ and $ \hat{\symbf{\mu}}_A $ should be close;
 that is, the model makes similar predictions whether
 we set $ A\symbf{\beta}=\symbf{0} $ or not when fitting the model.
 
 So to assess whether $ H_0 $ is plausible,
 look at $ \norm{\hat{\symbf{\mu}}-\hat{\symbf{\mu}}_A} $
-which is Euclidean or $ L_2 $ norm. That is,
+where $ \norm{\cdot} $ is Euclidean or $ L_2 $ norm. That is,
 \[ \norm{\hat{\symbf{\mu}}-\hat{\symbf{\mu}}_A}=
     \sqrt{(\hat{\symbf{\mu}}-\hat{\symbf{\mu}}_A)^\top(\hat{\symbf{\mu}}-\hat{\symbf{\mu}}_A)} \]
 If it's ``large'' or ``small'' (close to 0)
@@ -105,12 +109,12 @@ or equivalently $ \symbf{e}_A^\top \symbf{e}_A=\symbf{e}^\top \symbf{e}
     }^2 $
 where $ \symbf{e}_A^\top \symbf{e}_A $ is the sum of squares
 residual in the reduced model and $ \symbf{e}^\top \symbf{e} $
-is the sum of squares residual in the model.
+is the sum of squares residual in the full model.
 
 We define $ \symbf{e}_A^\top \symbf{e}_A=\SS{Res}_A $
 and $ \symbf{e}^\top \symbf{e} =\SS{Res} $.
 
-Thus, $ \norm{\hat{\symbf{\mu}}-\hat{\symbf{\mu}}_A}=
+Thus, $ \norm{\hat{\symbf{\mu}}-\hat{\symbf{\mu}}_A}^2=
     \SS{Res}_A-\SS{Res} \geqslant 0 $
 additional sum of squares explained by full model vs reduced
 one with constraints $ A $.
@@ -124,12 +128,12 @@ Practical implications:
 \end{itemize}
 
 Define test statistic:
-\[ F=\frac{(\SS{Res}_A-\SS{Res})/\ell}{\SS{Res}/(n-p-1)}  \]
-we know $ \SS{Res}/(n-p-1)=\hat{\sigma}^2 $ in the full model.
-\begin{Definition}{}{}
+\[ F=\frac{(\SS{Res}_A-\SS{Res})/\ell}{\SS{Res}/(n-p-1)}=
+    \frac{(\SS{Res}_A-\SS{Res})/\ell}{\hat{\sigma}^2}  \]
+\begin{Definition}{$F$ distribtion}{}
     If $ U \sim \chi^2(a) $ and $ V \sim \chi^2(b) $
-    are independent. We say $ F $ follows and
-    $ F $ distribution if
+    are independent. We say $ F $ follows an
+    $ F $ \textbf{distribution} if
     \[ F=\frac{U/a}{V/b} \]
     and wite $ F \sim F(a,b) $.
 \end{Definition}
@@ -155,6 +159,6 @@ Squaring everything,
 and we know $ Z^2 \sim \chi^2(1) $. Therefore,
 $ Y^2 \sim F(1,a) $ (we divide by 1 in the numerator).
 
-So, if our hypothesis test has one constraint,
-then $ H_0 $: $ \beta_1=0 $ versus $ H_A $: $ \beta_1\neq 0 $
-then $ F $ test is equal to $ t $ test of same hypothesis.
+Thus, if our hypothesis test has one constraint,
+then $ F $ test is equal to $ t $ test of same hypothesis;
+for example, $ H_0 $: $ \beta_1=0 $ versus $ H_A $: $ \beta_1\neq 0 $.
