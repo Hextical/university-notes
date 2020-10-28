@@ -32,5 +32,5 @@ N/A
 |     Course      | Completion |       Online       |
 | :-------------: | :--------: | :----------------: |
 |    STAT 330     | Week 6/12  | :heavy_check_mark: |
-|    STAT 330     | Week 6/12  | :heavy_check_mark: |
+|    STAT 331     | Week 6/12  | :heavy_check_mark: |
 | AMATH/PMATH 331 |    TODO    | :heavy_check_mark: |
