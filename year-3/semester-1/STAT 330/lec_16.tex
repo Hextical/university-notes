@@ -1,0 +1,208 @@
+\makeheading{Lecture 16 | 2020-10-01}
+\section{Moment Generating Function Technique}
+Idea:
+\begin{enumerate}[label=(\arabic*)]
+    \item Find the moment generating function of a random variable
+    \item Use uniqueness theorem of moment generating function
+          to find the distribution of the random variable and then
+          the p.d.f.\ of a random variable.
+\end{enumerate}
+\begin{Theorem}{}{}
+    Suppose $ X_1,\ldots,X_n $
+    are independent, then $ T=\sum_{i=1}^{n} X_i $
+    has moment generating function
+    \[ M_T(t)=\E*{e^{t \sum_{i=1}^{n} X_i}}=
+        \E*{\prod_{i=1}^n e^{tX_i}}=\prod_{i=1}^n \E*{e^{tX_i}}=
+        \prod_{i=1}^n M_{X_i}(t) \]
+    In particular, if $ X_1,\ldots,X_n $ are independently
+    and identically distributed, then they
+    have the exact same moment generating function $ M(t) $;
+    that is,
+    \[ M_T(t)=\left[ M(t) \right]^n \]
+\end{Theorem}
+Next, we use the m.g.f.\ technique to find properties
+of normal, $ \chi^2 $, $ t $-distribution,
+and $ F $-distributions.
+
+If $ X \sim N(\mu,\sigma^2) $, then
+\[ aX+b \sim N(a\mu+b,a^2\sigma^2) \]
+Recall that
+\[ M_X(t)
+    =\exp\left\{ \mu t+\frac{\sigma^2t^2}{2}\right\} \]
+Therefore,
+\begin{align*}
+    M_{aX+b}(t)
+     & =e^{b t}M_X(at)                                                              \\
+     & =\exp\left\{ b t\right\}\exp\left\{ a\mu t+\frac{a^2\sigma^2t^2}{2} \right\} \\
+     & =\expon*{b t}\expon*{a\mu t+\frac{a^2\sigma^2t^2}{2}}                        \\
+     & =\expon*{(a\mu+b)t+\frac{a^2\sigma^2}{2} t^2}
+\end{align*}
+which is the m.g.f.\ of $ \N{a\mu+b,a^2\sigma^2} $.
+
+If $ X \sim \N{\mu,\sigma^2} $, then
+\[ \frac{X-\mu}{\sigma} \sim \N{0,1} \]
+
+If $ X_i \sim \N{\mu_i,\sigma_i^2} $ for $ i=1,\ldots,n $
+are independent, then
+\[ \sum_{i=1}^{n} a_i X_i \sim \N[\bigg]{\sum_{i=1}^{n} a_i\mu_i,
+        \sum_{i=1}^{n} a_i^2\sigma_i^2} \]
+We know $ a_i X_i \sim \N{a_i\mu_i,a_i^2\sigma_i^2} $
+for $ i=1,\ldots, n $.
+\[ M_{a_i X_i}(t)=\expon*{(a_i\mu_i)t+\frac{a_i^2\sigma_i^2}{2}t^2} \]
+Therefore,
+\begin{align*}
+    M_{\sum_{i=1}^{n} a_i X_i}(t)
+     & =\E*{e^{t \sum_{i=1}^{n} a_i X_i}}                                 \\
+     & =\E*{\prod_{i=1}^n e^{(a_i X_i)t}}                                 \\
+     & =\prod_{i=1}^n\E*{e^{(a_i X_i)t}}                                  \\
+     & =\prod_{i=1}^n M_{a_i X_i}(t)                                      \\
+     & =\prod_{i=1}^n \expon*{(a_i\mu_i)t+\frac{\sigma_i^2 a_i^2}{2}t^2 } \\
+     & =\expon*{\biggl(\sum_{i=1}^{n} a_i\mu_i\biggr)t
+        +\frac{\sum_{i=1}^{n} a_i^2\sigma_i^2}{2}t^2}
+\end{align*}
+which is the m.g.f.\ of
+$ \N*{\sum_{i=1}^{n} a_i\mu_i,\sum_{i=1}^{n} a_i^2\sigma_i^2} $.
+
+If $ X_1,\ldots,X_n \stackrel{\text{iid}}{\sim} \N{\mu,\sigma^2} $,
+then
+\[ \sum_{i=1}^{n} X_i \sim \N*{n\mu,n\sigma^2} \]
+\[ \frac{1}{n} \sum_{i=1}^{n} X_i \sim \N*{\mu,\frac{\sigma^2}{n}} \]
+Let $ \displaystyle \bar{X}=\frac{1}{n} \sum_{i=1}^{n}X_i $, then
+\[ \bar{X}\sim \N*{\mu,\frac{\sigma^2}{n} } \]
+\[ \frac{\bar{X}-\mu}{\sigma}\sim \N{0,1}  \]
+\begin{Definition}{Chi-Squared Distribution}{}
+    If $ Z_1,\ldots,Z_k \sim \N{0,1} $ are independent
+    and $ 0<k\in\mathbb{Z} $, then
+    \[ Q=\sum_{i=1}^{k} Z_i^2 \]
+    follows a \textbf{chi-squared distribution}
+    with $ k $ degrees of freedom and write
+    $ Q \sim \chi^2(k) $.
+\end{Definition}
+If $ X \sim \N{\mu,\sigma^2} $, then
+\[ \biggl(\frac{X-\mu}{\sigma}\biggr)^2 \sim \chi^2(1)  \]
+If $ Y_i \sim \chi^2(k_i) $ are independent, then
+\[ \sum_{i=1}^{n} Y_i \sim \chi^2\biggl(\sum_{i=1}^{n} k_i\biggr) \]
+The m.g.f.\ of $ \chi^2(1) $ is $ (1-2t)^{-1/2} $. Derive
+the m.g.f.\ $ \chi^2(n) $: $ (1-2t)^{-n/2} $.
+\[ \chi^2(n)=\sum_{i=1}^{n} X_i^2\quad X_i\stackrel{\text{iid}}{\sim}\N{0,1}\]
+\begin{align*}
+    M_{\sum_{i=1}^{n} Y_i}(t)
+     & =\prod_{i=1}^n M_{Y_i}(t)         \\
+     & =\prod_{i=1}^n(1-2t)^{-k/2}       \\
+     & =(1-2t)^{-(\sum_{i=1}^{n} k_i)/2}
+\end{align*}
+In summary: sum of independent $ \chi^2 $ distributions
+follow $ \chi^2 $ with d.f.\ being sum of d.f.\ of
+$ \chi^2 $ distributions.
+
+Specifically, if $ X_1,\ldots,X_n\stackrel{\text{iid}}{\sim}\N{\mu,\sigma^2} $
+\[ \sum_{i=1}^{n} \biggl(\frac{X_i-\mu}{\sigma}\biggr)^2=
+    \frac{\sum_{i=1}^{n} (X_i-\mu)^2}{\sigma^2}\sim \chi(n)  \]
+\begin{Definition}{Student's $ t $-distribution}{}
+    Let $ Z \sim \N{0,1} $ and $ Q \sim \chi^2(\nu) $
+    be independent, then
+    \[ T=\frac{Z}{\sqrt{Q/\nu}}  \]
+    follows a \textbf{student's t-distribution}
+    with $ k $ degrees of freedom and write
+    $ T \sim t(\nu) $.
+
+    Support of $ T $: $ (-\infty,\infty) $.
+\end{Definition}
+\begin{Definition}{$ F $-distribution}{}
+    If $ X \sim \chi^2(n) $ and $ Y \sim \chi^2(m) $
+    are independent, then
+    \[ \frac{X/n}{Y/m} \sim F(n,m) \]
+    follows a \textbf{F-distribution}.
+
+    Support of $ F(n,m) $:
+    \begin{itemize}
+        \item If $ n=1 $: $ \interval[open right]{0}{\infty} $.
+        \item If $ n\neq 1 $: $ (0,\infty) $.
+    \end{itemize}
+\end{Definition}
+If $ X \sim \chi^2(n) $ and $ Y \sim \chi^2(m) $ are independent,
+then
+\[ X+Y \sim \chi^2(n+m) \]
+\begin{Exercise}{}{}
+    True or false:
+    \[ \frac{X/n}{(X+Y)/(n+m)} \sim F(n,n+m) \]
+\end{Exercise}
+Answer: False.
+\begin{Example}{$ \chi^2 $-distribution}{}
+    If $ X_1,\ldots,X_n \sim \N{\mu,\sigma^2} $, then
+    \[ \sum_{i=1}^{n} \biggl(\frac{X_i-\mu}{\sigma} \biggr) \sim \chi^2(n) \]
+    In STAT 231, if we replace $ \mu $ by $ \bar{X} $, then
+    \[ \frac{\sum_{i=1}^{n} (X_i-\bar{X})^2}{\sigma^2} \sim \chi^2(n-1)  \]
+\end{Example}
+Why do we lose one d.f.\ when replacing $ \mu $ by $ \bar{X} $?
+\begin{Proof}{}{}
+    \begin{align*}
+        \frac{\sum_{i=1}^{n} (X_i-\mu)^2}{\sigma^2}
+         & =\frac{\sum_{i=1}^{n} (X_i-\bar{X}+\bar{X}-\mu)^2}{\sigma^2} \\
+         & =\frac{\sum_{i=1}^{n} (X_i-\bar{X})^2}{\sigma^2}+2
+        \frac{\sum_{i=1}^{n} (X_i-\bar{X})(\bar{X}-\mu)}{\sigma^2}+
+        \frac{\sum_{i=1}^{n} (\bar{X}-\mu)^2}{\sigma^2}
+    \end{align*}
+    Note that $ \sum_{i=1}^{n} (X_i-\bar{X})=0 $. So,
+    \[ \frac{\sum_{i=1}^{n} (X_i-\mu)^2}{\sigma^2}=
+        \frac{\sum_{i=1}^{n} (X_i-\bar{X})^2}{\sigma^2}+
+        \frac{n(\bar{X}-\mu)^2}{\sigma^2} \]
+    Also,
+    \[ \frac{n(\bar{X}-\mu)^2}{\sigma^2}=
+        \left[ \frac{\sqrt{n}(\bar{X}-\mu)}{\sigma} \right]^2 \sim \chi^2(1)  \]
+    since $ \displaystyle \frac{\sqrt{n}(\bar{X}-\mu)}{\sigma} \sim \N{0,1} $.
+
+    On the left-hand side: $ \displaystyle  \frac{\sum_{i=1}^{n} (X_i-\mu)^2}{\sigma^2}\sim \chi^2(n) $.
+
+    Intuitively,
+    \[ \frac{\sum_{i=1}^{n}(X_i-\bar{X})^2}{\sigma^2}\sim \chi^2(n)-\chi^2(1)=\chi^2(n-1)  \]
+    A key observation: $ \bar{X} $ and $ \sum_{i=1}^{n} (X_i-\bar{X})^2 $
+    are independent.
+    \[
+        M_{\chi^2(n)}(t)=M_{\frac{\sum_{i=1}^{n} (X_i-\bar{X})^2}{\sigma^2}}(t)
+        M_{\frac{n(\bar{X}-\mu)^2}{2}}(t)\\
+    \]
+    \[ \implies (1-2t)^{-n/2}=M_{\frac{\sum_{i=1}^{n} (X_i-\bar{X})^2}{\sigma^2}}(t)
+        (1-2t)^{-1/2} \]
+    \[ \implies M_{\frac{\sum_{i=1}^{n} (X_i-\bar{X})^2}{\sigma^2}}(t)=(1-2t)^{-(n-1)/2}  \]
+\end{Proof}
+Why $ \bar{X} $ is independent of $ \sum_{i=1}^{n} (X_i-\bar{X})^2 $?
+\[ (\Uunderbracket{\bar{X}}_{0},X_1-\bar{X},\ldots,X_n-\bar{X})\sim \Mvn{\cdot} \]
+Verify that $ \bar{X} $ independent of $ (X_1-\bar{X},\ldots,X_n-\bar{X}) $
+by calculating the correlation.
+\begin{Example}{$ t $-distribution}{}
+    If $ X_1,\ldots,X_n \stackrel{\text{iid}}{\sim}\N{\mu,\sigma^2} $,
+    then
+    \[ \frac{\bar{X}-\mu}{S/\sqrt{n}}\sim t(n-1)  \]
+    where
+    \[ S^2=\frac{1}{n-1} \sum_{i=1}^{n} (X_i-\bar{X})^2 \]
+    is defined as the sample variance ($ \E{S^2}=\sigma^2 $).
+
+    \textbf{Solution.}
+    \[ \frac{\bar{X}-\mu}{\sigma/n}\sim \N{0,1}  \]
+    \[ \frac{(n-1)S^2}{\sigma^2}=\frac{\sum_{i=1}^{n} (X_i-\bar{X})^2}{\sigma^2}
+        \sim \chi^2(n-1)   \]
+    are independent, then
+    \[ \frac{\displaystyle \frac{\bar{X}-\mu}{\sigma/\sqrt{n}}}{
+            \displaystyle \sqrt{\frac{(n-1)S^2}{\sigma^2}/(n-1)}
+        } =\frac{\bar{X}-\mu}{S/\sqrt{n}} \sim t(n-1) \]
+\end{Example}
+\begin{Example}{$ F $-distribution}{}
+    If $ X_1,\ldots,X_n \stackrel{\text{iid}}{\sim}\N{\mu_1,\sigma_1^2} $
+    and $ Y_1,\ldots,Y_m \stackrel{\text{iid}}{\sim}\N{\mu_2,\sigma_2^2} $
+    are independent. Define
+    \[ S_1^2=\frac{\sum_{i=1}^{n} (X_i-\bar{X})^2}{n-1},\quad
+        \bar{X}=\frac{1}{n} \sum_{i=1}^{n} X_i \]
+    \[ S_2^2=\frac{\sum_{i=1}^{m} (Y_i-\bar{Y})^2}{m-1},\quad
+        \bar{Y}=\frac{1}{m} \sum_{i=1}^{m} Y_i \]
+    Then,
+    \[ \frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2} \sim F(n-1,m-1) \]
+    Reasoning:
+    \[ \frac{S_1^2}{\sigma_1^2}=\frac{\displaystyle \frac{\sum_{i=1}^{n} (X_i-\bar{X})^2}{\sigma_1^2}}{
+            n-1
+        }\sim \frac{\chi^2(n-1)}{n-1}   \]
+    \[ \frac{S_2^2}{\sigma_2^2}\sim \frac{\chi^2(m-1)}{m-1}  \]
+    are independent, therefore,
+    \[ \frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\sim
+        \frac{\chi^2(n-1)/(n-1)}{\chi^2(m-1)/(m-1)}=F(n-1,m-1)  \]
+\end{Example}

@@ -1,0 +1,102 @@
+\chapter{Function of Random Variables}
+\makeheading{Lecture 13 | 2020-09-25}
+Let $ (X_1,\ldots,X_n) $ be continuous random
+variables. We would like to find the distribution
+of $ Y=h(X_1,\ldots,X_n) $.
+
+Three methods here:
+\begin{enumerate}[label=(\arabic*)]
+    \item Cumulative Distribution Function Technique
+    \item One-to-One Transformation
+    \item Moment Generating Function Technique
+\end{enumerate}
+\begin{itemize}
+    \item (1) and (3) are useful to find marginal distribution
+          $ Y=h(X_1,\ldots,X_n) $.
+    \item (3) is useful to find both univariate and multivariate
+          functions.
+          \[ Y_1=h_1(X_1,\ldots,X_n)\quad\text{ and }\quad Y_2=h_2(X_1,\ldots,X_n) \]
+\end{itemize}
+\section{Cumulative Distribution Function Technique}
+Tutorial 5: $ T=\E{X\given Y}=\frac{3}{4} Y $.
+
+$ Y=h(X_1,\ldots,X_n) $
+
+\underline{Step 1}: Find the c.d.f.\ of $ Y $ by definition.
+\[ G(y)=\Prob{Y\leqslant y}=1-\Prob{Y>y} \]
+\underline{Step 2}: Find the p.d.f.\ of $ Y $ by
+\[ g(y)=G^\prime(y) \]
+\begin{Example}{Cumulative Distribution Function Technique}{}
+    Suppose the joint p.d.f.\ of $ (X,Y) $ is $ f(x,y)=3y $
+    for $ 0\leqslant x\leqslant y\leqslant 1 $. Find the p.d.f.\
+    of $ T=XY $ and p.d.f.\ of $ S=Y/X $.
+
+    \textbf{Solution.} $ T=XY $. Support of $ T $ is $ (0,1) $.
+    \begin{itemize}
+        \item If $ t\geqslant 1 $, then $ F_T(t)=\Prob{T\leqslant t}=1 $.
+        \item If $ t\leqslant 0 $, then $ F_T(t)=0 $.
+        \item If $ 0<t<1 $, then
+              \begin{align*}
+                  F_T(t)
+                   & =\Prob{T\leqslant t}                                                   \\
+                   & =\Prob{XY\leqslant t}                                                  \\
+                   & =1-\Prob{XY>t}                                                         \\
+                   & =1-\biggl(\int_{\sqrt{t}}^{1} \int_{t/y}^{y} 3y\, d{x} \, d{y} \biggr) \\
+                   & =1-(2t^{3/2}-3t+1)                                                     \\
+                   & =3t-2t^{3/2}
+              \end{align*}
+              Therefore, the p.d.f.\ of $ T $ for $ 0<t<1 $ is
+              \[ f_T(t)=3-3\sqrt{t} \]
+    \end{itemize}
+    $ S=Y/X $. Support of $ S $ is $ (1,\infty) $.
+    \begin{itemize}
+        \item If $ s<1 $, then $ F_S(s)=0 $
+        \item If $ s\geqslant 1 $, then
+              \begin{align*}
+                  F_S(s)
+                   & =\Prob{S\leqslant s}                           \\
+                   & =\Prob{Y/X\leqslant s}                         \\
+                   & =\Prob{Y\leqslant sX}                          \\
+                   & =\int_{0}^{1} \int_{y/s}^{y} 3y\, d{x} \, d{y} \\
+                   & =1-\frac{1}{s}
+              \end{align*}
+              Therefore, the p.d.f.\ of $ S $ for $ s\geqslant 1 $ is
+              \[ f_S(s)=\frac{1}{s^2} \]
+    \end{itemize}
+\end{Example}
+\begin{Example}{Distribution of maximum and minimum}{ex_minmaxstat}
+    Suppose $ (X_1,\ldots,X_n)\stackrel{\text{iid}}{\sim}\uniform{0,\theta} $.
+    Find the p.d.f.\ of the largest order statistic; that is,
+    \[ X_{(n)}=\max_{1\leqslant i\leqslant n} X_i \]
+    and the smallest order statistic; that is,
+    \[ X_{(1)}=\min_{1\leqslant i\leqslant n}X_i \]
+    \textbf{Solution.} $ F_{X_{(n)}}(y)=\Prob{X_{(n)}\leqslant y} $.
+    \begin{itemize}
+        \item If $ y\leqslant 0 $, then $ F_{X_{(n)}}(y)=0 $.
+        \item If $ y\geqslant \theta $, then $ F_{X_{(n)}}(y)=1 $.
+        \item If $ 0<y<\theta $, then
+              \begin{align*}
+                  F_{X_{(n)}}(y)
+                   & =\Prob{X_{(n)}\leqslant y}                        \\
+                   & =\Prob{X_1\leqslant y,\ldots,X_n\leqslant y}      \\
+                   & =\Prob{X_1\leqslant y}\cdots\Prob{X_n\leqslant y} \\
+                   & =\left( \frac{y}{\theta} \right)^n
+              \end{align*}
+              The p.d.f.\ of $ X_{(n)} $ for $ 0<y<\theta $ is
+              \[ f_{X_{(n)}}(y)=\frac{n}{\theta^n}= y^{n-1} \]
+    \end{itemize}
+    For $ X_{(1)} $ the support is $ [0,\theta] $. If $ 0<y<\theta $,
+    \begin{align*}
+        F_{X_{(1)}}(y)
+         & =\Prob{X_{(1)}\leqslant y}                        \\
+         & =1-\Prob{X_{(1)}>y}                               \\
+         & =1-\left[ \Prob{X_1>y}\cdots \Prob{X_n>y} \right] \\
+         & =1-\left( \frac{\theta-y}{\theta}  \right)^n
+    \end{align*}
+    The p.d.f.\ of $ X_{(1)} $ for $ 0<y<\theta $ is
+    \[ f_{X_{(1)}}(y)=\frac{n}{\theta} \left( 1-\frac{y}{\theta}  \right)^{n-1} \]
+\end{Example}
+\begin{Exercise}{}{}
+    If $ X_1,\ldots,X_n \stackrel{\text{iid}}{\sim} \exponential{1} $,
+    find $ X_{(n)} $ and $ X_{(1)} $.
+\end{Exercise}

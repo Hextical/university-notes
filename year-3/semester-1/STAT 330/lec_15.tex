@@ -1,0 +1,144 @@
+\makeheading{Lecture 15 | 2020-10-01}
+Find the p.d.f.\ of $ Y=h(X) $. Two possible ways:
+\begin{itemize}
+    \item Method I\@: CDF Technique
+    \item Method II\@: If $ h(x) $ is a one-to-one function,
+          then
+          \[ g_Y(y)=f_X(x)\abs*{\frac{dx}{dy} } \]
+\end{itemize}
+\section{One-to-One Transformations (Bivariate)}
+Given $ X $ and $ Y $, the joint p.d.f.\ of $ (X,Y) $
+is $ f(x,y) $. We would like to find the joint p.d.f.\
+of
+\[ U=h_1(X,Y)\quad\text{ and }\quad V=h_2(X,Y) \]
+One-to-one bivariate transformation
+\[ u=h_1(x,y)\quad\text{ and }\quad v=h_2(x,y) \]
+The two functions are one-to-one transformation if there exist
+another two unique functions such that
+\[ x=\omega_1(u,v)\quad\text{ and }\quad y=\omega_2(u,v) \]
+for $ (x,y) $ in support of $ (X,Y) $.
+\begin{Theorem}{One-to-One Bivariate Transformations}{}
+    The p.d.f.\ of $ U=h_1(X,Y) $ and $ V=h_2(X,Y) $ is given by
+    \[ g(u,v)=f(x,y)\abs*{\frac{\partial(x,y)}{\partial(u,v)} } \]
+    where
+    \[ \frac{\partial(x,y)}{\partial(u,v)} =
+        \begin{vmatrix}
+            \frac{\partial x}{\partial u} & \frac{\partial x}{\partial v} \\
+            \frac{\partial y}{\partial u} & \frac{\partial y}{\partial v}
+        \end{vmatrix} \]
+    is the Jacobian matrix.
+\end{Theorem}
+Step 1: Find support of $ (U,V) $ by making use of $ h_1 $, $ h_2 $,
+and support of $ (X,Y) $.
+
+Step 2: $ u=h_1(x,y) $ and $ v=h_2(x,y) $ implies
+$ x=\omega(u,v) $ and $ y=\omega(u,v) $, compute Jacobian:
+\[ \frac{\partial(x,y)}{\partial(u,v)}=\begin{vmatrix}
+        \partial x/\partial u & \partial x/\partial v \\
+        \partial y/\partial u & \partial y/\partial v
+    \end{vmatrix} \]
+Step 3:
+\[ g(u,v)=f(x,y)\abs*{\frac{\partial(x,y)}{\partial(u,v)} } \]
+\begin{Example}{One-to-One Transformation (Bivariate)}{}
+    Suppose $ X \sim N(0,1) $ and $ N(0,1) $ independent.
+    Find the joint p.d.f.\ of $ U=X+Y $ and $ V=X-Y $.
+
+    \textbf{Solution.} Since $ X $ and $ Y $ are independent,
+    the joint p.d.f.\ of $ X $ and $ Y $ is given by
+    \[ f(x,y)=f_X(x)f_Y(y)=\frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{x^2}{2}\right\}
+        \frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{y^2}{2}\right\}=
+        \frac{1}{2\pi}\exp\left\{ -\frac{x^2+y^2}{2} \right\}  \]
+    Step 1: $ u=x+y $ and $ v=x-y $ implies $ x=(u+v)/2 $
+    and $ y=(u-v)/2 $. Support of $ U $ and $ V $ is $ (-\infty,\infty) $.
+
+    Step 2: Jacobian is given by
+    \begin{align*}
+        \frac{\partial(x,y)}{\partial(u,v)}
+         & =\begin{vmatrix}
+            \partial x/\partial u & \partial x/\partial v \\
+            \partial y/\partial u & \partial y/\partial v
+        \end{vmatrix}                             \\
+         & =\begin{vmatrix}
+            1/2 & 1/2  \\
+            1/2 & -1/2
+        \end{vmatrix}                             \\
+         & =\left( \frac{1}{2} \right)\left( -\frac{1}{2} \right)
+        -\left( \frac{1}{2} \right)\left( \frac{1}{2} \right)     \\
+         & =-\frac{2}{4}                                          \\
+         & =-\frac{1}{2}
+    \end{align*}
+    Step 3:
+    \begin{align*}
+        g(u,v)
+         & =f(x,y)\abs*{\frac{\partial(x,y)}{\partial(u,v)}}                        \\
+         & =\frac{1}{2\pi}\exp\left\{ -\frac{x^2+y^2}{2}\right\}\abs*{-\frac{1}{2}} \\
+         & =\frac{1}{4\pi}\exp\left\{ -\frac{[(u+v)/2]^2+[(u-v)/2]^2}{2} \right\}   \\
+         & =\frac{1}{4\pi}\exp\left\{ -\frac{u^2+v^2}{4} \right\}
+    \end{align*}
+\end{Example}
+\begin{Example}{One-to-One Transformation (Bivariate)}{}
+    Suppose that $ X $ and $ Y $ are continuous random variables with
+    joint p.d.f.\ $ f(x,y)=e^{-x-y} $ for $ 0<x<\infty $
+    and $ 0<y<\infty $. Find the joint p.d.f.\ of
+    $ U=X+Y $ and $ V=X $. Find the marginal p.d.f.\ of $ U $.
+
+    \textbf{Solution.} $ u=x+y $ and $ v=x $ implies
+    $ x=v $ and $ y=u-v $. Therefore, $ 0<v<\infty $
+    and $ 0<u-v<\infty $. In other words,
+    the joint support of $ (U,V) $ is
+    $ 0<v<u<\infty $. Jacobian is
+    \begin{align*}
+        \frac{\partial(x,y)}{\partial(u,v)}
+         & =\begin{vmatrix}
+            \partial x/\partial u & \partial x/\partial v \\
+            \partial y/\partial u & \partial y/\partial v
+        \end{vmatrix} \\
+         & =\begin{vmatrix}
+            0 & 1  \\
+            1 & -1
+        \end{vmatrix} \\
+         & =-1
+    \end{align*}
+    Therefore, the joint p.d.f.\ of $ (U,V) $ for $ 0<v<u<\infty $ is
+    \begin{align*}
+        g(u,v)
+         & =f(x,y)\abs*{\frac{\partial(x,y)}{\partial(u,v)}} \\
+         & =e^{-x-y}\abs{-1}                                 \\
+         & =e^{-(x+y)}                                       \\
+         & =e^{-u}
+    \end{align*}
+    Support of $ U $ is $ (0,\infty) $.
+    The marginal p.d.f.\ of $ U $ for $ u>0 $ is
+    \[ f_1(u)=\int_{-\infty}^{\infty} g(u,v)\, d{v}=
+        \int_{0}^{u} e^{-u}\, d{v}=u e^{-u} \]
+    Find the p.d.f.\ of $ U=X+Y $.
+    \begin{enumerate}
+        \item CDF Technique
+        \item Define $ V=X $ (or $ U=Y $),
+              find $ (U,V) $ with the Theorem.
+    \end{enumerate}
+\end{Example}
+\begin{Example}{Support of One-to-One Transformation (Bivariate)}{}
+    Suppose that the support of $ (X,Y) $ is
+    $ 0<x<y<1 $. Find the support of $ (U,V) $
+    where $ U=X $ and $ V=XY $.
+
+    \textbf{Solution.} $ u=x $ and $ v=xy $
+    implies $ x=u $ and $ y=v/u $.
+    \[ 0<u<\frac{v}{u} <1\implies 0<u^2<v<u<1 \]
+    (multiply by $ u $)
+\end{Example}
+\begin{Example}{Support of One-to-One Transformation (Bivariate)}{}
+    Suppose the support of $ (X,Y) $ is $ 0<x<1 $
+    and $ 0<y<1 $. Find the support of $ (U,V) $
+    where $ U=X/Y $ and $ V=XY $.
+
+    \textbf{Solution.} $ u=x/y $ and $ v=xy $.
+    \[ uv=x^2\implies x=\sqrt{uv} \]
+    \[ y=\frac{v}{x} \implies y=\frac{v}{\sqrt{uv}}
+        =\frac{v^{1/2}}{u^{1/2}v^{1/2}}=\sqrt{\frac{v}{u}}  \]
+    So,
+    \[ 0<\sqrt{uv}<1\implies 0<uv<1\implies 0<u<\frac{1}{v}\quad (v>0) \]
+    \[ 0<\sqrt{\frac{v}{u}}<1\implies 0<\frac{v}{u}<1\implies 0<v<u\quad (u>0) \]
+    Combining, we get $ 0<v<u<1/v $.
+\end{Example}
