@@ -3,8 +3,12 @@ Model selection:
 Given $ p $ explanatory variables, find the subset
 $ k\leqslant p $ of explanatory variables
 (``reduced model'') that gives us
-the ``best'' model: goodness of fit,
-interpretability, predictive performance.
+the ``best'' model:
+\begin{itemize}
+      \item goodness of fit
+      \item interpretability
+      \item predictive performance
+\end{itemize}
 
 Some related concepts:
 \begin{enumerate}
@@ -26,6 +30,7 @@ Some related concepts:
             when adding variables.
       \item $ \hat{\sigma}^2 $ is estimated residual variable,
             used for prediction, want $ \hat{\sigma}^2 $ small
+            to give good predictive performance
 \end{enumerate}
 Two key ingredients:
 \begin{itemize}
@@ -37,11 +42,14 @@ Two key ingredients:
 \end{itemize}
 Examples of metrics for model selection:
 
-\underline{Adjusted $ R^2 $}
-\[ R^2_{\text{adj}}=1-\frac{\SS{Res}/(n-k-1)}{
-            \SS{Total}/(n-1)
-      } \]
-for model with $ k $ predictors.
+\begin{Definition}{Adjusted $ R^2 $}{}
+      \[ R^2_{\text{adj}}=1-\frac{\SS{Res}/(n-k-1)}{
+                  \SS{Total}/(n-1)
+            }=1-\frac{\hat{\sigma}^2}{s^2}  \]
+      for model with $ k $ predictors.
+\end{Definition}
+Compared to
+\[ R^2=1-\frac{\SS{Res}}{\SS{Total}}  \]
 \begin{itemize}
       \item $ \SS{Res}/(n-k-1) $
             estimated $ \hat{\sigma}^2 $
@@ -50,9 +58,12 @@ for model with $ k $ predictors.
             of responses $ y_i $.
 \end{itemize}
 \begin{align*}
-      R^2_{\text{adj}}=1-\frac{n-1}{n-k-1}
+      R^2_{\text{adj}}=1-\frac{n-1}{n-k-1}(1-R^2)
        & = 1-\left( 1+\frac{k}{n-k-1} \right)
-      (1-R^2)                                 \\
+      (1-R^2)                                                             \\
+       & =1-\left[ 1(1-R^2)-\left( \frac{k}{n-k-1} \right)(1-R^2) \right] \\
+       & =1-\left[ 1-R^2-\left( \frac{k}{n-k-1}  \right)(1-R^2) \right]   \\
+       & =1-1+R^2-\frac{k}{n-k-1} (1-R^2)                                 \\
        & =R^2-(1-R^2)\frac{k}{n-k-1}
 \end{align*}
 
@@ -75,21 +86,27 @@ $ R^2_{\text{adj}} $).
 
 
 \begin{Example}{}{}
-      $ n=25 $ observations, $ \SS{Total}=20 $,
-      in total $ p=6 $ predictors. Suppose
+      Given
+      \begin{itemize}
+            \item $ n=25 $
+            \item $ \SS{Total}=20 $
+            \item $ p=6 $
+      \end{itemize}
+      Suppose
       we're considering on a subset of $ k=4 $
       predictors, and find:
 
       \begin{center}
-            \begin{tabularx}{0.7\linewidth}{@{}YYY@{}}
-                                       & red                                  & full                                    \\
+            \begin{tabularx}{0.8\linewidth}{@{}YYY@{}}
+                                       & red                                     & full                                              \\
                   \midrule
-                                       & $ k=4 $                              & $ p=6 $                                 \\
-                  $ \SS{Total} $       & $ 20 $                               & $ 20 $                                  \\
-                  $ \SS{Res} $         & $ 10 $                               & $ 9.8 $                                 \\
-                  $ R^2 $              & $ 0.5 $                              & $ 10.2/20=0.51 $                        \\
-                  $ R^2_{\text{adj}} $ & $ 1-\frac{10/20}{20/24}\approx 0.4 $ & $ 1-\frac{9.8/18}{20/24}\approx 0.347 $ \\
-                  $ \hat{\sigma}^2 $   & $ 10/20=0.5 $                        & $ 9.8/18\approx 0.544 $
+                                       & $ k=4 $                                 & $ p=6 $                                           \\
+                  $ \SS{Total} $       & $ 20 $                                  & $ 20 $                                            \\
+                  $ \SS{Res} $         & $ 10 $                                  & $ 9.8 $                                           \\
+                  \midrule
+                  $ R^2 $              & $ 10/20=0.5 $                           & $ 9.8/20=0.49 $                                   \\
+                  $ R^2_{\text{adj}} $ & $ 1-\frac{10/(25-4-1)}{20/(25-1)}=0.4 $ & $ 1-\frac{9.8/(25-6-1)}{20/(25-1)}\approx 0.347 $ \\
+                  $ \hat{\sigma}^2 $   & $ 10/(25-4-1)=0.5 $                     & $ 9.8/(25-6-1)\approx 0.544 $
             \end{tabularx}
       \end{center}
       \begin{itemize}
@@ -110,7 +127,7 @@ $ R^2_{\text{adj}} $).
 
 Let $ n $ be sample size, $ q $ is number of parameters
       [in MLR $ k $ predictors + 1 (intercept) + 1 ($ \sigma^2 $)]
-\[ \text{AIC}=2q-\ln[L(\hat{\theta})] \]
+\[ \text{AIC}=2q-2\ln[L(\hat{\theta})] \]
 where $ L(\hat{\theta}) $ is the likelihood function evaluated
 at $ \hat{\theta} $ (parameter estimates). Note that
 LS estimates of $ \symbf{\beta} $ are equivalent to MLE
@@ -118,6 +135,11 @@ under the usual normal assumptions on $ \symbf{\varepsilon} $.
 Also, $ 2q $ is the penalty for including more predictors.
 With more parameters, $ L(\hat{\theta}) $
 increases, offset by penalty $ 2q $.
+
+If we want to measure
+just the \underline{difference}, we can do
+\[ \text{AIC}=n\ln \biggl[\frac{\SS{Res}}{n}\biggr]+2(p+1) \]
+
 
 Therefore, model with lower AIC is preferred; that is,
 differences in AIC matter not the value itself.
@@ -128,6 +150,10 @@ Similar to AIC, but more strongly penalizes
 inclusion of more variables.
 \[ \text{BIC}=q\ln(n)-2\ln[L(\hat{\theta})] \]
 where $ q\ln(n) $ depends on sample size.
+
+If we want to measure
+just the \underline{difference}, we can do
+\[ \text{BIC}=n\ln\left[ \frac{\SS{Res}}{n} \right]+(p+1)\ln(n) \]
 
 \underline{Recap}:
 \begin{itemize}
