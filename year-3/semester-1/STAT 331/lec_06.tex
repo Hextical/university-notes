@@ -1,24 +1,24 @@
 \makeheading{Lecture 6 | 2020-09-23}
 Recall that last lecture, for a MLR,
 we have $ \symbf{Y}=X\symbf{B}+\symbf{\varepsilon} $
-with the assumption that $ \varepsilon\stackrel{\text{iid}}{\sim}N(0,\sigma^2) $.
+with the assumption that $ \varepsilon\stackrel{\text{iid}}{\sim}\N{0,\sigma^2} $.
 Therefore, for a random vector $ \symbf{\varepsilon} $, we have
-\[ \symbf{\varepsilon}\sim\text{MVN}
-    \left( \begin{bmatrix}
+\[ \symbf{\varepsilon}\sim\Mvn*{
+        \begin{bmatrix}
             0      \\
             0      \\
             \vdots \\
             0      \\
             0
         \end{bmatrix},
-    \begin{bmatrix}
+        \begin{bmatrix}
             \sigma^2 & 0        & \cdots & 0        & 0        \\
             0        & \sigma^2 & \cdots & 0        & 0        \\
             \vdots   & \vdots   & \ddots & \vdots   & \vdots   \\
             0        & 0        & \cdots & \sigma^2 & 0        \\
             0        & 0        & \cdots & 0        & \sigma^2 \\
-        \end{bmatrix} \right)=
-    (\symbf{0}_{n\times 1},\sigma^2I_{n\times n}) \]
+        \end{bmatrix}}=
+    \Mvn{\symbf{0}_{n\times 1},\sigma^2I_{n\times n}} \]
 since $ \Cov{\varepsilon_1,\varepsilon_2}=0 $ due to independence.
 
 Thus, $ \symbf{Y}\sim \text{MVN}(X\symbf{B},\sigma^2 I) $.
@@ -108,14 +108,14 @@ $ \hat{\symbf{\beta}} \sim \text{MVN}(\symbf{\beta},\sigma^2
     \Uunderbracket{(X^\top X)^{-1}}_{V}) $. We proved the following theorem.
 \begin{Theorem}{Distribution of $ \hat{\beta}_j $}{}
     The distribution of a given $ \hat{\beta}_j $ is
-    \[ \hat{\beta}_j \sim N(\beta_j,\sigma^2 V_{jj}) \]
+    \[ \hat{\beta}_j \sim \N{\beta_j,\sigma^2 V_{jj}}\qquad j=0,1,\ldots,p \]
 \end{Theorem}
 from marginal property of MVN.\
-\[ \frac{\hat{\beta}_j-\beta_j}{\sigma\sqrt{V_{jj}}} \sim N(0,1)  \]
+\[ \frac{\hat{\beta}_j-\beta_j}{\sigma\sqrt{V_{jj}}} \sim \N{0,1}  \]
 \[ \frac{\hat{\beta}_j-\beta_j}{\hat{\sigma}\sqrt{V_{jj}}} \sim t(n-p-1)  \]
 \begin{Definition}{Standard error for $ \hat{\beta}_j $}{}
     We define the \textbf{standard error} of $ \hat{\beta}_j $ as
-    \[ \Se{\hat{\beta}_j}=\hat{\sigma}\sqrt{V_{jj}} \]
+    \[ \Se{\hat{\beta}_j}=\hat{\sigma}\sqrt{V_{jj}}\qquad j=0,1,\ldots,p  \]
 \end{Definition}
 So, a $ (1-\alpha) $ confidence interval for $ \beta_j $
 is
@@ -131,7 +131,7 @@ $ p $-value is $ 2P(T\geqslant \abs{t}) $ where $ T \sim t(n-p-1) $.
 Interpretation of $ \hat{\symbf{\beta}} $: fitted linear
 regression model says $ \widehat{\E{Y}} $
 (estimate of the expected response) is
-$ \hat{\beta}_0+\hat{\beta}_1x_1+\cdots+\hat{\beta}_p x_p $.
+\[ \hat{\beta}_0+\hat{\beta}_1x_1+\cdots+\hat{\beta}_p x_p \]
 \begin{itemize}
     \item $ \hat{\beta}_0 $ is the estimate of expected response
           when all explanatory variables are equal to 0.

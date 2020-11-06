@@ -25,7 +25,7 @@ Then,
         \beta_2x_{i2}+\cdots +\beta_p x_{ip}}_{\E{Y_i}=
         \mu_i},\sigma^2) \]
 or $ Y_i=\mu_i+\varepsilon_i $ where $ \varepsilon_i \stackrel{\text{iid}}{\sim}
-    N(0,\sigma^2) $.
+    \N{0,\sigma^2} $.
 We can write in vector/matrix form
 \[ \begin{bmatrix}
         Y_1    \\
@@ -110,7 +110,7 @@ Which we can more commonly write as $ \symbf{Y}=X\symbf{\beta}+\symbf{\varepsilo
     of constants and $ A $ be an $ n\times n $ matrix of constants, then
     the random vector has the following properties.
     \begin{enumerate}[label=(\arabic*)]
-        \item $ \E{\symbf{a}\symbf{Y}}=\symbf{a}\symbf{Y} $
+        \item $ \E{\symbf{a}\symbf{Y}}=\symbf{a}\E{\symbf{Y}} $
         \item $ \E{A\symbf{Y}}=A\E{\symbf{Y}} $
         \item $ \Var{\symbf{a}\symbf{Y}}=\symbf{a}\Var{\symbf{Y}}\symbf{a}^\top $
         \item $ \Var{A\symbf{Y}}=A\Var{\symbf{Y}}A^\top $
@@ -121,13 +121,13 @@ Which we can more commonly write as $ \symbf{Y}=X\symbf{\beta}+\symbf{\varepsilo
     \begin{align*}
         \Var{A\symbf{Y}}
          & =\E{\left(A\symbf{Y}-\E{A\symbf{Y}}\right)
-            \left(A\symbf{Y}-\E{A\symbf{Y}}\right)^\top}                                                 \\
+        \left(A\symbf{Y}-\E{A\symbf{Y}}\right)^\top}                                                     \\
          & =\E{\left( A\symbf{Y}-A\E{\symbf{Y}} \right)
-            \left( A\symbf{Y}-A\E{\symbf{Y}} \right)^\top}                                               \\
+        \left( A\symbf{Y}-A\E{\symbf{Y}} \right)^\top}                                                   \\
          & =\E{A\left( \symbf{Y}-\E{\symbf{Y}} \right)
-            \left( A\left( \symbf{Y}-\E{\symbf{Y}} \right) \right)^\top}                                 \\
+        \left( A\left( \symbf{Y}-\E{\symbf{Y}} \right) \right)^\top}                                     \\
          & =\E{A\left( \symbf{Y}-\E{\symbf{Y}} \right)
-            \left( \symbf{Y}-\E{\symbf{Y}} \right)^\top A^\top}                                          \\
+        \left( \symbf{Y}-\E{\symbf{Y}} \right)^\top A^\top}                                              \\
          & =A\E{\left( \symbf{Y}-\E{\symbf{Y}} \right)\left( \symbf{Y}-\E{\symbf{Y}} \right)^\top}A^\top \\
          & =A\Var{\symbf{Y}}A^\top
     \end{align*}
@@ -222,22 +222,24 @@ Which we can more commonly write as $ \symbf{Y}=X\symbf{\beta}+\symbf{\varepsilo
 \end{Definition}
 
 \begin{Theorem}{Properties of Multivariate Normal Distribution}{}
-    Let $ \symbf{Y}=(Y_1,\ldots,Y_n)^\top \sim \text{MVN}(\symbf{\mu},\Sigma) $
-    and $ \symbf{a} $ be a $ 1\times n $ row vector of constants
-    and $ A $ be an $ n\times n  $ matrix of constants.
+    Let $ \symbf{Y}
+        =(Y_1,Y_2,\ldots,Y_n)^\top \sim \text{MVN}(\symbf{\mu},\Sigma) $.
     \begin{enumerate}[label=(\arabic*)]
-        \item Linear transformations of MVN is MVN, so
-              \[ \symbf{a}\symbf{Y}\sim \text{MVN}(\symbf{a}\symbf{\mu},\symbf{a}
-                  \Sigma\symbf{a}^\top) \]
+        \item Any subset of $ Y_1,Y_2,\ldots,Y_n $
+              also has a multivariate normal distribution and in particular
+              \[ Y_i \sim \N{\mu_i,\Sigma_{ii}}\qquad i=1,2,\ldots,n \]
+        \item Let $ \symbf{a}=(a_1,a_2\ldots,a_n) $ be a
+              non-zero row vector ($ 1\times n $) of constants, then
+              \[ \symbf{a}\symbf{Y}\sim
+                  \N{\symbf{a}\symbf{\mu},\symbf{a}
+                      \Sigma\symbf{a}^\top} \]
+        \item Let $ A $ be a $ n\times n $ matrix of rank $ n $, then
               \[ A\symbf{Y} \sim \text{MVN}(A\symbf{\mu},A\Sigma A^\top) \]
-        \item Marginal distribution of $ Y_i $ is
-              Normal,
-              \[ Y_i \sim N(\mu_i,\Sigma_{ii}) \]
-              In fact, any subset of $ Y_i $'s is MVN
-        \item Conditional MVN is MVN, e.g. $ Y_1\mid Y_2,\ldots,Y_n $
-        \item Another property:
-              \[ \Cov{Y_i,Y_j}=0\iff Y_i,Y_j\text{ independent} \]
-              that is, $ Y_i $ and $ Y_j $ are uncorrelated.
-              \[ \Sigma_{ij}=0 \]
+        \item The conditional distribution of any
+              subset of $ (Y_1,Y_2,\ldots,Y_n) $ given any other coordinates
+              that are not in the subset
+              is a multivariate normal distribution.
+        \item $ Y_i $ and $ Y_j $ are independent
+              random variables if and only if $ \Sigma_{ij}=\Cov{Y_i,Y_j}=0 $.
     \end{enumerate}
 \end{Theorem}
