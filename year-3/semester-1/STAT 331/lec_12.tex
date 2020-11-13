@@ -26,7 +26,7 @@ when adding/removing variables from the model.
         \item $ x_2= $ Assists
         \item $ x_3= $ Points
     \end{itemize}
-    However, $ x_3=x_1+x_2 $ so we have exact multicollinearity.
+    $ x_3=x_1+x_2 $, therefore we have exact multicollinearity.
 \end{Example}
 \begin{Example}{Burmese Pythons in Florida (2017)}{}
     \begin{itemize}
@@ -44,8 +44,8 @@ when adding/removing variables from the model.
 \subsection{Detection of Multicollinearity}
 If two predictors are related
 \begin{itemize}
-    \item Scatterplot matrix [all possible pairs of
-                  scatterplots b/w $ y,x_1,x_2,\ldots,x_p $]
+    \item Scatter plot matrix [all possible pairs of
+                  scatter plots b/w $ y,x_1,x_2,\ldots,x_p $]
     \item Correlation matrix (all pairwise correlations)
 \end{itemize}
 \begin{Definition}{Variance inflation factor}{}
@@ -62,7 +62,7 @@ If two predictors are related
     \[ \VIF_j\geqslant 1 \]
 
 \end{Theorem}
-Fit MLR of $ x_j $ in terms of other predictors;
+Fit multiple linear regression model of $ x_j $ in terms of other predictors;
 that is,
 \[ x_{i j}=\alpha_0+\alpha_1x_{i1}+\cdots+\alpha_{j-1}x_{i(j-1)}+
     \alpha_{j+1}x_{i(j+1)}+\cdots+\alpha_p x_{i p}+\varepsilon_{ij} \]
@@ -71,13 +71,12 @@ and compute $ R^2 $ for this model, call it $ R_j^2 $.
 Intuition: if $ R_j^2 $ is close to 1, $ x_j $ is strongly
 related linearly to other predictors. It can be shown that
 \[ \VIF_j=\frac{1}{1-R_j^2}  \]
-Values of VIF
-larger than $ 10 $ are taken as solid evidence of multicollinearity;
+If $ \VIF_j\ge 10 $, then there is solid evidence of multicollinearity;
 that is, $ R_j^2>0.9 $.
 
 Procedure:
 \begin{itemize}
-    \item remove predictors with largest $ \VIF $, if it exceeds 10
-    \item repeat until no more multicollinearity
+    \item remove predictors with largest $ \VIF $, if it exceeds 10.
+          Repeat until no more multicollinearity.
 \end{itemize}
 \includepdf[pages=-]{multicollinear-demo}

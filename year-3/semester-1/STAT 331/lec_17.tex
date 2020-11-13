@@ -1,0 +1,124 @@
+\makeheading{Lecture 17 | 2020-11-09}
+\underline{Effects of individual observations}
+
+(or a few obs) can have an outsized impact on the fitted
+MLR model
+\begin{enumerate}[(1)]
+    \item We say an observation $ (y_i,x_{i1},\ldots,x_{ip}) $
+          is an outlier if it is substantially different from other
+          observations. This can occur if its response
+          and/or some of its explanatory variables have values that are unusual
+          or extreme compared to the others. Outliers can occur
+          for different reasons. For example, an extraordinary
+          subject, data entry errors. Generally, we don't recommend removing
+          outliers unless we have a strong reason to believe that observation
+          is an error. But it can be useful to investigate what
+          effect it has on our fitted model and quality of fit to
+          the rest of data.
+    \item How to detect and characterize outliers: Studentized residual
+          \[ d_i=\frac{e_i}{\hat{\sigma}\sqrt{1-h_{ii}}}  \]
+          are standardized to have approximately variance 1 where
+          \[ e_i\sim\N{0,\sigma^2(1-h_{ii})} \]
+          So, if $ \abs{d_i} $ is large, observation $ i $ could
+          be considered an outlier in the sense of having an
+          extreme value of response $ y_i $ (e.g. $ \abs{d_i}>3 $)
+    \item Recall that $ h_{ii} $ is the $ i^{\text{th}} $ diagonal
+          element of hat matrix $ H $. We call $ h_{ii} $ the \textbf{leverage}
+          of observation $ i $.
+          \[ \hat{\symbf{\mu}}=X\hat{\symbf{\beta}}=H\symbf{Y} \]
+          so
+          \[ \hat{\mu}_i=\begin{bmatrix}
+                  h_{i1} & h_{i2} & \cdots & h_{i n}
+              \end{bmatrix}\begin{bmatrix}
+                  y_1    \\
+                  y_2    \\
+                  \vdots \\
+                  y_n
+              \end{bmatrix}=\sum_{j=1}^{n} h_{i j}y_j
+              =h_{ii}y_i+\sum_{j\neq i}h_{i j}y_j  \]
+          so $ h_{ii} $ captures contribution of $ Y_i $ in determining
+          its corresponding fitted value. If the leverage is large
+          relative to $ h_{ij} $'s then $ \hat{\mu}_i $
+          is mostly determined by $ Y_i $. In A3, you will show
+          the leverage is between $ \frac{1}{n} $ and $ 1 $; that is,
+          \[ \frac{1}{n} \le h_{ii}\le 1 \]
+          If $ h_{ii}\approx 1 $, then $ \Var{e_i}=\sigma^2(1-h_{ii})\approx 0 $,
+          which in turn implies $ y_i\approx \hat{\mu}_i $; that is,
+          residuals with observations with high leverage tend to be small.
+
+          Rule of thumb: an observation with leverage higher than twice the average
+          leverage is considered high.
+          \[ h_{ii}>2\bar{h} \]
+          where $ \bar{h}=\frac{1}{n} \sum_{i=1}^{n} h_{ii} $.
+          \[ \tr{H}=\rank{X}=p+1 \]
+          Recall that $ H=X(X^\top X)^{-1}X^\top $
+          only involves predictors. Thus, leverage is useful
+          to help identify outliers n the sense of having explanatory
+          variables with extreme or unusual values. In simple
+          linear regression,
+          \[ h_{ii}=\frac{1}{n} +\frac{(x_i-\bar{x})^2}{S_{xx}} \]
+          Which means if $ x_i $ is far from $ \bar{x} $,
+          that point will have high leverage. This generalizes
+          to multiple linear regression: an observation
+          with high leverage is an outlier with extreme values in one
+          or more explanatory variables. However, leverage does not
+          tell us directly whether that observation is also
+          an outlier in response, in fact, $ y_i\approx \hat{\mu}_i $
+          for such observations with high leverage.
+    \item An observation $ i $ is quite influential if its presence
+          in fitting regression considerably changes estimates compared to when
+          observation $ i $ is not used to fit a model.
+
+          Start with fitting $ \symbf{Y}=X\symbf{\beta}+\symbf{\varepsilon} $
+          using all observations and call estimates $ \hat{\symbf{\beta}} $
+          as usual in the least squares.
+
+          Let $ \hat{\symbf{\beta}}^{(i)} $ denote the least squares estimates
+          based on fitting a model with the $ i^{\text{th}} $
+          observation removed.
+
+          \underline{Idea}: If $ \hat{\symbf{\beta}}^{(i)} $
+          is quite different from $ \hat{\symbf{\beta}} $, then
+          observation $ i $ is highly influential. Measure this
+          via \textbf{Cook's distance} between $ \hat{\symbf{\beta}} $
+          and $ \hat{\symbf{\beta}}^{(i)} $:
+          \[ D_i=\frac{(\hat{\symbf{\beta}}^{(i)}-\hat{\symbf{\beta}})^{\top}
+                  X^\top X(\hat{\symbf{\beta}}^{(i)}-\hat{\symbf{\beta}})}{
+                  \hat{\sigma}^2(p+1)
+              }  \]
+          To see this intuition, let $ \hat{\symbf{\mu}}^{(i)}=X\hat{\symbf{\beta}}^{(i)} $
+          fitted values based on removing $ i^{\text{th}} $ observation and
+          estimating $ \symbf{\beta} $. Then,
+          \[ D_i=\frac{(X\hat{\symbf{\beta}}^{(i)}-X\hat{\symbf{\beta}})^{\top}
+                  (X\hat{\symbf{\beta}}^{(i)}-X\hat{\symbf{\beta}})}{
+                  \hat{\sigma}^2(p+1)
+              }=\frac{(\hat{\symbf{\mu}}^{(i)}-\hat{\symbf{\mu}})^\top
+                  (\hat{\symbf{\mu}}^{(i)}-\hat{\symbf{\mu}})
+              }{
+                  \hat{\sigma}^2(p+1)
+              }=\frac{
+                  \norm{\hat{\symbf{\mu}}^{(i)}
+                      -\hat{\symbf{\mu}}}^2
+              }{
+                  \hat{\sigma}^2(p+1)
+              }    \]
+          $ D_i $ measures the Euclidean distance between fitted
+          values of two regressions that give
+          $ \hat{\symbf{\mu}}^{(i)} $ and $ \hat{\symbf{\mu}} $,
+          up to a scaling factor. Further, it can be shown
+          \[ D_i=d_i^2\left( \frac{h_{ii}}{1-h_{ii}} \right)
+              \left( \frac{1}{p+1} \right) \]
+          where we can see that both $ d_i $ and $ h_{ii} $
+          are key quantities to calculate $ D_i $ and
+          observation $ i $ that are most influential will have
+          larges of $ \abs{d_i} $ and $ h_{ii} $.
+          \begin{itemize}
+              \item High $ \abs{d_i}\rightarrow $ outlier in response
+              \item High $ h_{ii}\rightarrow $ outlier in explanatory variable
+          \end{itemize}
+          So high influential observations tend to be outliers
+          in the sense of having extreme values in \emph{both}
+          response and one/more predictors. Check if some
+          $ D_i $'s are much larger than others,
+          as they would be the most influential observations.
+\end{enumerate}
