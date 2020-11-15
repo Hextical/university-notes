@@ -45,27 +45,27 @@ Thus, $ \symbf{Y}\sim \text{MVN}(X\symbf{B},\sigma^2 I) $.
     and $ \displaystyle \frac{\partial S}{\partial \beta_j}=0 $ for $ j=1,\ldots,p $
     to get
     \[ \begin{dcases}
-            \sum\limits_{i=1}^{n} (y_i-\mu_i)=0\iff \symbf{1}_{n\times n}^\top(\symbf{y}-\symbf{\mu})=0 \\
+            \sum\limits_{i=1}^{n} (y_i-\mu_i)=0\iff \symbf{1}^\top(\symbf{y}-\symbf{\mu})=0 \\
             \sum\limits_{i=1}^{n} (y_i-\mu_i)x_{i j}=0\iff \symbf{x}_{j}^\top
             (\symbf{y}-\symbf{\mu})=0 & j=1,\ldots,p
         \end{dcases} \]
     since we recall that
     \[ X=\begin{bmatrix}
-            1 & x_{11} & x_{12} & \cdots & x_{1p}  \\
-            \vdots                                 \\
-            1 & x_{n1} & x_{n2} & \cdots & x_{n p}
+            1      & x_{11} & \cdots & x_{1(p-1)} & x_{1p}  \\
+            \vdots & \vdots & \ddots & \vdots     & \vdots  \\
+            1      & x_{n1} & \cdots & x_{n(p-1)} & x_{n p}
         \end{bmatrix}=
         \begin{bmatrix}
-            \symbf{1}_{n\times 1} & \symbf{x}_1 & \cdots & \symbf{x}_{p-1} & \symbf{x}_p
+            \symbf{1} & \symbf{x}_1 & \cdots & \symbf{x}_{p-1} & \symbf{x}_p
         \end{bmatrix} \]
     Therefore,
-    \[ X^\top(\symbf{y}-X\symbf{B})=0\iff
-        X^\top \symbf{y}-X^\top X\symbf{B}=0\iff
-        X^\top X \symbf{B}=X^\top \symbf{y}\iff
-        \symbf{B}=(X^\top X)^{-1}X^\top \symbf{y} \]
-    assuming $ X^\top X $ is invertible (full rank of $ p+1 $ or linearly
-    independent columns). So, the LS solution for $ \symbf{B} $ is given by
-    $ \hat{\symbf{B}}=(X^\top X)^{-1}X^\top \symbf{y} $.
+    \[ X^\top(\symbf{y}-X\symbf{\beta})=0\iff
+        X^\top \symbf{y}-X^\top X\symbf{\beta}=0\iff
+        X^\top X \symbf{\beta}=X^\top \symbf{y}\iff
+        \symbf{\beta}=(X^\top X)^{-1}X^\top \symbf{y} \]
+    assuming $ X^\top X $ is invertible; that is,
+    $ \rank(X^\top X)=p+1 $. So, the LS solution for $ \symbf{\beta} $ is given by
+    $ \hat{\symbf{\beta}}=(X^\top X)^{-1}X^\top \symbf{y} $.
 \end{Proof}
 \begin{Definition}{Residuals for MLR}{}
     The \textbf{residuals} for a multiple linear regression model is defined
@@ -110,9 +110,10 @@ $ \hat{\symbf{\beta}} \sim \text{MVN}(\symbf{\beta},\sigma^2
     The distribution of a given $ \hat{\beta}_j $ is
     \[ \hat{\beta}_j \sim \N{\beta_j,\sigma^2 V_{jj}}\qquad j=0,1,\ldots,p \]
 \end{Theorem}
-from marginal property of a multivariate normal distribution.
-\[ \frac{\hat{\beta}_j-\beta_j}{\sigma\sqrt{V_{jj}}} \sim \N{0,1}  \]
-\[ \frac{\hat{\beta}_j-\beta_j}{\hat{\sigma}\sqrt{V_{jj}}} \sim t(n-p-1)  \]
+\[ Z=\frac{\hat{\beta}_j-\beta_j}{\sigma\sqrt{V_{jj}}} \sim \N{0,1}\quad
+    \text{ and }\quad
+    T=\frac{\hat{\beta}_j-\beta_j}{\hat{\sigma}\sqrt{V_{jj}}} \sim t(n-p-1)\qquad
+    j=0,1,\ldots,p   \]
 \begin{Definition}{Standard error for $ \hat{\beta}_j $}{}
     We define the \textbf{standard error} of $ \hat{\beta}_j $ as
     \[ \Se{\hat{\beta}_j}=\hat{\sigma}\sqrt{V_{jj}}\qquad j=0,1,\ldots,p  \]
