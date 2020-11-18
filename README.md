@@ -1,14 +1,13 @@
 # university-notes
 All my university notes done in LaTeX.
 
-## Year 1
+## Year 3
 ### Semester 1
-N/A
-
-### Semester 2
-|  Course  | Completion | Online |
-| :------: | :--------: | :----: |
-| MATH 138 |    100%    |  :x:   |
+|     Course      | Completion  |       Online       |
+| :-------------: | :---------: | :----------------: |
+|    STAT 330     |  Week 8/12  | :heavy_check_mark: |
+|    STAT 331     | Week 9.5/12 | :heavy_check_mark: |
+| AMATH/PMATH 331 |    TODO     | :heavy_check_mark: |
 
 ## Year 2
 ### Semester 1
@@ -27,10 +26,11 @@ N/A
 
 :heavy_exclamation_mark: COVID-19 caused the last month of the term to be online
 
-## Year 3
+## Year 1
 ### Semester 1
-|     Course      | Completion |       Online       |
-| :-------------: | :--------: | :----------------: |
-|    STAT 330     | Week 8/12  | :heavy_check_mark: |
-|    STAT 331     | Week 8.5/12  | :heavy_check_mark: |
-| AMATH/PMATH 331 |    TODO    | :heavy_check_mark: |
+N/A
+
+### Semester 2
+|  Course  | Completion | Online |
+| :------: | :--------: | :----: |
+| MATH 138 |    100%    |  :x:   |
