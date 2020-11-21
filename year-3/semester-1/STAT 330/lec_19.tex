@@ -1,0 +1,177 @@
+\makeheading{Lecture 19 | 2020-11-15}
+\section{Some Useful Limit Theorems}
+In this section, we'll discuss some theorems
+regarding convergence in distribution of $ \bar{X}_n $
+or function of $ \bar{X}_n $.
+\begin{itemize}
+    \item Central Limit Theorem. Let $ X_1,\ldots,X_n $
+          be i.i.d.\ random variables with $ \E{X_i}=\mu<\infty $
+          and $ \Var{X_i}=\sigma^2<\infty $. Let
+          $ \bar{X}=\frac{1}{n} \sum_{i=1}^{n} X_i $. Then,
+          the limiting distribution of
+          \[ \frac{\sqrt{n}(\bar{X}_n-\mu)}{\sigma} \]
+          is the c.d.f.\ of $ \N{0,1} $.
+          \[  \frac{\sqrt{n}(\bar{X}_n-\mu)}{\sigma}
+              \stackrel{\text{d}}{\to}\N{0,1} \]
+\end{itemize}
+The proof is not hard, we use a standard method,
+but we need to put several pieces together.
+We need the following theorem.
+\begin{Theorem}{}{}
+    Let $ X_1,\ldots,X_n $ be a sequence of
+    random variables such that $ X_n $ has
+    m.g.f.\ $ M_n(t) $. Let $ X $
+    be another random variable with m.g.f.\
+    $ M(t) $. If there exists some $ h>0 $, such that
+    \[ \lim\limits_{{n} \to {\infty}} M_n(t)=M(t) \]
+    for all $ t\in(-h,h) $, then
+    \[ X_n \stackrel{\text{d}}{\to} X \]
+\end{Theorem}
+Therefore, our next steps:
+\begin{enumerate}[label=(\arabic*)]
+    \item Find the m.g.f.\ of
+          $ \frac{\sqrt{n}(\bar{X}_n-\mu)}{\sigma} $: $ M_n(t) $,
+          and m.g.f.\ of $ \N{0,1} $: $ M(t)=e^{t^2/2} $.
+    \item We try to show that
+          \[ \lim\limits_{{n} \to {\infty}}M_n(t)=e^{t^2/2}  \]
+          or
+          \[ \lim\limits_{{n} \to {\infty}} \log{M_n(t)}=\frac{t^2}{2} \]
+          for $ t\in(-h,h) $ where $ h>0 $.
+\end{enumerate}
+Step 1: Find m.g.f.\ of $ \displaystyle \frac{\sqrt{n}(\bar{X}_n-\mu)}{\sigma} $.
+\begin{align*}
+    \frac{\sqrt{n}(\bar{X}_n-\mu)}{\sigma}
+     & =\sqrt{n}\frac{\frac{1}{n} \sum_{i=1}^{n} (X_i-\mu)}{\sigma} \\
+     & =\frac{1}{\sqrt{n}} \frac{\sum_{i=1}^{n} (X_i-\mu)}{\sigma}
+\end{align*}
+Let $ \displaystyle Y_i=\frac{X_i-\mu}{\sigma} $, then
+$ Y_1,\ldots,Y_n $ are i.i.d.\ with $ \E{Y_i}=0 $
+and $ \Var{Y_i}=1 $. Then,
+\begin{align*}
+    M_n(t)
+     & =\E*{e^{(t)\frac{\sqrt{n}(\bar{X}-\mu)}{\sigma}}} \\
+     & =\E*{e^{\frac{t}{\sqrt{n}} \sum_{i=1}^{n} Y_i}}   \\
+     & =\E*{\prod_{i=1}^n e^{\frac{t}{\sqrt{n}} Y_i}}    \\
+     & =\prod_{i=1}^n\E*{e^{\frac{t}{\sqrt{n}} Y_i}}     \\
+\end{align*}
+Suppose $ Y_i $ has m.g.f.\ $ M_Y(t) $, then
+\begin{itemize}
+    \item $ M_Y(0)=1 $
+    \item $ M_Y^\prime(0)=0 $
+    \item $ M_Y^{\prime\prime}(0)=\E{Y^2}=\Var{Y}+(\E{Y})^2=1 $
+\end{itemize}
+\[ M_n(t)=\biggl[M_Y\biggl( \frac{t}{\sqrt{n}} \biggr)\biggr]^n \]
+since $
+    \displaystyle \E*{\expon*{\frac{t}{\sqrt{n}}Y_i}}=M_Y\biggl(\frac{t}{\sqrt{n}}\biggr) $
+Step 2: We want to show that
+\[ \lim\limits_{{n} \to {\infty}}
+    \biggl[M_Y\biggl(\frac{t}{\sqrt{n}} \biggr)\biggr]^n=\expon*{\frac{t^2}{2}} \]
+\begin{align*}
+    M_Y\biggl(\frac{t}{\sqrt{n}} \biggr)
+     & =M_Y(0)+M_Y^\prime(0)\biggl(\frac{t}{\sqrt{n}} \biggr)+
+    \frac{M_Y^{\prime\prime}(0)}{2!}\biggl(\frac{t}{\sqrt{n}} \biggr)^2
+    +o\biggl[\biggl(\frac{t}{\sqrt{n}} \biggr)^2\biggr]        \\
+     & =1+\frac{t^2}{2n} +o\biggl(\frac{t^2}{n}\biggr)
+\end{align*}
+Then,
+\[ \lim\limits_{{n} \to {\infty}}1+\frac{t^2}{2n} +o\biggl(\frac{t^2}{n}\biggr)=
+    \lim\limits_{{n} \to {\infty}} \biggl(1+\frac{t^2}{2n}\biggr)=\expon*{\frac{t^2}{2}}  \]
+\begin{Example}{}{}
+    Suppose that $ X_1,\ldots,X_n \stackrel{\text{iid}}{\sim} \chi^2(1) $
+    and $ Y_n=\sum_{i=1}^{n} X_i $. Show that
+    \[ \frac{Y_n-n}{\sqrt{2n}} \stackrel{\text{d}}{\to}\N{0,1} \]
+    \textbf{Solution.} $ \E{X_i}=1=\mu $ and $ \Var{X_i}=2=\sigma^2<\infty $.
+    CLT tells us
+    \[ \frac{\sqrt{n}(\bar{X}_n-\mu)}{\sigma}=
+        \frac{\sqrt{n}(\bar{X}_n-1)}{\sqrt{2}}\stackrel{\text{d}}{\to}Z\sim \N{0,1} \]
+    \[ \frac{Y_n-n}{\sqrt{2n}}=
+        \frac{\sum_{i=1}^{n} X_i-n}{\sqrt{2n}}=\frac{n(\bar{X}_n-1)}{\sqrt{2n}}
+        =\frac{\sqrt{n}(\bar{X}_n-1)}{\sqrt{2}}\stackrel{\text{d}}{\to}Z\sim\N{0,1}  \]
+    Suppose that $ Y_n \sim \chi^2(n) $, we might ask you to prove
+    \[ \frac{Y_n-n}{\sqrt{2n}} \stackrel{\text{d}}{\to}Z\sim \N{0,1} \]
+    and you might have to figure out $ Y_n=\sum_{i=1}^{n} X_i $
+    where $ X_1,\ldots,X_n\stackrel{\text{iid}}{\sim}\chi^2(1) $.
+\end{Example}
+\begin{Example}{}{}
+    $ X_1,\ldots,X_n\stackrel{\text{iid}}{\sim}\poi{\mu} $.
+    Let $ Y_n=\sum_{i=1}^{n} X_i $. Find the limiting
+    distribution of $ \displaystyle \frac{Y_n-n\mu}{\sqrt{n\mu}} $.
+
+    \textbf{Solution.} CLT tells us that
+    \[ \frac{\sqrt{n}(\bar{X}_n-\mu)}{\sqrt{\mu}}\stackrel{\text{d}}{\to}Z\sim \N{0,1} \]
+    Now,
+    \[ \frac{Y_n-n\mu}{\sqrt{n\mu}}=
+        \frac{\sum_{i=1}^{n} X_i-n\mu}{\sqrt{n\mu}}=
+        \frac{n(\bar{X}_n-\mu)}{\sqrt{n\mu}}=
+        \frac{\sqrt{n}(\bar{X}_n-\mu)}{\sqrt{\mu}}\stackrel{\text{d}}{\to}Z\sim \N{0,1}  \]
+    Alternatively: If $ Y_n \sim \poi{n\mu} $, what is the limiting
+    distribution of  $ \displaystyle \frac{Y_n-n\mu}{\sqrt{n\mu}} $?
+\end{Example}
+\begin{Theorem}{Continuous Mapping Theorem}{}
+    Suppose that $ g(\cdot) $ is a continuous function.
+    \begin{enumerate}[label=(\arabic*)]
+        \item If $ X_n\stackrel{\mathbb{P}}{\to}a $, then
+              $ g(X_n)\stackrel{\mathbb{P}}{\to}g(a) $.
+        \item If $ X_n\stackrel{\text{d}}{\to}X $,
+              then $ g(X_n)\stackrel{\mathbb{P}}{\to}g(X) $.
+    \end{enumerate}
+\end{Theorem}
+\begin{Theorem}{Slutsky's Theorem}{}
+    If $ X_n\stackrel{\text{d}}{\to} X $, and
+    $ Y_n\stackrel{\mathbb{P}}{\to}b $, then
+    \begin{enumerate}[label=(\alph*)]
+        \item $ X_n+Y_n\stackrel{\text{d}}{\to}X+b $.
+              If we replace $ b $ by $ Y $ it is still true.
+        \item $ X_n Y_n\stackrel{\text{d}}{\to}bX $.
+        \item $ \displaystyle \frac{X_n}{Y_n}\stackrel{\text{d}}{\to}
+                  \frac{X}{b} $ for $ b\neq 0 $.
+    \end{enumerate}
+\end{Theorem}
+\begin{Exercise}{}{}
+    Find a counter-example to the following statement.
+    If $ X_n\stackrel{\text{d}}{\to}X $ and $ Y_n\stackrel{\text{d}}{\to}Y $,
+    then
+    \[ X_n+Y_n\stackrel{\text{d}}{\to}X+Y \]
+\end{Exercise}
+\begin{Example}{}{}
+    If $ X_n \stackrel{\mathbb{P}}{\to} a $, then
+    \begin{itemize}
+        \item $ X_n^2\stackrel{\mathbb{P}}{\to}a^2 $.
+        \item $ \sqrt{X_n}\stackrel{\mathbb{P}}{\to}\sqrt{a} $
+              ($ X_n\geqslant 0 $, $ a\geqslant 0 $).
+    \end{itemize}
+
+    If $ X_n\stackrel{\text{d}}{\to}X \sim \N{0,1} $, then
+    \begin{itemize}
+        \item $ 2X_n\stackrel{\text{d}}{\to}2X\sim\N{0,4} $.
+        \item $ 2X_n+1\stackrel{\text{d}}{\to}2X+1\sim\N{1,4} $.
+        \item $ X_n^2\stackrel{\text{d}}{\to} X^2 \sim \chi^2(1) $.
+    \end{itemize}
+
+    If $ X_n\stackrel{\text{d}}{\to}X \sim \N{0,1} $
+    and $ Y_n\stackrel{\mathbb{P}}{\to}b $ for $ b\neq 0 $, then
+    \begin{itemize}
+        \item $ X_n+Y_n\stackrel{\text{d}}{\to}X+b \sim \N{b,1} $.
+        \item $ X_n Y_n \stackrel{\text{d}}{\to}bX \sim \N{0,b^2} $.
+        \item $ \displaystyle \frac{X_n}{Yn} \stackrel{\text{d}}{\to}
+                  \frac{X}{b}\sim \N*{0,\frac{1}{b^2}} $.
+    \end{itemize}
+\end{Example}
+\begin{Example}{}{}
+    Suppose that $ X_1,\ldots,X_n\stackrel{\text{iid}}{\sim}\poi{\mu} $.
+    Find the limiting distribution of
+    \[ Z_n=\frac{\sqrt{n}(\bar{X}_n-\mu)}{\sqrt{\bar{X}_n}}  \]
+    \[ U_n=\sqrt{n}(\bar{X}_n-\mu) \]
+    \textbf{Solution.} For $ Z_n $,
+    \[ \frac{\sqrt{n}(\bar{X}_n-\mu)}{\sqrt{\mu}}\stackrel{\text{d}}{\to}Z
+        \sim \N{0,1}  \]
+    \[ Z_n=\frac{\sqrt{n}(\bar{X}_n-\mu)}{\sqrt{\bar{X}_n}}=
+        \frac{\sqrt{n}(\bar{X}_n-\mu)}{\sqrt{\mu}}\cdot\frac{\sqrt{\mu}}{\sqrt{\bar{X}_n}}    \]
+    By continuous mapping theorem,
+    \[ \frac{\sqrt{\mu}}{\sqrt{\bar{X}_n}}\stackrel{\mathbb{P}}{\to}\frac{\sqrt{\mu}}{\sqrt{\mu}}=1
+        \text{ since $ \bar{X}_n\stackrel{\mathbb{P}}{\to}\mu $ by WLLN} \]
+    For $ U_n $, by Slutsky's theorem, $ Z_n\stackrel{\text{d}}{\to}Z \sim \N{0,1} $.
+    \[ U_n=\sqrt{n}(\bar{X}_n-\mu)=\frac{\sqrt{n}(\bar{X}_n-\mu)}{\sqrt{\mu}}\sqrt{\mu}
+        \stackrel{\text{d}}{\to}\sqrt{\mu}Z \sim \N{0,\mu}\text{ by
+            continuous mapping theorem}  \]
+\end{Example}

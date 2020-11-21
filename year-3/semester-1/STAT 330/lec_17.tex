@@ -1,0 +1,192 @@
+\chapter{Limiting/Asymptotic Distribution}
+\makeheading{Lecture 17 | 2020-11-08}
+Motivation: We're very interested in the distribution
+$ \sqrt{n}(\bar{X}-\mu) $, here $ X_1,\ldots,X_n
+    \stackrel{\text{iid}}{\sim} $ with c.d.f.\ $ F $ with
+$ \E{X_i}=\mu $ and $ \Var{X_i}=\sigma^2 $,
+\[ \bar{X}=\frac{1}{n} \sum_{i=1}^{n} X_i \]
+In practice, we don't know the distribution of $ X_i $.
+\begin{Remark}{}{}
+    \begin{enumerate}[label=(\roman*)]
+        \item It is impossible to find the exact distribution of
+              $ \sqrt{n}(\bar{X}-\mu) $.
+        \item Main idea: are we able to find an approximate
+              distribution for $ \sqrt{n}(\bar{X}-\mu) $?
+              Concept of limiting/asymptotic distribution
+              is introduced for this purpose.
+    \end{enumerate}
+\end{Remark}
+Let $ F_n(x) $ be the c.d.f.\ of $ \sqrt{n}(\bar{X}-\mu) $;
+that is, $ F_n(x)=\Prob*{\sqrt{n}(\bar{X}-\mu)\leqslant x} $.
+Consider: $ \lim\limits_{{n} \to {\infty}} F_n(x) $ (pointwise
+limit) and find that $ \lim\limits_{{n} \to {\infty}} F_n(x)=F(x) $
+where $ F(x) $ is a known distribution, e.g.\ normal c.d.f.\
+then we can use $ F(x) $ to approximate $ F_n(x) $ for a sufficiently
+large $ n $.
+
+To continue, we need some formal definition of this limit
+in a mathematical way.
+
+\section{Convergence in Distribution}
+\begin{Definition}{Convergence in Distribution}{}
+    Let $ X_1,\ldots,X_n $ be a sequence of random variables
+    such that $ X_n $ has c.d.f.\ $ F_n(x) $. Let $ X $
+    be another random variable with c.d.f.\ $ F(x) $.
+    If
+    \[ \lim\limits_{{n} \to {\infty}} F_n(x)=F(x) \]
+    for all $ x $ at which $ F(x) $ is continuous, then
+    we say $ X_n $ \textbf{converges in distribution}
+    to $ X $, and write $ X_n\stackrel{\text{d}}{\to} X $.
+\end{Definition}
+\begin{Remark}{}{}
+    \begin{enumerate}[label=(\roman*)]
+        \item $ F(x) $ is called the limiting distribution
+              (or asymptotic distribution) of $ X_n $.
+        \item It's the c.d.f.\ to which $ X_n $ converges to,
+              not the random variables. This means,
+              $ F_n(x)\approx F(x) $ for $ n $ sufficiently large,
+              however $ X_n $ is \underline{\emph{not approximately}},
+              $ X $.
+        \item $ \lim\limits_{{n} \to {\infty}} F_n(x)=F(x) $
+              only for continuous points of $ F(x) $, e.g.\
+              \[ F(x)=\begin{cases}
+                      1 & x\geqslant a \\
+                      0 & x<a
+                  \end{cases} \]
+              which is the c.d.f.\
+              of constant $ X=a $; that is,
+              $ \Prob{X=a}=1 $. It's easy to tell that the
+              c.d.f.\ of $ X $ is not continuous.
+              $ X_n\to X $ with c.d.f.\ $ F(x) $ if
+              $ \lim\limits_{{n} \to {\infty}} F_n(x)=F(x) $
+              for $ x\neq a $; that is,
+              \[ \lim\limits_{{n} \to {\infty}} F_n(x)=
+                  \begin{cases}
+                      1 & x>a \\
+                      0 & x<a
+                  \end{cases} \]
+              \underline{we don't care} what's the limit of
+              $ F_n(x) $ as $ n\to\infty $.
+    \end{enumerate}
+\end{Remark}
+\begin{Example}{}{lec_17ex1}
+    Suppose that $ X_1,\ldots,X_n\stackrel{\text{iid}}{\sim}
+        \uniform{0,1} $. Let $ X_{(1)}=\min(X_1,\ldots,X_n) $
+    and $ X_{(n)}=\max(X_1,\ldots,X_n) $. Find the
+    limiting distribution of
+    \begin{enumerate}[label=(\roman*)]
+        \item $ nX_{(1)} $ and $ n(1-X_{(n)}) $
+        \item $ X_{(1)} $ and $ X_{(n)} $
+    \end{enumerate}
+    \textbf{Solution.}
+    \begin{enumerate}[label=(\roman*)]
+        \item $ nX_{(1)} $. Support is
+              $ [0,n] $, so the c.d.f.\ of $ nX_{(1)} $ is:
+              \begin{itemize}
+                  \item $ x\geqslant n $, $ F_n(x)=\Prob{n X_{(1)}\leqslant x}=1 $
+                  \item $ x\leqslant 0 $, $ F_n(x)=\Prob{n X_{(1)}\leqslant x}=0 $
+                  \item $ 0<x<n $,
+                        \begin{align*}
+                            F_n(x)
+                             & =\Prob{n X_{(1)}\leqslant x}                      \\
+                             & =\Prob*{X_{(1)}\leqslant \frac{x}{n}}             \\
+                             & =1-\Prob*{X_1>\frac{x}{n},\ldots,X_n>\frac{x}{n}} \\
+                             & =1-\biggl[\Prob{X_1>\frac{x}{n}}\biggr]^n         \\
+                             & =1-\biggl(1-\frac{x}{n} \biggr)^n
+                        \end{align*}
+                        Therefore,
+                        \[ \Prob{nX_{(1)}\leqslant x}\coloneq
+                            F_n(x)=\begin{dcases}
+                                0                                & x\leqslant 0 \\
+                                1-\biggl(1-\frac{x}{n} \biggr)^n & 0<x<n        \\
+                                1                                & x\geqslant n
+                            \end{dcases} \]
+                        \[ \implies
+                            \lim\limits_{{n} \to {\infty}} F_n(x)=
+                            \begin{cases}
+                                0        & x\leqslant 0 \\
+                                1-e^{-x} & x>0
+                            \end{cases} \]
+                        Aside: $
+                            \displaystyle  \lim\limits_{{n} \to {\infty}}\biggl(1+\frac{x}{n}\biggr)=
+                            e^x $
+                        which is the c.d.f.\ of $ \exponential{1} $.
+              \end{itemize}
+              $ n(1-X_{(n)}) $. Support is $ [0,n] $, so the c.d.f.\ of
+              $ n(1-X_{(n)}) $ is
+              \begin{itemize}
+                  \item $ x\geqslant n $, $ F_n(x)=
+                            \Prob{n(1-X_{(n)})\leqslant x}=1 $
+                  \item $ x\leqslant 0 $, $ F_n(x)=
+                            \Prob{n(1-X_{(n)})\leqslant x}=0 $
+                  \item $ 0<x<n $,
+                        \begin{align*}
+                            F_n(x)
+                             & = \Prob{n(1-X_{(n)})\leqslant x}             \\
+                             & =\Prob*{1-X_{(n)}\leqslant \frac{x}{n}}      \\
+                             & =1-\Prob*{X_{(n)}<1-\frac{x}{n}}             \\
+                             & =1-\Prob*{X_1<1-\frac{x}{n},\ldots,
+                            X_n<1-\frac{x}{n}}                              \\
+                             & =1-\biggl[\Prob*{X_1<1-\frac{x}{n}}\biggr]^n \\
+                             & =1-\biggl(1-\frac{x}{n}\biggr)^n
+                        \end{align*}
+                        Therefore,
+                        \[ F_n(x)=\begin{dcases}
+                                0                               & x\leqslant 0 \\
+                                1-\biggl(1-\frac{x}{n}\biggr)^n & 0<x<n        \\
+                                1                               & x\geqslant n
+                            \end{dcases} \]
+                        \[ \implies
+                            \lim\limits_{{n} \to {\infty}} F_n(x)=
+                            \begin{cases}
+                                0        & x\leqslant 0 \\
+                                1-e^{-x} & x>0
+                            \end{cases} \]
+                        which is the c.d.f.\ of $ \exponential{1} $.
+              \end{itemize}
+        \item $ X_{(1)} $. Support $ (0,1) $.
+              \[ F_n(x)=\Prob{X_{(1)}\leqslant x}=
+                  \begin{cases}
+                      0         & x\leqslant 0 \\
+                      1-(1-x)^n & 0<x<1        \\
+                      1         & x\geqslant 1
+                  \end{cases} \]
+              \[ \implies \lim\limits_{{n} \to {\infty}} F_n(x)=
+                  \begin{cases}
+                      0 & x\leqslant 0 \\
+                      1 & 0<x<1        \\
+                      1 & x\geqslant 1
+                  \end{cases}=
+                  \begin{cases}
+                      0 & x\leqslant 0 \\
+                      1 & x>0
+                  \end{cases} \]
+              Question: What is $ F(x) $?
+              \[ F(x)=\begin{cases}
+                      0 & x<0          \\
+                      1 & x\geqslant 0
+                  \end{cases} \]
+              will make $ F(x) $ right-continuous.
+              $ F(x) $ is not continuous at $ x=0 $.
+              Here, we don't require that $ F_n(x) $ converges
+              to $ F(x) $ at $ x=0 $. $ F(x) $
+              is actually the c.d.f.\ of $ X $
+              which satisfies $ \Prob{X=0}=1 $.
+
+              \[ \lim\limits_{{n} \to {\infty}} F_n(x)=
+                  \begin{cases}
+                      0 & x\leqslant 0 \\
+                      0 & 0<x<1        \\
+                      1 & x\geqslant 1
+                  \end{cases}=\begin{cases}
+                      0 & x<1          \\
+                      1 & x\geqslant 1
+                  \end{cases} \]
+              which is right-continuous.
+
+              Therefore,
+              $ \lim\limits_{{n} \to {\infty}} F_n(x) =F(x) $
+              is the limiting distribution
+              \underline{in this case only}.
+    \end{enumerate}
+\end{Example}
