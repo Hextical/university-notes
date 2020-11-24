@@ -1,0 +1,174 @@
+\makeheading{Lecture 20 | 2020-11-15}
+Last lecture:
+\begin{enumerate}
+    \item CLT\@: $ X_1,\ldots,X_n \stackrel{\text{iid}}{\sim} $
+          with $ \E{X_i}=\mu<\infty $, $ \Var{\sigma^2}<\infty $. Then
+          \[ \frac{\sqrt{n}(\bar{X}-\mu)}{\sigma}
+              \stackrel{\text{d}}{\to}Z \sim \N{0,1} \]
+          $ n\to\infty $, then c.d.f.\ of
+          \[ \frac{\sqrt{n}(\bar{X}-\mu)}{\sigma}  \]
+          can be approximated by that of $ \N{0,1} $
+    \item Useful theorems:
+          \begin{itemize}
+              \item $ X_n\stackrel{\mathbb{P}}{\to}a\implies
+                        g(X_n)\stackrel{\mathbb{P}}{\to}g(a) $ $ g $
+                    is a continuous function
+              \item $ X_n\stackrel{\text{d}}{\to}X\implies
+                        g(X_n)\stackrel{\text{d}}{\to}g(X) $ $ g $
+              \item Slutsky's Theorem.
+                    $ X_n\stackrel{\text{d}}{\to}X $,
+                    $ Y_n\stackrel{\mathbb{P}}{\to}b $
+                    \[ X_n+Y_n\stackrel{\text{d}}{\to}X+b \]
+                    \[ X_nY_n\stackrel{\text{d}}{\to}Xb \]
+                    \[ \frac{X_n}{Y_n} \stackrel{\text{d}}{\to}\frac{X}{b} \quad
+                        (b\neq 0) \]
+          \end{itemize}
+\end{enumerate}
+\begin{Example}{}{}
+    $ X_1,\ldots,X_n \stackrel{\text{iid}}{\sim}\uniform{0,1} $
+    and $ U_n=\max_{1\le i\le n}X_i $. In the first two examples
+    of this chapter, we've shown that
+    \[ U_n=X_{(n)}\stackrel{\mathbb{P}}{\to}1 \]
+    \[ U_n\stackrel{\text{d}}{\to}1 \]
+    and
+    \[ n(1-X_{(n)})=n(1-U_n)\stackrel{\text{d}}{\to} X \sim \exponential{1} \]
+    Then,
+    \begin{enumerate}[label=(\roman*)]
+        \item $ e^{U_n} $
+        \item $ \sin(1-U_n) $
+        \item $ e^{-n(1-U_n)} $
+        \item $ (U_n+1)^2[n(1-U_n)] $
+    \end{enumerate}
+    \textbf{Solution.}
+    \begin{enumerate}[label=(\roman*)]
+        \item $ e^{U_n} $
+              Take $ g(x)=e^x $. Continuous mapping theorem:
+              \[ U_n\stackrel{\mathbb{P}}{\to}1\implies e^{U_n}
+                  \stackrel{\mathbb{P}}{\to} e^1 \]
+        \item $ \sin(1-U_n) $. Take $ g(x)=\sin(1-x) $.
+              \[ \sin(1-U_n)\stackrel{\mathbb{P}}{\to}\sin(1-1)=0 \]
+        \item $ e^{-n(1-U_n)} $.
+              \[ n(1-U_n)\stackrel{\text{d}}{\to} X \sim \exponential{1} \]
+              Continuous mapping theorem. Take $ g(x)=e^{-x} $,
+              \[ e^{-n(1-U_n)}\stackrel{\text{d}}{\to}e^{-X}\quad X \sim \exponential{1} \]
+              How to find c.d.f.\ of $ e^{-X} $? Let $ Y=e^{-X} $.
+              Support of $ Y $ is $ (0,1) $. For any $ 0<y<1 $,
+              \begin{align*}
+                  F_y(y)
+                   & =\Prob{e^{-X}\le y}                    \\
+                   & =\Prob{-X\le \ln(y)}                   \\
+                   & =\Prob{X\ge -\ln(y)}                   \\
+                   & =\int_{-\ln(y)}^{\infty} e^{-x}\, d{x} \\
+                   & =y
+              \end{align*}
+              Therefore,
+              \[ e^{-n(1-U_n)}\stackrel{\text{d}}{\to} Y \sim \exponential{1} \]
+        \item $ (U_n+1)^2[n(1-U_n)] $. Since $ U_n\stackrel{\mathbb{P}}{\to}1 $,
+              Take $ g(x)=(1+x)^2 $. Continuous mapping theorem:
+              \[ (U_n+1)^2\stackrel{\mathbb{P}}{\to}(1+1)^2=4 \]
+              \[ n(1-U_n)\stackrel{\text{d}}{\to}X \sim \exponential{1} \]
+              Slutsky's Theorem:
+              \[ (U_n+1)^2[n(1-U_n)]\stackrel{\text{d}}{\to}4X \]
+              Let $ Y=4X $. Support of $ Y $ is $ (0,\infty) $.
+              For $ 0<y<\infty $,
+              \begin{align*}
+                  \Prob{Y\le y}
+                   & =\Prob{4X\le y}               \\
+                   & =\Prob*{X\le \frac{y}{4}}     \\
+                   & =\int_{0}^{y/4}e^{-x} \, d{x} \\
+                   & =1-e^{-y/4}
+              \end{align*}
+              Hence, the p.d.f.\ of $ Y $ is
+              \[ f_Y(y)=\frac{1}{4} e^{-y/4}\quad (y>0) \]
+              $ Y \sim \exponential{4} $.
+    \end{enumerate}
+\end{Example}
+\begin{Theorem}{Delta Method}{}
+    Suppose that
+    \[ \sqrt{n}(X_n-\theta)
+        \stackrel{\text{d}}{\to}X \sim \N{0,\sigma^2} \]
+    and $ g(x) $ is differentiable at $ x=\theta $
+    and $ g^{\prime}(\theta)\ne 0 $. Then,
+    \[ \sqrt{n}[g(X_n)-g(\theta)]\stackrel{\text{d}}{\to}W \sim \N{0,
+            [g^{\prime}(\theta)]^2\sigma^2} \]
+\end{Theorem}
+Background: $ \sqrt{n}(X_n-\theta)\sqrt{n}(X_n-\theta)
+    \stackrel{\text{d}}{\to}X \sim \N{0,\sigma^2} $.
+This implies that
+\[ \sqrt{n}(X_n-\theta)\stackrel{\text{d}}{\approx}
+    \N{0,\sigma^2} \]
+equivalently,
+\[ X_n\stackrel{\text{d}}{\approx}\N*{\theta,\frac{\sigma^2}{n}} \]
+Question: What's the approximate distribution of $ g(X_n) $?
+Delta method tells us that
+\[ \sqrt{n}[g(X_n)-g(\theta)] \approx\N{0,
+        [g^{\prime}(\theta)]^2\sigma^2} \]
+\[ \implies g(X_n)\stackrel{\text{d}}{\approx}
+    \N*{g(\theta),\frac{[g^\prime(\theta)]\sigma^2}{n} } \]
+Not rigorous derivation. By 1st Taylor
+expansion:
+\[ f(x)\approx f(x_0)+f^\prime(x_0)(x-x_0)\quad (x\approx x_0) \]
+\[ g(X_n)\approx g(\theta)+g^\prime(\theta)(X_n-\theta)\implies
+    \sqrt{n}[g(X_n)-g(\theta)]\approx
+    \Uunderbracket{\sqrt{n}(X_n-\theta)}_{\N{0,\sigma^2}}
+    g^\prime \theta \]
+By continuous mapping theorem,
+\[ \sqrt{n}(X_n-\theta)g^\prime(\theta)
+    \stackrel{\text{d}}{\to} g^\prime(\theta)X \sim \N{
+        0,[g^\prime(\theta)]^2\sigma^2
+    } \]
+Not rigorous since we only considered the 1st Taylor expansion,
+``why can we drop other terms?''
+\begin{Example}{}{}
+    $ X_1,\ldots,X_n \stackrel{\text{iid}}{\sim}\poi{\mu} $.
+    Find limiting distribution of
+    \[ Z_n=\sqrt{n}(\sqrt{\bar{X}_n}-\sqrt{\mu}) \]
+    Recall in example from lecture 19:
+    \[ \sqrt{n}(\bar{X}_n-\mu)\stackrel{\text{d}}{\to}
+        \N{0,\mu} \]
+    since $ \E{X_i}=\mu $, $ \Var{X_i}=\mu $.
+    Take $ g(x)=\sqrt{x} $, $ g^\prime(x)=\frac{1}{2} x^{-1/2} $.
+    \[ Z_n=\sqrt{n}(\sqrt{\bar{X}_n}-\sqrt{\mu})\stackrel{\text{d}}{\to}
+        \N*{0,[g^\prime(\mu)]\sigma^2}=
+        \N*{0,\frac{1}{4}\mu^{-1}\mu=\frac{1}{4}}=\N{0,\frac{1}{4}} \]
+\end{Example}
+\begin{Example}{}{}
+    $ X_1,\ldots,X_n \stackrel{\text{iid}}{\sim}\exponential{\theta} $.
+    Find the limiting distribution of
+    \begin{enumerate}
+        \item $ \bar{X}_n $
+        \item $ \displaystyle Z_n=\frac{\sqrt{n}(\bar{X}_n-\theta)}{\bar{X}_n} $
+        \item $ U_n=\sqrt{n}(\bar{X}_n-\theta) $
+        \item $ V_n=\sqrt{n}(\ln(\bar{X}_n)-\ln(\theta)) $
+    \end{enumerate}
+    \textbf{Solution.}
+    \begin{enumerate}
+        \item $ \bar{X}_n $.
+              By WLLN, $ \E{X_i}=\theta $, $ \Var{X_i}=\theta^2 $
+              (also available on cheat sheet), so $ \bar{X}_n
+                  \stackrel{\mathbb{P}}{\to}\theta $.
+        \item $ \displaystyle Z_n=\frac{\sqrt{n}(\bar{X}_n-\theta)}{\bar{X}_n} $.
+              \[ \frac{\sqrt{n}(\bar{X}_n-\theta)}{\theta} \stackrel{\text{d}}{\to}
+                  \N{0,1}\quad \text{CLT} \]
+              \[ Z_n=\frac{\sqrt{n}(\bar{X}_n-\theta)}{\bar{X}_n}=
+                  \frac{\sqrt{n}(\bar{X}_n-\theta)}{\theta}\frac{\theta}{\bar{X}_n} \]
+              by continuous mapping theorem, take $ g(x)=\frac{\theta}{x} $,
+              \[ \frac{\theta}{\bar{X}_n}\stackrel{\mathbb{P}}{\to}1 \]
+              By Slutsky's Theorem,
+              \[ Z_n\stackrel{\text{d}}{\to}Z \sim \N{0,1}(1) \]
+        \item $ U_n=\sqrt{n}(\bar{X}_n-\theta) $.
+              \[ U_n=\frac{\sqrt{n}(\bar{X}_n-\theta)}{\theta}(\theta)
+                  \stackrel{\text{d}}{\to}Z \sim \N{0,1}
+              \]
+              $ g(x)=\theta x $, continuous mapping theorem
+              \[ U_n\stackrel{\text{d}}{\to}\theta Z \sim \N{0,\theta^2} \]
+        \item $ V_n=\sqrt{n}(\ln(\bar{X}_n)-\ln(\theta)) $.
+              $ g(x)=\ln(x) $. $ g^\prime(x)=1/x $. By Delta Method,
+              \[ \sqrt{n}(\bar{X}_n-\theta)\stackrel{\text{d}}{\to}
+                  \N{0,\sigma^2} \]
+              Delta method,
+              \[ \sqrt{n}(\ln(\bar{X}_n)\ln(\theta))
+                  \stackrel{\text{d}}{\to}\N*{0,[g^\prime(\sigma)]^2\theta^2}=\N{0,1}
+              \]
+    \end{enumerate}
+\end{Example}
