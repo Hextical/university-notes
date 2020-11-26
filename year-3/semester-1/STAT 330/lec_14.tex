@@ -8,15 +8,15 @@ $ Y=h(X) $. $ T=\E{X\given Y}=3/4Y $.
 \underline{Problem}: Suppose that $ X $ is a continuous
 random variable. Let $ Y=h(X) $. What is the p.d.f.\ of $ Y $?
 \begin{Example}{Cumulative Distribution Function Technique}{}
-    If $ X \sim N(0,1) $, find the p.d.f.\ of $ Y=X^2 $.
+    If $ X \sim \N{0,1} $, find the p.d.f.\ of $ Y=X^2 $.
 
     \textbf{Solution.} Support of $ Y $ is $ \interval[open right]{0}{\infty} $.
     The c.d.f.\ of $ Y $ for $ y>0 $ is
     \begin{align*}
         F_Y(y)
-         & =\Prob{Y\leqslant y}                           \\
-         & =\Prob{X^2\leqslant y}                         \\
-         & =\Prob{-\sqrt{y}\leqslant X\leqslant \sqrt{y}} \\
+         & =\Prob{Y\le y}                     \\
+         & =\Prob{X^2\le y}                   \\
+         & =\Prob{-\sqrt{y}\le X\le \sqrt{y}} \\
          & =F_X(\sqrt{y})-F_X(-\sqrt{y})
     \end{align*}
     The p.d.f.\ of $ Y $ is
@@ -42,17 +42,17 @@ random variable. Let $ Y=h(X) $. What is the p.d.f.\ of $ Y $?
 \end{Example}
 \begin{Example}{Cumulative Distribution Function Technique}{}
     Suppose the p.d.f.\ of $ X $ is $ \displaystyle  f(x)=
-        \frac{\theta}{x^{\theta+1}} $ for $ x\geqslant 1 $
+        \frac{\theta}{x^{\theta+1}} $ for $ x\ge 1 $
     and $ \theta>0. $
-    Find the p.d.f.\ of $ Y=\log(X) $.
+    Find the p.d.f.\ of $ Y=\ln(X) $.
 
-    \textbf{Solution.} Support of $ Y $ is $ (0,\infty) $.
+    \textbf{Solution.} Support of $ Y $ is $ \interval[open right]{0}{\infty} $.
     The c.d.f.\ of $ Y $ for $ y>0 $ is
     \begin{align*}
         F_Y(y)
-         & =\Prob{Y\leqslant y}                                \\
-         & =\Prob{\log(X)\leqslant y}                          \\
-         & =\Prob{X\leqslant e^y}                              \\
+         & =\Prob{Y\le y}                                      \\
+         & =\Prob{\ln(X)\le y}                                 \\
+         & =\Prob{X\le e^y}                                    \\
          & =\int_{1}^{e^y} \frac{\theta}{x^{\theta+1}} \, d{x} \\
          & =1-e^{-y\theta}
     \end{align*}
@@ -65,7 +65,7 @@ random variable. Let $ Y=h(X) $. What is the p.d.f.\ of $ Y $?
         \end{cases} \]
 \end{Example}
 \underline{Special case}: If $ h(x) $
-is a one-to-one transformation, then we have a
+is a one-to-one transformation on the support of $ X $, then we have a
 formula to find p.d.f.\ of $ Y=h(X) $.
 \begin{Theorem}{One-to-One Univariate Transformations}{}
     If $ h(x) $ is one-to-one transformation
@@ -80,18 +80,18 @@ formula to find p.d.f.\ of $ Y=h(X) $.
 \end{Remark}
 \begin{Example}{One-to-One Transformation (Univariate)}{}
     Suppose the p.d.f.\ of $ X $ is $ \displaystyle  f(x)=
-        \frac{\theta}{x^{\theta+1}} $ for $ x\geqslant 1 $
+        \frac{\theta}{x^{\theta+1}} $ for $ x\ge 1 $
     and $ \theta>0. $
-    Find the p.d.f.\ of $ Y=\log(X) $.
+    Find the p.d.f.\ of $ Y=\ln(X) $.
 
-    \textbf{Solution.} Support of $ Y $ is $ (0,\infty) $.
-    $ h(x)=\log(x) $
+    \textbf{Solution.} Support of $ Y $ is $ \interval[open right]{0}{\infty}$.
+    $ h(x)=\ln(x) $
     is a one-to-one transformation. For $ y>0 $ we have
     \begin{align*}
         g_Y(y)
-         & =f_X(x)\abs*{\frac{dx}{dy}}           & y=\log x\implies x=e^y \\
-         & =f_X(e^y)\abs{e^y}                                             \\
-         & =\frac{\theta}{(e^y)^{\theta+1}}(e^y)                          \\
+         & =f_X(x)\abs*{\frac{dx}{dy}}           & y=\ln (x)\implies x=e^y \\
+         & =f_X(e^y)\abs{e^y}                                              \\
+         & =\frac{\theta}{(e^y)^{\theta+1}}(e^y)                           \\
          & =\theta e^{-\theta y}
     \end{align*}
     Note that $ \displaystyle \frac{dx}{dy} =\frac{1}{dy/dx}=\frac{1}{1/x}=x $.
@@ -105,11 +105,11 @@ formula to find p.d.f.\ of $ Y=h(X) $.
     \end{align*}
 \end{Example}
 \begin{Example}{One-to-One Transformation (Univariate)}{}
-    Suppose $ X \sim N(0,1) $ and the c.d.f.\ of $ X $ is
+    Suppose $ X \sim \N{0,1} $ and the c.d.f.\ of $ X $ is
     $ \Phi(x) $. Find the p.d.f.\ of $ Y=\Phi(X) $.
 
     \textbf{Solution.} Support of $ Y $ is $ [0,1] $.
-    The p.d.f.\ of $ Y $ for $ 0\leqslant y\leqslant 1 $ is
+    The p.d.f.\ of $ Y $ for $ 0\le y\le 1 $ is
     \begin{align*}
         g_Y(y)
          & =f_X(x)\abs*{\frac{dx}{dy}}                                       \\
@@ -121,10 +121,11 @@ formula to find p.d.f.\ of $ Y=h(X) $.
     Thus, $ Y \sim \uniform{0,1} $.
 \end{Example}
 \begin{Example}{One-to-One Transformation (Univariate)}{}
-    Suppose $ X \sim \uniform{0,1} $. Find the p.d.f.\ of $ Y=-\log(X) $.
+    Suppose $ X \sim \uniform{0,1} $. Find the p.d.f.\ of $ Y=-\ln(X) $.
 
-    \textbf{Solution.} Support of $ Y $ is $ (0,\infty) $.
-    Note that $ y=-\log(x)\implies dy/dx=-1/x $.
+    \textbf{Solution.} Support of $ Y $ is $ \interval[open right]{0}{\infty} $.
+    Note that $ y=-\ln(x)\implies dy/dx=-1/x $.
+    The p.d.f.\ of $ Y $ for $ y>0 $ is
     \begin{align*}
         g_Y(y)
          & =f_X(x)\abs*{\frac{dx}{dy}} \\
@@ -133,7 +134,7 @@ formula to find p.d.f.\ of $ Y=h(X) $.
          & =e^{-y}
     \end{align*}
     where the last equality follows since
-    $ y=-\log(x)\implies x=e^{-y} $ for $ y>0 $.
+    $ y=-\ln(x)\implies x=e^{-y} $ for $ y>0 $.
 \end{Example}
 \begin{Remark}{}{}
     The c.d.f.\ technique is always useful, but the

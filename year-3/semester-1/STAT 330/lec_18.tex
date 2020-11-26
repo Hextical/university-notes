@@ -6,7 +6,7 @@
     c.d.f.\ $ F_n(x) $. Let $ X $ be a random variable
     with c.d.f.\ $ F(x) $. If for any $ \varepsilon>0 $,
     \[ \lim\limits_{{n} \to {\infty}}
-        \Prob*{\abs*{X_n-X}\geqslant \varepsilon}=0 \]
+        \Prob*{\abs*{X_n-X}\ge \varepsilon}=0 \]
     or
     \[ \lim\limits_{{n} \to {\infty}}
         \Prob*{\abs*{X_n-X}<\varepsilon}=1 \]
@@ -32,7 +32,7 @@ We consider a special case.
 \begin{Definition}{Convergence in Probability to a Constant}{}
     Let $ X_1,\ldots,X_n $ be a sequence of random variables,
     and $ b $ be a constant. If $ \lim\limits_{{n} \to {\infty}}
-        \Prob*{\abs*{X_n-b}\geqslant \varepsilon}=0 $
+        \Prob*{\abs*{X_n-b}\ge \varepsilon}=0 $
     for any $ \varepsilon>0 $. We say $ X_n $ \textbf{converges
         in probability} to $ b $, and write $ X_n\stackrel{\mathbb{P}}{\to}b $.
 \end{Definition}
@@ -45,8 +45,8 @@ We consider a special case.
         \end{cases} \]
     or limiting distribution of $ X_n $ is
     \[ F(x)=\begin{cases}
-            0 & x<b          \\
-            1 & x\geqslant b
+            0 & x<b    \\
+            1 & x\ge b
         \end{cases} \]
     (c.d.f.\ of $ X $, which satisfies $ \Prob{X=b}=1 $), then
     $ X_n\stackrel{\mathbb{P}}{\to}b $ and write
@@ -57,24 +57,24 @@ We consider a special case.
     \[ X_n\stackrel{\text{d}}{\to}b\iff X_n\stackrel{\mathbb{P}}{\to}b \]
 \end{Theorem}
 \begin{Proof}{}{}
-    For any $ \varepsilon>0 $, $ \Prob{\abs{X_n-b}\geqslant \varepsilon}\to 0 $
+    For any $ \varepsilon>0 $, $ \Prob{\abs{X_n-b}\ge \varepsilon}\to 0 $
     as $ n\to\infty $.
     \begin{enumerate}[label=(\roman*)]
-        \item Lower bound: $ \Prob{\abs{X_n-b}\geqslant \varepsilon}\geqslant 0 $
+        \item Lower bound: $ \Prob{\abs{X_n-b}\ge \varepsilon}\ge 0 $
         \item Upper bound:
               \begin{align*}
-                  \Prob{\abs{X_n-b}\geqslant \varepsilon}
-                   & =\Prob{(X_n\geqslant b+\varepsilon)\cup (X_n\leqslant b-\varepsilon)}     \\
+                  \Prob{\abs{X_n-b}\ge \varepsilon}
+                   & =\Prob{(X_n\ge b+\varepsilon)\cup (X_n\le b-\varepsilon)}      \\
                    & =1-\Prob{X_n<b+\varepsilon}+
-                  \Uunderbracket{\Prob{X_n\leqslant b-\varepsilon}}_{F_n(b-\varepsilon)}       \\
-                   & \leqslant 1-\Prob*{X_n\leqslant \frac{\varepsilon}{2}}+F_n(b-\varepsilon) \\
+                  \Uunderbracket{\Prob{X_n\le b-\varepsilon}}_{F_n(b-\varepsilon)}  \\
+                   & \le 1-\Prob*{X_n\le \frac{\varepsilon}{2}}+F_n(b-\varepsilon)  \\
                    & =1-F_n\biggl(b+\frac{\varepsilon}{2}\biggr)+F_n(b-\varepsilon)
               \end{align*}
-              as $ n\to\infty $, $ F_n\biggl(b+\frac{\varepsilon}{2}\biggr)\geqslant 1 $
+              as $ n\to\infty $, $ F_n\biggl(b+\frac{\varepsilon}{2}\biggr)\ge 1 $
               and $ \lim\limits_{{n} \to {\infty}} F_n(b-\varepsilon)=0 $,
               so the upper bound will be $ 1-1+0=0 $, and hence
-              \[ 0\leqslant \lim\limits_{{n} \to {\infty}} \Prob{\abs{X_n-b}\geqslant \varepsilon}
-                  \leqslant 0 \]
+              \[ 0\le \lim\limits_{{n} \to {\infty}} \Prob{\abs{X_n-b}\ge \varepsilon}
+                  \le 0 \]
               and hence
               \[ X_n\stackrel{\text{d}}{\to}b\iff X_n\stackrel{\mathbb{P}}{\to}b \]
     \end{enumerate}
@@ -82,13 +82,13 @@ We consider a special case.
 \begin{Example}{}{}
     $ X_1,\ldots,X_n \stackrel{\text{iid}}{\sim}\uniform{0,1} $.
     In~\Cref{ex:lec_17ex1}, we showed that
-    \[ \lim\limits_{{n} \to {\infty}} \Prob{X_{(n)}\leqslant x}=
+    \[ \lim\limits_{{n} \to {\infty}} \Prob{X_{(n)}\le x}=
         \begin{cases}
             0 & x<0 \\
             1 & x>0
         \end{cases}\implies X_{(1)}\stackrel{\text{d}}{\to}0
         \implies X_{(1)}\stackrel{\mathbb{P}}{\to}0 \]
-    \[ \lim\limits_{{n} \to {\infty}} \Prob{X_{(n)}\leqslant x}=
+    \[ \lim\limits_{{n} \to {\infty}} \Prob{X_{(n)}\le x}=
         \begin{cases}
             0 & x<1 \\
             1 & x>1
@@ -102,23 +102,23 @@ We consider a special case.
 
     \textbf{Solution 1.} Only need to show that $ X_{(n)}\stackrel{\text{d}}{\to}\theta $;
     that is,
-    \[ \lim\limits_{{n} \to {\infty}} \Prob{X_{(n)}\leqslant x}
+    \[ \lim\limits_{{n} \to {\infty}} \Prob{X_{(n)}\le x}
         =\begin{cases}
             0 & x<\theta \\
             1 & x>\theta
         \end{cases} \]
     or limiting distribution of $ X_{(1)} $ is
     \[ F(x)=\begin{cases}
-            0 & x< \theta         \\
-            1 & x\geqslant \theta
+            0 & x< \theta   \\
+            1 & x\ge \theta
         \end{cases} \]
     Support $ X_{(1)} $ is $ (\theta,\infty) $.
-    $ \Prob{X_{(1)}\leqslant x}=F_n(x) $.
+    $ \Prob{X_{(1)}\le x}=F_n(x) $.
     \begin{itemize}
-        \item $ x\leqslant \theta $, $ F_n(x)=0 $
+        \item $ x\le \theta $, $ F_n(x)=0 $
         \item $ x>\theta $,
               \begin{align*}
-                  \Prob{X_{(1)}\leqslant x}
+                  \Prob{X_{(1)}\le x}
                    & =1-[\Prob{X_1>x}]^n \\
                    & =1-e^{-n(x-\theta)}
               \end{align*}
@@ -126,7 +126,7 @@ We consider a special case.
               $ \displaystyle  \Prob{X_1>x}=\int_{x}^{\infty} e^{-(t-\theta)}\, d{t}=
                   e^{-(x-\theta)}  $. Therefore,
               \[ F_n(x)=\begin{cases}
-                      0                  & x\leqslant \theta \\
+                      0                  & x\le \theta \\
                       1-e^{-n(x-\theta)} & x>\theta
                   \end{cases}\implies
                   \lim\limits_{{n} \to {\infty}} F_n(x)=
@@ -139,19 +139,19 @@ We consider a special case.
     \end{itemize}
     \textbf{Solution 2.} By definition, for any $ \varepsilon>0 $,
     \begin{itemize}
-        \item Lower bound: $ \Prob{\abs{X_{(1)}-\theta}\geqslant \varepsilon}\geqslant 0 $
+        \item Lower bound: $ \Prob{\abs{X_{(1)}-\theta}\ge \varepsilon}\ge 0 $
         \item Upper bound:
               \begin{align*}
-                  \Prob{\abs{X_{(1)}-\theta}\geqslant \varepsilon}
-                   & =\Prob{(X_{(1)}\geqslant \theta+\varepsilon)\cup
-                  (X_{(1)}\leqslant \theta-\varepsilon)}              \\
-                   & =\Prob{X_{(1)}\geqslant \theta+\varepsilon}+
-                  \Prob{X_{(1)}\leqslant \theta-\varepsilon}          \\
-                   & =[\Prob{X_1>\theta+\varepsilon}]^n               \\
-                   & =e^{-n(\theta+\varepsilon-\theta)}               \\
+                  \Prob{\abs{X_{(1)}-\theta}\ge \varepsilon}
+                   & =\Prob{(X_{(1)}\ge \theta+\varepsilon)\cup
+                  (X_{(1)}\le \theta-\varepsilon)}                \\
+                   & =\Prob{X_{(1)}\ge \theta+\varepsilon}+
+                  \Prob{X_{(1)}\le \theta-\varepsilon}            \\
+                   & =[\Prob{X_1>\theta+\varepsilon}]^n           \\
+                   & =e^{-n(\theta+\varepsilon-\theta)}           \\
                    & =e^{-n\varepsilon}\to 0\text{ as }n\to\infty
               \end{align*}
-              Therefore, $ \Prob{\abs{X_{(1)}-\theta}\geqslant \varepsilon}=0 $
+              Therefore, $ \Prob{\abs{X_{(1)}-\theta}\ge \varepsilon}=0 $
               as $ n\to\infty $ which implies $ X_{(1)}\stackrel{\mathbb{P}}{\to}\theta $
               by definition.
     \end{itemize}
@@ -162,8 +162,8 @@ Brief Summary:
     \item Convergence in probability.
     \item Special case. Convergence in probability
           to a \underline{constant} if and only if convergence to distribution.
-    \item $ X_{(1)}=\min_{1\leqslant i\leqslant n}X_i $
-          and $ X_{(n)}=\max_{1\leqslant i\leqslant n}X_i $.
+    \item $ X_{(1)}=\min_{1\le i\le n}X_i $
+          and $ X_{(n)}=\max_{1\le i\le n}X_i $.
 \end{itemize}
 Next, our main job is to study convergence in distribution
 and probability $ \bar{X}_n=\frac{1}{n} \sum_{i=1}^{n} X_i $.
@@ -178,34 +178,34 @@ Sequence of results:
 \begin{Theorem}{Markov's Inequality}{}
     Suppose that $ X $ is a random variable. For any $ k>0 $,
     $ c>0 $, we have
-    \[ \Prob{\abs{X}\geqslant c}\leqslant \frac{\E*{\abs{X}^k}}{c^k}  \]
+    \[ \Prob{\abs{X}\ge c}\le \frac{\E*{\abs{X}^k}}{c^k}  \]
 \end{Theorem}
 Markov's Inequality relates probability to moments.
 
 In most situations, we take $ k=2 $; that is, we consider
-\[ \Prob{\abs{X}\geqslant c}\leqslant \frac{\E{X^2}}{c^2} \]
+\[ \Prob{\abs{X}\ge c}\le \frac{\E{X^2}}{c^2} \]
 \begin{Example}{Weak Law of Large Numbers}{}
     Suppose $ X_1,\ldots,X_n $ are i.i.d.\ random variables
-    with $ \E{X_i}=\mu $ and $ \Var{X_i}=\sigma^2 $, then
+    with $ \E{X_i}=\mu $ and $ \Var{X_i}=\sigma^2<\infty $, then
     \[ \bar{X}_n=\frac{1}{n} \sum_{i=1}^{n} X_i\stackrel{\mathbb{P}}{\to}\mu \]
     \textbf{Solution.} By definition, we only need to show that
     for any $ \varepsilon>0 $,
-    \[ \lim\limits_{{n} \to {\infty}} \Prob*{\abs*{\bar{X}_n-\mu}\geqslant \varepsilon}=0 \]
-    Lower bound: $ \Prob*{\abs*{\bar{X}_n-\mu}\geqslant \varepsilon}\geqslant 0 $.
+    \[ \lim\limits_{{n} \to {\infty}} \Prob*{\abs*{\bar{X}_n-\mu}\ge \varepsilon}=0 \]
+    Lower bound: $ \Prob*{\abs*{\bar{X}_n-\mu}\ge \varepsilon}\ge 0 $.
 
     Upper bound:
-    \[ \Prob*{\abs*{\bar{X}_n-\mu}\geqslant \varepsilon}\leqslant
+    \[ \Prob*{\abs*{\bar{X}_n-\mu}\ge \varepsilon}\le
         \frac{\E{(\bar{X}_n-\mu)^2}}{\varepsilon^2}  \]
     Aside: $ \E{\bar{X}_n}=\mu $, $ \Var{X_n}=\frac{\sigma^2}{n} $, so
     \[ \frac{\E{(\bar{X}_n-\mu)^2}}{\varepsilon^2}=
         \frac{\Var{\bar{X}_n}}{\varepsilon^2}=
         \frac{\sigma^2}{n\varepsilon^2}\to 0\text{ as }n\to\infty   \]
-    By Squeeze Theorem, $ \Prob*{\abs*{\bar{X}_n-\mu}\geqslant \varepsilon}=0 $.
+    By Squeeze Theorem, $ \Prob*{\abs*{\bar{X}_n-\mu}\ge \varepsilon}=0 $.
 \end{Example}
 \begin{Exercise}{Markov's Inequality}{}
     If $ X_1,\ldots,X_n $ are independent. $ \E{X_i}=\mu $
     and $ \Var{X_i}=\sigma_i^2 $ for $ i=1,\ldots,n $.
-    $ \max_{1\leqslant i\leqslant n}\sigma_i^2\leqslant c $.
+    $ \max_{1\le i\le n}\sigma_i^2\le c $.
     Show that
     \[ \bar{X}_n\stackrel{\mathbb{P}}{\to}\mu \]
 \end{Exercise}

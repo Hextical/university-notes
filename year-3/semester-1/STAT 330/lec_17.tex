@@ -17,7 +17,7 @@ In practice, we don't know the distribution of $ X_i $.
     \end{enumerate}
 \end{Remark}
 Let $ F_n(x) $ be the c.d.f.\ of $ \sqrt{n}(\bar{X}-\mu) $;
-that is, $ F_n(x)=\Prob*{\sqrt{n}(\bar{X}-\mu)\leqslant x} $.
+that is, $ F_n(x)=\Prob*{\sqrt{n}(\bar{X}-\mu)\le x} $.
 Consider: $ \lim\limits_{{n} \to {\infty}} F_n(x) $ (pointwise
 limit) and find that $ \lim\limits_{{n} \to {\infty}} F_n(x)=F(x) $
 where $ F(x) $ is a known distribution, e.g.\ normal c.d.f.\
@@ -50,7 +50,7 @@ in a mathematical way.
         \item $ \lim\limits_{{n} \to {\infty}} F_n(x)=F(x) $
               only for continuous points of $ F(x) $, e.g.\
               \[ F(x)=\begin{cases}
-                      1 & x\geqslant a \\
+                      1 & x\ge a \\
                       0 & x<a
                   \end{cases} \]
               which is the c.d.f.\
@@ -69,6 +69,16 @@ in a mathematical way.
               $ F_n(x) $ as $ n\to\infty $.
     \end{enumerate}
 \end{Remark}
+\begin{Theorem}{$ e $ Limit}{}
+    Let $ b,c\in\mathbf{R} $, $ \lim\limits_{{n} \to {\infty}} \psi(n)=0 $.
+    \[ \lim\limits_{{n} \to {\infty}}
+        \biggr[1+\frac{b}{n} +\frac{\psi(n)}{n} \biggl]^{c n}=e^{b c} \]
+\end{Theorem}
+\begin{Corollary}{}{}
+    Let $ b,c\in\mathbf{R} $.
+    \[ \lim\limits_{{n} \to {\infty}}
+        \biggl[1+\frac{b}{n}\biggr]^{c n}=e^{b c} \]
+\end{Corollary}
 \begin{Example}{}{lec_17ex1}
     Suppose that $ X_1,\ldots,X_n\stackrel{\text{iid}}{\sim}
         \uniform{0,1} $. Let $ X_{(1)}=\min(X_1,\ldots,X_n) $
@@ -83,28 +93,28 @@ in a mathematical way.
         \item $ nX_{(1)} $. Support is
               $ [0,n] $, so the c.d.f.\ of $ nX_{(1)} $ is:
               \begin{itemize}
-                  \item $ x\geqslant n $, $ F_n(x)=\Prob{n X_{(1)}\leqslant x}=1 $
-                  \item $ x\leqslant 0 $, $ F_n(x)=\Prob{n X_{(1)}\leqslant x}=0 $
+                  \item $ x\ge n $, $ F_n(x)=\Prob{n X_{(1)}\le x}=1 $
+                  \item $ x\le 0 $, $ F_n(x)=\Prob{n X_{(1)}\le x}=0 $
                   \item $ 0<x<n $,
                         \begin{align*}
                             F_n(x)
-                             & =\Prob{n X_{(1)}\leqslant x}                      \\
-                             & =\Prob*{X_{(1)}\leqslant \frac{x}{n}}             \\
+                             & =\Prob{n X_{(1)}\le x}                            \\
+                             & =\Prob*{X_{(1)}\le \frac{x}{n}}                   \\
                              & =1-\Prob*{X_1>\frac{x}{n},\ldots,X_n>\frac{x}{n}} \\
                              & =1-\biggl[\Prob{X_1>\frac{x}{n}}\biggr]^n         \\
                              & =1-\biggl(1-\frac{x}{n} \biggr)^n
                         \end{align*}
                         Therefore,
-                        \[ \Prob{nX_{(1)}\leqslant x}\coloneq
+                        \[ \Prob{nX_{(1)}\le x}\coloneq
                             F_n(x)=\begin{dcases}
-                                0                                & x\leqslant 0 \\
-                                1-\biggl(1-\frac{x}{n} \biggr)^n & 0<x<n        \\
-                                1                                & x\geqslant n
+                                0                                & x\le 0 \\
+                                1-\biggl(1-\frac{x}{n} \biggr)^n & 0<x<n  \\
+                                1                                & x\ge n
                             \end{dcases} \]
                         \[ \implies
                             \lim\limits_{{n} \to {\infty}} F_n(x)=
                             \begin{cases}
-                                0        & x\leqslant 0 \\
+                                0        & x\le 0 \\
                                 1-e^{-x} & x>0
                             \end{cases} \]
                         Aside: $
@@ -115,15 +125,15 @@ in a mathematical way.
               $ n(1-X_{(n)}) $. Support is $ [0,n] $, so the c.d.f.\ of
               $ n(1-X_{(n)}) $ is
               \begin{itemize}
-                  \item $ x\geqslant n $, $ F_n(x)=
-                            \Prob{n(1-X_{(n)})\leqslant x}=1 $
-                  \item $ x\leqslant 0 $, $ F_n(x)=
-                            \Prob{n(1-X_{(n)})\leqslant x}=0 $
+                  \item $ x\ge n $, $ F_n(x)=
+                            \Prob{n(1-X_{(n)})\le x}=1 $
+                  \item $ x\le 0 $, $ F_n(x)=
+                            \Prob{n(1-X_{(n)})\le x}=0 $
                   \item $ 0<x<n $,
                         \begin{align*}
                             F_n(x)
-                             & = \Prob{n(1-X_{(n)})\leqslant x}             \\
-                             & =\Prob*{1-X_{(n)}\leqslant \frac{x}{n}}      \\
+                             & = \Prob{n(1-X_{(n)})\le x}                   \\
+                             & =\Prob*{1-X_{(n)}\le \frac{x}{n}}            \\
                              & =1-\Prob*{X_{(n)}<1-\frac{x}{n}}             \\
                              & =1-\Prob*{X_1<1-\frac{x}{n},\ldots,
                             X_n<1-\frac{x}{n}}                              \\
@@ -132,39 +142,39 @@ in a mathematical way.
                         \end{align*}
                         Therefore,
                         \[ F_n(x)=\begin{dcases}
-                                0                               & x\leqslant 0 \\
-                                1-\biggl(1-\frac{x}{n}\biggr)^n & 0<x<n        \\
-                                1                               & x\geqslant n
+                                0                               & x\le 0 \\
+                                1-\biggl(1-\frac{x}{n}\biggr)^n & 0<x<n  \\
+                                1                               & x\ge n
                             \end{dcases} \]
                         \[ \implies
                             \lim\limits_{{n} \to {\infty}} F_n(x)=
                             \begin{cases}
-                                0        & x\leqslant 0 \\
+                                0        & x\le 0 \\
                                 1-e^{-x} & x>0
                             \end{cases} \]
                         which is the c.d.f.\ of $ \exponential{1} $.
               \end{itemize}
         \item $ X_{(1)} $. Support $ (0,1) $.
-              \[ F_n(x)=\Prob{X_{(1)}\leqslant x}=
+              \[ F_n(x)=\Prob{X_{(1)}\le x}=
                   \begin{cases}
-                      0         & x\leqslant 0 \\
-                      1-(1-x)^n & 0<x<1        \\
-                      1         & x\geqslant 1
+                      0         & x\le 0 \\
+                      1-(1-x)^n & 0<x<1  \\
+                      1         & x\ge 1
                   \end{cases} \]
               \[ \implies \lim\limits_{{n} \to {\infty}} F_n(x)=
                   \begin{cases}
-                      0 & x\leqslant 0 \\
-                      1 & 0<x<1        \\
-                      1 & x\geqslant 1
+                      0 & x\le 0 \\
+                      1 & 0<x<1  \\
+                      1 & x\ge 1
                   \end{cases}=
                   \begin{cases}
-                      0 & x\leqslant 0 \\
+                      0 & x\le 0 \\
                       1 & x>0
                   \end{cases} \]
               Question: What is $ F(x) $?
               \[ F(x)=\begin{cases}
-                      0 & x<0          \\
-                      1 & x\geqslant 0
+                      0 & x<0    \\
+                      1 & x\ge 0
                   \end{cases} \]
               will make $ F(x) $ right-continuous.
               $ F(x) $ is not continuous at $ x=0 $.
@@ -175,12 +185,12 @@ in a mathematical way.
 
               \[ \lim\limits_{{n} \to {\infty}} F_n(x)=
                   \begin{cases}
-                      0 & x\leqslant 0 \\
-                      0 & 0<x<1        \\
-                      1 & x\geqslant 1
+                      0 & x\le 0 \\
+                      0 & 0<x<1  \\
+                      1 & x\ge 1
                   \end{cases}=\begin{cases}
-                      0 & x<1          \\
-                      1 & x\geqslant 1
+                      0 & x<1    \\
+                      1 & x\ge 1
                   \end{cases} \]
               which is right-continuous.
 

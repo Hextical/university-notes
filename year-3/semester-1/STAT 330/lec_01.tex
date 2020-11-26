@@ -40,7 +40,7 @@ expectation, and moment generating function.
     A \textbf{probability function} $ \Prob{} $
     is a function that satisfies the following axioms:
     \begin{enumerate}[label=(\Roman*)]
-        \item\label{psf_def_1} $ \Prob{A}\geqslant 0 $ for any event $ A $
+        \item\label{psf_def_1} $ \Prob{A}\ge 0 $ for any event $ A $
         \item\label{psf_def_2} $ \Prob{S}=1 $
         \item\label{psf_def_3} \emph{Additivity property}: If $ A_1,A_2,A_3,\ldots $
               are pairwise mutually exclusive events; that is, $ A_i\cap A_j=\varnothing $
@@ -63,7 +63,7 @@ expectation, and moment generating function.
         \item\label{add_prop_psf_1} $ \Prob{\varnothing}=0 $
         \item\label{add_prop_psf_2} If $ A $ and $ B $ are mutually exclusive events, then $ \Prob{A\cup B}=\Prob{A}+\Prob{B} $
         \item\label{add_prop_psf_3} $ \Prob{\bar{A}}=1-\Prob{A} $
-        \item\label{add_prop_psf_4} If $ A\subseteq B $, then $ \Prob{A}\leqslant \Prob{B} $
+        \item\label{add_prop_psf_4} If $ A\subseteq B $, then $ \Prob{A}\le \Prob{B} $
     \end{enumerate}
 \end{Proposition}
 \begin{Proof}{\ref{prop:add_prop_psf}}{}
@@ -91,22 +91,22 @@ expectation, and moment generating function.
     \[ B=(A\cap B)\cup (\bar{A}\cap B)=A\cup(\bar{A}\cap B) \]
     and $ A\cap(\bar{A}\cap B)=\varnothing $ then by~\ref{add_prop_psf_2}
     \[ \Prob{B}=\Prob{A}+\Prob{\bar{A}\cap B} \]
-    But by~\ref{psf_def_1}, $ \Prob{\bar{A}\cap B}\geqslant 0 $, so the result now follows.
+    But by~\ref{psf_def_1}, $ \Prob{\bar{A}\cap B}\ge 0 $, so the result now follows.
 \end{Proof}
 
 \begin{Exercise}{}{}
     Let $ A $ and $ B $ be events with sample space $ S $
     and let $ \Prob{} $ be a probability function, then prove the following:
     \begin{enumerate}
-        \item $ 0\leqslant \Prob{A}\leqslant 1 $
+        \item $ 0\le \Prob{A}\le 1 $
         \item $ \Prob{A\cap\bar{B}}=\Prob{A}-\Prob{A\cap B} $
         \item $ \Prob{A\cup B}=\Prob{A}+\Prob{B}-\Prob{A\cap B} $
     \end{enumerate}
 \end{Exercise}
 \begin{enumerate}
-    \item $ \Prob{A}\geqslant 0 $ follows from~\ref{psf_def_1}. From~\ref{add_prop_psf_3}
-          we have $ \Prob{\bar{A}}=1-\Prob{A} $. But from~\ref{psf_def_1} $ \Prob{\bar{A}}=\geqslant 0 $
-          and therefore $ \Prob{A}\leqslant 1 $.
+    \item $ \Prob{A}\ge 0 $ follows from~\ref{psf_def_1}. From~\ref{add_prop_psf_3}
+          we have $ \Prob{\bar{A}}=1-\Prob{A} $. But from~\ref{psf_def_1} $ \Prob{\bar{A}}=\ge 0 $
+          and therefore $ \Prob{A}\le 1 $.
     \item Since $ A=(A\cap B)\cup (A\cap \bar{B}) $ and $ (A\cap B)\cap (A\cap \bar{B})
               =\varnothing $, then by~\ref{add_prop_psf_2}
           \[ \Prob{A}=\Prob{A\cap B}+\Prob{A\cap\bar{B}} \]
@@ -154,8 +154,8 @@ Clearly, $ \Prob{A\given B}=\Prob{A} $ if and only if $ A $ and $ B $ are indepe
     A \textbf{random variable} (r.v.) $ X $
     is a function from a sample space $ S $ to the real numbers $ \mathbb{R} $; that is,
     \[ X:S\to \mathbb{R} \] satisfies for any given $ x\in\mathbb{R} $
-    $ \set{X\leqslant x} $ is an event.
-    \[ \set{X\leqslant x}=\set{\omega\in S:X(\omega)\leqslant x}
+    $ \set{X\le x} $ is an event.
+    \[ \set{X\le x}=\set{w\in S:X(w)\le x}
         \subseteq S \]
 \end{Definition}
 
@@ -165,13 +165,13 @@ Clearly, $ \Prob{A\given B}=\Prob{A} $ if and only if $ A $ and $ B $ are indepe
 
     \textbf{Solution.}
     Possible values of $ X $: $ 0,1,2 $. Given $ x\in\mathbb{R} $,
-    $ \set{X\leqslant x} $.
+    $ \set{X\le x} $.
     \begin{itemize}
-        \item $ x<0 \implies \set{X\leqslant x}=\varnothing $
-        \item $ x=0 \implies \set{X\leqslant x}=\set{X=0}=\set{(T,T)}\subseteq S$
-        \item $ x=1 \implies \set{X\leqslant x}=\set{X=1}=\set{(H,T),(T,H)}
+        \item $ x<0 \implies \set{X\le x}=\varnothing $
+        \item $ x=0 \implies \set{X\le x}=\set{X=0}=\set{(T,T)}\subseteq S$
+        \item $ x=1 \implies \set{X\le x}=\set{X=1}=\set{(H,T),(T,H)}
                   \subseteq S $
-        \item $ x=2 \implies \set{X\leqslant x}=\set{X=2}=
+        \item $ x=2 \implies \set{X\le x}=\set{X=2}=
                   \set{(H,H)}\subseteq S $
     \end{itemize}
     Thus, $ X $ is a random variable.
@@ -180,33 +180,33 @@ Clearly, $ \Prob{A\given B}=\Prob{A} $ if and only if $ A $ and $ B $ are indepe
 \begin{Definition}{Cumulative distribution function}{}
     The \textbf{cumulative distribution function} (c.d.f.) of a random variable
     $ X $ is defined by
-    \[ F(x)=\Prob{X\leqslant x} \]
+    \[ F(x)=\Prob{X\le x} \]
     for all $ x\in\mathbb{R} $. Note that the c.d.f.\ is defined for all $ \mathbb{R} $.
 \end{Definition}
 
 \begin{Definition}{Properties --- Cumulative Distribution Function}{}
     \begin{enumerate}[label=(\arabic*)]
-        \item $ F $ is a non-decreasing function; that is, if $ x_1\leqslant x_2 $,
-              then $ F(x_1)\leqslant F(x_2) $.
+        \item $ F $ is a non-decreasing function; that is, if $ x_1\le x_2 $,
+              then $ F(x_1)\le F(x_2) $.
 
               By looking at:
               \begin{itemize}
-                  \item $ \set{X\leqslant x_1}\subseteq \set{X\leqslant x_2} $
-                        if $ x_1\leqslant x_2 $.
+                  \item $ \set{X\le x_1}\subseteq \set{X\le x_2} $
+                        if $ x_1\le x_2 $.
               \end{itemize}
         \item $ \lim\limits_{{x} \to {\infty}} F(x)=1 $
               and $ \lim\limits_{{x} \to {-\infty}} F(x)=0 $.
 
               By looking at:
               \begin{itemize}
-                  \item $ x\to\infty $: $ \set{X\leqslant x}\to S $
-                  \item $ x\to-\infty $: $ \set{X\leqslant x}\to \varnothing $
+                  \item $ x\to\infty $: $ \set{X\le x}\to S $
+                  \item $ x\to-\infty $: $ \set{X\le x}\to \varnothing $
               \end{itemize}
         \item $ F(x) $ is a right continuous function; that is,
               for any $ a\in\mathbb{R} $,
               \[ \lim\limits_{{x} \to {a^+}} F(a)=F(a) \]
         \item For all $ a<b $
-              \[ \Prob{a<X\leqslant b}=\Prob{X\leqslant b}-\Prob{X\leqslant a}=F(b)-F(a) \]
+              \[ \Prob{a<X\le b}=\Prob{X\le b}-\Prob{X\le a}=F(b)-F(a) \]
         \item For all $ b $
               \[ \Prob{X=b}=\Prob{\text{jump at }b}=\lim\limits_{{t} \to {b^+}} F(t)-
                   \lim\limits_{{t} \to {b^-}} F(t)=F(b)-\lim\limits_{{t} \to {b^-}} F(t) \]
