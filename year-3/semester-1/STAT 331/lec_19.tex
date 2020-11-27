@@ -1,13 +1,13 @@
 \makeheading{Lecture 19 | 2020-11-16}
-\underline{Prediction Error}
+\section{Prediction Error}
 Sometimes a key application of a fitted model
 is to do \underline{prediction} on new data
 (and is more important than interpretability).
 
 Previously, we saw model selection criteria
 that are computed on fitted models
-(AIC, BIC, Adjusted $ R^2 $) which assess how
-well the model explains the explanatory
+(AIC, BIC, Adjusted $ R^2 $) which assess
+the explanatory
 power of a model on the \emph{data used to fit the model}
 (or \emph{train}).
 
@@ -23,24 +23,28 @@ To assess accuracy in prediction, we need metrics for
 measuring prediction error, e.g.\ evaluated
 over $ m $ observations.
 
-\begin{itemize}
-    \item Mean-squared error (MSE): If we have $ m $
-          observations,
-          \[ \text{MSE}=\frac{1}{m} \sum_{i=1}^{m} (y_i-\hat{y}_i)^2 \]
-          where $ y_i $ is the actual value, $ \hat{y}_i $ is the
-          predicted value (or equivalently, if we apply MSE on the fitted
-          data, this would be the fitted value, $ \hat{\mu}_i $;
-          if calculated on training data).
-          Measured on the scale of $ \sigma^2 $.
-
-          \underline{Note}: MSE is equivalently called MSPE
-          if applied on new data.
-    \item Root-mean-squared error (RMSE): Square root
-          of MSE.\ Measured on the scale of $ \sigma $.
-          \[ \text{RSME}=\sqrt{\text{MSE}} \]
-    \item Mean absolute error (MAE):
-          \[ \text{MAE}=\frac{1}{m} \sum_{i=1}^{m} \abs{y_i-\hat{y}_i} \]
-\end{itemize}
+\begin{Definition}{Mean-squared Error (MSE)}{}
+    If we have $ m $
+    observations,
+    \[ \text{MSE}=\frac{1}{m} \sum_{i=1}^{m} (y_i-\hat{y}_i)^2 \]
+    where $ y_i $ is the actual value, $ \hat{y}_i $ is the
+    predicted value (or equivalently, if we apply MSE on the fitted
+    data, this would be the fitted value, $ \hat{\mu}_i $;
+    if calculated on training data).
+    Measured on the scale of $ \sigma^2 $.
+\end{Definition}
+\begin{Remark}{}{}
+    MSE is equivalently called MSPE if applied on new data.
+\end{Remark}
+\begin{Definition}{Root-mean-squared Error (RMSE)}{}
+    \[ \text{RSME}=\sqrt{\text{MSE}} \]
+\end{Definition}
+\begin{Remark}{}{}
+    RMSE is measured on the scale of $ \sigma $.
+\end{Remark}
+\begin{Definition}{Mean Absolute Error (MAE)}{}
+    \[ \text{MAE}=\frac{1}{m} \sum_{i=1}^{m} \abs{y_i-\hat{y}_i} \]
+\end{Definition}
 Ideally, we have lots of data, conceptualize having three parts.
 \begin{table}[ht]
     \centering
@@ -67,13 +71,14 @@ Ideally, we have lots of data, conceptualize having three parts.
         \bottomrule
     \end{tabularx}
 \end{table}
+
 We have access to train and validation. Test data is from the future,
 we won't have access to this until the data is released (say
 the actual stock prices were released); that is, assume we don't get
 to see this.
 
 For example, using MSE as a metric, based on a fitted model we can
-compute
+compute and compare:
 \begin{table}[ht]
     \centering
     \begin{tabularx}{\linewidth}{@{}YYY@{}}
@@ -165,10 +170,9 @@ How to use framework in practice:
                     Therefore, we get $ K $ estimates of prediction error
                     for that particular model.
               \item For example, using RMSE, we get
-                    \[ \overline{\text{RSME}}
-                        =\text{RMSE}_1,\text{RMSE}_2,\ldots,\text{RSME}_K \]
+                    \[ \text{RMSE}_1,\text{RMSE}_2,\ldots,\text{RSME}_K \]
                     and can take the average
-                    \[ \frac{1}{K} \sum_{k=1}^{K}\text{RSME}_k \]
+                    \[ \overline{\text{RSME}}=\frac{1}{K} \sum_{k=1}^{K}\text{RSME}_k \]
                     as an estimate for RMSPE on new data (test set).
           \end{itemize}
 \end{itemize}

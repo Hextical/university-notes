@@ -38,16 +38,16 @@ to the entire set of observations available for training
 and validation to get a final model (for applications
 to test data).
 
-\underline{Beyond AIC and BIC}
+Recall we have:
 \begin{itemize}
       \item $ \text{AIC}=2q-2\ln[L(\hat{\theta})] $
       \item $ \text{BIC}=q\ln(n)-2\ln[L(\hat{\theta})] $
-      \item $ L_0 $ penalized likelihood:
-            $ q\lambda -2\ln[L(\hat{\theta})] $ can
-            try different values of $ \lambda $ to construct different
-            model selection procedures.
 \end{itemize}
-
+We can go further (and beyond \emph{PLUS ULTRA!}) and consider the following.
+\begin{Definition}{$ L_0 $ Penalized Likelihood}{}
+      For any $ \lambda>0 $,
+      \[ q\lambda -2\ln[L(\hat{\theta})] \]
+\end{Definition}
 \underline{Beyond Stepwise Regression}
 \begin{itemize}
       \item Stepwise is a deterministic algorithm which is fast,
@@ -61,7 +61,7 @@ Start with a model with just intercept.
 For a given random seed, take predictors $ x_1,\ldots,x_p $
 and randomly re-order them into $ x_{(1)},\ldots,x_{(p)} $.
 For $ j=1,\ldots,p $: (let $ \mathcal{S} $ be the predictors
-currently in model, so start at $ \mathcal{S}=\emptyset $)
+currently in model, so start at $ \mathcal{S}=\emptyset $).
 \begin{itemize}
       \item If $ x_{(j)} $ is not in $ \mathcal{S} $:
             \begin{itemize}
@@ -78,7 +78,8 @@ currently in model, so start at $ \mathcal{S}=\emptyset $)
 \end{itemize}
 Repeat for loop until no predictors are added/removed
 from an entire pass through the for loop.
-
-Note: different random orderings could give different
-sets $ \mathcal{S} $ at end of procedure, could pick one
-that has the best criterion overall.
+\begin{Remark}{}{}
+      Different random orderings could give different
+      sets $ \mathcal{S} $ at end of procedure, could pick one
+      that has the best criterion overall.
+\end{Remark}

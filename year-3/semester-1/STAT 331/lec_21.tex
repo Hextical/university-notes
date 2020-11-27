@@ -1,23 +1,25 @@
+\chapter{Generalized Linear Models}
 \makeheading{Lecture 21 | 2020-11-23}
 \section{Beyond STAT 331:
   Generalized Linear Models and Logistic Regression}
 We have a vector of responses $ \symbf{Y} $
 which are independent, and predictors
 $ \symbf{x}_1,\ldots,\symbf{x}_p $.
-
-Three ingredients of a GLM\@:
-\begin{enumerate}
-    \item Random component. Response $ Y_i $ is a random
-          variable with a distribution that is a member of the
-          \emph{exponential family}, e.g.\ Normal,
-          Binomial, Poisson.
-    \item Systematic component. Typically, a linear predictor
-          based on $ x_{i1},\ldots,x_{ip} $. Let's denote
-          \[ \eta_i=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{i p} \]
-    \item Link function: A function $ g(\cdot) $ that defines
-          a relationship between $ \E{Y_i} $ and $ \eta_i $;
-          that is, $ \eta_i=g(\E{Y_i}) $.
-\end{enumerate}
+\begin{Definition}{Generalized Linear Model (GLM)}{}
+    Three ingredients of a GLM\@:
+    \begin{enumerate}
+        \item Random component. Response $ Y_i $ is a random
+              variable with a distribution that is a member of the
+              \emph{exponential family}, e.g.\ Normal,
+              Binomial, Poisson.
+        \item Systematic component. Typically, a linear predictor
+              based on $ x_{i1},\ldots,x_{ip} $ which we denote as
+              \[ \eta_i=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{i p} \]
+        \item Link function: A function $ g(\cdot) $ that defines
+              a relationship between $ \E{Y_i} $ and $ \eta_i $;
+              that is, $ \eta_i=g(\E{Y_i}) $.
+    \end{enumerate}
+\end{Definition}
 \begin{Example}{Multiple Linear Regression}{}
     MLR\@: $ Y_i=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{i p}+\varepsilon $
     where $ \varepsilon_i\stackrel{\text{iid}}{\sim}\N{0,\sigma^2} $
@@ -66,49 +68,44 @@ Three ingredients of a GLM\@:
               \[ \frac{\pi_i}{1-\pi_i}=e^{\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{i p}}  \]
               would say that $ e^{\beta_j} $ is the expected \emph{multiplicative change}
               in odds of $ Y_i=1 $ or a unit increase in $ x_j $ (holding other variables constant).
-        \item Model is fit using MLE (glm function in R).
+        \item Model is fit using MLE (\texttt{glm()} function in R).
     \end{itemize}
 \end{Example}
-\begin{Example}{Numerical Example of Logistic Regression (Music)}{}
-    Music analysis:
+\begin{Example}{Logistic Regression (Music Analysis)---String Quartet Classification}{}
+    Define
     \[ Y_i=\begin{cases*}
             1 & Haydn\\
             0 & Mozart
         \end{cases*} \]
-    String quartet classification. Model (for illustration, the actual model
-    had $ 7 $ predictors):
+    The model (for illustration purposes, the actual model
+    had $ 7 $ predictors) is given by:
     \[ \ln\biggl(\frac{\pi_i}{1-\pi_i}\biggr)=\beta_0+\beta_1x_{i1}+\beta_2x_{i2} \]
     From training data (observation with $ Y_i $'s known and predictors given)
-    MLEs are:
-    \begin{itemize}
-        \item $ \hat{\beta}_0=-1.12 $
-        \item $ \hat{\beta}_1=-15.47 $
-        \item $ \hat{\beta}_2=16.71 $
-    \end{itemize}
+    we have
+    \[ \symbf{\hat{\beta}}=(-1.12,-15.47,16.71)^\top \]
     Also,
     \begin{itemize}
         \item $ x_1= $ SD of note duration in 1st violin
+              where $ x_1\in(0.05, 0.35) $.
         \item $ x_2= $ proportion descending pairwise intervals
               in 1st violin
-    \end{itemize}
-    Range of predictor values
-    \begin{itemize}
-        \item 0.05 to 0.35
-        \item 0.2 to 0.5
+              where $ x_2\in(0.2,0.5) $.
     \end{itemize}
     \begin{itemize}
         \item Higher values of $ x_1 $ are more likely to be Mozart
         \item Higher values of $ x_2 $ are more likely to be Haydn
     \end{itemize}
-    If $ x_1 $ is 0.05; 0.2; 0.35 and $ x_2 $ is 0.4; 0.4; 0.4.
-    Higher estimated probability is Mozart since $ \hat{\beta}_1 $
+    Suppose we are given
+    $ \symbf{x}_1=(0.05,0.2,0.35)^\top $ and $ \symbf{x}_2=(0.4, 0.4, 0.4)^\top $,
+    then the higher estimated probability is Mozart since $ \hat{\beta}_1 $
     is negative.
 
     Estimate log odds of $ Y_i=1 $ is
     \[ -1.12-15.47(0.05)+16.71(0.4)=\hat{\eta}_i \]
     Estimate $ \pi_i $ is
     \[ \frac{e^{\hat{\eta}_i}}{1+e^{\hat{\eta}_i}}=0.992  \]
-    Estimate probability is Haydn for $ x_1=0.05 $ and $ x_2=0.4 $.
+    which is the estimate probability an observation
+    is Haydn for $ x_1=0.05 $ and $ x_2=0.4 $.
     \begin{itemize}
         \item Second probability: 0.992
         \item Third probability: 0.537

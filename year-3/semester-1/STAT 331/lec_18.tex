@@ -36,22 +36,24 @@ to obtain
 \begin{align*}
     \hat{\symbf{\beta}}^{(i)}
      & =[(X^{(i)})^\top
-    X^{(i)}]^{-1}(X^{(i)})^\top \symbf{y}^{(i)}                                       \\
+    X^{(i)}]^{-1}(X^{(i)})^\top \symbf{y}^{(i)}                                                  \\
      & =(X^\top X-\symbf{v}_i\symbf{v}_i^\top)^{-1}(X^\top \symbf{y}-
-    \symbf{v}_i y_i)                                                                  \\
+    \symbf{v}_i y_i)                                                                             \\
      & =\biggl[(X^\top X)^{-1}+\frac{(X^\top X)^{-1}\symbf{v}_i\symbf{v}_i^\top
             (X^\top X)^{-1}}{1-\symbf{v}_i^\top (X^\top X)^{-1}\symbf{v}_i} \biggr]
-    (X^\top \symbf{y}-\symbf{v}_i y_i)                                                \\
+    (X^\top \symbf{y}-\symbf{v}_i y_i)                                                           \\
      & =(X^\top X)^{-1}X^\top\symbf{y}-(X^\top X)^{-1}\symbf{v}_i y_i+
     \frac{(X^\top X)^{-1}\symbf{v}_i\symbf{v}_i^\top (X^\top X)^{-1}X^\top\symbf{y}
     -(X^\top X)^{-1}\symbf{v}_i\symbf{v}_i^\top(X^\top X)^{-1}\symbf{v}_i y_i
-    }{1-h_{ii}}                                                                       \\
+    }{1-h_{ii}}                                                                                  \\
      & =\hat{\symbf{\beta}}-(X^\top X)^{-1}\symbf{v}_i
-    \biggl[y_i-\frac{\symbf{v}_i^\top\hat{\symbf{\beta}}-h_{ii}y_i}{1-h_{ii}} \biggr] \\
+    \biggl[y_i-\frac{\symbf{v}_i^\top\hat{\symbf{\beta}}-h_{ii}y_i}{1-h_{ii}} \biggr]            \\
      & =\hat{\symbf{\beta}}-(X^\top X)^{-1}\symbf{v}_i
-    \biggl[\frac{y_i-\symbf{v}_i^\top \hat{\symbf{\beta}}}{1-h_{ii}} \biggr]          \\
+    \biggl[\frac{y_i-h_{ii}y_i-\symbf{v}_i^\top \hat{\symbf{\beta}}+h_{ii}y_i}{1-h_{ii}} \biggr] \\
      & =\hat{\symbf{\beta}}-(X^\top X)^{-1}\symbf{v}_i
-    \biggl[\frac{e_i}{1-h_{ii}} \biggr]                                               \\
+    \biggl[\frac{y_i-\symbf{v}_i^\top \hat{\symbf{\beta}}}{1-h_{ii}} \biggr]                     \\
+     & =\hat{\symbf{\beta}}-(X^\top X)^{-1}\symbf{v}_i
+    \biggl[\frac{e_i}{1-h_{ii}} \biggr]                                                          \\
 \end{align*}
 Therefore,
 \[ \hat{\symbf{\beta}}^{(i)}-\hat{\symbf{\beta}}=
@@ -64,7 +66,7 @@ that is, we don't need to fit a separate model.
      & =\frac{(\hat{\symbf{\beta}}^{(i)}-\hat{\symbf{\beta}})^{\top}
         X^\top X(\hat{\symbf{\beta}}^{(i)}-\hat{\symbf{\beta}})}{
     \hat{\sigma}^2(p+1) }                                            \\
-     & =\frac{\biggl(\frac{-e_i}{1-h_{ii}} \biggr)
+     & =\frac{\displaystyle \biggl(\frac{-e_i}{1-h_{ii}} \biggr)
         \symbf{v}_i^\top (X^\top X)^{-1}X^\top X
         \biggl(\frac{-e_i}{1-h_{ii}} \biggr)(X^\top X)^{-1}\symbf{v}_i}{
         \hat{\sigma}^2(p+1)
