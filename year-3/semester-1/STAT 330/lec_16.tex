@@ -24,52 +24,69 @@ Next, we use the m.g.f.\ technique to find properties
 of normal, $ \chi^2 $, $ t $-distribution,
 and $ F $-distributions.
 
-If $ X \sim N(\mu,\sigma^2) $, then
-\[ aX+b \sim N(a\mu+b,a^2\sigma^2) \]
-Recall that
-\[ M_X(t)
-    =\exp\left\{ \mu t+\frac{\sigma^2t^2}{2}\right\} \]
-Therefore,
-\begin{align*}
-    M_{aX+b}(t)
-     & =e^{b t}M_X(at)                                                              \\
-     & =\exp\left\{ b t\right\}\exp\left\{ a\mu t+\frac{a^2\sigma^2t^2}{2} \right\} \\
-     & =\expon*{b t}\expon*{a\mu t+\frac{a^2\sigma^2t^2}{2}}                        \\
-     & =\expon*{(a\mu+b)t+\frac{a^2\sigma^2}{2} t^2}
-\end{align*}
-which is the m.g.f.\ of $ \N{a\mu+b,a^2\sigma^2} $.
+\begin{Lemma}{}{lin_comb_normal_lem}
+    If $ X \sim \N{\mu,\sigma^2} $, then
+    \[ aX+b \sim \N{a\mu+b,a^2\sigma^2} \]
+\end{Lemma}
+\begin{Proof}{\Cref{lem:lin_comb_normal_lem}}{}
+    Recall that the m.g.f.\ of $ X \sim \N{\mu,\sigma^2} $ is
+    \[ M_X(t)
+        =\exp\left\{ \mu t+\frac{\sigma^2t^2}{2}\right\} \]
+    Therefore,
+    \begin{align*}
+        M_{aX+b}(t)
+         & =\E*{e^{t(aX+b)}}                                 \\                                                            \\
+         & =e^{b t}\E*{e^{taX}}                              \\
+         & =e^{b t}M_X(ta)                                   \\
+         & =e^{b t}\expon*{\mu(ta)+\frac{\sigma^2(at)^2}{2}} \\
+         & =\expon*{(a\mu+b)t+\frac{a^2\sigma^2t^2}{2}}
+    \end{align*}
+    which is the m.g.f.\ $ \N{a\mu+b,a^2\sigma^2} $.
+\end{Proof}
+\begin{Theorem}{}{}
+    If $ X \sim \N{\mu,\sigma^2} $, then
+    \[ \frac{X-\mu}{\sigma} \sim \N{0,1} \]
+\end{Theorem}
 
-If $ X \sim \N{\mu,\sigma^2} $, then
-\[ \frac{X-\mu}{\sigma} \sim \N{0,1} \]
-
-If $ X_i \sim \N{\mu_i,\sigma_i^2} $ for $ i=1,\ldots,n $
-are independent, then
-\[ \sum_{i=1}^{n} a_i X_i \sim \N[\bigg]{\sum_{i=1}^{n} a_i\mu_i,
-        \sum_{i=1}^{n} a_i^2\sigma_i^2} \]
-We know $ a_i X_i \sim \N{a_i\mu_i,a_i^2\sigma_i^2} $
-for $ i=1,\ldots, n $.
-\[ M_{a_i X_i}(t)=\expon*{(a_i\mu_i)t+\frac{a_i^2\sigma_i^2}{2}t^2} \]
-Therefore,
-\begin{align*}
-    M_{\sum_{i=1}^{n} a_i X_i}(t)
-     & =\E*{e^{t \sum_{i=1}^{n} a_i X_i}}                                 \\
-     & =\E*{\prod_{i=1}^n e^{(a_i X_i)t}}                                 \\
-     & =\prod_{i=1}^n\E*{e^{(a_i X_i)t}}                                  \\
-     & =\prod_{i=1}^n M_{a_i X_i}(t)                                      \\
-     & =\prod_{i=1}^n \expon*{(a_i\mu_i)t+\frac{\sigma_i^2 a_i^2}{2}t^2 } \\
-     & =\expon*{\biggl(\sum_{i=1}^{n} a_i\mu_i\biggr)t
-        +\frac{\sum_{i=1}^{n} a_i^2\sigma_i^2}{2}t^2}
-\end{align*}
-which is the m.g.f.\ of
-$ \N*{\sum_{i=1}^{n} a_i\mu_i,\sum_{i=1}^{n} a_i^2\sigma_i^2} $.
-
-If $ X_1,\ldots,X_n \stackrel{\text{iid}}{\sim} \N{\mu,\sigma^2} $,
-then
-\[ \sum_{i=1}^{n} X_i \sim \N*{n\mu,n\sigma^2} \]
-\[ \frac{1}{n} \sum_{i=1}^{n} X_i \sim \N*{\mu,\frac{\sigma^2}{n}} \]
-Let $ \displaystyle \bar{X}=\frac{1}{n} \sum_{i=1}^{n}X_i $, then
-\[ \bar{X}\sim \N*{\mu,\frac{\sigma^2}{n} } \]
-\[ \frac{\bar{X}-\mu}{\sigma}\sim \N{0,1}  \]
+\begin{Theorem}{Linear Combination of Independent Normal Random Variables}{lc_ind_normal}
+    If $ X_i \sim \N{\mu_i,\sigma_i^2} $, $ i=1,\ldots,n $
+    independently, then
+    \[ \sum_{i=1}^{n} a_i X_i \sim \N[\bigg]{\sum_{i=1}^{n} a_i\mu_i,
+            \sum_{i=1}^{n} a_i^2\sigma_i^2} \]
+\end{Theorem}
+\begin{Proof}{\Cref{thm:lc_ind_normal}}{}
+    By~\Cref{lem:lin_comb_normal_lem}, we have
+    $ a_i X_i \sim \N{a_i\mu_i,a_i^2\sigma_i^2} $ for $ i=1,\ldots, n $
+    and the m.g.f.\
+    \[ M_{a_i X_i}(t)=\expon*{(a_i\mu_i)t+\frac{a_i^2\sigma_i^2}{2}t^2} \]
+    Therefore,
+    \begin{align*}
+        M_{\sum_{i=1}^{n} a_i X_i}(t)
+         & =\E*{\expon[\bigg]{t \sum_{i=1}^{n} a_i X_i}}                      \\
+         & =\E*{\prod_{i=1}^n e^{(a_i X_i)t}}                                 \\
+         & =\prod_{i=1}^n\E*{e^{(a_i X_i)t}}                                  \\
+         & =\prod_{i=1}^n M_{a_i X_i}(t)                                      \\
+         & =\prod_{i=1}^n \expon*{(a_i\mu_i)t+\frac{\sigma_i^2 a_i^2}{2}t^2 } \\
+         & =\expon*{\biggl(\sum_{i=1}^{n} a_i\mu_i\biggr)t
+            +\frac{(\sum_{i=1}^{n} a_i^2\sigma_i^2)t^2}{2}}
+    \end{align*}
+    which is the m.g.f.\ of
+    $ \N*{\sum_{i=1}^{n} a_i\mu_i,\sum_{i=1}^{n} a_i^2\sigma_i^2} $.
+\end{Proof}
+\begin{Corollary}{}{lc_norm_corollary}
+    If $ X_1,\ldots,X_n \stackrel{\text{iid}}{\sim} \N{\mu,\sigma^2} $,
+    then
+    \begin{enumerate}[label=(\arabic*)]
+        \item $ \displaystyle  \sum_{i=1}^{n} X_i \sim \N*{n\mu,n\sigma^2} $
+        \item $ \displaystyle \bar{X}=\frac{1}{n} \sum_{i=1}^{n} X_i \sim \N*{\mu,\frac{\sigma^2}{n}} $
+    \end{enumerate}
+\end{Corollary}
+\begin{Proof}{\Cref{cor:lc_norm_corollary}}{}
+    \begin{enumerate}[label=(\arabic*)]
+        \item Let $ a_i=1 $, $ \mu_i=\mu $, $ \sigma_i^2=\sigma $ in~\Cref{thm:lc_ind_normal}.
+        \item Let $ a_i=\frac{1}{n} $, $ \mu_i=\mu $, $ \sigma_i^2=\sigma $ in~\Cref{thm:lc_ind_normal}.
+    \end{enumerate}
+\end{Proof}
 \begin{Definition}{Chi-Squared Distribution}{}
     If $ Z_1,\ldots,Z_k \sim \N{0,1} $ are independent
     and $ 0<k\in\mathbb{Z} $, then
@@ -179,7 +196,7 @@ by calculating the correlation.
     is defined as the sample variance ($ \E{S^2}=\sigma^2 $).
 
     \textbf{Solution.}
-    \[ \frac{\bar{X}-\mu}{\sigma/n}\sim \N{0,1}  \]
+    \[ \frac{\bar{X}-\mu}{\sigma/\sqrt{n}}\sim \N{0,1}  \]
     \[ \frac{(n-1)S^2}{\sigma^2}=\frac{\sum_{i=1}^{n} (X_i-\bar{X})^2}{\sigma^2}
         \sim \chi^2(n-1)   \]
     are independent, then

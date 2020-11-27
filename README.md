@@ -3,11 +3,11 @@ All my university notes done in LaTeX.
 
 ## Year 3
 ### Semester 1
-|     Course      | Completion |       Online       |
-| :-------------: | :--------: | :----------------: |
-|    STAT 330     | Week 10/12 | :heavy_check_mark: |
-|    STAT 331     | Week 10/11 | :heavy_check_mark: |
-| AMATH/PMATH 331 |    TODO    | :heavy_check_mark: |
+|     Course      |  Completion  |       Online       |
+| :-------------: | :----------: | :----------------: |
+|    STAT 330     |  Week 10/12  | :heavy_check_mark: |
+|    STAT 331     | Week 10.5/11 | :heavy_check_mark: |
+| AMATH/PMATH 331 |     TODO     | :heavy_check_mark: |
 
 ## Year 2
 ### Semester 1
