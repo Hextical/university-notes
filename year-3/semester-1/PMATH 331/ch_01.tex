@@ -1,0 +1,202 @@
+\chapter{Real Limits, Continuity and Differentiation}
+\section{Order Properties in \texorpdfstring{$ \mathbf{R} $}{R}}
+\begin{Theorem}{Discreteness Property of $ \mathbf{Z} $}{discrete_Z}
+    We state two equivalent definitions.
+    \[ \forall k\in\mathbf{Z}\;\forall n\in\mathbf{Z}\;(k\le n \iff k<n+1) \]
+    \[ \forall n\in\mathbf{Z}\;\nexists k\in\mathbf{Z}\;(n<k<n+1) \]
+\end{Theorem}
+\begin{Proof}{\Cref{thm:discrete_Z}}{}
+    Accepted axiomatically, without proof.
+\end{Proof}
+\begin{Definition}{Bounded above, Upper bound}{}
+    $ A $ is \textbf{bounded above} (in $ \mathbf{R} $)
+    when
+    \[ \exists b\in\mathbf{R}\;\forall x\in A\;(x\leq b) \]
+    We say that $ b $ is an \textbf{upper bound} for $ A $.
+\end{Definition}
+\begin{Definition}{Bounded below, Lower bound}{}
+    $ A $ is \textbf{bounded below} (in $ \mathbf{R} $) when
+    \[ \exists a\in\mathbf{R}\;\forall x\in A\;(a\le x) \]
+    We say that $ a $ is a \textbf{lower bound} for $ A $.
+\end{Definition}
+\begin{Definition}{Bounded}{}
+    $ A $ is \textbf{bounded} when $ A $ is both bounded
+    above and below.
+\end{Definition}
+\begin{Definition}{Supremum, Least upper bound, Maximum element}{}
+    $ A $ has a \textbf{supremum} (or a \textbf{greatest lower bound})
+    when there exists an element $ b\in \mathbf{R} $ such that
+    $ b $ is an upper bound for $ A $ with $ b\le c $ for
+    every upper bound $ c\in\mathbf{R} $ for $ A $. In this case,
+    we say $ b $ is the \textbf{supremum} (or the \textbf{greatest lower bound})
+    of $ A $ and write $ b=\Supremum{A} $. When $ b=\Supremum{A}\in A $
+    we also say that $ b $ is the \textbf{maximum element} of $ A $,
+    and we write $ b=\Maximum{A} $.
+\end{Definition}
+\begin{Definition}{Infimium, Greatest lower bound, Minimum element}{}
+    $ A $ has an \textbf{infimum} (or a \textbf{greatest lower bound})
+    when there exists an element $ a\in \mathbf{R} $ such that
+    $ a $ is a lower bound for $ A $ with $ c\le a $ for
+    every lower bound $ c $ for $ A $. In this case,
+    we say $ a $ is the \textbf{infimum} (or the \textbf{greatest lower bound})
+    of $ A $ and write $ a=\Infimum{A} $. When $ a=\Infimum{A}\in A $
+    we also say that $ a $ is the \textbf{minimum element} of $ A $,
+    and we write $ a=\Minimum{A} $.
+\end{Definition}
+\begin{Example}{}{}
+    Let $ A=\mathbf{R}_{>0}=(0,\infty)=\Set{x\in\mathbf{R}\given x>0} $
+    and $ B=\interval[open right]{1}{\sqrt{2}}
+        =\Set{x\in\mathbf{R}\given 1\le x<\sqrt{2}} $.
+    \begin{itemize}
+        \item $ A $ is bounded below, but not above.
+        \item $ -1 $ and $ 0 $ are both lower bounds for $ A $.
+        \item $ \Infimum{A}=0 $
+        \item $ A $ has no minimum element, and no maximum element.
+        \item $ B $ is bounded both above and below.
+        \item $ 0 $ and $ 1 $ are both lower bounds for $ B $
+        \item $ \sqrt{2} $ and $ 3 $ are both upper bounds for $ B $.
+        \item $ \Infimum{B}=1 $
+        \item $ \Supremum{B}=\sqrt{2} $
+        \item $ B $ has a minimum element, namely $ \Minimum{B}=1 $,
+              but has no maximum element.
+    \end{itemize}
+\end{Example}
+\begin{Theorem}{The Supremum and Infemum Properties of $ \mathbf{R} $}{sup_inf_properties}
+    \begin{enumerate}[label=(\arabic*)]
+        \item\label{sup_inf_properties_1}Every non-empty subset of $ \mathbf{R} $
+              which is bounded above in $ \mathbf{R} $ has a supremum in $ \mathbf{R} $.
+        \item\label{sup_inf_properties_2}Every non-empty subset of $ \mathbf{R} $
+              which is bounded below in $ \mathbf{R} $ has an infimum in $ \mathbf{R} $.
+    \end{enumerate}
+\end{Theorem}
+\begin{Proof}{\Cref{thm:sup_inf_properties}}{}
+    Accepted axiomatically, without proof.
+\end{Proof}
+\begin{Theorem}{Approximation Property of Supremum and Infimum}{approx_sup_inf}
+    Let $ \emptyset\neq A\in\mathbf{R} $.
+    \begin{enumerate}[label=(\arabic*)]
+        \item\label{approx_sup_inf_1}$ b=\Supremum{A}\implies \forall \varepsilon\in\mathbf{R}_{>0}\;
+                  \exists x\in A\;(b-\varepsilon<x\le b) $
+        \item $ a=\Infimum{A}\implies \forall \varepsilon\in\mathbf{R}_{>0}\;
+                  \exists x\in A\;(a\le x<a+\varepsilon) $
+    \end{enumerate}
+\end{Theorem}
+\begin{Proof}{\Cref{thm:approx_sup_inf}}{}
+    We prove~\ref{approx_sup_inf_1}. Let $ b=\Supremum{A} $
+    and $ \varepsilon>0 $. Suppose for a contradiction that there exists no
+    element $ x\in A $ with $ b-\varepsilon<x $, or equivalently
+    that for all $ x\in A $ we have $ b-\varepsilon\ge x $.
+    Let $ c=b-\varepsilon $. Note that $ c $ is an upper bound
+    for $ A $ since $ x\le b-\varepsilon=c $ for all $ x\in A $. Then,
+    since $ b=\Supremum{A} $ and $ c $ is an upper bound for
+    $ A $, we have $ b\le c $. However, since $ \varepsilon>0 $
+    we have $ b>b-\varepsilon=c $, contradiction. Therefore,
+    there exists $ x\in A $ with $ b-\varepsilon<x $. Now,
+    choose an element $ x\in A $. Then, since $ b=\Supremum{A} $,
+    we know that $ b $ is an upper bound for $ A $ and hence $ b\ge x $.
+    Therefore, $ b-\varepsilon<x\le b $, as required.
+\end{Proof}
+\begin{Theorem}{Well-Ordering Properties of $ \mathbf{Z} $ in $ \mathbf{R} $}{well_ord_zinr}
+    \begin{enumerate}[label=(\arabic*)]
+        \item\label{well_ord_zinr_1}Every non-empty subset of $ \mathbf{Z} $ which is bounded
+              above in $ \mathbf{R} $ has a maximum element.
+        \item Every non-empty subset of $ \mathbf{Z} $ which is bounded
+              below in $ \mathbf{R} $ has a minimum element.
+    \end{enumerate}
+\end{Theorem}
+\begin{Proof}{\Cref{thm:well_ord_zinr}}{}
+    We prove~\ref{well_ord_zinr_1}. Let $ A $ be a non-empty subset of
+    $ \mathbf{Z} $ which is bounded above.
+    By~\Cref{thm:sup_inf_properties}~\ref{sup_inf_properties_1},
+    $ A $ has a supremum in $ \mathbf{R} $. Let $ n=\Supremum{A} $.
+    We must show that $ n\in A $. Suppose for a contradiction
+    that $ n\notin A $. By~\Cref{thm:approx_sup_inf} (using $ \varepsilon=1 $),
+    we can choose $ a\in A $ with $ n-1<a\le n $. Note that $ a\neq n $
+    since $ a\in A $ and $ n\notin A $, so we have $ a<n $. By~\Cref{thm:approx_sup_inf}
+    (using $ \varepsilon=n-a $) we can choose $ b\in A $ with
+    $ a<b\le n $. Since $ a<b $ we have $ b-a>0 $. Since $ n-1<a $
+    and $ b\le n $, we have $ 1=n-(n-1)>b-a $. However,
+    we have $ (b-a)\in\mathbf{Z} $ with $ 0<b-a<1 $,
+    which contradicts~\Cref{thm:discrete_Z}. Therefore, $ n\in A $,
+    and hence $ A $ has a maximum element.
+\end{Proof}
+\begin{Theorem}{Floor and Ceiling Properties of $ \mathbf{Z} $ in $ \mathbf{R} $}{floor_ceil_zinr}
+    \begin{enumerate}[label=(\arabic*)]
+        \item\label{floor_ceil_zinr_1}$ \forall x\in\mathbf{R}\;\exists! n\in\mathbf{Z}\;(x-1<n\le x) $.
+        \item\label{floor_ceil_zinr_2}$ \forall x\in\mathbf{R}\;\exists! m\in\mathbf{Z}\;(x\le m<x+1) $.
+    \end{enumerate}
+\end{Theorem}
+\begin{Proof}{\Cref{thm:floor_ceil_zinr}}{}
+    We prove~\ref{floor_ceil_zinr_1}.
+
+    \emph{\textbf{Uniqueness}}. Let $ x\in\mathbf{R} $,
+    suppose $ n,m\in\mathbf{Z} $ with $ x-1<n\le x $ and
+    $ x-1<m\le x $. Since $ x-1<n $ we have $ x<n+1 $.
+    Since $ m\le x $ and $ x<n+1 $, we have $ m<n+1 $,
+    hence $ m\le n $ by~\Cref{thm:discrete_Z}. Similarly,
+    $ n\le m $. Since $ n\le m $ and $ m\le n $, we have $ n=m $
+    as required.
+
+    \emph{\textbf{Existence}}. Let $ x\in\mathbf{R} $. First, let us
+    consider the case that $ x\ge 0 $. Let $ A=\Set{k\in\mathbf{Z}\given k\le x} $.
+    Note that $ A\ne \emptyset $ (because $ 0\in A $), and $ A $ is bounded
+    above by $ x $. By~\Cref{thm:well_ord_zinr}, $ A $ has a maximum
+    element. Let $ n=\Maximum{A} $. Since $ n\in A $, we have
+    $ n\in\mathbf{Z} $ and $ n\le x $. Also, note that $ x-1<n $
+    since $ x-1\ge n\implies x\ge n+1\implies n+1\in A\implies
+        n\ne \Maximum{A} $. Thus, for $ n=\Maximum{A} $, we have $ n\in\mathbf{Z} $
+    with $ x-1<n\le x $ as required.
+
+    Next, consider the case that $ x<0 $. If $ x\in\mathbf{Z} $,
+    we can take $ n=x $. Suppose that $ x\notin \mathbf{Z} $.
+    We have $ -x>0 $ so, by the previous paragraph, we can choose
+    $ m\in\mathbf{Z} $ with $ -x-1<-m<x+1 $. Thus, we can take
+    $ n=-m-1 $ to get $ x-1<n<x $.
+\end{Proof}
+\begin{Definition}{Floor, Floor function}{}
+    Let $ x\in\mathbf{R} $. The \textbf{floor} of $ x $,
+    denoted by $ \Floor{x} $, is the unique $ n\in\mathbf{Z} $
+    with $ x-1<n\le x $. The function $ f:\mathbf{R}\to\mathbf{Z} $
+    given by $ f(x)=\Floor{x} $ is called the \textbf{floor function}.
+\end{Definition}
+\begin{Definition}{Ceiling, Ceiling function}{}
+    Let $ x\in\mathbf{R} $. The \textbf{ceiling} of $ x $,
+    denoted by $ \Ceil{x} $, is the unique $ n\in\mathbf{Z} $
+    with $ x\le n<x+1 $. The function $ f:\mathbf{R}\to\mathbf{Z} $
+    given by $ f(x)=\Ceil{x} $ is called the \textbf{ceiling function}.
+\end{Definition}
+\begin{Theorem}{Archimedean Properties of $ \mathbf{Z} $ in $ \mathbf{R} $}{arch_prop_zinr}
+    \begin{enumerate}[label=(\arabic*)]
+        \item\label{arch_prop_zinr_1} $ \forall x\in\mathbf{R}\;\exists n\in\mathbf{Z}\;(n>x) $.
+        \item\label{arch_prop_zinr_2} $ \forall x\in\mathbf{R}\;\exists m\in\mathbf{Z}\;(m<x) $.
+    \end{enumerate}
+\end{Theorem}
+\begin{Proof}{\Cref{thm:arch_prop_zinr}}{}
+    Let $ x\in\mathbf{R} $. Let $ n=\Floor{x}+1 $ and $ m=\Floor{x}-1 $.
+    Since $ x-1<\Floor{x} $, we have $ x<\Floor{x}+1=n $ and since
+    $ \Floor{x}\le x $, we have $ m=\Floor{x}-1\le x-1<x $.
+\end{Proof}
+\begin{Theorem}{Density of $ \mathbf{Q} $ in $ \mathbf{R} $}{dens_qinr}
+    \[ \forall a\in\mathbf{R}\;\forall b\in\mathbf{R}\;\exists q\in\mathbf{Q}
+        (a<b\implies a<q<b) \]
+\end{Theorem}
+\begin{Proof}{}{}
+    Let $ a,b\in\mathbf{R} $ with $ a<b $. By~\Cref{thm:arch_prop_zinr},
+    we can choose $ n\in\mathbf{Z} $ with $ n>\frac{1}{b-a} >0 $. Then,
+    $ n(b-a)>1 $ and so $ nb>na+1 $. Let $ k=\Floor{na+1} $.
+    Then we have $ na<k\le na+1<nb $ hence $ a<\frac{k}{n} <b $. Thus,
+    we can take $ q=\frac{k}{n} $ to get $ a<q<b $.
+\end{Proof}
+
+\section{Limit of Sequences in \texorpdfstring{$ \mathbf{R} $}{R}}
+\begin{Definition}{Sequence, Term}{}
+    For $ p\in\mathbf{Z} $, let $ Z_{\ge p}=\Set{k\in\mathbf{Z}\given k\ge p} $.
+    A \textbf{sequence} in a set $ A $ is a function of the form
+    $ x:\mathbf{Z}_{\ge p}\to A $ for some $ p\in\mathbf{Z} $.
+    Given a sequence $ x:\mathbf{Z}_{\ge p}\to A $, the $ k^{\text{th}} $
+    \textbf{term} of the sequence is the element $ x_k=x(k)\in A $, and
+    we denote the sequence $ x $ by
+    \[ (x_k)_{k\ge p}=(x_p,x_{p+1},\ldots) \]
+    Note that the range of the sequence $ (x_k)_{k\ge p} $
+    is the set $ \Set{x_k}_{k\ge p}=\Set{x_k\given k\ge p} $.
+\end{Definition}

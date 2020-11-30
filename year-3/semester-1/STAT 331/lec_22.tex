@@ -1,0 +1,60 @@
+\makeheading{Lecture 22 | 2020-11-25}
+\section{Last Lecture!}
+Project Tips:
+\begin{itemize}
+    \item Explore the data
+    \item No one ``right'' model
+    \item Understand what you're fitting and why
+    \item Present it well (no raw R output in report)
+    \item Data set has many variables (be careful
+          about overfitting)---don't wait until last minute.
+\end{itemize}
+Residual Surrealism:
+\begin{itemize}
+    \item Want $ (\hat{\mu}_i,e_i) $, $ i=1,\ldots,n $
+          to represent black pixel locations in the image.
+    \item Recall in fitting MLR that $ \symbf{e} $
+          and $ \hat{\symbf{\mu}} $ satisfy
+          \[ \hat{\symbf{\mu}}=H\symbf{Y} \]
+          \[ \symbf{e}=(I-H)\symbf{Y} \]
+          which is a linear system of $ 2n $ equations.
+    \item Reverse engineer what $ \symbf{Y},\symbf{x}_1,\ldots,\symbf{x}_p $
+          could be. There are $ n(p+1) $ free variables.
+    \item Fix $ \symbf{\beta} $ (choose our regression coefficient).
+    \item Recall $ \symbf{Y}=X \symbf{\beta}+\symbf{\varepsilon} $,
+          so the equations can be expressed as
+          \[ \hat{\symbf{\mu}}=H(X \symbf{\beta}+\symbf{\varepsilon})=
+              X \symbf{\beta}+H \symbf{\varepsilon} \]
+          \[ \symbf{e}=(I-H)\symbf{\varepsilon}=
+              \symbf{\varepsilon}-H \symbf{\varepsilon} \]
+    \item Residuals also satisfy condition
+          \[ \hat{\symbf{\mu}}^\top \symbf{e}=0 \]
+          since $ \symbf{e} $ are orthogonal to $ \Span{X} $
+          which might not be satisfied by an arbitrary image.
+
+          \textbf{Solution.} Add a few pixels to corners (outliers,
+          influential points) to satisfy orthogonality.
+    \item Least squares solution implies $ \symbf{1}^\top \symbf{e}=0 $
+          for the intercept,
+          and $ \tilde{X}^\top \symbf{e}=\symbf{0} $ for the predictors.
+          \[ X=\begin{bmatrix}
+                  \symbf{1} & \tilde{X}
+              \end{bmatrix} \]
+          So if we let
+          \[ \tilde{X}=\biggl(I_n-\frac{\symbf{e}\symbf{e}^\top}{\symbf{e}^\top \symbf{e}} \biggr)M_{n\times p} \]
+          then $ \tilde{X} \symbf{e}=0 $ is satisfied, for any matrix $ M $.
+    \item Simulate $ \symbf{Z} $ i.i.d.\ from $ \N{0,\tau^2} $
+          controls $ R^2 $ in MLR and let
+          \[ \symbf{\varepsilon}=\symbf{e}+H \symbf{Z} \]
+          and substitute in 1st equation to get
+          \[ \hat{\symbf{\mu}}=X \symbf{\beta}+H\symbf{e}+H\symbf{Z}=
+              \Uunderbracket{X \symbf{\beta}}_{\text{function of }M}+\Uunderbracket{H\symbf{Z}}_{\text{function of }M} \]
+    \item Iterative solution to update $ M $ until it satisfies the equation.
+\end{itemize}
+\begin{quote}
+    The program provided by the author that has the easiest version to use
+    runs on Windows, so I had to boot up a Virtual Box for Windows.---Samuel Wong
+\end{quote}
+\begin{Remark}{Author's Note}{}
+    I use Arch btw.
+\end{Remark}
