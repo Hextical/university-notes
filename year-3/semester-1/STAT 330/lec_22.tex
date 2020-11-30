@@ -1,0 +1,165 @@
+\makeheading{Lecture 22 | 2020-11-22}
+\begin{Example}{}{}
+    $ X_1,\ldots,X_n $ are i.i.d.\
+    \begin{enumerate}
+        \item $ \exponential{\theta} $
+        \item $ \uniform{0,\theta} $
+        \item $ f(x;\theta)=\theta x^{\theta-1} $ with $ 0<x<1 $ and $ \theta>0 $
+    \end{enumerate}
+    \textbf{Solution.}
+    \begin{enumerate}
+        \item $ \exponential{\theta} $. $ \mu_1=\E{X_1}=\theta $. $ \mu_1(\theta)=\theta $
+              \[ \hat{\mu}_1=\frac{1}{n} \sum_{i=1}^{n} X_i \]
+              $ \mu_1(\hat{\theta})=\hat{\mu}_1 $. Since $ \mu_1 $ is the identity
+              map,
+              \[ \hat{\theta}=\hat{\mu}_1=\frac{1}{n} \sum_{i=1}^{n} X_i \]
+        \item $ \uniform{0,\theta} $.
+              \[ \mu_1=\E{X_1}=\int_{0}^{\theta} x\biggl(\frac{1}{\theta} \biggr)\, d{x}=
+                  \theta/2 \]
+              $ \mu_1(\theta)=\frac{\theta}{2} $
+              \[ \hat{\mu}_1=\frac{1}{n} \sum_{i=1}^{n} X_i \]
+              \[ \mu_1(\hat{\theta})=\frac{\hat{\theta}}{2} =\hat{\mu}_1 \]
+              Therefore,
+              \[ \hat{\theta}_{\text{MM}}=2\hat{\mu}_1=\frac{2}{n} \sum_{i=1}^{n} X_i \]
+        \item $ f(x;\theta)=\theta x^{\theta-1} $ with $ 0<x<1 $ and $ \theta>0 $
+              \[ \mu_1=\E{X_1}=\int_{0}^{1} x \theta x^{\theta-1}\, d{x}=
+                  \frac{\theta}{1+\theta} \]
+              $ \displaystyle \mu_1(\theta)=\frac{\theta}{1+\theta} $
+              \[ \hat{\mu}_1=\frac{1}{n}\sum_{i=1}^{n}  X_i \]
+              \[ \mu_1(\hat{\theta})=\frac{\hat{\theta}}{1+\hat{\theta}}=\hat{\mu}_1 \]
+              Therefore,
+              \[ \hat{\theta}_{\text{MM}}=\frac{\hat{\mu}_1}{1-\hat{\mu}_1}=\frac{\bar{X}}{1-\bar{X}}   \]
+        \item $ X_1,\ldots,X_n\stackrel{\text{iid}}{\sim}\N{\mu,\sigma^2} $.
+              \[ \theta=\begin{pmatrix}
+                      \mu \\
+                      \sigma^2
+                  \end{pmatrix} \]
+              \begin{align*}
+                  \mu_1 & =\E{X_1}=\mu                                  \\
+                  \mu_2 & =\E{X_1^2}=\Var{X}+[\E{X_1}]^2=\mu^2+\sigma^2
+              \end{align*}
+              \begin{align*}
+                  \mu_1(\mu,\sigma^2) & =\mu            \\
+                  \mu_2(\mu,\sigma^2) & =\mu^2+\sigma^2
+              \end{align*}
+              \[ \hat{\mu}_1=\frac{1}{n} \sum_{i=1}^n X_i \]
+              \[ \hat{\mu}_2=\frac{1}{n} \sum_{i=1}^{n} X_i^2 \]
+              \[ \mu_1(\hat{\mu},\hat{\sigma}^2)=\hat{\mu}=\hat{\mu}_1=\bar{X} \]
+              \[ \mu_2(\hat{\mu},\hat{\sigma}^2)=(\hat{\mu})^2+\hat{\sigma}^2=\hat{\mu}_2 \]
+              Therefore,
+              \begin{align*}
+                  \hat{\mu}_{\text{MM}} & =\bar{X}                                    \\
+                  \hat{\sigma}^2_{\text{MM}}
+                                        & =\hat{\mu}_2-(\bar{X})^2                    \\
+                                        & =\frac{1}{n} \sum_{i=1}^{n} X_i^2-\bar{X}   \\
+                                        & =\frac{1}{n} \sum_{i=1}^{n} (X_i-\bar{X})^2
+              \end{align*}
+    \end{enumerate}
+\end{Example}
+\section{Maximum Likelihood Method}
+This section: introduce the most commonly used method for estimating unknown
+parameter $ \theta $ referred to as maximum likelihood method.
+\begin{itemize}
+    \item Likelihood function
+          \begin{enumerate}
+              \item Suppose $ X_1,\ldots,X_n $ are i.i.d.\ from $ f(x;\theta) $
+              \item Given $ (x_1,\ldots,x_n) $, the observed value of $ (X_1,\ldots,X_n) $.
+                    We calculate the joint p.f.\ of $ (X_1,\ldots,X_n) $ at observed
+                    data $ (x_1,\ldots,x_n) $ or joint p.d.f.\ of $ (X_1,\ldots,X_n) $
+                    at observed data $ (x_1,\ldots,x_n) $.
+
+                    Discrete random variables joint p.d.f.\ of $ (X_1,\ldots,X_n) $
+                    at $ (x_1,\ldots,x_n) $:
+                    \[ \Prob{X_1=x_1,\ldots,X_n=x_n}=
+                        \prod_{i=1}^n \Prob{X_i=x_i}=
+                        \prod_{i=1}^n f(x_i;\theta) \]
+                    Continuous random variables joint p.d.f.\ of $ (X_1,\ldots,X_n) $
+                    at $ (x_1,\ldots,x_n) $:
+                    \[ f_{X_1,\ldots,X_n}(x_1,\ldots,x_n)=
+                        \prod_{i=1}^n f(x_i;\theta) \]
+              \item We use $ L(\theta;x_1,\ldots,x_n) $ or simply
+                    $ L(\theta) $ to denote it. That is to say,
+                    \[ L(\theta;x_1,\ldots,x_n)=
+                        \begin{cases*}
+                            \Prob{X_1=x_1,\ldots,X_n=x_n} & discrete\\
+                            f_{X_1,\ldots,X_n}(x_1,\ldots,x_n) & continuous
+                        \end{cases*}=\prod_{i=1}^n f(x_i;\theta) \]
+                    Here, $ L(\theta;x_1,\ldots,x_n) $ is called the likelihood function
+                    of $ \theta $.
+          \end{enumerate}
+\end{itemize}
+Comments:
+\begin{enumerate}
+    \item Likelihood function measures how likely we get
+          the observed data for a given $ \theta $.
+    \item Smaller $ L(\theta) $ means $ \theta $ is less likely
+          to generate the observed data.
+    \item Larger $ L(\theta) $ means $ \theta $ is more likely
+          to generate the observed data.
+\end{enumerate}
+\underline{Idea of Maximum Likelihood Method}
+
+Choose $ \theta $ to maximize $ L(\theta) $ or choose
+$ \theta $ such that it most likely generates the observed data.
+
+Maximum likelihood estimator/estimate (MLE)
+\begin{enumerate}
+    \item ML estimate maximizes $ L(\theta) $ and we use
+          $ \hat{\theta}=\hat{\theta}(x_1,\ldots,x_n) $ to denote it.
+          \[ \hat{\theta}=\hat{\theta}(x_1,\ldots,x_n)=
+              \arg\max_{\theta\in \Theta}L(\theta) \]
+    \item ML estimator: $ \hat{\theta}=\hat{\theta}(X_1,\ldots,X_n) $
+    \item Log-likelihood function: log of likelihood function:
+          \[ \ell(\theta)=\ln[L(\theta)] \]
+          Then: an immediate result is:
+          \[ \hat{\theta}=\hat{\theta}(x_1,\ldots,x_n)=
+              \arg\max_{\theta\in \Theta}\ell(\theta)
+              \arg\max_{\theta\in \Theta}L(\theta) \]
+    \item Invariance principal of ML estimator
+          $ \tau(\theta) $ is a function of $ \theta $.
+          $ \tau(\hat{\theta}) $ is the ML estimator of
+          $ \tau(\theta) $ if $ \hat{\theta} $ is the ML
+          estimator of $ \theta $.
+\end{enumerate}
+\begin{Example}{}{}
+    $ X_1,\ldots,X_n \stackrel{\text{iid}}{\sim} \poi{\theta} $.
+    Find ML estimator of $ \theta $.
+
+    \textbf{Solution.}
+    \[ f(x;\theta)=\frac{\theta^x}{x!} e^{-\theta} \]
+    \[ L(\theta)=\prod_{i=1}^n f(x_i;\theta)=
+        \prod_{i=1}^n \frac{\theta^{x_i}}{x_i!}e^{-\theta}=
+        \frac{\theta^{\sum_{i=1}^{n} x_i}}{\prod_{i=1}^n(x_i!)}e^{-n\theta}   \]
+    \[ \ell(\theta)=\biggl(\sum_{i=1}^{n} x_i\biggr)\ln(\theta)-n \theta-
+        \sum_{i=1}^{n} \ln(x_i!) \]
+    \[ \frac{d\ell(\theta)}{d\theta}=\frac{\sum_{i=1}^{n} x_i}{\theta}-n   \]
+    ML estimator of $ \theta $ satisfies
+    \[ \biggl[\frac{d\ell}{d\theta}\biggr]_{\theta=\hat{\theta}}=0\implies
+        \frac{\sum_{i=1}^{n} x_i}{\hat{\theta}}-n=0\implies
+        \hat{\theta}=\frac{\sum_{i=1}^{n} x_i}{n}   \]
+    ML estimator of $ \theta $ is
+    \[ \hat{\theta}=\frac{\sum_{i=1}^{n} X_i}{n}\quad\text{(same as the MM estimator)} \]
+\end{Example}
+\begin{Remark}{}{}
+    \begin{itemize}
+        \item ML estimator of $ \theta^2 $ is $ (\hat{\theta})^2 $
+        \item ML estimator of $ e^{-\theta} $ is $ e^{-\hat{\theta}} $
+    \end{itemize}
+\end{Remark}
+\begin{Example}{}{}
+    $ X_1,\ldots,X_n $ are i.i.d.\ from $ f(x;\theta)=\theta x^{\theta-1} $
+    with $ 0<x<1 $, $ \theta>0 $.
+    Find ML estimator of $ \theta $.
+
+    \textbf{Solution.}
+    \[ L(\theta)=\prod_{i=1}^n f(x_i;\theta)=
+        \prod_{i=1}^n \theta x_i^{\theta-1}=\theta^n\biggl(\prod_{i=1}^n x_i \biggr)^{\theta-1} \]
+    \[ \ell(\theta)=n\ln(\theta)+(\theta-1)\sum_{i=1}^{n} \ln(x_i) \]
+    \[ \frac{d\ell(\theta)}{d\theta}=\frac{n}{\theta} +\sum_{i=1}^{n} \ln(x_i)  \]
+    ML estimate $ \hat{\theta} $ satisfies
+    \[ \biggl[\frac{d\ell}{d\theta}\biggr]_{\theta=\hat{\theta}}=0\implies
+        \frac{n}{\hat{\theta}} +\sum_{i=1}^{n} \ln(x_i)=0
+        \implies \hat{\theta}=-\frac{n}{\sum_{i=1}^{n} \ln(x_i)}  \]
+    ML estimator:
+    \[ \hat{\theta}=-\frac{n}{\sum_{i=1}^{n} \ln(X_i)}\quad\text{(is different from MM estimator)} \]
+\end{Example}

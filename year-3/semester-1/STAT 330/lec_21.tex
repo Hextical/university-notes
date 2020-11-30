@@ -1,0 +1,147 @@
+\chapter{Point Estimation}
+\makeheading{Lecture 21 | 2020-11-22}
+\section{Introduction}
+Background: Suppose $ X_1,\ldots,X_n $
+are i.i.d.\ random variables from
+$ f(x;\theta) $. Here, $ \theta $ is unknown, but fixed.
+It can be a scalar
+or a vector since
+\[ \symbf{\theta}=\begin{pmatrix}
+        \theta_1 \\
+        \vdots   \\
+        \theta_k
+    \end{pmatrix} \]
+Clearly, if $ k=1 $, $ \theta $ is a scalar,
+and if $ k>1 $, $ \theta $ is a vector.
+
+Purpose: Given $ X_1,\ldots,X_n $ we'd like to estimate
+$ \theta $.
+\begin{Example}{}{}
+    \begin{itemize}
+        \item If $ X_1,\ldots,X_n \sim \N{\mu,1} $,
+              then $ \theta=\mu $ is a scalar.
+        \item If $ X_1,\ldots,X_n \sim \N{\mu,\sigma^2} $, then
+              $ \theta=\begin{pmatrix}
+                      \mu \\
+                      \sigma^2
+                  \end{pmatrix} $ is a vector.
+    \end{itemize}
+\end{Example}
+Notation:
+\begin{itemize}
+    \item $ \Theta $: parameter space, it contains all possible values
+          of $ \theta $.
+          \begin{Example}{}{}
+              \begin{itemize}
+                  \item If $ X_1,\ldots,X_n \sim \N{\mu,1} $,
+                        then
+                        \[ \Theta=\set{\mu:-\infty<\mu<\infty} \]
+                  \item If $ X_1,\ldots,X_n \sim \N{\mu,\sigma^2} $, then
+                        \[ \Theta=\set{(\mu,\sigma^2):-\infty<\mu<\infty,\sigma^2>0} \]
+              \end{itemize}
+          \end{Example}
+    \item Data: $ (X_1,\ldots,X_n) $ data are random variables.
+    \item Observed data/observations: $ (x_1,\ldots,x_n) $,
+          they're observed values of $ (X_1,\ldots,X_n) $.
+          Note that
+          $ x_1,\ldots,x_n $ are not random variables.
+    \item Statistic: function of data and does not depend on any
+          unknown parameter, denote it by $ T=T(X_1,\ldots,X_n) $.
+          \begin{Example}{}{}
+              \begin{itemize}
+                  \item If $ X_1,\ldots,X_n \stackrel{\text{iid}}{\sim}\N{\mu,1} $,
+                        then
+                        \[ \bar{X}_n=\frac{1}{n} \sum_{i=1}^{n} X_i \]
+                        is a statistic.
+                  \item $ \sqrt{n}(\bar{X}_n-\mu) $
+                        is \underline{not} a statistic, since it depends
+                        on $ \theta=\mu $.
+              \end{itemize}
+          \end{Example}
+    \item Estimator \& estimate
+          \begin{enumerate}
+              \item If a statistic $ T=T(X_1,\ldots,X_n) $
+                    is used to estimate $ \theta $, then
+                    $ T=T(X_1,\ldots,X_n) $ is an
+                    estimator (which must be a statistic,
+                    and also a random variable) of $ \theta $.
+              \item The observed value of $ T $,
+                    denote it by $ t=T(x_1,\ldots,x_n) $
+                    is called an estimate (which
+                    is an observed value, therefore not a random variable)
+                    of $ \theta $.
+          \end{enumerate}
+          \begin{Example}{}{}
+              $ X_1,\ldots,X_n \stackrel{\text{iid}}{\sim}\N{\mu,1} $
+              with observed data is $ (x_1,\ldots,x_n) $.
+              \begin{itemize}
+                  \item $ \displaystyle \bar{X}_n=\frac{1}{n} \sum_{i=1}^{n} X_i $
+                        is an estimator.
+                  \item $ \displaystyle \bar{x}_n=\frac{1}{n} \sum_{i=1}^{n} x_i $
+                        is an estimate.
+              \end{itemize}
+          \end{Example}
+\end{itemize}
+\begin{Remark}{}{}
+    We prefer using
+    \begin{itemize}
+        \item $ \hat{\theta}=\hat{\theta}(X_1,\ldots,X_n) $
+              to denote an estimator of $ \theta $.
+        \item (Slight abuse of notation)
+              $ \hat{\theta}=\hat{\theta}(x_1,\ldots,x_n) $
+              to denote an estimate of $ \theta $. That is:
+              $ \hat{\theta} $ is used for both estimator and estimate.
+              \begin{itemize}
+                  \item If $ \hat{\theta} $ is a random variable, then
+                        $ \hat{\theta}=\hat{\theta}(X_1,\ldots,X_n) $
+                        is regarded as an estimator.
+                  \item If $ \hat{\theta} $ is an observed value, then
+                        $ \hat{\theta}=\hat{\theta}(x_1,\ldots,x_n) $
+                        is regarded as an estimate.
+              \end{itemize}
+    \end{itemize}
+\end{Remark}
+\section{Method of Moments}
+Problem setup: Suppose $ X_1,\ldots,X_n $
+are i.i.d.\ with p.f.\ $ f(x;\theta) $
+or p.d.f.\ $ f(x;\theta) $. We need to estimate
+$ \symbf{\theta}=(\theta_1,\ldots,\theta_k)^\top $.
+
+Method: Method of moments estimator (MM estimator).
+\begin{enumerate}
+    \item Population moment. Let $ \mu_j=\E{X_i^j}=\E{X^j} $
+          for $ j=1,\ldots,k $.
+          \begin{itemize}
+              \item $ \mu_j $ is called $ j^{\text{th}} $ population moment.
+              \item $ \mu_j $ is a function of $ \symbf{\theta} $,
+                    and we write it as $ \mu_j(\symbf{\theta}) $.
+          \end{itemize}
+    \item Sample moments. Let $ \hat{\mu}_j=\sum_{i=1}^{n} X_i^j $ for
+          $ j=1,\ldots,k $.
+          \begin{itemize}
+              \item $ \hat{\mu}_j $: $ j^{\text{th}} $ sample moment.
+              \item $ \E{\hat{\mu}_j}=\frac{1}{n} \sum_{i=1}^{n}\E{X_i^j}=\mu_j $.
+          \end{itemize}
+    \item Idea of method of moments.
+          Choose estimators $ \hat{\symbf{\theta}} $
+          such that $ \mu_j(\hat{\symbf{\theta}})=
+              \hat{\mu}_j=\frac{1}{n} \sum_{i=1}^{n} X_i^j $
+          for
+          $ j=1,\ldots,k $. There are $ k $ unknown parameters
+          and $ k $ equations.
+
+          The estimator $ \hat{\symbf{\theta}} $ is called the method
+          of moment estimator of $ \symbf{\theta} $.
+\end{enumerate}
+
+\begin{Example}{}{}
+    $ X_1,\ldots,X_n\stackrel{\text{iid}}{\sim}\poi{\theta} $
+    \begin{itemize}
+        \item First population moment is $ \E{X_1}=\mu_1=\theta\to
+                  \mu_1(\theta)=\theta $
+        \item First sample moment is $ \hat{\mu}_1=\frac{1}{n} \sum_{i=1}^{n} X_i $
+        \item MM estimator satisfies $ \mu_1(\hat{\theta})=\hat{\mu}_1 $
+              and $ \hat{\theta}=\hat{\mu}_1=\frac{1}{n}X_i $
+              which is MM estimator of $ \theta $.
+    \end{itemize}
+\end{Example}
