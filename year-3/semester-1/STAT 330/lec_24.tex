@@ -1,0 +1,90 @@
+\makeheading{Lecture 24 | 2020-11-29}
+\begin{Example}{}{}
+    $ X_1,\ldots,X_n \stackrel{\text{iid}}{\sim}\poi{\theta} $.
+    \begin{enumerate}[label=(\roman*)]
+        \item Find ML estimator of $ \theta $, $ \hat{\theta} $.
+        \item Find ML estimator of $ \Prob{X_1=0}\coloneq g(\theta) $.
+        \item Find limiting distribution of
+              \[ \sqrt{n}(\hat{\theta}-\theta) \]
+        \item Find limiting distribution of
+              \[ \sqrt{n}(g(\hat{\theta})-g(\theta)) \]
+        \item Is $ \hat{\theta} $ (or $ g(\hat{\theta}) $) unbiased?
+    \end{enumerate}
+    \textbf{Solution.}
+    \begin{enumerate}[label=(\roman*)]
+        \item $ \displaystyle \hat{\theta}=\frac{1}{n}\sum_{i=1}^{n} X_i=\bar{X}_n $
+        \item $ \Prob{X_1=0}=e^{-\theta}\coloneq g(\theta) $,
+              therefore, ML estimator of $ g(\theta) $ is $ g(\hat{\theta})=e^{-\bar{X}_n} $
+              by the invariance property.
+        \item $ \sqrt{n}(\hat{\theta}-\theta)=\sqrt{\bar{X}_n-\theta} $.
+              \begin{itemize}
+                  \item Method 1 (ML estimator): First, note that
+                        the support does not depend on $ \theta $. If it does,
+                        then see Method 2.
+                        \[ \sqrt{n}(\hat{\theta}-\theta)\stackrel{\text{d}}{\to}
+                            \N*{0,\frac{1}{J_1(\theta)} } \]
+                        Since we've shown $ J(\theta)=\frac{n}{\theta} $, find
+                        \[ J_1(\theta)=\frac{J(\theta)}{n}=\frac{1}{\theta} \]
+                        Therefore,
+                        \[  \sqrt{n}(\hat{\theta}-\theta)\stackrel{\text{d}}{\to}
+                            \N{0,\theta} \]
+                  \item Method 2 (CLT): $ X_1,\ldots,X_n\stackrel{\text{iid}}{\sim}\poi{\theta} $
+                        so $ \E{X_i}=\theta $ and $ \Var{X_i}=\theta $.
+                        \[ \implies \frac{\sqrt{n}(\bar{X}_n-\theta)}{\sqrt{\theta}}
+                            \stackrel{\text{d}}{\to}Z \sim \N{0,1}  \]
+                        Continuous mapping theorem,
+                        \[ \sqrt{\theta}\frac{\sqrt{n}(\bar{X}_n-\theta)}{\sqrt{\theta}}
+                            \stackrel{\text{d}}{\to}\sqrt{\theta}Z \sim \N{0,\theta} \]
+              \end{itemize}
+        \item \[ \sqrt{n}(g(\hat{\theta})-g(\theta)) \]
+              \begin{itemize}
+                  \item Method 1 (ML estimator of $ g(\theta) $):
+                        First, note that
+                        the support does not depend on $ \theta $. If it does,
+                        then see Method 2.
+                        \[ \sqrt{n}(e^{-\bar{X}_n}-e^\theta)
+                            \stackrel{\text{d}}{\to}\N{0,\frac{[g^\prime(\theta)]^2}{J_1(\theta)} } \]
+                        Here, $ g(x)=e^{-x} $.
+                        \[ \frac{[g^\prime(\theta)]^2}{J_1(\theta)}=e^{-2\theta}\theta  \]
+                        So, $ \sqrt{n}(e^{-\bar{X}_n}-e^\theta)
+                            \stackrel{\text{d}}{\to}\N{0,e^{-2\theta}\theta} $
+                  \item By using delta method
+                        \[ \sqrt{n}(\bar{X}_n-\theta) \stackrel{\text{d}}{\to}\N{0,\theta} \]
+                        Take $ g(x)=e^{-x} $. Therefore,
+                        \[ \sqrt{n}(g(\bar{X}_n)-g(\theta)) \stackrel{\text{d}}{\to}
+                            \N*{0,[g^\prime(\theta)]^2\theta} \]
+              \end{itemize}
+        \item Approximate mean of $ \hat{\theta} $ is $ \theta $.
+              Approximate mean of $ e^{-\hat{\theta}} $ is $ e^{-\theta} $.
+              However, we want the exact expectation.
+              \begin{itemize}
+                  \item Part 1
+                        \[ \E{e^{-\bar{X}_n}}=\E*{
+                                \expon*{-\frac{1}{n} \sum_{i=1}^{n} X_i}
+                            } \]
+                        $ X_1,\ldots,X_n \stackrel{\text{iid}}{\sim}\poi{\theta}
+                            \implies \sum_{i=1}^{n} X_i \sim \poi{n\theta} $
+                        \[ \E{e^{-T/n}}=
+                            M_T\biggl(-\frac{1}{n} \biggr)=
+                            \expon{n\theta(e^{-1/n}-1)} \]
+                        Therefore,
+                        \[ \E{g(\hat{\theta})}\neq e^{-\theta} \]
+                        \[ \lim\limits_{{n} \to {\infty}}
+                            e^{\theta[ne^{-1/n}-1]} \]
+                        Consider
+                        \[ e^x=1+x+x^2+o(x^2) \]
+                        \[ e^{-1/n}=1-\frac{1}{n} +\frac{1}{n^2}+o
+                            \biggl(\frac{1}{n^2}\biggr)  \]
+                        Therefore,
+                        \[ n(e^{-1/n}-1)=-1+\frac{1}{n} +
+                            o\biggl(\frac{1}{n}\biggr) \]
+                        Asymptotic mean of $ \hat{\theta} $ is $ \theta $ since
+                        \[ \lim\limits_{{n} \to {\infty}} \E{\hat{\theta}}=\theta \]
+                  \item Part 2
+                        \[ \E{\hat{\theta}}=\theta \]
+                        \[ \E{\theta}=\E{\bar{X}_n}=\E*{\frac{1}{n} \sum_{i=1}^{n} X_i}=
+                            \E{X_1}=\theta \]
+                        $ \hat{\theta} $ is an unbiased estimator of $ \theta $.
+              \end{itemize}
+    \end{enumerate}
+\end{Example}
