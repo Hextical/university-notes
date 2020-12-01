@@ -8,6 +8,7 @@ All my university notes done in LaTeX.
 |    STAT 330     |   100%*    | :heavy_check_mark: |
 |    STAT 331     |   100%*    | :heavy_check_mark: |
 | AMATH/PMATH 331 |    WIP     | :heavy_check_mark: |
+
 *Unreviewed
 ## Year 2
 ### Semester 1
