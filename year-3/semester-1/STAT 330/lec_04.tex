@@ -68,19 +68,20 @@
          & =\int_{0}^{\infty} e^{tx} \frac{x^{\alpha-1}e^{-x/\beta}}{
         \Gamma(\alpha)\beta^\alpha
         } \, d{x}                                                                                          \\
-         & =\int_{0}^{\infty} \frac{x^{\alpha-1}e^{-x\left( \frac{1}{\beta} -t \right)}}{
-        \Gamma(\alpha)\beta^\alpha
+         & =\int_{0}^{\infty} \frac{x^{\alpha-1}\expon*{\displaystyle
+                -\frac{x}{\frac{1}{(1/\beta)-t} }}} {
+            \Gamma(\alpha)\beta^\alpha
         } \, d{x}                                                                                          \\
          & = \int_{0}^{\infty} \frac{x^{\alpha-1}e^{-x/\tilde{\beta}}}{\Gamma(\alpha)\beta^\alpha} \, d{x}
     \end{align*}
     where
-    \[ \tilde{\beta}=\dfrac{1}{\left(\dfrac{1}{\beta}-t\right)}  \]
+    \[ \tilde{\beta}=\dfrac{1}{\biggl(\dfrac{1}{\beta}-t\biggr)}  \]
     Continuing,
     \begin{align*}
          & =\int_{0}^{\infty} \frac{x^{\alpha-1}e^{-x/\tilde{\beta}}}{\Gamma(\alpha)
-        \tilde{\beta}^\alpha} \left( \frac{\tilde{\beta}^\alpha}{\beta^\alpha} \right)  \, d{x} \\
-         & =\frac{\tilde{\beta}^\alpha}{\beta^\alpha}(1)                                        \\
-         & =\left( 1-\beta t \right)^{-\alpha}
+        \tilde{\beta}^\alpha} \biggl( \frac{\tilde{\beta}^\alpha}{\beta^\alpha} \biggr)  \, d{x} \\
+         & =\frac{\tilde{\beta}^\alpha}{\beta^\alpha}(1)                                         \\
+         & =(1-\beta t)^{-\alpha}
     \end{align*}
     The moment generating function must be non-negative since
     $ 1-\beta t>0 $ and therefore, $ t<1/\beta $. Take $ h=1/\beta $.
@@ -94,35 +95,29 @@
     \textbf{Solution.}
     \begin{align*}
         M(t)
-         & =\E{e^{tX}}                                                                    \\
-         & =\sum\limits_{x=0}^{\infty} e^{tx} \frac{\theta^x e^{-\theta}}{x!}             \\
-         & =\sum\limits_{x=0}^{\infty} \frac{\left( e^t \theta \right)^x e^{-\theta}}{x!} \\
-         & =e^{-\theta}\sum\limits_{x=0}^{\infty} \frac{\left( e^t \theta \right)^x}{x!}  \\
-         & =e^{-\theta} \exp\left\{e^t \theta\right\}                                     \\
-         & =\exp\left\{\theta\left( e^t-1 \right)\right\}
+         & =\E{e^{tX}}                                                        \\
+         & =\sum\limits_{x=0}^{\infty} e^{tx} \frac{\theta^x e^{-\theta}}{x!} \\
+         & =\sum\limits_{x=0}^{\infty} \frac{(e^t \theta)^x e^{-\theta}}{x!}  \\
+         & =e^{-\theta}\sum\limits_{x=0}^{\infty} \frac{(e^t \theta)^x}{x!}   \\
+         & =e^{-\theta} \expon{e^t \theta}                                    \\
+         & =\expon{\theta(e^t-1)}
     \end{align*}
     for all $ t\in\mathbb{R} $.
 \end{Example}
 Three important properties of $ M(t) $.
 
 \begin{Theorem}{Moment Generating Function of a Linear Function}{mgf_linear}
-    Suppose the random variable $ X $ has moment generating function
-    $ M_X(t) $ defined for $ t\in\interval[open]{-h}{h} $ for some $ h>0 $.
-    Let $ Y=aX+b $ where $ a,b\in\mathbb{R} $ and $ a\neq 0 $. Then,
-    the moment generating function of $ Y $ is
+    Suppose that the moment generating function of $ X $ is $ M_X(t) $.
+    Then $ Y=aX+b $ has moment generating function
     \[ M_Y(t)=e^{bt}M_X(at) \]
-    for $ \abs{t}<\dfrac{h}{\abs{a}} $.
 \end{Theorem}
 
 \begin{Proof}{\ref{thm:mgf_linear}}{}
-    \begin{align*}
-        M_Y(t)
-         & =\E{e^{tY}}                                                       \\
-         & =\E{e^{t(aX+b)}}                                                  \\
-         & =e^{bt}\E{e^{atX}} & \quad & \text{exists for }\abs{at}<h         \\
-         & =e^{bt}M_X(at)     &       & \text{for }\abs{t}<\frac{h}{\abs{a}}
-    \end{align*}
-    as required.
+    \[  M_Y(t)
+        =\E{e^{tY}}
+        =\E{e^{t(aX+b)}}
+        =e^{bt}\E{e^{atX}}
+        =e^{bt}M_X(at) \]
 \end{Proof}
 
 \begin{Example}{}{}
@@ -134,47 +129,37 @@ Three important properties of $ M(t) $.
     \begin{enumerate}[label=(\roman*)]
         \item \begin{align*}
                   M_Z(t)
-                                                                     & =\E{e^{tZ}}                                                                        \\
-                                                                     & =\int_{-\infty}^{\infty} e^{tx} \frac{1}{\sqrt{2\pi}}
-                  \exp\left\{ -\frac{x^2}{2} \right\} \, d{x}                                                                                             \\
-                                                                     & =\int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}}
-                  \exp\left\{ -\frac{x^2-2tx}{2} \right\} \, d{x}                                                                                         \\
-                                                                     & =\int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}}
-                  \exp\left\{ -\frac{(x-t)^2-t^2}{2}\right\} \, d{x} & \quad                                                 & \text{complete the square} \\
-                                                                     & =\exp\left\{ \frac{t^2}{2}\right\}
+                                                           & =\E{e^{tZ}}                                                                        \\
+                                                           & =\int_{-\infty}^{\infty} e^{tx} \frac{1}{\sqrt{2\pi}}
+                  \expon*{-\frac{x^2}{2}} \, d{x}                                                                                               \\
+                                                           & =\int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}}
+                  \expon*{ -\frac{x^2-2tx}{2}} \, d{x}                                                                                          \\
+                                                           & =\int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}}
+                  \expon*{ -\frac{(x-t)^2-t^2}{2}} \, d{x} & \quad                                                 & \text{complete the square} \\
+                                                           & = \expon*{ \frac{t^2}{2}}
                   \int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}}
-                  \exp\left\{ -\frac{(x-t)^2}{2} \right\} \, d{x}
+                  \expon*{ -\frac{(x-t)^2}{2} } \, d{x}
               \end{align*}
               where the integral is the p.d.f.\ of $ N(\mu=t,\sigma^2=1) $. Therefore,
-              \[ \E{e^{tZ}}=\exp\left\{ \frac{t^2}{2}\right\} \]
+              \[ \E{e^{tZ}}= \expon*{ \frac{t^2}{2}} \]
 
         \item $ X=\sigma Z+\mu $ where $ Z \sim \N{0,1} $.
-              \begin{align*}
+              \[
                   M_X(t)
-                   & =e^{\mu t}M_Z(\sigma t)                                            \\
-                   & =e^{\mu t}\exp\left\{ \frac{\left( \sigma t \right)^2}{2} \right\} \\
-                   & =\exp\left\{ \frac{(\sigma t)^2}{2} +\mu t\right\}
-              \end{align*}
+                  =e^{\mu t}M_Z(\sigma t)
+                  =e^{\mu t} \expon*{ \frac{(\sigma t)^2}{2}}
+                  = \expon*{ \frac{(\sigma t)^2}{2} +\mu t}
+              \]
     \end{enumerate}
 \end{Example}
 
 \begin{Theorem}{Moments from Moment Generating Function}{m_mgf}
-    Suppose the random variable $ X $ has moment generating
-    function $ M(t) $ defined for $ t\in\interval[open]{-h}{h} $
-    for some $ h>0 $. Then, $ M(0)=1 $ and
+    Suppose $ X $ has moment generating function $ M(t) $.
     \[ M^{(k)}(0)=\E{X^k} \]
-    for $ k=1,2,\ldots $ where
-    \[ M^{(k)}(t)=\frac{d^k}{dt^k} \left[ M(t) \right] \]
-    is the $ k $th derivative of $ M(t) $.
 \end{Theorem}
-\begin{Proof}{\ref{thm:m_mgf}}{}
-    Omitted from the lecture and hence these notes.
-    See Course Notes for most of the proof.
-\end{Proof}
-
 \begin{Example}{}{}
     $ \gam{\alpha,\beta}$ has m.g.f.\
-    $ \displaystyle  M(t)=(1-\beta t)^{-\alpha} $
+    $  M(t)=(1-\beta t)^{-\alpha} $
     for $ t<1/\beta $. What is $ \E{X} $ and $ \Var{X} $?
 
     \textbf{Solution.} For $ \E{X} $ we find $ M^\prime(t) $.
@@ -190,36 +175,30 @@ Three important properties of $ M(t) $.
 \end{Example}
 
 \begin{Example}{}{}
-    The m.g.f.\ of $ \poi{\theta} $ is $ \displaystyle  M(t)=\exp\left\{ \theta(e^t-1)\right\} $.
+    The m.g.f.\ of $ \poi{\theta} $ is $ M(t)=\expon{\theta(e^t-1)} $.
     Find $ \E{X} $ and $ \Var{X} $.
 
     \textbf{Solution.}
-    \[ M^\prime(t)=\exp\left\{ \theta(e^t-1)\right\}\theta e^t \]
+    \[ M^\prime(t)=\expon{\theta(e^t-1)}\theta e^t \]
     Therefore,
     \[ \E{X}=M^\prime(0)=\theta \]
     Now,
     \[ M^{\prime\prime}(t)=
-        \exp\left\{ \theta(e^t-1)\right\}\theta^2 e^{2t}+\theta e^t
-        \exp\left\{ e^\theta(e^t-1)\right\} \]
+        \expon{\theta(e^t-1)}\theta^2 e^{2t}+\theta e^t
+        \expon{\theta(e^t-1)} \]
     Therefore,
     \[ M^{\prime\prime}(0)=\E{X^2}=\theta^2+\theta \]
     So,
     \[ \Var{X}=\E{X^2}-\mu^2=\theta^2+\theta-(\theta)^2=\theta \]
 \end{Example}
 
-\begin{Theorem}{Uniqueness Theorem for Moment Generating Functions}{uniq_mgf}
-    Suppose the random variable $ X $ has moment generating function
-    $ M_X(t) $ and the random variable $ Y $ has
-    moment generating function $ M_Y(t) $.
-    $ M_X(t) = M_Y(t) $ for all $ t\in\interval[open]{-h}{h} $
-    for some $ h>0 $ if and only if $ X $ and $ Y $ have the same distribution;
-    that is,
-    \[ \Prob{X\le s}=F_X(s)=F_Y(s)=\Prob{Y\le s} \]
-    for all $ s\in\mathbb{R} $.
+\begin{Theorem}{Uniqueness of Moment Generating Functions}{uniq_mgf}
+    $ X $ and $ Y $ have the same moment generating function if and only if
+    $ X $ and $ Y $ have the same distribution.
 \end{Theorem}
 
 \begin{Example}{}{}
-    Suppose $ X $ has m.g.f.\ $ \displaystyle  M_X(t)=\exp\left\{ \frac{t^2}{2} \right\} $.
+    Suppose $ X $ has m.g.f.\ $ \displaystyle  M_X(t)=\expon*{\frac{t^2}{2}} $.
     \begin{enumerate}[label=(\roman*)]
         \item Find m.g.f.\ of $ Y=2X-1 $
         \item Find $ \E{Y} $ and $ \Var{Y} $
@@ -228,24 +207,24 @@ Three important properties of $ M(t) $.
 
     \textbf{Solution.}
     \begin{enumerate}[label=(\roman*)]
-        \item $ \displaystyle  M_Y(t)=e^{-t}\exp\left\{ \frac{(2t)^2}{2}\right\}=
-                  \exp\left\{ 2t^2-t\right\} $.
+        \item $ \displaystyle  M_Y(t)=e^{-t}\expon*{\frac{(2t)^2}{2}}=
+                  \expon{2t^2-t} $.
 
         \item \begin{align*}
-                  M^\prime_Y(t)=\exp\left\{ 2t^2-t\right\}(4t-1)
+                  M^\prime_Y(t)=\expon*{2t^2-t}(4t-1)
               \end{align*}
               Therefore,
               \[ \E{Y}=M^\prime_Y(0)=-1 \]
               Also,
-              \[ M^{\prime\prime}_Y(t)=\exp\left\{ 2t^2-t\right\}(4t-1)^2+4
-                  \exp\left\{ 2t^2-t\right\} \]
+              \[ M^{\prime\prime}_Y(t)=\expon{2t^2-t}(4t-1)^2+4
+                  \expon{2t^2-t} \]
               and
               \[ \E{Y^2}=M_Y^{\prime\prime}(0)=1+4=5 \]
               Therefore,
               \[ \Var{Y}=\E{Y^2}-\mu^2=5-1=4 \]
-        \item $ M_Y(t)=\exp\left\{ 2t^2-t\right\} $ is the m.g.f.\
+        \item $ M_Y(t)=\expon{2t^2-t} $ is the m.g.f.\
               of $ N(-1,4) $ since
               if $ X \sim N(\mu,\sigma^2) $, then (by previous example)
-              \[ M_X(t)=e^{\mu t}\exp\left\{ \frac{\sigma^2 t^2}{2} \right\} \]
+              \[ M_X(t)=e^{\mu t}\expon*{\frac{\sigma^2 t^2}{2} } \]
     \end{enumerate}
 \end{Example}

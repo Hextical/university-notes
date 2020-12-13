@@ -9,48 +9,11 @@ We first introduce a function that will be used.
 \begin{Proposition}{Properties of the Gamma Function}{prop_gamma}
     \begin{enumerate}[label=(\arabic*)]
         \item\label{gamma_prop_1}$ \Gamma(\alpha)=(\alpha-1)\Gamma(\alpha-1) $ for $ \alpha>1 $
-        \item\label{gamma_prop_2} $ \Gamma(n)=(n-1)! $ when $ n\ge 1 $ is a positive integer
-        \item\label{gamma_prop_3} $ \displaystyle \Gamma\left( \frac{1}{2} \right)=\sqrt{\pi} $
+        \item\label{gamma_prop_2} $ \Gamma(n)=(n-1)! $ when $ n\in\mathbf{Z}^+ $,
+              where $ \Gamma(1)=1 $.
+        \item\label{gamma_prop_3} $ \displaystyle \Gamma\biggl(\frac{1}{2}\biggr)=\sqrt{\pi} $
     \end{enumerate}
 \end{Proposition}
-We don't need to know the following proof, but I checked it out for fun. Content not found in the
-syllabus is usually labelled with a dagger ($ \dagger $).
-\begin{Proof}{$ \dagger $~\ref{prop:prop_gamma}}{}
-    Proof of~\ref{gamma_prop_1}. Suppose $ \alpha>1 $.
-    \[ \Gamma(\alpha)=\int_{0}^{\infty} x^{\alpha-1}e^{-x}\, d{x}  \]
-    Let $ u=x^{\alpha-1} \implies du=(\alpha-1)x^{\alpha-2}\,dx $ and $ dv=e^{-x}\,dx\implies v=-e^{-x} $. Now,
-    recall from MATH 138:
-    \[ \int u\, d{v} =uv-\int v\, d{u} \]
-    So,
-    \begin{align*}
-        \Gamma(\alpha)
-         & = \left[ (\alpha-1)x^{\alpha-2}\left( -e^{-x} \right) \right]_0^\infty-\int_{0}^{\infty}\left(-e^{-x}\right)
-        (\alpha-1)x^{\alpha-2}\, d{x}                                                                                   \\
-         & =0+(\alpha-1)\int_{0}^{\infty}e^{-x} x^{\alpha-2}\, d{x}                                                     \\
-         & =(\alpha-1)\Gamma(\alpha)
-    \end{align*}
-    Proof of~\ref{gamma_prop_2}. Using~\ref{gamma_prop_1}:
-    \begin{align*}
-        \Gamma(\alpha)
-         & =(\alpha-1)\Gamma(\alpha-1)                    \\
-         & =(\alpha-1)(\alpha-2)\Gamma(\alpha-3)          \\
-         & =(\alpha-1)(\alpha-2)\cdots (3)(2)(1)\Gamma(1) \\
-    \end{align*}
-    We know that $ \Gamma(1)=1 $ by using the definition (trivial), therefore the result now follows.
-
-    Proof of~\ref{gamma_prop_3}. Sketch:
-    \begin{itemize}
-        \item Let $ u=x^2 $, so $ du=2x\,dx $. Let $ \alpha=\dfrac{1}{2} $, so the integral looks like:
-              \[ \Gamma\left( \frac{1}{2}  \right)=2\int_{0}^{\infty} e^{-u^2}\, d{u}  \]
-        \item Compute $ \left[ \Gamma \left( \frac{1}{2}  \right) \right]^2 $. Using polar coordinates,
-              compute the following double integral.
-              \[ 4 \int_{0}^{\infty} \int_{0}^{\infty} e^{-(u^2+v^2)}\, d{v} \, d{u}  \]
-              One will have to compute the Jacobian Matrix.
-        \item Solve for $ \Gamma\left( \dfrac{1}{2} \right) $ explicitly now.
-    \end{itemize}
-    \underline{Author's note}: This was covered in MATH 237 when I took it (F19).
-\end{Proof}
-
 \begin{Example}{}{}
     The p.d.f.\ is given by
     \[ f(x)=\begin{dcases}
@@ -58,7 +21,7 @@ syllabus is usually labelled with a dagger ($ \dagger $).
             0                                                           & x\le 0
         \end{dcases}
     \]
-    when $ \alpha>0 $ and $ \beta>0 $. We say that $ X \sim \gam{\alpha,\beta} $.
+    where $ \alpha>0 $ and $ \beta>0 $. $ X \sim \gam{\alpha,\beta} $.
 
     We also say that $ \alpha $ is the scale parameter and $ \beta $ is the shape parameter
     for this distribution.
@@ -79,16 +42,19 @@ syllabus is usually labelled with a dagger ($ \dagger $).
 \begin{Example}{}{}
     Suppose the p.d.f.\ is given by
     \[ f(x)=\begin{dcases}
-            \frac{\beta}{\theta^\beta}x^{\beta-1}e^{-\left( x/\theta  \right)^\beta} & x>0    \\
-            0                                                                        & x\le 0
+            \frac{\beta}{\theta^\beta}x^{\beta-1}
+            \expon*{-\biggl(\frac{x}{\theta}\biggr)^\beta} & x>0    \\
+            0                                              & x\le 0
         \end{dcases} \]
     with $ \alpha>0 $ and $ \beta>0 $.
-    Then, $ X \sim \weib{\theta,\beta} $.
+    $ X \sim \weib{\theta,\beta} $.
+
     Verify that $ f(x) $ is a p.d.f.
 
     \textbf{Solution.} $ f(x)\ge 0 $ for every $ x\in\mathbb{R} $. Now,
     \[ \int_{-\infty}^{\infty} f(x)\, d{x} =
-        \int_{0}^{\infty} \frac{\beta}{\theta^\beta}x^{\beta-1}e^{-\left( x/\theta  \right)^\beta} \, d{x} \]
+        \int_{0}^{\infty} \frac{\beta}{\theta^\beta}x^{\beta-1}
+        \expon*{-\biggl(\frac{x}{\theta}\biggr)^\beta} \, d{x} \]
     Let $ y=(x/\theta)^\beta \implies
         x=\theta y^{1/\beta} $ and $ dx=(\theta/\beta) y^{(1/\beta)-1}\,dy $.
     Therefore,
@@ -99,36 +65,34 @@ syllabus is usually labelled with a dagger ($ \dagger $).
 
 \begin{Example}{Normal}{}
     The p.d.f.\ is given by
-    \[ f(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{(x-\mu)^2}{2\sigma^2} \right\}  \]
-    for $ x\in\mathbb{R} $, $ \mu\in\mathbb{R} $, $ \sigma^2>0 $.
+    \[ f(x)=\frac{1}{\sqrt{2\pi}\sigma}\expon*{-\frac{(x-\mu)^2}{2\sigma^2}}  \]
+    for $ x\in\mathbb{R} $, $ -\infty<\mu<\infty $, $ \sigma^2>0 $.
     Verify that $ f(x) $ is a p.d.f.
 
-    \textbf{Solution.}
-
-    $ f(x)\ge 0 $ obviously.
+    \textbf{Solution.} $ f(x)\ge 0 $ for every $ x\in\mathbf{R} $.
 
     \underline{Case 1}: $ \mu=0 $ and $ \sigma^2=1 $, then
     we say $ X $ follows a \textbf{standard normal} distribution.
     We want to show that
-    \[ \int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{x^2}{2} \right\} \, d{x}=1  \]
+    \[ \int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}}\expon*{-\frac{x^2}{2}} \, d{x}=1  \]
     Since the function is symmetrical around 0, we have the following equivalent integral.
-    \[ 2\int_{0}^{\infty} \frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{x^2}{2} \right\} \, d{x}  \]
+    \[ 2\int_{0}^{\infty} \frac{1}{\sqrt{2\pi}}\expon*{-\frac{x^2}{2}} \, d{x}  \]
     Let $ y=x^2/2\implies x=\sqrt{2y} $
     and $ dx=\dfrac{\sqrt{2}}{2} y^{-1/2}\,dy $. Therefore,
     \[ =\frac{2}{\sqrt{2\pi}}\int_{0}^{\infty} e^{-y}\frac{\sqrt{2}}{2} y^{-1/2}\, d{y}
         =\frac{1}{\sqrt{\pi}}\int_{0}^{\infty} y^{1/2-1}e^{-y}\, d{y}=
-        \left( \frac{1}{\sqrt{\pi}}  \right)\Gamma\left( \frac{1}{2} \right)=1    \]
+        \biggl(\frac{1}{\sqrt{\pi}}\biggr)\Gamma\biggl(\frac{1}{2}\biggr)=1    \]
     \underline{Case 2}: For general $ \mu $ and $ \sigma^2 $,
-    \[ \int_{-\infty}^{\infty}  \frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{(x-\mu)^2}{2\sigma^2} \right\} \, d{x} \]
+    \[ \int_{-\infty}^{\infty}  \frac{1}{\sqrt{2\pi}\sigma}\expon*{-\frac{(x-\mu)^2}{2\sigma^2}} \, d{x} \]
     Let $ z=\dfrac{x-\mu}{\sigma}\implies x=\mu+\sigma z  $
     and $ dx=\sigma\,dz $. Therefore,
     \[ =\int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}\sigma}
-        \exp\left\{ -\frac{z^2}{2}\right\}\sigma \, d{z}=
-        \int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}}\exp\left\{ -\frac{z^2}{2} \right\} \, d{z}=1   \]
+        \expon*{-\frac{z^2}{2}}\sigma \, d{z}=
+        \int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}}\expon*{-\frac{z^2}{2}} \, d{z}=1   \]
     using Case 1.
 \end{Example}
 \section{Expectation}
-\begin{Definition}{Expectation of discrete random variable}{}
+\begin{Definition}{Expectation (Discrete)}{}
     Suppose $ X $ is a discrete random variable with support
     $ A $ and p.f. $ f(x) $. Then,
     \[ \E{X}=\sum\limits_{x\in A}x f(x)  \]
@@ -137,7 +101,7 @@ syllabus is usually labelled with a dagger ($ \dagger $).
     $ \E{X} $ does not exist.
 \end{Definition}
 
-\begin{Definition}{Expectation of continuous random variable}{}
+\begin{Definition}{Expectation (Continuous)}{}
     Suppose $ X $ is a continuous random variable with support $ A $
     and p.d.f. $ f(x) $. Then,
     \[ \E{X}=\int_{-\infty}^{\infty} x f(x)\, d{x}  \]
@@ -155,13 +119,13 @@ syllabus is usually labelled with a dagger ($ \dagger $).
     We note that $ f(x) $ is a p.f.\ since
     $ f(x)\ge 0 $ and
     \[ \sum\limits_{x\in A}f(x)=\sum\limits_{x=1}^{\infty}
-        \left( \frac{1}{x} -\frac{1}{x+1} \right)=
+        \biggl(\frac{1}{x} -\frac{1}{x+1} \biggr)=
         1-\frac{1}{2} +\frac{1}{2} -\frac{1}{3} +\cdots=1  \]
     Find $ \E{X} $.
 
     \textbf{Solution.}
     \[ \sum\limits_{x\in A}\abs{x}f(x)=\sum\limits_{x=1}^{\infty}
-        x\left( \frac{1}{x} -\frac{1}{x+1} \right)
+        x\biggl( \frac{1}{x} -\frac{1}{x+1} \biggr)
         =\sum\limits_{x=1}^{\infty} \frac{1}{x+1} =\infty  \]
     Therefore, $ \E{X} $ does not exist!
 \end{Example}
@@ -181,7 +145,8 @@ syllabus is usually labelled with a dagger ($ \dagger $).
         \int_{-\infty}^{\infty} \frac{x}{1+x^2} \, d{x}=0  \]
     since the integral above with $ \abs{x} $ is infinite. You must
     always remember to check that the $ \E{X} $ is finite
-    (using $ \abs{X} $) for both the discrete and continuous case.
+    (using $ \abs{x} $) for both the discrete and continuous case
+    whenever the support is \textbf{negative}.
 \end{Example}
 
 \begin{Example}{Bernoulli and Binomial Random Variable}{}
@@ -207,8 +172,8 @@ syllabus is usually labelled with a dagger ($ \dagger $).
     Suppose for a random variable $ X $ the p.d.f.\ is given by
     $ f(x)=\dfrac{\theta}{x^{\theta+1}} $
     for $ x\ge 1 $ and $ 0 $ when $ x<1 $. Assume $ \theta>0 $.
-    Find $ \E{X} $ and for what values of $ \theta $,
-    does $ \E{X} $ exist.
+    Find $ \E{X} $, and determine the values of $ \theta $
+    for which $ \E{X} $ exists.
 
     \textbf{Solution.}
     \[ \int_{-\infty}^{\infty} \abs{x}f(x)\, d{x}=
@@ -250,10 +215,6 @@ syllabus is usually labelled with a dagger ($ \dagger $).
     \[ \E{aX+b}=a\E{X}+b \]
     \[ \E{a g(X)+b h(X)}=a\E{g(X)}+b\E{h(X)} \]
 \end{Theorem}
-\begin{Proof}{\ref{thm:exp_linear_op}}{}
-    Omitted from the lecture and hence these notes.
-    See Course Notes for most of the proof.
-\end{Proof}
 \begin{Definition}{Variance}{}
     The variance of a random variable is defined as
     \[ \sigma^2=\Var{X}=\E{(X-\mu)^2} \]
@@ -261,10 +222,8 @@ syllabus is usually labelled with a dagger ($ \dagger $).
 \end{Definition}
 \begin{Definition}{Special Expectations}{}
     \begin{enumerate}[label=(\Roman*)]
-        \item The $ k $th moment (about the origin) of a random variable
-              \[ \E{X^k} \]
-        \item The $ k $th moment about the mean of a random variable
-              \[ \E{(X-\mu)^k} \]
+        \item The $ k^{\text{th}} $ moment (about 0): $ \E{X^k} $
+        \item The $ k^{\text{th}} $ moment about the mean $ \E{(X-\mu)^k} $
     \end{enumerate}
 \end{Definition}
 \begin{Theorem}{Properties of Variance}{prop_var}
@@ -273,11 +232,6 @@ syllabus is usually labelled with a dagger ($ \dagger $).
     where $ \mu=\E{X} $. Note that the
     variance of $ X $ exists if $ \E{X^2}<\infty $.
 \end{Theorem}
-\begin{Proof}{\ref{thm:prop_var}}{}
-    Omitted from the lecture and hence these notes.
-    See Course Notes for most of the proof.
-\end{Proof}
-
 \begin{Example}{}{}
     Suppose $ X \sim \poi{\theta} $, the p.f.\ is defined as
     $ f(x)=\dfrac{\theta^x}{x!} e^{-\theta} $
@@ -286,13 +240,13 @@ syllabus is usually labelled with a dagger ($ \dagger $).
     \textbf{Solution.} The support is non-negative, so $ \abs{x}=x $.
     Therefore,
     \[ \E{X}=\sum\limits_{x=0}^{\infty} x \frac{\theta^x}{x!} e^{-\theta}
-        =\sum\limits_{x=1}^{\infty} \frac{x}{x!} \theta^x e^{-\theta}
+        =\sum\limits_{x=0}^{\infty} \frac{x}{x!} \theta^x e^{-\theta}
         =\theta \sum\limits_{x=1}^{\infty} \frac{\theta^{x-1}}{(x-1)!}
         e^{-\theta}  \]
     Let $ y=x-1 $, then
-    \[ \E{X}= \theta\sum\limits_{y=0}^{\infty} \frac{\theta^y}{y!} e^{-\theta} \]
-    We know $\displaystyle  e^{\theta}=\sum\limits_{y=0}^{\infty} \frac{\theta^y}{y!} $,
-    so $ \E{X}= \theta $.
+    \[ \E{X}= \theta\sum\limits_{y=0}^{\infty} \frac{\theta^y}{y!} e^{-\theta}=\theta(e^{-\theta})e^{\theta} \]
+    since we know $\displaystyle  e^{\theta}=\sum\limits_{y=0}^{\infty} \frac{\theta^y}{y!} $.
+    Therefore, $ \E{X}= \theta $.
 
     \[ \Var{X}=\E{X^2}-\mu^2 \]
     Let's find $ \E{X^2} $:
@@ -304,11 +258,16 @@ syllabus is usually labelled with a dagger ($ \dagger $).
          & =\sum\limits_{x=1}^{\infty} \frac{x-1}{(x-1)!}\theta^x e^{-\theta}+
         \sum\limits_{x=1}^{\infty} \frac{1}{(x-1)!}\theta^x e^{-\theta}
     \end{align*}
-    Looking at the first sum (since the second sum was computed before):
-    \[ \sum\limits_{x=2}^{\infty} \frac{\theta^2}{(x-2)!} \theta^{x-2}e^{-\theta}+\theta \]
+    Looking at the first sum (since the second sum was computed before
+    and is $ \theta $)
+    \[ \sum\limits_{x=1}^{\infty} \frac{x-1}{(x-1)!}\theta^x e^{-\theta}=
+        \sum\limits_{x=2}^{\infty} \frac{\theta^2}{(x-2)!} \theta^{x-2}e^{-\theta} \]
     Let $ y=x-2 $:
-    \[ \E{X^2}=\sum\limits_{y=0}^{\infty}\frac{\theta^2\theta^y}{y!}e^{-\theta}+\theta=
-        \theta^2+\theta   \]
+    \[ \sum\limits_{x=2}^{\infty} \frac{\theta^2}{(x-2)!} \theta^{x-2}e^{-\theta}=
+        \sum\limits_{y=0}^{\infty}\frac{\theta^2\theta^y}{y!}e^{-\theta}=
+        \theta^2 \]
+    Therefore,
+    \[ \E{X^2}=\theta^2+\theta   \]
     Therefore,
     \[ \Var{X}=\E{X^2}-\mu^2=(\theta^2+\theta)-\theta^2=\theta \]
 \end{Example}

@@ -5,12 +5,10 @@
     finite or countable values, $ X $
     is a \textbf{discrete random variable}.
 \end{Definition}
-In this case, $ F(x) $ is a right-continuous
-step function.
 \begin{Remark}{}{}
     When we say \textbf{countable}, we mean
-    something you can enumerate such as $ \mathbb{Z} $ or
-    $ \mathbb{N}^+ $.
+    something you can enumerate such as $ \mathbf{Z} $ or
+    $ \mathbf{N}^+ $.
 \end{Remark}
 
 \begin{Definition}{Probability function}{}
@@ -18,21 +16,19 @@ step function.
     then the \textbf{probability function} (p.f.) of $ X $ is given by
     \[ f(x)=
         \begin{dcases}
-            \Prob{X=x}=
-            F(x)-\lim\limits_{{\varepsilon} \to {0^+}}
-            F(x-\varepsilon) & \text{ if } X\text{ can take value }x    \\
-            0                & \text{ if } X\text{ cannot take value }x
+            \Prob{X=x} & \text{ if } X\text{ can take value }x    \\
+            0          & \text{ if } X\text{ cannot take value }x
         \end{dcases} \]
 \end{Definition}
 
-\begin{Definition}{Support set}{}
-    The set $ A=\set{x:f(x)>0} $ is called the \textbf{support set}
+\begin{Definition}{Support}{}
+    The set $ A=\set{x:f(x)>0} $ is called the \textbf{support}
     of $ X $. These are all the possible values $ X $ can take.
 \end{Definition}
 
 \begin{Proposition}{Properties of the Probability Function}{ds_prob_prop}
     \begin{enumerate}[label=(\arabic*)]
-        \item $ f(x)\ge 0 $ for all $ x\in\mathbb{R} $
+        \item $ f(x)\ge 0 $ for all $ x\in\mathbf{R} $
         \item $ \sum\limits_{x\in A}f(x)=1 $
     \end{enumerate}
 \end{Proposition}
@@ -43,10 +39,10 @@ Review some commonly used discrete random variables:
           where $ X $ can only take two possible values 0 (failure) or 1 (success).
           Let $ p $ be the probability of a success for a single trial. So,
           \[ \Prob{X=1}=p\quad\text{ and }\quad \Prob{X=0}=1-p \]
-          Therefore,
-          \[ f(x)=\Prob{X=x}=p^x(1-p)^{1-x} \]
-          Example: Toss a coin twice. Let $ X $ be the number of heads.
-          Then $ X \sim \bern{p} $
+          \begin{Example}{Bernoulli}{}
+              Toss a coin twice. Let $ X $ be the number of heads.
+              Therefore, $ X \sim \bern{p} $.
+          \end{Example}
     \item \textbf{Binomial.} $ X \sim \bin{n,p} $. Suppose
           we have \textbf{Bernoulli Trials}:
           \begin{itemize}
@@ -58,21 +54,25 @@ Review some commonly used discrete random variables:
           Let $ X $ be the number of success across these $ n $ trials
           and $ p $ be the success probability for a single trial.
           \[ X=\sum\limits_{i=1}^{n} X_i \]
-          $ X_i $ is the outcome of the $ i $th trial.
+          $ X_i $ is the outcome of the $ i^{\text{th}} $ trial.
           \[ \Prob{X_i=1}=p \]
-          where $ X_i \sim \bern{p} $. Therefore,
-          \[ f(x)=\Prob{X=x}=\binom{n}{x}p^x(1-p)^{n-x} \]
+          where $ X_i \sim \bern{p} $.
     \item \textbf{Geometric.} $ X \sim \geo{p} $.
           Let $ X $ be the number of failures before the first success.
+          \begin{Example}{Geometric}{}
+              $ X = $ number of tails before you get the first
+              head. Therefore, $ X \sim \geo{p} $.
+          \end{Example}
           $ X $ can take values $ 0,1,2,\ldots $.
-          \[ f(x)=\Prob{X=x}=(1-p)^x p \]
-          Example. $ X = $ number of tails before you get the first
-          head.
+          \[ \Prob{X=x}=(1-p)^x p \]
     \item \textbf{Negative Binomial.} $ X \sim \nb{r,p} $.
           Let $ X $ be the number of failures before you get $ r $ success.
           $ X $ can take values $ 0,1,2,\ldots $
           \[ f(x)=\Prob{X=x}=\binom{x+r-1}{x}(1-p)^x p^{r-1}p \]
-          Example. $ X= $ number of tails before you get the $ r $th head.
+          \begin{Example}{Negative Binomial}{}
+              $ X= $ number of tails before you get the $ r^{\text{th}} $ head.
+              Therefore, $ X \sim \nb{r,p} $.
+          \end{Example}
     \item \textbf{Poisson.} $ X \sim \poi{\mu} $
           where $ X = 0,1,\ldots $.
           \[ f(x)=\Prob{X=x}=\frac{\mu^x}{x!} e^{-\mu} \]
@@ -81,23 +81,23 @@ Review some commonly used discrete random variables:
 
 \section{Continuous Random Variables}
 \begin{Definition}{Continuous random variable}{}
-    Suppose $ X $ is a random variable with c.d.f. $ F $. If $ F $
-    is a continuous function for all $ x\in\mathbb{R} $ and
-    $ F $ is differentiable except possibly at
-    countably many points, then $ X $ is called a
-    \textbf{continuous random variable}.
+    If the possible values of $ X $ is an interval or real line,
+    $ X $ is a \textbf{continuous random variable}. In this case,
+    $ F(x) $ is continuous and it's differentiable
+    almost everywhere. (It's not differentiable for at
+    most a countable set of points).
 \end{Definition}
 Note that this is not a rigorous definition, but it will be
 used in this course.
 
-\begin{Definition}{Probability density function, Support set}{}
+\begin{Definition}{Probability density function, Support}{}
     The \textbf{probability density function} (p.d.f.) of a continuous random variable
     is
     \[ f(x)=\begin{cases}
             F^\prime(x) & \text{if }F(x)\text{ is differentiable at }x \\
             0           & \text{otherwise}
         \end{cases} \]
-    The set $ A=\set{x:f(x)>0} $ is called the \textbf{support set}
+    The set $ A=\set{x:f(x)>0} $ is called the \textbf{support}
     of $ X $.
 \end{Definition}
 
@@ -105,21 +105,19 @@ Continuous case: $ f(x)\neq \Prob{X=x} $
 \[ \Prob{x<X\le x+\delta}\approx f(x)\delta \]
 since
 \[ \lim\limits_{{\delta} \to {0}}\frac{F(x+\delta)-F(x)}{\delta}=F^\prime(x)=f(x) \]
+where $ F(x+\delta)-F(x)=\Prob{x\le X\le x+\delta} $.
 \begin{Definition}{Properties --- Probability Density Function}{}
     \begin{enumerate}[label=(\Roman*)]
-        \item $ f(x)\ge 0 $ for all $ x\in\mathbb{R} $
-        \item $ \displaystyle \int_{-\infty}^{\infty} f(x)\, d{x} =
-                  \lim\limits_{{x} \to {\infty}} F(x)-
-                  \lim\limits_{{x} \to {-\infty}} F(x)= 1 $
-        \item $ f(x)=F^\prime(x)=
-                  \lim\limits_{{h} \to {0}} \dfrac{F(x+h)-F(x)}{h} $
-        \item $ F(x)=\displaystyle \int_{-\infty}^{x} f(t)\, d{t} $
-              since $ F(-\infty)=0 $.
-        \item $ \Prob{a< X\le b}=\Prob{X\le b}-
-                  \Prob{X\le a}=F(b)-F(a)
-                  =\displaystyle \int_{a}^{b} f(x)\, d{x}  $
-        \item $ \Prob{X=b}=F(b)-\lim\limits_{{a} \to {b^-}}
-                  F(a)=F(b)-F(b) =0\neq f(b) $ since $ F $ is continuous.
+        \item $ f(x)\ge 0 $ for all $ x\in\mathbf{R} $
+        \item $ \displaystyle \int_{-\infty}^{\infty} f(x)\, d{x}= 1 $
+        \item $ \displaystyle F(x)=\int_{-\infty}^{x} f(t)\, d{t} $
+              with $ F(-\infty)=0 $
+        \item $ f(x)=F^\prime(x) $
+        \item $ \Prob{X=x}=0\ne f(x) $
+        \item $ \displaystyle
+                  \Prob{a<X\le b}=\Prob{a\le X\le b}=\Prob{a<X<b}=\Prob{a\le X <b}=
+                  F(b)-F(a)=\int_{a}^{b} f(x)\, d{x} $
+              since $ \Prob{X=a}=\Prob{X=b}=0 $.
     \end{enumerate}
 \end{Definition}
 
@@ -178,6 +176,11 @@ since
                   =\int_{-\infty}^{1} f(t)\, d{t} +\int_{1}^{x} f(t)\, d{t}
                   =\int_{1}^{x} \frac{\theta}{t^{\theta+1}} \, d{t}=\left[ -t^{-\theta} \right]_1^x=
                   1-x^{-\theta}  \]
+              Therefore,
+              \[ F(x)=\begin{cases}
+                      1-x^{-\theta} & x\ge 1 \\
+                      0             & x< 1
+                  \end{cases} \]
         \item $ \Prob{-2<X<3} $. Either use the c.d.f.\ we found or the p.d.f.
 
               \underline{Using the c.d.f.} we have

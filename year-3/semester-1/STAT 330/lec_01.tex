@@ -7,11 +7,11 @@ expectation, and moment generating function.
 \section{Probability Model and Random Variable}
 \begin{Definition}{Probability model}{}
     A \textbf{probability model} is used for a random
-    experiment and consists of three components:
+    experiment. It has three important components:
     \begin{enumerate}[label=(\Roman*)]
         \item Sample space
         \item Event
-        \item Probability (density) function
+        \item Probability function
     \end{enumerate}
 \end{Definition}
 
@@ -21,26 +21,23 @@ expectation, and moment generating function.
     random experiment.
 \end{Definition}
 \begin{Definition}{Event}{}
-    An \textbf{event} is a subset of $ S $ and is denoted
-    by $ A $.
+    An \textbf{event} $ A,B,\ldots $ is a subset of $ S $.
 \end{Definition}
 
 \begin{Example}{}{}
-    Toss a coin twice. This is a random experiment because
-    we do not know the outcome before we toss the coin twice.
+    Toss a coin twice.
     \begin{itemize}
-        \item $ S=\left\{ (H,H),(H,T),(T,H),(T,T)\right\} $
+        \item $ S=\set{(H,H),(H,T),(T,H),(T,T)} $
+        \item $ A $: First toss is a head $ (H) $.
     \end{itemize}
-    Define $ A $: First toss is an $ H $.
-
-    Clearly, $ A=\left\{ (H,H),(H,T)\right\}\subseteq S $, so $ A $ is an event.
+    Clearly, $ A=\set{(H,H),(H,T)}\subseteq S $, so $ A $ is an event.
 \end{Example}
 
 \begin{Definition}{Probability function}{psf_def}
     A \textbf{probability function} $ \Prob{} $
-    is a function that satisfies the following axioms:
+    is a function of events and satisfies:
     \begin{enumerate}[label=(\Roman*)]
-        \item\label{psf_def_1} $ \Prob{A}\ge 0 $ for any event $ A $
+        \item\label{psf_def_1} For any event $ A $, $ \Prob{A}\ge 0 $
         \item\label{psf_def_2} $ \Prob{S}=1 $
         \item\label{psf_def_3} \emph{Additivity property}: If $ A_1,A_2,A_3,\ldots $
               are pairwise mutually exclusive events; that is, $ A_i\cap A_j=\varnothing $
@@ -52,80 +49,78 @@ expectation, and moment generating function.
 \begin{Example}{}{}
     Toss a coin twice, given one event $ A $,
     \[ \Prob{A}=\frac{\text{\# of outcomes in }A}{4}  \]
-    since $ |S|= 4 $. $ \Prob{} $ satisfies the three properties,
-    therefore $ \Prob{} $ is a probability function.
+    where $ 4 $ is the total number of outcomes in $ S $.
+    $ \Prob{} $ satisfies the three properties, therefore $ \Prob{} $ is a probability function.
 \end{Example}
 
-\begin{Proposition}{Additional Properties of the Probability Set Function}{add_prop_psf}
-    Let $ A $ and $ B $ be events with sample space $ S $
-    and let $ \Prob{} $ be a probability function, then
+\begin{Proposition}{Additional Properties of the Probability Function}{add_prop_psf}
     \begin{enumerate}[label=(\arabic*)]
         \item\label{add_prop_psf_1} $ \Prob{\varnothing}=0 $
-        \item\label{add_prop_psf_2} If $ A $ and $ B $ are mutually exclusive events, then $ \Prob{A\cup B}=\Prob{A}+\Prob{B} $
-        \item\label{add_prop_psf_3} $ \Prob{\bar{A}}=1-\Prob{A} $
-        \item\label{add_prop_psf_4} If $ A\subseteq B $, then $ \Prob{A}\le \Prob{B} $
+              where $ \varnothing=\bigcup_{i=1}^\infty \varnothing $.
+        \item\label{add_prop_psf_2} Let $ \bar{A} $
+              be the complementary event of $ A $.
+              \begin{enumerate}[label=(\roman*)]
+                  \item $ \bar{A}\cup A=S $
+                  \item $ \bar{A}\cap A=\varnothing $
+                        \[ \Prob{A}+\Prob{\bar{A}}=1 \]
+              \end{enumerate}
+        \item If $ A_1 $ and $ A_2 $ are mutually exclusive, then
+              \[ \Prob{A_1\cup A_2}=\Prob{A_1}+\Prob{A_2}. \]
+        \item\label{add_prop_psf_3} Generally,
+              \[ \Prob{A_1\cup A_2}=\Prob{A_1}+\Prob{A_2}-
+                  \Prob{A_1\cap A_2} \]
+              \begin{center}
+                  \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+                      %Shape: Circle [id:dp45613176616869144] 
+                      \draw  [fill={rgb, 255:red, 255; green, 196; blue, 196 }  ,fill opacity=0.5 ] (148.67,117.83) .. controls (148.67,73.93) and (184.26,38.33) .. (228.17,38.33) .. controls (272.07,38.33) and (307.67,73.93) .. (307.67,117.83) .. controls (307.67,161.74) and (272.07,197.33) .. (228.17,197.33) .. controls (184.26,197.33) and (148.67,161.74) .. (148.67,117.83) -- cycle ;
+                      %Shape: Circle [id:dp3007887211930459] 
+                      \draw  [fill={rgb, 255:red, 196; green, 255; blue, 196 }  ,fill opacity=0.5 ]  (48.67,118.33) .. controls (48.67,74.15) and (84.48,38.33) .. (128.67,38.33) .. controls (172.85,38.33) and (208.67,74.15) .. (208.67,118.33) .. controls (208.67,162.52) and (172.85,198.33) .. (128.67,198.33) .. controls (84.48,198.33) and (48.67,162.52) .. (48.67,118.33) -- cycle ;
+                      %Shape: Rectangle [id:dp5844224741640769] 
+                      \draw   (8.67,9.33) -- (349.67,9.33) -- (349.67,228.33) -- (8.67,228.33) -- cycle ;
+                      % Text Node
+                      \draw (65.23,44.98) node [anchor=south east] [inner sep=0.75pt]    {$A_{1}$};
+                      % Text Node
+                      \draw (327.23,44.98) node [anchor=south east] [inner sep=0.75pt]    {$A_{2}$};
+                      % Text Node
+                      \draw (118.67,118.33) node    {$B_{1}$};
+                      % Text Node
+                      \draw (238.17,117.83) node    {$B_{2}$};
+                      % Text Node
+                      \draw (179.17,118.83) node  [font=\small]  {$A_{1} \cap A_{2}$};
+                  \end{tikzpicture}
+              \end{center}
+              \[ A_1\cup A_2=B_1\cup (A_1\cap A_2)\cup B_2 \]
+        \item If $ A_1\subseteq A_2 $, then $ \Prob{A_1}\le \Prob{A_2} $.
+              \begin{center}
+                  \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+                      %Shape: Circle [id:dp45613176616869144] 
+                      \draw  [fill={rgb, 255:red, 255; green, 196; blue, 196 }  ,fill opacity=0.9 ] (49.17,97.33) .. controls (49.17,53.43) and (84.76,17.83) .. (128.67,17.83) .. controls (172.57,17.83) and (208.17,53.43) .. (208.17,97.33) .. controls (208.17,141.24) and (172.57,176.83) .. (128.67,176.83) .. controls (84.76,176.83) and (49.17,141.24) .. (49.17,97.33) -- cycle ;
+                      %Shape: Circle [id:dp3007887211930459] 
+                      \draw  [fill={rgb, 255:red, 196; green, 255; blue, 196 }  ,fill opacity=0.9 ] (72.67,94.33) .. controls (72.67,73.35) and (89.68,56.33) .. (110.67,56.33) .. controls (131.65,56.33) and (148.67,73.35) .. (148.67,94.33) .. controls (148.67,115.32) and (131.65,132.33) .. (110.67,132.33) .. controls (89.68,132.33) and (72.67,115.32) .. (72.67,94.33) -- cycle ;
+                      %Shape: Rectangle [id:dp5844224741640769] 
+                      \draw   (8.67,9.33) -- (248.67,9.33) -- (248.67,185.33) -- (8.67,185.33) -- cycle ;
+                      % Text Node
+                      \draw (110.67,94.33) node    {$A_{1}$};
+                      % Text Node
+                      \draw (179.58,128.12) node [anchor=south east] [inner sep=0.75pt]    {$B_{1}$};
+                  \end{tikzpicture}
+              \end{center}
+              \[ A_2=A_1\cup B_1 \]
+
     \end{enumerate}
 \end{Proposition}
 \begin{Proof}{\ref{prop:add_prop_psf}}{}
-    Proof of~\ref{add_prop_psf_1}: Let $ A_1=S $ and $ A_i=\varnothing $ for $ i=2,3,\ldots $.
-    Since $ \bigcup\limits_{i=1}^{\infty}A_i=S $, then by~\ref{psf_def_3}
-    it follows that
-    \[ \Prob{S}=\Prob{S}+\sum\limits_{i=2}^{\infty} \Prob{\varnothing} \]
-    and by~\ref{psf_def_2} we have
-    \[ 1=1+\sum\limits_{i=2}^{\infty}\Prob{\varnothing} \]
-    By~\ref{psf_def_1} the right side is a series of non-negative numbers which must converge to
-    the left side which is 1 which is finite which results in a contradiction
-    unless $ \Prob{\varnothing}=0 $ as required.
+    Proof of~\ref{add_prop_psf_1}: Let $ A_1=\varnothing $, $ A_2=\varnothing $,
+    $ A_3=\varnothing $, $ \ldots $, then
+    \[ \Prob{\varnothing}=
+        \Prob[\bigg]{\bigcup_{i=1}^\infty A_i}=
+        \sum_{i=1}^{n} \Prob{A_i}=\sum_{i=1}^{n}\Prob{\varnothing} \]
 
-    Proof of~\ref{add_prop_psf_2}: Let $ A_1=A $, $ A_2=B $, and $ A_i=\varnothing $ for
-    $ i=3,4,\ldots $. Since $ \bigcup\limits_{i=1}^\infty A_i=A\cup B $, then by~\ref{psf_def_3}
-    \[ \Prob{A\cup B}=\Prob{A}+\Prob{B}+\sum\limits_{i=3}^{\infty} \Prob{\varnothing} \]
-    and since $ \Prob{\varnothing}=0 $ by the result of~\ref{add_prop_psf_1} it follows that
-    \[ \Prob{A\cup B}=\Prob{A}+\Prob{B} \]
-    Proof of~\ref{add_prop_psf_3}: Since $ S=A\cup \bar{A} $ and $ A\cap \bar{A}=\varnothing $
-    then by~\ref{psf_def_2} and by~\ref{add_prop_psf_2} it follows that
-    \[ 1=\Prob{S}=\Prob{A\cup\bar{A}}=\Prob{A}+\Prob{\bar{A}} \]
-    as required.
-
-    Proof of~\ref{add_prop_psf_4}: Since
-    \[ B=(A\cap B)\cup (\bar{A}\cap B)=A\cup(\bar{A}\cap B) \]
-    and $ A\cap(\bar{A}\cap B)=\varnothing $ then by~\ref{add_prop_psf_2}
-    \[ \Prob{B}=\Prob{A}+\Prob{\bar{A}\cap B} \]
-    But by~\ref{psf_def_1}, $ \Prob{\bar{A}\cap B}\ge 0 $, so the result now follows.
 \end{Proof}
-
-\begin{Exercise}{}{}
-    Let $ A $ and $ B $ be events with sample space $ S $
-    and let $ \Prob{} $ be a probability function, then prove the following:
-    \begin{enumerate}
-        \item $ 0\le \Prob{A}\le 1 $
-        \item $ \Prob{A\cap\bar{B}}=\Prob{A}-\Prob{A\cap B} $
-        \item $ \Prob{A\cup B}=\Prob{A}+\Prob{B}-\Prob{A\cap B} $
-    \end{enumerate}
-\end{Exercise}
-\begin{enumerate}
-    \item $ \Prob{A}\ge 0 $ follows from~\ref{psf_def_1}. From~\ref{add_prop_psf_3}
-          we have $ \Prob{\bar{A}}=1-\Prob{A} $. But from~\ref{psf_def_1} $ \Prob{\bar{A}}=\ge 0 $
-          and therefore $ \Prob{A}\le 1 $.
-    \item Since $ A=(A\cap B)\cup (A\cap \bar{B}) $ and $ (A\cap B)\cap (A\cap \bar{B})
-              =\varnothing $, then by~\ref{add_prop_psf_2}
-          \[ \Prob{A}=\Prob{A\cap B}+\Prob{A\cap\bar{B}} \]
-          as required.
-    \item $ \Prob{A\cup B}=(A\cap \bar{B})+\Prob{A\cap B}+\Prob{\bar{A}\cap B} $. By the previous
-          result,
-          \[ \Prob{A\cap \bar{B}}=\Prob{A}-\Prob{A\cap B}\quad\text{ and }\quad\Prob{\bar{A}\cap B}=\Prob{B}-\Prob{A\cap B}\]
-          Therefore,
-          \begin{align*}
-              \Prob{A\cup B} & =(\Prob{A}-\Prob{A\cap B})+\Prob{A\cap B}+(\Prob{B}-\Prob{A\cap B}) \\
-                             & =\Prob{A}+\Prob{B}-\Prob{A\cap B}
-          \end{align*}
-          as required.
-\end{enumerate}
-
 \begin{Definition}{Conditional probability}{}
     Suppose $ A $ and $ B $ are two events with
-    $ \Prob{B}>0 $. Then the \textbf{conditional probability}
-    of $ A $ given that $ B $ has occurred is
+    $ \Prob{B}>0 $. The \textbf{conditional probability}
+    of $ A $ given that $ B $ is
     \[ \Prob{A\given B}=\frac{\Prob{A\cap B}}{\Prob{B}} \]
 \end{Definition}
 
@@ -147,24 +142,24 @@ Clearly, $ \Prob{A\given B}=\Prob{A} $ if and only if $ A $ and $ B $ are indepe
     \[ \Prob{A}=\frac{\text{\# of outcomes in }A}{4}=\frac{2}{4}\quad
         \text{ and }\quad \Prob{B}=\frac{2}{4} \]
     \[ \Prob{A\cap B}=\frac{1}{4}=\Prob{A}\Prob{B} \]
-    therefore $ A $ and $ B $ are independent.
+    Therefore, $ A $ and $ B $ are independent.
 \end{Example}
 
 \begin{Definition}{Random variable}{}
     A \textbf{random variable} (r.v.) $ X $
-    is a function from a sample space $ S $ to the real numbers $ \mathbb{R} $; that is,
-    \[ X:S\to \mathbb{R} \] satisfies for any given $ x\in\mathbb{R} $
+    is a function from a sample space $ S $ to the real numbers $ \mathbf{R} $; that is,
+    \[ X:S\to \mathbf{R} \] satisfies for any given $ x\in\mathbf{R} $
     $ \set{X\le x} $ is an event.
     \[ \set{X\le x}=\set{w\in S:X(w)\le x}
         \subseteq S \]
 \end{Definition}
 
 \begin{Example}{}{}
-    Toss a coin twice. Let $ X $ be the number of heads ($ H $) in two tosses.
+    Toss a coin twice. Let $ X $ be the number of heads $ (H) $ in two tosses.
     Verify that $ X $ is a random variable.
 
     \textbf{Solution.}
-    Possible values of $ X $: $ 0,1,2 $. Given $ x\in\mathbb{R} $,
+    Possible values of $ X $: $ 0,1,2 $. Given $ x\in\mathbf{R} $,
     $ \set{X\le x} $.
     \begin{itemize}
         \item $ x<0 \implies \set{X\le x}=\varnothing $
@@ -180,8 +175,8 @@ Clearly, $ \Prob{A\given B}=\Prob{A} $ if and only if $ A $ and $ B $ are indepe
 \begin{Definition}{Cumulative distribution function}{}
     The \textbf{cumulative distribution function} (c.d.f.) of a random variable
     $ X $ is defined by
-    \[ F(x)=\Prob{X\le x} \]
-    for all $ x\in\mathbb{R} $. Note that the c.d.f.\ is defined for all $ \mathbb{R} $.
+    \[ F(x)=\Prob{X\le x}\quad\text{for all $ x\in\mathbf{R} $} \]
+    Note that the c.d.f.\ is defined for all $ \mathbf{R} $.
 \end{Definition}
 
 \begin{Definition}{Properties --- Cumulative Distribution Function}{}
@@ -199,16 +194,67 @@ Clearly, $ \Prob{A\given B}=\Prob{A} $ if and only if $ A $ and $ B $ are indepe
 
               By looking at:
               \begin{itemize}
-                  \item $ x\to\infty $: $ \set{X\le x}\to S $
-                  \item $ x\to-\infty $: $ \set{X\le x}\to \varnothing $
+                  \item $ \set{X\le x} \to S $ as $ x\to\infty $.
+                  \item $ \set{X\le x} \to \varnothing $ as $ x\to-\infty $.
               \end{itemize}
         \item $ F(x) $ is a right continuous function; that is,
-              for any $ a\in\mathbb{R} $,
-              \[ \lim\limits_{{x} \to {a^+}} F(a)=F(a) \]
-        \item For all $ a<b $
-              \[ \Prob{a<X\le b}=\Prob{X\le b}-\Prob{X\le a}=F(b)-F(a) \]
-        \item For all $ b $
-              \[ \Prob{X=b}=\Prob{\text{jump at }b}=\lim\limits_{{t} \to {b^+}} F(t)-
-                  \lim\limits_{{t} \to {b^-}} F(t)=F(b)-\lim\limits_{{t} \to {b^-}} F(t) \]
+              for any $ a\in\mathbf{R} $,
+              \[ \lim\limits_{{x} \to {a^+}} F(x)=F(a) \]
     \end{enumerate}
 \end{Definition}
+\begin{figure}[!ht]
+    \centering
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %Curve Lines [id:da10991679289562262] 
+        \draw    (22.67,142.17) .. controls (62.67,112.17) and (163.67,135.17) .. (202.67,100.17) ;
+        %Curve Lines [id:da07899179356252228] 
+        \draw    (202.67,55.5) .. controls (242.67,25.5) and (357.67,48.5) .. (392.67,11.5) ;
+        %Shape: Circle [id:dp5581982780608664] 
+        \draw   (194.83,92.33) .. controls (194.83,88.01) and (198.34,84.5) .. (202.67,84.5) .. controls (206.99,84.5) and (210.5,88.01) .. (210.5,92.33) .. controls (210.5,96.66) and (206.99,100.17) .. (202.67,100.17) .. controls (198.34,100.17) and (194.83,96.66) .. (194.83,92.33) -- cycle ;
+        %Shape: Circle [id:dp6983301165229509] 
+        \draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (194.83,63.33) .. controls (194.83,59.01) and (198.34,55.5) .. (202.67,55.5) .. controls (206.99,55.5) and (210.5,59.01) .. (210.5,63.33) .. controls (210.5,67.66) and (206.99,71.17) .. (202.67,71.17) .. controls (198.34,71.17) and (194.83,67.66) .. (194.83,63.33) -- cycle ;
+        %Straight Lines [id:da8561892708640969] 
+        \draw    (12,161) -- (424.67,161.33) ;
+        %Straight Lines [id:da40985872868130113] 
+        \draw    (202.67,154.33) -- (202.67,168.33) ;
+        \draw    (405.17,140.33) -- (203.67,140.33) ;
+        \draw [shift={(201.67,140.33)}, rotate = 360] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+        % Text Node
+        \draw (202.67,171.73) node [anchor=north] [inner sep=0.75pt]    {$a$};
+    \end{tikzpicture}
+    \caption{Right Continuous}
+\end{figure}
+\begin{figure}[!ht]
+    \centering
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+        %Curve Lines [id:da10991679289562262] 
+        \draw    (22.67,142.17) .. controls (62.67,112.17) and (163.67,135.17) .. (202.67,100.17) ;
+        %Curve Lines [id:da07899179356252228] 
+        \draw    (202.67,55.5) .. controls (242.67,25.5) and (357.67,48.5) .. (392.67,11.5) ;
+        %Shape: Circle [id:dp5581982780608664] 
+        \draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (194.83,92.33) .. controls (194.83,88.01) and (198.34,84.5) .. (202.67,84.5) .. controls (206.99,84.5) and (210.5,88.01) .. (210.5,92.33) .. controls (210.5,96.66) and (206.99,100.17) .. (202.67,100.17) .. controls (198.34,100.17) and (194.83,96.66) .. (194.83,92.33) -- cycle ;
+        %Shape: Circle [id:dp6983301165229509] 
+        \draw   (194.83,63.33) .. controls (194.83,59.01) and (198.34,55.5) .. (202.67,55.5) .. controls (206.99,55.5) and (210.5,59.01) .. (210.5,63.33) .. controls (210.5,67.66) and (206.99,71.17) .. (202.67,71.17) .. controls (198.34,71.17) and (194.83,67.66) .. (194.83,63.33) -- cycle ;
+        %Straight Lines [id:da8561892708640969] 
+        \draw    (12,161) -- (424.67,161.33) ;
+        %Straight Lines [id:da40985872868130113] 
+        \draw    (202.67,154.33) -- (202.67,168.33) ;
+        %Straight Lines [id:da9341376741643171] 
+        \draw    (405.17,140.33) -- (203.67,140.33) ;
+        \draw [shift={(201.67,140.33)}, rotate = 360] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+        % Text Node
+        \draw (202.67,171.73) node [anchor=north] [inner sep=0.75pt]    {$a$};
+    \end{tikzpicture}
+    \caption{Not Right Continuous}
+\end{figure}
+\begin{Proposition}{Additional Properties of Cumulative Distribution Function}{}
+    \begin{enumerate}[label=(\arabic*)]
+        \item $ \Prob{a<X\le b}=\Prob{X\le b}-\Prob{X\le a}=F(b)-F(a) $
+        \item $ \Prob{X=x}=\Prob{\text{Jump at $ x $}}=\lim\limits_{{t} \to {x^+}}
+                  F(t)-\lim\limits_{{t} \to {x^-}}F(t)=F(x)-\lim\limits_{{t} \to {x^-}} F(t) $
+    \end{enumerate}
+\end{Proposition}

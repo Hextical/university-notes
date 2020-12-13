@@ -8,35 +8,18 @@
 \end{Definition}
 
 \begin{Theorem}{Independent Random Variables}{}
+    Suppose $ X $ and $ Y $ are random variables. $ X $
+    and $ Y $ are independent if and only if
     \begin{enumerate}[label=(\arabic*)]
-        \item Suppose $ X $ and $ Y $
-              are random variables with cumulative distribution
-              function $ F(x,y) $. Suppose also that
-              $ F_1(x) $ is the marginal cumulative distribution
-              function of $ X $ and $ F_2(y) $
-              is the marginal cumulative distribution function of $ Y $.
-              Then $ X $ and $ Y $ are independent random variables if and only
-              if
-              \[ F(x,y)=F_1(x)F_2(y)\quad\forall(x,y)\in\mathbb{R}^2 \]
-        \item Suppose $ X $ and $ Y $ are random variables with
-              joint probability (density) function $ f(x,y) $.
-              Suppose also that $ f_1(x) $ is the marginal
-              probability (density) function of $ X $
-              with support set $ A_1=\set{x:f_1(x)>0} $ and
-              $ f_2(y) $ is the marginal
-              probability (density) function of $ Y $
-              with support set $ A_2=\set{y:f_2(x)>0} $. Then
-              $ X $ and $ Y $ are independent random variables
-              if and only if
-              \[ f(x,y)=f_1(x)f_2(y)\quad \forall(x,y)\in A_1\times A_2 \]
-              where $ A_1\times A_2=\set{(x,y):x\in A_1,y\in A_2} $.
+        \item $ F(x,y)=F_1(x)F_2(y) $, or
+        \item $ f(x,y)=f_1(x)f_2(y) $.
     \end{enumerate}
 \end{Theorem}
 
 \begin{Theorem}{}{}
+    Let $ g $ and $ h $ be real-valued functions.
     If $ X $ and $ Y $ are independent,
     then $ g(X) $ and $ h(Y) $ are independent.
-    Where $ g $ and $ h $ are two real-valued functions.
 \end{Theorem}
 
 \begin{Example}{}{}
@@ -54,25 +37,25 @@
     $ f(x,y)=q^2 p^{x+y} $, where $ x=0,1,\ldots $
     and $ y=0,1,2,\ldots $. Then $ f_1(x)=qp^x $
     and $ f_2(y)=qp^y $. Therefore,
-    \[ f(x,y)=f_1(x)f_2(y) \]
+    $ f(x,y)=f_1(x)f_2(y) $
     shows that $ X $ and $ Y $ are independent.
 
     Consider $ \displaystyle
         f(x,y)=\begin{cases}
-            x+y & 0\le x\le 1 \\
-            0   & 0\le y\le y
+            x+y & 0\le x\le 1,\quad 0\le y\le 1 \\
+            0   & \text{otherwise}
         \end{cases} $
     We've shown that
     \[ f_1(x)=\begin{dcases}
-            x+\frac{1}{2} & 0\le x\le 0      \\
+            x+\frac{1}{2} & 0\le x\le 1      \\
             0             & \text{otherwise}
         \end{dcases} \]
     \[ f_2(y)=\begin{dcases}
-            y+\frac{1}{2} & 0\le y\le 0      \\
+            y+\frac{1}{2} & 0\le y\le 1      \\
             0             & \text{otherwise}
         \end{dcases} \]
-    Here we see that $ f(x,y)\neq f_1(x)f_2(y) $
-    Therefore, $ X $ and $ Y $ are not independent.
+    We see that $ f(x,y)\neq f_1(x)f_2(y) $
+    therefore, $ X $ and $ Y $ are not independent.
 \end{Example}
 
 \begin{Theorem}{Factorization Theorem for Independence}{}
@@ -88,9 +71,9 @@
     where $ A_1\times A_2=\set{(x,y):x\in A_1,y\in A_2} $.
 \end{Theorem}
 \begin{Remark}{}{}
-    Equivalently, we can check that
+    Equivalently, we can check that both conditions are met:
     \begin{itemize}
-        \item The support of $ A $ is a rectangle.
+        \item The support of $ A $ is a square or rectangle.
         \item The range of $ X $ does not depend on the values
               of $ y $ and the range of $ Y $ does not depend on the values of $ x $.
     \end{itemize}
@@ -139,21 +122,26 @@
 \begin{Example}{Uniform Distribution on a Semicircle}{}
     $ \displaystyle f(x,y)=\frac{2}{\pi} $ where $ 0\le x\le \sqrt{1-y^2} $
     and $ -1\le y\le 1 $. The area of the semicircle
-    is given by $ \pi/2 $. Are $ X $ and $ Y $ independent and find
+    is given by $ \pi/2 $. Are $ X $ and $ Y $ independent? Find
     $ f_1(x) $ and $ f_2(y) $.
 
-    \textbf{Solution.} $ f(x,y)=2/\pi $.
-    Take $ g(x)=1 $ and $ h(y)=2/\pi $. Also,
-    this is not a rectangle, so $ X $ and $ Y $ are not independent.
-    Similarly, for a particular value of $ x $
-    we can easily see that $ y $ depends on $ x $.
+    \begin{minipage}{0.7\textwidth}
+        \textbf{Solution.} $ f(x,y)=2/\pi $.
+        Take $ g(x)=1 $ and $ h(y)=2/\pi $. Also,
+        this is not a rectangle, so $ X $ and $ Y $ are not independent.
+        Similarly, for a particular value of $ x $
+        we can easily see that $ y $ depends on $ x $.
 
-    The support of $ X $ is $ \interval{0}{1} $.
-    \[ f_1(x)=\int\limits_{-\sqrt{1-x^2}}^{\sqrt{1-x^2}} \frac{2}{\pi} \, d{y}=
-        \frac{4}{\pi}\sqrt{1-x^2}  \]
-    The support of $ Y $ is $ \interval{-1}{1} $.
-    \[ f_2(y)=
-        \int\limits_{0}^{\sqrt{1-y^2}} \frac{2}{\pi} \, d{x}=
-        \frac{2}{\pi} \sqrt{1-y^2}  \]
-    Neither of these marginal distributions are uniform.
+        The support of $ X $ is $ \interval{0}{1} $.
+        \[ f_1(x)=\int\limits_{-\sqrt{1-x^2}}^{\sqrt{1-x^2}} \frac{2}{\pi} \, d{y}=
+            \frac{4}{\pi}\sqrt{1-x^2}  \]
+        The support of $ Y $ is $ \interval{-1}{1} $.
+        \[ f_2(y)=
+            \int\limits_{0}^{\sqrt{1-y^2}} \frac{2}{\pi} \, d{x}=
+            \frac{2}{\pi} \sqrt{1-y^2}  \]
+        Neither of these marginal distributions are uniform.
+    \end{minipage}
+    \begin{minipage}{0.28\textwidth}
+        \includegraphics[width=\linewidth]{fig3.pdf}
+    \end{minipage}
 \end{Example}
