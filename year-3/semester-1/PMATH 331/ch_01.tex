@@ -77,7 +77,7 @@
     \begin{enumerate}[label=(\arabic*)]
         \item\label{approx_sup_inf_1}$ b=\Supremum{A}\implies \forall \varepsilon\in\mathbf{R}_{>0}\;
                   \exists x\in A\;(b-\varepsilon<x\le b) $
-        \item $ a=\Infimum{A}\implies \forall \varepsilon\in\mathbf{R}_{>0}\;
+        \item\label{approx_sup_inf_2} $ a=\Infimum{A}\implies \forall \varepsilon\in\mathbf{R}_{>0}\;
                   \exists x\in A\;(a\le x<a+\varepsilon) $
     \end{enumerate}
 \end{Theorem}
@@ -177,7 +177,7 @@
     $ \Floor{x}\le x $, we have $ m=\Floor{x}-1\le x-1<x $.
 \end{Proof}
 \begin{Theorem}{Density of $ \mathbf{Q} $ in $ \mathbf{R} $}{dens_qinr}
-    \[ \forall a\in\mathbf{R}\;\forall b\in\mathbf{R}\;\exists q\in\mathbf{Q}
+    \[ \forall a\in\mathbf{R}\;\forall b\in\mathbf{R}\;\exists q\in\mathbf{Q}\;
         (a<b\implies a<q<b) \]
 \end{Theorem}
 \begin{Proof}{}{}
@@ -200,3 +200,165 @@
     Note that the range of the sequence $ (x_k)_{k\ge p} $
     is the set $ \Set{x_k}_{k\ge p}=\Set{x_k\given k\ge p} $.
 \end{Definition}
+\begin{Definition}{Limit, Convergence, Divergence}{}
+    Let $ (x_k)_{k\ge p} $ be a sequence in $ \mathbf{R} $. For
+    $ a\in\mathbf{R} $ we say that $ (x_k)_{k\ge p} $ \textbf{converges}
+    to $ a $ (or that the \textbf{limit} of $ (x_k)_{k\ge p} $ is
+    equal to $ a $), and we write $ x_k\to a $ (as $ k\to\infty $),
+    or we write $ \lim\limits_{{k} \to {\infty}} x_k=a $, when
+    \[ \forall\varepsilon\in\mathbf{R}_{>0}\;
+        \exists m\in\mathbf{Z}\;\forall k\in\mathbf{Z}_{\ge p}\;
+        (k\ge m\implies \abs{x_k-a}<\varepsilon) \]
+    We say that the sequence $ (x_k)_{k\ge p} $ converges
+    (in $ \mathbf{R} $) when there exists $ a\in\mathbf{R} $
+    such that $ (x_k)_{k\ge p} $ converges to $ a $. We say that
+    $ (x_k)_{k\ge p} $ \textbf{diverges} (in $ \mathbf{R} $)
+    when it does not converge (to any $ a\in\mathbf{R} $).
+    We say that $ (x_k)_{k\ge p} $ \textbf{diverges to infinity},
+    or that the limit of $ (x_k)_{k\ge p} $ is equal to
+    \textbf{infinity}, and we write $ x_k\to\infty $
+    (as $ k\to\infty $), or we write $ \lim\limits_{{k} \to {\infty}} x_k=\infty $,
+    when
+    \[ \forall r\in\mathbf{R}\;\exists m\in\mathbf{Z}\;
+        \forall k\in\mathbf{Z}_{\ge p}\;(k\ge m\implies x_k>r) \]
+    Similarly, we say that $ (x_k)_{k\ge p} $ \textbf{diverges to}
+    $ -\infty $, or that the limit of $ (x_k)_{k\ge p} $ is equal
+    to \textbf{negative infinity}, and we write $ x_k\to-\infty $
+    (as $ k\to\infty $), or we write $ \lim\limits_{{k} \to {\infty}} x_k=-\infty $
+    when
+    \[ \forall r\in\mathbf{R}\;\exists m\in\mathbf{Z}\;
+        \forall k\in\mathbf{Z}_{\ge p}\;(k\ge m\implies x_k<r) \]
+\end{Definition}
+\begin{Remark}{}{}
+    We shall assume that students are familiar with sequences and limits
+    of sequences from first-year calculus. For example, students should know that if
+    the limit of a sequence exists, then it is unique. Also, the limit does not depend
+    on the first few terms (indeed the first few finitely many terms)
+    and so we often omit the starting value $ p $ from our
+    notation and write the sequence $ (x_k)_{k\ge p} $ as $ (x_k) $.
+    Students should also be able to calculate limits using various
+    limit rules, such as Operation on Limits,
+    the Comparison Theorem, and the Squeeze Theorem (which can
+    all be found in the Appendix).
+\end{Remark}
+\begin{Definition}{Bounded above, Bounded below, Bounded}{}
+    Let $ (x_{k}) $ be a sequence in $ \mathbf{R} $.
+    For $ b \in \mathbf{R} $, we say that the sequence
+    $ (x_{k}) $ is \textbf{bounded above}
+    by $ b $ when the set $\{x_{k}\}$ is bounded above by $ b $;
+    that is, when $x_{k} \le b$ for all $ k $, and we say that the sequence
+    $ (x_{k}) $ is \textbf{bounded below} by $ b $ when the set $ \{x_{k}\} $
+    is bounded below by $ b $; that is, when $ b \le x_{k} $ for all $ k $.
+    We say $(x_{k})$ is \textbf{bounded above} when it is bounded above
+    by some element $ b \in \mathbf{R} $, we say that $ (x_{k}) $ is
+    bounded below when it is bounded below by some $ b \in \mathbf{R} $, and
+    we say that $ (x_{k}) $ is \textbf{bounded} when it is bounded above
+    and bounded below.
+\end{Definition}
+\begin{Definition}{Increasing, Non-decreasing, Strictly increasing, Strictly
+        decreasing, Monotonic}{}
+    Let $ (x_k)_{k\ge p} $ be a sequence in $ \mathbf{R} $.
+    \begin{itemize}
+        \item $ (x_k) $ is \textbf{increasing} (\textbf{non-decreasing}) when
+              \[ \forall k,\ell\in\mathbf{Z}_{\ge p}\;(k\le \ell\implies x_k\le x_\ell) \]
+        \item $ (x_k) $ is \textbf{strictly increasing} when
+              \[ \forall k,\ell\in\mathbf{Z}_{\ge p}\;(k< \ell\implies x_k< x_\ell) \]
+        \item $ (x_k) $ is \textbf{decreasing} (\textbf{non-increasing}) when
+              \[ \forall k,\ell\in\mathbf{Z}_{\ge p}\;(k\le \ell\implies x_k\ge x_\ell) \]
+        \item $ (x_k) $ is \textbf{strictly decreasing} when
+              \[ \forall k,\ell\in\mathbf{Z}_{\ge p}\;(k< \ell\implies x_k> x_\ell) \]
+        \item $ (x_k) $ is \textbf{monotonic} when it is either
+              increasing or decreasing.
+    \end{itemize}
+\end{Definition}
+\begin{Theorem}{Monotonic Convergence Theorem}{MCT}
+    Let $ (x_k) $ be a sequence in $ \mathbf{R} $.
+    \begin{enumerate}[(1)]
+        \item\label{MCT_1} Suppose $ (x_k) $ is increasing. If $ (x_k) $ is
+              bounded above, then $ x_k\to\Supremum{x_k} $, and if
+              $ (x_k) $ is not bounded above, then $ x_k\to\infty $.
+        \item\label{MCT_2} Suppose $ (x_k) $ is decreasing. If $ (x_k) $ is
+              bounded below, then $ x_k\to\Infimum{x_k} $, and if
+              $ (x_k) $ is not bounded below, then $ x_k\to-\infty $.
+    \end{enumerate}
+\end{Theorem}
+\begin{Proof}{\Cref{thm:MCT}}{}
+    We prove~\ref{MCT_1}. Let $ (x_k) $ be an increasing sequence.
+    Assume $ (x_k) $ is bounded above, say by $ b\in\mathbf{R} $.
+    Let $ A=\Set{x_k\given k\ge p} $ (so $ A $ is the range of
+    the sequence $ (x_k) $). Note that $ A $ is
+    non-empty and bounded above (indeed $ b $ is an upper bound for
+    $ A $). By~\Cref{thm:sup_inf_properties}~\ref{approx_sup_inf_1},
+    $ A $ has a supremum in $ \mathbf{R} $. Let $ a=\Supremum{x_k\given k\ge p} $.
+    Note that $ a\ge x_k $ for all $ k\ge p $ and $ a\le b $
+    by the definition of supremum. Let $ \varepsilon>0 $. By~\Cref{thm:approx_sup_inf}~\ref{approx_sup_inf_1},
+    we can choose an index $ m\ge p $ so that $ x_m\in A $ satisfies
+    $ a-\varepsilon<x_m\le a $. Since $ (x_k) $ is increasing, for all
+    $ k\ge m $, we have $ x_k\ge x_m $, so we have
+    $ a-\varepsilon<x_m\le x_k\le a $, and hence $ \abs{x_k-a}<\varepsilon $.
+    Thus, $ \lim\limits_{{k} \to {\infty}} x_k=a\le b $.
+\end{Proof}
+\begin{Definition}{}{}
+    For $ a,b\in\mathbf{R} $ with $ a\le b $, we write
+    \begin{itemize}
+        \item $ (a,b)=\Set{x\in\mathbf{R}\given a<x<b} $
+        \item $ [a,b]=\Set{x\in\mathbf{R}\given a\le x\le b} $
+        \item $ \interval[open left]{a}{b}=\Set{x\in\mathbf{R}\given a<x\le b} $
+        \item $ \interval[open right]{a}{b}=\Set{x\in\mathbf{R}\given a\le x< b} $
+        \item $ (a,\infty)=\Set{x\in\mathbf{R}\given a<x} $
+        \item $ \interval[open right]{a}{\infty}=\Set{x\in\mathbf{R}\given a\le x} $
+        \item $ (-\infty,b)=\Set{x\in\mathbf{R}\given x<b} $
+        \item $ \interval[open left]{-\infty}{b}=\Set{x\in\mathbf{R}\given x\le b} $
+        \item $ (-\infty,\infty)=\mathbf{R} $
+    \end{itemize}
+    An \textbf{interval} in $ \mathbf{R} $ is any set
+    of one of the above forms.
+
+    \begin{itemize}
+        \item \textbf{Degenerate} intervals: If $ a=b $, then
+              $ (a,b)=\interval[open right]{a}{b}=\interval[open left]{a}{b}=\emptyset $,
+              and $ [a,b]=\Set{a} $.
+        \item \textbf{Non-degenerate} intervals
+              contain at least two points.
+        \item \textbf{Open} intervals:
+              $ \emptyset $, $ (a,b) $, $ (a,\infty) $, $ (-\infty,b) $, and
+              $ (-\infty,\infty) $.
+        \item \textbf{Closed} intervals:
+              $ \emptyset $, $ [a,b] $,
+              $ \interval[open right]{a}{\infty} $, $ \interval[open left]{-\infty}{b} $,
+              and $ (-\infty,\infty) $.
+        \item \textbf{Bounded} intervals:
+              $ \emptyset $, $ (a,b) $, $ \interval[open left]{a}{b} $,
+              $ \interval[open right]{a}{b} $, and $ [a,b] $.
+        \item \textbf{Unbounded} intervals: $ (a,\infty) $, $ \interval[open right]{a}{\infty} $,
+              $ (-\infty,b) $, $ \interval[open left]{-\infty}{b} $,
+              and $ (-\infty,\infty) $.
+    \end{itemize}
+\end{Definition}
+\begin{Theorem}{Nested Interval Theorem}{NIT}
+    Let $ I_1,I_2,I_3,\ldots $ be non-empty, closed, and bounded
+    intervals in $ \mathbf{R} $.
+    \[ I_1\supseteq I_2\supseteq I_3\supseteq\cdots
+        \implies \bigcap_{k\ge 1}I_k\ne \emptyset \]
+\end{Theorem}
+\begin{Proof}{\Cref{thm:NIT}}{}
+    For each $ k\ge 1 $, let $ I_k=[a_k,b_k] $ with $ a_k\le b_k $.
+    For each $ k $, since $ I_{k+1}\subseteq I_k $, we have
+    $ a_k\le a_{k+1}\le b_{k+1}\le b_k $. Since $ a_k\le a_{k+1} $ for all
+    $ k $, the sequence $ (a_k) $ is increasing. Since
+    $ a_k\le b_k\le b_{k-1}\le \cdots\le b_1 $ for all $ k $, the sequence
+    $ (a_k) $ is bounded above by $ b_1 $. Since
+    $ (a_k) $ is increasing, and bounded above, it converges.
+    Let $ a=\Supremum{a_k}=\lim\limits_{{k} \to {\infty}} a_k $.
+    Similarly, $ (b_k) $ is decreasing, and bounded below by $ a_1 $,
+    so it converges. Let $ b=\Infimum{b_k}=\lim\limits_{{k} \to {\infty}} b_k $.
+    Since $ a_k\le b_k $ for all $ k $, by the Comparison Theorem, we have
+    $ a\le b $, and so the interval $ [a,b] $ is not empty. Since
+    $ (a_k) $ is increasing, with $ a_k\to a $, it follows
+    (proof as an exercise), that $ a_k\le a $ for all $ k\ge 1 $, Similarly,
+    $ b_k\ge b $ for all $ k\ge 1 $, and so
+    $ [a,b]\subseteq [a_k,b_k]=I_k $. Therefore,
+    \[ [a,b]\subseteq
+        \bigcap_{k\ge 1}I_k \implies
+        \bigcap_{k\ge 1}I_k\ne \emptyset \]
+\end{Proof}
