@@ -26,9 +26,9 @@ to draw the diagrams when following the examples.
         \item Note that $ f(x,y)\ge 0 $. We need to show
               \[ \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(x,y)\, d{y} \, d{x} =1 \]
               \[ \int_{0}^{1} \int_{0}^{1} (x+y)\, d{y} \, d{x}
-                  =\int_{0}^{1} \left[ x+\frac{y^2}{2} \right]_0^1\, d{x}
-                  =\int_{0}^{1} \left( x+\frac{1}{2} \right)\, d{x}
-                  =\left[ \frac{x^2}{2}  +\frac{x}{2}\right]_0^1
+                  =\int_{0}^{1} \biggl[ x+\frac{y^2}{2} \biggr]_0^1\, d{x}
+                  =\int_{0}^{1} \biggl( x+\frac{1}{2} \biggr)\, d{x}
+                  =\biggl[ \frac{x^2}{2}  +\frac{x}{2}\biggr]_0^1
                   =1
               \]
         \item \begin{enumerate}[label=(\alph*)]
@@ -64,7 +64,7 @@ to draw the diagrams when following the examples.
               \[ f_1(x)=0\iff x<0\text{ or } x>1 \]
               Therefore, we focus on $ 0\le x\le 1 $.
               \[ f_1(x)=\int_{-\infty}^{\infty} f(x,y)\, d{y}
-                  =\int_{0}^{1} (x+y)\, d{y}=\left[ x+\frac{y^2}{2} \right]_0^1
+                  =\int_{0}^{1} (x+y)\, d{y}=\biggl[ x+\frac{y^2}{2} \biggr]_0^1
                   =x+\frac{1}{2} \]
               Thus,
               \[ f_1(x)=
@@ -112,15 +112,8 @@ to draw the diagrams when following the examples.
                         Therefore,
                         \begin{align*}
                             \Prob{X\le 1/3,Y\le 1/2}
-                             & =\int_{0}^{1/3} \int_{x}^{1/2} 2e^{-x-y}\, d{y} \, d{x}                                              \\
-                             & =2\int_{0}^{1/3} e^{-x}\left[ -e^{-y} \right]_x^{1/2}\, d{x}                                         \\
-                             & =2 \int_{0}^{1/3} e^{-x}\left( -e^{-1/2}+e^{-x} \right)\, d{x}                                       \\
-                             & =2 \int_{0}^{1/3} -e^{-1/2}e^{-x}+e^{-2x}\, d{x}                                                     \\
-                             & =2\left( -e^{-1/2}\left[ -e^{-x} \right]_0^{1/3}+\left[ -\frac{1}{2} e^{-2x} \right]_0^{1/3} \right) \\
-                             & =2\left( -e^{-1/2}\left( -e^{-1/3}+1 \right)+\left( -\frac{1}{2}  \right)
-                            \left( e^{-2/3}-1 \right) \right)                                                                       \\
-                             & =2\left(1/2+e^{-5/6}-e^{-1/2}-\frac{1}{2}e^{-2/3}\right)                                             \\
-                             & =1-e^{-2/3}+2\left(e^{-5/6}-e^{-1/2}\right)                                                          \\
+                             & =\int_{0}^{1/3} \int_{x}^{1/2} 2e^{-x-y}\, d{y} \, d{x} \\
+                             & =1-e^{-2/3}+2(e^{-5/6}-e^{-1/2})                        \\
                              & \approx 0.1427
                         \end{align*}
                   \item $ \Prob{X\le Y} $. Note that the region
@@ -135,34 +128,25 @@ to draw the diagrams when following the examples.
                         \[ R=\set{(x,y):0\le x\le 1/2,x\le y\le 1-x} \]
                         \begin{align*}
                             \Prob{X+Y\le 1}
-                             & =\int_{0}^{1/2} \int_{x}^{1-x} 2e^{-x}e^{-y}\, d{y} \, d{x}         \\
-                             & =2\int_{0}^{1/2} e^{-x}\left[ e^{-y} \right]_{x}^{1-x}\, d{x}       \\
-                             & =2 \int_{0}^{1/2} e^{-x}\left( -e^{x-1}+e^{-x} \right)\, d{x}       \\
-                             & =2 \int_{0}^{1/2} -e^{-1}+e^{-2x}\, d{x}                            \\
-                             & =2 \left[ -xe^{-1}-\frac{1}{2} e^{-2x} \right]_0^{1/2}              \\
-                             & =2\left( \left( -\frac{1}{2} e^{-1}-\frac{1}{2} e^{-2(1/2)} \right)
-                            -\left( 0-\frac{1}{2} \right) \right)                                  \\
-                             & =2\left( -\frac{1}{2} e^{-1}-\frac{1}{2} e^{-1}+\frac{1}{2}
-                            \right)                                                                \\
-                             & =2\left( -e^{-1}+\frac{1}{2} \right)                                \\
+                             & =\int_{0}^{1/2} \int_{x}^{1-x} 2e^{-x}e^{-y}\, d{y} \, d{x} \\
                              & =1-2e^{-1}
                         \end{align*}
                         Thus, $ \Prob{X+Y\ge 1}
                             =1-\Prob{X+Y\le 1}
-                            =1-\left( 1-2e^{-1} \right)=2e^{-1} $.
+                            =1-(1-2e^{-1})=2e^{-1} $.
               \end{enumerate}
         \item Marginal p.d.f.\ of $ X $. The support of $ X $ is
               $ \interval[open]{0}{\infty} $. We know $ x>0 $, so
               \[ f_1(x)=
                   \int_{-\infty}^{\infty} f(x,y)\, d{y}
                   =\int_{x}^{\infty} 2e^{-x-y}\, d{y}
-                  =2e^{-x}\left[ -e^{-y} \right]_x^\infty=2e^{-2x} \]
+                  =2e^{-x}\Bigl[ -e^{-y} \Bigr]_x^\infty=2e^{-2x} \]
               The marginal p.d.f.\ of $ Y $. The support of $ Y $ is
               $ \interval[open]{0}{\infty} $. We know $ y>0 $, so
               \[ f_2(y)=
                   \int_{0}^{y}2e^{-x-y}\, d{x} =
-                  2e^{-y}\left[ -e^{-x} \right]_0^y
-                  =2e^{-y}\left( 1-e^{-y} \right)=
+                  2e^{-y}\Bigl[ -e^{-x} \Bigr]_0^y
+                  =2e^{-y}\Bigl( 1-e^{-y} \Bigr)=
                   2e^{-y}-2e^{-2y} \]
         \item Suppose $ T=X+Y $, find the p.d.f.\ of $ T $.
               We first find the c.d.f.\ of $ T $, then we take the derivative
@@ -176,14 +160,7 @@ to draw the diagrams when following the examples.
               Therefore,
               \begin{align*}
                   F_T(t)
-                   & = \int_{0}^{t/2} \int_{x}^{t-x} 2e^{-x-y}\, d{y} \, d{x}             \\
-                   & =2 \int_{0}^{t/2} e^{-x}\left[ -e^{-y} \right]_x^{t-x}\, d{x}        \\
-                   & =2 \int_{0}^{t/2} e^{-x}\left( -e^{x-t}+e^{-x} \right)\, d{x}        \\
-                   & =2 \int_{0}^{t/2} -e^{-t}+e^{-2x}\, d{x}                             \\
-                   & =2\left[ -xe^{-t}-\frac{1}{2}e^{-2x} \right]_0^{t/2}                 \\
-                   & =2\left( \left( -\frac{t}{2} e^{-t} -\frac{1}{2} e^{-t}\right)
-                  -\left( 0-\frac{1}{2}  \right) \right)                                  \\
-                   & =2\left( -\frac{t}{2} e^{-t}-\frac{1}{2} e^{-t}+\frac{1}{2}  \right) \\
+                   & = \int_{0}^{t/2} \int_{x}^{t-x} 2e^{-x-y}\, d{y} \, d{x} \\
                    & =1-e^{-t}-te^{-t}
               \end{align*}
               So,

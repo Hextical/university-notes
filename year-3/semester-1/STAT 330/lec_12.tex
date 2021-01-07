@@ -50,7 +50,7 @@
 
     Proof of~\Cref{prop_multi2}: The moment
     generating function of $ X_i $ for $ i=1,\ldots,k $ is
-    \[ M(0,\ldots,0,t,0,\ldots,0)=\left[ p_i e^{t_i}+(1-p_i) \right]^n
+    \[ M(0,\ldots,0,t,0,\ldots,0)=\bigl[p_i e^{t_i}+(1-p_i)\bigr]^n
         \quad t_i\in\mathbf{R} \]
     which is the moment generating function of a
     $ \bin{n,p_i} $ random variable. By~\Cref{thm:uniq_mgf}
@@ -65,7 +65,7 @@
          & =\E*{e^{t X_i+t X_j}}                                                                \\
          & =M(0,\ldots,0,t,0,\ldots,0,t,0,\ldots,0)                                             \\
          & =(p_1+\cdots+p_i e^{t}+\cdots+p_j e^t+\cdots+p_{k-1}+p_k)^n & \quad & t\in\mathbf{R} \\
-         & =\left[ (p_i+p_j)e^t+(1-p_i-p_j) \right]^n                  &       & t\in\mathbf{R}
+         & =\bigl[ (p_i+p_j)e^t+(1-p_i-p_j) \bigr]^n                   &       & t\in\mathbf{R}
     \end{align*}
     which is the moment generating function of a
     $ \bin{n,p_i+p_j} $ random variable. By~\Cref{thm:uniq_mgf}
@@ -99,8 +99,7 @@
     are continuous random variables with joint probability
     density function
     \[ f(x_1,x_2)=\frac{1}{2\pi\abs*{\Sigma}^{1/2}}
-        \exp\left\{ -\frac{1}{2}(\symbf{x}-\symbf{\mu})^\top \Sigma^{-1}(\symbf{x}-\symbf{\mu})
-        \right\}\quad(x_1,x_2)\in\mathbf{R}^2     \]
+        \expon*{-\frac{1}{2}(\symbf{x}-\symbf{\mu})^\top \Sigma^{-1}(\symbf{x}-\symbf{\mu})}\quad(x_1,x_2)\in\mathbf{R}^2     \]
     Also,
     \[ \symbf{x}=\begin{pmatrix}
             x_1 \\
@@ -126,10 +125,10 @@
     \begin{align*}
         f(x_1 & ,x_2)                                          \\
               & =\frac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}
-        \exp\left\{ -\frac{1}{2(1-\rho^2)}
-        \left[ \left( \frac{x_1-\mu_1}{\sigma_1}  \right)^2+
-            \left( \frac{x_2-\mu_2}{\sigma_2}  \right)^2-
-            \frac{2\rho(x_1-\mu_1)(x_2-\mu_2)}{\sigma_1\sigma_2} \right] \right\}
+        \expon*{-\frac{1}{2(1-\rho^2)}
+            \Biggl[ \biggl( \frac{x_1-\mu_1}{\sigma_1}  \biggr)^2+
+                \biggl( \frac{x_2-\mu_2}{\sigma_2}  \biggr)^2-
+                \frac{2\rho(x_1-\mu_1)(x_2-\mu_2)}{\sigma_1\sigma_2} \Biggr]}
     \end{align*}
 \end{Remark}
 \begin{Proposition}{Properties --- Bivariate Normal Distribution}{prop_bvn}
@@ -137,16 +136,16 @@
         \item\label{prop_bvn_1}$ X_1,X_2 $ has joint moment generating function
               \[ M(t_1,t_2)=\E{
                       e^{t_1X_1+t_2X_2}
-                  }=\exp\left\{ \symbf{t}^\top \symbf{\mu}+\frac{1}{2}\symbf{t}^\top \Sigma
-                  \symbf{t} \right\}\quad \forall \symbf{t}\in\mathbf{R}^2 \]
+                  }=\expon*{\symbf{t}^\top \symbf{\mu}+\frac{1}{2}\symbf{t}^\top \Sigma
+                      \symbf{t}}\quad \forall \symbf{t}\in\mathbf{R}^2 \]
         \item\label{prop_bvn_2}Marginally,
-              \[ M_{X_1}(t_1)=M(t_1,0)=\exp\left\{ t_1\mu_1+\frac{1}{2} t_1^2
-                  \sigma_1^2\right\} \]
+              \[ M_{X_1}(t_1)=M(t_1,0)=\expon*{t_1\mu_1+\frac{1}{2} t_1^2
+                      \sigma_1^2} \]
               which is the m.g.f.\ of $ \N{\mu_1,\sigma_1^2} $; that is,
               $ X_1 \sim \N{\mu_1,\sigma_1^2} $. Also,
               $ \E{X_1}=\mu_1 $ and $ \Var{X_1}=\sigma_1^2 $.
-              \[ M_{X_2}(t_2)=M(0,t_2)=\exp\left\{ t_2\mu_2+\frac{1}{2} t_2^2
-                  \sigma_2^2\right\} \]
+              \[ M_{X_2}(t_2)=M(0,t_2)=\expon*{t_2\mu_2+\frac{1}{2} t_2^2
+                      \sigma_2^2} \]
               which is the m.g.f.\ of $ \N{\mu_2,\sigma_2^2} $; that is,
               $ X_2 \sim \N{\mu_2,\sigma_2^2} $. Also,
               $ \E{X_2}=\mu_2 $ and $ \Var{X_2}=\sigma_2^2 $.
@@ -154,9 +153,9 @@
               \[ X_2\mid X_1=x_1 \sim \N*{
                       \mu_2+\frac{\rho\sigma_2(x_1-\mu_1)}{\sigma_1} ,
                       \sigma_2^2(1-\rho^2)} \]
-              \[ X_1\mid X_2=x_2 \sim N
-                  \left( \mu_1+\frac{\rho\sigma_1(x_2-\mu_2)}{\sigma_2} ,
-                  \sigma_1^2(1-\rho^2) \right) \]
+              \[ X_1\mid X_2=x_2 \sim
+                  \N*{\mu_1+\frac{\rho\sigma_1(x_2-\mu_2)}{\sigma_2} ,
+                      \sigma_1^2(1-\rho^2)} \]
               \[ f_2(x_2\mid x_1)=\frac{f(x_1,x_2)}{f_1(x_1)}  \]
               \[ f_1(x_1\mid x_2)=\frac{f(x_1,x_2)}{f_2(x_2)}  \]
         \item\label{prop_bvn_4}$ \Cov{X_1,X_2}=\rho\sigma_1\sigma_2 $
@@ -172,10 +171,10 @@
     Step 1:
     \[ \E{X_1X_2\given X_1=x_1}=\E{x_1X_2\given X_1=x_1}=
         x_1\E{X_2\given X_1=x_1}=x_1
-        \left(  \mu_2+\frac{\rho\sigma_2(x_1-\mu_1)}{\sigma_1} \right) \]
+        \biggl(  \mu_2+\frac{\rho\sigma_2(x_1-\mu_1)}{\sigma_1} \biggr) \]
     Step 2:
     \[ \E{X_1X_2\given X_1}=X_1
-        \left(  \mu_2+\frac{\rho\sigma_2(X_1-\mu_1)}{\sigma_1} \right)
+        \biggl(  \mu_2+\frac{\rho\sigma_2(X_1-\mu_1)}{\sigma_1} \biggr)
     \]
     \begin{align*}
         \E{X_1X_2}

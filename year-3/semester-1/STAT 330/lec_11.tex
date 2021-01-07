@@ -36,21 +36,21 @@
     \[ \E{Y}=\E{\E{Y\given X}} \]
     Two steps to find $ \E{Y\given X} $.
     \[ \E{Y\given X=x}=10x\implies \E{Y\given X}=10X \]
-    \[ \E{Y}=\E{10X}=10\E{X}=10\left( \frac{1+0}{2} \right)=5 \]
+    \[ \E{Y}=\E{10X}=10\E{X}=10\biggl( \frac{1+0}{2} \biggr)=5 \]
     \[ \Var{Y}=\E{\Var{Y\given X}}=\Var{\E{Y\given X}} \]
     Two steps to find $ \Var{Y\given X} $.
     \[ \Var{Y\given X=x}=10x(1-p)\implies\Var{Y\given X}=10X(1-X) \]
     \begin{align*}
         \Var{Y}
-         & =\E{10X(1-X)}+\Var{10X}                                                 \\
-         & =10\E{X}-10\E{X^2}+100\Var{X}                                           \\
-         & =10\left( \frac{1+0}{2} \right)-
-        10\left[ \Var{X}+(\E{X})^2 \right]+100\Var{X}                              \\
-         & =5-10\left[ \frac{(0-1)^2}{12}+\left( \frac{1+0}{2} \right)^2  \right]+
-        100\left[ \frac{(0-1)^2}{12} \right]                                       \\
-         & =5-10\left( \frac{1}{12} +\frac{1}{4}  \right)+
-        100\left( \frac{1}{12} \right)                                             \\
-         & =5-10\left( \frac{1}{3} \right)+\frac{100}{12}                          \\
+         & =\E{10X(1-X)}+\Var{10X}                                                   \\
+         & =10\E{X}-10\E{X^2}+100\Var{X}                                             \\
+         & =10\biggl( \frac{1+0}{2} \biggr)-
+        10\bigl[ \Var{X}+(\E{X})^2 \bigr]+100\Var{X}                                 \\
+         & =5-10\Biggl[ \frac{(0-1)^2}{12}+\biggl( \frac{1+0}{2} \biggr)^2  \Biggr]+
+        100\biggl[ \frac{(0-1)^2}{12} \biggr]                                        \\
+         & =5-10\biggl( \frac{1}{12} +\frac{1}{4}  \biggr)+
+        100\biggl( \frac{1}{12} \biggr)                                              \\
+         & =5-10\biggl( \frac{1}{3} \biggr)+\frac{100}{12}                           \\
          & =10
     \end{align*}
 \end{Example}
@@ -72,11 +72,11 @@
     Therefore, $ \E*{e^{tX}\given Y}=(1-p+pe^t)^Y $. Therefore,
     \begin{align*}
         M_X(t)
-         & =\E*{(1-p+pe^t)^Y}                                                           \\
-         & =\sum_{y=0}^{\infty} (1-p+pe^t)^y \frac{\theta^y e^{-\theta}}{y!}            \\
-         & =e^{-\theta}\sum_{y=0}^{\infty} \frac{\left[ \theta(1-p+pe^t) \right]^y}{y!} \\
-         & =e^{-\theta}\exp\left\{ \theta(1-p+pe^t)\right\}                             \\
-         & =\exp\left\{ \theta p(e^t-1)\right\}
+         & =\E*{(1-p+pe^t)^Y}                                                          \\
+         & =\sum_{y=0}^{\infty} (1-p+pe^t)^y \frac{\theta^y e^{-\theta}}{y!}           \\
+         & =e^{-\theta}\sum_{y=0}^{\infty} \frac{\bigl[ \theta(1-p+pe^t) \bigr]^y}{y!} \\
+         & =e^{-\theta}\expon{\theta(1-p+pe^t)}                                        \\
+         & =\expon{\theta p(e^t-1)}
     \end{align*}
     Actually, this is the m.g.f.\ of $ \poi{\theta p} $.
 \end{Example}
@@ -93,7 +93,7 @@
 \begin{Remark}{}{}
     In general, suppose $ X_1,\ldots,X_n $ are random variables,
     then
-    \[ M(t_1,\ldots,t_n)=\E*{\exp\left\{ \sum_{i=1}^{n} t_i X_i\right\}} \]
+    \[ M(t_1,\ldots,t_n)=\E[\bigg]{\expon[\bigg]{\sum_{i=1}^{n} t_i X_i}} \]
     is the \textbf{joint moment generating function}
     if it exists for $ \abs{t_i}<h_i $
     for some $ h_i>0 $ where $ i=1,\ldots,n $.
@@ -122,15 +122,15 @@
     \textbf{Solution.}
     \begin{align*}
         M(t_1,t_2)
-         & =\E{e^{t_1X+t_2Y}}                                                  \\
+         & =\E{e^{t_1X+t_2Y}}                                                   \\
          & =\int_{0}^{\infty}
-        \biggl[\int_{0}^{y} e^{t_1 x+ t_2 y}e^{-y}\, d{x} \biggr]\, d{y}       \\
+        \biggl[\int_{0}^{y} e^{t_1 x+ t_2 y}e^{-y}\, d{x} \biggr]\, d{y}        \\
          & =\int_{0}^{\infty} e^{(t_2-1)y}
-        \left[ \frac{1}{t_1} e^{t_1 x} \right]_0^y \, d{y}                     \\
-         & =\frac{1}{t_1} \int_{0}^{\infty} e^{(t_2-1)y}(e^{t_1 y}-1)\, d{y}   \\
+        \biggl[ \frac{1}{t_1} e^{t_1 x} \biggr]_0^y \, d{y}                     \\
+         & =\frac{1}{t_1} \int_{0}^{\infty} e^{(t_2-1)y}(e^{t_1 y}-1)\, d{y}    \\
          & =\frac{1}{t_1} \int_{0}^{\infty}
-        e^{(t_1+t_2-1)y}-e^{(t_2-1)y}\, d{y}                                   \\
-         & =\frac{1}{t_1} \left( \frac{1}{1-t_1-t_2} -\frac{1}{1-t_2}  \right) \\
+        e^{(t_1+t_2-1)y}-e^{(t_2-1)y}\, d{y}                                    \\
+         & =\frac{1}{t_1} \biggl( \frac{1}{1-t_1-t_2} -\frac{1}{1-t_2}  \biggr) \\
          & =\frac{1}{(1-t_1-t_2)(1-t_2)}
     \end{align*}
     with $ t_2-1<0 $ and $ t_1+t_2-1<0 $. Therefore,
@@ -152,11 +152,11 @@
     (direct method). Alternatively, find $ M_{X+Y}(t) $.
     \begin{align*}
         M_{X+Y}(t)
-         & =\E{e^{tX+tY}}                                                                                                   \\
-         & =\E{e^{tX}e^{tY}}                                                       & \quad & \text{$X$ and $Y$ independent} \\
-         & =\E{e^{tX}}\E{e^{tY}}                                                                                            \\
-         & =\exp\left\{ \theta_1(e^t-1)\right\}\exp\left\{ \theta_2(e^t-1)\right\}                                          \\
-         & =\exp\left\{ (\theta_1+\theta_2)(e^t-1)\right\}
+         & =\E{e^{tX+tY}}                                                                           \\
+         & =\E{e^{tX}e^{tY}}                               & \quad & \text{$X$ and $Y$ independent} \\
+         & =\E{e^{tX}}\E{e^{tY}}                                                                    \\
+         & =\expon{\theta_1(e^t-1)}\expon{\theta_2(e^t-1)}                                          \\
+         & =\expon{(\theta_1+\theta_2)(e^t-1)}
     \end{align*}
     which is the m.g.f.\ of $ \poi{\theta_1+\theta_2} $.
 \end{Example}
