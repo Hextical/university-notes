@@ -6,10 +6,9 @@ All my university notes done in LaTeX.
 |     Course      | Completion |       Online       |
 | :-------------: | :--------: | :----------------: |
 |    STAT 330     |    100%    | :heavy_check_mark: |
-|    STAT 331     |   100%*    | :heavy_check_mark: |
+|    STAT 331     |    100%    | :heavy_check_mark: |
 | AMATH/PMATH 331 | ETA: Never | :heavy_check_mark: |
 
-*Few R Demos Excluded
 ## Year 2
 ### Semester 1
 |  Course  | Completion | Online |

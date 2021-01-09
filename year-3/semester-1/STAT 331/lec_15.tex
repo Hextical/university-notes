@@ -6,14 +6,14 @@ where $ \symbf{\varepsilon}\sim \Mvn{0,\sigma^2I_{n}} $.
 Practically, this means
 \[ \varepsilon \stackrel{\text{iid}}{\sim}\N{0,\sigma^2} \]
 \begin{itemize}
-    \item Independence among all error terms
-    \item Normally distributed
-    \item Since $ \E{Y_i}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip} $
-          is implied by $ \E{\varepsilon_i}=0 $ for any
-          $ x_{i1},\ldots,x_{ip} $, the linear model
-          is appropriate; that is, it correctly explains response
-          on average.
-    \item Constant error variance $ \sigma^2 $
+      \item Independence among all error terms
+      \item Normally distributed
+      \item Since $ \E{Y_i}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip} $
+            is implied by $ \E{\varepsilon_i}=0 $ for any
+            $ x_{i1},\ldots,x_{ip} $, the linear model
+            is appropriate; that is, it correctly explains response
+            on average.
+      \item Constant error variance $ \sigma^2 $
 \end{itemize}
 We could assess these assumptions
 via $ \varepsilon_i $'s, but we can't observe
@@ -23,9 +23,9 @@ via residuals $ e_i $ from the fitted model.
 Recall, $ \symbf{e}\sim \Mvn{0,(I-H)\sigma^2} $.
 So $ \symbf{e} $ and $ \symbf{\varepsilon} $ are related:
 \[ \symbf{e}=\symbf{Y}-X \hat{\symbf{\beta}}=(I-H)\symbf{Y}=
-    (I-H)(X \symbf{\beta}+\symbf{\varepsilon})=
-    (X \symbf{\beta}-H X\symbf{\beta})+(I-H)\symbf{\varepsilon}=
-    (I-H)\symbf{\varepsilon} \]
+      (I-H)(X \symbf{\beta}+\symbf{\varepsilon})=
+      (X \symbf{\beta}-H X\symbf{\beta})+(I-H)\symbf{\varepsilon}=
+      (I-H)\symbf{\varepsilon} \]
 Note: we can't ``solve'' $ \symbf{\varepsilon} $
 since $ (I-H) $ is not invertible since it is not full rank:
 recall $ H $ and $ (I-H) $ are idempotent, so
@@ -37,7 +37,7 @@ which means $ e_i $ is a good approximation to $ \varepsilon $
 when entries of $ h_{ij} $ of $ H $ are small
 (which is ``usually'' the case, especially when $ n $ is large).
 \[ e_i \sim \N{0,\sigma^2(1-h_{ii})}\iff
-    \frac{e_i-0}{\sigma\sqrt{1-h_{ii}}} \sim \N{0,1} \]
+      \frac{e_i-0}{\sigma\sqrt{1-h_{ii}}} \sim \N{0,1} \]
 If we plug in $ \hat{\sigma} $, that defines
 the studentized residuals.
 \[ d_i\equiv \frac{e_i}{\hat{\sigma}\sqrt{1-h_{ii}}}  \]
@@ -86,4 +86,5 @@ on the $ 45^\circ $ line through origin.
 If these sets of residuals plots show violations, then that could
 affect the validity of confidence intervals, hypothesis tests, etc.
 
-\includepdf[pages=-]{residual-plots.pdf}
+\subsection{R Demo}
+\includepdf[pages=-]{lec_15-demo.pdf}
