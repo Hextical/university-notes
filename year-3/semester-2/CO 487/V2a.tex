@@ -1,0 +1,29 @@
+\chapter*{V2: Symmetric-Key Cryptography}
+\addcontentsline{toc}{chapter}{V2: Symmetric-Key Cryptography}
+\setcounter{chapter}{1}
+
+\section*{V2a: Basic Concepts}
+\addcontentsline{toc}{section}{V2a: Basic Concepts}
+\setcounter{section}{1}
+
+\begin{Definition}{Symmetric-key Encryption Scheme (SKES)}{}
+    A \textbf{symmetric-key encryption scheme} (SKES) consists of:
+    \begin{itemize}
+        \item $ M $: the plaintext space,
+        \item $ C $: the ciphertext space,
+        \item $ K $: the key space,
+        \item a family of encryption functions, $ E_k $: $ M\to C $,
+              $ \forall k\in K $,
+        \item a family of decryption functions, $ D_k $: $ C\to M $,
+              $ \forall k \in K $, such that $ D_k(E_k(m))=m $ for
+              all $ m\in M $, $ k\in K $.
+    \end{itemize}
+\end{Definition}
+Using a SKES to Achieve Confidentiality
+\begin{enumerate}
+    \item Alice and Bob agree on a \emph{secret key} $ k\in K $
+          by communicating over the \emph{secure channel}.
+    \item Alice computes $ c=E_k(m) $ and sends the ciphertext
+          $ c $ to Bob over the \emph{unsecured channel}.
+    \item Bob retrieves the plaintext by computing $ m=D_k(c) $.
+\end{enumerate}
