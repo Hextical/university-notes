@@ -25,6 +25,7 @@ All my university notes done in LaTeX.
 |  CS 246  | 100% \ {Online Lectures} | :heavy_exclamation_mark: |
 | MATH 239 |   Online Lectures Only   | :heavy_exclamation_mark: |
 | STAT 231 | 100% \ {Online Lectures} | :heavy_exclamation_mark: |
+
 :heavy_exclamation_mark: COVID-19 caused the last month of the term to be online
 
 ### Semester 1
