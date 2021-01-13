@@ -1,4 +1,4 @@
-\chapter{TODO}
+\chapter{Characteristics of Time Series}
 \section{What is a time series?}
 In classical statistics, we normally consider $ X_1,\ldots,X_n\in\mathbf{R}^p $,
 a \textbf{simple random sample}.
@@ -551,3 +551,78 @@ This follows from the ``famous'' Riesz-Fischer Theorem.
           \[ \innerp{X_{T+h}-Y}{Z}=0\quad\forall Z\in\mathcal{M} \]
           must be in the orthogonal complement.
 \end{enumerate}
+
+\section{Signal and Noise Models}
+``Ideally,'' a time series that we are considering
+was generated from a stationary process. If so,
+we can pool data to estimate the processes underlying structure
+(e.g.\ its marginal distribution and serial dependence structure)
+
+Most time series are evidently \underline{not} stationary.
+
+Looking back at Figure~\ref{fig:jj}:
+\begin{itemize}
+    \item Mean appears to increase, so it is not first order stationary;
+    \item Variability also appears to increase, so it is not
+          second order stationary;
+    \item Therefore, it is not strictly stationary.
+\end{itemize}
+Signal and Noise Model: $ X_t=S_t+\varepsilon_t $
+\begin{itemize}
+    \item $ S_t $ is the \textbf{deterministic}
+          ``signal'' or ``trend'' of the series
+    \item $ \varepsilon_t $ is the ``noise'' added
+          to the signal satisfying $ \E{\varepsilon_t}=0 $, hence
+          $ \E{X_t}=\E{S_t+\varepsilon_t}=\E{S_t} $.
+          There exists a (strong) white noise $ \set{W_t}_{t\in\mathbf{Z}} $
+          so that
+          \[ \varepsilon_t=g(W_t,W_{t-1}\ldots,)\quad\text{[Stationary Noise]} \]
+          \[ \varepsilon_t=g_t(W_t,W_{t-1}\ldots,)\quad\text{[Non-stationary Noise]} \]
+          The terms $ \set{W_t}_{t\in\mathbf{Z}} $ are often called the
+          ``innovations'' or ``shocks'' during the random behaviour
+          of $ X_t $.
+
+              {\color{blue}$ g $ is used to try to capture noise that can
+                  potentially have serial dependence.}
+\end{itemize}
+\begin{Example}{}{}
+    An example of a function $ g $ so that $ \varepsilon_t=g_t(W_t,W_{t-1},\ldots) $
+    might be a \textbf{random walk}; that is, $ \varepsilon_t=\sum_{j=0}^{t} W_j $.
+    Another example could be the \textbf{changing variance models}; that is,
+    $ \varepsilon_t=\sigma(t)W_t $.
+\end{Example}
+Our goal is to estimate $ S_t $, and then infer the structure of $ \varepsilon_t $.
+
+In Figure~\cref{fig:gtemp}, the model appears to be non-stationary
+(trending upwards over time),
+so we might try the signal and noise model. We might posit
+a linear trend, or even higher order functions.
+
+For the temperature data, we may posit that
+\[ S_t=\beta_0+\beta_1 t\quad\text{[Linear Trend]} \]
+The trend may be estimated by ordinary least squares (OLS).
+We choose $ \beta_0 $ and $ \beta_1 $ to minimize
+\[ \sum_{t=1}^{T} \bigl[X_t-(\beta_0+\beta_1 t)\bigr]^2 \]
+This can be done in R using the \code{lm()} command, and
+can easily be computed with calculus. Figure~\ref{fig:gtemp_lm}
+is a small example of the global temperature data superimposed
+with \code{lm()}'s estimate.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{gtemp_lm.pdf}
+    \caption{OLS estimate of a linear trend.}\label{fig:gtemp_lm}
+\end{figure}
+Let's introduce some terminology about trends.
+\begin{Definition}{Detrending a time series, Detrended}{}
+    \textbf{Detrending a time series} constitutes computing the
+    residuals based on an estimate for the signal/trend. A
+    \textbf{detrended} time series is a time series of such residuals.
+    \begin{enumerate}
+        \item Estimate $ S_t\to \hat{S_t} $
+        \item Detrend series: $ X_t-\hat{S_t}=Y_t $
+              where $ Y_t $ is the ``detrended'' series.
+    \end{enumerate}
+\end{Definition}
+
+If the trend is zero, there appears to be a substantial serial
+dependence remaining in the time series.
