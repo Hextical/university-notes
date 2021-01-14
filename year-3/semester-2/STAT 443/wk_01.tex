@@ -593,7 +593,7 @@ Signal and Noise Model: $ X_t=S_t+\varepsilon_t $
 \end{Example}
 Our goal is to estimate $ S_t $, and then infer the structure of $ \varepsilon_t $.
 
-In Figure~\cref{fig:gtemp}, the model appears to be non-stationary
+In Figure~\ref{fig:gtemp}, the model appears to be non-stationary
 (trending upwards over time),
 so we might try the signal and noise model. We might posit
 a linear trend, or even higher order functions.
@@ -613,10 +613,11 @@ with \code{lm()}'s estimate.
     \caption{OLS estimate of a linear trend.}\label{fig:gtemp_lm}
 \end{figure}
 Let's introduce some terminology about trends.
-\begin{Definition}{Detrending a time series, Detrended}{}
-    \textbf{Detrending a time series} constitutes computing the
-    residuals based on an estimate for the signal/trend. A
-    \textbf{detrended} time series is a time series of such residuals.
+\begin{Definition}{Detrended time series}{}
+    Detrending a time series constitutes computing the
+    residuals based on an estimate for the signal/trend.
+
+    A \textbf{detrended time series} is a time series of such residuals.
     \begin{enumerate}
         \item Estimate $ S_t\to \hat{S_t} $
         \item Detrend series: $ X_t-\hat{S_t}=Y_t $
@@ -626,3 +627,82 @@ Let's introduce some terminology about trends.
 
 If the trend is zero, there appears to be a substantial serial
 dependence remaining in the time series.
+
+\section{Time Series Differencing}
+Signal and Noise Model: $ X_t=S_t+\varepsilon_t $. Hopefully,
+upon estimating $ S_t $ with $ \hat{S}_t $,
+we find $ X_t-\hat{S}_t=\hat{\varepsilon}_t $ (detrended series)
+looks reasonably stationary. If the residuals would be
+reasonably stationary, we might
+proceed in estimating their underlying structure of $ \set{\hat{\varepsilon}_t}_{t=1,\ldots,T} $.
+as if it were stationary. {\color{blue}In particular, we might try to estimate their marginal
+        distributions and/or their serial dependence structure. If we thought those estimates
+        were reasonably good, we would have a good idea of how the time series $ X_t $ behaves.}
+
+\textbf{Random Walk with Drift Model}. Let $ \varepsilon_t $ be a strong white noise.
+\begin{align*}
+    X_t
+     & =\delta+X_{t-1}+\varepsilon_t                                                                                  \\
+     & =\delta+\delta+X_{t-2}+\varepsilon_{t-1}+\varepsilon_t                                                         \\
+     & =\delta+\delta+\delta+X_{t-3}+\varepsilon_{t-2}+\varepsilon_{t-1}+\varepsilon_{t}                              \\
+     & \vdots                                                                            & \quad & \text{$ t $ times} \\
+     & =t\delta+X_0+\sum_{j=1}^{t} \varepsilon_j
+\end{align*}
+where we note that $ t\delta+X_0=S_t $ is a linear signal,
+and $ \sum_{j=1}^{t} \varepsilon_j $ is a
+random walk noise.
+
+Notice that under the Random Walk Model.
+\[ X_t-X_{t-1}=\nabla X_t=\delta+\varepsilon_t \]
+So, if $ X_t $ follows a random walk model, the series $ Y_t=\delta X_t $
+should behave like a white noise shifted by $ \delta $.
+
+\begin{Definition}{Differenced time series}{}
+    Differencing a time series constitutes
+    computing the difference between successive terms.
+
+    A \textbf{differenced time series} is a time series of such differences.
+    The first differenced series is denoted
+    \[ \nabla X_t=X_t-X_{t-1} \]
+    and is the series of length $ T-1 $, namely
+    \[ X_2-X_1,X_3-X_2,\ldots,X_T-X_{T-1} \]
+    Higher order differences are calculated recursively, so
+    \[ \nabla^d X_t=\nabla^{d-1}\nabla X_t \]
+    where $ \nabla^d $ is the $ d^{\text{th}} $ order difference and
+    we define $ \nabla^0 X_t=X_t $.
+\end{Definition}
+
+Detrending and Differencing are both ways of reducing a
+(potentially non-stationary) time series
+to an approximately stationary series.
+
+\underline{Differencing vs. Detrending}
+
+\emph{Pros}:
+\begin{itemize}
+    \item Differencing does not require the parameter estimation
+          (don't need to estimate $ S_t $).
+    \item Higher order differencing can reduce even very
+          ``trendy'' series to look more like noise.
+\end{itemize}
+\emph{Cons}:
+\begin{itemize}
+    \item Differencing can ``wash away'' features of the series,
+          and introduce more complicated structures.
+    \item The trend is often of interest, and good estimates
+          of the trend lead to improved long-range forecasts.
+\end{itemize}
+\begin{Example}{Differencing can complicate time series}{}
+    $ X_t=W_t $ where $ W_t $ is a strong white noise.
+    \[ \nabla X_t=W_t-W_{t-1}=Y_t \]
+    \[ \gamma_X(h)=\Cov{X_t,X_{t+h}}=\begin{cases}
+            \sigma_W^2 & h=0    \\
+            0          & h\ge 1
+        \end{cases} \]
+    More complicated:
+    \[ \gamma_Y(h)=\Cov{Y_t,Y_{t+h}}=\begin{cases}
+            2\sigma_W^2 & h=0    \\
+            -\sigma_W^2 & h=1    \\
+            0           & h\ge 2
+        \end{cases} \]
+\end{Example}
