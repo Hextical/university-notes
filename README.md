@@ -1,6 +1,8 @@
 # university-notes
 All my university notes done in LaTeX.
 
+# [View Notes Here!](https://hextical.github.io/university-notes/)
+
 ## Year 3
 ### Semester 2
 |  Course  | Completion |       Online       |
