@@ -1,5 +1,6 @@
 \chapter{Characteristics of Time Series}
 \section{What is a time series?}
+\usemintedstyle{pastie}
 In classical statistics, we normally consider $ X_1,\ldots,X_n\in\mathbf{R}^p $,
 a \textbf{simple random sample}.
 
@@ -59,6 +60,10 @@ Examples:
     \includegraphics[width=0.75\textwidth]{jj.pdf}
     \caption{Quarterly Johnson and Johnson Earnings}\label{fig:jj}
 \end{figure}
+\begin{minted}{R}
+# Figure 1.1
+plot(jj, type = "o", ylab = "Quarterly Earnings per Share")
+\end{minted}
 Observe that in~\Cref{fig:jj}:
 \begin{itemize}
     \item The earnings are steadily increasing over time.
@@ -92,7 +97,10 @@ However, in contrast, with time series, the data often exhibit:
     \caption{$ x_t $ is the deviation of global mean
         yearly temperature from the mean computed from 1951--1980}\label{fig:gtemp}
 \end{figure}
-
+\begin{minted}{R}
+# Figure 1.2
+plot(gtemp, type = "o", ylab = "Global Temperature Deviations")
+\end{minted}
 Observe that in~\Cref{fig:gtemp}:
 \begin{itemize}
     \item The global temperature is steadily increasing over time.
@@ -268,7 +276,7 @@ Additional terminology:
 \begin{itemize}
     \item The property when $ \E{X_t}=\mu $ does not depend
           on $ t $ is often called the \textbf{first order stationary}.
-    \item The property when $ \gamma(t,s)=\gamma(\abs{t-s}) $
+    \item The property when $ \gamma(t,s)=f(\abs{t-s}) $
           only depends on the lag $ \abs{t-s} $ is called the
           \textbf{second order stationary}.
     \item For a second order stationary process,
@@ -307,6 +315,10 @@ Additional terminology:
     \includegraphics[width=0.75\textwidth]{wn.pdf}
     \caption{Gaussian White Noise of Length 500}\label{fig:wn}
 \end{figure}
+\begin{minted}{R}
+# Figure 1.3
+plot.ts(rnorm(500), main = "Gaussian White Noise", ylab = "w")
+\end{minted}
 Figure~\ref{fig:wn} is a Gaussian \emph{white} noise series.
 \textbf{White} comes from spectral analysis,
 in which a white noise series shares the same spectral properties as white light:
@@ -528,18 +540,18 @@ This follows from the ``famous'' Riesz-Fischer Theorem.
 \subsection{Useful Tools for Time Series}
 \begin{enumerate}[(1)]
     \item \textbf{Existence of Limits}
-          \[ X_{t,n}=\sum_{j=0}^{n} \Psi_j \varepsilon_{t-j}
+          \[ X_{t,n}=\sum_{j=0}^{n} \psi_j \varepsilon_{t-j}
           \]
           $ \set{\varepsilon_t}_{t\in\mathbf{Z}} $ is a strong white noise.
           Since for $ n>m $,
           \[ \E{(X_{t,n}-X_{t,m})^2}
-              =\E[\bigg]{\biggl(\sum_{j=m+1}^{n} \Psi_j \varepsilon_{t-j}\biggr)^{\!2}}
-              =\sum_{j=m+1}^{n} \Psi_j^2\sigma_{\varepsilon}^2\to 0\text{ as }
+              =\E[\bigg]{\biggl(\sum_{j=m+1}^{n} \psi_j \varepsilon_{t-j}\biggr)^{\!2}}
+              =\sum_{j=m+1}^{n} \psi_j^2\sigma_{\varepsilon}^2\to 0\text{ as }
               n,m\to \infty \]
-          only if $ \sum_{j=0}^{\infty} \Psi_j^2<\infty $, then there \textbf{must}
+          only if $ \sum_{j=0}^{\infty} \psi_j^2<\infty $, then there \textbf{must}
           exist a random variable $ X_t $ (by the completeness of $ L^2 $), so that
           \[ X_t=\lim\limits_{{n} \to {\infty}} X_{t,n}=\sum_{j=0}^{\infty}
-              \Psi_j \varepsilon_{t-j} \]
+              \psi_j \varepsilon_{t-j} \]
     \item \textbf{Projection Theorem and Forecasting}.
           Forecasting can be often cast as finding a random variable $ Y $ among
           a collection of possible forecasts $ \mathcal{M} $ (e.g.
@@ -576,8 +588,8 @@ Signal and Noise Model: $ X_t=S_t+\varepsilon_t $
           $ \E{X_t}=\E{S_t+\varepsilon_t}=\E{S_t} $.
           There exists a (strong) white noise $ \set{W_t}_{t\in\mathbf{Z}} $
           so that
-          \[ \varepsilon_t=g(W_t,W_{t-1}\ldots,)\quad\text{[Stationary Noise]} \]
-          \[ \varepsilon_t=g_t(W_t,W_{t-1}\ldots,)\quad\text{[Non-stationary Noise]} \]
+          \[ \varepsilon_t=g(W_t,W_{t-1},\ldots)\quad\text{[Stationary Noise]} \]
+          \[ \varepsilon_t=g_t(W_t,W_{t-1},\ldots)\quad\text{[Non-stationary Noise]} \]
           The terms $ \set{W_t}_{t\in\mathbf{Z}} $ are often called the
           ``innovations'' or ``shocks'' during the random behaviour
           of $ X_t $.
@@ -610,8 +622,14 @@ with \code{lm()}'s estimate.
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.75\textwidth]{gtemp_lm.pdf}
-    \caption{OLS estimate of a linear trend.}\label{fig:gtemp_lm}
+    \caption{OLS estimate of linear trend}\label{fig:gtemp_lm}
 \end{figure}
+\begin{minted}{R}
+# Figure 1.4
+fit <- lm(gtemp ~ time(gtemp), na.action = NULL)
+plot.ts(gtemp, type = "o", ylab = "Global Temperature Deviations")
+abline(fit)
+\end{minted}
 Let's introduce some terminology about trends.
 \begin{Definition}{Detrended time series}{}
     Detrending a time series constitutes computing the
@@ -624,8 +642,17 @@ Let's introduce some terminology about trends.
               where $ Y_t $ is the ``detrended'' series.
     \end{enumerate}
 \end{Definition}
-
-If the trend is zero, there appears to be a substantial serial
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{detrended.pdf}
+    \caption{Residuals of OLS fit.}\label{fig:detrended}
+\end{figure}
+\begin{minted}{R}
+# Figure 1.5
+plot(resid(fit), type = "o", main = "detrended")
+\end{minted}
+In Figure~\ref{fig:detrended}:
+If trend is now zero, there appears to be a substantial serial
 dependence remaining in the time series.
 
 \section{Time Series Differencing}
@@ -656,6 +683,24 @@ Notice that under the Random Walk Model.
 \[ X_t-X_{t-1}=\nabla X_t=\delta+\varepsilon_t \]
 So, if $ X_t $ follows a random walk model, the series $ Y_t=\delta X_t $
 should behave like a white noise shifted by $ \delta $.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{first-diff.pdf}
+    \caption{First differenced series. Average of first differenced series
+        is $ \hat{\delta}\approx 0.0066 $}\label{fig:firstdiff}
+\end{figure}
+\begin{minted}{R}
+# Figure 1.6
+plot(diff(gtemp), type = "o", main = "first difference")
+\end{minted}
+In Figure~\ref{fig:firstdiff}:
+{\color{blue}To see what this looks like in this temperature example, here is a plot
+of $ \nabla X_t=X_t-X_{t-1} $ for the temperature deviation data. As you can
+see if you look at this compared to the detrended series using linear trend,
+I would say this series looks much more like a white noise (there does not
+appear to be any discernible patterns in this first difference). If you calculate the mean
+of this first difference series, that would be an estimator for the drift term
+in the random walk model which here is $ \approx 0.0066 $.}
 
 \begin{Definition}{Differenced time series}{}
     Differencing a time series constitutes
@@ -706,3 +751,20 @@ to an approximately stationary series.
             0           & h\ge 2
         \end{cases} \]
 \end{Example}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{firstdiffwn.pdf}\label{fig:firstdiffwn}
+\end{figure}
+\begin{minted}{R}
+# Figure 1.7
+par(mfrow = c(2, 1))
+plot(diff(gtemp), main = "first difference Temp data")
+plot(rnorm(gtemp),
+     type = "l",
+     main = "white noise",
+     ylab = "w")    
+\end{minted}
+In Figure~\ref{fig:firstdiffwn}: If these two series behave in
+the same way, then it stands to reason that
+\[ g(\varepsilon_t,\varepsilon_{t-1},\ldots)=\varepsilon_t
+    \stackrel{\text{iid}}{\sim}\N{0,\sigma^2_{\text{temp}}} \]
