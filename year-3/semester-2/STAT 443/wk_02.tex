@@ -163,21 +163,21 @@ and we want to discuss the asymptotic properties of this estimator.
 \end{Remark}
 \begin{Theorem}{Markov's Inequality}{markov}
     If $ \E{Y^2}<\infty $, then
-    \[ \Prob{\abs{Y}\ge M}\le \frac{\E[\big]{Y^2}}{M^2}  \]
+    \[ \Prob{\abs{Y}\ge m}\le \frac{\E[\big]{Y^2}}{m^2}  \]
 \end{Theorem}
 \begin{Proof}{\Cref{thm:markov}}{}
     \begin{align*}
         \E{Y^2}
-         & =\E{Y^2 I_{(\abs{Y}\ge M)}+Y^2 I_{(\abs{Y<M})}}                                    \\
-         & =\E{Y^2 I_{(\abs{Y}\ge M)}} + \E{Y^2 I_{(\abs{Y<M})}}                              \\
-         & \ge \E{Y^2 I_{(\abs{Y}\ge M)}}                                                     \\
-         & \ge M^2\E{I_{(\abs{Y}\ge M)}}                         &  & \text{since }Y^2\ge M^2 \\
-         & =M^2\Prob{\abs{Y}\ge M}
+         & =\E{Y^2 \Ind{\abs{Y}\ge m}+Y^2 \Ind{\abs{Y}<m}}                                    \\
+         & =\E{Y^2 \Ind{\abs{Y}\ge m}} + \E{Y^2 \Ind{\abs{Y}<m}}                              \\
+         & \ge \E{Y^2 \Ind{\abs{Y}\ge m}}                                                     \\
+         & \ge m^2\E{\Ind{\abs{Y}\ge m}}                         &  & \text{since }Y^2\ge m^2 \\
+         & =m^2\Prob{\abs{Y}\ge m}
     \end{align*}
 \end{Proof}
 \begin{Remark}{Generalization of Markov's Inequality}{}
     If $ \E{Y^k}<\infty $, then
-    \[ \Prob{\abs{Y}\ge M}\le  \frac{\E[\big]{\abs{Y}^k}}{M^k}  \]
+    \[ \Prob{\abs{Y}\ge m}\le  \frac{\E[\big]{\abs{Y}^k}}{m^k}  \]
 \end{Remark}
 \begin{Example}{}{}
     Suppose $ X_n $ is a strong white noise in $ L^2 $ ($ \E{X_0^2}<\infty $),
@@ -347,7 +347,8 @@ Visually, row-wise random variables are independent:
     and
     \[ S_i=\frac{1}{\sigma_i} \sum_{j=1}^{n_i} X_{i,j} \]
     If for $ \varepsilon>0 $,
-    \[ \frac{1}{\sigma_i^2}\sum_{j=1}^{n_i} \E{X_{i,j}^2 I_{(\abs{X_{i,j}}>\varepsilon\sigma_i)}}\to 0
+    \[ \frac{1}{\sigma_i^2}\sum_{j=1}^{n_i} \E{X_{i,j}^2
+            \Ind{\abs{X_{i,j}}>\varepsilon\sigma_i}}\to 0
         \text{ as } i\to\infty \]
     then
     \[ S_i\stackrel{D}{\to}\N{0,1} \]
@@ -407,21 +408,21 @@ Visually, row-wise random variables are independent:
     Therefore, the variance of $ G_1 $ is bounded.
     We showed $ \sigma_N^2=\Var{G_1}\approx $ constant. So, we must show
     \[
-        \sum_{j=1}^{N} \E{\Uunderbracket{Y_{j}^2}_{\text{iid}} I_{(\abs{Y_{j}}>\varepsilon\sigma_N)}}=
-        N\E{Y_{1}^2 I_{(\abs{Y_{1}}>\varepsilon\sigma_N)}} \to 0\text{ as } T\to\infty
+        \sum_{j=1}^{N} \E{\Uunderbracket{Y_{j}^2}_{\text{iid}} \Ind{\abs{Y_{j}}>\varepsilon\sigma_N}}=
+        N\E{Y_{1}^2 \Ind{\abs{Y_{1}}>\varepsilon\sigma_N}} \to 0\text{ as } T\to\infty
     \]
     \emph{Aside}:
     \begin{align*}
         \E[\big]{\abs{Y}^{2+\delta}}
-         & \ge \E[\big]{\abs{Y}^{2+\delta}I_{(\abs{Y}>\varepsilon)}}           \\
-         & \ge \varepsilon^\delta\E[\big]{\abs{Y}^2 I_{(\abs{Y}>\varepsilon)}} \\
+         & \ge \E[\big]{\abs{Y}^{2+\delta}\Ind{\abs{Y}>\varepsilon}}           \\
+         & \ge \varepsilon^\delta\E[\big]{\abs{Y}^2 \Ind{\abs{Y}>\varepsilon}} \\
     \end{align*}
-    \[ \implies \E[\big]{\abs{Y}^2 I_{(\abs{Y}>\varepsilon)}}\le \frac{\E[\big]{\abs{Y}^{2+\delta}}}{\varepsilon^\delta} \]
+    \[ \implies \E[\big]{\abs{Y}^2 \Ind{\abs{Y}>\varepsilon}}\le \frac{\E[\big]{\abs{Y}^{2+\delta}}}{\varepsilon^\delta} \]
     It may be shown that for $ C>0 $
     \[ \E[\big]{\abs{Y_j}^{2+\delta}}\le C\biggl(\frac{a_T}{T} \biggr)^{\frac{2+\delta}{2}} \]
     So
     \begin{align*}
-        N\E{Y_{1}^2 I_{(\abs{Y_{1}}>\varepsilon\sigma_N)}}
+        N\E{Y_{1}^2 \Ind{\abs{Y_{1}}>\varepsilon\sigma_N}}
          & \le \frac{N}{(\varepsilon\sigma_N)^\delta}C\biggl(\frac{a_T}{T} \biggr)^{\frac{2+\delta}{2}} \\
          & =\frac{C}{(\varepsilon\sigma_N)^\delta}
         \frac{N a_T}{T}\biggl(\frac{a_T}{T} \biggr)^{\delta/2}\to 0\text{ as }T\to\infty
@@ -431,9 +432,9 @@ Visually, row-wise random variables are independent:
     and since
     \[ \sigma_N^2\to \sum_{j=-m}^{m} \gamma(j) \]
     we have
-    \[ G_1\stackrel{D}{\to}\N*{0,\sum_{h=-m}^{m} \gamma(h)} \]
+    \[ G_1\stackrel{D}{\to}\N[\bigg]{0,\sum_{h=-m}^{m} \gamma(h)} \]
     Since $ G_2=o_p(1) $ we have
-    \[ \frac{1}{\sqrt{T}}\sum_{t=1}^{T} X_t\stackrel{D}{\to}\N*{0,\sum_{h=-m}^{n} \gamma(h)}  \]
+    \[ \frac{1}{\sqrt{T}}\sum_{t=1}^{T} X_t\stackrel{D}{\to}\N[\bigg]{0,\sum_{h=-m}^{n} \gamma(h)}  \]
 \end{Proof}
 \section{\texorpdfstring{$ \dagger $}{†} Two Plus Delta Moment Calculation}
 We want to show
@@ -451,7 +452,7 @@ $ X_t $ are $ m $-dependent random variables.
     \[ \E*{\abs[\bigg]{\sum_{i=1}^{n} X_i}^{2+\delta}}<c_p n^{\delta/2}\sum_{i=1}^{n}
         \E[\big]{\abs{X_i}^{2+\delta}} \]
     In particular, if $ X_1,\ldots,X_n $ are i.i.d., then
-    \[ \E{\abs[\bigg]{\sum_{i=1}^{n} X_i}^{2+\delta}}\le c_p n^{\frac{2+\delta}{2}}
+    \[ \E*{\abs[\bigg]{\sum_{i=1}^{n} X_i}^{2+\delta}}\le c_p n^{\frac{2+\delta}{2}}
         \E[\big]{\abs{X_1}^{2+\delta}} \]
 \end{Theorem}
 \begin{Proof}{\Cref{thm:rosenthal_ineq}}{}
@@ -463,11 +464,12 @@ $ X_t $ are $ m $-dependent random variables.
         \sum_{i=1}^{n}\E[\big]{\abs{X_i}^{2+\delta}} \]
 \end{Proposition}
 \begin{Proof}{\Cref{prop:prop1}}{}
-    By Jensen's Inequality, for $ a_1,\ldots,a_n\in\mathbf{R} $,
+    Since $ \varphi(x)=\abs{x}^{2+\delta} $ is convex where $ a_1,\ldots,a_n\in\mathbf{R} $,
+    by Jensen's Inequality,
     \[ \abs[\bigg]{\frac{1}{n} \sum_{i=1}^{n} a_i}^{2+\delta}\le \frac{1}{n} \sum_{i=1}^{n} \abs{a_i}^{2+\delta} \]
-    Since $ f(x)=x^{2+\delta} $ is convex, rearranging yields
+    Rearranging yields
     \[ \abs[\bigg]{\sum_{i=1}^{n} a_i}^{2+\delta}\le
-        n^{(2+\delta-1)}\sum_{i=1}^{n} \abs{a_i}^{2+\delta} \]
+        n^{(2+\delta)-1}\sum_{i=1}^{n} \abs{a_i}^{2+\delta} \]
     Replace $ a_i\sim X_i $, take expectation.
 \end{Proof}
 \[ \sum_{t=1}^{a_T} X_t=\sum_{j=0}^{m}
@@ -475,8 +477,8 @@ $ X_t $ are $ m $-dependent random variables.
 Variables in the second sum are separated by at least
 $ m $-time steps, and hence i.i.d.\ Therefore,
 \begin{align*}
-    \E{\abs[\bigg]{\sum_{t=1}^{a_T} X_t}^{2+\delta}}
-     & \le (m=1)^{(2+\delta)-1}
+    \E*{\abs[\bigg]{\sum_{t=1}^{a_T} X_t}^{2+\delta}}
+     & \le (m+1)^{(2+\delta)-1}
     \E[\bigg]{\abs[\bigg]{\sum_{\substack{t=j\mod (m+1)                                                                                                    \\1\le t\le a_T}}X_t}^{2+\delta}} & \quad & \text{by~\Cref{prop:prop1}}\\
      & \le (m+1)^{(2+\delta)-1}\biggl(\frac{a_T}{m+1} \biggr)^{\frac{2+\delta}{2} }\E[\big]{\abs{X_1}^{2+\delta}} &  & \text{by~\Cref{thm:rosenthal_ineq}} \\
      & =C a_T^{\frac{2+\delta}{2}}
@@ -521,7 +523,7 @@ where $ C $ is the same constant as in the proof of~\Cref{thm:m_clt}.
     $ L^2 $. If
     \[ S_t=\frac{1}{\sqrt{T}} \sum_{t=1}^{T} X_t \]
     then
-    \[ S_T\stackrel{D}{\to}\N*{0,\sum_{\ell=-\infty}^{\infty} \gamma(\ell)}\text{ as }
+    \[ S_T\stackrel{D}{\to}\N[\bigg]{0,\sum_{\ell=-\infty}^{\infty} \gamma(\ell)}\text{ as }
         T\to\infty \]
 \end{Theorem}
 \begin{Proof}{\Cref{thm:lin_clt}}{}
@@ -539,7 +541,7 @@ where $ C $ is the same constant as in the proof of~\Cref{thm:m_clt}.
         \le \sum_{\ell=0}^{\infty} \abs{\psi_\ell}\sum_{h=-\infty}^{\infty} \abs{\psi_h}\sigma_W^2<\infty \]
     So $ \sum_{h=-\infty}^{\infty} \gamma(h) $ is well-defined.
     Note that $ \E{S_T}=0 $ since $ \E{X_t}=0 $. Also,
-    \[ \Var{S_T}=\frac{1}{T} \sum_{t=1}^{T} \sum_{s=1}^{T} \E{X_tX_s}=
+    \[ \Var{S_T}=\frac{1}{T} \sum_{t=1}^{T} \sum_{s=1}^{T} \E{X_t X_s}=
         \frac{1}{T} \sum_{h=1-T}^{T-1} (T-\abs{h})\gamma(h)=\sum_{h=1-T}^{T-1}
         \biggl(1-\frac{\abs{h}}{T} \biggr)\gamma(h) \]
     Note that $ \displaystyle \biggl(1-\frac{\abs{h}}{T} \biggr)\le \abs{\gamma(h)} $
@@ -551,14 +553,14 @@ where $ C $ is the same constant as in the proof of~\Cref{thm:m_clt}.
     is a $ m $-dependent approximation to $ S_T $.
     \begin{enumerate}[(1)]
         \item By the $ m $-dependent CLT,
-              \[ S_{T,m}\stackrel{D}{\to}\N*{0,\sum_{h=-m}^{m} \gamma_m(h)}\coloneq
+              \[ S_{T,m}\stackrel{D}{\to}\N[\bigg]{0,\sum_{h=-m}^{m} \gamma_m(h)}\coloneq
                   S_m^\prime \]
               and $ \gamma_m(h)=\E{X_{t,m}X_{t+h,m}} $.
         \item By DCT,
               \[ \sum_{h=-m}^{m} \gamma_m(h)
                   \stackrel{m\to\infty}{\to}\sum_{h=-\infty}^{\infty} \gamma(h) \]
               and hence
-              \[ S_m^\prime\stackrel{D}{\to}\N*{0,\sum_{h=-\infty}^{\infty} \gamma(h)} \]
+              \[ S_m^\prime\stackrel{D}{\to}\N[\bigg]{0,\sum_{h=-\infty}^{\infty} \gamma(h)} \]
         \item \begin{align*}
                   \E{(S_{T,m}-S_T)^2}
                    & =\frac{1}{T} \E*{\biggl(\sum_{t=1}^{T}(X_t-X_{t,m}) \biggr)^{\!2}} \\
@@ -569,7 +571,7 @@ where $ C $ is the same constant as in the proof of~\Cref{thm:m_clt}.
               \end{align*}
     \end{enumerate}
     So condition (3) of the BAT is satisfied using Markov's Inequality. Therefore,
-    \[ S_t=\frac{1}{\sqrt{T}}\sum_{t=1}^{T} X_t\stackrel{D}{\to}\N*{0,\sum_{h=-\infty}^{\infty} \gamma(h)}  \]
+    \[ S_t=\frac{1}{\sqrt{T}}\sum_{t=1}^{T} X_t\stackrel{D}{\to}\N[\bigg]{0,\sum_{h=-\infty}^{\infty} \gamma(h)}  \]
 \end{Proof}
 \section{Asymptotic Properties of Empirical ACF}
 If $ X_1,\ldots,X_T $ is an observed time series
@@ -657,4 +659,74 @@ assuming the data is generated by a strong white noise process.
 
 Now, we know that the blue boundaries are $ \displaystyle \pm \frac{1.96}{\sqrt{T}} $
 in~\Cref{fig:acfwn130}. Also, we might be able to say that
-exists mild serial correlation at lag 1 of the ACF for Figure 2.2.
+exists mild serial correlation at lag 1 of the ACF for~\Cref{fig:gtemp_diff}
+since there are lines that go outside the blue boundaries.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{gtemp_diff.pdf}
+    \caption{ACF of first differenced temperature data}\label{fig:gtemp_diff}
+\end{figure}
+\begin{minted}{R}
+# Figure 2.2
+plot(acf(diff(gtemp)))
+\end{minted}
+
+\section{Interpreting the Autocorrelation Function (Non-stationary)}
+We have an excellent understanding of how $ \hat{\rho}(h) $
+behaves when $ X_1,\ldots,X_T $ is a strong white noise.
+\begin{itemize}
+    \item \underline{Consistency}:
+          \[ \hat{\rho}(h)\stackrel{P}{\to}0\quad(h\ge 1) \]
+    \item \underline{Distribution}:
+          \[ \hat{\rho}(h)\stackrel{D}{\approx}\N*{0,\frac{1}{T} }\quad (T\text{ is large}) \]
+\end{itemize}
+What happens when we calculate the empirical ACF for a non-stationary time
+series?
+
+\begin{Example}{}{}
+    $ X_t=t+W_t $ where $ W_t $ is a strong white noise. Note that
+    $ X_t $ has a linear trend, and hence not stationary.
+    First,
+    \[ \bar{X}=\frac{1}{T} \sum_{t=1}^{T}[t+W_t]=\frac{1}{T}
+        \frac{\bigl[T(T+1)\bigr]}{2}+\bar{W}=\frac{T+1}{2} +\bar{W}  \]
+    Also,
+    \begin{align*}
+        \hat{\gamma}(h)
+         & =\frac{1}{T} \sum_{t=1}^{T-h}\biggl(t+W_t-\frac{T+1}{2} -\bar{W}\biggr)\biggl(t+h+W_{t+h}-\frac{T+1}{2}-\bar{W}\biggr)        \\
+         & =\frac{1}{T} \sum_{t=1}^{T-h}\biggl(t-\frac{T+1}{2}\biggr)\biggl(t+h-\frac{T+1}{2}\biggr)+R                                   \\
+         & =\frac{1}{T} \sum_{t=1}^{T-h} \biggl(t-\frac{T+1}{2}\biggr)^{\!2}+\frac{1}{T} \sum_{t=1}^{T-h} h\biggl(t-\frac{T+1}{2}\biggr) \\
+         & =\frac{1}{T} \sum_{t=1}^{T/2} t^2+\frac{h}{T} \biggl[\frac{(T-h)(T-h+1)}{2}-\frac{(T+1)(T-h)}{2} \biggr]                      \\
+         & \approx \mathcal{O}(T^2)+\mathcal{O}(T)
+    \end{align*}
+    where $ R $ is the remainder with the white noise terms. Note that
+    the dominant term; that is, the $ \mathcal{O}(T^2) $ doesn't depend on $ h $.
+
+    It follows that in this case that
+    \[ \frac{\hat{\rho}(h)}{T^2}\to C\quad(\forall h,\, T\to\infty)  \]
+    Hence
+    \[ \hat{\rho}(h)=\frac{\hat{\gamma}(h)}{\hat{\gamma}(0)}\frac{T^2}{T^2}\stackrel{P}{\to}1\quad(\forall h)  \]
+    \underline{Moral}: If $ X_t $ has a trend that is not properly removed,
+    $ \hat{\rho}(h) $ is likely to be large.
+\end{Example}
+
+Looking back at~\Cref{fig:gtemp}, we see that this time series has an
+upwards trend. Therefore, based on what we just did, we expect
+that the ACF should be very large (close to 1) at each lag
+for this time series.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{gtemp_acf.pdf}
+    \caption{ACF of raw temperature data, sample length 130}\label{fig:gtemp_acf}
+\end{figure}
+\begin{minted}{R}
+# Figure 2.3
+acf(gtemp)
+\end{minted}
+Clearly,~\Cref{fig:gtemp_acf} is indicative
+of a strong trend or non-stationarity.
+
+TODO, 2 figures
+
+Similar pattern indicative of non-stationarity.
