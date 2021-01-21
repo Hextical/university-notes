@@ -709,12 +709,6 @@ series?
     \underline{Moral}: If $ X_t $ has a trend that is not properly removed,
     $ \hat{\rho}(h) $ is likely to be large.
 \end{Example}
-
-Looking back at~\Cref{fig:gtemp}, we see that this time series has an
-upwards trend. Therefore, based on what we just did, we expect
-that the ACF should be very large (close to 1) at each lag
-for this time series.
-
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.75\textwidth]{gtemp_acf.pdf}
@@ -723,10 +717,33 @@ for this time series.
 \begin{minted}{R}
 # Figure 2.3
 acf(gtemp)
+# Figure 2.4
+plot(as.ts(cumsum(rnorm(100))), main = "autoregression, phi=1")
+# Figure 2.5
+acf(as.ts(cumsum(rnorm(100))))
 \end{minted}
-Clearly,~\Cref{fig:gtemp_acf} is indicative
-of a strong trend or non-stationarity.
-
-TODO, 2 figures
-
-Similar pattern indicative of non-stationarity.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{ar1phi1x00.pdf}
+    \caption{Realization of an AR(1) with $ \phi=1 $ starting from
+        $ x_0=0 $}\label{fig:ar1phi1x00}
+\end{figure}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{ar1phi1x00_acf.pdf}
+    \caption{ACF of an AR(1) with $ \phi=1 $ starting from
+        $ x_0=0 $}\label{fig:ar1phi1x00_acf}
+\end{figure}
+\begin{itemize}
+    \item Looking back at~\Cref{fig:gtemp}, we see that this time series has an
+    upwards trend. Therefore, based on what we just did, we expect
+    that the ACF should be very large (close to 1) at each lag
+    for this time series. Clearly,~\Cref{fig:gtemp_acf} is indicative
+    of a strong trend or non-stationarity.
+    \item In~\Cref{fig:ar1phi1x00}, we are plotting
+          \[ X_t=X_{t-1}+W_{t} \]
+          with $ X_0=0 $ and $ X_t=\sum_{j=1}^{t} W_j $ which is
+          non-stationary. Some people say it has a ``stochastic trend.''
+    \item In~\Cref{fig:ar1phi1x00_acf}~there exists a
+          similar pattern which is indicative of non-stationarity.
+\end{itemize}
