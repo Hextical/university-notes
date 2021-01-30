@@ -20,39 +20,38 @@ Examples:
               \end{bmatrix} $ where $ Y_i $ is a dependent variable, and
           $ Z_i $ is an independent variable.
               {\color{blue}Perhaps we happen to observe
-                  $ Y_i $ and $ Z_i $ in pairs, and we stop at a model:}
-          \[ Y_i=\beta^\top Z_i+\varepsilon_i\quad \text{where }\varepsilon_i
-              \stackrel{\text{iid}}{\sim} \N{0,\sigma_\varepsilon^2} \]
+                  $ Y_i $ and $ Z_i $ in pairs, and we posit a model:}
+          \[ Y_i=\beta^\top Z_i+\varepsilon_i,\quad\varepsilon_i
+              \stackrel{\text{iid}}{\sim} \N{0,\sigma_{\varepsilon}^2} \]
           \begin{Remark}{}{}
               The relationship between $ Y_i $ and $ Z_i $ doesn't
               depend on $ i $, it only depends through the common parameter
-              $ \beta $, and it assumes that $ \varepsilon $ has fixed variance
+              $ \beta $, and it assumes that $ \varepsilon_i $ has fixed variance
               for each $ i $.
           \end{Remark}
     \item In such settings, one is typically interested in:
           \begin{enumerate}
-              \item Prediction: {\color{blue}how based on the data, can we predict
-                    how these variables would behave in the future?}
+              \item Prediction: {\color{blue} based on the data, how can we predict
+                    the behaviour of these variables in the future?}
               \item Inference: {\color{blue}how do we use the data to try to estimate
-                    and understand better the underlying mechanism which generates
+                    and better understand the underlying mechanism which generates
                     the data? For example, a linear model or simple Gaussian model.}
           \end{enumerate}
 \end{enumerate}
-\begin{Definition}{Time Series}{}
+\begin{Definition}{Time series}{}
     We say $ X_1,\ldots,X_T $ is an (observed)
     \textbf{time series} of length $ T $ if $ X_t $
     denotes an observation obtained at time $ t $.
-
     In particular, the observations are ordered in time.
 \end{Definition}
-\begin{Definition}{Real-valued}{}
+\begin{Definition}{Real-valued time series}{}
     If $ X_t\in\mathbf{R} $, we say $ X_1,\ldots,X_T $ is
-    a \textbf{real-valued} or \textbf{scalar} time series.
+    a \textbf{real-valued} (\textbf{scalar}) \textbf{time series}.
 \end{Definition}
-\begin{Definition}{Multivariate}{}
+\begin{Definition}{Multivariate time series}{}
     If $ X_t\in\mathbf{R}^p $, we say $ X_1,\ldots,X_T $
-    is a \textbf{multivariate} or \textbf{vector-valued}
-    time series.
+    is a \textbf{multivariate} (\textbf{vector-valued})
+    \textbf{time series}.
 \end{Definition}
 
 \begin{figure}[!ht]
@@ -72,17 +71,17 @@ Observe that in~\Cref{fig:jj}:
 
 With time series data, we are typically concerned
 with the same goals as in classical statistics (prediction and inference).
-However, in contrast, with time series, the data often exhibit:
+However, in contrast with time series, the data often exhibit:
 \begin{enumerate}[(1)]
-    \item Heterogeneity
+    \item \textbf{Heterogeneity}
           \begin{itemize}
-              \item Time trends $ \rightarrow \E{X_t}\neq \E{X_{t+h}} $
+              \item Time trends $ \rightarrow \E{X_t}\neq \E{X_{t+h}} $.
               \item Heteroskedasticity
-                    $ \rightarrow \Var{X_t}\neq \Var{X_{t+h}} $
+                    $ \rightarrow \Var{X_t}\neq \Var{X_{t+h}} $.
           \end{itemize}
           {\color{blue}In classical statistics, it's assumed that all the observations have the
           same distribution which is clearly \underline{not} the case in time series.}
-    \item Serial Dependence (Serial Correlation)
+    \item \textbf{Serial Dependence (Serial Correlation)}
           \begin{itemize}
               \item Observations that are temporally close appear to depend
                     on each other.
@@ -104,28 +103,28 @@ plot(gtemp, type = "o", ylab = "Global Temperature Deviations")
 Observe that in~\Cref{fig:gtemp}:
 \begin{itemize}
     \item The global temperature is steadily increasing over time.
-    \item There is heterogeneity in the mean over time.
-    \item Heterogeneity in the variance over time is not very apparent.
+    \item Heterogeneity exists within the mean over time.
+    \item Heterogeneity exists within the variance over time, although it is not very apparent.
     \item Serial dependence occurs.
 \end{itemize}
-
-\begin{Definition}{Time series (Formal Definition)}{}
+Let's formally define a time series.
+\begin{Definition}{Time series}{}
     We say $ \set{X_t}_{t\in\mathbf{Z}} $
     is a \textbf{time series} if $ \set{X_t : t\in\mathbf{Z}} $
     is a stochastic process indexed by $ \mathbf{Z} $.
+    In other words, there is a common probability space
+    $ (\Omega,\mathcal{F},\mathbb{P}) $ such that
+    $ X_t:\Omega\to\mathbf{R} $ is a random variable
+    for all $ t $.
+
+    In relation to the original definition, we say
+    $ X_1,\ldots,X_T $ is an \textbf{observed stretch} (\textbf{realization},
+    \textbf{simple path}) of length $ T $ from $ \set{X_t}_{t\in\mathbf{Z}} $.
 \end{Definition}
-In other words, there is a common probability space
-$ (\Omega,\mathcal{F},\mathbb{P}) $ so that for all
-$ X_t:\Omega\to\mathbf{R} $ is a random variable.
-
-In relation to the original definition, we say
-$ X_1,\ldots,X_T $ is an \textbf{observed stretch} (\textbf{realization},
-\textbf{simple path}) of length $ T $ from $ \set{X_t}_{t\in\mathbf{Z}} $.
-
-    {\color{blue}Formally speaking, we think of a time series as being a little snippet
-        of one long sample path the stochastic process for which would characterize
-        all the serial dependence, time trends, and heteroskedasticity,
-        that exist within a time series.}
+{\color{blue}Formally speaking, we think of a time series as being a little snippet
+of one long sample path the stochastic process for which would characterize
+all the serial dependence, time trends, and heteroskedasticity
+that exist within a time series.}
 
 \section{Basic Principles of Forecasting}
 Consider a time series of length $ T $, namely $ X_1,\ldots,X_T $.
@@ -138,51 +137,58 @@ for $ X_{T+h} $:
     is called a \textbf{forecast} of $ X_{T+h} $
     at \textbf{horizon} $ h $.
 \end{Definition}
-There are two primary goals in forecasting:
+\subsection*{Goals of Forecasting}
+\textbf{Goal 1}
 \begin{itemize}
-    \item Goal 1: Choose $ f_n $ ``optimally.'' Normally,
+    \item Choose $ f_n $ ``optimally.'' Normally,
           we or the practitioner have some measure, say $ L(\cdot,\cdot) $,
           in mind for determining how ``close'' $ \hat{X}_{T+h} $
           is to the true value, $ X_{T+h} $. We then wish to choose $ f_h $ so that
           $ L(X_{T+h},f_h(X_T,\ldots,X_1)) $
-          is minimized.
+          is minimized, where $ L(\cdot,\cdot) $ is a loss function.
 
           \begin{Example}{}{}
-              Most common measure $ L(\cdot,\cdot) $ is mean-squared error
-              (MSE), where
-              \[ L(X,Y)=\E{(X-Y)^2} \]
+              The most common measure of $ L(\cdot,\cdot) $ is the \textbf{mean-squared error}
+              (MSE), defined by
+              \[ L(X,Y)=\E[\big]{(X-Y)^2} \]
           \end{Example}
-    \item \textbf{Goal 2}: Quantify the uncertainty in the forecast.
+\end{itemize}
+\textbf{Goal 2}
+\begin{itemize}
+    \item Quantify the uncertainty in the forecast.
           This entails providing some description of how close
           we expect $ \hat{X}_{T+h} $ to be to $ X_{T+h} $.
           \begin{Example}{Why is it important to quantify uncertainty?}{}
               Suppose every minute, we flip a coin and denote
               \begin{itemize}
-                  \item $ H\to 1 $
-                  \item $ T\to -1 $
+                  \item (Heads): $ H\to 1 $
+                  \item (Tails): $ T\to -1 $
                   \item $ X_t= $ outcome in minute $ t $,
                         where $ t=1,\ldots,T $.
               \end{itemize}
               This produces a time series of length $ T $, which is a random
-              sequence of $ (1) $'s and $ (-1) $'s. Note $ \E{X_t}=0 $.
-              So, if we wish to forecast for $ h\ge 1 $,
-              consider $ \hat{X}_{T+h}=f(X_T,\ldots,X_1) $
+              sequence of $ (1) $'s and $ (-1) $'s. Note $ \E{X_t}=0 $ for all
+              $ t $.
+              If we wish to forecast for $ h\ge 1 $,
+              consider $ \hat{X}_{T+h}=f(X_T,\ldots,X_1) $, thus
               \begin{align*}
                   L(X_{T+h},\hat{X}_{T+h})
-                   & =\E{(X_{T+h}-\hat{X}_{T+h})^2}                                   \\
-                   & =\E{X_{T+h}^2}+\E{\hat{X}_{T+h}^2}-2\E{X_{T+h}\hat{X}_{T+h}}     \\
-                   & =\E{X_{T+h}^2}+\E{\hat{X}_{T+h}^2}-2\E{X_{T+h}}\E{\hat{X}_{T+h}} \\
-                   & =\E{X_{T+h}^2}+\E{\hat{X}_{T+h}^2}
+                   & =\E[\big]{(X_{T+h}-\hat{X}_{T+h})^2}                               \\
+                   & =\E{X_{T+h}^2}+\E{\hat{X}_{T+h}^2}-2\E{X_{T+h}\hat{X}_{T+h}}       \\
+                   & =\E{X_{T+h}^2}+\E{\hat{X}_{T+h}^2}-2\E{X_{T+h}}\E{\hat{X}_{T+h}} & \\
+                   & =\E{X_{T+h}^2}+\E{\hat{X}_{T+h}^2}                                 \\
               \end{align*}
-              Furthermore, note that
-              $ \E{X_{T+h}^2}=\Var{X_t} $ since $ \E{X_{T+h}}=0 $.
-
-              We can write $ \E{X_{T+h}\hat{X}_{T+h}}=\E{X_{T+h}}\E{\hat{X}_{T+h}} $ since
+              Note that we can write $ \E{X_{T+h}\hat{X}_{T+h}}=\E{X_{T+h}}\E{\hat{X}_{T+h}} $ since
               $ \hat{X}_{T+h} $ is a function of the data
               $ X_T,\ldots,X_1 $, and hence independent of $ X_{T+h} $.
 
+              Furthermore, note that
+              $ \E{X_{T+h}^2}=\Var{X_t} $ since $ \E{X_{T+h}}=0 $.
+
+
+
               We can minimize this by taking $ \hat{X}_{T+h}=0 $. There's
-              nothing ``wrong'' with this forecast. But ideally,
+              nothing ``wrong'' with this forecast, but ideally
               we would also be able to say that the sequence appears to be random,
               and that we don't expect this forecast to be close to the actual value.
 
@@ -194,24 +200,23 @@ There are two primary goals in forecasting:
                       describe the accuracy for which we expect the forecast to perform.}
           \end{Example}
 \end{itemize}
-How can we quantify the uncertainty in forecasting?
-
-Ideal: The predictive distribution:
+\subsection*{How can we quantify the uncertainty in forecasting?}
+\textbf{Ideal}: The predictive distribution, that is,
 \[ X_{T+h}\mid X_T,\ldots,X_1 \]
-Excellent: Predictive intervals/sets. For some $ \alpha\in(0,1) $
-find $ I_\alpha $ so that
+\textbf{Excellent}: Predictive intervals/sets, that is, for some $ \alpha\in(0,1) $
+find an interval $ I_\alpha $ such that
 \[ \Prob{X_{T+h}\in I_\alpha\given X_T,\ldots,X_1}=\alpha \]
-($ \alpha=0.95 $, for example). Often such intervals take the form
+A common example is with $ \alpha=0.95 $. Often times, such intervals take the form
 \[ I_\alpha=(\hat{X}_{T+h}-\hat{\sigma}_h,\hat{X}_{T+h}+\hat{\sigma}_h) \]
-Concluding remarks:
+\textbf{Concluding Remarks}:
 \begin{enumerate}
     \item Estimating predictive distribution leads one towards
-          estimating the joint distribution of
+          \emph{estimating} the joint distribution of
           \[ X_{T+h},X_T,\ldots,X_1 \]
-          For example, ARMA and ARIMA models.
+          For example, the ARMA and ARIMA models.
     \item It is important that we acknowledge that some things cannot be predicted!
 \end{enumerate}
-``It is tough to make predictions, especially about the future.''---Yogi Berra
+``It's tough to make predictions, especially about the future.''---Yogi Berra
 
 \section{Definitions of Stationary}
 Given a time series $ X_1,\ldots,X_T $, we are
@@ -227,9 +232,39 @@ $ \set{X_{t}}_{t\in\mathbf{Z}} $
     \item $ \set{X_t}_{t\in\mathbf{Z}} $: Stochastic process.
 \end{itemize}
 
+\begin{figure}[!htbp]
+    \centering
+    \begin{tikzpicture}[scale=0.8]
+        \draw (-2.5,0) -- (6.5,0) node[right] {time};
+        \draw (0,-1.5) -- (0,2.5) node[above] {$X_t$};
+
+        \foreach \x/\xtext in {-2/-2, -1/-1, 1/1, 2/2, 4/T, 5/T+1, 6/T+2}
+        \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below] {$\scriptstyle\xtext$};
+
+        \draw (-2.6,0) node[below,yshift=-4pt] {$\scriptstyle\ldots$};
+        \draw (3,0) node[below,yshift=-4pt] {$\scriptstyle\ldots$};
+        \draw (6.7,0) node[below,yshift=-4pt] {$\scriptstyle\ldots$};
+
+        \draw[fill=red] (-2,-.6) circle (.5ex);
+        \draw[fill=red] (-1,0.3) circle (.5ex);
+        \draw[fill=blue] (1,1) circle (.5ex);
+        \draw[fill=blue] (2,-1) circle (.5ex);
+        \draw[fill=blue] (2.6,1.1) circle (.5ex);
+        \draw[fill=blue] (3,0.5) circle (.5ex);
+        \draw[fill=blue] (3.4,-.7) circle (.5ex);
+        \draw[fill=blue] (4,.8) circle (.5ex);
+        \draw[fill=red] (5,.6) circle (.5ex);
+        \draw[fill=red] (6,-.8) circle (.5ex);
+
+        \draw [decorate,decoration={brace,amplitude=5pt,mirror,raise=4ex},color=red]
+        (-2.5,-0.8) -- (6.6,-0.8) node[midway,yshift=-3.5em,text=red]{Complete Time Series};
+        \draw [decorate,decoration={brace,amplitude=5pt},color=blue]
+        (1,1.6) -- (4,1.6) node[midway,yshift=1.5em,text=blue]{Observed Time Series};
+    \end{tikzpicture}
+\end{figure}
 Worst case: $ X_t\sim F_t $, where $ F_t $ is a \emph{changing}
 function of $ t $. If so, it is hard to pool the data
-$ X_1,\ldots,X_T $, to estimate $ F_t $. If
+$ X_1,\ldots,X_T $ to estimate $ F_t $. If
 \textbf{serial dependence} occurs; that is, if the
 distribution of $ (X_t,X_{t+h}) $
 depends strongly on $ t $, then we have a similar problem in estimating
@@ -257,7 +292,7 @@ e.g.\ $ \Cov{X_t,X_{t+h}} $.
     we denote the \textbf{mean function} of the time series as
     \[ \mu_t=\E{X_t} \]
 \end{Definition}
-\begin{Definition}{Autocovariance function, Lag}{}
+\begin{Definition}{Autocovariance function}{}
     The \textbf{autocovariance} function of the time series $ \set{X_t}_{t\in\mathbf{Z}} $
     is defined as
     \[ \gamma(t,s)=\E{(X_t-\mu_t)(X_s-\mu_s)}=\Cov{X_t,X_s} \]
@@ -265,7 +300,7 @@ e.g.\ $ \Cov{X_t,X_{t+h}} $.
 \begin{Definition}{Weakly stationary, Lag}{}
     We say that a time series $ \set{X_t}_{t\in\mathbf{Z}} $
     is \textbf{weakly stationary} if $ \E{X_t}=\mu $
-    (does not depend on $ t $), and if
+    which does not depend on $ t $, and if
     \[ \gamma(t,s)=f(\abs{t-s}) \]
     that is, $ \gamma(t,s) $ is a function of $ \abs{t-s} $. In this case,
     we usually write
@@ -274,7 +309,7 @@ e.g.\ $ \Cov{X_t,X_{t+h}} $.
 \end{Definition}
 Additional terminology:
 \begin{itemize}
-    \item The property when $ \E{X_t}=\mu $ does not depend
+    \item The property when $ \E{X_t}=\mu $ which does not depend
           on $ t $ is often called the \textbf{first order stationary}.
     \item The property when $ \gamma(t,s)=f(\abs{t-s}) $
           only depends on the lag $ \abs{t-s} $ is called the
@@ -332,13 +367,13 @@ all periodicities occur with equal strength.
             \sigma_W^2 & \abs{t-s}=0 \\
             0          & \abs{t-s}>0
         \end{cases} \]
-    only depends on $ \abs{t-s} $.
-
+    only depends on $ \abs{t-s} $. Therefore,
     $ \set{W_t}_{t\in\mathbf{Z}} $ is
     \textbf{weakly stationary}. Furthermore,
+    we claim that
     $ \set{W_t}_{t\in\mathbf{Z}} $ is
-    \textbf{strictly stationary}. Let $ k\ge 1 $
-    with $ i_1<\cdots<i_k $ and $ h\in\mathbf{Z} $, then
+    \textbf{strictly stationary}. Let $ k\ge 1 $,
+    $ i_1,\ldots,i_k,h\in\mathbf{Z} $ with $ i_1<\cdots<i_k $, then
     \begin{align*}
         \Prob{W_{i_1}\le t_1,\ldots,W_{i_k}\le t_k}
          & =\prod_{j=1}^k\Prob{W_{i_j}\le t_j}                   & \quad & \text{independence} \\
@@ -350,7 +385,7 @@ all periodicities occur with equal strength.
     Suppose $ \set{W_t}_{t\in\mathbf{Z}} $ is a strong white noise.
     Define $ X_t=W_t+\theta W_{t-1} $ for $ \theta\in\mathbf{R} $.
     Since $ \set{W_t}_{t\in\mathbf{Z}} $ is a strong white noise, we
-    have $ \E{W_t}=0 $ for all $ t $, and so we
+    have $ \E{W_t}=0 $ for all $ t $, hence we
     have $ \E{X_t}=\E{W_t+\theta W_{t-1}}=\E{W_t}+\theta\E{W_{t-1}}=0 $
     which is first order stationary.
     \[ \gamma(t,s)=\Cov{X_t,X_s}=\begin{cases}
@@ -361,18 +396,19 @@ all periodicities occur with equal strength.
     We obtain these calculations as follows:
     \begin{itemize}
         \item $ \abs{t-s}=0 $.
-              \[ \E{(W_t+\theta W_{t-1})^2}
+              \[ \E[\big]{(W_t+\theta W_{t-1})^2}
                   =\E{W_t^2}+\theta^2\E{W_{t-1}^2}+2\E{\theta W_t W_{t-1}}
                   =(1+\theta^2)\sigma_W^2 \]
+              since $ W_t $ is independent of $ W_{t-1} $. The calculation is easy to verify.
         \item $ t=s+1 $ (or $ s=t+1 $).
-              \[ \E{(W_{s+1}+\theta W_s)(W_s+\theta W_{s-1})}=\theta\E{W_s^2}=\theta\sigma_W^2 \]
+              \[ \E[\big]{(W_{s+1}+\theta W_s)(W_s+\theta W_{s-1})}=\theta\E{W_s^2}=\theta\sigma_W^2 \]
               since $ W_{s+1} $ is independent of $ W_s $ and $ W_{s-1} $.
               The calculation is easy to verify.
         \item $ \abs{t-s}>1 $. $ W_t+\theta W_{t-1} $ is independent of
               $ W_s+\theta W_{s-1} $.
     \end{itemize}
-    $ \set{X_t}_{t\in\mathbf{Z}} $ is also strictly stationary.
-    Suppose $ k\ge 1 $, $ i_1,\ldots,i_k, h\in\mathbf{Z} $
+    We claim that $ \set{X_t}_{t\in\mathbf{Z}} $ is also strictly stationary.
+    Let $ k\ge 1 $, $ i_1,\ldots,i_k, h\in\mathbf{Z} $
     with $ i_1<\cdots<i_k $, then
     \begin{align*}
         \Prob{X_{i_1}\le t_1,\ldots,X_{i_k}\le t_k}
@@ -414,6 +450,30 @@ all periodicities occur with equal strength.
     \[ X_t=\sum_{i=0}^{t} W_i+\sum_{i=t}^{-1} W_i  \]
     Show that $ \set{X_t}_{t\in\mathbf{Z}} $ is first order stationary,
     but $ \set{X_t}_{t\in\mathbf{Z}} $ is \underline{not} second order stationary.
+
+    \textbf{Solution.} $ \set{X_t}_{t\in\mathbf{Z}} $ is first order stationary
+    since
+    \begin{align*}
+        \E{X_t}
+         & =\E[\bigg]{\sum_{i=0}^{t}W_i+\sum_{i=t}^{-1} W_i}                   \\
+         & =\E{W_0+W_1+\cdots+W_{t-1}+W_{t}+W_{t}+W_{t-1}+\cdots+W_{0}+W_{-1}} \\
+         & =\E{W_{-1}}+\E{2W_0}+\E{2W_1}+\cdots+\E{2W_{t-1}}                   \\
+         & =0+2(0)+\cdots+2(0)                                                 \\
+         & =0
+    \end{align*}
+    since $ \set{W_t}_{t\in\mathbf{Z}} $ is a strong white noise; that is,
+    $ \E{W_t}=0 $ for all $ t $.
+
+    $ \set{X_t}_{t\in\mathbf{Z}} $ is \underline{not} second order stationary
+    since if $ t>0 $ the second sum is simply $ \sum_{i=t}^{-1} W_i=0 $ and we have
+    \begin{align*}
+        \E{(X_t-\mu_t)(X_t-\mu_t)}
+         & =\E{X_t^2}                                                                                           \\
+         & =\E*{\biggl(\sum_{i=0}^{t} W_i\biggr)^{\!2}}                                                         \\
+         & =\E{W_0^2}+\cdots+\E{W_t^2}                  & \quad & \text{since $ W_i\indep W_j $ for $ i\ne j $} \\
+         & =t\sigma_W^2
+    \end{align*}
+    which depends on $ t $.
 \end{Exercise}
 \section{Weak versus Strong Stationary}
 Sadly, $ \set{X_t}_{t\in\mathbf{Z}} $ is strictly stationary does \underline{not} imply
@@ -432,13 +492,20 @@ $ \set{X_t}_{t\in\mathbf{Z}} $ is weakly stationary.
     then $ \set{X_t}_{t\in\mathbf{Z}} $ is weakly stationary.
 \end{Theorem}
 \begin{Proof}{\Cref{thm:strongly_imp_weakly}}{}
-    Note that if $ \set{X_t}_{t\in\mathbf{Z}} $ is strictly stationary,
+    Note that if $ \set{X_t}_{t\in\mathbf{Z}} $ is strictly stationary, then
     \[ (X_t)\stackrel{\text{d}}{=}(X_0) \]
     so that $ \E{X_t}=\E{X_0} $ which does not depend on $ t $, and also
     \[ \Var{X_t}=\Var{X_0} \]
     By the Cauchy-Schwarz inequality,
-    \[ \gamma(t,s)=\Cov{X_t,X_s}\le \Var{X_t}<\infty \]
-    and suppose $ t<s $,
+    \begin{align*}
+        \gamma(t,s)
+         & =\Cov{X_t,X_s}                                                           \\
+         & =\E[\big]{(X_s-\mu)(X_t-\mu)}                                            \\
+         & \le \set*{\E[\big]{(X_s-\mu)^2}}^{1/2}\set*{\E[\big]{(X_t-\mu)^2}}^{1/2} \\
+         & =\sqrt{\Var{X_s}}\sqrt{\Var{X_t}}                                        \\
+         & =\Var{X_t}<\infty
+    \end{align*}
+    If $ t<s $, then
     \[ \Cov{X_t,X_s}=\Cov{X_0,X_{s-t}}=f(\abs{s-t}) \]
     since it is shift-invariant, and hence if we shift everything over by $ t $,
     \[ (X_t,X_s)\stackrel{\text{d}}{=}(X_{t-t},X_{s-t})\stackrel{\text{d}}{=}(X_0,X_{s-t}) \]
@@ -458,7 +525,7 @@ $ \set{X_t}_{t\in\mathbf{Z}} $ is weakly stationary.
         \Cov{X_{i_j},X_{i_r}}_{1\le j,\, r\le k} \]
 \end{Definition}
 \begin{Theorem}{}{weak_gaussian_imp_strictly}
-    If $ \set{X_t}_{t\in\mathbf{Z}} $ is weakly stationary and a Gaussian process, then
+    If $ \set{X_t}_{t\in\mathbf{Z}} $ is weakly stationary and is a Gaussian process, then
     $ \set{X_t}_{t\in\mathbf{Z}} $ is strictly stationary.
 \end{Theorem}
 \begin{Proof}{\Cref{thm:weak_gaussian_imp_strictly}}{}
@@ -481,10 +548,10 @@ $ \set{X_t}_{t\in\mathbf{Z}} $ is weakly stationary.
     Also,
     \begin{align*}
         \Var{X_{i_1},\ldots,X_{i_k}}
-         & =\Cov{X_{i_j},X_{i_r}}_{1\le j,\, r\le k} \\
-         & =\Cov{X_0,X_{i_r-i_j}}_{1\le j,\, r\le k} \\
-         & =\Cov{X_0,X_{i_r+h},X_{i_r+h-(i_j+h)}}    \\
-         & =\Cov{X_{i_j+h},X_{i_r+h}}                \\
+         & =\Cov{X_{i_j},X_{i_r}}_{1\le j,\, r\le k}       \\
+         & =\Cov{X_0,X_{i_r-i_j}}_{1\le j,\, r\le k}       \\
+         & =\Cov{X_0,X_{i_r+h-(i_j+h)}}_{1\le j,\, r\le k} \\
+         & =\Cov{X_{i_j+h},X_{i_r+h}}_{1\le j,\, r\le k}   \\
          & =\Var{X_{i_1+h},\ldots,X_{i_k+h}}
     \end{align*}
 \end{Proof}
@@ -499,7 +566,8 @@ $ \set{X_t}_{t\in\mathbf{Z}} $ is weakly stationary.
 \begin{Exercise}{}{}
     Prove that if $ \set{X_t}_{t\in\mathbf{Z}} $ is \underline{not}
     weakly stationary; that is, either $ \E{X_t} $ depends on $ t $
-    or $ \gamma(t,s) $ does not depend on the lag,
+    or $ \gamma(t,s) $ does not depend on the lag, and has
+    a finite mean and variance,
     then $ \set{X_t}_{t\in\mathbf{Z}} $ is \underline{not} strictly stationary.
 \end{Exercise}
 
@@ -537,7 +605,7 @@ whenever $ X_n\in L^2 $ so that $ \E{(X_n-X_m)^2}\to 0 $
 as $ n,m\to\infty $, then there exists $ X\in L^2 $
 so that $ X_n\to X $; that is, $ \E{(X_n-X)^2}\to 0 $.
 This follows from the ``famous'' Riesz-Fischer Theorem.
-\subsection{Useful Tools for Time Series}
+\subsection*{Useful Tools for Time Series}
 \begin{enumerate}[(1)]
     \item \textbf{Existence of Limits}
           \[ X_{t,n}=\sum_{j=0}^{n} \psi_j \varepsilon_{t-j}
@@ -681,7 +749,7 @@ random walk noise.
 
 Notice that under the Random Walk Model.
 \[ X_t-X_{t-1}=\nabla X_t=\delta+\varepsilon_t \]
-So, if $ X_t $ follows a random walk model, the series $ Y_t=\delta X_t $
+So, if $ X_t $ follows a random walk model, the series $ Y_t=\nabla X_t $
 should behave like a white noise shifted by $ \delta $.
 \begin{figure}[!ht]
     \centering
@@ -737,7 +805,7 @@ to an approximately stationary series.
     \item The trend is often of interest, and good estimates
           of the trend lead to improved long-range forecasts.
 \end{itemize}
-\begin{Example}{Differencing can complicate time series}{}
+\begin{Example}{Potentially Complicating Series with Differencing}{}
     $ X_t=W_t $ where $ W_t $ is a strong white noise.
     \[ \nabla X_t=W_t-W_{t-1}=Y_t \]
     \[ \gamma_X(h)=\Cov{X_t,X_{t+h}}=\begin{cases}

@@ -1,4 +1,4 @@
-\chapter{Time Series Regression}
+\chapter{Time Series Regression and Exploratory Data Analysis}
 \section{Autocorrelation and Empirical Autocorrelation}
 Usually through either detrending or differencing, we arrive
 at a series $ \set{X_t}_{t\in\mathbf{Z}} $ that we may consider as stationary.
@@ -142,8 +142,8 @@ and we want to discuss the asymptotic properties of this estimator.
     If $ a_n $ is a sequence of scalars, we abbreviate
     $ \displaystyle \frac{X_n}{a_n} $
     converges in probability to zero as
-    \[ X_n=o_p(a_n)\iff \Prob*{\abs*{\frac{X_n}{a_n}}>\varepsilon}\to 0\text{ as }
-        n\to\infty\quad (\forall\varepsilon>0) \]
+    \[ X_n=o_p(a_n)\iff \Prob*{\abs*{\frac{X_n}{a_n}}>\varepsilon}\xrightarrow{n\to\infty}0
+        \quad (\forall\varepsilon>0) \]
     Hence, $ X_n $
     converges in probability to zero is denoted $ X_n=o_p(1) $.
     We also write $ X_n\stackrel{p}{\to}X $ to denote $ X_n $
@@ -197,13 +197,13 @@ and we want to discuss the asymptotic properties of this estimator.
               \end{align*}
               Therefore, for $ \varepsilon>0 $, by Markov's Inequality we have
               \[ \Prob{\abs{\bar{X}_T}>\varepsilon}\le \frac{\E{\abs{\bar{X}_T}^2}}{\varepsilon^2}=
-                  \frac{\sigma^2/T}{\varepsilon^2}\to 0\text{ as }T\to\infty  \]
+                  \frac{\sigma^2/T}{\varepsilon^2}\xrightarrow{T\to\infty}0  \]
               Hence, $ \abs{\bar{X}_T}\stackrel{p}{\to}0 $
         \item $ \bar{X}_T=\mathcal{O}_p(1/\sqrt{T}) $, as before
               \[ \Var*{\frac{\bar{X}_T}{1/\sqrt{T}}}=\Var{\sqrt{T}\bar{X}_T}=T\Var{\bar{X}_T}=\sigma^2 \]
               So by Markov's Inequality, for $ M>0 $
               \[ \Prob{\abs{\sqrt{T}\bar{X}_T}>M}\le \frac{\Var{\sqrt{T}\bar{X}_T}}{M^2}=\frac{\sigma^2}{M^2}
-                  \to 0\text{ as }M\to\infty \]
+                  \xrightarrow{M\to\infty}0 \]
               Hence $ \sqrt{T}\bar{X}_T=\mathcal{O}_p(1)\implies \bar{X}_T=\mathcal{O}_p(1/\sqrt{T}) $.
     \end{enumerate}
 \end{Example}
@@ -212,7 +212,7 @@ and we want to discuss the asymptotic properties of this estimator.
     \[ \sqrt{T}\bar{X}_T\stackrel{D}{\to}\N{0,\sigma^2} \]
     Therefore, if $ F_T\sim $ CDF of $ \sqrt{T}\bar{X}_T $ and $ \Phi\sim $
     CDF of $ \N{0,1} $ random variable we have
-    \[ \abs*{F_T(x)-\Phi\biggl(\frac{x}{\sigma}\biggr)}\to 0\text{ as }T\to\infty\quad (\forall x\in\mathbf{R}) \]
+    \[ \abs*{F_T(x)-\Phi\biggl(\frac{x}{\sigma}\biggr)}\xrightarrow{T\to\infty}0\quad (\forall x\in\mathbf{R}) \]
     For $ \varepsilon>0 $, choose $ M $ such that
     \[ \Phi\biggl(-\frac{M}{\sigma}\biggr)=1-\biggl(\frac{M}{\sigma}\biggr)\le \frac{\varepsilon}{4} \]
     For this $ M $, choose $ T_0 $ such that if $ T\ge T_0 $, then
@@ -279,7 +279,7 @@ and we want to discuss the asymptotic properties of this estimator.
         \Var{G_{1}}
          & =\E{G_{1}^2}                                                                                                \\
          & =\frac{1}{T^2}\sum_{t=1}^{T-1} \sum_{s=1}^{T-1}\Uunderbracket{\E{W_{t}W_{t+1}W_{s}W_{s+1}}}_{\ne 0\iff s=t} \\
-         & =\frac{T-1}{T^2} \sum_{t=1}^{T-1} \E{W_{t}^2W_{t+1}^2}=\frac{T-1}{T^2} \sigma_W^4\to 0\text{ as }T\to\infty
+         & =\frac{T-1}{T^2} \sum_{t=1}^{T-1} \E{W_{t}^2W_{t+1}^2}=\frac{T-1}{T^2} \sigma_W^4\xrightarrow{T\to\infty}0
     \end{align*}
     By Markov's Inequality,
     \[ G_{1}=o_p(1) \]
@@ -320,7 +320,7 @@ with the problems:
     and $ m $-dependent time series for $ m\in\mathbf{Z}_{>0} $
     with $ \E{X_t}=0 $ and $ \E{X_t^2}<\infty $, then if
     \[ S_T=\frac{1}{\sqrt{T}} \sum_{t=1}^{T}X_t=\sqrt{T}\bar{X}_T
-        \stackrel{D}{\to}\N{0,\sigma_m^2}\text{ as }T\to\infty  \]
+        \stackrel{D}{\xrightarrow{T\to\infty}}\N{0,\sigma_m^2}  \]
     where
     \[ \sigma_m^2=\sum_{h=-m}^{m} \gamma(h)=\gamma(0)+2 \sum_{h=1}^{m} \gamma(h) \]
     Note that $ \sigma_m^2 $ is just the variance of $ S_T $
@@ -348,8 +348,7 @@ Visually, row-wise random variables are independent:
     \[ S_i=\frac{1}{\sigma_i} \sum_{j=1}^{n_i} X_{i,j} \]
     If for $ \varepsilon>0 $,
     \[ \frac{1}{\sigma_i^2}\sum_{j=1}^{n_i} \E{X_{i,j}^2
-            \Ind{\abs{X_{i,j}}>\varepsilon\sigma_i}}\to 0
-        \text{ as } i\to\infty \]
+            \Ind{\abs{X_{i,j}}>\varepsilon\sigma_i}}\xrightarrow{i\to\infty}0 \]
     then
     \[ S_i\stackrel{D}{\to}\N{0,1} \]
 \end{Theorem}
@@ -383,7 +382,7 @@ Visually, row-wise random variables are independent:
     \[ =\sum_{h=1-m}^{m-1} (m-\abs{h})\gamma(h)<\infty \]
     noting that $ \gamma(h)=\gamma(-h) $, therefore for $ C $ as a constant, we have
     \[ \Var{G_2}=\frac{N}{T}
-        C=\frac{\displaystyle \biggl\lfloor \frac{T}{a_T+m} \biggr\rfloor}{T}(C)\to 0\text{ as }a_T\to\infty  \]
+        C=\frac{\displaystyle \biggl\lfloor \frac{T}{a_T+m} \biggr\rfloor}{T}(C)\xrightarrow{a_T\to\infty}0  \]
     and hence $ G_2=o_p(1) $.
 
     Let's deal with the big block terms. Notice
@@ -404,12 +403,12 @@ Visually, row-wise random variables are independent:
         \sum_{h=-m}^{m} (a_T-\abs{h})\gamma(h) \]
     Therefore,
     \[ \Var{G_1}=\Uunderbracket{\frac{N}{T}}_{\approx 1/a_T}
-        \sum_{h=-m}^{m}(a_T-\abs{h})\gamma(h) \to \sum_{h=-m}^{m} \gamma(h)\text{ as }T\to\infty \]
+        \sum_{h=-m}^{m}(a_T-\abs{h})\gamma(h) \xrightarrow{T\to\infty} \sum_{h=-m}^{m} \gamma(h) \]
     Therefore, the variance of $ G_1 $ is bounded.
     We showed $ \sigma_N^2=\Var{G_1}\approx $ constant. So, we must show
     \[
         \sum_{j=1}^{N} \E{\Uunderbracket{Y_{j}^2}_{\text{iid}} \Ind{\abs{Y_{j}}>\varepsilon\sigma_N}}=
-        N\E{Y_{1}^2 \Ind{\abs{Y_{1}}>\varepsilon\sigma_N}} \to 0\text{ as } T\to\infty
+        N\E{Y_{1}^2 \Ind{\abs{Y_{1}}>\varepsilon\sigma_N}} \xrightarrow{T\to\infty}0
     \]
     \emph{Aside}:
     \begin{align*}
@@ -425,10 +424,10 @@ Visually, row-wise random variables are independent:
         N\E{Y_{1}^2 \Ind{\abs{Y_{1}}>\varepsilon\sigma_N}}
          & \le \frac{N}{(\varepsilon\sigma_N)^\delta}C\biggl(\frac{a_T}{T} \biggr)^{\frac{2+\delta}{2}} \\
          & =\frac{C}{(\varepsilon\sigma_N)^\delta}
-        \frac{N a_T}{T}\biggl(\frac{a_T}{T} \biggr)^{\delta/2}\to 0\text{ as }T\to\infty
+        \frac{N a_T}{T}\biggl(\frac{a_T}{T} \biggr)^{\delta/2}\xrightarrow{T\to\infty}0
     \end{align*}
     Therefore, by~\Cref{thm:m_clt}
-    \[ \frac{G_1}{\sigma_N}\stackrel{D}{\to}\N{0,1}\text{ as }T\to\infty  \]
+    \[ \frac{G_1}{\sigma_N}\stackrel{D}{\xrightarrow{T\to\infty}}\N{0,1}  \]
     and since
     \[ \sigma_N^2\to \sum_{j=-m}^{m} \gamma(j) \]
     we have
@@ -523,8 +522,7 @@ where $ C $ is the same constant as in the proof of~\Cref{thm:m_clt}.
     $ L^2 $. If
     \[ S_t=\frac{1}{\sqrt{T}} \sum_{t=1}^{T} X_t \]
     then
-    \[ S_T\stackrel{D}{\to}\N[\bigg]{0,\sum_{\ell=-\infty}^{\infty} \gamma(\ell)}\text{ as }
-        T\to\infty \]
+    \[ S_T\stackrel{D}{\xrightarrow{T\to\infty}}\N[\bigg]{0,\sum_{\ell=-\infty}^{\infty} \gamma(\ell)} \]
 \end{Theorem}
 \begin{Proof}{\Cref{thm:lin_clt}}{}
     $ X_t $ is strictly (and weakly) stationary.
@@ -558,7 +556,7 @@ where $ C $ is the same constant as in the proof of~\Cref{thm:m_clt}.
               and $ \gamma_m(h)=\E{X_{t,m}X_{t+h,m}} $.
         \item By DCT,
               \[ \sum_{h=-m}^{m} \gamma_m(h)
-                  \stackrel{m\to\infty}{\to}\sum_{h=-\infty}^{\infty} \gamma(h) \]
+                  \xrightarrow{m\to\infty}\sum_{h=-\infty}^{\infty} \gamma(h) \]
               and hence
               \[ S_m^\prime\stackrel{D}{\to}\N[\bigg]{0,\sum_{h=-\infty}^{\infty} \gamma(h)} \]
         \item \begin{align*}
@@ -567,7 +565,7 @@ where $ C $ is the same constant as in the proof of~\Cref{thm:m_clt}.
                    & \le \sum_{h=1-T}^{T-1} \biggl(1-\frac{\abs{h}}{T} \biggr)
                   \sum_{\ell=m+1}^{\infty}\abs{\psi_\ell}\abs{\psi_{\ell+h}}\sigma_W^2  \\
                    & \le \sum_{\ell=m+1}^{\infty} \abs{\psi_\ell}
-                  \biggl(\sum_{h=-\infty}^{\infty} \abs{\psi_h}\biggr)\sigma_W^2\to 0\text{ as }m\to\infty
+                  \biggl(\sum_{h=-\infty}^{\infty} \abs{\psi_h}\biggr)\sigma_W^2\xrightarrow{0\to\infty}m
               \end{align*}
     \end{enumerate}
     So condition (3) of the BAT is satisfied using Markov's Inequality. Therefore,
@@ -632,7 +630,7 @@ is non-zero only when $ t=s $, so
     \frac{T-h}{T^2} \sigma_X^4 \]
 where $ \E{X_t^2}=\sigma_X^2 $. Therefore,
 \[ \Var{\sqrt{T}\tilde{\gamma}(h)}
-    \stackrel{T\to\infty}{\to}\sigma_X^4 \]
+    \xrightarrow{T\to\infty}\sigma_X^4 \]
 \begin{Theorem}{}{sigma4}
     If $ \set{X_t}_{t\in\mathbf{Z}} $ is a strong white noise
     with $ \E{X_t^4}<\infty $, then
@@ -703,7 +701,7 @@ series?
     the dominant term; that is, the $ \mathcal{O}(T^2) $ doesn't depend on $ h $.
 
     It follows that in this case that
-    \[ \frac{\hat{\rho}(h)}{T^2}\to C\quad(\forall h,\, T\to\infty)  \]
+    \[ \frac{\hat{\rho}(h)}{T^2}\xrightarrow{T\to\infty} C\quad(\forall h)  \]
     Hence
     \[ \hat{\rho}(h)=\frac{\hat{\gamma}(h)}{\hat{\gamma}(0)}\frac{T^2}{T^2}\stackrel{P}{\to}1\quad(\forall h)  \]
     \underline{Moral}: If $ X_t $ has a trend that is not properly removed,
@@ -736,10 +734,10 @@ acf(as.ts(cumsum(rnorm(100))))
 \end{figure}
 \begin{itemize}
     \item Looking back at~\Cref{fig:gtemp}, we see that this time series has an
-    upwards trend. Therefore, based on what we just did, we expect
-    that the ACF should be very large (close to 1) at each lag
-    for this time series. Clearly,~\Cref{fig:gtemp_acf} is indicative
-    of a strong trend or non-stationarity.
+          upwards trend. Therefore, based on what we just did, we expect
+          that the ACF should be very large (close to 1) at each lag
+          for this time series. Clearly,~\Cref{fig:gtemp_acf} is indicative
+          of a strong trend or non-stationarity.
     \item In~\Cref{fig:ar1phi1x00}, we are plotting
           \[ X_t=X_{t-1}+W_{t} \]
           with $ X_0=0 $ and $ X_t=\sum_{j=1}^{t} W_j $ which is

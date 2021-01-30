@@ -1,0 +1,331 @@
+\chapter{ARIMA Models}
+\section{Moving Average Processes}
+Suppose $ X_t $ is stationary. Identify serial
+dependence using ACF $ \hat{\rho}(h) $.
+If the lines go out of the dotted blue boundaries,
+namely $ \pm \displaystyle \frac{1.96}{\sqrt{T}} $,
+within the ACF plot of $ \hat{\rho}(h) $, then we suspect serial dependence.
+
+Posit
+\[ X_t=g(W_t,W_{t-1},\ldots)=\sum_{\ell=0}^{\infty} \psi_\ell W_{t-\ell}\quad
+    \text{[Linear Process]} \]
+Not feasible to estimate infinitely many parameters
+$ \set{\psi}_{\ell=0}^{\infty} $. Assume coefficients
+arise from a parsimonious linear model $ f $.
+\begin{Definition}{Moving average process}{}
+    Suppose $ \set{W_t}_{\in\mathbf{Z}} $ is a strong
+    white noise with $ \Var{W_t}=\sigma_W^2<\infty $.
+    We say $ X_t $ is a \textbf{moving average process}
+    of order $ q $ if there exists
+    $ \theta_1,\ldots,\theta_q\in\mathbf{R} $ with $ \theta_q\ne 0 $
+    such that
+    \[ X_t=W_t+\theta_1W_{t-1}+\cdots+\theta_q W_{t-q}=\sum_{\ell=0}^{q}
+        \theta_\ell W_{t-\ell} \]
+    where $ \theta_0=1 $. We abbreviate this definition
+    as $ \MA{q} $.
+\end{Definition}
+\begin{Definition}{Backshift operator}{}
+    The \textbf{backshift operator}, $ B $, is defined
+    by
+    \[ B^j X_t=X_{t-j} \]
+    $ B $ is assumed further to be linear in the sense
+    that for $ a,b\in\mathbf{R} $
+    \[ (a B^j+b B^k)X_t=
+        a B^j X_t+b B^k X_t=a X_{t-j}+b X_{t-k} \]
+\end{Definition}
+\begin{Example}{}{}
+    $ \nabla X_t = $ first difference of $ X_t=(1-B)X_t $
+\end{Example}
+\begin{Definition}{Moving average polynomial}{}
+    The \textbf{moving average polynomial} is defined as
+    \[ \theta(x)=1+\theta_1 x+\cdots+\theta_q x^q \]
+    If $ X_t\sim\MA{q} $, then
+    \[ X_t=W_t+\theta_1W_{t-1}+\cdots+\theta_q W_{t-q}=\theta(B)W_t \]
+    which is a succinct expression defining $ \MA{q} $.
+\end{Definition}
+\subsection*{Properties of $ \MA{q} $ Processes}
+\begin{enumerate}
+    \item $ \MA{0} $ process is a strong white noise.
+    \item If $ X_t\sim\MA{q} $, then
+          \[ \E{X_t}=\E[\bigg]{\sum_{\ell=0}^{q} \theta_\ell W_{t-\ell}}=0 \]
+          \[ \Var{X_t}=\E[\bigg]{\biggl(\sum_{\ell=0}^{q} \theta_\ell W_{t-\ell}\biggr)^{\!2}}=
+              \sum_{\ell=0}^{q} \theta_\ell^2\sigma_W^2 \]
+          \begin{align*}
+              \gamma(h)
+               & =\Cov{X_t,X_{t+h}}                                                \\
+               & =\E[\bigg]{\biggl(\sum_{\ell=0}^{q} \theta_\ell W_{t-\ell}\biggr)
+              \biggl(\sum_{k=0}^{q} \theta_k W_{t+h-k}\biggr)}                     \\
+               & =\begin{dcases}
+                  \sum_{j=0}^{q-\abs{h}} \theta_j \theta_{j+h}\sigma_W^2 & 0\le h\le q \\
+                  0                                                      & h>q
+              \end{dcases}
+          \end{align*}
+          Therefore,
+          \[ \rho(h)=\frac{\gamma(h)}{\gamma(0)} =
+              \begin{dcases}
+                  \frac{\sum_{j=0}^{q-h} \theta_j \theta_{j+h}}{\sum_{j=0}^{q} \theta_j^2} & 0\le h\le q \\
+                  0                                                                        & h\ge q+1
+              \end{dcases} \]
+          \begin{Remark}{}{}
+              By choosing $ \theta_1,\ldots,\theta_q $ appropriately, we can
+              get any ACF we want $ \rho(h) $ where $ 1\le h\le q $.
+          \end{Remark}
+    \item If $ X_t\sim\MA{q} $, then $ X_t $ is $ q $-dependent.
+\end{enumerate}
+\section{Autoregressive Processes}
+\begin{Definition}{Autoregressive process}{}
+    Suppose $ \set{W_t}_{t\in\mathbf{Z}} $ is a strong
+    white noise with $ \Var{W_t}=\sigma_W^2<\infty $. We say
+    $ X_t $ is an \textbf{autoregressive process}
+    of order $ 1 $, abbreviated $ \AR{1} $ if there
+    exists a constant $ \phi $ such that
+    \[ X_t=\phi X_{t-1}+W_t\quad (t\in\mathbf{Z}) \]
+    Using the backshift operator, this may also be expressed as
+    \[ (1-\phi B)X_t=W_t \]
+\end{Definition}
+\subsection*{Interpretation}
+\textbf{Prediction}: Form a linear model (regression)
+predicting $ X_t $ as
+\[ X_t=\phi X_{t-1}+W_t \]
+where $ X_t $ is the dependent variable
+and $ X_{t-1} $ is the covariant/independent variable.
+
+\textbf{Markovian Property}:
+\[ X_t\mid (X_{t-1},X_{t-2},\ldots)=X_t\mid X_{t-1} \]
+\textbf{Question}: Does there exist a stationary process
+$ X_t $ satisfying the following?
+\[ X_t=\phi X_{t-1}+W_t \]
+Let's see.
+\begin{align*}
+    X_t
+     & =\phi X_{t-1}+W_t                                                                                      \\
+     & =\phi(X_{t-z}+W_{t})+W_t                        & \quad & (z\in\mathbf{Z})                             \\
+     & =\phi^2(X_{t-2})+\phi W_{t-1}+W_t                                                                      \\
+     & \vdots                                          & \quad & k\text{ times}                               \\
+     & =\phi^k X_{t-k}+\sum_{j=0}^{k-1} \phi^j W_{t-j} & \quad & \text{if $ \abs{\phi}>1 $, the sum diverges} \\
+\end{align*}
+Suppose $ \abs{\phi}<1 $, then
+\[ \xrightarrow[k\to\infty]{L^2\text{-sense}}0+
+    \sum_{j=0}^{\infty} \phi^j W_{t-j} \]
+which is a causal linear process. Moreover, if
+$ X_t=\sum_{j=0}^{\infty} \phi^j W_{t-j} $, then
+$ X_t $ is strictly stationary, and
+\begin{align*}
+    X_t
+     & =\sum_{j=0}^{\infty} \phi^j W_{t-j}                                \\
+     & =\sum_{j=1}^{\infty}\phi^j W_{t-j}+W_t                             \\
+     & =\phi \sum_{j=1}^{\infty} \phi^{j-1}W_{t-j}+W_t & \quad & j\to j-1 \\
+     & =\phi \sum_{j=0}^{\infty} \phi^j W_{t-1-j}+W_t                     \\
+     & =\phi X_{t-1}+W_t
+\end{align*}
+Therefore, $ X_t $ satisfies $ \AR{1} $ equation.
+\begin{Theorem}{}{}
+    If $ \abs{\phi}<1 $, then there exists a strictly stationary
+    and causal linear process $ X_t $ such that
+    \[ X_t=\phi X_{t-1}+W_t \]
+\end{Theorem}
+What if $ \abs{\phi}>1 $? If $ X_t=\phi X_{t-1}+W_t $ for $ t\in\mathbf{Z} $,
+then that implies $ X_t=X_{t+1}/\phi-W_{t+1}/\phi $. Iterating
+$ k $-times similarly as before, we get
+\[ X_t=\frac{X_{t+k}}{\phi^k} -\sum_{j=1}^{k} \frac{W_{t+j}}{\phi^j}
+    \xrightarrow[k\to\infty]{L^2\text{-sense}}-\sum_{j=1}^{\infty} \frac{W_{t+j}}{\phi^j}   \]
+given that $ \sum_{j=1}^{\infty} \frac{1}{\phi^j} <\infty $.
+This sequence is strictly stationary since it is a Bernoulli shift.
+Future dependent, normally we try to avoid this.
+
+What if $ \abs{\phi}=1 $? In this case we claim that
+there is no stationary process such that $ X_t=\phi X_{t-1}+W_t $. Let's prove this.
+Suppose $ \abs{\phi}=1 $. If $ X_t=X_{t-1}+W_{t} $, then
+\[ X_t=\sum_{j=1}^{t} W_j+X_0\quad\text{(by iterating)}
+    \implies X_t-X_0=\sum_{j=1}^{t} W_j \]
+Now,
+\[ \Var{X_t-X_0}=\Var{X_t}+\Var{X_0}-2\Cov{X_t,X_0}\le 4\Var{X_0} \]
+where in the last inequality we used the fact that $ X_t $ is stationary.
+Furthermore,
+\[ \Var[\bigg]{\sum_{j=1}^{t} W_j}=t\sigma_W^2\xrightarrow{t\to\infty}\infty \]
+\subsection*{Properties of Causal $ \AR{1} $ for $ \abs{\phi}<1 $}
+\begin{enumerate}[(1)]
+    \item The span of dependence of $ X_t $ is ``infinite''
+          \[ X_t=\sum_{\ell=0}^{\infty} \phi^\ell W_{t-\ell} \]
+    \item ACF.\@
+          \[ \Var{X_t}=\E[\bigg]{\biggl(\sum_{\ell=0}^{\infty}\phi^\ell W_{t-\ell} \biggr)^{\!2}}
+              =\sum_{\ell=0}^{\infty} \phi^{2\ell}\sigma_W^2=\frac{\sigma_W^2}{(1-\phi)^2}  \]
+          \begin{align*}
+              \gamma(h)
+               & =\Cov{X_t,X_{t+h}}                                                                                                      \\
+               & =\E[\bigg]{\biggl(\sum_{\ell=0}^{\infty} \phi^\ell W_{t-\ell}\biggr)\biggl(\sum_{k=0}^{\infty} \phi^k W_{t+h-k}\biggr)} \\
+               & =\sum_{\ell=0}^{\infty} \phi^\ell \phi^{\ell+h}\sigma_W^2                                                               \\
+               & =\phi^h \sum_{\ell=0}^{\infty} \sum_{\ell=0}^{\infty} \phi^{2\ell}\sigma_W^2                                            \\
+               & =\phi^h \biggl(\frac{\sigma_W^2}{1-\phi^2} \biggr)
+          \end{align*}
+          where in the first sum we let $ t-\ell=t+h-k $ and in the second sum
+          we let $ k=\ell+h $ for $ \ell=0,1,2,\ldots $. Hence,
+          \[ \rho(h)=\frac{\gamma(h)}{\gamma(0)} =\phi^h\quad(h\ge 0) \]
+          Note: this decays geometrically in the lag parameter.
+\end{enumerate}
+\begin{Definition}{Autoregressive process, Autoregressive polynomial}{}
+    We say $ X_t $ follows an \textbf{autoregressive process} of order $ p $,
+    denoted $ \AR{p} $ if there exists coefficients $ \phi_1,\ldots,\phi_p\in\mathbf{R} $
+    with $ \phi_p\ne 0 $ such that
+    \[ X_t=\phi_1X_{t-1}+\cdots+\phi_p X_{t-p}=W_t \]
+    We also define the \textbf{autoregressive polynomial} to be
+    \[ \phi(x)=1-\phi_1 x-\cdots-\phi_p x^p \]
+    $ X_t\sim \AR{p} $ if $ \phi(B)X_t=W_t $.
+\end{Definition}
+We've seen the moving average polynomial:
+\[ \theta(x)=1+\theta_1 x+\cdots+\theta_q x^q\quad(\theta_q\ne 0) \]
+and the autoregressive polynomial:
+\[ \phi(x)=1-\phi_1 x-\cdots - \phi_p x^p\quad(\phi_p\ne 0) \]
+Why not combine the two?
+\begin{Definition}{Autoregressive moving average (ARMA)}{}
+    Given a strong white noise sequence $ W_t $, we say
+    that $ X_t $ is an autoregressive moving average process
+    of orders $ p $ and $ q $, denoted $ \ARMA{p,q} $ if
+    \[ \phi(B)X_t=\theta(B)W_t \]
+    \[ \phi(z)=1-\phi_1 z-\cdots - \phi_p z^p\quad (\phi_p\ne 0) \]
+    \[ \theta(z)=1+\theta_1 z+\cdots+\theta_q z^q \quad (\theta_q\ne 0) \]
+    This implies that the model
+    \[ X_t=\phi_1X_{t-1}+\cdots+\phi_p X_{t-p}+W_t+
+        W_t+\theta_1 W_{t-1}+\cdots+\theta_q W_{t-q} \]
+\end{Definition}
+Using ARMA models to model autocorrelation: ARMA combines the
+following two points.
+\begin{itemize}
+    \item $ \MA{q} $: ACF may be specified at lags $ 1,\ldots,q $
+    \item $ \AR{p} $: ACF has geometric decay/oscillations
+\end{itemize}
+\begin{Remark}{Parameter redundancy}{}
+    Consider $ X_t=W_t $ where $ X_t\sim \MA{0} $, then
+    \[ 0.5 X_{t-1}=0.5 W_{t-1} \]
+    Therefore,
+    \[ X_t-0.5 X_{t-1}=W_{t}-0.5W_{t-1}\implies X_t\sim \ARMA{1,1} \]
+    \[ \phi(z)=1-0.5z\implies \text{zero of $\phi$ is }z_0=z \]
+    \[ \theta(z)=1-0.5z\implies \text{zero of $\theta$ is }z_0=z \]
+    Parameter redundancy manifests as shared zeros in $ \phi $
+    and $ \theta $. We always assume the models are ``reduced''
+    by factoring and diving away common zeros in $ \phi $.
+\end{Remark}
+\begin{Definition}{Causal ARMA}{}
+    We say an $ \ARMA{p,q} $ is causal if there exists $ \set{X_t}_{t\in\mathbf{Z}} $
+    satisfying $ \phi(B)X_t=\theta(B)W_{t}$ and
+    \[ X_t=\sum_{\ell=0}^{\infty} \phi_\ell W_{t-\ell}=\phi(B)W_t \quad\text{[Causal Linear Process Solution]} \]
+    where $ \phi(B)=\sum_{\ell=0}^{\infty} \phi_\ell B^\ell $
+    and $ \sum_{\ell=0}^{\infty} \abs{\phi_\ell}<\infty $ with
+    $ \phi_0=1 $.
+\end{Definition}
+\begin{Definition}{Invertible ARMA}{}
+    An $ \ARMA{p,q} $ is invertible if there exists $ \set{X_t}_{t\in\mathbf{Z}} $ satisfying
+    $ \phi(B)X_t=\theta(B)W_t $ and
+    \[ W_t=\sum_{\ell=0}^{\infty} \pi_\ell X_{t-\ell}=\pi(B)X_t \]
+    where $ \pi(B)=\sum_{\ell=0}^{\infty} \pi_\ell B^\ell $
+    and $ \sum_{\ell=0}^{\infty} \abs{\pi_\ell}<\infty $ with
+    $ \pi_0=1 $.
+\end{Definition}
+\begin{Remark}{}{}
+    Causal $ + $ Invertibility $ \implies  $ Information
+    in $ \set{X_t}_{t\le T} $ is the same as Information in
+    $ \set{W_t}_{t\le T} $. Also, note that $ \set{X_t}_{t\le T} $ is
+    an observed time series.
+\end{Remark}
+\begin{Theorem}{Causality}{}
+    By the fundamental theorem of algebra, the autoregressive
+    polynomial $ \phi(z) $ has $ p $ roots,
+    say $ z_1,\ldots,z_p\in\mathbf{C} $. If
+    \[ \rho=\min_{1\le j\le p}\abs{z_j}>1 \]
+    then there exists a stationary and causal $ X_t $
+    to the ARMA equations: $ \phi(B)X_t=\theta(B)W_t $.
+    \[ X_t=\sum_{\ell=0}^{\infty} \psi_\ell W_{t-\ell} \]
+    The coefficients $ \set{\psi_\ell}_{\ell=0}^\infty $
+    satisfy
+    \[ \sum_{\ell=0}^{\infty} \abs{\psi_\ell}<\infty \]
+    in fact,
+    \[ \abs{\psi_\ell}\le \frac{1}{\rho^\ell}  \]
+    which is the geometric decay. Also,
+    \[ \psi(z)=\sum_{\ell=0}^{\infty}\psi_\ell z^\ell=\frac{\theta(z)}{\phi(z)}
+        \quad(\abs{z}\le 1)  \]
+    In essence,
+    \[ X_t=\frac{\theta(B)}{\phi(B)}W_t=\sum_{j=0}^{\infty} \psi_j B^j W_t  \]
+    Key: $ \displaystyle \frac{1}{\phi(z)}=\sum_{j=0}^{\infty}
+        \phi_j z^j\quad\abs{z}\le 1 $. $ (1/\phi) $ has a convergent power
+    series rep. $ \abs{z}\le 1 $
+\end{Theorem}
+\begin{Theorem}{Invertibility}{}
+    If $ z_1,\ldots,z_q $ are the zeros
+    of $ \theta(z) $ and $ \min_{1\le i\le q}\abs{z_i}>1 $,
+    then $ X_t $ is invertible,
+    \[ W_t=\sum_{\ell=0}^{\infty} \pi_\ell X_{t-\ell} \]
+    Coefficients $ \set{\pi_\ell}_{\ell=0}^\infty $ satisfy
+    \[ \pi(z)=\sum_{\ell=0}^{\infty} \pi_\ell z^\ell =\frac{\phi(z)}{\theta(z)}
+        \quad (\abs{z}\le 1)  \]
+\end{Theorem}
+\underline{Moral}: When we look for coefficients
+$ \phi_1,\ldots,\phi_p,\theta_1,\ldots,\theta_q $
+we want to do so in such a way that
+\[ \phi(z),\theta(z)\ne 0\quad(\abs{z}\le 1) \]
+\section{ARMA Process Examples and ACF}
+\begin{Example}{}{}
+    Consider the $ \ARMA{2,2} $ model
+    \[ X_t= \frac{1}{4}X_{t-1} + \frac{1}{8} X_{t-2} + w_t - \frac{5}{6}w_{t-1} +\frac{1}{6}w_{t-2} \]
+    Questions:
+    {\color{blue}
+    \begin{itemize}
+        \item Is there a stationary and causal solution to $X_t$?
+        \item Is it invertible?
+        \item Is there parameter redundancy?
+    \end{itemize}}
+    AR polynomial:
+    \[ \phi(z)=1-\frac{1}{4}z- \frac{1}{8}z^2  \]
+    MA polynomial:
+    \[ \theta(z)= 1-\frac{5}{6}z + \frac{1}{6}z^2\]
+    Roots for $\phi$:
+    \[ \frac{2 \pm \sqrt{4+ 4(8)}}{-2} =-1 \pm 3=-4,2 \]
+    Roots for $\theta$: $ 2,3 $
+    \[ \implies \phi(z)= -\frac{1}{8}(z+4)(z-2) \quad \theta(z) = \frac{1}{6}(z-2)(z-3)\]
+    Note that $\phi (z)$ and $\theta (z)$ share common $(z-2)$ which indicates
+    that the parameters are redundant.
+    Therefore, $X_t$ satisfies an $ \ARMA{1,1} $ with
+    \[\phi(z)=-\frac{1}{8}(z+4), \quad \theta(z)= \frac{1}{6}(z-3)\]
+    Since the roots of $\phi$ and $\theta$ are
+    outside of the unit circle in $\mathbb{C}$, $X_t$ is
+    stationary, causal, and invertible.
+\end{Example}
+\begin{Example}{}{}
+    Suppose
+    \[ X_t =-\frac{1}{4} X_{t-1}+W_t-\frac{1}{3}W_{t-1}\]
+    where $X_t \sim \ARMA{1,1}$.
+    \[\phi(z)=1+\frac{1}{4}(z) \implies \text{Root is $-4$.}\]
+    So $X_t$ is stationary and causal, and can be represented as a linear process:
+    \[X_t= \sum^{\infty}_{\ell=0} \psi_\ell w_{t-\ell} \]
+    We need to calculate the coefficients $\psi_\ell$.
+
+    We know
+    \[\psi(z)= \sum^{\infty}_{\ell=0} \psi_\ell z^\ell = \frac{\theta(z)}{\phi(z)}\quad (\abs{z}\leq 1)  \]
+    \[\implies \psi(z)\phi(z)=\theta(z) \]
+    Note that both $ \psi(z)\phi(z) $ and $ \theta(z) $ are power series, therefore
+    we can calculate $ \psi_\ell $ by matching coefficients.
+    \begin{itemize}
+        \item $ \displaystyle \phi(z)=1+ \frac{1}{4}z $
+        \item $ \displaystyle  \theta(z)= 1-\frac{1}{3}z $
+        \item $ \psi(z)\phi(z)=\theta(z) $
+    \end{itemize}
+    Let's compute it.
+    \begin{align*}
+        z^0    :\quad & \psi_0=1                                                                                           \\
+        z^1    :\quad & \frac{\psi_0}{4}+\psi_1=-\frac{1}{3}  &  & \implies \psi_1=\frac{-7}{12}                           \\
+        z^2    :\quad & \frac{\psi_1}{4}+\psi_2 = 0           &  & \implies \psi_2=-\frac{7}{12} \biggl(\frac{1}{4}\biggr) \\
+        \vdots \quad  &                                                                                                    \\
+        z^\ell :\quad & \frac{\psi^{\ell-1}}{4} + \psi^\ell=0 &  & \implies
+        \psi^\ell= -\frac{7}{12}\biggl(\frac{1}{4}\biggr)^{\ell-1}
+    \end{align*}
+    Finite linear difference equation must be solved. (Automated in R with \texttt{ARMAtoMA()}).
+    If $X_t$ is a stationary and causal solution to the $\ARMA{p,q}$ model.
+    \[X_t = \sum^{\infty}_{j=0} \psi_j W_{t-j}\]
+    \[\gamma_X(h) =
+        \E{X_t X_{t+h}}= \E[\bigg]{\biggl(\sum^{\infty}_{j=0}\psi_j W_{t-j}\biggr)\biggl(\sum^{\infty}_{k=0} \psi_k W_{t+h-k}\biggr)} \]
+    Note that
+    \[t-j= t+h-k, \implies k=h+j,j=0,1,2,\ldots\quad  \E{X^2_{t-j}}={\sigma_w}^2\]
+    Therefore,
+    \[\gamma_X(h) =\sigma_W^2 \sum^{\infty}_{j=0} \psi_j \psi_{j+h} \]
+    Coefficients can be solved for as in the previous examples by solving a finite difference equation.
+    (Automated in R with \texttt{ARMAacf}).
+\end{Example}
