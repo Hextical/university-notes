@@ -11,8 +11,8 @@ Posit
     \text{[Linear Process]} \]
 Not feasible to estimate infinitely many parameters
 $ \set{\psi}_{\ell=0}^{\infty} $. Assume coefficients
-arise from a parsimonious linear model $ f $.
-\begin{Definition}{Moving average process}{}
+arise from a \emph{parsimonious} linear model for $ X_t $.
+\begin{Definition}{Moving average process $ [\MA{q}] $}{}
     Suppose $ \set{W_t}_{\in\mathbf{Z}} $ is a strong
     white noise with $ \Var{W_t}=\sigma_W^2<\infty $.
     We say $ X_t $ is a \textbf{moving average process}
@@ -21,8 +21,8 @@ arise from a parsimonious linear model $ f $.
     such that
     \[ X_t=W_t+\theta_1W_{t-1}+\cdots+\theta_q W_{t-q}=\sum_{\ell=0}^{q}
         \theta_\ell W_{t-\ell} \]
-    where $ \theta_0=1 $. We abbreviate this definition
-    as $ \MA{q} $.
+    where $ \theta_0=1 $. In other words, we've truncated
+    the linear process representation at the level $ q $.
 \end{Definition}
 \begin{Definition}{Backshift operator}{}
     The \textbf{backshift operator}, $ B $, is defined
@@ -34,7 +34,7 @@ arise from a parsimonious linear model $ f $.
         a B^j X_t+b B^k X_t=a X_{t-j}+b X_{t-k} \]
 \end{Definition}
 \begin{Example}{}{}
-    $ \nabla X_t = $ first difference of $ X_t=(1-B)X_t $
+    $ \nabla X_t = $ first difference of $ X_t=(1-B)X_t=X_t-B X_t=X_t-X_{t-1} $
 \end{Example}
 \begin{Definition}{Moving average polynomial}{}
     The \textbf{moving average polynomial} is defined as
@@ -44,7 +44,7 @@ arise from a parsimonious linear model $ f $.
     which is a succinct expression defining $ \MA{q} $.
 \end{Definition}
 \subsection*{Properties of $ \MA{q} $ Processes}
-\begin{enumerate}
+\begin{enumerate}[(1)]
     \item $ \MA{0} $ process is a strong white noise.
     \item If $ X_t\sim\MA{q} $, then
           \[ \E{X_t}=\E[\bigg]{\sum_{\ell=0}^{q} \theta_\ell W_{t-\ell}}=0 \]
@@ -52,10 +52,10 @@ arise from a parsimonious linear model $ f $.
               \sum_{\ell=0}^{q} \theta_\ell^2\sigma_W^2 \]
           \begin{align*}
               \gamma(h)
-               & =\Cov{X_t,X_{t+h}}                                                \\
-               & =\E[\bigg]{\biggl(\sum_{\ell=0}^{q} \theta_\ell W_{t-\ell}\biggr)
-              \biggl(\sum_{k=0}^{q} \theta_k W_{t+h-k}\biggr)}                     \\
-               & =\begin{dcases}
+                                                               & =\Cov{X_t,X_{t+h}}                                                                                \\
+                                                               & =\E[\bigg]{\biggl(\sum_{\ell=0}^{q} \theta_\ell W_{t-\ell}\biggr)
+              \biggl(\sum_{k=0}^{q} \theta_k W_{t+h-k}\biggr)} & \quad                                                             & t-\ell=t+h-k\implies k=\ell+h \\
+                                                               & =\begin{dcases}
                   \sum_{j=0}^{q-\abs{h}} \theta_j \theta_{j+h}\sigma_W^2 & 0\le h\le q \\
                   0                                                      & h>q
               \end{dcases}
@@ -72,12 +72,59 @@ arise from a parsimonious linear model $ f $.
           \end{Remark}
     \item If $ X_t\sim\MA{q} $, then $ X_t $ is $ q $-dependent.
 \end{enumerate}
+{\color{blue}In~\Cref{fig:maprocesses1}, let's look an example now of what a moving average process would
+actually look like if we were to realize a moving average process.
+On the top of fig, I've plotted a moving average process of order $ 0 $,
+which is just a strong white noise, as we progress down to
+panel 2 and panel 3 I've calculated moving averages of order $ 1 $ and
+$ 2 $ based on this strong white noise sequence. In the second
+panel, $ X_t=W_t+W_{t-1} $, so this is a moving average process
+of order $ 1 $, in which $ \theta_1=1 $. In the third panel,
+we have a moving average process of order $ 2 $,
+in which $ X_t=W_t+W_{t-1}+W_{t-2} $, which is a
+moving average process of order $ 2 $ in which
+$ \theta_1=\theta_2=1 $. One thing to observe when going
+from a moving average process of order $ 0 $ to $ 2 $
+is that the time series is getting ``smoother''.}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.75\textwidth]{maprocesses1.pdf}
+    \caption{Realizations of MA processes with coefficients equal to 1}\label{fig:maprocesses1}
+\end{figure}
+\begin{minted}{R}
+# Figure 3.1
+par(mfrow = c(3, 1))
+ma0.sim <- arima.sim(model = list(ma = 0), n = 150)
+ma1.sim <- arima.sim(model = list(ma = 1), n = 150)
+ma2.sim <- arima.sim(model = list(ma = 2), n = 150)
+plot.ts(ma0.sim, ylab = "w", main = "white noise")
+plot.ts(ma1.sim, ylab = "v", main = "MA(1)")
+plot.ts(ma2.sim, ylab = "y", main = "MA(2)")
+\end{minted}
+In~\Cref{fig:maprocesses2}, the difference is apparent since
+going from $ \MA{0} $ to $ \MA{1} $ shows that
+$ \MA{1} $ has significant serial correlation
+at lag $ 1 $. Similarly, for $ \MA{2} $
+there is significant serial correlation
+at lag $ 2 $.
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.75\textwidth]{maprocesses2.pdf}
+    \caption{ACF plots of corresponding moving average series.}\label{fig:maprocesses2}
+\end{figure}
+\begin{minted}{R}
+# Figure 3.2
+acf(ma0.sim)
+acf(ma1.sim)
+acf(ma2.sim)    
+\end{minted}
 \section{Autoregressive Processes}
-\begin{Definition}{Autoregressive process}{}
+\begin{Definition}{Autoregressive process $ [\AR{1}] $}{}
     Suppose $ \set{W_t}_{t\in\mathbf{Z}} $ is a strong
     white noise with $ \Var{W_t}=\sigma_W^2<\infty $. We say
     $ X_t $ is an \textbf{autoregressive process}
-    of order $ 1 $, abbreviated $ \AR{1} $ if there
+    of order $ 1 $ if there
     exists a constant $ \phi $ such that
     \[ X_t=\phi X_{t-1}+W_t\quad (t\in\mathbf{Z}) \]
     Using the backshift operator, this may also be expressed as
@@ -99,9 +146,9 @@ Let's see.
 \begin{align*}
     X_t
      & =\phi X_{t-1}+W_t                                                                                      \\
-     & =\phi(X_{t-z}+W_{t})+W_t                        & \quad & (z\in\mathbf{Z})                             \\
+     & =\phi(X_{t-z}+W_{t-1})+W_t                      & \quad & (z\in\mathbf{Z})                             \\
      & =\phi^2(X_{t-2})+\phi W_{t-1}+W_t                                                                      \\
-     & \vdots                                          & \quad & k\text{ times}                               \\
+     & \;\vdots                                        & \quad & k\text{ times}                               \\
      & =\phi^k X_{t-k}+\sum_{j=0}^{k-1} \phi^j W_{t-j} & \quad & \text{if $ \abs{\phi}>1 $, the sum diverges} \\
 \end{align*}
 Suppose $ \abs{\phi}<1 $, then
@@ -129,15 +176,16 @@ then that implies $ X_t=X_{t+1}/\phi-W_{t+1}/\phi $. Iterating
 $ k $-times similarly as before, we get
 \[ X_t=\frac{X_{t+k}}{\phi^k} -\sum_{j=1}^{k} \frac{W_{t+j}}{\phi^j}
     \xrightarrow[k\to\infty]{L^2\text{-sense}}-\sum_{j=1}^{\infty} \frac{W_{t+j}}{\phi^j}   \]
-given that $ \sum_{j=1}^{\infty} \frac{1}{\phi^j} <\infty $.
+since $ \sum_{j=1}^{\infty} \frac{1}{\phi^j} <\infty $.
 This sequence is strictly stationary since it is a Bernoulli shift.
-Future dependent, normally we try to avoid this.
+However, what we have derived is not desirable as this model is
+future dependent, normally we try to avoid this.
 
 What if $ \abs{\phi}=1 $? In this case we claim that
 there is no stationary process such that $ X_t=\phi X_{t-1}+W_t $. Let's prove this.
 Suppose $ \abs{\phi}=1 $. If $ X_t=X_{t-1}+W_{t} $, then
 \[ X_t=\sum_{j=1}^{t} W_j+X_0\quad\text{(by iterating)}
-    \implies X_t-X_0=\sum_{j=1}^{t} W_j \]
+    \implies X_t-X_0=\sum_{j=1}^{t} W_j\quad\text{[Random Walk]} \]
 Now,
 \[ \Var{X_t-X_0}=\Var{X_t}+\Var{X_0}-2\Cov{X_t,X_0}\le 4\Var{X_0} \]
 where in the last inequality we used the fact that $ X_t $ is stationary.
@@ -149,13 +197,13 @@ Furthermore,
           \[ X_t=\sum_{\ell=0}^{\infty} \phi^\ell W_{t-\ell} \]
     \item ACF.\@
           \[ \Var{X_t}=\E[\bigg]{\biggl(\sum_{\ell=0}^{\infty}\phi^\ell W_{t-\ell} \biggr)^{\!2}}
-              =\sum_{\ell=0}^{\infty} \phi^{2\ell}\sigma_W^2=\frac{\sigma_W^2}{(1-\phi)^2}  \]
+              =\sum_{\ell=0}^{\infty} \phi^{2\ell}\sigma_W^2=\frac{\sigma_W^2}{1-\phi^2}  \]
           \begin{align*}
               \gamma(h)
                & =\Cov{X_t,X_{t+h}}                                                                                                      \\
                & =\E[\bigg]{\biggl(\sum_{\ell=0}^{\infty} \phi^\ell W_{t-\ell}\biggr)\biggl(\sum_{k=0}^{\infty} \phi^k W_{t+h-k}\biggr)} \\
                & =\sum_{\ell=0}^{\infty} \phi^\ell \phi^{\ell+h}\sigma_W^2                                                               \\
-               & =\phi^h \sum_{\ell=0}^{\infty} \sum_{\ell=0}^{\infty} \phi^{2\ell}\sigma_W^2                                            \\
+               & =\phi^h \sum_{\ell=0}^{\infty} \phi^{2\ell}\sigma_W^2                                                                   \\
                & =\phi^h \biggl(\frac{\sigma_W^2}{1-\phi^2} \biggr)
           \end{align*}
           where in the first sum we let $ t-\ell=t+h-k $ and in the second sum
@@ -163,29 +211,33 @@ Furthermore,
           \[ \rho(h)=\frac{\gamma(h)}{\gamma(0)} =\phi^h\quad(h\ge 0) \]
           Note: this decays geometrically in the lag parameter.
 \end{enumerate}
-\begin{Definition}{Autoregressive process, Autoregressive polynomial}{}
+\begin{Definition}{Autoregressive process $ [\AR{p}] $, Autoregressive polynomial}{}
     We say $ X_t $ follows an \textbf{autoregressive process} of order $ p $,
-    denoted $ \AR{p} $ if there exists coefficients $ \phi_1,\ldots,\phi_p\in\mathbf{R} $
+    if there exists coefficients $ \phi_1,\ldots,\phi_p\in\mathbf{R} $
     with $ \phi_p\ne 0 $ such that
-    \[ X_t=\phi_1X_{t-1}+\cdots+\phi_p X_{t-p}=W_t \]
+    \[ X_t=\phi_1X_{t-1}+\cdots+\phi_p X_{t-p}+W_t \]
     We also define the \textbf{autoregressive polynomial} to be
     \[ \phi(x)=1-\phi_1 x-\cdots-\phi_p x^p \]
     $ X_t\sim \AR{p} $ if $ \phi(B)X_t=W_t $.
 \end{Definition}
+\section{ARMA Processes}
 We've seen the moving average polynomial:
 \[ \theta(x)=1+\theta_1 x+\cdots+\theta_q x^q\quad(\theta_q\ne 0) \]
 and the autoregressive polynomial:
 \[ \phi(x)=1-\phi_1 x-\cdots - \phi_p x^p\quad(\phi_p\ne 0) \]
+If $ W_t\sim $ strong white noise
+\[ X_t=\theta(B)W_t\quad(X_t\sim \MA{q}) \]
+\[ \phi(B)X_t=W_t\quad(X_t\sim\AR{p}) \]
 Why not combine the two?
-\begin{Definition}{Autoregressive moving average (ARMA)}{}
+\begin{Definition}{Autoregressive moving average $ [\ARMA{p,q}] $}{}
     Given a strong white noise sequence $ W_t $, we say
-    that $ X_t $ is an autoregressive moving average process
+    that $ X_t $ is an \textbf{autoregressive moving average} process
     of orders $ p $ and $ q $, denoted $ \ARMA{p,q} $ if
     \[ \phi(B)X_t=\theta(B)W_t \]
     \[ \phi(z)=1-\phi_1 z-\cdots - \phi_p z^p\quad (\phi_p\ne 0) \]
     \[ \theta(z)=1+\theta_1 z+\cdots+\theta_q z^q \quad (\theta_q\ne 0) \]
     This implies that the model
-    \[ X_t=\phi_1X_{t-1}+\cdots+\phi_p X_{t-p}+W_t+
+    \[ X_t=\phi_1X_{t-1}+\cdots+\phi_p X_{t-p}+
         W_t+\theta_1 W_{t-1}+\cdots+\theta_q W_{t-q} \]
 \end{Definition}
 Using ARMA models to model autocorrelation: ARMA combines the
@@ -199,14 +251,14 @@ following two points.
     \[ 0.5 X_{t-1}=0.5 W_{t-1} \]
     Therefore,
     \[ X_t-0.5 X_{t-1}=W_{t}-0.5W_{t-1}\implies X_t\sim \ARMA{1,1} \]
-    \[ \phi(z)=1-0.5z\implies \text{zero of $\phi$ is }z_0=z \]
-    \[ \theta(z)=1-0.5z\implies \text{zero of $\theta$ is }z_0=z \]
+    \[ \phi(z)=1-0.5z\implies \text{zero of $\phi$ is }z_0=2 \]
+    \[ \theta(z)=1-0.5z\implies \text{zero of $\theta$ is }z_0=2 \]
     Parameter redundancy manifests as shared zeros in $ \phi $
     and $ \theta $. We always assume the models are ``reduced''
     by factoring and diving away common zeros in $ \phi $.
 \end{Remark}
 \begin{Definition}{Causal ARMA}{}
-    We say an $ \ARMA{p,q} $ is causal if there exists $ \set{X_t}_{t\in\mathbf{Z}} $
+    We say an $ \ARMA{p,q} $ is \textbf{causal} if there exists $ \set{X_t}_{t\in\mathbf{Z}} $
     satisfying $ \phi(B)X_t=\theta(B)W_{t}$ and
     \[ X_t=\sum_{\ell=0}^{\infty} \phi_\ell W_{t-\ell}=\phi(B)W_t \quad\text{[Causal Linear Process Solution]} \]
     where $ \phi(B)=\sum_{\ell=0}^{\infty} \phi_\ell B^\ell $
@@ -214,7 +266,7 @@ following two points.
     $ \phi_0=1 $.
 \end{Definition}
 \begin{Definition}{Invertible ARMA}{}
-    An $ \ARMA{p,q} $ is invertible if there exists $ \set{X_t}_{t\in\mathbf{Z}} $ satisfying
+    An $ \ARMA{p,q} $ is \textbf{invertible} if there exists $ \set{X_t}_{t\in\mathbf{Z}} $ satisfying
     $ \phi(B)X_t=\theta(B)W_t $ and
     \[ W_t=\sum_{\ell=0}^{\infty} \pi_\ell X_{t-\ell}=\pi(B)X_t \]
     where $ \pi(B)=\sum_{\ell=0}^{\infty} \pi_\ell B^\ell $
@@ -222,9 +274,9 @@ following two points.
     $ \pi_0=1 $.
 \end{Definition}
 \begin{Remark}{}{}
-    Causal $ + $ Invertibility $ \implies  $ Information
+    Causality $ + $ Invertibility $ \implies  $ Information
     in $ \set{X_t}_{t\le T} $ is the same as Information in
-    $ \set{W_t}_{t\le T} $. Also, note that $ \set{X_t}_{t\le T} $ is
+    $ \set{W_t}_{t\le T} $ where $ \set{X_t}_{t\le T} $ is
     an observed time series.
 \end{Remark}
 \begin{Theorem}{Causality}{}
@@ -246,8 +298,8 @@ following two points.
     In essence,
     \[ X_t=\frac{\theta(B)}{\phi(B)}W_t=\sum_{j=0}^{\infty} \psi_j B^j W_t  \]
     Key: $ \displaystyle \frac{1}{\phi(z)}=\sum_{j=0}^{\infty}
-        \phi_j z^j\quad\abs{z}\le 1 $. $ (1/\phi) $ has a convergent power
-    series rep. $ \abs{z}\le 1 $
+        \phi_j z^j\quad\abs{z}\le 1 $ so $ \displaystyle \frac{1}{\phi} $ has a convergent power
+    series representation for $ \abs{z}\le 1 $.
 \end{Theorem}
 \begin{Theorem}{Invertibility}{}
     If $ z_1,\ldots,z_q $ are the zeros
@@ -265,7 +317,7 @@ we want to do so in such a way that
 \section{ARMA Process Examples and ACF}
 \begin{Example}{}{}
     Consider the $ \ARMA{2,2} $ model
-    \[ X_t= \frac{1}{4}X_{t-1} + \frac{1}{8} X_{t-2} + w_t - \frac{5}{6}w_{t-1} +\frac{1}{6}w_{t-2} \]
+    \[ X_t= \frac{1}{4}X_{t-1} + \frac{1}{8} X_{t-2} + W_t - \frac{5}{6}W_{t-1} +\frac{1}{6}W_{t-2} \]
     Questions:
     {\color{blue}
     \begin{itemize}
@@ -280,7 +332,7 @@ we want to do so in such a way that
     Roots for $\phi$:
     \[ \frac{2 \pm \sqrt{4+ 4(8)}}{-2} =-1 \pm 3=-4,2 \]
     Roots for $\theta$: $ 2,3 $
-    \[ \implies \phi(z)= -\frac{1}{8}(z+4)(z-2) \quad \theta(z) = \frac{1}{6}(z-2)(z-3)\]
+    \[ \implies \phi(z)= -\frac{1}{8}(z+4)(z-2), \quad  \theta(z) = \frac{1}{6}(z-2)(z-3)\]
     Note that $\phi (z)$ and $\theta (z)$ share common $(z-2)$ which indicates
     that the parameters are redundant.
     Therefore, $X_t$ satisfies an $ \ARMA{1,1} $ with
@@ -293,9 +345,9 @@ we want to do so in such a way that
     Suppose
     \[ X_t =-\frac{1}{4} X_{t-1}+W_t-\frac{1}{3}W_{t-1}\]
     where $X_t \sim \ARMA{1,1}$.
-    \[\phi(z)=1+\frac{1}{4}(z) \implies \text{Root is $-4$.}\]
+    \[\phi(z)=1+\frac{1}{4}z \implies \text{Root is $-4$.}\]
     So $X_t$ is stationary and causal, and can be represented as a linear process:
-    \[X_t= \sum^{\infty}_{\ell=0} \psi_\ell w_{t-\ell} \]
+    \[X_t= \sum^{\infty}_{\ell=0} \psi_\ell W_{t-\ell} \]
     We need to calculate the coefficients $\psi_\ell$.
 
     We know
@@ -310,22 +362,26 @@ we want to do so in such a way that
     \end{itemize}
     Let's compute it.
     \begin{align*}
-        z^0    :\quad & \psi_0=1                                                                                           \\
-        z^1    :\quad & \frac{\psi_0}{4}+\psi_1=-\frac{1}{3}  &  & \implies \psi_1=\frac{-7}{12}                           \\
-        z^2    :\quad & \frac{\psi_1}{4}+\psi_2 = 0           &  & \implies \psi_2=-\frac{7}{12} \biggl(\frac{1}{4}\biggr) \\
-        \vdots \quad  &                                                                                                    \\
-        z^\ell :\quad & \frac{\psi^{\ell-1}}{4} + \psi^\ell=0 &  & \implies
-        \psi^\ell= -\frac{7}{12}\biggl(\frac{1}{4}\biggr)^{\ell-1}
+        z^0    :\quad & \psi_0=1                                                                                          \\
+        z^1    :\quad & \frac{\psi_0}{4}+\psi_1=-\frac{1}{3}  &  & \implies \psi_1=\frac{-7}{12}                          \\
+        z^2    :\quad & \frac{\psi_1}{4}+\psi_2 = 0           &  & \implies \psi_2=\frac{7}{12} \biggl(\frac{1}{4}\biggr) \\
+        \vdots \quad  &                                                                                                   \\
+        z^\ell :\quad & \frac{\psi_{\ell-1}}{4} + \psi^\ell=0 &  & \implies
+        \psi^\ell= (-1)^{\ell-1}\frac{7}{12}\biggl(\frac{1}{4}\biggr)^{\ell-1}\quad(\ell\ge 1)
     \end{align*}
     Finite linear difference equation must be solved. (Automated in R with \texttt{ARMAtoMA()}).
+    \begin{minted}{R}
+    library(astsa)
+    ARMAtoMA(ar=-1/4, ma=-1/3, 10)
+    \end{minted}
     If $X_t$ is a stationary and causal solution to the $\ARMA{p,q}$ model.
     \[X_t = \sum^{\infty}_{j=0} \psi_j W_{t-j}\]
     \[\gamma_X(h) =
         \E{X_t X_{t+h}}= \E[\bigg]{\biggl(\sum^{\infty}_{j=0}\psi_j W_{t-j}\biggr)\biggl(\sum^{\infty}_{k=0} \psi_k W_{t+h-k}\biggr)} \]
     Note that
-    \[t-j= t+h-k, \implies k=h+j,j=0,1,2,\ldots\quad  \E{X^2_{t-j}}={\sigma_w}^2\]
+    \[t-j= t+h-k, \implies k=h+j,\, j=0,1,2,\ldots\quad  \E{X^2_{t-j}}=\sigma_W^2\]
     Therefore,
     \[\gamma_X(h) =\sigma_W^2 \sum^{\infty}_{j=0} \psi_j \psi_{j+h} \]
     Coefficients can be solved for as in the previous examples by solving a finite difference equation.
-    (Automated in R with \texttt{ARMAacf}).
+    (Automated in R with \texttt{ARMAacf()}).
 \end{Example}
