@@ -11,6 +11,7 @@ All my university notes done in LaTeX.
 | STAT 341 |    TBA     | :heavy_check_mark: |
 | STAT 443 |   Week 4   | :heavy_check_mark: |
 |  CO 487  |  Dropped*  | :heavy_check_mark: |
+
 *Might still type this though.
 
 ### Semester 1
