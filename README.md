@@ -12,7 +12,10 @@ All my university notes done in LaTeX.
 | STAT 443 |   Week 4   | :heavy_check_mark: |
 |  CO 487  |  Dropped*  | :heavy_check_mark: |
 
-*Might still type this though.
+*Might still type this though. Notes will
+probably be fully updated for STAT 332 and STAT 443 at the end of
+reading week, provided I'm not lazy. STAT 341
+is situational, not sure if I want to type this.
 
 ### Semester 1
 |     Course      | Completion |       Online       |

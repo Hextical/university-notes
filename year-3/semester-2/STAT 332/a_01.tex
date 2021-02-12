@@ -1,0 +1,284 @@
+\chapter{Assignment 1}
+\section{Lecture 1.00 - PPDAC + Example}
+PPDAC\@: \underline{P}roblem, \underline{P}lan, \underline{D}ata,
+\underline{A}nalysis, \underline{C}onclusion.
+\begin{itemize}
+    \item \underline{P}roblem: Define the problem.
+          \begin{itemize}
+              \item \textbf{Target population} (TP): The group of units referred to in the problem step.
+              \item \textbf{Response}: The answer provided by the TP to the problem.
+              \item \textbf{Attribute}: Statistic of the response.
+                    \begin{Example}{}{}
+                        What is the average grade of the students in STAT 101?
+                        \begin{itemize}
+                            \item Target population: All STAT 101 students
+                            \item Response: Grade of a STAT 101 student.
+                            \item Attribute: Average grade.
+                        \end{itemize}
+                    \end{Example}
+          \end{itemize}
+    \item \underline{P}lan:
+          \begin{itemize}
+              \item \textbf{Study population} (SP): The set of units you \emph{can} study
+                    \begin{Example}{}{}
+                        Does a drug reduce hair loss?
+                        \begin{itemize}
+                            \item Target population: People.
+                            \item Study population: Mice.
+                        \end{itemize}
+                    \end{Example}
+              \item \textbf{Sample}: A subset of the study population.
+          \end{itemize}
+    \item \underline{A}nalysis: We analyze the data.
+    \item \underline{C}onclusion: Refers back to the problem. We also
+          note some common \emph{errors}.
+          \begin{itemize}
+              \item \textbf{Study error}: The attribute of the population the
+                    target population differs from the parameter of the study population.
+                    \begin{Example}{}{}
+                        Mathematically we can write it down as $ a(\text{TP})-\mu $,
+                        however this error is qualitative. Therefore, we cannot
+                        actually calculate it.
+                    \end{Example}
+              \item \textbf{Sample error}: The parameter differs from the
+                    sample statistic (estimate).
+                    \begin{Example}{}{}
+                        Mathematically we can write it down as $ \mu-\bar{x} $,
+                        however this error is qualitative. Therefore, we cannot
+                        actually calculate it.
+                    \end{Example}
+              \item \textbf{Measurement error}: The difference
+                    between what \emph{we want} to calculate and what \emph{we do}
+                    calculate.
+          \end{itemize}
+\end{itemize}
+
+\section{Lecture 2.00 - Models, Model 1}
+\begin{Definition}{Model}{}
+    A \textbf{model} relates a parameter to a response.
+\end{Definition}
+\begin{Definition}{Model 1}{}
+    \textbf{Model 1} is defined as
+    \[ Y_j=\mu+R_j\quad(R_j\sim\N{0,\sigma^2}) \]
+    where
+    \begin{itemize}
+        \item $ Y_j $: random parameter that is the response of unit $ j $.
+        \item $ \mu $: non-random unknown parameter that is the study population mean.
+        \item $ R_j $: the distribution of responses about $ \mu $.
+    \end{itemize}
+\end{Definition}
+\begin{Remark}{}{}
+    \begin{itemize}
+        \item $ R_j $'s are always independent.
+        \item \textbf{Gauss}' Theorem: Any linear combination of
+              normal random variables is normal.
+        \item $ Y_j\sim\N{\mu,\sigma^2} $ since
+              \[ \E{Y_j}=\E{\mu+R_j}=\E{\mu}+\E{R_j}=\mu+0=\mu \]
+              \[ \Var{Y_j}=\Var{\mu+R_j}=\Var{R_j}=\sigma^2 \]
+    \end{itemize}
+\end{Remark}
+\begin{Example}{}{}
+    Average grade of STAT 101 students.
+    \[ Y_j=\mu+R_j\quad(R_j\sim\N{0,\sigma^2}) \]
+\end{Example}
+
+\section{Lecture 3.00 - Independent Groups}
+\begin{itemize}
+    \item Dependent: we randomly select one group and
+          we find a match, having the same explanatory variates, for
+          each unit of the first group. For example, twins, reusing
+          members of a group, or matching.
+    \item Independent: are formed when we select units at random
+          from mutually exclusive groups. For example, broken parts
+          and non-broken parts.
+\end{itemize}
+
+\section{Lecture 4.00 - Models 2A and 2B}
+\begin{Definition}{Model 2A}{}
+    \textbf{Model 2A} is used when we assume
+    the groups have the same standard deviation and is defined as
+    \[ Y_{ij}=\mu_i+R_{ij}\quad(R_{ij}\sim\N{0,\sigma^2}) \]
+    where
+    \begin{itemize}
+        \item $ Y_{ij} $: response of unit $ j $ in group $ i $.
+        \item $ \mu_i $: mean for group $ i $.
+        \item $ R_{ij} $: the distribution of responses about $ \mu_i $.
+    \end{itemize}
+\end{Definition}
+
+\begin{Definition}{Model 2B}{}
+    \textbf{Model 2B} is used when $ \sigma_1\ne \sigma_2 $
+    and is defined as
+    \[ Y_{ij}=\mu_i+R_{ij}\quad(R_{ij}\sim\N{0,\sigma_i^2}) \]
+\end{Definition}
+
+\section{Lecture 5.00 - Model 3}
+We subtract Model 2A from Model 2B to model a difference between two groups,
+and we get \emph{Model 3}.
+\[ \begin{array}{cccccc}
+          & Y_{1j}        & = & \mu_1       & + & R_{1j}        \\
+        - & Y_{2j}        & = & \mu_2       & + & R_{2j}        \\
+        \midrule
+          & Y_{1j}-Y_{2j} & = & \mu_1-\mu_2 & + & R_{1j}-R_{2j}
+    \end{array} \]
+Let
+\begin{itemize}
+    \item $ Y_{1j}-Y_{2j}=Y_{dj} $
+    \item $ \mu_1-\mu_2=\mu_d $
+    \item $ R_{1j}-R_{2j}=R_{dj} $
+\end{itemize}
+\begin{Definition}{Model 3}{}
+    \textbf{Model 3} is defined as
+    \[ Y_{dj}=\mu_d+R_{dj}\quad(R_{dj}\sim\N{0,\sigma_d^2}) \]
+\end{Definition}
+\begin{Example}{Model 3}{}
+    \begin{tabularx}{\linewidth}{@{}YYY@{}}
+        Heart Rate Before Exercise & Heart Rate After Exercise & $ d $ \\
+        \midrule
+        70                         & 80                        & 10    \\
+        80                         & 100                       & 20    \\
+        90                         & 90                        & 0
+    \end{tabularx}
+
+    We could use Model 3.
+\end{Example}
+\section{Lecture 6.00 - Model 4}
+Suppose $ Y\sim\bin{n,p} $; that is, we have $ n $
+outcomes where each outcome is binary.
+\[ \E{Y}=np \]
+\[ \Var{Y}=np(1-p) \]
+By the Central Limit Theorem, $ Y\stackrel{\cdot}{\sim}\N{np,np(1-p)} $.
+The proportion is
+\[ \frac{Y}{n} \stackrel{\cdot}{\sim}\N*{p,\frac{p(1-p)}{n} } \]
+Let's find the expected value and variance of $ Y/n $.
+\[ \E*{\frac{Y}{n}}=\frac{\E{Y}}{n}=\frac{np}{n}=p \]
+\[ \Var*{\frac{Y}{n}}=\frac{\Var{Y}}{n^2}=\frac{np(1-p)}{n^2}=\frac{p(1-p)}{n}  \]
+\begin{Definition}{Model 4}{}
+    \textbf{Model 4} is defined as
+    \[ \frac{Y}{n} \sim \N*{p,\frac{p(1-p)}{n} } \]
+\end{Definition}
+
+\section{Lecture 7.00 - MLE}
+\begin{itemize}
+    \item What is MLE? It connects the population parameter $ \theta $
+          to your sample statistic $ \hat{\theta} $.
+    \item How? It chooses the most probable value of $ \theta $
+          given our data $ y_1,\ldots,y_n $.
+\end{itemize}
+\underline{Process}:
+\begin{enumerate}[(1)]
+    \item Define the \textbf{likelihood function}.
+          \[ L=f(Y_1=y_1,Y_2=y_2,\ldots,Y_n=y_n) \]
+          We assume $ Y_i\perp Y_j $ for all $ i\ne j $. Therefore,
+          \[ L=f(Y_1=y_1)f(Y_2=y_2)\cdots f(Y_n=y_n) \]
+    \item Define the \textbf{log-likelihood function} and use log rules to
+          clean it up!
+    \item Find $ \pd{\ell}{\theta} $.
+    \item Set $ \pd{\ell}{\theta}=0 $, put hat on all $ \theta $'s.
+    \item Solve for $ \hat{\theta} $.
+\end{enumerate}
+\begin{Example}{}{}
+    Let $ Y_{ij}=\mu_i+R_{ij} $ where $ R_{ij}\sim\N{0,\sigma^2} $.
+    \begin{align*}
+        L & =f(Y_{11}=y_{11},\ldots,Y_{2n_2}=y_{2n_2})                                                \\
+          & =\prod_{j=1}^{n_1}f(y_{1j})\prod_{j=1}^{n_2}f(y_{2j})                                     \\
+          & =\prod_{j=1}^{n_1}\frac{1}{\sqrt{2\pi}\sigma}\expon*{-\frac{(y_{1j}-\mu_1)^2}{2\sigma^2}}
+        \prod_{j=1}^{n_2}\frac{1}{\sqrt{2\pi}\sigma}\expon*{-\frac{(y_{2j}-\mu_2)^2}{2\sigma^2}}
+    \end{align*}
+    Let $ n_1+n_2=n $, then
+    \[ L=(2\pi)^{-n/2}\sigma^{-n}\expon*{-\frac{\sum_{j=1}^{n_1}(y_{1j}-\mu_1)^2}{2\sigma^2}}
+        \expon*{-\frac{\sum_{j=1}^{n_2}(y_{2j}-\mu_2)^2}{2\sigma^2}} \]
+    The log-likelihood is given by
+    \[ \ell=-\frac{n}{2}\ln(2\pi)-n\ln(\sigma)-\frac{\sum_{j=1}^{n_1} (y_{1j}-\mu_1)^2}{2\sigma^2}-
+        -\frac{\sum_{j=1}^{n_2}(y_{2j}-\mu_2)^2}{2\sigma^2} \]
+    Now,
+    \[ \pd{\ell}{\hat{\mu}_1}=0+0-\frac{\sum_{j=1}^{n_1}2(y_{1j}-\hat{\mu})(-1) }{2\hat{\sigma}^2}+0=0 \]
+    Hence,
+    \[ 0=\sum_{j=1}^{n_1}(y_{1j}-\hat{\mu})\implies \sum_{j=1}^{n_1}y_{1j}=\sum_{j=1}^{n_1}\hat{\mu} \]
+    Note that
+    \[ \sum_{j=1}^{n_1}y_{1j}=\frac{n_1}{n_1} \sum_{j=1}^{n_1} y_{1j}=n_1\bar{y}_{1+}  \]
+    Therefore,
+    \[ n_1\bar{y}_{1+}=n_1\hat{\mu}\implies \bar{y}_{1+}=\hat{\mu}_1 \]
+    By symmetry,
+    \[ \bar{y}_{2+}=\hat{\mu}_2 \]
+    The second partial is given by
+    \[ \pd{\ell}{\sigma}=0+\frac{(-n)}{\hat{\sigma}}-\frac{\sum_{j=1}^{n_1} (y_{1j}-\hat{\mu}_1)^2}{2}(-2\hat{\sigma}^{-3})-
+        -\frac{\sum_{j=1}^{n_2}(y_{2j}-\hat{\mu}_2)^2}{2}(-2\hat{\sigma}^{-3})
+    \]
+    Multiply both sizes by $ \hat{\sigma}^3 $, yields
+    \[ 0=-n\hat{\sigma}^2+\sum_{j=1}^{n_1} (y_{1j}-\hat{\mu}_1)^2
+        +\sum_{j=1}^{n_2}(y_{2j}-\hat{\mu}_2)^2 \]
+    Divide both sizes by $ n $ and rearrange to get
+    \[ \hat{\sigma}^2=\frac{\sum_{j=1}^{n_1} (y_{1j}-\hat{\mu}_1)^2+\sum_{j=1}^{n_{2}}(y_{2j}-\hat{\mu}_2) }{n} \]
+    Recall that
+    \[ s^2=\sum_{i=1}^{n} \frac{(y_i-\bar{y})^2}{n-1}  \]
+    \[ s_1^2=\sum_{j=1}^{n_1}\frac{(y_{1j}-\bar{y}_{1+})^2}{n_1-1} \]
+    \[ s_2^2=\sum_{j=1}^{n_2}\frac{(y_{2j}-\bar{y}_{2+})^2}{n_2-1} \]
+    Therefore,
+    \[ \hat{\sigma}^2=s_p^2=\frac{(n_1-1)s_1^2+(n_2-1)s_2^2}{n_1+n_2-2}  \]
+\end{Example}
+
+\section{Lecture 8.00 - LS}
+\begin{itemize}
+    \item What is LS\@? Another technique to find $ \hat{\theta} $.
+    \item How? It minimizes the ``residuals.''
+    \item Models:
+          \[ \text{Response}=\text{Deterministic Part}+\text{Random Part} \]
+          \[ Y=f(\theta)+R \]
+          Let $ y_1,y_2,\ldots,y_n $ be realizations of $ Y $. Let
+          $ \hat{y}_i=f(\hat{\theta}) $, where $ f(\hat{\theta}) $
+          is simply $ f(\theta) $ with $ \theta $ replaced
+          by $ \hat{\theta} $. We call $ \hat{y}_i $ our ``prediction.''
+          \begin{Definition}{Residual}{}
+              A \textbf{residual} is
+              \[ r_i=y_i-f(\hat{\theta})=y_i-\hat{y}_i \]
+          \end{Definition}
+\end{itemize}
+\underline{Process}:
+\begin{enumerate}[(1)]
+    \item Define the $ W $ function, $ W=\sum r^2 $.
+    \item Calculate $ \pd{W}{\theta} $ for all non-$ \sigma $
+          parameters
+    \item Set $ \pd{W}{\theta}=0 $ and replace $ \theta $ by $ \hat{\theta} $.
+    \item Solve for $ \hat{\theta} $.
+\end{enumerate}
+
+\section{Lecture 9.00 - LS Example}
+Let's determine the LS of Model 2A.
+\[ Y_{ij}=\mu_i+R_{ij} \]
+Also, let $ n=n_1+n_2 $.
+\begin{align*}
+    W=\sum_{ij}r_{ij}^2
+     & =\sum_{ij}(y_{ij}-\hat{\mu}_i)^2                                                  \\
+     & =\sum_{j=1}^{n} \sum_{i=1}^{2} (y_{ij}-\hat{\mu}_i)^2                             \\
+     & =\sum_{j=1}^{n_1}(y_{1j}-\hat{\mu}_1)^2 + \sum_{j=1}^{n_2} (y_{2j}-\hat{\mu}_2)^2
+\end{align*}
+\begin{align*}
+    0 & =\pd{W}{\hat{\mu}_1}                                                 \\
+      & =\sum_{j=1}^{n_1} (y_{1j}-\hat{\mu}_1)(-2)                           \\
+      & =\frac{n_1}{n_1} \sum_{j=1}^{n_1} y_{ij}-\sum_{j=1}^{n_1}\hat{\mu}_1 \\
+      & =n_1\bar{y}_{1+}-n\hat{\mu}_1                                        \\
+\end{align*}
+Therefore, $ \hat{\mu}_1=\bar{y}_{1+} $ and by symmetry $ \hat{\mu}_2=\bar{y}_{2+} $.
+\begin{Remark}{}{}
+    For LS, $ \hat{\sigma}^2 $ is always of the form
+    \[ \hat{\sigma}^2=\frac{W}{n-q+c} \]
+    where
+    \begin{itemize}
+        \item $ n= $ number of units
+        \item $ q= $ number of non-$ \sigma $ parameters
+        \item $ c= $ number of constraints
+    \end{itemize}
+    Note that $ \hat{\sigma}^2=s_p^2 $.
+\end{Remark}
+\begin{Remark}{MLE versus LS}{}
+    \begin{itemize}
+        \item LS is from 1860's. Unbiased provided $ R_j $ is normal.
+        \item MLE is a recent technique and it is much more flexible
+              since it does not require $ R_j $ to be normal.
+        \item Minimum? You need to calculate the second derivative,
+              but we're too lazy and unrigorous in this course. No thanks.
+    \end{itemize}
+\end{Remark}
+
+\section{Lecture 10.00 - Estimators}
