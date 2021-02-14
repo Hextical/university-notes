@@ -7,10 +7,10 @@ All my university notes done in LaTeX.
 ### Semester 2
 |  Course  | Completion |       Online       |
 | :------: | :--------: | :----------------: |
-| STAT 332 |    TBA     | :heavy_check_mark: |
+|  CO 487  |  Dropped*  | :heavy_check_mark: |
+| STAT 332 |     A1     | :heavy_check_mark: |
 | STAT 341 |    TBA     | :heavy_check_mark: |
 | STAT 443 |   Week 4   | :heavy_check_mark: |
-|  CO 487  |  Dropped*  | :heavy_check_mark: |
 
 *Might still type this though. Notes will
 probably be fully updated for STAT 332 and STAT 443 at the end of
@@ -20,17 +20,17 @@ is situational, not sure if I want to type this.
 ### Semester 1
 |     Course      | Completion |       Online       |
 | :-------------: | :--------: | :----------------: |
+| AMATH/PMATH 331 | ETA: Never | :heavy_check_mark: |
 |    STAT 330     |    100%    | :heavy_check_mark: |
 |    STAT 331     |    100%    | :heavy_check_mark: |
-| AMATH/PMATH 331 | ETA: Never | :heavy_check_mark: |
 
 ## Year 2
 ### Semester 2
 |  Course  |        Completion        |          Online          |
 | :------: | :----------------------: | :----------------------: |
+| MATH 239 |   Online Lectures Only   | :heavy_exclamation_mark: |
 |  CO 331  |           100%           | :heavy_exclamation_mark: |
 |  CS 246  | 100% \ {Online Lectures} | :heavy_exclamation_mark: |
-| MATH 239 |   Online Lectures Only   | :heavy_exclamation_mark: |
 | STAT 231 | 100% \ {Online Lectures} | :heavy_exclamation_mark: |
 
 :heavy_exclamation_mark: COVID-19 caused the last month of the term to be online
