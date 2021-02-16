@@ -1,0 +1,102 @@
+\chapter{Assignment 2}
+\section{Lecture 18.00 - Model 5 - Estimates}
+\begin{Definition}{Completely randomized design, Model 5}{}
+    The \textbf{completely randomized design} (CRD) is defined as
+    \[ Y_{ij}=\mu+\tau_i+R_{ij}\quad(R_{ij}\sim \N{0,\sigma^2}) \]
+    for $ i=1,2,\ldots,t $ (\# of treatments),
+    $ j=1,2,\ldots,r $ (\# of replicates/treatment).
+    The number of units is $ tr $. In this course,
+    this is \textbf{Model 5}.
+    \begin{itemize}
+        \item $ \mu $ is the study population mean
+        \item $ \mu+\tau_i $ is the group mean
+        \item $ \tau_i $ is the treatment effect of group $ i $
+        \item $ R_{ij} $ is the distribution of values about the deterministic
+              part of the model.
+    \end{itemize}
+    \underline{Constraint}: $ \tau_1+\tau_2+\cdots+\tau_t=0 $
+\end{Definition}
+\begin{Example}{}{}
+    \begin{center}
+        \begin{tabularx}{0.95\linewidth}{@{}YY@{}}
+            Group 1 & Group 2 \\
+            \midrule
+            60      & 70      \\
+            65      & 75      \\
+            70      & 80      \\
+        \end{tabularx}
+    \end{center}
+    \begin{itemize}
+        \item $ \hat{\mu}=\frac{60+65+70+70+75+80}{6} =70 $
+        \item $ \hat{\mu}+\hat{\tau}_1=65 $
+        \item $ \hat{\mu}+\hat{\tau}_2=75 $
+        \item $ \hat{\tau}_1=-5 $
+        \item $ \hat{\tau}_2=5 $
+    \end{itemize}
+    Note that $ \hat{\tau}_1+\hat{\tau}_2=5 $.
+\end{Example}
+\begin{Example}{LS for CRD}{}
+    \[ W=\sum_{ij}r_{ij}^2+\lambda(\tau_1+\cdots+\tau_t)=
+        \sum_{ij}(y_{ij}-\mu-\tau_i)^2+\lambda(\tau_1+\tau_2+\cdots+\tau_t)   \]
+    Find $ \pd{W}{\mu},\, \pd{W}{\tau_1},\ldots,\pd{W}{\tau_t} $, and $ \pd{W}{\lambda} $
+    and set to zero to solve.
+    \[ \hat{\mu}=\bar{y}_{++} \]
+    \[ \hat{\tau}_i=\bar{y}_{i+}-\bar{y}_{++} \]
+    \[ \hat{\sigma}^2=\frac{W}{n-q+c}=\frac{W}{(tr)-(t+1)+(1)} \]
+    \begin{itemize}
+        \item $ n=tr $ since that is the number of parameters we have.
+        \item $ q=t+1 $ since we have one $ \mu $ and $ t $ $ \tau $'s.
+        \item $ c=1 $ since we have one constraint $ \tau_1+\cdots+\tau_t=0 $.
+    \end{itemize}
+\end{Example}
+\section{Lecture 19.00 - Model 5 - Estimators}
+Suppose we have $ i=1,2 $ and $ j=1,2,\ldots,r $.
+The number of units is $ 2r $. For the CRD model, the estimator is
+\[ \tilde{\mu}=\bar{Y}_{++} \]
+Let's find the mean and variance of $ \tilde{\mu} $ for $ i=1,2 $ and
+$ j=1,2,\ldots,r $.
+\begin{align*}
+    \E{\bar{Y}_{++}}
+     & =\E*{\frac{\sum_{i=1}^{2} \sum_{j=1}^{r} Y_{ij}}{2r} }                  \\
+     & =\E*{\frac{\sum_{i=1}^{2} \sum_{j=1}^{r} (\mu+\tau_i+R_{ij})}{2r} }     \\
+     & =\frac{\sum_{i=1}^{2} \sum_{j=1}^{r} \E{\mu}+\E{\tau_i}+\E{R_{ij}}}{2r} \\
+     & =\frac{\sum_{i=1}^{2} \sum_{j=1}^{r} \mu+\tau_i}{2r}                    \\
+     & =\frac{2r\mu+\sum_{j=1}^{r} (\tau_1+\tau_2)}{2r}                        \\
+     & =\mu
+\end{align*}
+Since $ \E{\tilde{\mu}}=\mu $ we have an unbiased estimator.
+\[ \Var{\bar{Y}_{++}}
+    =\Var*{\frac{\sum_{i=1}^{2} \sum_{j=1}^{r} Y_{ij}}{2r} }
+    =\frac{\sum_{i=1}^{2} \sum_{j=1}^{r} \Var{Y_{ij}}}{(2r)^2}
+    =\frac{2r\sigma^2}{(2r)^2}
+    =\frac{\sigma^2}{2r}  \]
+where the second equality used independence.
+
+\section{Lecture 20.00 - Model 5 - Estimators 2}
+An estimator for CRD is
+\[ \tilde{\tau}_1=\bar{Y}_{1+}-\bar{Y}_{++} \]
+Let's find the mean and variance of $ \tilde{\tau_1} $ for $ i=1,2 $ and
+$ j=1,2,\ldots,r $.
+\[ \E{\tilde{\tau}_1}
+    =\E{\bar{Y}_{1+}-\bar{Y}_{++}}
+    =\E{\bar{Y}_{1+}}-\mu
+    =\E*{\frac{\sum_{i=1}^{r} Y_{1j}}{r}}-\mu
+    =\frac{\sum_{i=1}^{r} (\mu+\tau_1)}{r} -\mu
+    =\frac{r\mu+r\tau_1}{r} -\mu
+    =\tau_1 \]
+Working with the variance is slightly tricky.
+\begin{align*}
+    \Var{\tilde{\tau}_1}
+     & =\Var{\bar{Y}_{1+}-\bar{Y}_{++}}                                                                 \\
+     & =\Var*{\bar{Y}_{1+}-\biggl(\frac{\bar{Y}_{1+}+\bar{Y}_{2+}}{2} \biggr)}                          \\
+     & =\Var*{\frac{1}{2} \bar{Y}_{1+}-\frac{1}{2} \bar{Y}_{2+}}                                        \\
+     & =\frac{1}{4}\Var{\bar{Y}_{1+}}+\frac{1}{4} \Var{\bar{Y}_{2+}}           &  & \text{independence} \\
+     & =\frac{\sigma^2}{4r}+\frac{\sigma^2}{4r}                                                         \\
+     & =\frac{\sigma^2}{2r}
+\end{align*}
+The confidence interval for $ \tau_1 $ is given by
+\[ \tau_1:\hat{\tau}_1\pm c\sqrt{\frac{\hat{\sigma}^2}{2r}}\quad(c\sim t(n-q+c)) \]
+and the discrepancy is (obviously) given by
+\[ d=\frac{\hat{\tau}_1-\tau_0}{\displaystyle \sqrt{\frac{\hat{\sigma}^2}{2r}}}\quad(c\sim t(n-q+c))  \]
+The confidence interval for $ \mu $ is given by
+\[ \mu:\hat{\mu}\pm c\sqrt{\frac{\hat{\sigma}^2}{2r}}\quad(c\sim t(n-q+c)) \]

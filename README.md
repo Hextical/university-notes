@@ -8,7 +8,7 @@ All my university notes done in LaTeX.
 |  Course  | Completion |       Online       |
 | :------: | :--------: | :----------------: |
 |  CO 487  |  Dropped*  | :heavy_check_mark: |
-| STAT 332 |     A1     | :heavy_check_mark: |
+| STAT 332 |     A3     | :heavy_check_mark: |
 | STAT 341 |    TBA     | :heavy_check_mark: |
 | STAT 443 |   Week 4   | :heavy_check_mark: |
 
