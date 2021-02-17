@@ -7,15 +7,14 @@ All my university notes done in LaTeX.
 ### Semester 2
 |  Course  | Completion |       Online       |
 | :------: | :--------: | :----------------: |
-|  CO 487  |  Dropped*  | :heavy_check_mark: |
-| STAT 332 |     A3     | :heavy_check_mark: |
-| STAT 341 |    TBA     | :heavy_check_mark: |
-| STAT 443 |   Week 4   | :heavy_check_mark: |
+| STAT 341 | ETA: Never | :heavy_check_mark: |
+| STAT 443 |  Week 4**  | :heavy_check_mark: |
+| STAT 332 |    ***     | :heavy_check_mark: |
 
-*Might still type this though. Notes will
-probably be fully updated for STAT 332 and STAT 443 at the end of
-reading week, provided I'm not lazy. STAT 341
-is situational, not sure if I want to type this.
+** Notes will probably be fully updated for STAT 443 at the end of reading week.
+
+*** Please e-mail me if you want my notes for this course. The professor
+has too many copyright things on his Word (lol) documents.
 
 ### Semester 1
 |     Course      | Completion |       Online       |
