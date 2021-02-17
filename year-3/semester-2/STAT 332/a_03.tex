@@ -1,6 +1,6 @@
 \chapter{Assignment 3}
 \section{Lecture 21.00 - Model 5, Example 1}
-\begin{Example}{}{}
+\begin{Example}{Continued in~\Cref{ex:m_6_ex_1}}{m_5_ex_1}
     A study of intoxication measured two groups of students,
     one of which was drunk while the other was not as
     they drove a computer-simulated driving course with a max speed limit of 50 km/h.
@@ -69,7 +69,7 @@ F-statistic: 5.902 on 1 and 6 DF,  p-value: 0.0512
     \begin{itemize}
         \item \textbf{Q1}: What is the treatment effect for being inebriated?
 
-              \textbf{Solution.} $ \hat{\tau}_1=-2.75 $ and $ \hat{\tau}_2=-\hat{\tau}_1=2.75 $
+              \textbf{Solution.} $ \hat{\tau}_1=-2.75 $.
         \item \textbf{Q2}: Is there a difference between the treatment effect of group 1 and 2? Use a 95\% CI\@.
 
               \textbf{Solution.}
@@ -137,7 +137,7 @@ To check these, we can
 \begin{Example}{}{m_5_ex_2}
     Suppose professors are coordinating 4 sections
     of the same course in a term. We want to look
-    at the marks of each student for the midterm between these sections. The
+    at the average mark for each section on the midterm. The
     treatment is the ``instructor.''
 
     \begin{itemize}
@@ -212,8 +212,9 @@ tau.4 <- -1 * (tau.1 + tau.2 + tau.3)
 tau.1 - tau.2 - qt(0.975, 20) * summary(model)$sigma/sqrt(3)
 tau.1 - tau.2 + qt(0.975, 20) * summary(model)$sigma/sqrt(3)
 \end{minted}
-    To get at 95\% confidence interval $ \theta $: $ (-29.38,4.38) $. Yes,
-    there is a difference between the treatment effect of group 1 and 2.
+    To get at 95\% confidence interval $ \theta $: $ (-29.38,4.38) $. 0 is in the interval,
+    therefore
+    there is not a difference between the treatment effect of group 1 and 2.
 
     \textbf{Q2}: Groups 2 and 3 were taught by the same instructor. Groups 1 and 4 are taught by another
     instructor. Is there a difference between the average treatment effect of instructor 1 to instructor 2? Use an
@@ -233,7 +234,8 @@ tau.1 - tau.2 + qt(0.975, 20) * summary(model)$sigma/sqrt(3)
     $ H_0 $: $ \theta=0 $ versus $ H_a $: $ \theta\ne 0 $.
     \[ d=\frac{\hat{\theta}-0}{\hat{\sigma}/\sqrt{6}}=-5.19\quad(D \sim t(20))  \]
     \[ p=2\Prob{D>\abs{-5.19}}=(0,0.001) \]
-    We have tons of evidence to reject $ H_0 $. In R, we could do
+    We have tons of evidence to reject $ H_0 $ in favour
+    of the instructors having a different effect. In R, we could do
     \begin{minted}{R}
 theta <- ((tau.1 + tau.4) / 2) - ((tau.2 + tau.3) / 2)
 d <- (theta - 0) / (summary(model)$sigma / sqrt(6))
@@ -261,7 +263,7 @@ Recall:
 \end{align*}
 Rearranging
 \[ \Uunderbracket{\sum_{ij}(y_{ij}-\bar{y}_{++})^2}_{\SS{Tot}}
-    =\Uunderbracket{r \sum_{i}(y_{i+}-\bar{y}_{++})^2}_{\SS{Trt}}+
+    =\Uunderbracket{r \sum_{i}(\bar{y}_{i+}-\bar{y}_{++})^2}_{\SS{Trt}}+
     \Uunderbracket{\sum_{ij}(y_{ij}-\hat{\mu}-\hat{\tau}_i)^2}_{\SS{Res}}   \]
 \[ \boxed{\SS{Tot}=\SS{Trt}+\SS{Res}} \]
 $ \SS{Tot} $
@@ -278,7 +280,7 @@ $ \SS{Res} $
 \begin{itemize}
     \item The variability left over after you fit the model (unexplained)
     \item Synonymous with $ \hat{\sigma}^2 $
-    \item $ \displaystyle \hat{\sigma}^2=\frac{W}{n-q+c} =\frac{\SS{res}}{\text{df}_{Res}}=\MS{Res} $
+    \item $ \displaystyle \hat{\sigma}^2=\frac{W}{n-q+c} =\frac{\SS{Res}}{\text{df}_{\text{Res}}}=\MS{Res} $
     \item $ \text{df}=n-q+c $
 \end{itemize}
 $ \SS{Trt} $
@@ -336,8 +338,8 @@ where $ n=\text{df}_\text{Trt} $ and $ d=\text{df}_\text{Res} $.
 \[ \E{\tilde{F}}=
     \E*{\frac{\tilde{\MS{Trt}}}{\tilde{\MS{Res}}}}\approx
     \frac{\E{\tilde{\MS{Trt}}}}{\E{\tilde{\MS{Res}}}}
-    =\frac{\sigma^2+r \dfrac{\sum_{i} \tau_i^2}{t-1} }{\sigma^2}  \]
-\[ \E{\tilde{F}}=1+\frac{4}{\sigma^2} \frac{\sum \tau_i^2 }{t-1}  \]
+    =\frac{\sigma^2+r \dfrac{\sum_{i=1}^t \tau_i^2}{t-1} }{\sigma^2}  \]
+\[ \E{\tilde{F}}=1+\frac{r}{\sigma^2} \frac{\sum_{i=1}^t \tau_i^2 }{t-1}  \]
 If $ \tau_1=\tau_2=\cdots=\tau_t=0 $, then $ \E{\tilde{F}}=1 $.
 However, if even one $ \tau $ is not zero, then $ \E{\tilde{F}}>1 $.
 

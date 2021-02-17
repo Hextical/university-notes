@@ -171,7 +171,7 @@ Let's find the expected value and variance of $ Y/n $.
           \[ L=f(Y_1=y_1,Y_2=y_2,\ldots,Y_n=y_n) \]
           We assume $ Y_i\perp Y_j $ for all $ i\ne j $. Therefore,
           \[ L=f(Y_1=y_1)f(Y_2=y_2)\cdots f(Y_n=y_n) \]
-    \item Define the \textbf{log-likelihood function} and use log rules to
+    \item Define the \textbf{log-likelihood function} $ \ell=\ln(L) $ and use log rules to
           clean it up!
     \item Find $ \pd{\ell}{\theta} $.
     \item Set $ \pd{\ell}{\theta}=0 $, put hat on all $ \theta $'s.
@@ -325,8 +325,8 @@ to $ \tilde{\theta} $ we capitalize our $ Y $'s.
         \E{\tilde{\mu}_1}
         =\E*{\frac{\sum_{j=1}^{n_1} Y_{1j}}{n_1}}
         =\frac{\sum_{j=1}^{n_1}\E{Y_{1j}}}{n_1}
-        =\frac{\sum_{j=1}^{n_1} \E{\mu+R_{1j}}}{n_1}
-        =\frac{\sum_{j=1}^{n_1} \mu+\E{R_{1j}}}{n_1}
+        =\frac{\sum_{j=1}^{n_1} \E{\mu_1+R_{1j}}}{n_1}
+        =\frac{\sum_{j=1}^{n_1} \mu_1+\E{R_{1j}}}{n_1}
         =\mu_1
     \]
     \begin{Definition}{Unbiased estimator}{}
@@ -379,8 +379,8 @@ to $ \tilde{\theta} $ we capitalize our $ Y $'s.
     \[ X=\frac{(n-1)\tilde{\sigma}^2}{\sigma^2}\sim \chi^2(n-1)  \]
     By~\Cref{thm:thm_3},
     \[ \frac{Z}{\sqrt{X/(n-1)}}
-        =\frac{\frac{\tilde{\mu}-\mu}{\sigma/\sqrt{n}}}{\frac{(n-1)\tilde{\sigma}^2}{\sigma^2}}=
-        \frac{\tilde{\mu}-\mu}{\tilde{\sigma}/\sqrt{n}}\sim t(n-1)   \]
+        =\frac{\displaystyle \frac{\tilde{\mu}-\mu}{\sigma/\sqrt{n}}}{\displaystyle \sqrt{\frac{(n-1)\tilde{\sigma}^2}{\sigma^2}\bigg/(n-1)}}
+        =\frac{\tilde{\mu}-\mu}{\tilde{\sigma}/\sqrt{n}}\sim t(n-1)   \]
 \end{Example}
 \begin{Remark}{}{}
     Recall that
@@ -438,7 +438,7 @@ and obtain
     Model 3: $ Y_{dj}=\mu_d+R_{dj} $ where $ R_{dj} \sim \N{0,\sigma^2_d} $,
     which is the same as Model 1.
     \[ \mu_d:\bar{y}_{d+}\pm c \frac{\sigma_d}{\sqrt{n_d}}\quad (c \sim \N{0,1})  \]
-    \[ \mu_d:\bar{y}_{d+} \pm c \frac{s_d}{\sqrt{n_d}}\sim t(n_d-1)  \]
+    \[ \mu_d:\bar{y}_{d+} \pm c \frac{s_d}{\sqrt{n_d}}\quad (c\sim t(n_d-1))  \]
 \end{Example}
 \begin{Example}{}{}
     Model 4:
