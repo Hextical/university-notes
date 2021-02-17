@@ -31,6 +31,7 @@
 \usepackage{tikz}
 \usetikzlibrary{patterns}
 \usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
 \usepackage{commath}
 
 
@@ -42,14 +43,15 @@
 \usepackage{adjustbox}
 \usepackage{tabularx}
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{Z}{>{\centering\arraybackslash\columncolor{light-gray}}X}
 
 % -----------------------------------------------------------------------------
 
 % Intervals
 \usepackage{interval}
 \intervalconfig{
-    soft open fences,
-    separator symbol={,}
+      soft open fences,
+      separator symbol={,}
 }
 
 % -----------------------------------------------------------------------------
@@ -70,15 +72,15 @@
 % Functions
 \providecommand\given{} % just to make sure it exists
 \DeclarePairedDelimiterXPP{\E}[1]{\mathbb{E}}[]{}{
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
-    #1}
+      \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
+      #1}
 \DeclarePairedDelimiterXPP{\Var}[1]{\mathbb{V}}(){}{
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
-    #1}
+      \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
+      #1}
 \DeclarePairedDelimiterXPP\Prob[1]{\mathbb{P}}(){}{
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
-    \ifblank{#1}{\:\cdot\:}
-    #1}
+      \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
+      \ifblank{#1}{\:\cdot\:}
+      #1}
 \DeclarePairedDelimiterXPP\Ind[1]{\mathbb{I}}\{\}{}{
 \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
 \ifblank{#1}{\:\cdot\:}
@@ -114,8 +116,8 @@
 \DeclarePairedDelimiterXPP{\tr}[1]{\text{tr}}(){}{#1}
 
 \DeclarePairedDelimiterX\innerp[2]{\langle}{\rangle}{
-    \ifblank{#1}{\:\cdot\:,}#1,
-    \ifblank{#2}{\:\cdot\:}#2
+      \ifblank{#1}{\:\cdot\:,}#1,
+      \ifblank{#2}{\:\cdot\:}#2
 }
 
 \DeclarePairedDelimiterXPP{\MA}[1]{\text{MA}}(){}{#1}
@@ -134,13 +136,13 @@
 % Heading Dates
 \newcommand{\makeheading}[1]
 {
-    \begin{figure}[H]
-        \centering
-        \rule{\columnwidth}{1pt}\\
-        {\large \scshape{#1}}\\[-0.6\baselineskip]
-        \rule{\columnwidth}{1pt}
-        \vspace*{-20pt}
-    \end{figure}
+      \begin{figure}[H]
+            \centering
+            \rule{\columnwidth}{1pt}\\
+            {\large \scshape{#1}}\\[-0.6\baselineskip]
+            \rule{\columnwidth}{1pt}
+            \vspace*{-20pt}
+      \end{figure}
 }
 
 % -----------------------------------------------------------------------------
@@ -159,80 +161,80 @@
 \definecolor{mycyan}{RGB}{204,229,229}
 
 \tcbset{
-    common/.style={
-            fonttitle=\bfseries,
-            coltitle=black,
-            boxrule=0pt
-        },
-    theorem/.style={
-            common,
-            colback=mypurple,
-            colframe=mypurple!95!black,
-            fontupper=\itshape{}
-        },
+      common/.style={
+                  fonttitle=\bfseries,
+                  coltitle=black,
+                  boxrule=0pt
+            },
+      theorem/.style={
+                  common,
+                  colback=mypurple,
+                  colframe=mypurple!95!black,
+                  fontupper=\itshape{}
+            },
 }
 
 
 \newtcbtheorem[number within=section, crefname={definition}{definitions}]
 {Definition}{DEFINITION}{
-    common,
-    colback=myyellow,
-    colframe=myyellow!95!black
+      common,
+      colback=myyellow,
+      colframe=myyellow!95!black
 }{def}
 
 \newtcbtheorem[use counter from=Definition, crefname={example}{examples}]
 {Example}{EXAMPLE}{
-    common,
-    colback=mygreen,
-    colframe=mygreen!95!black,
-    breakable
+      common,
+      colback=mygreen,
+      colframe=mygreen!95!black,
+      breakable
 }{ex}
 
 \newtcbtheorem[use counter from=Definition, crefname={exercise}{exercises}]
 {Exercise}{EXERCISE}{
-    common,
-    colback=myred,
-    colframe=myred!95!black,
-    breakable
+      common,
+      colback=myred,
+      colframe=myred!95!black,
+      breakable
 }{ex}
 
 \newtcbtheorem[use counter from=Definition, crefname={remark}{remarks}]
 {Remark}{REMARK}{
-    common,
-    colback=mycyan,
-    colframe=mycyan!95!black,
+      common,
+      colback=mycyan,
+      colframe=mycyan!95!black,
 }{remark}
 
 \newtcbtheorem[use counter from=Definition, crefname={theorem}{theorems}]
 {Theorem}{THEOREM}{
-    theorem,
+      theorem,
 }{thm}
 
 \newtcbtheorem[use counter from=Definition, crefname={proposition}{propositions}]
 {Proposition}{PROPOSITION}{
-    theorem,
+      theorem,
 }{prop}
 
 \newtcbtheorem[use counter from=Definition, crefname={corollary}{corollaries}]
 {Corollary}{COROLLARY}{
-    theorem,
+      theorem,
 }{cor}
 
 \newtcbtheorem[use counter from=Definition, crefname={lemma}{lemmas}]
 {Lemma}{LEMMA}{
-    theorem,
+      theorem,
 }{lem}
 
 \newtcbtheorem[no counter]
 {Proof}{Proof of}{
-    common,
-    colframe=black!10,
-    breakable
+      common,
+      colframe=black!10,
+      breakable
 }{pf}
 
 \DeclarePairedDelimiter\Set{\{}{\}}
 
 \AtBeginDocument{%
-    \let\mathbb\relax
-    \DeclareMathAlphabet{\mathbb}{U}{msb}{m}{n}%
+      \let\mathbb\relax
+      \DeclareMathAlphabet{\mathbb}{U}{msb}{m}{n}%
 }
