@@ -1,0 +1,357 @@
+\chapter{Week 5}
+\section{ARMA Parameter Estimation: AR Case}
+Suppose we observe a time series
+$ X_1,\ldots,X_t \sim \ARMA{p,q} $
+\[ \phi(B)X_t=\theta(B)X_t \]
+\[ \phi(z)=1-\phi_1 z-\cdots - \phi_p z^p \]
+\[ \theta(z)=1+\theta_1 z+\cdots+\theta_q z^q \]
+Our goal is to estimate
+\begin{itemize}
+    \item $ \phi_1,\ldots,\phi(p) $ (AR parameters)
+    \item $ \theta_1,\ldots,\theta_q $ (MA parameters)
+    \item $ \sigma_W^2 $ (white noise variance)
+\end{itemize}
+$ \AR{1} $ case: $ X_t=\phi X_{t-1}+W_t $ with $ \E{W_t^2}=\sigma_W^2 $.
+The idea is to use OLS\@.
+\[ \hat{\phi}=\arg\min_{\abs{\phi}<1}\sum_{t=2}^{T} (X_t-\phi X_{t-1})^2 \]
+This leads to (upon some calculations):
+\[ \hat{\phi}=\frac{\frac{1}{T}  \sum_{t=2}^{T} X_t X_{t-1}}{\frac{1}{T} \sum_{t=2}^{T} X_t^2}
+    \approx \frac{\hat{\gamma}(1)}{\hat{\gamma}(0)}=\hat{\rho}(1)
+    \xrightarrow[T\to\infty]{P}\phi   \]
+\[ \hat{\sigma}_W^2=\frac{1}{T-1} \sum_{t=2}^{T} (X_t-\hat{\phi}X_{t-1})^2 \]
+where $ X_t-\hat{\phi}X_{t-1} $ is estimate $ W_t $ and $ \hat{\sigma}_W^2 $
+is the sample variance of residuals.
+
+$ \AR{p} $ case: $ X_t=\phi_1 X_{t-1}+\cdots+\phi_p X_{t-p}+W_t $.
+OLS\@: $ \symbf{\phi}=(\phi_1,\ldots,\phi_p)^\top \in\mathbf{R}^p $
+\[ \hat{\symbf{\phi}}=\text{argmin}_{\hat{\symbf{\phi}}}\sum_{t=p+1}^{T} (X_t-\phi_1X_{t-1}-\cdots-\phi_p X_{t-p})^2 \]
+$\hat{\symbf{\phi}}$ admits a stationary and causal solution.
+
+Solve using calculus (take first order partial derivatives set equal to zero),
+leads to a system of $ p $ linear equations of the form
+\[ \hat{\Gamma}_p \symbf{\hat{\phi}}=\hat{\symbf{\gamma}_p} \]
+where
+\[ \hat{\Gamma}_p=(\hat{\gamma}(j-k),\, 1\le j,k\le p)\in\mathbf{R}^{p\times p} \]
+\[ \symbf{\hat{\gamma}}_p=(\hat{\gamma}(1).\ldots,\hat{\gamma}(p))^\top \]
+The resulting OLS estimator takes the form
+\[ \hat{\symbf{\phi}}=\hat{\Gamma}_p^{-1}\hat{\symbf{\gamma}}_p \]
+\[ \hat{\sigma}_W^2=\hat{\gamma}(0)-\hat{\gamma}_p^\top \Gamma_p \]
+Similar approach: use method of moments (set parameters so that
+empirical moments match theoretical causal moments induced by the model).
+
+If $ X_t \sim \AR{p} $, then for $ 1\le h\le p $.
+\begin{align*}
+    \gamma(h)
+     & =\E{X_{t}X_{t+h}}                                                                                   \\
+     & =\E{X_t(\phi_1 X_{t+h-1}+\cdots+\phi_p X_{t+h-p}+W_{t+h})}                                          \\
+     & =\phi_1\gamma(h-1)+\phi(2)\gamma(h-2)+\cdots+\phi_p\gamma(h-p)+\Uunderbracket{0}_{X_t\perp W_{t+h}}
+\end{align*}
+This implies the linear system:
+\[ \symbf{\gamma}_p=\Gamma_p \symbf{\phi} \]
+\[ \symbf{ \gamma}_p=(\gamma(1),\ldots,\gamma(p))\in\mathbf{R}^p \]
+\[  \Gamma_p=\bigl[\gamma(j-k),\, 1\le j,k\le p\bigr]\in\mathbf{R}^{p\times p} \]
+Note that $ X_t=\sum_{\ell=0}^{\infty} \psi_0\ell W_{t-\ell} $ where $ \psi_0=1 $
+and $ W_t=X_t-\phi_1X_{t-1}-\cdots-\phi_p X_{t-p} $ imply
+\[ \sigma_W^2=\E{X_t W_t}
+    =\E{X_t(X_t-\phi_1 X_{t-1}-\cdots-\phi_p X_{t-p})}
+    =\gamma(0)-\phi_1\gamma(1)-\cdots-\phi_p\gamma(p) \]
+which are \textbf{Yule-Walker Equations}.
+\[ \symbf{\gamma}_p=\Gamma_p \symbf{\phi} \]
+\textbf{Yule-Walker Estimators}:
+\[ \hat{\symbf{\phi}}=\hat{\Gamma}_p^{-1} \symbf{\hat{\gamma}}_p \]
+\[ \hat{\sigma}_W^2=\hat{\gamma}(0)-\hat{\symbf{\gamma}}_p^\top \hat{\Gamma}_p^{-1}\hat{\symbf{\gamma}}_p \]
+\begin{Example}{}{}
+    In the $ \AR{1} $ case, the YW estimators are
+    \[ \hat{\phi}=\frac{\hat{\gamma}(1)}{\hat{\gamma}(0)}=\hat{\rho}(1)  \]
+    \[ \hat{\sigma}_W^2=\hat{\gamma}(0)-\frac{\hat{\gamma}^2(1)}{\hat{\gamma}(0)}  \]
+\end{Example}
+\begin{Theorem}{}{}
+    If $ X_t \sim \AR{p} $ (causal), then
+    \[ \frac{\hat{\phi}_{\text{OLS, $i$}}}{\hat{\phi}_{\text{YW, $i$}}}
+        \xrightarrow[T\to\infty]{P}1  \]
+    OLS and YW estimates are asymptotically equivalent.
+\end{Theorem}
+\begin{Theorem}{}{}
+    \[ \sqrt{T}\bigl(\hat{\symbf{\phi}}_{\text{YW}}-\symbf{\phi}\bigr)
+        \xrightarrow[T\to\infty]{D}\Mvn{0,\sigma_W^2\Gamma_p^{-1}} \]
+    \[ \hat{\sigma}_W^2\xrightarrow{P}\sigma_W^2 \]
+    \begin{itemize}
+        \item Optimal variance among all possible (asymptotically) unbiased estimators, hence \textbf{efficient}.
+        \item Result can be used to obtain confidence intervals for $ \phi $.
+    \end{itemize}
+\end{Theorem}
+
+\section{ARMA Parameter Estimation: MLE}
+Ordinary Least Squares and Yuke Walker equation
+estimators are effective in estimating the $ \AR{p} $
+parameters, but are difficult to apply to fitting
+$ \MA{q} $ and general $ \ARMA{p,q} $
+models since the white noises $ W_t $ are not observable,
+and YW equations are not linear in the MLA parameters.
+
+Latent Variables (variables associated with $ W_t $) $\implies$
+MLE is best.
+
+Suppose $ X_t \sim \AR{1} $ (causal)
+\[ X_t=\phi X_{t-1}+W_t \]
+where $ W_t \stackrel{\text{iid}}{\sim}\N{0,\sigma_W^2} $,
+then
+\[ X_t=\sum_{\ell=0}^{\infty} \phi^\ell W_{t-\ell} \]
+is gaussian. $ L^2 $ limits of Gaussian random variables are Gaussian.
+(MGF or characteristic function).
+
+Moreover, $ X_1,\ldots,X_T $ are jointly Gaussian since
+\[ a_1X_1+\cdots+a_T X_T= \sum_{\ell=0}^{\infty}
+    \phi^\ell (a_1 W_{1-\ell}+\cdots+a_T W_{t-\ell}) \]
+MLE:
+\[ L(\phi,\sigma_W^2)=f(X_T, X_{T-1},\ldots,X_1;\phi,\sigma_W^2) \]
+where
+\begin{itemize}
+    \item $L(\phi,\sigma_W^2)$ is the likelihood of $ \phi $ and $ \sigma_W^2 $.
+    \item $f(X_T, X_{T-1},\ldots,X_1;\phi,\sigma_W^2)$ is the joint density
+          of $ X_T,\ldots,X_1 $ at the observed data. Gaussian Density.
+\end{itemize}
+Key idea in Time series: To evaluate the likelihood condition on
+the path/past!
+
+\begin{align*}
+    f(X_T,\ldots,X_1)
+     & =f(X_T\mid X_{T-1},\ldots,X_1)f(X_{T-1},\ldots,X_1)                                                            \\
+     & =\vdots                                                                                    &  & \text{iterate} \\
+     & =f(X_T\mid X_{T-1},\ldots,X_1)f(X_{T-1}\mid X_{T-2},\ldots,X_1)\cdots f(X_2\mid X_1)f(X_1)                     \\
+     & =\prod_{i=1}^T f(X_i\mid X_{i-1},\ldots,X_1)
+\end{align*}
+According to HW2:
+\[ X_i \mid (X_{i-1},\ldots,X_1)\sim \N{\phi X_{i-1},\sigma_W^2} \]
+Note that $  X_i \mid (X_{i-1},\ldots,X_1)=X_i\mid X_{i-1} $, $ \AR{1} $.
+
+Thus,
+\begin{align*}
+    L(\phi,\sigma_W^2)
+     & = \prod_{i=2}^T \frac{1}{\sqrt{2\pi\sigma_W^2}}\expon*{-\frac{(X_i-\phi X_{i-1})^2}{2\sigma_W^2} }f(X_1)                   \\
+     & = (2\pi\sigma_W^2)^{-\frac{T-1}{2}}\expon*{-\frac{\sum_{i=2}^{T} (X_i-\phi X_{i-1})^2}{2\sigma_W^2}}f(X_1;\phi,\sigma_W^2)
+\end{align*}
+Maximizing $ L(\phi,\sigma_W^2) $ in this case leads to a similar estimator as OLS/YW\@.
+
+General $ \ARMA{p,q} $ case: Again, $ X_T,\ldots,X_1 $ are jointly
+Gaussian if $ W_t \sim  $ Gaussian.
+\[ L(\phi_1,\ldots,\phi_p,\theta_1,\ldots,\theta_q,\sigma_W^2)=
+    \prod_{i=1}^T f(X_i\mid X_{i-1},\ldots,X_1) \]
+\[ X_i\mid (X_{i-1},\ldots,X_1)\sim \N{\E{X_i\given X_{i-1},\ldots,X_1},\text{MSE}}
+    \sim \N*{\tilde{X}_{i\mid (i-1)}(\symbf{\theta}),P_{i-1}^i(\symbf{\theta})} \]
+where $ \phi_1,\ldots,\phi_p,\theta_1,\ldots,\theta_q,\sigma_W^2=\symbf{\theta}\in\mathbf{R}^{p+q+1} $
+and $ P_{i-1}^i(\symbf{\theta}) $ is forecast MSE predicting $ X_i $ from $ X_{i-1},\ldots,X_1 $.
+
+This likelihood can be maximized using numerical optimization. (Newton-Raphson Algorithm,
+Conjugate Gradient).
+
+\begin{Theorem}{Chapter 8 of Brockwell and Davis, Hannan (1980)}{}
+    The MLE's of $ \phi_1,\ldots,\phi_p,\theta_1,\ldots,\theta_q,\sigma_W^2 $
+    are $ \sqrt{T} $ consistent and asymptotically Normal with asymptotic covariance
+    equal to the inverse of the information matrix. In this sense, they
+    are asymptotically optimal.
+\end{Theorem}
+\begin{Remark}{Takeaway Message}{}
+    \begin{enumerate}[(1)]
+        \item MLE estimation reduces to OLS, YW equation estimation for $ \AR{p} $ models.
+        \item For general $ \ARMA{p,q} $ estimation, MLE
+              is through to be optimal in most situations. (Used as a default/benchmark).
+    \end{enumerate}
+\end{Remark}
+
+\section{Model Selection Diagnostic Tests}
+Using Maximum Likelihood Estimation, we can fit an $ \ARMA{p,q} $
+model to an observed series $ X_1,\ldots ,X_T $.
+
+Question: How do we select the orders $ p $ and $ q $ of the model?
+\subsection*{Usual Methods}
+\begin{enumerate}[(1)]
+    \item Examine ACF and PACF
+    \item Model Diagnostics/Goodness-of-Fit tests:
+          Examine the residuals of the $ \ARMA{p,q} $ model to check for the plausibility
+          of the white noise assumption.
+    \item Model Selection Methods: Information criteria, cross-validation.
+\end{enumerate}
+\subsection*{Model Diagnostics}
+if the $ \ARMA{p,q} $ model fits the data well, then the estimated residuals
+\[ \hat{W}_{t}=\frac{X_t-\tilde{X}_{t\mid (t-1)}}{\sqrt{\tilde{P}}_{t}^{t-1}}  \]
+where
+\begin{itemize}
+    \item $ \tilde{X}_{t\mid(t-1)} $ is the truncated predicator of $ X_t $
+          based on $ X_{t-1},\ldots,X_1 $.
+    \item $ \hat{P}_t^{t+1} $ is the estimated MSE
+\end{itemize}
+should behave like white noise.
+
+This can be investigated by considering
+$ \hat{\rho}_W(h) $
+which is the emperical ACF of $ \hat{W}_1,\ldots,\hat{W}_T $.
+
+As a measure of how ``white'' the residuals are, it is common
+to evaluate the cumulative significance of $ \hat{\rho}_W(h) $
+for $ 1\le h\le H $ by applying a ``white noise test.''
+Suppose $ W_1,\ldots,W_T $ is a strong white noise, and
+$ \hat{\rho}_W(h) $ is the empirical ACF of this series.
+
+We know that for each fixed $ h $,
+\[ \sqrt{T}\hat{\rho}_W(h)\xrightarrow{D}\N{0,1} \]
+Also, for $ j\ne h $,
+\begin{align*}
+    \Cov{\sqrt{T}\hat{\gamma}_W(h),\sqrt{T}\hat{\gamma}_W(j)}          \\
+     & =T\E*{\sum_{t=1}^{T} W_t W_{t+h}}\E{\sum_{s=1}^{T} W_s W_{s+j}} \\
+     & =T \sum_{t=1}^{T} \sum_{s=1}^{T} \E{W_{t}W_{t+h}W_{s}W_{s+j}}   \\
+     & =0
+\end{align*}
+Using Martingale, or $ m $-dependent CLT's, it can be shown that
+\[ \begin{pmatrix}
+        \sqrt{T}\hat{\rho}_W(1) \\
+        \vdots                  \\
+        \sqrt{T}\hat{\rho}_W(H)
+    \end{pmatrix}
+    \xrightarrow{D} \Mvn{0,I_{H\times H}} \]
+Therefore,
+\[ T \sum_{h=1}^{H} \hat{\rho}_W^2(h)
+    \xrightarrow{D}\chi^2(H) \]
+Box-Ljung-Pierce Test (White Noise test for $ \ARMA{p,q} $ models)
+
+If $ X_t \sim \ARMA{p,q} $, and $ \hat{W}_t $ are the model residuals
+with empriical ACF $ \hat{\rho}_W(h) $, then if
+\[ Q(T,H)=T(T+2)\sum_{h=1}^{H} \frac{\hat{\rho}_W^2(h)}{T-h}\approx
+    T \sum_{h=1}^{H} \hat{\rho}_W^2(h)  \]
+\[ Q(T,H)\xrightarrow[T\to\infty]{D}\chi^2(H-(p+q)) \]
+That is, we lose $ p+q $ degrees of freedom for fitting the model.
+
+The BLP test $ p $-value is then computed as
+\[ P_{\text{BLP}}=\Prob{\chi^2(H-(p+q))>Q(T,H)} \]
+
+\begin{Remark}{}{}
+    If $ X_t \sim \ARMA{p,q} $, and $ \hat{W}_t $
+    are calculated based on $ \ARMA{p^\prime,q^\prime} $ model
+    where $ p^\prime <p $ or $ p^\prime <q $ (model is under specified),
+    then
+    \[ Q(T,H)\xrightarrow[T\to\infty]{P}\infty \]
+    \underline{Interpretation}: If BLP $ p $-values are small,
+    the model is ill-fitting or under specified.
+\end{Remark}
+
+\section{Model Selection Information Criteria}
+Suppose we are trying to select the orders $ p $ and
+$ q $ of an $ \ARMA{p,q} $ model to fit $ X_1,\ldots,X_T $.
+\[ \symbf{\phi}=\text{AR parameters} \]
+\[ \symbf{\theta}=\text{MA parameters} \]
+\[ \sigma_W^2=\text{white noise variance} \]
+\[ L(X_1,\ldots,X_T;\hat{\symbf{\phi}},\hat{\symbf{\theta}},\sigma_W^2) \]
+Natural idea: Maximize the likelihood of the data as a function of
+$ p $ and $ q $.
+
+\underline{Problem}: The likelihood is (monotonically)
+increasing as a function of $ p $ and $ q $. Maximizing would lead
+to overfitting.
+
+\underline{Solution}: Maximize the likelihood subject to a
+penalty term on the number of parameters (complexity)
+of the model. Let the number of parameters
+in the $ \ARMA{p,q} $ model be denoted by $ k=p+q+1 $.
+\[ -2\log\bigl(L(X_1,\ldots,X_T;\hat{\symbf{\phi}},\hat{\symbf{\theta}},\sigma_W^2)\bigr)+P(T,k) \]
+where $ P(T,k) $ is an increasing function of $ k $.
+
+Optimal $ p $ and $ q $ balance model fit with the penalty for complexity.
+
+\subsection*{Common Penalty Term Choices}:
+\begin{itemize}
+    \item $ \AIC{p,q}=-2\log\bigl(L(X_1,\ldots,X_T;\hat{\symbf{\phi}},\hat{\symbf{\theta}},\sigma_W^2)\bigr)+\dfrac{2k+T}{T} $.
+          \begin{itemize}
+              \item Comes from estimating the Kullback-Liebler distance from the fitted model to the ``true'' model.
+          \end{itemize}
+    \item $ \BIC{p,q}=-2\log\bigl(L(X_1,\ldots,X_T;\hat{\symbf{\phi}},\hat{\symbf{\theta}},\sigma_W^2)\bigr)+\dfrac{k\log(T)}{T} $.
+          \begin{itemize}
+              \item Comes from approximating and maximizing the posterior distribution of the model given the data.
+          \end{itemize}
+\end{itemize}
+\underline{Interpretation}: Small AIC/BIC mean a better model.
+
+Information criteria are also used in trend fitting. Suppose
+\[ X_t=s_t+y_t=f_t(\symbf{\beta})+y_t \]
+where $ \symbf{\beta}\in\mathbf{R}^k $ and $ f_t(\symbf{\beta}) $ is the trend we fit.
+
+Estimate $ \symbf{\beta} $ with $ \hat{\symbf{\beta}} $ using ordinary least squares.
+\[ \SS{Res}_T=\sum_{t=1}^{T}(X_t-f_t(\symbf{\hat{\beta}}))^2 \]
+Information criteria typically calculated assuming $ Y_t $ is a Gaussian white noise.
+\[ \SS{Res}_T+P(T,k) \]
+where for $ P(T,k) $ we use AIC or BIC penalty.
+\begin{Remark}{}{}
+    \begin{enumerate}[(1)]
+        \item In trend fitting, the assumption of Gaussian white noise residuals is often in doubt.
+        \item AIC/BIC are not perfect! They are but one of many tools useful in model selection.
+
+              \textbf{Strengths}:
+              \begin{enumerate}[(i)]
+                  \item Easy to compute.
+                  \item Facilitates comparing many models quickly
+              \end{enumerate}
+              \textbf{Weaknessess}:
+              \begin{enumerate}[(i)]
+                  \item Likelihood must be specified.
+                  \item There is a degree of ``arbitrariness'' to the choice of penalty.
+              \end{enumerate}
+        \item It can be shown that minimizing the AIC is related to minimizing
+              the $ 1 $-step forecast MSE, and so when the application is forecasting,
+              AIC is more common.
+    \end{enumerate}
+\end{Remark}
+\section{ARIMA Models}
+We have seen that many time series appear stationary after differencing.
+\begin{Definition}{Integrated}{}
+    We say a time series $ X_t $ is \textbf{integrated} to order $ d $
+    if $ \nabla^d X_t $ is stationary, but $ \nabla^j X_t $
+    for $ 1\le j\le d $ is \underline{not} stationary.
+\end{Definition}
+\underline{Motivation}: If $ Y_t $ is stationary,
+and $ X_t=\sum_{j=1}^{t} Y_j $, $ X_t $ is integrated to order 1.
+$ Z_t=\sum_{j=1}^{t} X_j $ is integrated to order 2, and so on.
+\begin{Definition}{ARIMA}{}
+    We say $ X_t $ follows an \textbf{Autoregressive Integrated Moving Average Process}
+    (ARIMA) of orders $ p,d,q $ if
+    \[ \phi(B)(1-B)^d X_t=\theta(B)W_t \]
+    and write $ X_t \sim \ARIMA{p,d,q} $. Note that $ \nabla^d X_t $
+    follows an $ \ARMA{p,q} $ model.
+\end{Definition}
+\subsection*{Forecasting $ \ARIMA{p,d,q} $ Processess}
+\begin{enumerate}[(1)]
+    \item $ Y_t=\nabla^d X_t $ follows an $ \ARMA{p,q} $ model
+          and so can be forecast using truncated ARMA prediction.
+    \item Forecasts $ \hat{Y}_{T+h}\mid T $ can be used to forecast $ X_{T+h} $
+          by reversing the differencing.
+          \begin{Example}{}{}
+              For $ d=1 $, $ Y_{T+1}=X_{T+1}-X_{T} $ so $ \hat{X}_{T+1\mid T}=X_T+\hat{Y}_{T+1\mid T} $.
+              This can be iterated to produce longer Horizon forecasts.
+          \end{Example}
+\end{enumerate}
+Predicting MSE is approximately of the form
+\[ P_{T+h}^T\approx \sigma_W^2 \sum_{j=0}^{h-1} \psi^2_{j,*} \]
+where $  \psi^2_{j,*} $ is the coefficient of $ z^j $ in the
+power series expansion (centred at zero) of
+\[ \frac{\theta(z)}{\phi(z)(1-z)^d} \quad(\abs{z}<1) \]
+Idea:
+\[ X_t \approx \frac{\theta(B)}{\phi(B)(1-B)^d}W_t  \]
+\begin{Example}{}{}
+    Let $ X_t \sim \ARIMA{0,1,0} $.
+    \[ X_t-X_{t-1}=(1-B)X_t=W_t\implies X_t=X_{t-1}W_t\implies X_t=\sum_{j=1}^{t} W_j \]
+    if we iterate $ t $-times. Therefore,
+    \[ \hat{X}_{T+1\mid T}=X_t+\hat{Y}_{T+1\mid T}=X_t \]
+    Similarly, $ \hat{X}_{T+h\mid T}=X_T $. Best predictor of random
+    walk is last known equation.
+
+    Prediction MSE: \[ \frac{\theta(z)}{\phi(z)(1-z)^d}=\frac{1}{1-z} =\sum_{j=0}^{\infty} z^j\quad(\abs{z}<1)  \]
+    \[ \implies\psi_{j,*}=1\quad(\forall j) \]
+    \[ \implies P_{T+h}^T=\sigma_W^2 \sum_{j=0}^{h-1} \psi_{j,*}^2=h\sigma_W^2 \]
+    Note that
+    \[ \E*{(\hat{X}_{T+h\mid T}-X_{T+h})^2}=\E*{\biggl(\sum_{j=T+1}^{T+h} W_j)\biggr)^2}=h\sigma_W^2 \]
+    TODO diagram
+\end{Example}
+How to decide in practice on degree of differencing $ d $:
+\begin{enumerate}[(1)]
+    \item Eye-ball Test.
+    \item Formal Stationary Tests (Dickey-Fuller, KPSS).
+    \item Cross-validation.
+\end{enumerate}
