@@ -25,16 +25,18 @@ with the inner product
 Hilbert spaces are generalizations of Euclidean space ($ \mathbf{R}^d $)
 in which the geometry and notation of projection
 are preserved.
-\[ \text{Proj}(X\to Y)=\innerp{X}{Y}Y \]
-\begin{Theorem}{Projection Theoren}{}
+\[ \Proj{X\to Y}=\innerp{X}{Y}Y \]
+\begin{Definition}{Closed Linear Subspace}{}
     We say $ M\subseteq L^2 $
     is a \textbf{closed linear subspace}, if
-    \begin{itemize}
+    \begin{enumerate}[(i)]
         \item Linearity: $ X,Y\in M $, $ \alpha,\beta\in\mathbf{R} $
               then $ \alpha X+\beta Y\in M $
-        \item Closed: If $ X_n\to X $ ($ \E{(X_n-X)^2} $),
+        \item Closed: If $ X_n\to X $ (in the sense that $ \E{(X_n-X)^2} \to 0 $),
               and $ X_n\in M $, then $ X\in M $.
-    \end{itemize}
+    \end{enumerate}
+\end{Definition}
+\begin{Theorem}{Projection Theoren}{}
     If $ M $ is a closed linear subspace in $ L^2 $
     and $ x\in L^2 $, then there exists a
     unique $ \hat{X}\in M $ such that
@@ -49,14 +51,14 @@ $ \hat{X}_{T+h} $ satisfying
 where $ M $ is a closed linear subspace based on the available
 data.
 \begin{enumerate}[(1)]
-    \item $ M=M_1=\set{z:z=f(X_{T},\ldots,X_{1}), f\text{ is any
+    \item $ M_1=\set{z:z=f(X_{T},\ldots,X_{1}), f\text{ is any
                   Borel Measurable function}} $
           In this case
           \[ \hat{X}_{T+h}=\E{X_{T+h}\mid X_{T},\ldots,X_1} \]
           Unfortunately $ M_1 $ is enormous and complicated!
-    \item $ M=M_2=\Spanc{1,X_{T},\ldots,X_1}=
+    \item $ M_2=\Spanc{1,X_{T},\ldots,X_1}=
               \set{Y:Y=\alpha_0+\sum_{j=1}^{T} \alpha_j X_j,\,\alpha_0,\ldots,\alpha_T\in\mathbf{R}} $
-          which is the linear functions of $ X_1,\ldots,X_T $
+          which is the linear functions of $ X_1,\ldots,X_T $.
           $ \hat{X}_{T+h} $ is called the \textbf{best linear predictor} (BLP).
 \end{enumerate}
 \section{Best Linear Prediction}
@@ -69,18 +71,20 @@ functions of $ X_T,\ldots,X_1 $.
     If $ \hat{X} $ satisfies
     \[ \E{(X-\hat{X})^2}=\inf_{y\in M}\E{(X-Y)^2} \]
     we say that $ \hat{X} $ is the \textbf{projection}
-    of $ X $ onto $ M $, and we write $ \hat{X}=\Proj{X\onto M_2} $.
+    of $ X $ onto $ M $, and we write $ \hat{X}=\Proj{X\onto M} $.
 \end{Definition}
+In particular, the BLP is
+\[ \hat{X}_{T+h}=\Proj{X_{T+h}\onto M_2} \]
 Consider the case when $ h=1 $. From the Projection Theorem, the BLP
 is of the form
 \[ \hat{X}_{T+1}=\phi_{T,0}+\sum_{j=1}^{T} \phi_{T,j}X_j \approx
     \phi_{T,0}+\sum_{j=0}^{T} \phi_{T,j}(X_j-\mu) \]
 where $ \mu=\E{X_t} $. $ \hat{X}_{T+1} $ must satisfy
 the \textbf{prediction equations},
-\[ \E{(X_{T+1}-\hat{X}_{T+1})y}=0 \]
-for all $ y\in M_2 $. In particular,
-\[ \E{(X_{T+1}-\hat{X}_{T+1})1}=0\quad(y=1) \]
-\[ \E{(X_{T+1}-\hat{X}_{T+1})X_j}=0\quad(1\le j\le T,\, y=X_j) \]
+\[ \E{(X_{T+1}-\hat{X}_{T+1})Y}=0\quad (\forall  Y\in M_2 ) \]
+In particular,
+\[ \E{(X_{T+1}-\hat{X}_{T+1})1}=0\quad(Y=1) \]
+\[ \E{(X_{T+1}-\hat{X}_{T+1})X_j}=0\quad(1\le j\le T,\, Y=X_j) \]
 We have $ T+1 $ equations. Since $ \E{X_{j}-\mu}=0 $,
 \[ 0=\E{X_{T+1}-\hat{X}_{T+1}}=\mu-\phi_{T,0}+0\implies \phi_{T,0}=\mu \]
 Before proceeding, note that this implies
@@ -112,7 +116,7 @@ When is $ \Gamma_T $ non-singular?
     $ \Gamma_T $ is non-singular.
 \end{Theorem}
 Takeaway: Most stationary processes (those whose serial dependence decays
-over time) have non singular $ \Gamma_T $.
+over time) have non-singular $ \Gamma_T $.
 
 Note that
 \[ \hat{X}_{T+1}^2=\symbf{\gamma}_T^\top \Gamma_T^{-1}\symbf{X}_T \symbf{X}_T^\top
@@ -144,7 +148,7 @@ Automated in R using \code{ARMAacf()}.
 \begin{Definition}{Partial autocorrelation function}{}
     The \textbf{partial autocorrelation function} of a stationary
     process $ \set{X_t}_{t\in\mathbf{Z}} $ is
-    \[ \phi_{h,h}=\Corr{X_{t+h}-\Proj{X_{t+h}\onto X_{t+h-1},\ldots,X_{t+1}},
+    \[ \phi_{h,h}=\Corr[\big]{X_{t+h}-\Proj{X_{t+h}\onto X_{t+h-1},\ldots,X_{t+1}},
         X_{t}-\Proj{X_t\onto X_{t+h-1},\ldots,X_{t+1}}} \]
     Interpretation: Autocorrelation between $ X_t $ and $ X_{t+h} $
     after removing the linear dependence on the intervening variables $ X_{t+h-1},\ldots,X_{t+1} $.
@@ -211,7 +215,7 @@ $ \psi $'s and $ \pi $'s are computable by solving homogeneous
 linear difference equations.
 
 These representations imply,
-\[ \text{Information in }(X_T,X_{T-1},\ldots)=\text{Information in}
+\[ \text{Information in }(X_T,X_{T-1},\ldots)=\text{Information in }
     (W_T,W_{T-1},\ldots) \]
 So
 \[ \tilde{X}_{T+h}=\E{X_{T+h}\given X_{T},X_{T-1},\ldots}=
@@ -224,7 +228,7 @@ So
      & =\sum_{\ell=h}^{\infty} \psi_\ell W_{T+h-\ell}                               & \quad & \text{since $ \psi_\ell W_{T+h-\ell}=0 $}
 \end{align*}
 Also, using invertibility,
-\[ 0=\E{W_{T+h}\given X_T,X_{T-1}\ldots}=
+\[ 0=\E{W_{T+h}\given X_T,X_{T-1},\ldots}=
     \E*{\sum_{\ell=0}^{\infty} \pi_\ell X_{T+h-\ell}\given X_T,\ldots} \]
 by independence, and furthermore, with $ \pi_0=1 $ we have
 \[ 0=\tilde{X}_{T+h}+\sum_{\ell=1}^{h-1} \pi_\ell \tilde{X}_{T+h-\ell}+
@@ -248,21 +252,21 @@ Therefore,
     \frac{1}{T} \sum_{t=1}^{T} \hat{W}_t^2 \]
 \textbf{Mean Squared Prediction Error}:
 Since $ \hat{X}_{T+h}\approx \sum_{j=h}^{\infty} \psi_j W_{t+h-j} $,
-\[ P_{T+h}^T=\E{(X_{T+h}-\hat{X}_{T+h})^2}
+\[ P_{T+h}^T=\E*{(X_{T+h}-\hat{X}_{T+h})^2}
     =\E*{\biggl(\sum_{j=0}^{h-1} \psi_j W_{t-j}\biggr)^{\!2}}=\sigma_W^2 \sum_{j=0}^{h-1} \psi_j^2 \]
 \textbf{Estimated Mean Squared Prediction Error}:
 \[ \hat{P}_{T+h}=\hat{\sigma}_W^2 \sum_{j=0}^{h-1} \psi_j^2 \]
 \textbf{Construction of Prediction Intervals}:
 Since $ \hat{X}_{T+h}\approx \E{X_{T+h}\given X_T,\ldots} $,
-\[ \E{\hat{X}_{T+h}-X_{T+h}}=0\quad(\text{Tower Property}) \]
-\[ \E{(\hat{X}_{T+h}-X_{T+h})^2}=P_{T+h}^T \]
+\[ \E*{\hat{X}_{T+h}-X_{T+h}}=0\quad(\text{Tower Property}) \]
+\[ \E*{(\hat{X}_{T+h}-X_{T+h})^2}=P_{T+h}^T \]
 Hence
 \[ \frac{\hat{X}_{T+h}-X_{T+h}}{\sqrt{\hat{P}_{T+h}^T}}  \]
 is an approximately mean zero and unit variance random variable.
 
 Suppose $ C_\alpha $ is the $ \alpha $-critical value of this random variable,
 then
-\[ \hat{X}_{T+h}\pm C_{\alpha/2}\sqrt{P_{T+h}^T} \]
+\[ \hat{X}_{T+h}\pm C_{\alpha/2}\sqrt{\hat{P}_{T+h}^T} \]
 is an approximate $ (1-\alpha) $ prediction interval for $ X_{T+h} $.
 
 Choices for $ C_\alpha $:
@@ -276,57 +280,229 @@ Choices for $ C_\alpha $:
     \item $ t $-distribution, Pareto, or skewed distribution fit to standardized residuals.
 \end{enumerate}
 
-\subsection*{Long Range Behaviour of ARMA Forecasts}:
+\subsection*{Long Range Behaviour of ARMA Forecasts}
 Suppose $ Y_t=s_t+X_t $ where $ X_t \sim \ARMA{p,q} $.
-\[ \hat{Y}_{T+h}=\hat{s}_{T+h}+\hat{X}_{T+h}=\hat{s}_{T+h}+\sum_{j=h}^{\infty} \psi_j W_{T+h-j}\to 0\quad(\text{Geometrically}) \]
+\[ \hat{Y}_{T+h}=\hat{s}_{T+h}+\hat{X}_{T+h}=\hat{s}_{T+h}+\Uunderbracket{\sum_{j=h}^{\infty} \psi_j W_{T+h-j}}_{\to 0(\text{ geometrically})} \]
 $ \hat{Y}_{T+h} $ is converging fast to $ \hat{s}_{T+h} $: better get the trend for
 long range forecasts.
 \[ P_{T+h}^T=\sigma_W^2 \sum_{\ell=0}^{h-1} \psi_\ell^2\to \sigma_W^2 \sum_{\ell=0}^{\infty} \psi_\ell^2=\gamma_X(0) \]
 In the long run, the MSE is the variance of $ X_t $.
 
 \section{ARMA Forecasting Example 1: Cardiovascular Mortality}
+\subsection*{Slide 1}
 Let's give ARMA forecasting a try on real data.
 
+\subsection*{Slide 2}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{wk_04-s_02.pdf}
+    \caption{Weekly cardiovascular mortality, LA County.}
+\end{figure}
+
+\subsection*{Slide 3}
 Let $ X_t= $ cardiovascular mortality series. Our model is
 \[ X_t=s_t+Y_t \]
 where $ Y_t \sim \ARMA{p,q} $.
-\[ s_t=\text{seasonal}+\text{polynomial}=
-    \beta_0+\beta_1 t+\beta_2 t^2+\beta_3 t^3+\beta_4\sin\biggl(\frac{2\pi}{52} \biggr)
-    +\beta_5\cos\biggl(\frac{2\pi}{52} \biggr)+\beta_6\sin\biggl(\frac{2\pi}{26} \biggr)
-    +\beta_6\cos\biggl(\frac{2\pi}{26} \biggr) \]
+\[ X_t=
+    \Uunderbracket{\beta_0+\beta_1 t+\beta_2 t^2+\beta_3 t^3}_{\text{polynomial}}
+    +\Uunderbracket{\beta_4\sin\biggl(\frac{2\pi}{52}t \biggr)
+        +\beta_5\cos\biggl(\frac{2\pi}{52}t \biggr)+\beta_6\sin\biggl(\frac{2\pi}{26}t \biggr)
+        +\beta_6\cos\biggl(\frac{2\pi}{26}t \biggr)}_{\text{seasonal}} \]
 where the first four terms are the polynomial trends, the next two terms
 are the yearly cycle, and the last two are the half-yearly cycle.
 
-Decided on the trend using AIC (discussed later).
+Decided on the trend using AIC, which will be discussed next week.
 
-Plotting residuals versus time, $ \hat{Y}_t=X_t-\hat{s}_t $ seems reasonably
-stationary.
+\subsection*{Slide 4}
+$ s_t $ estimated using ordinary least squares.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{wk_04-s_04.pdf}
+\end{figure}
 
-The ACF of the residuals have two bars outside the interval, so
-the mild serial correlation $ \hat{Y}_t $ might be well modelled
-by $ \MA{2} $ or $ \ARMA{1,1} $.
+\subsection*{Slide 5}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{wk_04-s_05.pdf}
+\end{figure}
+\begin{itemize}
+    \item $ \hat{Y}_t=X_t-\hat{s}_t $ ``seems reasonably
+          stationary.''
+    \item Mild serial correlation in $ \hat{Y}_t $ --- Might be well modelled by $ \MA{2} $ or $ \ARMA{1,1} $.
+\end{itemize}
 
-The Normal Q-Q Plot: $ \hat{Y}_t $ is reasonably normal, suggests
-using
-\[ \pm Z_{\alpha/2}\sqrt{P_{T+h}^T} \]
-to construct prediction bounds.
+\subsection*{Slide 6}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{wk_04-s_06.pdf}
+\end{figure}
+\begin{itemize}
+    \item $ \hat{Y}_t $ seems reasonably normal, suggests
+          using
+          \[ \pm Z_{\alpha/2}\sqrt{P_{T+h}^T} \]
+          to construct prediction bounds.
+\end{itemize}
 
-Considering the PACF, on the first two lags these are large which
+\subsection*{Slide 7}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{wk_04-s_07.pdf}
+\end{figure}
+Considering the PACF\@: On the first two lags these are large which
 is indicative of an autoregressive 2 structure, that is, $ \AR{2} $
 structure.
 
+\subsection*{Slide 8}
 Model $ \hat{Y}_{t} $ as $ \ARMA{2,1} $.
 \[ Y_t=0.0885 Y_{t-1}+0.3195 Y_{t-2}+W_t +0.1328 W_{t-1} \]
 parameters estimated by MLE\@.
 
-10-step prediction of residuals; $ \hat{Y}_{T+h\mid T} $, $ h=1,\ldots,10 $.
+\subsection*{Slide 9}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{wk_04-s_09.pdf}
+\end{figure}
+
+\subsection*{Slide 10}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{wk_04-s_10.pdf}
+\end{figure}
+$ \hat{Y}_{T+h\mid T} $, $ h=1,\ldots,10 $.
 \[ \hat{Y}_{T+h\mid T}\pm 1.96\sqrt{\hat{P}_{T+h}^T} \]
 where $ 1.96 $ is the 97.5\% critical value of $ \N{0,1} $.
 
+\subsection*{Slide 11}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{wk_04-s_11.pdf}
+    \caption{30 weeks of data with predicted trend}
+\end{figure}
+
+\subsection*{Slide 12}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{wk_04-s_12.pdf}
+    \caption{Forecasts with 95\% prediction intervals}
+\end{figure}
 Fluctuations attribute to serial dependence. Red lines
 show that forecasts quickly converge to trend.
 
-TODO a lot of practical stuff.
+\begin{minted}{R}
+####
+##Cardiovascular Mortality Forecasting
+#####
+
+# SLIDE 1
+
+# SLIDE 2
+wk = time(cmort) - mean(time(cmort))  # wk is essentially t/52 centered at zero
+wk2 = wk ^ 2
+wk3 = wk ^ 3
+cs = cos(2 * pi * wk)
+sn = sin(2 * pi * wk)
+cs1 = cos(4 * pi * wk)
+sn1 = sin(4 * pi * wk)
+
+reg2 = lm(cmort ~ wk + wk2 + wk3 + sn + cs + sn1 + cs1, na.action = NULL)
+plot(cmort, type = "p", ylab = "mortality")
+
+# SLIDE 3
+
+# SLIDE 4
+lines(fitted(reg2))
+
+# SLIDE 5
+par(mfrow = c(2, 1))
+plot(residuals(reg2)) # \hat{Y}_t = X_t - \hat{S}_t "seems reasonably stationary"
+acf(residuals(reg2))  # Mild serial correlation
+
+# SLIDE 7
+par(mfrow = c(1, 1))
+rec = residuals(reg2)
+pacf(rec)
+
+# SLIDE 6 - Normal Q-Q Plot, stuff here
+par(mfrow = c(1, 1))
+qqnorm(rec)
+
+# SLIDE 8
+regr = arima(rec, c(2, 0, 1))
+regr$coef
+
+# SLIDE 9
+par(mfrow = c(2, 1))
+acf(residuals(reg2), 20, ylim = c(-.1, 1))
+plot(
+  ARMAacf(ar = c(0.0885,  0.3195), ma = c(0.1328), 20),
+  type = "h",
+  ylim = c(-.1, 1),
+  main = "Theoretical ARMA(2,1) ACF",
+  ylab = ""
+)
+abline(h = 0)
+
+# SLIDE 10
+par(mfrow = c(1, 1))
+fore = predict(regr, n.ahead = 10)
+ts.plot(
+  rec,
+  fore$pred,
+  col = 1:2,
+  xlim = c(1979.3, 1979.95),
+  main = "10-step Prediction of residuals"
+)
+lines(fore$pred, type = "p", col = 2)
+lines(fore$pred + qnorm(0.975) * fore$se,
+      lty = "dashed",
+      col = 4)
+lines(fore$pred - qnorm(0.975) * fore$se,
+      lty = "dashed",
+      col = 4)
+
+# SLIDE 11
+inc = wk[2] - wk[1]
+wkp = wk[length(wk)] + inc * (1:10)
+wk = c(wk, wkp)
+wk2 = wk ^ 2
+wk3 = wk ^ 3
+cs = cos(2 * pi * wk)
+sn = sin(2 * pi * wk)
+cs1 = cos(4 * pi * wk)
+sn1 = sin(4 * pi * wk)
+
+fit1 = 88.55365 - 2.96791228 * wk + 0.04624381 * wk2 +  0.09833614 * wk3 +  8.21611903 *
+  cs +  4.08801987 * sn + 1.20542123 * sn1 + 2.77101452 * cs1
+datl = rec + fit1[1:length(rec)]
+
+plot(
+  datl[(length(datl) - 19):length(datl)],
+  xlim = c(1, 30),
+  type = 'l',
+  ylim = c(70, 110),
+  ylab = ""
+)
+lines(21:30, fit1[(length(fit1) - 9):length(fit1)], col = 2, lty = 2)
+
+# SLIDE 12
+plot(
+  datl[(length(datl) - 19):length(datl)],
+  xlim = c(1, 30),
+  type = 'l',
+  ylim = c(70, 110),
+  ylab = ""
+)
+lines(21:30, fit1[(length(fit1) - 9):length(fit1)], col = 2, lty = 2)
+lines(21:30, fit1[(length(fit1) - 9):length(fit1)] + fore$pred, type = "p", col = 2)
+lines(21:30,
+      fit1[(length(fit1) - 9):length(fit1)] + fore$pred + 2 * fore$se,
+      lty = "dashed",
+      col = 4)
+lines(21:30,
+      fit1[(length(fit1) - 9):length(fit1)] + fore$pred - 2 * fore$se,
+      lty = "dashed",
+      col = 4)
+\end{minted}
 
 \section{ARMA Forecasting Example 2: Johnson and Johnson}
 TODO a lot of practical stuff.
