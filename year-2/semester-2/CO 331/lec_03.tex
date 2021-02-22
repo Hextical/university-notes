@@ -24,25 +24,25 @@ Same as IMLD, except ties are broken arbitrarily.
 \textbf{Question:} Is IMLD a reasonable strategy?
 
 \begin{Theorem}{}{}
-    IMLD selects the codeword $ \symbf{c} $ that maximizes $ P(\symbf{r}\mid \symbf{c})$; that is,
+    IMLD selects the codeword $ \symbf{c} $ that maximizes $ \Prob{\symbf{r}\given \symbf{c}} $; that is,
     it maximizes the probability $ \symbf{r} $ is received, given $ \symbf{c} $ was sent.
 \end{Theorem}
 
-We actually want to maximize $ P(\symbf{c}\mid \symbf{r}) $, but we will ignore that for now.
+We actually want to maximize $ \Prob{\symbf{r}\given \symbf{c}} $, but we will ignore that for now.
 
 \begin{Proof}{}{}
     Suppose $ \symbf{c}_1,\symbf{c}_2\in C $ with $ d(\symbf{c}_1,\symbf{r})=d_1 $
     and $ d(\symbf{c}_2,\symbf{r})=d_2 $.
     Suppose $ d_1>d_2 $. Now,
 
-    $ P(\symbf{r}\mid \symbf{c}_1)=(1-p)^{n-d_1}\left( \frac{p}{q-1} \right)^{d_1} $ and
-    $ P(\symbf{r}\mid \symbf{c}_2)=(1-p)^{n-d_2}\left( \frac{p}{q-1} \right)^{d_2} $.
+    $ \Prob{\symbf{r}\given \symbf{c}_1}=(1-p)^{n-d_1}\biggl(\dfrac{p}{q-1} \biggr)^{d_1} $ and
+    $ \Prob{\symbf{r}\given \symbf{c}_2}=(1-p)^{n-d_2}\biggl( \dfrac{p}{q-1} \biggr)^{d_2} $.
 
     Hence,
     \begin{align*}
-        \frac{P(\symbf{r}\mid \symbf{c}_1)}{P(\symbf{r}\mid \symbf{c}_2)}
-         & =(1-p)^{d_2-d_1}\left( \frac{p}{q-1}  \right)^{d_1-d_2} \\
-         & =\left[ \frac{p}{(1-p)(q-1)}  \right]^{d_1-d_2}
+        \frac{\Prob{\symbf{r}\given \symbf{c}_1}}{\Prob{\symbf{r}\given \symbf{c}_2}}
+         & =(1-p)^{d_2-d_1}\biggl(\frac{p}{q-1}  \biggr)^{d_1-d_2} \\
+         & =\biggl[ \frac{p}{(1-p)(q-1)}  \biggr]^{d_1-d_2}
     \end{align*}
     Recall that, for a $ q $-ary channel, we can assume that $ p<\frac{q-1}{q} $. Thus,
     \begin{align*}
@@ -52,49 +52,49 @@ We actually want to maximize $ P(\symbf{c}\mid \symbf{r}) $, but we will ignore 
          & \implies p < (1-p)(q-1)           \\
          & \implies \frac{p}{(1-p)(q-1)} < 1
     \end{align*}
-    Since $ d_1>d_2 $, we get $ \frac{P(\symbf{r}\mid \symbf{c}_1)}{P(\symbf{r}\mid \symbf{c}_2)} < 1 $, and so
-    $ P(\symbf{r}\mid \symbf{c}_1)<P(\symbf{r}\mid \symbf{c}_2) $.
+    Since $ d_1>d_2 $, we get $ \dfrac{\Prob{\symbf{r}\given \symbf{c}_1}}{\Prob{\symbf{r}\given \symbf{c}_2}} < 1 $, and so
+    $ \Prob{\symbf{r}\given \symbf{c}_1}<\Prob{\symbf{r}\given \symbf{c}_2} $.
 \end{Proof}
 The ideal strategy is to correct $ \symbf{r} $ to $ \symbf{c}\in C $ such that
-$ P(\symbf{c}\mid \symbf{r}) $ is maximized. This is \textbf{Minimum Error Decoding (MED)}.
+$ \Prob{\symbf{c}\given \symbf{r}} $ is maximized. This is \textbf{Minimum Error Decoding (MED)}.
 
 
 \begin{Example}{IMLD $ \neq $ MED}{}
     Let $ C=\set{\underbrace{000}_{\symbf{c}_1},\underbrace{111}_{\symbf{c}_2}},\,
-        P(\symbf{c}_1)=0.1,\, P(\symbf{c}_2)=0.9,\, p=\sfrac{1}{4} $, and $ \symbf{r}=100 $.
+        \Prob{\symbf{c}_1}=0.1,\, \Prob{\symbf{c}_2}=0.9,\, p=1/4 $, and $ \symbf{r}=100 $.
 
     \textbf{IMLD} $ \symbf{r} $ is decoded to to $ \symbf{c}_1 = 000 $.
 
     \textbf{MED}
     \begin{align*}
-        P(\symbf{c}_1\mid \symbf{r})
-         & =\frac{P(\symbf{r}\mid \symbf{c}_1)P(\symbf{c}_1)}{P(\symbf{r})} \\
-         & =\frac{p(1-p)^2(0.1)}{P(\symbf{r})}                     \\
-         & =\frac{0.0140625}{P(\symbf{r})}
+        \Prob{\symbf{c}_1\given \symbf{r}}
+         & =\frac{\Prob{\symbf{r}\given \symbf{c}_1}\Prob{\symbf{c}_1}}{\Prob{\symbf{r}}} \\
+         & =\frac{p(1-p)^2(0.1)}{\Prob{\symbf{r}}}                                        \\
+         & =\frac{0.0140625}{\Prob{\symbf{r}}}
     \end{align*}
     \begin{align*}
-        P(\symbf{c}_2\mid \symbf{r})
-         & =\frac{P(\symbf{r}\mid \symbf{c}_2)P(\symbf{c}_2)}{P(\symbf{r})} \\
-         & =\frac{p^2(1-p)(0.9)}{P(\symbf{r})}                     \\
-         & =\frac{0.0421875}{P(\symbf{r})}
+        \Prob{\symbf{c}_2\given \symbf{r}}
+         & =\frac{\Prob{\symbf{r}\given \symbf{c}_2}\Prob{\symbf{c}_2}}{\Prob{\symbf{r}}} \\
+         & =\frac{p^2(1-p)(0.9)}{\Prob{\symbf{r}}}                                        \\
+         & =\frac{0.0421875}{\Prob{\symbf{r}}}
     \end{align*}
-    Since $ P(\symbf{c}_1\mid \symbf{r})<P(\symbf{c}_2\mid \symbf{r}) $,
+    Since $ \Prob{\symbf{c}_1\given \symbf{r}}<\Prob{\symbf{c}_2\given \symbf{r}} $,
     $ \symbf{r} $ is decoded to $ \symbf{c}_2=111 $.
 \end{Example}
 
 
 \textbf{Notes:}
 \begin{enumerate}[label=(\roman*)]
-    \item IMLD selects $ \symbf{c} $ such that $ P(\symbf{r}\mid \symbf{c}) $ is maximum.
-    \item MED selects $ \symbf{c} $ such that $ P(\symbf{c}\mid \symbf{r}) $ is maximum.
-    \item MED has a drawback that it requires knowledge of $ P(\symbf{c}_i) $ for
+    \item IMLD selects $ \symbf{c} $ such that $ \Prob{\symbf{r}\given \symbf{c}} $ is maximum.
+    \item MED selects $ \symbf{c} $ such that $ \Prob{\symbf{c}\given \symbf{r}} $ is maximum.
+    \item MED has a drawback that it requires knowledge of $ \Prob{\symbf{c}_i} $ for
           each $ i\in [1,M] $.
     \item Suppose source messages are equally likely, so
-          $ P(\symbf{c}_i)=\frac{1}{M} $ for each $ i\in[1,M] $.
+          $ \Prob{\symbf{c}_i}=\frac{1}{M} $ for each $ i\in[1,M] $.
           Then,
-          \[ P(\symbf{r}\mid \symbf{c}_i)=\frac{P(\symbf{c}_i\mid \symbf{r})P(\symbf{r})}{P(\symbf{c}_i)}
-              =P(\symbf{c}_i\mid \symbf{r}) \underbrace{M P(r)}_{\text{constant}}\]
-          So, maximizing $ P(\symbf{r}\mid \symbf{c}_i) $ is the same as maximizing
-          $ P(\symbf{c}_i\mid \symbf{r}) $. Thus, IMLD is the same as MED in this case.
+          \[ \Prob{\symbf{r}\given \symbf{c}_i}=\frac{\Prob{\symbf{c}_i\given \symbf{r}}\Prob{\symbf{r}}}{\Prob{\symbf{c}_i}}
+              =\Prob{\symbf{c}_i\given \symbf{r}} \underbrace{M \Prob{\symbf{r}}}_{\text{constant}}\]
+          So, maximizing $ \Prob{\symbf{r}\given \symbf{c}_i} $ is the same as maximizing
+          $ \Prob{\symbf{c}_i\given \symbf{r}} $. Thus, IMLD is the same as MED in this case.
 \end{enumerate}
 In the remainder of the course, we will use IMLD/CMLD\@.
