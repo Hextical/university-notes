@@ -12,11 +12,11 @@ Posit
 Not feasible to estimate infinitely many parameters
 $ \set{\psi}_{\ell=0}^{\infty} $. Assume coefficients
 arise from a \emph{parsimonious} linear model for $ X_t $.
-\begin{Definition}{Moving average process $ [\MA{q}] $}{}
+\begin{Definition}{Moving average process}{}
     Suppose $ \set{W_t}_{\in\mathbf{Z}} $ is a strong
     white noise with $ \Var{W_t}=\sigma_W^2<\infty $.
     We say $ X_t $ is a \textbf{moving average process}
-    of order $ q $ if there exists
+    of order $ q $ or $ \MA{q} $, if there exists
     $ \theta_1,\ldots,\theta_q\in\mathbf{R} $ with $ \theta_q\ne 0 $
     such that
     \[ X_t=W_t+\theta_1W_{t-1}+\cdots+\theta_q W_{t-q}=\sum_{\ell=0}^{q}
@@ -34,20 +34,29 @@ arise from a \emph{parsimonious} linear model for $ X_t $.
         a B^j X_t+b B^k X_t=a X_{t-j}+b X_{t-k} \]
 \end{Definition}
 \begin{Example}{}{}
-    $ \nabla X_t = $ first difference of $ X_t=(1-B)X_t=X_t-B X_t=X_t-X_{t-1} $
+    \begin{itemize}
+        \item First difference of $ X_t $:
+              \[ \nabla X_t=(1-B)X_t=X_t-B X_t=X_t-X_{t-1} \]
+        \item Second difference of $ X_t $:
+              \[ \nabla^2 X_t=(1-B)^2 X_t=(1-2B+B^2)X_t=X_t-2X_{t-1}+X_{t-2} \]
+    \end{itemize}
 \end{Example}
+\begin{Definition}{Moving average operator}{}
+    The \textbf{moving average operator} is defined by
+    \[ \theta(B)=1+\theta_1 B+\theta_2 B^2+\cdots+\theta_q B^q \]
+\end{Definition}
 \begin{Definition}{Moving average polynomial}{}
     The \textbf{moving average polynomial} is defined as
     \[ \theta(x)=1+\theta_1 x+\cdots+\theta_q x^q \]
-    If $ X_t\sim\MA{q} $, then
-    \[ X_t=W_t+\theta_1W_{t-1}+\cdots+\theta_q W_{t-q}=\theta(B)W_t \]
-    which is a succinct expression defining $ \MA{q} $.
 \end{Definition}
+If $ X_t\sim\MA{q} $, then
+\[ X_t=W_t+\theta_1W_{t-1}+\cdots+\theta_q W_{t-q}=\theta(B)W_t \]
+which is a succinct expression defining $ \MA{q} $.
 \subsection*{Properties of $ \MA{q} $ Processes}
 \begin{enumerate}[(1)]
     \item $ \MA{0} $ process is a strong white noise.
     \item If $ X_t\sim\MA{q} $, then
-          \[ \E{X_t}=\E[\bigg]{\sum_{\ell=0}^{q} \theta_\ell W_{t-\ell}}=0 \]
+          \[ \E{X_t}=\E[\bigg]{\sum_{\ell=0}^{q} \theta_\ell W_{t-\ell}}=0\quad (\theta_0=1) \]
           \[ \Var{X_t}=\E[\bigg]{\biggl(\sum_{\ell=0}^{q} \theta_\ell W_{t-\ell}\biggr)^{\!2}}=
               \sum_{\ell=0}^{q} \theta_\ell^2\sigma_W^2 \]
           \begin{align*}
@@ -56,15 +65,19 @@ arise from a \emph{parsimonious} linear model for $ X_t $.
                                                                & =\E[\bigg]{\biggl(\sum_{\ell=0}^{q} \theta_\ell W_{t-\ell}\biggr)
               \biggl(\sum_{k=0}^{q} \theta_k W_{t+h-k}\biggr)} & \quad                                                             & t-\ell=t+h-k\implies k=\ell+h \\
                                                                & =\begin{dcases}
-                  \sum_{j=0}^{q-\abs{h}} \theta_j \theta_{j+h}\sigma_W^2 & 0\le h\le q \\
-                  0                                                      & h>q
+                  \sigma_W^2\sum_{j=0}^{q-h} \theta_j \theta_{j+h} & 1\le h\le q \\
+                  0                                                & h>q
               \end{dcases}
           \end{align*}
+          Recall that $ \gamma(h)=\gamma(-h) $, so we will only display the values
+          for $ h\ge 0 $. Note that $ \gamma(q) $ cannot be zero
+          because $ \theta\ne 0 $. The cutting off of $ \gamma(h) $
+          after $ q $ lags is the signature of the $ \MA{q} $ model.
           Therefore,
           \[ \rho(h)=\frac{\gamma(h)}{\gamma(0)} =
               \begin{dcases}
-                  \frac{\sum_{j=0}^{q-h} \theta_j \theta_{j+h}}{\sum_{j=0}^{q} \theta_j^2} & 0\le h\le q \\
-                  0                                                                        & h\ge q+1
+                  \frac{\sum_{j=0}^{q-h} \theta_j \theta_{j+h}}{\sum_{j=0}^{q} \theta_j^2} & 1\le h\le q \\
+                  0                                                                        & h>q
               \end{dcases} \]
           \begin{Remark}{}{}
               By choosing $ \theta_1,\ldots,\theta_q $ appropriately, we can
@@ -74,33 +87,39 @@ arise from a \emph{parsimonious} linear model for $ X_t $.
 \end{enumerate}
 {\color{blue}In~\Cref{fig:maprocesses1}, let's look an example now of what a moving average process would
 actually look like if we were to realize a moving average process.
-On the top of fig, I've plotted a moving average process of order $ 0 $,
-which is just a strong white noise, as we progress down to
-panel 2 and panel 3 I've calculated moving averages of order $ 1 $ and
+On the top of~\Cref{fig:maprocesses1}, I've plotted a moving average process of order $ 0 $,
+which is just a strong white noise. Then, as we progress down to
+panel 2 and panel 3 I've calculated moving averages of orders $ 1 $ and
 $ 2 $ based on this strong white noise sequence. In the second
 panel, $ X_t=W_t+W_{t-1} $, so this is a moving average process
 of order $ 1 $, in which $ \theta_1=1 $. In the third panel,
 we have a moving average process of order $ 2 $,
 in which $ X_t=W_t+W_{t-1}+W_{t-2} $, which is a
-moving average process of order $ 2 $ in which
+moving average process of order $ 2 $ where
 $ \theta_1=\theta_2=1 $. One thing to observe when going
 from a moving average process of order $ 0 $ to $ 2 $
-is that the time series is getting ``smoother''.}
+is that the time series is getting ``smoother.''}
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.75\textwidth]{maprocesses1.pdf}
+    \includegraphics[width=\textwidth]{maprocesses1.pdf}
     \caption{Realizations of MA processes with coefficients equal to 1}\label{fig:maprocesses1}
 \end{figure}
 \begin{minted}{R}
 # Figure 3.1
 par(mfrow = c(3, 1))
-ma0.sim <- arima.sim(model = list(ma = 0), n = 150)
-ma1.sim <- arima.sim(model = list(ma = 1), n = 150)
-ma2.sim <- arima.sim(model = list(ma = 2), n = 150)
-plot.ts(ma0.sim, ylab = "w", main = "white noise")
-plot.ts(ma1.sim, ylab = "v", main = "MA(1)")
-plot.ts(ma2.sim, ylab = "y", main = "MA(2)")
+
+ma0.sim <- arima.sim(list(order = c(0, 0, 0), ma = c()), n = 134)
+plot(ma0.sim, ylab = "x", main = "white noise")
+
+ma1.sim <- arima.sim(list(order = c(0, 0, 1), ma = c(1)), n = 134)
+plot(ma1.sim, ylab = "v", main = (expression(MA(1) ~  ~  ~ theta[1] == 1)))
+
+ma2.sim <-
+  arima.sim(list(order = c(0, 0, 2), ma = c(1, 1)), n = 134)
+plot(ma2.sim, ylab = "y", main = (expression(paste(
+  MA(2), ~  ~  ~ theta[1], " = ",  theta[2], " = ", 1
+))))
 \end{minted}
 In~\Cref{fig:maprocesses2}, the difference is apparent since
 going from $ \MA{0} $ to $ \MA{1} $ shows that
@@ -110,7 +129,7 @@ there is significant serial correlation
 at lag $ 2 $.
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.75\textwidth]{maprocesses2.pdf}
+    \includegraphics[width=\textwidth]{maprocesses2.pdf}
     \caption{ACF plots of corresponding moving average series.}\label{fig:maprocesses2}
 \end{figure}
 \begin{minted}{R}
@@ -120,11 +139,11 @@ acf(ma1.sim)
 acf(ma2.sim)    
 \end{minted}
 \section{Autoregressive Processes}
-\begin{Definition}{Autoregressive process $ [\AR{1}] $}{}
+\begin{Definition}{Autoregressive process}{}
     Suppose $ \set{W_t}_{t\in\mathbf{Z}} $ is a strong
     white noise with $ \Var{W_t}=\sigma_W^2<\infty $. We say
     $ X_t $ is an \textbf{autoregressive process}
-    of order $ 1 $ if there
+    of order $ 1 $, or $ \AR{1} $, if there
     exists a constant $ \phi $ such that
     \[ X_t=\phi X_{t-1}+W_t\quad (t\in\mathbf{Z}) \]
     Using the backshift operator, this may also be expressed as
@@ -146,8 +165,8 @@ Let's see.
 \begin{align*}
     X_t
      & =\phi X_{t-1}+W_t                                                                                      \\
-     & =\phi(X_{t-z}+W_{t-1})+W_t                      & \quad & (z\in\mathbf{Z})                             \\
-     & =\phi^2(X_{t-2})+\phi W_{t-1}+W_t                                                                      \\
+     & =\phi(\phi X_{t-2}+W_{t-1})+W_t                                                                        \\
+     & =\phi^2X_{t-2}+\phi W_{t-1}+W_t                                                                        \\
      & \;\vdots                                        & \quad & k\text{ times}                               \\
      & =\phi^k X_{t-k}+\sum_{j=0}^{k-1} \phi^j W_{t-j} & \quad & \text{if $ \abs{\phi}>1 $, the sum diverges} \\
 \end{align*}
@@ -172,11 +191,18 @@ Therefore, $ X_t $ satisfies $ \AR{1} $ equation.
     \[ X_t=\phi X_{t-1}+W_t \]
 \end{Theorem}
 What if $ \abs{\phi}>1 $? If $ X_t=\phi X_{t-1}+W_t $ for $ t\in\mathbf{Z} $,
-then that implies $ X_t=X_{t+1}/\phi-W_{t+1}/\phi $. Iterating
-$ k $-times similarly as before, we get
-\[ X_t=\frac{X_{t+k}}{\phi^k} -\sum_{j=1}^{k} \frac{W_{t+j}}{\phi^j}
+then that implies
+\begin{align*}
+    X_t
+     & =\phi^{-1}X_{t+1}-\phi^{-1}W_{t+1}                                                                \\
+     & =\phi^{-1}\bigl(\phi^{-1}X_{t+1}-\phi^{-1}W_{t+1}\bigr)-\phi^{-1}W_{t+1}                          \\
+     & \;\vdots                                                                 & \quad & k\text{ times} \\
+     & =\phi^{-k}X_{t+k}-\sum_{j=1}^{k-1} \phi^{-j}W_{t+j}
+\end{align*}
+Therefore,
+\[ X_t=\frac{X_{t+k}}{\phi^k} -\sum_{j=1}^{k-1} \frac{W_{t+j}}{\phi^j}
     \xrightarrow[k\to\infty]{L^2\text{-sense}}-\sum_{j=1}^{\infty} \frac{W_{t+j}}{\phi^j}   \]
-since $ \sum_{j=1}^{\infty} \frac{1}{\phi^j} <\infty $.
+since $ \displaystyle \sum_{j=1}^{\infty} \frac{1}{\phi^j} <\infty $.
 This sequence is strictly stationary since it is a Bernoulli shift.
 However, what we have derived is not desirable as this model is
 future dependent, normally we try to avoid this.
@@ -211,8 +237,36 @@ Furthermore,
           \[ \rho(h)=\frac{\gamma(h)}{\gamma(0)} =\phi^h\quad(h\ge 0) \]
           Note: this decays geometrically in the lag parameter.
 \end{enumerate}
-\begin{Definition}{Autoregressive process $ [\AR{p}] $, Autoregressive polynomial}{}
+\begin{minted}{R}
+# Figure 3.3
+ar0.sim <- arima.sim(list(order = c(1, 0, 0), ar = c(0.5)), n = 134)
+plot(ar0.sim, ylab = "x", main = (expression(AR(1) ~  ~  ~ phi[1] == 0.5)))
+
+ar1.sim <- arima.sim(list(order = c(1, 0, 0), ar = c(0.9)), n = 134)
+plot(ar1.sim, ylab = "y", main = (expression(AR(1) ~  ~  ~ phi[1] == 0.9)))
+
+ar2.sim <-
+  arima.sim(list(order = c(1, 0, 0), ar = c(-0.9)), n = 134)
+plot(ar2.sim, ylab = "z", main = (expression(AR(1) ~  ~  ~ phi[1] == -0.9)))
+
+# Figure 3.4
+acf(ar0.sim)
+acf(ar1.sim)
+acf(ar2.sim)    
+\end{minted}
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\textwidth]{arprocesses1.pdf}
+    \caption{Realizations of $ \AR{1} $ processes}\label{fig:arprocesses1}
+\end{figure}
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\textwidth]{arprocesses2.pdf}
+    \caption{Corresponding ACF plots}\label{fig:arprocesses2}
+\end{figure}
+\begin{Definition}{Autoregressive process, Autoregressive polynomial}{}
     We say $ X_t $ follows an \textbf{autoregressive process} of order $ p $,
+    or $ \AR{p} $,
     if there exists coefficients $ \phi_1,\ldots,\phi_p\in\mathbf{R} $
     with $ \phi_p\ne 0 $ such that
     \[ X_t=\phi_1X_{t-1}+\cdots+\phi_p X_{t-p}+W_t \]
@@ -229,14 +283,15 @@ If $ W_t\sim $ strong white noise
 \[ X_t=\theta(B)W_t\quad(X_t\sim \MA{q}) \]
 \[ \phi(B)X_t=W_t\quad(X_t\sim\AR{p}) \]
 Why not combine the two?
-\begin{Definition}{Autoregressive moving average $ [\ARMA{p,q}] $}{}
+\begin{Definition}{Autoregressive moving average}{}
     Given a strong white noise sequence $ W_t $, we say
     that $ X_t $ is an \textbf{autoregressive moving average} process
-    of orders $ p $ and $ q $, denoted $ \ARMA{p,q} $ if
+    of orders $ p $ and $ q $, or $ \ARMA{p,q} $, if $ X_t $ is stationary
+    and
     \[ \phi(B)X_t=\theta(B)W_t \]
     \[ \phi(z)=1-\phi_1 z-\cdots - \phi_p z^p\quad (\phi_p\ne 0) \]
     \[ \theta(z)=1+\theta_1 z+\cdots+\theta_q z^q \quad (\theta_q\ne 0) \]
-    This implies that the model
+    This implies that the model is
     \[ X_t=\phi_1X_{t-1}+\cdots+\phi_p X_{t-p}+
         W_t+\theta_1 W_{t-1}+\cdots+\theta_q W_{t-q} \]
 \end{Definition}
@@ -260,10 +315,10 @@ following two points.
 \begin{Definition}{Causal ARMA}{}
     We say an $ \ARMA{p,q} $ is \textbf{causal} if there exists $ \set{X_t}_{t\in\mathbf{Z}} $
     satisfying $ \phi(B)X_t=\theta(B)W_{t}$ and
-    \[ X_t=\sum_{\ell=0}^{\infty} \phi_\ell W_{t-\ell}=\phi(B)W_t \quad\text{[Causal Linear Process Solution]} \]
-    where $ \phi(B)=\sum_{\ell=0}^{\infty} \phi_\ell B^\ell $
-    and $ \sum_{\ell=0}^{\infty} \abs{\phi_\ell}<\infty $ with
-    $ \phi_0=1 $.
+    \[ X_t=\sum_{\ell=0}^{\infty} \psi_\ell W_{t-\ell}=\psi(B)W_t \quad\text{[Causal Linear Process Solution]} \]
+    where $ \psi(B)=\sum_{\ell=0}^{\infty} \psi_\ell B^\ell $
+    and $ \sum_{\ell=0}^{\infty} \abs{\psi_\ell}<\infty $ with
+    $ \psi_0=1 $.
 \end{Definition}
 \begin{Definition}{Invertible ARMA}{}
     An $ \ARMA{p,q} $ is \textbf{invertible} if there exists $ \set{X_t}_{t\in\mathbf{Z}} $ satisfying
@@ -283,7 +338,7 @@ following two points.
     By the fundamental theorem of algebra, the autoregressive
     polynomial $ \phi(z) $ has $ p $ roots,
     say $ z_1,\ldots,z_p\in\mathbf{C} $. If
-    \[ \rho=\min_{1\le j\le p}\abs{z_j}>1 \]
+    $ \displaystyle  \rho=\min_{1\le j\le p}\abs{z_j}>1 $,
     then there exists a stationary and causal $ X_t $
     to the ARMA equations: $ \phi(B)X_t=\theta(B)W_t $.
     \[ X_t=\sum_{\ell=0}^{\infty} \psi_\ell W_{t-\ell} \]
@@ -298,12 +353,12 @@ following two points.
     In essence,
     \[ X_t=\frac{\theta(B)}{\phi(B)}W_t=\sum_{j=0}^{\infty} \psi_j B^j W_t  \]
     Key: $ \displaystyle \frac{1}{\phi(z)}=\sum_{j=0}^{\infty}
-        \phi_j z^j\quad\abs{z}\le 1 $ so $ \displaystyle \frac{1}{\phi} $ has a convergent power
+        \phi_j z^j $ where $ \abs{z}\le 1 $ so $ \displaystyle \frac{1}{\phi} $ has a convergent power
     series representation for $ \abs{z}\le 1 $.
 \end{Theorem}
 \begin{Theorem}{Invertibility}{}
     If $ z_1,\ldots,z_q $ are the zeros
-    of $ \theta(z) $ and $ \min_{1\le i\le q}\abs{z_i}>1 $,
+    of $ \theta(z) $ and $ \displaystyle \min_{1\le i\le q}\abs{z_i}>1 $,
     then $ X_t $ is invertible,
     \[ W_t=\sum_{\ell=0}^{\infty} \pi_\ell X_{t-\ell} \]
     Coefficients $ \set{\pi_\ell}_{\ell=0}^\infty $ satisfy
@@ -311,7 +366,7 @@ following two points.
         \quad (\abs{z}\le 1)  \]
 \end{Theorem}
 \underline{Moral}: When we look for coefficients
-$ \phi_1,\ldots,\phi_p,\theta_1,\ldots,\theta_q $
+$ \phi_1,\ldots,\phi_p,\theta_1,\ldots,\theta_q $,
 we want to do so in such a way that
 \[ \phi(z),\theta(z)\ne 0\quad(\abs{z}\le 1) \]
 \section{ARMA Process Examples and ACF}
@@ -344,6 +399,8 @@ we want to do so in such a way that
 \begin{Example}{}{}
     Suppose
     \[ X_t =-\frac{1}{4} X_{t-1}+W_t-\frac{1}{3}W_{t-1}\]
+    \[ X_t+\frac{1}{4} X_{t-1}=(1+1/4B)X_t=(1-1/3B)Z_t \]
+
     where $X_t \sim \ARMA{1,1}$.
     \[\phi(z)=1+\frac{1}{4}z \implies \text{Root is $-4$.}\]
     So $X_t$ is stationary and causal, and can be represented as a linear process:
@@ -363,12 +420,18 @@ we want to do so in such a way that
     Let's compute it.
     \begin{align*}
         z^0    :\quad & \psi_0=1                                                                                          \\
-        z^1    :\quad & \frac{\psi_0}{4}+\psi_1=-\frac{1}{3}  &  & \implies \psi_1=\frac{-7}{12}                          \\
+        z^1    :\quad & \frac{\psi_0}{4}+\psi_1=-\frac{1}{3}  &  & \implies \psi_1=-\frac{7}{12}                          \\
         z^2    :\quad & \frac{\psi_1}{4}+\psi_2 = 0           &  & \implies \psi_2=\frac{7}{12} \biggl(\frac{1}{4}\biggr) \\
         \vdots \quad  &                                                                                                   \\
-        z^\ell :\quad & \frac{\psi_{\ell-1}}{4} + \psi^\ell=0 &  & \implies
-        \psi^\ell= (-1)^{\ell-1}\frac{7}{12}\biggl(\frac{1}{4}\biggr)^{\ell-1}\quad(\ell\ge 1)
+        z^\ell :\quad & \frac{\psi_{\ell-1}}{4} + \psi_\ell=0 &  & \implies
+        \psi_\ell= (-1)^{\ell}\frac{7}{12}\biggl(\frac{1}{4}\biggr)^{\ell-1}\quad(\ell\ge 1)
     \end{align*}
+    Simplifying,
+    \[ \psi_j=
+        \begin{dcases}
+            1                                        & j=1    \\
+            \frac{7}{3} \biggl(-\frac{1}{4}\biggr)^j & j\ge 1
+        \end{dcases} \]
     Finite linear difference equation must be solved. (Automated in R with \texttt{ARMAtoMA()}).
     \begin{minted}{R}
     library(astsa)
@@ -384,4 +447,42 @@ we want to do so in such a way that
     \[\gamma_X(h) =\sigma_W^2 \sum^{\infty}_{j=0} \psi_j \psi_{j+h} \]
     Coefficients can be solved for as in the previous examples by solving a finite difference equation.
     (Automated in R with \texttt{ARMAacf()}).
+
+    For $ h\ge 1 $, we have
+    \begin{align*}
+        \gamma_X(h)
+         & =\sum_{j=0}^{\infty} \psi_j\psi_{j+h}                                                                               \\
+         & =\psi_0\psi_h+\sum_{j=1}^{\infty}\psi_j\psi_{j+1}                                                                   \\
+         & =\frac{7}{3} \biggl(-\frac{1}{4}\biggr)^{h}+
+        \sum_{j=1}^{\infty} \Biggl[\frac{7}{3}\biggl(-\frac{1}{4}\biggr)^{j}\frac{7}{3}\Bigl(-\frac{1}{4} \biggr)^{j+1}\Biggr] \\
+         & =\frac{91}{135}(-1)^h 4^{1-h}
+    \end{align*}
+    Then,
+    \begin{align*}
+        \gamma_X(0)
+         & =\sum_{j=0}^{\infty} \psi_j^2                                     \\
+         & =(1)^2+\sum_{j=1}^{\infty} \psi_j^2                               \\
+         & =1+\sum_{j=1}^{\infty} \frac{7}{3} \biggl(-\frac{1}{4}\biggr)^{j} \\
+         & =\frac{184}{135}
+    \end{align*}
+    Therefore, the ACF for $ h\ge 1 $ is given by
+    \[ \rho_X(h)=\begin{dcases}
+            1                                                                                                                   & h=0    \\
+            \frac{\gamma_X(h)}{\gamma_X(0)}=\frac{\frac{91}{135}(-1)^h 4^{1-h}}{\frac{184}{135}}=\frac{91}{23} (-1)^h 2^{-2h-1} & h\ge 1
+        \end{dcases}
+    \]
+    This is correct since
+    \begin{minted}{R}
+round(ARMAacf(ar = -1 / 4, ma = -1 / 3, 5), 6)
+h <- seq(1, 10, by = 1)
+round((91 / 23) * (-1) ^ h * 2 ^ (-2 * h - 1), 6)
+\end{minted}
+    \textbf{Output}:
+    \begin{minted}{R}
+        0         1         2         3         4         5
+ 1.000000 -0.494565  0.123641 -0.030910  0.007728 -0.001932
+
+          -0.494565  0.123641 -0.030910  0.007728 -0.001932
+\end{minted}
+    As we can see, this is correct.
 \end{Example}
