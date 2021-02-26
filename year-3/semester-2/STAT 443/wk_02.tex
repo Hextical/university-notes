@@ -191,8 +191,8 @@ and we want to discuss the asymptotic properties of this estimator.
                    & =\E{\bar{X}_T^2}                                                                                                             \\
                    & =\frac{1}{T^2} \E*{\biggl(\sum_{t=1}^{T} X_t\biggr)^{\!2}}                                                                   \\
                    & =\frac{1}{T^2} \sum_{t=1}^{T} \sum_{s=1}^{T}\Uunderbracket{\E{X_t X_s}}_{\ne 0\iff t=s}                                      \\
-                   & =\frac{T}{T^2} \sum_{t=1}^{T} \E{X_t^2}                                                                                      \\
-                   & =\frac{1}{T} \sum_{t=1}^{T} \E{X_0^2}                                                                                        \\
+                   & =\frac{1}{T^2} \sum_{t=1}^{T} \E{X_t^2}                                                                                      \\
+                   & =\frac{1}{T^2} \sum_{t=1}^{T} \E{X_0^2}                                                                                      \\
                    & =\frac{\sigma^2}{T}                                                                     &  & \text{since }\sigma^2=\E{X_0^2}
               \end{align*}
               Therefore, for $ \varepsilon>0 $, by Markov's Inequality we have
@@ -279,7 +279,8 @@ and we want to discuss the asymptotic properties of this estimator.
         \Var{G_{1}}
          & =\E{G_{1}^2}                                                                                                \\
          & =\frac{1}{T^2}\sum_{t=1}^{T-1} \sum_{s=1}^{T-1}\Uunderbracket{\E{W_{t}W_{t+1}W_{s}W_{s+1}}}_{\ne 0\iff s=t} \\
-         & =\frac{T-1}{T^2} \sum_{t=1}^{T-1} \E{W_{t}^2W_{t+1}^2}=\frac{T-1}{T^2} \sigma_W^4\xrightarrow{T\to\infty}0
+         & =\frac{1}{T^2} \sum_{t=1}^{T-1} \E{W_t^2 W_{t+1}^2}                                                         \\
+         & =\frac{T-1}{T^2} \sigma_W^4\xrightarrow{T\to\infty}0
     \end{align*}
     By Markov's Inequality:
     $ G_{1}=o_p(1) $,
@@ -306,14 +307,14 @@ with the problems:
     We say a time series $ \set{X_t}_{t\in\mathbf{Z}} $ is $ m $\textbf{-dependent}
     for a positive integer $ m $, if for all
     \[ t_1<t_2<\cdots<t_{d_1}<s_1<s_2<\cdots<s_{d_2}\in\mathbf{Z} \]
-    so that $ t_{d_1}+m\le s_1 $, then
+    so that $ t_{d_1+m}\le s_1 $, then
     \[ (X_{t_1},\ldots,X_{t_{d_1}}) \]
     is \textbf{independent} of
     \[ (X_{s_1},\ldots,X_{s_{d_2}}) \]
 \end{Definition}
 \begin{Example}{}{}
     $ X_t=W_{t}+\theta W_{t-1} $ for $ \theta\in\mathbf{R} $
-    and $ W_{t} $ is a strong white noise is $ 2 $-dependent.
+    where $ W_{t} $ is a strong white noise is $ 2 $-dependent.
 \end{Example}
 \begin{Theorem}{Generalization of the standard CLT to $ m $-dependent}{m_clt}
     Suppose $ X_t $ is a strictly stationary
@@ -331,7 +332,7 @@ with the problems:
     \textbf{triangular array} of mean zero $ L^2 $ random
     variables, if $ \E{X_{i,j}}=0 $, $ \E{X_{i,j}^2}<\infty $, and
     for each $ i $-fixed we have $ X_{i,1},\ldots,X_{i,n_i} $
-    are independent with $ n_i<n_i+1 $.
+    are independent with $ n_i<n_{i+1} $.
 \end{Definition}
 Visually, row-wise random variables are independent:
 \[ \begin{matrix}
@@ -347,8 +348,8 @@ Visually, row-wise random variables are independent:
     and
     \[ S_i=\frac{1}{\sigma_i} \sum_{j=1}^{n_i} X_{i,j} \]
     If for $ \varepsilon>0 $,
-    \[ \frac{1}{\sigma_i^2}\sum_{j=1}^{n_i} \E{X_{i,j}^2
-            \Ind{\abs{X_{i,j}}>\varepsilon\sigma_i}}\xrightarrow{i\to\infty}0 \]
+    \[ \frac{1}{\sigma_i^2}\sum_{j=1}^{n_i} \E[\Big]{X_{i,j}^2
+            \Ind[\big]{\abs{X_{i,j}}>\varepsilon\sigma_i}}\xrightarrow{i\to\infty}0 \]
     then
     \[ S_i\stackrel{D}{\to}\N{0,1} \]
 \end{Theorem}
@@ -359,8 +360,8 @@ Visually, row-wise random variables are independent:
     We assume $ a_T\to\infty $ as $ T\to\infty $, but $ \displaystyle \frac{a_T}{T}\to 0 $.
     Then,
     \[ N=\text{number of blocks}=\biggl\lfloor \frac{T}{M+a_T} \biggr\rfloor \]
-    \[ B_j=\set{i:(j-1)(a_T+m)+1\le i\le j a_T+(j-m)m} \]
-    \[ b_j=\set{i:j a_T+(j-1)m+1\le i\le j(a_T+m)} \]
+    \[ B_j=\set[\big]{i:(j-1)(a_T+m)+1\le i\le j a_T+(j-1)m} \]
+    \[ b_j=\set[\big]{i:j a_T+(j-1)m+1\le i\le j(a_T+m)} \]
     Since $ a_T $ is increasing up to infinity, for $ T $
     sufficiently large, $ a_T>m $, and so
     by $ m $-dependence,
@@ -375,6 +376,8 @@ Visually, row-wise random variables are independent:
     \[ \Var{G_2}=\frac{1}{T}
         \sum_{j=1}^{N}\E*{\biggl(\sum_{t\in b_j}X_t \biggr)^{\!2}}=
         \frac{N}{T}\E*{\biggl(\sum_{t=1}^{m} X_t\biggr)^{\!2}} \]
+    due to strict stationarity.
+
     Also,
     \[ \E*{\biggl(\sum_{t=1}^{m} X_t\biggr)^{\!2}}=\sum_{t=1}^{m} \sum_{s=1}^{m} \E{X_t X_s}=
         \sum_{t=1}^{m} \sum_{s=1}^{m}\gamma(\abs{t-s})  \]
@@ -386,7 +389,7 @@ Visually, row-wise random variables are independent:
     and hence $ G_2=o_p(1) $.
 
     Let's deal with the big block terms. Notice
-    \[ G_1=\frac{1}{\sqrt{T}}=\sum_{j=1}^{N} \sum_{t\in B_j}X_t=
+    \[ G_1=\frac{1}{\sqrt{T}}\sum_{j=1}^{N} \sum_{t\in B_j}X_t=
         \sum_{j=1}^{N}\frac{\sum_{t\in B_j} X_t}{\sqrt{T}}=\sum_{j=1}^{N}Y_j  \]
     where $ Y_{j} $ is a triangular array. So,
     $ \Var{G_1}=\sum_{j=1}^{N} \Var{Y_j} $.
@@ -407,21 +410,21 @@ Visually, row-wise random variables are independent:
     Therefore, the variance of $ G_1 $ is bounded.
     We showed $ \sigma_N^2=\Var{G_1}\approx $ constant. So, we must show
     \[
-        \sum_{j=1}^{N} \E{\Uunderbracket{Y_{j}^2}_{\text{iid}} \Ind{\abs{Y_{j}}>\varepsilon\sigma_N}}=
-        N\E{Y_{1}^2 \Ind{\abs{Y_{1}}>\varepsilon\sigma_N}} \xrightarrow{T\to\infty}0
+        \sum_{j=1}^{N} \E[\Big]{\Uunderbracket{Y_{j}^2}_{\text{iid}} \Ind[\big]{\abs{Y_{j}}>\varepsilon\sigma_N}}=
+        N\E[\Big]{Y_{1}^2 \Ind[\big]{\abs{Y_{1}}>\varepsilon\sigma_N}} \xrightarrow{T\to\infty}0
     \]
-    \emph{Aside}:
+    \emph{Aside}: For $ \delta>0 $,
     \begin{align*}
         \E[\big]{\abs{Y}^{2+\delta}}
-         & \ge \E[\big]{\abs{Y}^{2+\delta}\Ind{\abs{Y}>\varepsilon}}           \\
-         & \ge \varepsilon^\delta\E[\big]{\abs{Y}^2 \Ind{\abs{Y}>\varepsilon}} \\
+         & \ge \E[\Big]{\abs{Y}^{2+\delta}\Ind[\big]{\abs{Y}>\varepsilon}}           \\
+         & \ge \varepsilon^\delta\E[\Big]{\abs{Y}^2 \Ind[\big]{\abs{Y}>\varepsilon}}
     \end{align*}
-    \[ \implies \E[\big]{\abs{Y}^2 \Ind{\abs{Y}>\varepsilon}}\le \frac{\E[\big]{\abs{Y}^{2+\delta}}}{\varepsilon^\delta} \]
+    \[ \implies \E[\Big]{\abs{Y}^2 \Ind[\big]{\abs{Y}>\varepsilon}}\le \frac{\E[\big]{\abs{Y}^{2+\delta}}}{\varepsilon^\delta} \]
     It may be shown that for $ C>0 $
     \[ \E[\big]{\abs{Y_j}^{2+\delta}}\le C\biggl(\frac{a_T}{T} \biggr)^{\frac{2+\delta}{2}} \]
     So
     \begin{align*}
-        N\E{Y_{1}^2 \Ind{\abs{Y_{1}}>\varepsilon\sigma_N}}
+        N\E[\Big]{Y_{1}^2 \Ind[\big]{\abs{Y_{1}}>\varepsilon\sigma_N}}
          & \le \frac{N}{(\varepsilon\sigma_N)^\delta}C\biggl(\frac{a_T}{T} \biggr)^{\frac{2+\delta}{2}} \\
          & =\frac{C}{(\varepsilon\sigma_N)^\delta}
         \frac{N a_T}{T}\biggl(\frac{a_T}{T} \biggr)^{\delta/2}\xrightarrow{T\to\infty}0
@@ -536,6 +539,7 @@ where $ C $ is the same constant as in~\Cref{pf:pf_clt}.
     \[ \sum_{h=-\infty}^{\infty} \gamma(h)=\sum_{h=-\infty}^{\infty}
         \abs[\bigg]{\sum_{\ell=0}^{\infty} \psi_\ell \psi_{\ell+h}\sigma_W^2}
         \le \sum_{\ell=0}^{\infty} \abs{\psi_\ell}\sum_{h=-\infty}^{\infty} \abs{\psi_h}\sigma_W^2<\infty \]
+    by the Triangle Inequality.
     So $ \sum_{h=-\infty}^{\infty} \gamma(h) $ is well-defined.
     Note that $ \E{S_T}=0 $ since $ \E{X_t}=0 $. Also,
     \[ \Var{S_T}=\frac{1}{T} \sum_{t=1}^{T} \sum_{s=1}^{T} \E{X_t X_s}=
@@ -564,26 +568,27 @@ where $ C $ is the same constant as in~\Cref{pf:pf_clt}.
                    & \le \sum_{h=1-T}^{T-1} \biggl(1-\frac{\abs{h}}{T} \biggr)
                   \sum_{\ell=m+1}^{\infty}\abs{\psi_\ell}\abs{\psi_{\ell+h}}\sigma_W^2  \\
                    & \le \sum_{\ell=m+1}^{\infty} \abs{\psi_\ell}
-                  \biggl(\sum_{h=-\infty}^{\infty} \abs{\psi_h}\biggr)\sigma_W^2\xrightarrow{0\to\infty}m
+                  \biggl(\sum_{h=-\infty}^{\infty} \abs{\psi_h}\biggr)\sigma_W^2\xrightarrow{m\to\infty}0
               \end{align*}
     \end{enumerate}
     So condition (3) of the BAT is satisfied using Markov's Inequality. Therefore,
-    \[ S_t=\frac{1}{\sqrt{T}}\sum_{t=1}^{T} X_t\stackrel{D}{\to}\N[\bigg]{0,\sum_{h=-\infty}^{\infty} \gamma(h)}  \]
+    \[ S_T=\frac{1}{\sqrt{T}}\sum_{t=1}^{T} X_t\stackrel{D}{\to}\N[\bigg]{0,\sum_{h=-\infty}^{\infty} \gamma(h)}  \]
 \end{Proof}
 \section{Asymptotic Properties of Empirical ACF}
 If $ X_1,\ldots,X_T $ is an observed time series in
 which we think was generated by a stationary process, then
-$ \Cov{X_t,X_{t+h}} $ does not depend on $ t $. Recall that
+$ \gamma(h)=\Cov{X_t,X_{t+h}} $ does not depend on $ t $. Recall that
 \[ \hat{\gamma}(h)=\frac{1}{T} \sum_{t=1}^{T-h}(X_t-\bar{X})(X_{t+h}-\bar{X}) \]
 \[ \rho(h)=\Corr{X_t,X_{t+h}}=\frac{\gamma(h)}{\gamma(0)} \]
 \[ \hat{\rho}(h)=\frac{\hat{\gamma}(h)}{\hat{\gamma}(0)}  \]
-Questions:
+\subsection*{Questions}
 \begin{enumerate}[(1)]
-    \item Are $ \hat{\gamma} $ and $ \hat{\rho} $ consistent?
+    \item Are $ \hat{\gamma} $ and $ \hat{\rho} $ \textbf{consistent}?
     \item What is the approximate distribution of $ \hat{\gamma}(h) $
           and $ \hat{\rho}(h) $.
 \end{enumerate}
-\textbf{Consistency}: By adding and subtracting $ \mu $ in the definition
+\subsection*{Consistency}
+By adding and subtracting $ \mu $ in the definition
 of $ \hat{\gamma}(h) $, we may assume without loss of generality that $ \E{X_t}=0 $.
 
 Suppose $ \set{X_t}_{t\in\mathbf{Z}} $ is strictly stationary, and
@@ -605,15 +610,16 @@ Furthermore,
 where we note that the last three terms converge in probability to 0 by the Ergodic Theorem.
 
 Also, note that $ \E{X_t X_{t+h}}=\gamma(h) $ and
-\[ X_{t}X_{t+h}=g_h(W_{t+h},W_{t+h-1},\ldots) \]
+$ X_{t}X_{t+h}=g_h(W_{t+h},W_{t+h-1},\ldots) $.
+
 Again, by the Ergodic Theorem,
 \[ \frac{1}{T} \sum_{t=1}^{T-h} X_t X_{t+h}\stackrel{P}{\to}\gamma(h) \]
 Therefore, $ \hat{\gamma}(h)\stackrel{P}{\to}\gamma(h) $
 and $ \displaystyle \hat{\rho}(h)=\frac{\hat{\gamma}(h)}{\hat{\gamma}(0)}\stackrel{P}{\to}\rho(h) $
 under strict stationarity and $ \E{X_t^2}<\infty $.
 
-\textbf{Distribution of} $ \hat{\gamma}(h) $: Consider
-simple (but most important case) when $ \set{X_t}_{t\in\mathbf{Z}} $
+\subsection*{Distribution of $ \hat{\gamma}(h) $}
+Consider simple (but most important case) when $ \set{X_t}_{t\in\mathbf{Z}} $
 is a strong white noise with $ \E{X_t^4}<\infty $. The finite
 4th moment assumption is not really assumed here, but this will
 be explained why it's classically assumed.
@@ -650,7 +656,7 @@ If $ \set{X_t}_{t\in\mathbf{Z}} $ is a strong white noise,
 \[ \biggl(-\frac{z_{\alpha/2}}{\sqrt{T}} ,\frac{z_{\alpha/2}}{\sqrt{T}} \biggr) \]
 is a $ (1-\alpha) $ prediction interval for $ \hat{\rho}(h) $
 for all $ h $ with $ T $ large where $ \Phi(z_{\alpha/2})=1-\alpha $. Hence,
-\[ \biggl(\frac{-1.96}{\sqrt{T}},\frac{1.96}{\sqrt{T}} \biggr) \]
+\[ \biggl(-\frac{1.96}{\sqrt{T}},\frac{1.96}{\sqrt{T}} \biggr) \]
 is an approximate $ 95\% $ prediction interval for $ \hat{\rho}(h) $
 assuming the data is generated by a strong white noise process.
 
@@ -700,9 +706,9 @@ series?
     the dominant term; that is, the $ \mathcal{O}(T^2) $ doesn't depend on $ h $.
 
     It follows that in this case that
-    \[ \frac{\hat{\rho}(h)}{T^2}\xrightarrow{T\to\infty} C\quad(\forall h)  \]
+    \[ \frac{\hat{\gamma}(h)}{T^2}\xrightarrow{T\to\infty} C\quad(\forall h)  \]
     Hence
-    \[ \hat{\rho}(h)=\frac{\hat{\gamma}(h)}{\hat{\gamma}(0)}\frac{T^2}{T^2}\stackrel{P}{\to}1\quad(\forall h)  \]
+    \[ \hat{\rho}(h)=\frac{\hat{\gamma}(h)}{\hat{\gamma}(0)}\frac{T^2}{T^2}=\frac{\hat{\gamma}(h)}{T^2}\frac{T^2}{\hat{\gamma}(0)}  \stackrel{P}{\to}1\quad(\forall h)  \]
     \underline{Moral}: If $ X_t $ has a trend that is not properly removed,
     $ \hat{\rho}(h) $ is likely to be large.
 \end{Example}

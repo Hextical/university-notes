@@ -15,10 +15,10 @@ where $ L $ is a loss function.
 
 Frequently, the loss function is taken
 to be the \emph{mean-squared error} (MSE)
-\[ L(X_{T+h},\hat{X}_{T+h})=
+\[ L\bigl(X_{T+h},\hat{X}_{T+h}\bigr)=
     \E[\big]{(X_{T+h}-\hat{X}_{T+h})^2} \]
 When using MSE, it is natural to consider
-\[ L^2=\set{\text{Random variables } X: \E{X^2}<\infty} \]
+\[ L^2=\set[\big]{\text{Random variables } X: \E{X^2}<\infty} \]
 $ L^2 $ is a Hilbert space when equipped
 with the inner product
 \[ \innerp{X}{Y}=\E{XY} \]
@@ -27,36 +27,36 @@ in which the geometry and notation of projection
 are preserved.
 \[ \Proj{X\to Y}=\innerp{X}{Y}Y \]
 \begin{Definition}{Closed Linear Subspace}{}
-    We say $ M\subseteq L^2 $
+    We say $ \mathcal{M}\subseteq L^2 $
     is a \textbf{closed linear subspace}, if
     \begin{enumerate}[(i)]
-        \item Linearity: $ X,Y\in M $, $ \alpha,\beta\in\mathbf{R} $
-              then $ \alpha X+\beta Y\in M $
-        \item Closed: If $ X_n\to X $ (in the sense that $ \E{(X_n-X)^2} \to 0 $),
-              and $ X_n\in M $, then $ X\in M $.
+        \item Linearity: $ X,Y\in \mathcal{\mathcal{M}} $, $ \alpha,\beta\in\mathbf{R} $
+              then $ \alpha X+\beta Y\in \mathcal{M} $
+        \item Closed: If $ X_n\to X $ (in the sense that $ \E[\big]{(X_n-X)^2} \to 0 $),
+              and $ X_n\in \mathcal{M} $, then $ X\in \mathcal{M} $.
     \end{enumerate}
 \end{Definition}
 \begin{Theorem}{Projection Theoren}{}
-    If $ M $ is a closed linear subspace in $ L^2 $
+    If $ \mathcal{M} $ is a closed linear subspace in $ L^2 $
     and $ x\in L^2 $, then there exists a
-    unique $ \hat{X}\in M $ such that
-    \[ \E{(X-\hat{X})^2}=\inf_{y\in M}\E{(X-Y)^2} \]
+    unique $ \hat{X}\in \mathcal{M} $ such that
+    \[ \E[\big]{(X-\hat{X})^2}=\inf_{Y\in \mathcal{M}}\E[\big]{(X-Y)^2} \]
     Moreover, $ \hat{X} $ satisfies the prediction equations/normal
     equations:
-    \[ (X-\hat{X})\in M^\perp \implies \E{(X-\hat{X})Y}=0\quad (\forall y\in M) \]
+    \[ (X-\hat{X})\in \mathcal{M}^\perp \implies \E[\big]{(X-\hat{X})Y}=0\quad (\forall Y\in \mathcal{M}) \]
 \end{Theorem}
 In MSE forecasting, we want to choose
 $ \hat{X}_{T+h} $ satisfying
-\[ \E{(X_{T+h}-\hat{X}_{T+h})^2}=\inf_{y\in M}\E{(X_{T+h}-y)^2} \]
-where $ M $ is a closed linear subspace based on the available
+\[ \E[\big]{(X_{T+h}-\hat{X}_{T+h})^2}=\inf_{Y\in \mathcal{M}}\E[\big]{(X_{T+h}-Y)^2} \]
+where $ \mathcal{M} $ is a closed linear subspace based on the available
 data.
 \begin{enumerate}[(1)]
-    \item $ M_1=\set{z:z=f(X_{T},\ldots,X_{1}), f\text{ is any
-                  Borel Measurable function}} $
+    \item $ \mathcal{M}_1=\set{z:z=f(X_{T},\ldots,X_{1}), f\text{ is any
+                  Borel Measurable function}} $.
           In this case
           \[ \hat{X}_{T+h}=\E{X_{T+h}\mid X_{T},\ldots,X_1} \]
-          Unfortunately $ M_1 $ is enormous and complicated!
-    \item $ M_2=\Spanc{1,X_{T},\ldots,X_1}=
+          Unfortunately $ \mathcal{M}_1 $ is enormous and complicated!
+    \item $ \mathcal{M}_2=\Spanc{1,X_{T},\ldots,X_1}=
               \set{Y:Y=\alpha_0+\sum_{j=1}^{T} \alpha_j X_j,\,\alpha_0,\ldots,\alpha_T\in\mathbf{R}} $
           which is the linear functions of $ X_1,\ldots,X_T $.
           $ \hat{X}_{T+h} $ is called the \textbf{best linear predictor} (BLP).
@@ -64,34 +64,34 @@ data.
 \section{Best Linear Prediction}
 Suppose $ X_t $ is a (weakly) stationary time series.
 Best linear prediction entails finding $ \hat{X}_{T+h} $ so that
-\[ \E{(X_{T+h}-\hat{X}_{T+h})^2}=\inf_{y\in M_2}\E{(X_{T+h}-Y)^2} \]
+\[ \E[\big]{(X_{T+h}-\hat{X}_{T+h})^2}=\inf_{Y\in \mathcal{M}_2}\E[\big]{(X_{T+h}-Y)^2} \]
 $ \hat{X}_{T+h} $ is the best prediction among all linear
 functions of $ X_T,\ldots,X_1 $.
 \begin{Definition}{Projection}{}
     If $ \hat{X} $ satisfies
-    \[ \E{(X-\hat{X})^2}=\inf_{y\in M}\E{(X-Y)^2} \]
+    \[ \E[\big]{(X-\hat{X})^2}=\inf_{Y\in \mathcal{M}}\E[\big]{(X-Y)^2} \]
     we say that $ \hat{X} $ is the \textbf{projection}
-    of $ X $ onto $ M $, and we write $ \hat{X}=\Proj{X\onto M} $.
+    of $ X $ onto $ \mathcal{M} $, and we write $ \hat{X}=\Proj{X\onto \mathcal{M}} $.
 \end{Definition}
 In particular, the BLP is
-\[ \hat{X}_{T+h}=\Proj{X_{T+h}\onto M_2} \]
+\[ \hat{X}_{T+h}=\Proj{X_{T+h}\onto \mathcal{M}_2} \]
 Consider the case when $ h=1 $. From the Projection Theorem, the BLP
 is of the form
 \[ \hat{X}_{T+1}=\phi_{T,0}+\sum_{j=1}^{T} \phi_{T,j}X_j \approx
     \phi_{T,0}+\sum_{j=0}^{T} \phi_{T,j}(X_j-\mu) \]
 where $ \mu=\E{X_t} $. $ \hat{X}_{T+1} $ must satisfy
 the \textbf{prediction equations},
-\[ \E{(X_{T+1}-\hat{X}_{T+1})Y}=0\quad (\forall  Y\in M_2 ) \]
+\[ \E[\big]{(X_{T+1}-\hat{X}_{T+1})Y}=0\quad (\forall  Y\in \mathcal{M}_2 ) \]
 In particular,
-\[ \E{(X_{T+1}-\hat{X}_{T+1})1}=0\quad(Y=1) \]
-\[ \E{(X_{T+1}-\hat{X}_{T+1})X_j}=0\quad(1\le j\le T,\, Y=X_j) \]
+\[ \E[\big]{(X_{T+1}-\hat{X}_{T+1})1}=0\quad(Y=1) \]
+\[ \E[\big]{(X_{T+1}-\hat{X}_{T+1})X_j}=0\quad(1\le j\le T,\, Y=X_j) \]
 We have $ T+1 $ equations. Since $ \E{X_{j}-\mu}=0 $,
 \[ 0=\E{X_{T+1}-\hat{X}_{T+1}}=\mu-\phi_{T,0}+0\implies \phi_{T,0}=\mu \]
 Before proceeding, note that this implies
-\[ \E{(X_{T+1}-\hat{X}_{T+1})X_j}=\E{(X_{T+1}-\mu-(\hat{X}_{T+1}-\mu))(X_{j}-\mu)} \]
+\[ \E[\big]{(X_{T+1}-\hat{X}_{T+1})X_j}=\E[\big]{(X_{T+1}-\mu-(\hat{X}_{T+1}-\mu))(X_{j}-\mu)} \]
 So we may assume without loss of generality that $ \mu=0 $, therefore $ \E{X_i X_j}=\gamma(j-i) $.
 Therefore,
-\[ 0=\E{(X_{T+1}-\hat{X}_{T+1})X_k}=\gamma(T+1-k)-\sum_{j=1}^{T} \phi_{T,j}\gamma(j-k)\quad(1\le k\le T) \]
+\[ 0=\E[\big]{(X_{T+1}-\hat{X}_{T+1})X_k}=\gamma(T+1-k)-\sum_{j=1}^{T} \phi_{T,j}\gamma(j-k)\quad(1\le k\le T) \]
 Therefore, we have linear system of equations for $ \phi_{T,1},\ldots,\phi_{T,T} $:
 \[ \sum_{j=1}^{T}\phi_{T,j}\gamma(j-k)=\gamma(T+1-k)  \]
 Let
@@ -129,7 +129,7 @@ Also, since
 It follows that the mean-squared prediction error is
 \begin{align*}
     P_{T+1}^T
-     & =\E{(X_{T+1}-\hat{X}_{T+1})^2}                                                                                       \\
+     & =\E[\big]{(X_{T+1}-\hat{X}_{T+1})^2}                                                                                 \\
      & =\E{X_{T+1}^2-2 X_{T+1}\hat{X}_{T+1}+\hat{X}_{T+1}^2}                                                                \\
      & =\gamma(0)-2 \symbf{\gamma}_T^\top \Gamma_T^{-1}\symbf{\gamma}_T+\symbf{\gamma}_T^\top \Gamma_T^{-1}\symbf{\gamma}_T \\
      & =\gamma(0)-\symbf{\gamma}_T^\top\Gamma_T^{-1}\symbf{\gamma}_T
@@ -145,6 +145,34 @@ $ p,q $ by looking at the ACF\@.
 ACF of an $ \ARMA{p,q} $ model can be calculated by calculating
 the linear process coefficients $ \set{\psi}_{\ell=0}^\infty $.
 Automated in R using \code{ARMAacf()}.
+
+In~\Cref{fig:partialacf}, it looks like geometric decay. However, it is hard to tell
+the difference between the $ \ARMA{1,1} $ process and the $ \AR{p} $ process
+via the ACF\@. Therefore, we want to define the \emph{partial autocorrelation function}.
+\begin{minted}{R}
+# Figure 4.1 (Omitted the PACF)
+ACF = ARMAacf(ar = c(.8), ma = 1, 24)[-1]
+PACF = ARMAacf(ar = c(.8),
+               ma = 1,
+               24,
+               pacf = TRUE)
+par(mfrow = c(1, 2))
+plot(ACF,
+     type = "h",
+     xlab = "lag",
+     ylim = c(-.8, 1))
+abline(h = 0)
+plot(PACF,
+     type = "h",
+     xlab = "lag",
+     ylim = c(-.8, 1))
+abline(h = 0)
+\end{minted}
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{partialacf.pdf}
+    \caption{$ \ARMA{1,1} $: $ X_t=0.9X_{t-1}+W_t+0.5W_{t-1} $}\label{fig:partialacf}
+\end{figure}
 \begin{Definition}{Partial autocorrelation function}{}
     The \textbf{partial autocorrelation function} of a stationary
     process $ \set{X_t}_{t\in\mathbf{Z}} $ is
@@ -159,13 +187,13 @@ Automated in R using \code{ARMAacf()}.
 \begin{Proof}{\Cref{remark:rem_acf}}{}
     If $ X_t \sim \AR{p} $, then $ X_{t+h}=\sum_{j=1}^{p} \phi_j X_{t+h-j} +W_{t+h} $.
     \[ \Proj{X_{t+h}\onto X_{t+h-1},\ldots,X_{t+1}}=
-        \sum_{k=1}^{h-1}B_k X_{t+h-k}  \]
+        \sum_{k=1}^{h-1}\beta_k X_{t+h-k}  \]
     and minimizes
     \begin{align*}
-        \E*{\biggl(X_{t+h}-\sum_{k=1}^{h-1} B_k X_{t+h-k}\biggr)^{\!2}}
+        \E*{\biggl(X_{t+h}-\sum_{k=1}^{h-1} \beta_k X_{t+h-k}\biggr)^{\!2}}
          & =\E*{\biggl(W_{t+h}+\sum_{j=1}^{p} \phi_j X_{t+h-j}
-        -\sum_{k=1}^{h-1} B_k X_{t+h-k}\biggr)^{\!2}}                                                          \\
-         & =\sigma_W^2+\E*{\biggl(\sum_{j=1}^{p} \phi_j X_{t+h-j}-\sum_{k=1}^{h-1} B_k X_{t+h-k}\biggr)^{\!2}}
+        -\sum_{k=1}^{h-1} \beta_k X_{t+h-k}\biggr)^{\!2}}                                                          \\
+         & =\sigma_W^2+\E*{\biggl(\sum_{j=1}^{p} \phi_j X_{t+h-j}-\sum_{k=1}^{h-1} \beta_k X_{t+h-k}\biggr)^{\!2}}
     \end{align*}
     where the second term is minimized by setting $ \beta_j=\phi_j $ for $ 1\le j\le p $
     and $ \beta_j=0 $ for $ j\ge p $. Note that $ W_{t+h} $ is independent of other terms.
@@ -199,7 +227,7 @@ where
 Suppose $ X_t $ follows a stationary and invertible $ \ARMA{p,q} $
 model so that $ \phi(B)X_t=\theta(B)W_t $. Having observed
 $ X_T,\ldots,X_1 $, we wish to predict $ X_{T+h} $.
-\[ \hat{X}_{T+h}=\Proj{X_{T+h}\onto M_2}\approx \E{X_{T+h}\given X_{T},\ldots,X_1} \]
+\[ \hat{X}_{T+h}=\Proj{X_{T+h}\onto \mathcal{M}_2}\approx \E{X_{T+h}\given X_{T},\ldots,X_1} \]
 by causality and invertibility $ X_t \sim $ linear function of $ W_t $.
 
 Furthermore,
@@ -221,10 +249,10 @@ So
     \E{X_{T+h}\given W_{T},W_{T-1},\ldots} \]
 \begin{align*}
     \tilde{X}_{T+h}
-     & =\E*{\sum_{\ell=0}^{\infty} \psi_\ell W_{T+h-\ell}\given W_T,W_{T-1},\ldots}                                                     \\
+     & =\E*{\sum_{\ell=0}^{\infty} \psi_\ell W_{T+h-\ell}\given W_T,W_{T-1},\ldots}                                                                       \\
      & =\E*{\sum_{\ell=0}^{h-1} \psi_\ell W_{T+h-\ell}\given W_T,\ldots}
-    +\E*{\sum_{\ell=h}^{\infty} \psi_\ell W_{T+h-\ell}\given W_{T},\ldots}                                                              \\
-     & =\sum_{\ell=h}^{\infty} \psi_\ell W_{T+h-\ell}                               & \quad & \text{since $ \psi_\ell W_{T+h-\ell}=0 $}
+    +\E*{\sum_{\ell=h}^{\infty} \psi_\ell W_{T+h-\ell}\given W_{T},\ldots}                                                                                \\
+     & =\sum_{\ell=h}^{\infty} \psi_\ell W_{T+h-\ell}                               &  & \text{since $ \psi_\ell W_{T+h-\ell}=0 $ for $0\le \ell\le h-1$}
 \end{align*}
 Also, using invertibility,
 \[ 0=\E{W_{T+h}\given X_T,X_{T-1},\ldots}=
@@ -254,7 +282,7 @@ Since $ \hat{X}_{T+h}\approx \sum_{j=h}^{\infty} \psi_j W_{t+h-j} $,
 \[ P_{T+h}^T=\E*{(X_{T+h}-\hat{X}_{T+h})^2}
     =\E*{\biggl(\sum_{j=0}^{h-1} \psi_j W_{t-j}\biggr)^{\!2}}=\sigma_W^2 \sum_{j=0}^{h-1} \psi_j^2 \]
 \textbf{Estimated Mean Squared Prediction Error}:
-\[ \hat{P}_{T+h}=\hat{\sigma}_W^2 \sum_{j=0}^{h-1} \psi_j^2 \]
+\[ \hat{P}_{T+h}^T=\hat{\sigma}_W^2 \sum_{j=0}^{h-1} \psi_j^2 \]
 \textbf{Construction of Prediction Intervals}:
 Since $ \hat{X}_{T+h}\approx \E{X_{T+h}\given X_T,\ldots} $,
 \[ \E*{\hat{X}_{T+h}-X_{T+h}}=0\quad(\text{Tower Property}) \]
@@ -263,14 +291,14 @@ Hence
 \[ \frac{\hat{X}_{T+h}-X_{T+h}}{\sqrt{\hat{P}_{T+h}^T}}  \]
 is an approximately mean zero and unit variance random variable.
 
-Suppose $ C_\alpha $ is the $ \alpha $-critical value of this random variable,
+Suppose $ c_\alpha $ is the $ \alpha $-critical value of this random variable,
 then
-\[ \hat{X}_{T+h}\pm C_{\alpha/2}\sqrt{\hat{P}_{T+h}^T} \]
+\[ \hat{X}_{T+h}\pm c_{\alpha/2}\sqrt{\hat{P}_{T+h}^T} \]
 is an approximate $ (1-\alpha) $ prediction interval for $ X_{T+h} $.
 
-Choices for $ C_\alpha $:
+Choices for $ c_\alpha $:
 \begin{enumerate}[(1)]
-    \item $ Z_\alpha $ (standard normal critical value).
+    \item $ z_\alpha $ (standard normal critical value).
 
           Motivation: If $ W_t $ is Gaussian, then $ X_t=\sum_{\ell=0}^{\infty} \psi_\ell W_{t-\ell} $
           is Gaussian.
@@ -281,9 +309,12 @@ Choices for $ C_\alpha $:
 
 \subsection*{Long Range Behaviour of ARMA Forecasts}
 Suppose $ Y_t=s_t+X_t $ where $ X_t \sim \ARMA{p,q} $.
-\[ \hat{Y}_{T+h}=\hat{s}_{T+h}+\hat{X}_{T+h}=\hat{s}_{T+h}+\Uunderbracket{\sum_{j=h}^{\infty} \psi_j W_{T+h-j}}_{\to 0(\text{ geometrically})} \]
-$ \hat{Y}_{T+h} $ is converging fast to $ \hat{s}_{T+h} $: better get the trend for
-long range forecasts.
+\[ \hat{Y}_{T+h}=\hat{s}_{T+h}+\hat{X}_{T+h}=\hat{s}_{T+h}+\Uunderbracket{\sum_{j=h}^{\infty} \psi_j W_{T+h-j}}_{\to 0\text{ (geometrically)}} \]
+$ \hat{Y}_{T+h} $ is converging fast to $ \hat{s}_{T+h} $. {\color{blue}Therefore, when we are doing ARMA
+        forecasting in a trend + noise framework, we better get the trend correct for long range
+        forecasts. Long range forecasts are only going to depend on the trend, and very
+        little on the noise because we know that ARMA processes have a geometric decay to
+        their dependent structure.}
 \[ P_{T+h}^T=\sigma_W^2 \sum_{\ell=0}^{h-1} \psi_\ell^2\to \sigma_W^2 \sum_{\ell=0}^{\infty} \psi_\ell^2=\gamma_X(0) \]
 In the long run, the MSE is the variance of $ X_t $.
 
@@ -504,4 +535,126 @@ lines(21:30,
 \end{minted}
 
 \section{ARMA Forecasting Example 2: Johnson and Johnson}
-TODO a lot of practical stuff.
+$ X_t $ Johnson and Johnson Earnings.
+\[ X_t=e^{s_t+Y_t} \]
+where $ Y_t $ is stationary. In this case,
+\[ \log(X_t)=s_t+Y_t \]
+where $ Y_t \sim \ARMA{p,q} $.
+\begin{minted}{R}
+plot(jj, ylab = "Johnson and Johnson Earnings")
+jj.ts = as.vector(jj)
+
+plot(log(jj))
+
+time.vec = 1:length(jj)
+time.vec2 = time.vec ^ 2
+time.vec3 = time.vec ^ 3
+time.vec4 = time.vec ^ 4
+time.vec5 = time.vec ^ 5
+
+num = length(jj)
+reg1 = lm(log(jj) ~ time.vec, na.action = NULL)
+reg2 = lm(log(jj) ~ time.vec + time.vec2, na.action = NULL)
+reg3 = lm(log(jj) ~ time.vec + time.vec2 + time.vec3, na.action = NULL)
+reg4 = lm(log(jj) ~ time.vec + time.vec2 + time.vec3 + time.vec4, na.action =
+            NULL)
+reg5 = lm(log(jj) ~ time.vec + time.vec2 + time.vec3 + time.vec4 + time.vec5,
+          na.action = NULL)
+
+AIC(reg1)
+AIC(reg2)
+AIC(reg3)
+AIC(reg4)
+AIC(reg5)
+
+plot(log(jj), type = "p", ylab = "log Earnings")
+lines(fitted(reg4), col = 1)
+
+par(mfrow = c(2, 1))
+plot(resid(reg4), type = 'l')
+acf(resid(reg4))
+
+dev.off()
+
+pacf(resid(reg4))
+
+rec = resid(reg4)
+
+regr = arima(rec, c(4, 0, 0))
+
+par(mfrow = c(2, 1))
+
+regr$coef
+plot(
+  ARMAacf(ar = regr$coef[1:4], ma = c(0), 20),
+  type = "h",
+  ylim = c(-1, 1),
+  main = "Theoretical AR(4) ACF",
+  ylab = "",
+  xaxt = "n"
+)
+abline(h = 0)
+
+acf(rec)
+
+dev.off()
+
+fore = predict(regr, n.ahead = 4)
+ts.plot(rec, fore$pred, col = 1:2, main = "4-step Prediction of residuals")
+lines(fore$pred, type = "p", col = 2)
+lines(fore$pred + 2 * fore$se, lty = "dashed", col = 4)
+lines(fore$pred - 2 * fore$se, lty = "dashed", col = 4)
+
+plot(
+  log(jj.ts),
+  type = 'l',
+  xlim = c(60, 88),
+  ylim = c(1, 4)
+)
+
+fore.trend = reg4$coefficients[1] + reg4$coefficients[2] * (85:88) + reg4$coefficients[3] *
+  (85:88) ^ 2 + reg4$coefficients[4] * (85:88) ^ 3 + reg4$coefficients[5] *
+  (85:88) ^ 4
+
+lines(85:88, fore.trend, lty = 2, col = 2)
+
+points(85:88, fore.trend + fore$pred, col = 2)
+lines(
+  85:88,
+  fore.trend + fore$pred + 2 * fore$se,
+  col = 3,
+  lty = 2,
+  lwd = 2
+)
+lines(
+  85:88,
+  fore.trend + fore$pred - 2 * fore$se,
+  col = 3,
+  lty = 2,
+  lwd = 2
+)
+
+dev.off()
+
+plot(jj.ts,
+     type = 'l',
+     xlim = c(1, 88),
+     ylim = c(0, 25))
+lines(85:88, exp(fore.trend), lty = 2, col = 2)
+
+points(85:88, exp(fore.trend + fore$pred), col = 2)
+lines(
+  85:88,
+  exp(fore.trend + fore$pred + 2 * fore$se),
+  col = 3,
+  lty = 2,
+  lwd = 2
+)
+lines(
+  85:88,
+  exp(fore.trend + fore$pred - 2 * fore$se),
+  col = 3,
+  lty = 2,
+  lwd = 2
+)
+\end{minted}
