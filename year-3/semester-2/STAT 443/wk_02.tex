@@ -40,7 +40,7 @@ In a first pass, it's reasonable to assume that $ g $ is a linear function.
 \end{Remark}
 \begin{Example}{}{}
     $ X_t=W_t+\theta W_{t-1} $ where $ \set{W_t}_{t\in\mathbf{Z}} $ is a strong white noise
-    with finite variance, and $ X_t $ is a linear process.
+    with finite variance. $ X_t $ is a linear process.
     \[ \gamma_X=\begin{cases}
             (1+\theta^2)\sigma_W^2 & h=0    \text{ always non-zero} \\
             \theta\sigma_W^2       & h=1                            \\
@@ -62,8 +62,8 @@ In a first pass, it's reasonable to assume that $ g $ is a linear function.
         \sqrt{\Uunderbracket{\Var{X_t}\Var{X_{t+h}}}_{\text{Same \# by stationarity}}}=\Var{X_0} \]
     Hence, $ \abs{\rho(h)}\le 1\implies -1\le \rho(h)\le 1 $.
 \end{Definition}
-\underline{Estimating $ \gamma(h) $ and $ \rho(h) $}:
-\[ \gamma(h)=\Cov{X_t,X_{t+h}}=\E{(X_t-\mu)(X_{t+h}-\mu)} \]
+\subsection*{Estimating $ \gamma(h) $ and $ \rho(h) $}
+\[ \gamma(h)=\Cov[\big]{X_t,X_{t+h}}=\E[\big]{(X_t-\mu)(X_{t+h}-\mu)} \]
 where $ \mu=\E{X_t} $. Hence, a sensible estimator is
 \[ \hat{\mu}=\frac{1}{T} \sum_{t=1}^{T} X_t=\bar{X} \]
 which is the \textbf{sample mean} (\textbf{time series average}).
@@ -111,15 +111,15 @@ which is the point of the blue lines (explained
 in the next lecture). The basic interpretation of blue lines is that
 if an autocorrelation would go inside the blue lines then you could imagine
 that it would be consistent with the series being a strong white noise,
-which is what we observe here. There's small violations that can occur by
+which is what we observe here. There are small violations that can occur by
 sheer chance.}
 
 \section{Modes of Convergence of Random Variables}
 $ \hat{\gamma}(h) $ is an estimator of $ \gamma(h) $ when the data is stationary,
 and we want to discuss the asymptotic properties of this estimator.
 
-\underline{Introduce (Review)}
-\begin{enumerate}
+\subsection{Review/Introduce}
+\begin{enumerate}[(1)]
     \item Stochastic Boundedness (convergence of random variables): $ \mathcal{O}(p) $
           and $ \mathcal{o}(p) $
     \item Convergence in Probability
@@ -138,7 +138,7 @@ and we want to discuss the asymptotic properties of this estimator.
 \begin{Definition}{Converges in probability}{}
     We say $ X_n $ \textbf{converges in probability}
     to $ X $ if for all $ \varepsilon>0 $,
-    \[ \lim\limits_{{n} \to {\infty}} \Prob{\abs{X_n-X}>\varepsilon}=0 \]
+    \[ \lim\limits_{{n} \to {\infty}} \Prob[\big]{\abs{X_n-X}>\varepsilon}=0 \]
     If $ a_n $ is a sequence of scalars, we abbreviate
     $ \displaystyle \frac{X_n}{a_n} $
     converges in probability to zero as
@@ -146,7 +146,7 @@ and we want to discuss the asymptotic properties of this estimator.
         \quad (\forall\varepsilon>0) \]
     Hence, $ X_n $
     converges in probability to zero is denoted $ X_n=o_p(1) $.
-    We also write $ X_n\stackrel{p}{\to}X $ to denote $ X_n $
+    Likewise, we also write $ X_n\stackrel{p}{\to}X $ to denote $ X_n $
     converges in probability to $ X $.
 \end{Definition}
 \begin{Definition}{Converges in distribution}{}
@@ -158,26 +158,26 @@ and we want to discuss the asymptotic properties of this estimator.
 \end{Definition}
 \begin{Remark}{}{}
     When $ F(x) $ is the CDF of a continuous random variable
-    (e.g.\ a normal CDF), then
+    (e.g., a normal CDF), then
     \[ \lim\limits_{{n} \to {\infty}} \abs{F_n(y)-F(y)}=0\quad(\forall y\in\mathbf{R}) \]
 \end{Remark}
 \begin{Theorem}{Markov's Inequality}{markov}
     If $ \E{Y^2}<\infty $, then
-    \[ \Prob{\abs{Y}\ge m}\le \frac{\E[\big]{Y^2}}{m^2}  \]
+    \[ \Prob[\big]{\abs{Y}\ge m}\le \frac{\E{Y^2}}{m^2}  \]
 \end{Theorem}
 \begin{Proof}{\Cref{thm:markov}}{}
     \begin{align*}
         \E{Y^2}
-         & =\E{Y^2 \Ind{\abs{Y}\ge m}+Y^2 \Ind{\abs{Y}<m}}                                    \\
-         & =\E{Y^2 \Ind{\abs{Y}\ge m}} + \E{Y^2 \Ind{\abs{Y}<m}}                              \\
-         & \ge \E{Y^2 \Ind{\abs{Y}\ge m}}                                                     \\
-         & \ge m^2\E{\Ind{\abs{Y}\ge m}}                         &  & \text{since }Y^2\ge m^2 \\
-         & =m^2\Prob{\abs{Y}\ge m}
+         & =\E[\Big]{Y^2 \Ind[\big]{\abs{Y}\ge m}+Y^2 \Ind[\big]{\abs{Y}<m}}                                          \\
+         & =\E[\Big]{Y^2 \Ind[\big]{\abs{Y}\ge m}} + \E[\Big]{Y^2 \Ind[\big]{\abs{Y}<m}}                              \\
+         & \ge \E[\Big]{Y^2 \Ind[\big]{\abs{Y}\ge m}}                                                                 \\
+         & \ge m^2\E[\Big]{\Ind[\big]{\abs{Y}\ge m}}                                     &  & \text{since }Y^2\ge m^2 \\
+         & =m^2\Prob[\big]{\abs{Y}\ge m}
     \end{align*}
 \end{Proof}
 \begin{Remark}{Generalization of Markov's Inequality}{}
     If $ \E{Y^k}<\infty $, then
-    \[ \Prob{\abs{Y}\ge m}\le  \frac{\E[\big]{\abs{Y}^k}}{m^k}  \]
+    \[ \Prob[\big]{\abs{Y}\ge m}\le  \frac{\E[\big]{\abs{Y}^k}}{m^k}  \]
 \end{Remark}
 \begin{Example}{}{}
     Suppose $ X_n $ is a strong white noise in $ L^2 $ ($ \E{X_0^2}<\infty $),
@@ -189,20 +189,20 @@ and we want to discuss the asymptotic properties of this estimator.
               \begin{align*}
                   \Var{\bar{X}_T}
                    & =\E{\bar{X}_T^2}                                                                                                             \\
-                   & =\frac{1}{T^2} \E[\bigg]{\biggl(\sum_{t=1}^{T} X_t\biggr)^{\!2}}                                                             \\
+                   & =\frac{1}{T^2} \E*{\biggl(\sum_{t=1}^{T} X_t\biggr)^{\!2}}                                                                   \\
                    & =\frac{1}{T^2} \sum_{t=1}^{T} \sum_{s=1}^{T}\Uunderbracket{\E{X_t X_s}}_{\ne 0\iff t=s}                                      \\
                    & =\frac{T}{T^2} \sum_{t=1}^{T} \E{X_t^2}                                                                                      \\
                    & =\frac{1}{T} \sum_{t=1}^{T} \E{X_0^2}                                                                                        \\
                    & =\frac{\sigma^2}{T}                                                                     &  & \text{since }\sigma^2=\E{X_0^2}
               \end{align*}
               Therefore, for $ \varepsilon>0 $, by Markov's Inequality we have
-              \[ \Prob{\abs{\bar{X}_T}>\varepsilon}\le \frac{\E{\abs{\bar{X}_T}^2}}{\varepsilon^2}=
+              \[ \Prob[\big]{\abs{\bar{X}_T}>\varepsilon}\le \frac{\E*{\abs{\bar{X}_T}^2}}{\varepsilon^2}=
                   \frac{\sigma^2/T}{\varepsilon^2}\xrightarrow{T\to\infty}0  \]
               Hence, $ \abs{\bar{X}_T}\stackrel{p}{\to}0 $
         \item $ \bar{X}_T=\mathcal{O}_p(1/\sqrt{T}) $, as before
               \[ \Var*{\frac{\bar{X}_T}{1/\sqrt{T}}}=\Var{\sqrt{T}\bar{X}_T}=T\Var{\bar{X}_T}=\sigma^2 \]
               So by Markov's Inequality, for $ M>0 $
-              \[ \Prob{\abs{\sqrt{T}\bar{X}_T}>M}\le \frac{\Var{\sqrt{T}\bar{X}_T}}{M^2}=\frac{\sigma^2}{M^2}
+              \[ \Prob[\big]{\abs{\sqrt{T}\bar{X}_T}>M}\le \frac{\Var{\sqrt{T}\bar{X}_T}}{M^2}=\frac{\sigma^2}{M^2}
                   \xrightarrow{M\to\infty}0 \]
               Hence $ \sqrt{T}\bar{X}_T=\mathcal{O}_p(1)\implies \bar{X}_T=\mathcal{O}_p(1/\sqrt{T}) $.
     \end{enumerate}
@@ -221,7 +221,7 @@ and we want to discuss the asymptotic properties of this estimator.
     \[ \abs*{F_T(M)-\Phi\biggl(\frac{M}{\sigma}\biggr)}\le \frac{\varepsilon}{4} \]
     Then,
     \begin{align*}
-        \Prob{\abs{\sqrt{T}\bar{X}_T}\ge M}
+        \Prob[\big]{\abs{\sqrt{T}\bar{X}_T}\ge M}
          & =F_T(-M)+(1-F_T(M))                                                                                                                                                            \\
          & =\Phi\biggl(-\frac{M}{\sigma}\biggr)+\biggl[1-\Phi\biggl(\frac{M}{\sigma} \biggr)\biggr]+F_T(-M)-\Phi\biggl(-\frac{M}{\sigma}\biggr)+\Phi\biggl(\frac{M}{\sigma}\biggr)-F_T(M) \\
          & \le \frac{\varepsilon}{4}+\frac{\varepsilon}{4} + \frac{\varepsilon}{4} + \frac{\varepsilon}{4}                                                                                \\
@@ -281,8 +281,8 @@ and we want to discuss the asymptotic properties of this estimator.
          & =\frac{1}{T^2}\sum_{t=1}^{T-1} \sum_{s=1}^{T-1}\Uunderbracket{\E{W_{t}W_{t+1}W_{s}W_{s+1}}}_{\ne 0\iff s=t} \\
          & =\frac{T-1}{T^2} \sum_{t=1}^{T-1} \E{W_{t}^2W_{t+1}^2}=\frac{T-1}{T^2} \sigma_W^4\xrightarrow{T\to\infty}0
     \end{align*}
-    By Markov's Inequality,
-    \[ G_{1}=o_p(1) \]
+    By Markov's Inequality:
+    $ G_{1}=o_p(1) $,
     and similarly, for $ G_{2} $ and $ G_{3} $.
 \end{Example}
 \section{\texorpdfstring{$ \dagger $}{†} M-dependent CLT}
@@ -472,23 +472,22 @@ $ X_t $ are $ m $-dependent random variables.
     Replace $ a_i\sim X_i $, take expectation.
 \end{Proof}
 \[ \sum_{t=1}^{a_T} X_t=\sum_{j=0}^{m}
-    \sum_{\substack{t=j\mod (m+1)\\1\le t\le a_T}}X_t  \]
+    \sum_{\substack{t=j\!\!\!\mod (m+1)\\1\le t\le a_T}}X_t  \]
 Variables in the second sum are separated by at least
 $ m $-time steps, and hence i.i.d.\ Therefore,
 \begin{align*}
     \E*{\abs[\bigg]{\sum_{t=1}^{a_T} X_t}^{2+\delta}}
      & \le (m+1)^{(2+\delta)-1}
-    \E[\bigg]{\abs[\bigg]{\sum_{\substack{t=j\mod (m+1)                                                                                                    \\1\le t\le a_T}}X_t}^{2+\delta}} & \quad & \text{by~\Cref{prop:prop1}}\\
+    \E*{\abs[\bigg]{\sum_{\substack{t=j\!\!\!\mod (m+1)                                                                                                    \\1\le t\le a_T}}X_t}^{2+\delta}} & \quad & \text{by~\Cref{prop:prop1}}\\
      & \le (m+1)^{(2+\delta)-1}\biggl(\frac{a_T}{m+1} \biggr)^{\frac{2+\delta}{2} }\E[\big]{\abs{X_1}^{2+\delta}} &  & \text{by~\Cref{thm:rosenthal_ineq}} \\
      & =C a_T^{\frac{2+\delta}{2}}
 \end{align*}
-where $ C $ is the same constant as in the proof of~\Cref{thm:m_clt}.
+where $ C $ is the same constant as in~\Cref{pf:pf_clt}.
 
 \section{\texorpdfstring{$ \dagger $}{†} Linear Process CLT}
 \begin{Example}{}{}
     $ \displaystyle X_t=\sum_{\ell=0}^{m} \psi_\ell W_{t-\ell} $
-    where $ \set{W_t}_{t\in\mathbf{Z}} $ is
-    is a strong white noise in $ L^2 $.
+    where $ \set{W_t}_{t\in\mathbf{Z}} $ is a strong white noise in $ L^2 $.
 
     A general linear process $ \displaystyle X_t=\sum_{\ell=0}^{m} \psi_\ell W_{t-\ell} $
     is \underline{not} $ m $-dependent.
@@ -505,7 +504,7 @@ where $ C $ is the same constant as in the proof of~\Cref{thm:m_clt}.
         \item For all $ \varepsilon>0 $,
               \[ \lim\limits_{{m} \to {\infty}}
                   \Bigl[\lim\sup\limits_{{n} \to {\infty}}
-                  \Prob{\abs{X_n-Y_{m,n}>\varepsilon}} \Bigr]=0 \]
+                  \Prob[\big]{\abs{X_n-Y_{m,n}>\varepsilon}} \Bigr]=0 \]
     \end{enumerate}
     Then $ X_n\stackrel{D}{\to}Y $ as $ n\to\infty $.
 \end{Theorem}
@@ -548,7 +547,7 @@ where $ C $ is the same constant as in the proof of~\Cref{thm:m_clt}.
     Define
     \[ X_{t,m}=\sum_{\ell=0}^{m} \psi_\ell W_{t-\ell} \]
     \[ S_{T,m}=\frac{1}{\sqrt{T}} \sum_{t=1}^{T} X_{t,m} \]
-    is a $ m $-dependent approximation to $ S_T $.
+    is an $ m $-dependent approximation to $ S_T $.
     \begin{enumerate}[(1)]
         \item By the $ m $-dependent CLT,
               \[ S_{T,m}\stackrel{D}{\to}\N[\bigg]{0,\sum_{h=-m}^{m} \gamma_m(h)}\coloneq
@@ -560,7 +559,7 @@ where $ C $ is the same constant as in the proof of~\Cref{thm:m_clt}.
               and hence
               \[ S_m^\prime\stackrel{D}{\to}\N[\bigg]{0,\sum_{h=-\infty}^{\infty} \gamma(h)} \]
         \item \begin{align*}
-                  \E{(S_{T,m}-S_T)^2}
+                  \E[\big]{(S_{T,m}-S_T)^2}
                    & =\frac{1}{T} \E*{\biggl(\sum_{t=1}^{T}(X_t-X_{t,m}) \biggr)^{\!2}} \\
                    & \le \sum_{h=1-T}^{T-1} \biggl(1-\frac{\abs{h}}{T} \biggr)
                   \sum_{\ell=m+1}^{\infty}\abs{\psi_\ell}\abs{\psi_{\ell+h}}\sigma_W^2  \\
@@ -572,7 +571,7 @@ where $ C $ is the same constant as in the proof of~\Cref{thm:m_clt}.
     \[ S_t=\frac{1}{\sqrt{T}}\sum_{t=1}^{T} X_t\stackrel{D}{\to}\N[\bigg]{0,\sum_{h=-\infty}^{\infty} \gamma(h)}  \]
 \end{Proof}
 \section{Asymptotic Properties of Empirical ACF}
-If $ X_1,\ldots,X_T $ is an observed time series
+If $ X_1,\ldots,X_T $ is an observed time series in
 which we think was generated by a stationary process, then
 $ \Cov{X_t,X_{t+h}} $ does not depend on $ t $. Recall that
 \[ \hat{\gamma}(h)=\frac{1}{T} \sum_{t=1}^{T-h}(X_t-\bar{X})(X_{t+h}-\bar{X}) \]
@@ -585,7 +584,7 @@ Questions:
           and $ \hat{\rho}(h) $.
 \end{enumerate}
 \textbf{Consistency}: By adding and subtracting $ \mu $ in the definition
-of $ \hat{\gamma}(h) $, we may assume WLOG that $ \E{X_t}=0 $.
+of $ \hat{\gamma}(h) $, we may assume without loss of generality that $ \E{X_t}=0 $.
 
 Suppose $ \set{X_t}_{t\in\mathbf{Z}} $ is strictly stationary, and
 \[ X_t=g(W_t,W_{t-1},\ldots) \]

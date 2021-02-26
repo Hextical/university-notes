@@ -156,7 +156,7 @@ predicting $ X_t $ as
 where $ X_t $ is the dependent variable
 and $ X_{t-1} $ is the covariant/independent variable.
 
-\textbf{Markovian Property}:
+\textbf{Markov Property}:
 \[ X_t\mid (X_{t-1},X_{t-2},\ldots)=X_t\mid X_{t-1} \]
 \textbf{Question}: Does there exist a stationary process
 $ X_t $ satisfying the following?
@@ -393,14 +393,12 @@ we want to do so in such a way that
     Therefore, $X_t$ satisfies an $ \ARMA{1,1} $ with
     \[\phi(z)=-\frac{1}{8}(z+4), \quad \theta(z)= \frac{1}{6}(z-3)\]
     Since the roots of $\phi$ and $\theta$ are
-    outside of the unit circle in $\mathbb{C}$, $X_t$ is
+    outside the unit circle in $\mathbb{C}$, $X_t$ is
     stationary, causal, and invertible.
 \end{Example}
 \begin{Example}{}{}
     Suppose
     \[ X_t =-\frac{1}{4} X_{t-1}+W_t-\frac{1}{3}W_{t-1}\]
-    \[ X_t+\frac{1}{4} X_{t-1}=(1+1/4B)X_t=(1-1/3B)Z_t \]
-
     where $X_t \sim \ARMA{1,1}$.
     \[\phi(z)=1+\frac{1}{4}z \implies \text{Root is $-4$.}\]
     So $X_t$ is stationary and causal, and can be represented as a linear process:
@@ -432,7 +430,7 @@ we want to do so in such a way that
             1                                        & j=1    \\
             \frac{7}{3} \biggl(-\frac{1}{4}\biggr)^j & j\ge 1
         \end{dcases} \]
-    Finite linear difference equation must be solved. (Automated in R with \texttt{ARMAtoMA()}).
+    We can automate $ \psi_j $ in R with \texttt{ARMAtoMA()}.
     \begin{minted}{R}
     library(astsa)
     ARMAtoMA(ar=-1/4, ma=-1/3, 10)
@@ -445,8 +443,7 @@ we want to do so in such a way that
     \[t-j= t+h-k, \implies k=h+j,\, j=0,1,2,\ldots\quad  \E{X^2_{t-j}}=\sigma_W^2\]
     Therefore,
     \[\gamma_X(h) =\sigma_W^2 \sum^{\infty}_{j=0} \psi_j \psi_{j+h} \]
-    Coefficients can be solved for as in the previous examples by solving a finite difference equation.
-    (Automated in R with \texttt{ARMAacf()}).
+    We can automate $\gamma_X(h)$ in R with \texttt{ARMAacf()}.
 
     For $ h\ge 1 $, we have
     \begin{align*}
@@ -471,7 +468,7 @@ we want to do so in such a way that
             \frac{\gamma_X(h)}{\gamma_X(0)}=\frac{\frac{91}{135}(-1)^h 4^{1-h}}{\frac{184}{135}}=\frac{91}{23} (-1)^h 2^{-2h-1} & h\ge 1
         \end{dcases}
     \]
-    This is correct since
+    Let's verify this in R.
     \begin{minted}{R}
 round(ARMAacf(ar = -1 / 4, ma = -1 / 3, 5), 6)
 h <- seq(1, 10, by = 1)

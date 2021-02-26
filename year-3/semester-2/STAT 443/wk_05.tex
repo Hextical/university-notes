@@ -82,7 +82,7 @@ which are \textbf{Yule-Walker Equations}.
 \end{Theorem}
 
 \section{ARMA Parameter Estimation: MLE}
-Ordinary Least Squares and Yuke Walker equation
+Ordinary Least Squares and Yule-Walker equation
 estimators are effective in estimating the $ \AR{p} $
 parameters, but are difficult to apply to fitting
 $ \MA{q} $ and general $ \ARMA{p,q} $
@@ -97,7 +97,7 @@ Suppose $ X_t \sim \AR{1} $ (causal)
 where $ W_t \stackrel{\text{iid}}{\sim}\N{0,\sigma_W^2} $,
 then
 \[ X_t=\sum_{\ell=0}^{\infty} \phi^\ell W_{t-\ell} \]
-is gaussian. $ L^2 $ limits of Gaussian random variables are Gaussian.
+is Gaussian. $ L^2 $ limits of Gaussian random variables are Gaussian.
 (MGF or characteristic function).
 
 Moreover, $ X_1,\ldots,X_T $ are jointly Gaussian since
@@ -173,7 +173,7 @@ Question: How do we select the orders $ p $ and $ q $ of the model?
     \item Model Selection Methods: Information criteria, cross-validation.
 \end{enumerate}
 \subsection*{Model Diagnostics}
-if the $ \ARMA{p,q} $ model fits the data well, then the estimated residuals
+If the $ \ARMA{p,q} $ model fits the data well, then the estimated residuals
 \[ \hat{W}_{t}=\frac{X_t-\tilde{X}_{t\mid (t-1)}}{\sqrt{\tilde{P}}_{t}^{t-1}}  \]
 where
 \begin{itemize}
@@ -185,7 +185,7 @@ should behave like white noise.
 
 This can be investigated by considering
 $ \hat{\rho}_W(h) $
-which is the emperical ACF of $ \hat{W}_1,\ldots,\hat{W}_T $.
+which is the empirical ACF of $ \hat{W}_1,\ldots,\hat{W}_T $.
 
 As a measure of how ``white'' the residuals are, it is common
 to evaluate the cumulative significance of $ \hat{\rho}_W(h) $
@@ -212,10 +212,10 @@ Using Martingale, or $ m $-dependent CLT's, it can be shown that
 Therefore,
 \[ T \sum_{h=1}^{H} \hat{\rho}_W^2(h)
     \xrightarrow{D}\chi^2(H) \]
-Box-Ljung-Pierce Test (White Noise test for $ \ARMA{p,q} $ models)
+Ljung–Box test (White Noise test for $ \ARMA{p,q} $ models)
 
 If $ X_t \sim \ARMA{p,q} $, and $ \hat{W}_t $ are the model residuals
-with empriical ACF $ \hat{\rho}_W(h) $, then if
+with empirical ACF $ \hat{\rho}_W(h) $, then if
 \[ Q(T,H)=T(T+2)\sum_{h=1}^{H} \frac{\hat{\rho}_W^2(h)}{T-h}\approx
     T \sum_{h=1}^{H} \hat{\rho}_W^2(h)  \]
 \[ Q(T,H)\xrightarrow[T\to\infty]{D}\chi^2(H-(p+q)) \]
@@ -261,7 +261,7 @@ Optimal $ p $ and $ q $ balance model fit with the penalty for complexity.
 \begin{itemize}
     \item $ \AIC{p,q}=-2\log\bigl(L(X_1,\ldots,X_T;\hat{\symbf{\phi}},\hat{\symbf{\theta}},\sigma_W^2)\bigr)+\dfrac{2k+T}{T} $.
           \begin{itemize}
-              \item Comes from estimating the Kullback-Liebler distance from the fitted model to the ``true'' model.
+              \item Comes from estimating the Kullback–Leibler distance from the fitted model to the ``true'' model.
           \end{itemize}
     \item $ \BIC{p,q}=-2\log\bigl(L(X_1,\ldots,X_T;\hat{\symbf{\phi}},\hat{\symbf{\theta}},\sigma_W^2)\bigr)+\dfrac{k\log(T)}{T} $.
           \begin{itemize}
@@ -289,7 +289,7 @@ where for $ P(T,k) $ we use AIC or BIC penalty.
                   \item Easy to compute.
                   \item Facilitates comparing many models quickly
               \end{enumerate}
-              \textbf{Weaknessess}:
+              \textbf{Weaknesses}:
               \begin{enumerate}[(i)]
                   \item Likelihood must be specified.
                   \item There is a degree of ``arbitrariness'' to the choice of penalty.
@@ -316,7 +316,7 @@ $ Z_t=\sum_{j=1}^{t} X_j $ is integrated to order 2, and so on.
     and write $ X_t \sim \ARIMA{p,d,q} $. Note that $ \nabla^d X_t $
     follows an $ \ARMA{p,q} $ model.
 \end{Definition}
-\subsection*{Forecasting $ \ARIMA{p,d,q} $ Processess}
+\subsection*{Forecasting $ \ARIMA{p,d,q} $ Processes}
 \begin{enumerate}[(1)]
     \item $ Y_t=\nabla^d X_t $ follows an $ \ARMA{p,q} $ model
           and so can be forecast using truncated ARMA prediction.
@@ -339,7 +339,7 @@ Idea:
     \[ X_t-X_{t-1}=(1-B)X_t=W_t\implies X_t=X_{t-1}W_t\implies X_t=\sum_{j=1}^{t} W_j \]
     if we iterate $ t $-times. Therefore,
     \[ \hat{X}_{T+1\mid T}=X_t+\hat{Y}_{T+1\mid T}=X_t \]
-    Similarly, $ \hat{X}_{T+h\mid T}=X_T $. Best predictor of random
+    Similarly, $ \hat{X}_{T+h\mid T}=X_T $. The best predictor of random
     walk is last known equation.
 
     Prediction MSE\@: \[ \frac{\theta(z)}{\phi(z)(1-z)^d}=\frac{1}{1-z} =\sum_{j=0}^{\infty} z^j\quad(\abs{z}<1)  \]
@@ -352,6 +352,6 @@ Idea:
 How to decide in practice on degree of differencing $ d $:
 \begin{enumerate}[(1)]
     \item Eye-ball Test.
-    \item Formal Stationary Tests (Dickey-Fuller, KPSS).
+    \item Formal Stationary Tests [Dickey-Fuller, Kwiatkowski–Phillips–Schmidt–Shin (KPSS)].
     \item Cross-validation.
 \end{enumerate}
