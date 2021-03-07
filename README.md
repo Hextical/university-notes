@@ -8,10 +8,10 @@ All my university notes done in LaTeX.
 |  Course  | Completion |       Online       |
 | :------: | :--------: | :----------------: |
 | STAT 341 | ETA: Never | :heavy_check_mark: |
-| STAT 443 |  Week 6**  | :heavy_check_mark: |
+| STAT 443 |  Week 7**  | :heavy_check_mark: |
 | STAT 332 |    ***     | :heavy_check_mark: |
 
-** STAT 443 Week 6 is unreviewed.
+** STAT 443 Week 6 and 7 are unreviewed.
 
 *** Please e-mail me if you want my notes for this course. The professor
 has too many copyright things on his Word (lol) documents.

@@ -120,3 +120,8 @@ mean(cv00h)
 mean(cv10h)
 mean(cv01h)
 mean(cv11h)
+
+sarima.for(cmort2, 20, y.aic10[1], 1, y.aic10[2], y.aic10[3], 0, y.aic10[4], 13)
+sarima.for(cmort2, 20, y.aic10[1], 1, y.aic10[2], y.aic10[3], 0, y.aic10[4], 13)
+sarima.for(cmort2, 20, y.aic00[1], 0, y.aic00[2], y.aic00[3], 0, y.aic00[4], 13)
+sarima.for(cmort2, 20, y.aic11[1], 1, y.aic11[2], y.aic11[3], 1, y.aic11[4], 13)

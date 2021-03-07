@@ -8,10 +8,10 @@ plot(cmort2)
 
 
 num = 3
-aic.mat = rep(10 ^ 100, num) %o% rep(10 ^ 100, num) %o% rep(10 ^ 100, num) %o%
-  rep(10 ^ 100, num)
-bic.mat = rep(10 ^ 100, num) %o% rep(10 ^ 100, num) %o% rep(10 ^ 100, num) %o%
-  rep(10 ^ 100, num)
+aic.mat = rep(10 ^ 100, (num + 1)) %o% rep(10 ^ 100, (num + 1)) %o% rep(10 ^
+                                                                          100, (num + 1)) %o% rep(10 ^ 100, (num + 1))
+bic.mat = rep(10 ^ 100, (num + 1)) %o% rep(10 ^ 100, (num + 1)) %o% rep(10 ^
+                                                                          100, (num + 1)) %o% rep(10 ^ 100, (num + 1))
 
 for (ar in 0:num) {
   for (ma in 0:num) {
@@ -26,14 +26,15 @@ for (ar in 0:num) {
             return(x)
           }
         )
-        aic.mat[ar, ma, AR, MA] = x$AIC
-        bic.mat[ar, ma, AR, MA] = x$BIC
+        aic.mat[(ar + 1), (ma + 1), (AR + 1), (MA + 1)] = x$AIC
+        bic.mat[(ar + 1), (ma + 1), (AR + 1), (MA + 1)] = x$BIC
       }
     }
   }
 }
-y.aic = which(aic.mat == min(aic.mat), arr.ind = TRUE)
-y.bic = which(bic.mat == min(bic.mat), arr.ind = TRUE)
+y.aic = which(aic.mat == min(aic.mat), arr.ind = TRUE) - 1
+y.bic = which(bic.mat == min(bic.mat), arr.ind = TRUE) - 1
+
 sarima(cmort2, y.aic[1], 0, y.aic[2], y.aic[3], 0, y.aic[4], 13)
 sarima.for(cmort2, 20, y.aic[1], 0, y.aic[2], y.aic[3], 0, y.aic[4], 13)
 
@@ -42,10 +43,10 @@ y.aic00 = y.aic
 library(astsa)
 cmort2 = cmort[seq(1, 508, by = 4)]
 num = 3
-aic.mat = rep(10 ^ 100, num) %o% rep(10 ^ 100, num) %o% rep(10 ^ 100, num) %o%
-  rep(10 ^ 100, num)
-bic.mat = rep(10 ^ 100, num) %o% rep(10 ^ 100, num) %o% rep(10 ^ 100, num) %o%
-  rep(10 ^ 100, num)
+aic.mat = rep(10 ^ 100, (num + 1)) %o% rep(10 ^ 100, (num + 1)) %o% rep(10 ^
+                                                                          100, (num + 1)) %o% rep(10 ^ 100, (num + 1))
+bic.mat = rep(10 ^ 100, (num + 1)) %o% rep(10 ^ 100, (num + 1)) %o% rep(10 ^
+                                                                          100, (num + 1)) %o% rep(10 ^ 100, (num + 1))
 
 for (ar in 0:num) {
   for (ma in 0:num) {
@@ -60,19 +61,23 @@ for (ar in 0:num) {
             return(x)
           }
         )
-        aic.mat[ar, ma, AR, MA] = x$AIC
-        bic.mat[ar, ma, AR, MA] = x$BIC
+        aic.mat[(ar + 1), (ma + 1), (AR + 1), (MA + 1)] = x$AIC
+        bic.mat[(ar + 1), (ma + 1), (AR + 1), (MA + 1)] = x$BIC
       }
     }
   }
 }
-y.aic = which(aic.mat == min(aic.mat), arr.ind = TRUE)
-y.bic = which(bic.mat == min(bic.mat), arr.ind = TRUE)
+y.aic = which(aic.mat == min(aic.mat), arr.ind = TRUE) - 1
+y.bic = which(bic.mat == min(bic.mat), arr.ind = TRUE) - 1
 sarima(cmort2, y.aic[1], 1, y.aic[2], y.aic[3], 1, y.aic[4], 13)
 sarima.for(cmort2, 20, y.aic[1], 1, y.aic[2], y.aic[3], 1, y.aic[4], 13)
 
 y.aic11 = y.aic
 
+aic.mat = rep(10 ^ 100, (num + 1)) %o% rep(10 ^ 100, (num + 1)) %o% rep(10 ^
+                                                                          100, (num + 1)) %o% rep(10 ^ 100, (num + 1))
+bic.mat = rep(10 ^ 100, (num + 1)) %o% rep(10 ^ 100, (num + 1)) %o% rep(10 ^
+                                                                          100, (num + 1)) %o% rep(10 ^ 100, (num + 1))
 
 
 for (ar in 0:num) {
@@ -88,16 +93,17 @@ for (ar in 0:num) {
             return(x)
           }
         )
-        aic.mat[ar, ma, AR, MA] = x$AIC
-        bic.mat[ar, ma, AR, MA] = x$BIC
+        aic.mat[(ar + 1), (ma + 1), (AR + 1), (MA + 1)] = x$AIC
+        bic.mat[(ar + 1), (ma + 1), (AR + 1), (MA + 1)] = x$BIC
       }
     }
   }
 }
-y.aic = which(aic.mat == min(aic.mat), arr.ind = TRUE)
-y.bic = which(bic.mat == min(bic.mat), arr.ind = TRUE)
-sarima(cmort2, y.aic[1], 1, y.aic[2], y.aic[3], 1, y.aic[4], 13)
-sarima.for(cmort2, 20, y.aic[1], 1, y.aic[2], y.aic[3], 1, y.aic[4], 13)
+y.aic = which(aic.mat == min(aic.mat), arr.ind = TRUE) - 1
+y.bic = which(bic.mat == min(bic.mat), arr.ind = TRUE) - 1
+sarima(cmort2, y.aic[1], 1, y.aic[2], y.aic[3], 0, y.aic[4], 13)
+sarima.for(cmort2, 20, y.aic[1], 1, y.aic[2], y.aic[3], 0, y.aic[4], 13)
+
 
 y.aic10 = y.aic
 
@@ -105,10 +111,10 @@ y.aic10 = y.aic
 library(astsa)
 cmort2 = cmort[seq(1, 508, by = 4)]
 num = 2
-aic.mat = rep(10 ^ 100, num) %o% rep(10 ^ 100, num) %o% rep(10 ^ 100, num) %o%
-  rep(10 ^ 100, num)
-bic.mat = rep(10 ^ 100, num) %o% rep(10 ^ 100, num) %o% rep(10 ^ 100, num) %o%
-  rep(10 ^ 100, num)
+aic.mat = rep(10 ^ 100, (num + 1)) %o% rep(10 ^ 100, (num + 1)) %o% rep(10 ^
+                                                                          100, (num + 1)) %o% rep(10 ^ 100, (num + 1))
+bic.mat = rep(10 ^ 100, (num + 1)) %o% rep(10 ^ 100, (num + 1)) %o% rep(10 ^
+                                                                          100, (num + 1)) %o% rep(10 ^ 100, (num + 1))
 
 for (ar in 0:num) {
   for (ma in 0:num) {
@@ -123,16 +129,16 @@ for (ar in 0:num) {
             return(x)
           }
         )
-        aic.mat[ar, ma, AR, MA] = x$AIC
-        bic.mat[ar, ma, AR, MA] = x$BIC
+        aic.mat[(ar + 1), (ma + 1), (AR + 1), (MA + 1)] = x$AIC
+        bic.mat[(ar + 1), (ma + 1), (AR + 1), (MA + 1)] = x$BIC
       }
     }
   }
 }
-y.aic = which(aic.mat == min(aic.mat), arr.ind = TRUE)
-y.bic = which(bic.mat == min(bic.mat), arr.ind = TRUE)
-sarima(cmort2, y.aic[1], 1, y.aic[2], y.aic[3], 1, y.aic[4], 13)
-sarima.for(cmort2, 20, y.aic[1], 1, y.aic[2], y.aic[3], 1, y.aic[4], 13)
+y.aic = which(aic.mat == min(aic.mat), arr.ind = TRUE) - 1
+y.bic = which(bic.mat == min(bic.mat), arr.ind = TRUE) - 1
+sarima(cmort2, y.aic[1], 0, y.aic[2], y.aic[3], 1, y.aic[4], 13)
+sarima.for(cmort2, 20, y.aic[1], 0, y.aic[2], y.aic[3], 1, y.aic[4], 13)
 
 y.aic01 = y.aic
 

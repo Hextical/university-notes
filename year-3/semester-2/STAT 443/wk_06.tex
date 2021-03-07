@@ -18,7 +18,7 @@ These typically lead to yearly, weekly, monthly, or quarterly cycles.
       if
       \[ \Phi_P(B^s)\phi_p(B)(1-B^s)^D(1-B)^d=\Theta_Q(B^s)\theta_q(B)W_t \]
       We abbreviate the SARIMA $ p,d,q,P,D,Q $ model with seasonal
-      period $ s $ as $ \SARIMA{p,d,q}{P,D,Q}{s} $.
+      period $ s $ as $ \text{SARIMA}(p,d,q)\times(P,D,Q)_s $.
       \[ \begin{array}{ccccccccc}
                   \Phi_P(B)     & = & 1 & - & \Phi_1 B     & - & \cdots & - & \Phi_P B^P      \\
                   \Phi_P(B^s)   & = & 1 & - & \Phi_1 B^s   & - & \cdots & - & \Phi_P B^{Ps}   \\
@@ -35,7 +35,7 @@ These typically lead to yearly, weekly, monthly, or quarterly cycles.
       \[ \Theta(z)=1+\Theta_1 z+\cdots+\Theta_Q z^Q \]
 \end{Definition}
 \begin{Example}{}{}
-      Let $ X_t \sim \SARIMA{1,1,1}{1,1,1}{13} $.
+      Let $ X_t \sim \text{SARIMA}(1,1,1)\times(1,1,1)_{13} $.
       \[ \Phi(z)=1-\Phi_1 z \]
       \[ \phi(z)=1-\phi_1 z \]
       \[ \Theta(z)=1+\Theta_1 z \]
@@ -136,7 +136,7 @@ with the goal of minimizing $ L(Y_i,\hat{f}(X_i)) $.
       \end{enumerate}
 \end{Remark}
 \section{Cross-Validation Example}
-\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT%20443/code/6.4%20-%20Cross-Validation%20Example.R}{[R Code] Cross-Validation Example}
+\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT%20443/code/6.4%20-%20Cross-Validation%20Example.R}{[R Code] Cross-Validation Example} % chktex 15
 \section{Simulated and Bootstrapped Prediction Intervals}
 Usually forecasts are of the form
 \[ \hat{X}_{T+1\mid T}=g(X_T,X_{T-1},\ldots,X_1,W_{T+1}) \]
@@ -165,7 +165,7 @@ use simulation!
 \end{Remark}
 \subsection*{Distributions to Choose for $ W_t $}
 \begin{enumerate}[(1)]
-      \item $ W_t \sim \N{0,\hat{\sigma}_W^2} $ where $ \hat{\Sigma}_W^2 $ is estimated from residuals which
+      \item $ W_t \sim \N{0,\hat{\sigma}_W^2} $ where $ \hat{\sigma}_W^2 $ is estimated from residuals which
             leads to approximately the same ``well known'' prediction intervals.
       \item A distribution fit to the estimated residuals $ \hat{W}_t $; e.g., a $ t $-distribution,
             Pareto, etc.
