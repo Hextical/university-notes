@@ -27,12 +27,11 @@ BCH codes.
 
     This BCH code is called \textbf{$ \symbf{C_{15}:(15,7,5)} $-binary code}.
 
-    \underline{Note}: $ C_{15} $ is a $ 2 $-error correcting code.
+    \textbf{Note}: $ C_{15} $ is a $ 2 $-error correcting code.
 \end{Definition}
 
 
-\underline{Computing Syndromes}
-
+\subsection*{Computing Syndromes}
 Let's first find a PCM for $ C_{15} $. Let $ \symbf{r}\in V_{15}(\mathbb{Z}_2) $.
 Then
 \begin{align*}
@@ -47,11 +46,10 @@ So, a PCM for $ C_{15} $ is
         \beta^0     & \beta^1     & \beta^2     & \beta^3     & \cdots & \beta^{14}     \\
         (\beta^3)^0 & (\beta^3)^1 & (\beta^3)^2 & (\beta^3)^3 & \cdots & (\beta^3)^{15}
     \end{bmatrix}_{8\times 15} \]
-\underline{Note}: $ H $ is a $ 2\times 15 $ matrix over $ GF(2^4) $,
+\textbf{Note}: $ H $ is a $ 2\times 15 $ matrix over $ GF(2^4) $,
 and an $ 8\times 15 $ matrix over $ GF(2) $.
 
-\underline{Syndromes}
-
+\subsection*{Syndromes}
 The syndrome of $ \symbf{r} $ is
 \[ H\symbf{r}^\top=
     \begin{bmatrix}
@@ -64,22 +62,22 @@ The syndrome of $ \symbf{r} $ is
     \end{bmatrix} \]
 (So, we don't need $ H $ to compute syndromes)
 
-\underline{Recall}: $ C_{15} $ is a $ (15,7,5) $-BCH code over $ GF(2) $.
-The \underline{syndrome} of $ \symbf{r} $ is comprised of $ s_1=r(\beta) $
+\textbf{Recall}: $ C_{15} $ is a $ (15,7,5) $-BCH code over $ GF(2) $.
+The \emph{syndrome} of $ \symbf{r} $ consists of $ s_1=r(\beta) $
 and $ s_3=r(\beta^3) $. We have $ s_1,s_3\in GF(2^4) $.
 
-\underline{Decoding strategy}: If there is an error vector $ \symbf{e} $
+\subsection*{Decoding strategy}: If there is an error vector $ \symbf{e} $
 of weight at most $ 2 $, that has syndrome $ (s_1,s_3) $, then we decode
 $ \symbf{r} $ to $ \symbf{r}-\symbf{e} $. Otherwise, we reject $ \symbf{r} $.
 
-\textbf{Decoding Algorithm for C15 [With Justification]}
+\subsection*{Decoding Algorithm for C15 [With Justification]}
 \begin{itemize}
     \item Received word is $ \symbf{r}\in V_{15}(GF(2)) $.
     \item Compute $ s_1=r(\beta) $ and $ s_3=r(\beta^3) $.
     \item If $ s_1=0 $ and $ s_3=0 $, then accept $ \symbf{r} $; STOP\@.
-    \item Suppose $ e(x)=x^i $; i.e.\ exactly one error has occurred in the $ i^{\text{th}} $
+    \item Suppose $ e(x)=x^i $; i.e., exactly one error has occurred in the $ i^{\text{th}} $
           position $ i\in[0,14] $. Then, $ s_1=r(\beta)=c(\beta)+e(\beta)=e(\beta)=\beta^i $,
-          and $ s_3=r(\beta^3)=e(\beta^3)=\beta^{3i} $. Hence $ s_3=s_1^3 $.
+          and $ s_3=r(\beta^3)=e(\beta^3)=\beta^{3i} $. Hence, $ s_3=s_1^3 $.
           If $ s_1^3=s_3 $, then correct $ \symbf{r} $ in position $ i $ where $ s_1=\beta^i $;
           STOP\@.
     \item If $ s_1=0 $ (and $ s_3\neq 0 $), then reject $ \symbf{r} $; STOP\@.
@@ -169,8 +167,7 @@ $ \symbf{r} $ to $ \symbf{r}-\symbf{e} $. Otherwise, we reject $ \symbf{r} $.
 \end{Example}
 
 
-\underline{More Generally}
-
+\subsection*{More Generally}
 Suppose $ C $ is a binary $ (n,k) $-BCH code with designed distance $ \delta $.
 
 Suppose the generator polynomial of $ C $ is
@@ -184,6 +181,6 @@ is received.
 Compute $ s_i=r(\beta^i) $ for each $ i\in[1,\delta-1] $, and form the
 \textbf{syndrome polynomial}:
 \[ s(z)=s_1+s_2z+s_3z^3+\cdots+s_{\delta-1}z^{\delta-2} \]
-\underline{Fact}: From $ s(z) $, the error locator polynomial
+\textbf{Fact}: From $ s(z) $, the error locator polynomial
 can be efficiently computed. The roots of $ \sigma(z) $
 are $ \beta^{-j} $, where $ j $ are the error positions.

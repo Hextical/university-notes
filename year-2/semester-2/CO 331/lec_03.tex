@@ -3,14 +3,14 @@
 \section{Decoding Strategy}
 Suppose we have an $ [n,M] $-code $ C $ over $ A $ of distance $ d $.
 We need to adopt a strategy for the channel decoder (henceforth called the decoder).
-When the decoder receives an $ n $-tuple $ \symbf{r}\in A^n $ it must make some decision.
+If decoder receives an $ n $-tuple $ \symbf{r}\in A^n $, it must make some decision.
 This decision may be one of
 \begin{enumerate}[label=(\roman*)]
-    \item no errors have occurred; accept $ \symbf{r} $ as a codeword.
-    \item errors have occurred; correct $ \symbf{r} $ to a codeword $ \symbf{c} $;
-          e.g. $ 0 \rightarrow 0000,\,1 \rightarrow 1111,\,r=0001 $ corrected to
+    \item No errors have occurred; accept $ \symbf{r} $ as a codeword.
+    \item Errors have occurred; correct $ \symbf{r} $ to a codeword $ \symbf{c} $;
+          e.g., $ 0 \rightarrow 0000,\,1 \rightarrow 1111,\,r=0001 $ corrected to
           $ 0000 $.
-    \item errors have occurred; no correction is possible.
+    \item Errors have occurred; no correction is possible.
 \end{enumerate}
 
 \section{Nearest Neighbour Decoding}
@@ -23,14 +23,14 @@ Same as IMLD, except ties are broken arbitrarily.
 
 \textbf{Question:} Is IMLD a reasonable strategy?
 
-\begin{Theorem}{}{}
+\begin{Theorem}{}{imld}
     IMLD selects the codeword $ \symbf{c} $ that maximizes $ \Prob{\symbf{r}\given \symbf{c}} $; that is,
     it maximizes the probability $ \symbf{r} $ is received, given $ \symbf{c} $ was sent.
 \end{Theorem}
 
 We actually want to maximize $ \Prob{\symbf{r}\given \symbf{c}} $, but we will ignore that for now.
 
-\begin{Proof}{}{}
+\begin{Proof}{\Cref{thm:imld}}{}
     Suppose $ \symbf{c}_1,\symbf{c}_2\in C $ with $ d(\symbf{c}_1,\symbf{r})=d_1 $
     and $ d(\symbf{c}_2,\symbf{r})=d_2 $.
     Suppose $ d_1>d_2 $. Now,
@@ -63,7 +63,7 @@ $ \Prob{\symbf{c}\given \symbf{r}} $ is maximized. This is \textbf{Minimum Error
     Let $ C=\set{\underbrace{000}_{\symbf{c}_1},\underbrace{111}_{\symbf{c}_2}},\,
         \Prob{\symbf{c}_1}=0.1,\, \Prob{\symbf{c}_2}=0.9,\, p=1/4 $, and $ \symbf{r}=100 $.
 
-    \textbf{IMLD} $ \symbf{r} $ is decoded to to $ \symbf{c}_1 = 000 $.
+    \textbf{IMLD} $ \symbf{r} $ is decoded to $ \symbf{c}_1 = 000 $.
 
     \textbf{MED}
     \begin{align*}
