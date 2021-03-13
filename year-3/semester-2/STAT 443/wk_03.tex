@@ -63,7 +63,7 @@ which is a succinct expression defining $ \MA{q} $.
               \gamma(h)
                                                                & =\Cov{X_t,X_{t+h}}                                                                                \\
                                                                & =\E[\bigg]{\biggl(\sum_{\ell=0}^{q} \theta_\ell W_{t-\ell}\biggr)
-              \biggl(\sum_{k=0}^{q} \theta_k W_{t+h-k}\biggr)} & \quad                                                             & t-\ell=t+h-k\implies k=\ell+h \\
+              \biggl(\sum_{k=0}^{q} \theta_k W_{t+h-k}\biggr)} &                                                                   & t-\ell=t+h-k\implies k=\ell+h \\
                                                                & =\begin{dcases}
                   \sigma_W^2\sum_{j=0}^{q-h} \theta_j \theta_{j+h} & 1\le h\le q \\
                   0                                                & h>q
@@ -164,11 +164,11 @@ $ X_t $ satisfying the following?
 Let's see.
 \begin{align*}
     X_t
-     & =\phi X_{t-1}+W_t                                                                                      \\
-     & =\phi(\phi X_{t-2}+W_{t-1})+W_t                                                                        \\
-     & =\phi^2X_{t-2}+\phi W_{t-1}+W_t                                                                        \\
-     & \;\vdots                                        & \quad & k\text{ times}                               \\
-     & =\phi^k X_{t-k}+\sum_{j=0}^{k-1} \phi^j W_{t-j} & \quad & \text{if $ \abs{\phi}>1 $, the sum diverges} \\
+     & =\phi X_{t-1}+W_t                                                                                           \\
+     & =\phi(\phi X_{t-2}+W_{t-1})+W_t                                                                             \\
+     & =\phi^2X_{t-2}+\phi W_{t-1}+W_t                                                                             \\
+     & \vdotswithin{=}                                           &  & k\text{ times}                               \\
+     & =\textstyle\phi^k X_{t-k}+\sum_{j=0}^{k-1} \phi^j W_{t-j} &  & \text{if $ \abs{\phi}>1 $, the sum diverges} \\
 \end{align*}
 Suppose $ \abs{\phi}<1 $, then
 \[ \xrightarrow[k\to\infty]{L^2\text{-sense}}0+
@@ -178,10 +178,10 @@ $ X_t=\sum_{j=0}^{\infty} \phi^j W_{t-j} $, then
 $ X_t $ is strictly stationary, and
 \begin{align*}
     X_t
-     & =\sum_{j=0}^{\infty} \phi^j W_{t-j}                                \\
-     & =\sum_{j=1}^{\infty}\phi^j W_{t-j}+W_t                             \\
-     & =\phi \sum_{j=1}^{\infty} \phi^{j-1}W_{t-j}+W_t & \quad & j\to j-1 \\
-     & =\phi \sum_{j=0}^{\infty} \phi^j W_{t-1-j}+W_t                     \\
+     & =\sum_{j=0}^{\infty} \phi^j W_{t-j}                           \\
+     & =\sum_{j=1}^{\infty}\phi^j W_{t-j}+W_t                        \\
+     & =\phi \sum_{j=1}^{\infty} \phi^{j-1}W_{t-j}+W_t &  & j\to j-1 \\
+     & =\phi \sum_{j=0}^{\infty} \phi^j W_{t-1-j}+W_t                \\
      & =\phi X_{t-1}+W_t
 \end{align*}
 Therefore, $ X_t $ satisfies $ \AR{1} $ equation.
@@ -194,10 +194,10 @@ What if $ \abs{\phi}>1 $? If $ X_t=\phi X_{t-1}+W_t $ for $ t\in\mathbf{Z} $,
 then that implies
 \begin{align*}
     X_t
-     & =\phi^{-1}X_{t+1}-\phi^{-1}W_{t+1}                                                                \\
-     & =\phi^{-1}\bigl(\phi^{-1}X_{t+1}-\phi^{-1}W_{t+1}\bigr)-\phi^{-1}W_{t+1}                          \\
-     & \;\vdots                                                                 & \quad & k\text{ times} \\
-     & =\phi^{-k}X_{t+k}-\sum_{j=1}^{k-1} \phi^{-j}W_{t+j}
+     & =\phi^{-1}X_{t+1}-\phi^{-1}W_{t+1}                                                           \\
+     & =\phi^{-1}\bigl(\phi^{-1}X_{t+1}-\phi^{-1}W_{t+1}\bigr)-\phi^{-1}W_{t+1}                     \\
+     & \vdotswithin{=}                                                          &  & k\text{ times} \\
+     & =\textstyle\phi^{-k}X_{t+k}-\sum_{j=1}^{k-1} \phi^{-j}W_{t+j}
 \end{align*}
 Therefore,
 \[ X_t=\frac{X_{t+k}}{\phi^k} -\sum_{j=1}^{k-1} \frac{W_{t+j}}{\phi^j}

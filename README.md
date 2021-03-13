@@ -5,13 +5,11 @@ All my university notes done in LaTeX.
 
 ## Year 3
 ### Semester 2
-|  Course  | Completion |       Online       |
-| :------: | :--------: | :----------------: |
-| STAT 341 | ETA: Never | :heavy_check_mark: |
-| STAT 443 |  Week 7**  | :heavy_check_mark: |
-| STAT 332 |    ***     | :heavy_check_mark: |
-
-** STAT 443 Week 6 and 7 are unreviewed.
+|  Course  |    Completion    |       Online       |
+| :------: | :--------------: | :----------------: |
+| STAT 341 | ETA: End of term | :heavy_check_mark: |
+| STAT 443 |      Week 7      | :heavy_check_mark: |
+| STAT 332 |       ***        | :heavy_check_mark: |
 
 *** Please e-mail me if you want my notes for this course. The professor
 has too many copyright things on his Word (lol) documents.

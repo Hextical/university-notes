@@ -475,13 +475,13 @@ $ X_t $ are $ m $-dependent random variables.
     Replace $ a_i\sim X_i $, take expectation.
 \end{Proof}
 \[ \sum_{t=1}^{a_T} X_t=\sum_{j=0}^{m}
-    \sum_{\substack{t=j\!\!\!\mod (m+1)\\1\le t\le a_T}}X_t  \]
+    \sum_{\substack{t\equiv j\!\!\!\!\pmod{m+1}\\1\le t\le a_T}}X_t  \]
 Variables in the second sum are separated by at least
 $ m $-time steps, and hence i.i.d.\ Therefore,
 \begin{align*}
     \E*{\abs[\bigg]{\sum_{t=1}^{a_T} X_t}^{2+\delta}}
      & \le (m+1)^{(2+\delta)-1}
-    \E*{\abs[\bigg]{\sum_{\substack{t=j\!\!\!\mod (m+1)                                                                                                    \\1\le t\le a_T}}X_t}^{2+\delta}} & \quad & \text{by~\Cref{prop:prop1}}\\
+    \E*{\abs[\bigg]{\sum_{\substack{t\equiv j\!\!\!\!\pmod{m+1}                                                                                            \\1\le t\le a_T}}X_t}^{2+\delta}} &  & \text{by~\Cref{prop:prop1}}\\
      & \le (m+1)^{(2+\delta)-1}\biggl(\frac{a_T}{m+1} \biggr)^{\frac{2+\delta}{2} }\E[\big]{\abs{X_1}^{2+\delta}} &  & \text{by~\Cref{thm:rosenthal_ineq}} \\
      & =C a_T^{\frac{2+\delta}{2}}
 \end{align*}
@@ -530,9 +530,9 @@ where $ C $ is the same constant as in~\Cref{pf:pf_clt}.
     $ X_t $ is strictly (and weakly) stationary.
     \begin{align*}
         \gamma(h)
-         & =\E{X_t X_{t+h}}                                                                                                                                          \\
-         & =\E[\bigg]{\biggl(\sum_{\ell=0}^{\infty} \psi_\ell W_{t-\ell}\biggr)\biggl(\sum_{j=0}^{\infty} \psi_j W_{t+h-j}\biggr)}                                   \\
-         & =\sum_{\ell=0}^{\infty}\sum_{j=0}^{\infty} \psi_\ell\psi_j\E{W_{t-\ell}W_{t+h-j}}                                       & \quad & \text{Fubini's Theorem} \\
+         & =\E{X_t X_{t+h}}                                                                                                                                     \\
+         & =\E[\bigg]{\biggl(\sum_{\ell=0}^{\infty} \psi_\ell W_{t-\ell}\biggr)\biggl(\sum_{j=0}^{\infty} \psi_j W_{t+h-j}\biggr)}                              \\
+         & =\sum_{\ell=0}^{\infty}\sum_{j=0}^{\infty} \psi_\ell\psi_j\E{W_{t-\ell}W_{t+h-j}}                                       &  & \text{Fubini's Theorem} \\
          & = \sum_{\ell=0}^{\infty} \psi_\ell \psi_{\ell+h}\sigma_W^2
     \end{align*}
     Then,

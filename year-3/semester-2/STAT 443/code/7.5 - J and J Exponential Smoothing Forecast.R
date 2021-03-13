@@ -8,10 +8,6 @@ autoplot(x)
 y = forecast(x, 20)
 autoplot(y)
 
-x = ets(jj, model = "MNN")
-autoplot(x)
-y = forecast(x, 1000)
-autoplot(y)
 
 x = ets(jj, model = "AAN")
 autoplot(x)

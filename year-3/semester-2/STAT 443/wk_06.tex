@@ -123,11 +123,9 @@ with the goal of minimizing $ L(Y_i,\hat{f}(X_i)) $.
             \[ \text{CV}(M)=\sum_{j=t_r+1}^{T} L_j \]
 \end{enumerate}
 \begin{Remark}{}{}
-      \begin{enumerate}
+      \begin{enumerate}[(1)]
             \item If interested in longer horizon forecasting, you can compare
-                  \[ \hat{X}_{j+1\mid j},\ldots,\hat{X}_{j+h\mid j} \]
-                  to
-                  \[ X_{j+1},\ldots,X_{j+h} \]
+                  \[ \hat{X}_{j+1\mid j},\ldots,\hat{X}_{j+h\mid j}\quad\text{to}\quad X_{j+1},\ldots,X_{j+h} \]
                   in the loss calculation step.
             \item Stationarity is \emph{crucial} in time series cross validation
                   since the model errors in the present must be similar to errors in the future.
@@ -158,9 +156,9 @@ use simulation!
 \end{enumerate}
 \begin{Remark}{}{}
       For longer horizon forecasts, prediction intervals can be obtained by iteration:
-      \[ \hat{X}_{T+h\mid T}^{(b)}=g(\hat{X}_{T+h-1}^{(b)},\ldots,\hat{X}_{T+1\mid T}^{(b)},X_T,\ldots,X_1)+W_{T+h}^{(b)} \]
+      \[ \hat{X}_{T+h\mid T}^{(b)}=g(\hat{X}_{T+h-1\mid T}^{(b)},\ldots,\hat{X}_{T+1\mid T}^{(b)},X_T,\ldots,X_1)+W_{T+h}^{(b)} \]
       The prediction interval is
-      \[ \biggl(\hat{Q}_{T+h}\biggl(\frac{\alpha}{2} \biggr)\hat{Q}_{T+h}\biggl(1-\frac{\alpha}{2} \biggr)\biggr) \]
+      \[ \biggl(\hat{Q}_{T+h}\biggl(\frac{\alpha}{2} \biggr),\hat{Q}_{T+h}\biggl(1-\frac{\alpha}{2} \biggr)\biggr) \]
       where $ \hat{Q}_{T+h}(q) $ the empirical $ q^{\text{th}} $ quantile of $ \hat{X}_{T+h}^{(b)} $.
 \end{Remark}
 \subsection*{Distributions to Choose for $ W_t $}

@@ -1,10 +1,10 @@
 \chapter{Week 7}
 \section{Exponential Smoothing Models Introduction}
 \begin{itemize}
-    \item \textbf{ARIMA Models}: Model a time series, potentially after differencing towards
-          stationarity, in terms of its autocorrelation (linear process).
-    \item \textbf{Exponential Smoothing}: Flexibly model the trend and seasonality
-          observed in a time series.
+      \item \textbf{ARIMA Models}: Model a time series, potentially after differencing towards
+            stationarity, in terms of its autocorrelation (linear process).
+      \item \textbf{Exponential Smoothing}: Flexibly model the trend and seasonality
+            observed in a time series.
 \end{itemize}
 \subsection*{Simple Exponential Smoothing}
 Suppose we wish to forecast a time series $ X_1,\ldots,X_T $. Two extreme
@@ -12,64 +12,64 @@ forecasts are
 \[ \hat{X}_{T+1\mid T}=X_t\quad\text{[Random Walk]} \]
 \[ \hat{X}_{T+1\mid T}=\bar{X}=\frac{1}{T} \sum_{t=1}^{T} X_t \quad\text{[IID Sequence]} \]
 \underline{Compromise}: \emph{Exponential Smoothing}.
-\[ \hat{X}_{T+1\mid T}=\alpha X_T+\alpha(1-\alpha)X_{T-1}+\cdots+\alpha(1-\alpha)^{T-1}X_1 \]
-where $ \alpha\in[0,1] $. Weights applied to past observations decrease exponentially quickly.
+\[ \hat{X}_{T+1\mid T}=\alpha X_T+\alpha(1-\alpha)X_{T-1}+\cdots+\alpha(1-\alpha)^{T-1}X_1\quad(\alpha\in[0,1]) \]
+Weights applied to past observations decrease exponentially quickly.
 
 Simple exponential smoothing can be stated as a recursive system of equations.
 \begin{itemize}
-    \item Prediction Equation: $ \hat{X}_{T+1}=\ell_T $.
-    \item Smoothing/Level Equation: $ \ell_T=\alpha X_T+(1-\alpha)\ell_{T-1}=\ell_T(\alpha,\ell_\sigma) $
-          which is a convex combination of last observed value and last prediction or ``level.''
-    \item Initial Condition: $ \ell_0 $.
-    \item Parameters Defining Model are $ \alpha\in[0,1] $ and $ \ell_0 $.
+      \item Prediction Equation: $ \hat{X}_{T+1}=\ell_T $.
+      \item Smoothing/Level Equation: $ \ell_T=\alpha X_T+(1-\alpha)\ell_{T-1}=\ell_T(\alpha,\ell_\sigma) $
+            which is a convex combination of last observed value and last prediction or ``level.''
+      \item Initial Condition: $ \ell_0 $.
+      \item Parameters Defining Model are $ \alpha\in[0,1] $ and $ \ell_0 $.
 \end{itemize}
 Estimation may be conducted using MLE (later) or OLS\@. For OLS,
 \[ (\hat{\alpha},\hat{\ell}_0)=\argmin_{0\le \alpha\le 1,\,\ell_0\in\mathbf{R}}
-    \sum_{i=2}^{T} (X_i-\ell_i(\alpha,\ell_0))^2 \]
+      \sum_{i=2}^{T} \bigl[X_i-\ell_i(\alpha,\ell_0)\bigr]^2 \]
 \[ \hat{X}_{T+1}=\hat{\alpha}X_T+(1-\hat{\alpha})\ell_T(\hat{\alpha}.\hat{\ell}_0) \]
 which can be calculated by iterating the level equation back to $ \ell_0 $.
 
 \subsection*{Linear Trend Exponential Smoothing}
 \begin{itemize}
-    \item Prediction Equation: $ \hat{X}_{T+h}=\ell_T+h b_T $ where $ \ell_T $
-          is the \textbf{level} and $ b_T $ is the slope.
-    \item Level Equation: $ \ell_T=\alpha X_T+(1-\alpha)(\ell_{T-1}+b_{T-1}) $
-          which is the convex combination of last observation and last ``level''
-          or prediction.
-    \item Trend/Slope Equation: $ b_T=\beta(\ell_T-\ell_{T-1})+(1-\beta)b_{T-1} $
-          where $ \ell_T-\ell_{T-1} $ is the last ``observed'' slope or change in level.
-    \item Initial Conditions: $ \ell_0 $ and $ \beta_0 $.
-    \item Parameters: $ \alpha,\beta\in[0,1] $, $ \ell_0,\beta_0\in\mathbf{R} $
-          which are estimated using MLE/OLS\@.
+      \item Prediction Equation: $ \hat{X}_{T+h}=\ell_T+h b_T $ where $ \ell_T $
+            is the \textbf{level} and $ b_T $ is the \textbf{slope}.
+      \item Level Equation: $ \ell_T=\alpha X_T+(1-\alpha)(\ell_{T-1}+b_{T-1}) $
+            which is the convex combination of last observation and last ``level''
+            or prediction.
+      \item Trend/Slope Equation: $ b_T=\beta(\ell_T-\ell_{T-1})+(1-\beta)b_{T-1} $
+            where $ \ell_T-\ell_{T-1} $ is the last ``observed'' slope or change in level.
+      \item Initial Conditions: $ \ell_0 $ and $ b_0 $.
+      \item Parameters: $ \alpha,\beta\in[0,1] $, $ \ell_0,\beta_0\in\mathbf{R} $
+            which are estimated using MLE/OLS\@.
 \end{itemize}
 
 \subsection*{Trend + Seasonal Exponential Smoothing (Holt Winters ES, 1960s)}
 Suppose $ h $ is the forecast horizon of interest and time series has seasonal
 period $ p $. Set $ k=\lfloor (h-1)/p\rfloor $.
 \begin{itemize}
-    \item Prediction Equation: $ \hat{X}_{T+1}=\ell_T+h b_T+s_{T+h-p(k+1)} $
-          where $ \ell_T $ is the level, $ b_T $ is the slope, and
-          $ s_{T+1-p(k+1)} $ is the seasonal effect.
-    \item Level Equation: $ \ell_T=\alpha(X_t-s_{T-p})+(1-\alpha)(\ell_{T-1}+b_{T-1}) $.
-    \item Slope Equation: $ b_T=\beta(\ell_T-\ell_{T-1})+(1-\beta)b_{T-1} $.
-    \item Seasonal Equation: $ s_T=\gamma(X_T-\ell_{T-1}+b_{T-1})+(1-\gamma)s_{T-p} $.
-    \item Initial Conditions: $ \ell_0,\beta_0,s_0,\ldots,s_{-p+1} $.
-    \item Parameters: $ \alpha,\beta,\gamma\in[0,1] $, $ \ell_0,\beta_0,s_0,\ldots,s_{-p+1}\in\mathbf{R} $.
+      \item Prediction Equation: $ \hat{X}_{T+1}=\ell_T+h b_T+s_{T+h-p(k+1)} $
+            where $ \ell_T $ is the level, $ b_T $ is the slope, and
+            $ s_{T+1-p(k+1)} $ is the seasonal effect.
+      \item Level Equation: $ \ell_T=\alpha(X_t-s_{T-p})+(1-\alpha)(\ell_{T-1}+b_{T-1}) $.
+      \item Slope Equation: $ b_T=\beta(\ell_T-\ell_{T-1})+(1-\beta)b_{T-1} $.
+      \item Seasonal Equation: $ s_T=\gamma(X_T-\ell_{T-1}+b_{T-1})+(1-\gamma)s_{T-p} $.
+      \item Initial Conditions: $ \ell_0,\beta_0,s_0,\ldots,s_{-p+1} $.
+      \item Parameters: $ \alpha,\beta,\gamma\in[0,1] $, $ \ell_0,\beta_0,s_0,\ldots,s_{-p+1}\in\mathbf{R} $.
 \end{itemize}
 
 \section{Exponential Smoothing as a State Space Model}
 Consider Simple Exponential Smoothing:
 \begin{itemize}
-    \item Prediction Equation: $ X_{t\mid t-1}=\ell_{t-1} $.
-    \item Level Equation: $ \ell_t=\alpha X_t+(1-\alpha)\ell_{t-1} $.
+      \item Prediction Equation: $ X_{t\mid t-1}=\ell_{t-1} $.
+      \item Level Equation: $ \ell_t=\alpha X_t+(1-\alpha)\ell_{t-1} $.
 \end{itemize}
 Re-arranging the level equation gives
 \[ \ell_t=\ell_{t-1}+\alpha(\Uunderbracket{X_t-\ell_{t-1}}_{\text{residual $ \varepsilon_t $}})=\ell_{t-1}+\alpha \varepsilon_t \]
 Also, $ X_t=\ell_{t-1}+\varepsilon_t $. Therefore, these equations
 can be reformulated as:
 \begin{itemize}
-    \item Prediction Equation: $ X_t=\ell_{t-1}+\varepsilon_t $.
-    \item Level Equation: $ \ell_t=\ell_{t-1}+\alpha \varepsilon_t $.
+      \item Prediction Equation: $ X_t=\ell_{t-1}+\varepsilon_t $.
+      \item Level Equation: $ \ell_t=\ell_{t-1}+\alpha \varepsilon_t $.
 \end{itemize}
 \underline{Why is this useful?} If we make a parametric assumption
 on $ \varepsilon_t $ (e.g., $ \varepsilon_t \sim \N{0,\sigma_{\varepsilon}^2} $),
@@ -77,38 +77,68 @@ then we can use Likelihood techniques (MLE, AIC, simulation based Prediction Int
 
 Such equations are examples of ``State Space'' Models:
 \begin{Definition}{State space model}{}
-    We say $ X_T $ follows a general \textbf{state space model}
-    if:
-    \begin{itemize}
-        \item Observation Equation: $ X_t= A_t Y_t+\varepsilon_t $
-              where $ A_t $ is the \textbf{measurement matrix}, $ Y_t $ is the \textbf{state vector},
-              and $ \varepsilon_t $ is an \textbf{observation error}.
-        \item State Equation: $ Y_t=\Phi Y_{t-1}+W_t $.
-    \end{itemize}
-    $ \varepsilon_t $ and $ W_t $ are white noise terms that may depend on each other.
+      We say $ X_T $ follows a general \textbf{state space model}
+      if:
+      \begin{itemize}
+            \item Observation Equation: $ X_t= A_t Y_t+\varepsilon_t $
+                  where $ A_t $ is the \textbf{measurement matrix}, $ Y_t $ is the \textbf{state vector} (unobserved),
+                  and $ \varepsilon_t $ is an \textbf{observation error}.
+            \item State Equation: $ Y_t=\phi Y_{t-1}+W_t $.
+      \end{itemize}
+      \begin{center}
+            \begin{tikzpicture}[
+                        roundnode/.style={circle, draw=green!60, fill=green!5, very thick, minimum size=15mm},
+                        roundnodeb/.style={circle, draw=blue!60, fill=blue!5, very thick, minimum size=15mm},
+                        roundnodes/.style={circle, draw=blue!60, fill=blue!5, very thick, minimum size=5mm},
+                  ]
+                  %Nodes
+                  \node[roundnode]       (maintopic)                              {$Y_{t-1}$};
+                  \node[roundnode]        (rightcircle)        [right=of maintopic] {$Y_{t}$};
+                  \node[roundnode]      (rrightcircle)       [right=of rightcircle] {$Y_{t+1}$};
+                  \node[roundnodeb]        (lowercircle)       [below=of maintopic] {$X_{t-1}$};
+                  \node[roundnodeb]        (lowerrcircle)       [right=of lowercircle] {$X_{t}$};
+                  \node[roundnodeb]        (lowerrrcircle)       [below=of rrightcircle] {$X_{t+1}$};
+                  \node[roundnodes]        (slowercircle)       [left=of lowercircle] {$A_{t-1}$};
+                  \node[roundnodes]        (slowerrcircle)       [below=of lowerrcircle] {$A_{t}$};
+                  \node[roundnodes]        (slowerrrcircle)       [right=of lowerrrcircle] {$A_{t+1}$};
+
+
+                  %Lines
+                  \draw[->] (maintopic.south) -- (lowercircle.north);
+                  \draw[->] (maintopic.east) -- (rightcircle.west);
+                  \draw[->] (rightcircle.south) -- (lowerrcircle.north);
+                  \draw[->] (rightcircle.east) -- (rrightcircle.west);
+                  \draw[->] (rrightcircle.south) -- (lowerrrcircle.north);
+                  \draw[->] (slowerrcircle.north) -- (lowerrcircle.south);
+                  \draw[->] (slowercircle.east) -- (lowercircle.west);
+                  \draw[->] (slowerrrcircle.west) -- (lowerrrcircle.east);
+            \end{tikzpicture}
+      \end{center}
+
+      $ \varepsilon_t $ and $ W_t $ are white noise terms that may depend on each other.
 \end{Definition}
 \begin{Example}{State Space Models}{}
-    \begin{itemize}
-        \item $ \AR{1} $: $ X_t=Y_t $ where $ Y_t=\phi Y_{t-1}+W_t $
-              where $ W_t \sim  $ strong white noise.
-        \item Simple Exponential Smoothing:
-              \[ X_t=Y_{t-1}+\varepsilon_t \]
-              \[ Y_t=Y_{t-1}+\alpha \varepsilon_t \]
-              where $ \varepsilon_t \sim  $ strong white noise.
-    \end{itemize}
-    All ARMA and Exponential Smoothing models can be written in state-space form.
+      \begin{itemize}
+            \item $ \AR{1} $: $ X_t=Y_t $ where $ Y_t=\phi Y_{t-1}+W_t $
+                  where $ W_t \sim  $ strong white noise.
+            \item Simple Exponential Smoothing:
+                  \[ X_t=Y_{t-1}+\varepsilon_t \]
+                  \[ Y_t=Y_{t-1}+\alpha \varepsilon_t \]
+                  where $ \varepsilon_t \sim  $ strong white noise.
+      \end{itemize}
+      All ARMA and Exponential Smoothing models can be written in state-space form.
 \end{Example}
 \subsection*{Parameter Estimation and Model Selection using State-Space Formulation}
 \begin{itemize}
-    \item $ X_t=\ell_{t-1}+\varepsilon_t $.
-    \item $ \ell_t=\ell_{t-1}+\alpha\varepsilon_t $.
-    \item $ \varepsilon_t \sim \N{0,\sigma_\varepsilon^2} $.
-    \item Initial Condition: $ \ell_0 $.
+      \item $ X_t=\ell_{t-1}+\varepsilon_t $.
+      \item $ \ell_t=\ell_{t-1}+\alpha\varepsilon_t $.
+      \item $ \varepsilon_t \sim \N{0,\sigma_\varepsilon^2} $.
+      \item Initial Condition: $ \ell_0 $.
 \end{itemize}
 \[ \mathcal{L}(X_1,\ldots,X_T;\alpha,\ell_0,\sigma_\varepsilon^2)=
-    \prod_{i=1}^T \Uunderbracket{\mathcal{L}(X_i\mid X_{i-1},\ldots,X_1;\alpha,\ell_0,\sigma_\varepsilon^2)}_{
-    \N*{\ell_{i-1}(\alpha,\ell_0),\sigma_\varepsilon^2}
-    } \]
+      \prod_{i=1}^T \Uunderbracket{\mathcal{L}(X_i\mid X_{i-1},\ldots,X_1;\alpha,\ell_0,\sigma_\varepsilon^2)}_{
+      \N*{\ell_{i-1}(\alpha,\ell_0),\sigma_\varepsilon^2}
+      } \]
 Likelihood can be maximized numerically, and we use this to calculate AIC/BIC\@.
 
 \section{Multiplicative Exponential Smoothing Models}
@@ -123,18 +153,18 @@ errors, in the sense that
 where we note that the error is relative to the previous level. Therefore,
 \[ X_t=\ell_{t-1}(1+\varepsilon_t) \]
 \[ \ell_t=\alpha X_t+(1-\alpha)\ell_{t-1} =\alpha\varepsilon_t\ell_{t-1}+\alpha\ell_{t-1}+(1-\alpha)\ell_{t-1}
-    =\ell_{t-1}(1+\alpha\varepsilon_t) \]
+      =\ell_{t-1}(1+\alpha\varepsilon_t) \]
 \underline{Why consider multiplicative errors?} It is important
 to note that since the level follows the same exponential smoothing equation,
 the forecasts from multiplicative and additive error models will be the same.
 The difference arises from how uncertainty/error propagates in the model.
 \begin{itemize}
-    \item Additive: $ \hat{X}_{T+1}=\ell_T+\sum_{j=T+1}^{T+h} \varepsilon_j $
-          where we note that the MSE scales like $ h $.
-    \item Multiplicative: $ \hat{X}_{T+h}=\ell_T \prod_{j=T+1}^{T+h}(1+\varepsilon_j) $
-          where we note that the MSE (variance) is scaling like
-          \[ \Bigl(\E[\big]{(1+\varepsilon_0)^2}\Bigr)^h \]
-          which could grow very quickly as $ h\to\infty $.
+      \item Additive: $ \hat{X}_{T+1}=\ell_T+\sum_{j=T+1}^{T+h} \varepsilon_j $
+            where we note that the MSE scales like $ h $.
+      \item Multiplicative: $ \hat{X}_{T+h}=\ell_T \prod_{j=T+1}^{T+h}(1+\varepsilon_j) $
+            where we note that the MSE (variance) is scaling like
+            \[ \Bigl(\E[\big]{(1+\varepsilon_0)^2}\Bigr)^h \]
+            which could grow very quickly as $ h\to\infty $.
 \end{itemize}
 \subsection*{Multiplicative Linear + Trend and Holt Winters}
 Linear + Trend State Space Formulation:
@@ -152,47 +182,49 @@ Let $ p $ be the seasonal period.
 \subsection*{When to use Additive versus Multiplicative}
 Seasonal Exponential Smoothing Models:
 \begin{enumerate}[(1)]
-    \item Multiplicative models imply that as the level increases (decreases)
-          the seasonal fluctuations increase (decrease). Additive models suggest
-          seasonal fluctuations remain constant as trend fluctuations.
-          \[ \text{Seasonal Fluctuations}\uparrow\text{ as }\text{Level}\uparrow\implies
-              \text{ Multiplicative}. \]
-    \item Use AIC/BIC\@: The AIC can be evaluated for each state-space
-          model and compared.
+      \item Multiplicative models imply that as the level increases (decreases)
+            the seasonal fluctuations increase (decrease). Additive models suggest
+            seasonal fluctuations remain constant as trend fluctuations.
+            \[ \text{Seasonal Fluctuations}\uparrow\text{ as }\text{Level}\uparrow\implies
+                  \text{ Multiplicative}. \]
+      \item Use AIC/BIC\@: The AIC can be evaluated for each state-space
+            model and compared.
 \end{enumerate}
 \section{Exponential Smoothing Model Selection}
 Given the state-space formulation of exponential smoothing and the use of MLE to estimate
 the parameters, it is common to use AIC to choose among competing
 Exponential Smoothing (including additive versus multiplicative) models. Other
-options include
+options include:
 \begin{itemize}
-    \item Cross-validation.
-    \item Residual Analysis (white noise testing).
+      \item Cross-validation.
+      \item Residual Analysis (white noise testing).
 \end{itemize}
 \subsection*{Prediction Intervals}
 Using the state-space formulation, valid prediction intervals
 may be computed using simulation.
 \begin{Example}{Simple Exponential Smoothing}{}
-    \[ \hat{X}_{T+1\mid T}=\hat{\ell}_T \]
-    State-space formula:
-    \[ \hat{X}_{T+1}\approxeq \hat{\ell}_T+\Uunderbracket{\varepsilon_{T+1}}_{\N{0,\sigma_\varepsilon^2}} \]
-    \begin{enumerate}[(1)]
-        \item Estimate
-              \[ \hat{\sigma}_{\varepsilon}^2=\frac{1}{T-1} \sum_{j=2}^{T} (X_j-\hat{\ell}_{T-1})^2 \]
-        \item Simulate
-              \[ \hat{X}_{T+1\mid T}^{(b)}=\hat{\ell}_T+\Uunderbracket{\varepsilon_{T+1}^{(b)}}_{\N{0,\hat{\sigma}_\varepsilon^2}} \]
-        \item Use $ 5\% $ and $ 95\% $ sample quantiles of $ X_{T+1\mid T}^{(b)} $, $ b=1,\ldots,B $
-              as prediction intervals.
-    \end{enumerate}
+      \[ \hat{X}_{T+1\mid T}=\hat{\ell}_T \]
+      State-space formula:
+      \[ \hat{X}_{T+1}\cong\hat{\ell}_T+\Uunderbracket{\varepsilon_{T+1}}_{\N{0,\sigma_\varepsilon^2}} \]
+      \begin{enumerate}[(1)]
+            \item Estimate
+                  \[ \hat{\sigma}_{\varepsilon}^2=\frac{1}{T-1} \sum_{j=2}^{T} (X_j-\hat{\ell}_{T-1})^2 \]
+            \item Simulate
+                  \[ \hat{X}_{T+1\mid T}^{(b)}=\hat{\ell}_T+\Uunderbracket{\varepsilon_{T+1}^{(b)}}_{\N{0,\hat{\sigma}_\varepsilon^2}} \]
+            \item Use $ 5\% $ and $ 95\% $ sample quantiles of $ X_{T+1\mid T}^{(b)} $, $ b=1,\ldots,B $
+                  as prediction intervals.
+      \end{enumerate}
 \end{Example}
 \begin{Remark}{}{}
-    In many cases, the prediction MSE assuming $ \varepsilon_t \sim \N{0,\sigma_{\varepsilon}^2} $
-    can be computed explicitly. See $ \S $ 7.7 of HA\@.
+      In many cases, the prediction MSE assuming $ \varepsilon_t \sim \N{0,\sigma_{\varepsilon}^2} $
+      can be computed explicitly. See $ \S $ 7.7 of HA\@.
 \end{Remark}
 An important consideration in applying this approach is that $ \varepsilon_t $
 should behave like Gaussian white noise. We can check this using a residual analysis.
 \begin{itemize}
-    \item White noise tests, ACF plots.
-    \item Quantile-Quantile plot for Normality.
+      \item White noise tests, ACF plots.
+      \item Quantile-Quantile plot for Normality.
 \end{itemize}
 \section{J and J Exponential Smoothing Forecast}
+\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT%20443/code/7.5%20-%20J%20and%20J%20Exponential%20Smoothing%20Forecast.R}{[R Code] J and J Exponential Smoothing Forecast}
+

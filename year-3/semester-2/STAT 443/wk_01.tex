@@ -304,7 +304,7 @@ e.g., $ \Cov{X_t,X_{t+h}} $.
     We say that a time series $ \set{X_t}_{t\in\mathbf{Z}} $
     is \textbf{strictly stationary} (\textbf{strongly stationary})
     if for each $ k\ge 1 $, $ i_1,\ldots,i_k,h\in\mathbf{Z} $,
-    \[ (X_{i_1},\ldots,X_{i_k})\stackrel{\text{d}}{=}
+    \[ (X_{i_1},\ldots,X_{i_k})\equiv
         (X_{i_{1}+h},\ldots,X_{i_k+h}) \]
     {\color{blue}If we look at the $ k $-dimensional joint distribution
     $ (X_{i_1},\ldots,X_{i_k}) $
@@ -346,9 +346,9 @@ e.g., $ \Cov{X_t,X_{t+h}} $.
     \item For a second order stationary process,
           \begin{align*}
               \gamma(h)
-               & =\Cov{X_t,X_{t+h}}                                      \\
-               & =\Cov{X_{t-h},X_{t-h+h}} & \quad & t\rightarrow{} (t-h) \\
-               & =\Cov{X_t,X_{t-h}}                                      \\
+               & =\Cov{X_t,X_{t+h}}                                 \\
+               & =\Cov{X_{t-h},X_{t-h+h}} &  & t\rightarrow{} (t-h) \\
+               & =\Cov{X_t,X_{t-h}}                                 \\
                & =\gamma(-h)
           \end{align*}
           Since $ \gamma(h)=\gamma(-h) $, we
@@ -504,9 +504,9 @@ all periodicities occur with equal strength.
     since if $ t>0 $ the second sum is simply $ \sum_{i=t}^{-1} W_i=0 $, and we have
     \begin{align*}
         \E[\big]{(X_t-\mu_t)(X_t-\mu_t)}
-         & =\E{X_t^2}                                                                                           \\
-         & =\E*{\biggl(\sum_{i=0}^{t} W_i\biggr)^{\!2}}                                                         \\
-         & =\E{W_0^2}+\cdots+\E{W_t^2}                  & \quad & \text{since $ W_i\indep W_j $ for $ i\ne j $} \\
+         & =\E{X_t^2}                                                                                      \\
+         & =\E*{\biggl(\sum_{i=0}^{t} W_i\biggr)^{\!2}}                                                    \\
+         & =\E{W_0^2}+\cdots+\E{W_t^2}                  &  & \text{since $ W_i\indep W_j $ for $ i\ne j $} \\
          & =t\sigma_W^2
     \end{align*}
     which depends on $ t $.
@@ -529,7 +529,7 @@ $ \set{X_t}_{t\in\mathbf{Z}} $ is weakly stationary.
 \end{Theorem}
 \begin{Proof}{\Cref{thm:strongly_imp_weakly}}{}
     Note that if $ \set{X_t}_{t\in\mathbf{Z}} $ is strictly stationary, then
-    \[ (X_t)\stackrel{\text{d}}{=}(X_0) \]
+    \[ (X_t)\equiv(X_0) \]
     so that $ \E{X_t}=\E{X_0}=\mu $ which does not depend on $ t $, and also
     \[ \Var{X_t}=\Var{X_0} \]
     By the Cauchy-Schwarz inequality,
@@ -544,7 +544,7 @@ $ \set{X_t}_{t\in\mathbf{Z}} $ is weakly stationary.
     If $ t<s $, then
     \[ \Cov{X_t,X_s}=\Cov{X_0,X_{s-t}}=f\bigl(\abs{s-t}\bigr) \]
     since it is shift-invariant, and hence if we shift everything over by $ t $,
-    \[ (X_t,X_s)\stackrel{\text{d}}{=}(X_{t-t},X_{s-t})\stackrel{\text{d}}{=}(X_0,X_{s-t}) \]
+    \[ (X_t,X_s)\equiv(X_{t-t},X_{s-t})\equiv(X_0,X_{s-t}) \]
 \end{Proof}
 \begin{Definition}{Gaussian process}{}
     $ \set{X_t}_{t\in\mathbf{Z}} $ is said to be a
@@ -592,8 +592,8 @@ $ \set{X_t}_{t\in\mathbf{Z}} $ is weakly stationary.
     \end{align*}
     Using the Gaussian assumption
     \[ (X_{i_1},\ldots,X_{i_k})
-        \stackrel{\text{d}}{=}\Mvn{\symbf{\mu},\symbf{\Sigma}_{k\times k}}
-        \stackrel{\text{d}}{=}(X_{i_1+h},\ldots,X_{i_k+h}) \]
+        \equiv\Mvn{\symbf{\mu},\symbf{\Sigma}_{k\times k}}
+        \equiv(X_{i_1+h},\ldots,X_{i_k+h}) \]
     Hence $ \set{X_{t}}_{t\in\mathbf{Z}} $ is strictly stationary
     in this case.
 \end{Proof}
@@ -770,11 +770,11 @@ as if it were stationary. {\color{blue}In particular, we might try to estimate t
 \textbf{Random Walk with Drift Model}. Let $ \varepsilon_t $ be a strong white noise.
 \begin{align*}
     X_t
-     & =\delta+X_{t-1}+\varepsilon_t                                                                                  \\
-     & =\delta+\delta+X_{t-2}+\varepsilon_{t-1}+\varepsilon_t                                                         \\
-     & =\delta+\delta+\delta+X_{t-3}+\varepsilon_{t-2}+\varepsilon_{t-1}+\varepsilon_{t}                              \\
-     & \vdots                                                                            & \quad & \text{$ t $ times} \\
-     & =t\delta+X_0+\sum_{j=1}^{t} \varepsilon_j
+     & =\delta+X_{t-1}+\varepsilon_t                                                                             \\
+     & =\delta+\delta+X_{t-2}+\varepsilon_{t-1}+\varepsilon_t                                                    \\
+     & =\delta+\delta+\delta+X_{t-3}+\varepsilon_{t-2}+\varepsilon_{t-1}+\varepsilon_{t}                         \\
+     & \vdotswithin{=}                                                                   &  & \text{$ t $ times} \\
+     & =t\delta+X_0+\textstyle \sum_{j=1}^{t} \varepsilon_j
 \end{align*}
 where we note that $ t\delta+X_0=s_t $ is a linear signal,
 and $ \sum_{j=1}^{t} \varepsilon_j $ is a
