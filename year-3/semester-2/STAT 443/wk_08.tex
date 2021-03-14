@@ -1,0 +1,74 @@
+\chapter{Week 8}
+\section{Neural Network Autoregression}
+Simple Neural Network ``Architecture:''
+\begin{itemize}
+    \item Input layer (covariates/predictors).
+    \item Hidden layer (neurons).
+    \item Output layer.
+\end{itemize}
+It's possible to have several hidden layers and multiple
+neurons at each layer.
+
+Any particular layer, the inputs are mapped to the $ j^{\text{th}} $
+neuron linearly. The value taken on the $ j^{\text{th}} $
+neuron is
+\[ z_j=b_j+\sum_{i=1}^{4} w_{i,j}x_{i} \]
+where $ b_j $ is a function, $ x_i $ is the $ i^{\text{th}} $ input, and $ w_{i,j} $
+are the weights.
+
+To calculate the inputs to the next layer, a non-linear transformation
+is applied. For example, using the sigmoid function:
+\[ S(z)=\frac{1}{1+e^{-z}} \]
+The final model is a complex non-linear function of the inputs.
+
+\subsection*{Neural Network AR}
+\begin{itemize}
+    \item Input layer: $ X_t,\ldots,X_{t-p} $.
+    \item Output layer: $ X_{t+1} $.
+\end{itemize}
+A neural network model with $ k $ hidden states (assuming one hidden layer)
+we call a $ \NNAR{p,k} $ model.
+\begin{Remark}{}{}
+    If $ k=0 $, then $ \NNAR{p}=\AR{p} $. The inputs are mapped
+    linearly to the outputs.
+\end{Remark}
+\subsection*{Seasonal Neural Network AR}
+\begin{itemize}
+    \item Input layer: $ X_{t},\ldots,X_{t-p},X_{t-m},X_{t-P_m} $
+          where $ m $ is the seasonal lag.
+    \item Output layer: $ X_{t+1} $.
+\end{itemize}
+We call this a $ \NNSAR{p,k,P}{m} $ model.
+
+The model selection of choosing $ k $, $ p $, and $ P $
+can be carried out using cross-validation where the weights are estimated using ordinary
+least squares.
+
+\subsection*{Prediction Intervals}
+If $ \symbf{X}_t=(X_t,\ldots,X_{t-p},X_{t-m},\ldots,X_{t-P_m})^\top $
+denotes the vector of predictors, then we can posit an additive stochastic model for
+$ X_{t+1} $ as
+\[ X_{t+1}=f(\symbf{X}_t)+\varepsilon_{t+1} \]
+where $ f $ is the neural network.
+
+By calculating the residuals
+$ \hat{\varepsilon}_t=X_t-\hat{f}(\symbf{X}_t) $,
+prediction intervals can be estimated using the bootstrap
+\[ X_{T+1}^{(b)}=\hat{f}(\symbf{X}_T)+\hat{\varepsilon}_{T+1}^{(b)}\quad(b=1,\ldots,B) \]
+We can then construct a prediction interval by using
+the empirical quantiles from the simulated distribution of the
+forecast $ 1 $-step ahead. This process can be iterated multiple
+times to produce forecasts as well as prediction intervals for
+forecasts at longer time horizons.
+
+\section{Comparing Various Forecasting Methods}
+
+\section{Conditional Heteroscedasticity}
+
+\section{ARCH and GARCH Models}
+
+\section{Stationarity of GARCH Models}
+
+\section{\texorpdfstring{$ \dagger $}{†} Stationarity of General \texorpdfstring{$ \GARCH{p,q} $}{GARCH(𝑝, 𝑞)}}
+
+\section{Identifying GARCH Models}
