@@ -64,11 +64,324 @@ forecasts at longer time horizons.
 \section{Comparing Various Forecasting Methods}
 
 \section{Conditional Heteroscedasticity}
+\[ \Uunderbracket{\text{Hetero}}_{\text{different}}\text{-}\Uunderbracket{\text{scedasticity}}_{\text{variance}} \]
+\[ \Uunderbracket{\text{Hetero}}_{\text{same}}\text{-}\Uunderbracket{\text{scedasticity}}_{\text{variance}} \]
+\begin{Definition}{Heteroscedastic}{}
+    We say a time series $ X_t $ is \textbf{heteroscedastic}
+    if $ \Var{X_t}=\sigma_{X,t}^2 $; that is, the variance
+    depends on $ t $ and changes at some points.
+\end{Definition}
+\begin{Remark}{}{}
+    Heteroscedastic time series are \underline{not} stationary.
+\end{Remark}
+Asset price data terminology: In the context of conditionally
+heteroscedastic time series, we often consider asset price or ``financial''
+time series. Suppose $ X_t= $ price of an asset at time $ t $.
+\begin{Definition}{Returns, Log-returns}{}
+    If $ X_t $ is the value of an asset at time $ t $, then
+    the \textbf{return} (relative gain) $ Y_t $ of the
+    asset at time $ t $ is
+    \[ Y_t=X_t-X_{t-1}=\nabla X_t \]
+    Furthermore, the \textbf{log-returns}
+    of a positive asset price series $ X_t $
+    are
+    \[ Y_t=\log\biggl(\frac{X_t}{X_{t-1}} \biggr)=\log(X_t)-\log(X_{t-1}) \]
+\end{Definition}
+\begin{Remark}{}{}
+    ``Volatility'' $ \iff $ ``Variance''.
+\end{Remark}
+TODO Code
+
+A common observation, especially prominent with financial and asset
+price data, is that periods of volatility or heteroscedastic
+tend to cluster.
+
+Why? Big ``shocks'' cause volatile periods, that further propagate
+volatility until things ``calm down.''
+
+ARMA and linear time series models are not useful for capturing this phenomenon
+as we will see in the next example.
+\begin{Example}{}{}
+    Let $ X_t \sim \AR{1} $; that is, $ X_t=\phi X_{t-1}+W_t $ where $ \abs{\phi}<1 $.
+    \[ \E{X_t\given X_{t-1},X_{t-2},\ldots}=\phi X_{t-1} \]
+    ARMA models ``model'' the conditional mean $ X_{t-1},X_{t-2},\ldots $.
+    \[ \Var{X_t\given X_{t-1},X_{t-2},\ldots}=\sigma_W^2 \]
+    $ X_{t-1},X_{t-2},\ldots $ leave the variance untouched.
+\end{Example}
+\begin{Definition}{Conditionally heteroscedastic}{}
+    We say a time series $ X_t $ is \textbf{conditionally heteroscedastic}
+    if
+    \[ \Var{X_t\given X_{t-1},X_{t-2},\ldots}=\sigma_{X,t}^2 \]
+    that is, the variance changes with $ t $.
+\end{Definition}
 
 \section{ARCH and GARCH Models}
+\begin{Definition}{Autoregressive conditionally heteroscedastic (ARCH)}{}
+    Let $ W_t $ be a unit variance strong white noise; that is,
+    $ \E{W_t}=0 $ and $ \Var{W_t}=1 $. We say $ X_t $
+    follows an \textbf{autoregressive conditionally heteroscedastic}
+    (ARCH) model if there exists parameters $ \omega> 0 $, $ \alpha_1\ge 0 $
+    such that $ X_t=\sigma_t W_t $ where
+    \[ \sigma_t^2=\omega+\alpha_1 X_{t-1}^2 \]
+    where $ \sigma_t $ is the conditional variance and $ W_t $
+    is a white noise.
+\end{Definition}
+\begin{Remark}{}{}
+    ARCH is from Robert Engle, 1982.
+\end{Remark}
+\begin{Definition}{Autoregressive conditionally heteroscedastic $ [\ARCH{p}] $}{}
+    We say $ X_t $ follows an \textbf{autoregressive conditionally heteroscedastic} model
+    of order $ p $, if $ W_t $ is a strong white noise with $ \E{W_t^2}=1 $
+    and
+    \[ X_t=\sigma_t W_t \]
+    \[ \sigma_t^2=\omega+\sum_{j=1}^{p} \alpha_j X_{t-j}^2 \]
+    where $ p>0 $, $ \omega>0$, and $\alpha_j\ge 0$ for $j=1,\ldots,p$.
+
+    We write $ X_t \sim \ARCH{p} $.
+\end{Definition}
+\begin{Remark}{}{}
+    \begin{enumerate}[(1)]
+        \item $ \sigma_t^2 $ is called the ``conditional variance'' or ``volatility.''
+              Imagine that there exist a representation $ X_t=g(W_t,\ldots,W_{t-1}) $
+              (stationary process satisfying the ARCH model). Then, for example, in the
+              $ \ARCH{1} $ case,
+              \[ \sigma_t=w+\alpha_1 X_{t-1}^2=g_\sigma(W_{t-1}W_{t-2},\ldots) \]
+              Therefore,
+              \[ \Var{X_t\given W_{t-1},W_{t-2},\ldots}=\Var{\sigma_tW_t\given W_{t-1},\ldots}=\sigma_t^2\Var{W_t}=\sigma_t^2 \]
+              $ \Var{W_t}=1 $ identifies $ \sigma_t^2 $ as conditional variance.
+        \item Engle won the nobel prize in economics in part for ``methods of analyzing economic
+              time series with time varying volatility (ARCH)'' in 2003.
+        \item One problem noted early on was that $ \ARCH{p} $
+              models required large orders of $ p $ to model asset returns.
+    \end{enumerate}
+\end{Remark}
+\begin{Definition}{Generalized autoregressive conditional heteroskedasticity (GARCH)}{}
+    We say $ X_t $ follows a \textbf{generalized autoregressive conditional heteroskedasticity}
+    (GARCH) model
+    if $ W_t $ is unit variance strong white noise and
+    \[ X_t=\sigma_t W_t \]
+    \[ \sigma_t^2=\omega+\sum_{j=1}^{p} \alpha_j X_{t-j}^2+\sum_{k=1}^{q} \beta_k \sigma_{t-k}^2 \]
+    where $ q\ge 0 $, $ p>0 $, $ \omega>0 $, $ \alpha_j\ge 0 $ for $ j=1,\ldots,p $, and
+    $ \beta_k\ge 0 $ for $ k=1,\ldots,q $.
+
+    We write $ X_t \sim \GARCH{p,q} $.
+\end{Definition}
+\begin{Remark}{}{}
+    The $ \GARCH{p,q} $ model was proposed by Bollerslev (1986).
+\end{Remark}
+\begin{Remark}{}{}
+    \begin{itemize}
+        \item $ \GARCH{p,0}\equiv \ARCH{p} $.
+        \item $ \GARCH{0,0} $ is a white noise.
+    \end{itemize}
+\end{Remark}
+\begin{Proposition}{Properties of GARCH}{}
+    Suppose for the moment that there exists a stationary and causal time
+    series $ X_t $ satisfying the $ \GARCH{p,q} $ model,
+    $ X_t=g(W_t,W_{t-1},\ldots)\implies \sigma_t^2=g_\sigma(W_{t-1},W_{t-2},\ldots) $,
+    then
+    \begin{enumerate}
+        \item $ \E{X_t}=\E{\sigma_t}\E{W_t}=0 $ since $ \sigma_t $ and $ W_t $ are
+              independent.
+              \[ \gamma_X(h)=\E{X_{t+h}X_t}=\E{\sigma_{t+h}W_{t+h}\sigma_tW_t}=0 \]
+              since $ W_{t+h} $ is independent of the rest.
+              ``GARCH series have mean zero and are serially uncorrelated.''
+        \item Suppose $ X_t \sim \ARCH{1} $.
+              \begin{align*}
+                  X_t^2
+                   & =\sigma_t^2 W_{t}^2                        \\
+                   & =\sigma_t^2(W_t^2+1-1)                     \\
+                   & =\sigma_t^2+(W_t^2-1)                      \\
+                   & =w+\alpha_1 X_{t-1}^2 +\sigma_t^2(W_t^2-1)
+              \end{align*}
+              Therefore, $ X_t^2 \sim \AR{1} $ process (weak white noise innovations).
+              In general, if $ X_t \sim \GARCH{p,q} $, then $ X_t^2 $
+              follows an ARMA model with weak white noise innovations.
+              \[ X_r \sim \text{GARCH},\quad X_t^2\text{ is serially correlated.} \]
+    \end{enumerate}
+\end{Proposition}
+TODO Code
 
 \section{Stationarity of GARCH Models}
+Suppose $ X_t \sim \GARCH{p,q} $ model, then we have
+$ X_t=\sigma_t W_t $, $ \E{W_t}=0 $, $ \Var{W_t}=\E{W_t^2}=1 $, and
+\[ \sigma_t^2=\omega+\sum_{j=1}^{p} \alpha_j X_{t-j}^2+\sum_{k=1}^{q}\beta_k \sigma^2_{t-k}  \]
+where $ \omega>0 $ and $ \alpha_1,\ldots,\alpha_p,\beta_1,\ldots,\beta_q \ge 0 $.
+
+\underline{Question}: Under what conditions on $ \omega,\alpha_1,\ldots,\alpha_p,
+    \beta_1,\ldots,\beta_p $, does a stationary process $ \set{X_t}_{t\in\mathbf{Z}} $
+satisfy these questions?
+
+\begin{Remark}{}{}
+    Suppose a stationary solution exists that is a causal Bernoulli shift; that is,
+    \[ X_t=g(W_t,W_{t-1},\ldots) \]
+    \[ \sigma_t^2=g_\sigma(W_{t-1},W_{t-2},\ldots) \]
+    If $ \Var{X_t}<\infty $, note
+    \[ \Var{X_\sigma}=\Var{\sigma_t W_t}=\E{\sigma_t^2 W_T^2}=\E{\sigma_t^2}=\sigma_X^2 \]
+    and using the GARCH recursion:
+    \[ \E{\sigma_t^2}=\omega+\sum_{j=1}^{p} \alpha_j \E{X_{t-j}^2}+\sum_{k=1}^{q} \beta_k \E{\sigma^2_{t-k}} \]
+    \[ \sigma_X^2=\omega+\sum_{j=1}^{p} \alpha_j \sigma_X^2 +\sum_{k=1}^{q}\beta_k \sigma^2_X  \]
+    Solving gives
+    \[ \sigma_X^2=\frac{\omega}{1-\sum_{j=1}^{p} \alpha_j-\sum_{k=1}^{q} \beta_k}  \]
+    Suggests that in order for a solution to exist in $ L^2 $, we need
+    \[ \sum_{j=1}^{p} \alpha_j + \sum_{k=1}^{q} \beta_k <1 \]
+    (Bollerslev, 1986)
+\end{Remark}
+Consider $ \GARCH{1,1} $ case; that is,
+\[ X_t=\sigma_t W_t \]
+\[ \sigma_t^2=\omega+\alpha X_{t-1}^2+\beta \sigma_{t-1}^2 \]
+$ X_t $ in order to get stationary solution and $ \sigma_t^2 $ need
+a stationary conditional variance process. Let $ f(z)=\alpha z^2+\beta $.
+Iterate GARCH recursion:
+\begin{align*}
+    \sigma_t^2
+     & =\omega+\alpha X_{t-1}^2+\beta \sigma_{t-1}^2                                                              \\
+     & =\omega+\alpha(\sigma_{t-1}^2 W_{t-1}^2)+\beta \sigma_{t-1}^2                                              \\
+     & =\omega+(\alpha W_{t-1}^2+\beta)\sigma_{t-1}^2                                                             \\
+     & =\omega+f(W_{t-1})(\omega+\alpha X_{t-2}^2+\beta \sigma_{t-2}^2)                                           \\
+     & =\omega+\omega f(W_{t-1})+f(W_{t-1})(\alpha X_{t-2}^2+\beta \sigma_{t-2}^2)                                \\
+     & =\omega+\omega f(W_{t-1})+\omega f(W_{t-1})f(W_{t-2})+f(W_{t-1})f(W_{t-2})(\alpha X_{t-3}^2+\beta_{t-3}^2) \\
+     & \vdotswithin{=}                                                                                            \\
+     & =\omega\biggl(1+\sum_{i=1}^{\infty} \prod_{j=1}^i f(W_{t-j})\biggr)                                        \\
+     & =g_\sigma (W_{t-1},W_{t-2},\ldots)
+\end{align*}
+Posit solution
+\[ \sigma_t^2=\omega\biggl(1+\sum_{j=1}^{\infty} \prod_{i=1}^j f(W_{t-i})\biggr) \]
+\underline{Question}: When is this series well-defined?
+\[ \prod_{i=1}^j f(W_{t-i})=\expon[\bigg]{\sum_{i=1}^{j} \log\bigl[f(W_{t-j})\bigr]} \]
+Now,
+\[ \sum_{i=1}^{j} \log\bigl[f(W_{t-j})\bigr]\to
+    \begin{cases*}
+        +\infty                                               & with probability $ 1 $ if $ \E*{\log\bigl[f(W_0)\bigr]}>0 $ \\
+        -\infty                                               & if $ \E*{\log\bigl[f(W_0)\bigr]}<0 $                        \\
+        \text{oscillates between $ -\infty $ and $ +\infty $} & if $\E*{\log\bigl[f(W_0)\bigr]}=0$
+    \end{cases*} \]
+\begin{Theorem}{}{}
+    A stationary solution $ X_t $ exists to the $ \GARCH{1,1} $ equations if and only if
+    \[ \gamma=\E{\log(\alpha W_0^2+\beta)}<0\quad\text{[Top Lyapunov Exponent]} \]
+    The solution is of the form
+    \[ X_t=\sigma_t W_t \]
+    \[ \sigma_t^2=\omega\biggl(1+\sum_{j=1}^{\infty} \prod_{i=1}^j (\alpha W_{t-j}^2+\beta)\biggr)=
+        g(W_{t-1},W_{t-2},\ldots) \]
+    where $ g $ is a function that is not linear; that is, we have a non-linear time series.
+\end{Theorem}
+\begin{Remark}{}{rem_garch11}
+    \begin{enumerate}[(1)]
+        \item If $ \gamma<0 $, $ \omega=0 $ forces $ X_t\equiv 0 $. Therefore, we will
+              normally assume $ \omega>0 $.
+        \item The condition $ \gamma=\E{\log(\alpha W_0^2+\beta)}<0 $ depends
+              on the distribution of $ W_t $.
+        \item A sufficient condition is $ \alpha_1+\beta_1<1 $.
+    \end{enumerate}
+\end{Remark}
+\begin{Proof}{\Cref{remark:rem_garch11} (3)}{}
+    Jensen's Inequality: If $ f:\mathbf{R}\to\mathbf{R} $ is convex, then
+    \[ f\bigl(\E{X}\bigr)\le \E[\big]{f(X)} \]
+    and the opposite holds if $ f $ is concave. We note that $ \log(x) $
+    is concave, hence
+    \[ \E[\big]{\log(\alpha W_0^2+\beta)}\le \log\bigl(\E{\alpha W_0^2+\beta}\bigr)=\log(\alpha+\beta)<0 \]
+    If $ \alpha+\beta<1 $.
+\end{Proof}
+\begin{Remark}{Second-order Stationarity}{}
+    If $ \alpha_1+\beta_1>1 $, we have seen that $ \Var{X_t} $ is not well-defined.
+    If $ \alpha_1+\beta_1<1 $, then
+    \[ \E{\sigma_t^2}=\E*{\frac{\omega}{1-\alpha-\beta}}<\infty \]
+    Assuming $ \alpha_1+\beta_1<1 $, $ X_t $ is a weak white noise.
+    \[ \gamma_X(h)=\E{X_{t+h}X_t}=\E{\sigma_{t+h}W_{t+h}\sigma_t W_t}=0 \]
+\end{Remark}
 
 \section{\texorpdfstring{$ \dagger $}{†} Stationarity of General \texorpdfstring{$ \GARCH{p,q} $}{GARCH(𝑝, 𝑞)}}
+General conditions exist for when a $ \GARCH{p,q} $ process has a strictly stationary solution: Let
+\begin{align*}
+    \tau_{t} & =(\beta_{1}+\alpha_{1} W_{t}^{2}, \beta_{2}, \ldots, \beta_{q-1})\in \mathbf{R}^{q-1}                  \\
+    \xi_{t}  & =(X_{t}^{2}, 0, \ldots, 0) \in \mathbf{R}^{q-1}                                                        \\
+    \alpha   & =(\alpha_{2}, \ldots, \alpha_{p-1}) \in \mathbf{R}^{p-2}                                               \\
+    I_{c}    & =c\times c \text{ identity matrix.}                                                                    \\
+    N        & =(\omega, 0, \ldots, 0) \in \mathbf{R}^{p+q-1}                                                         \\
+    Y_{t}    & =(\sigma_{t}^{2}, \ldots, \sigma_{t-q+1}^{2}, X_{t}^{2}, \ldots, X_{t-p+1}^{2}) \in \mathbf{R}^{p+q-1} \\
+    M_{t}    & =\begin{bmatrix}
+        \tau_{t} & \beta_{q} & \alpha  & \alpha_{p} \\
+        I_{q-1}  & 0         & 0       & 0          \\
+        \xi_{t}  & 0         & 0       & 0          \\
+        0        & 0         & I_{p-2} & 0
+    \end{bmatrix}\in \mathbf{R}^{p+q-1 \times p+q-1}
+\end{align*}
+
+\begin{Theorem}{}{}
+    $X_{t}$ solves the $ \GARCH{p,q} $ equations if and only if
+    \[
+        Y_{t}=M_{t} Y_{t-1}+N
+    \]
+    This representation is known as the Markov representation of the GARCH equations.
+    This defines a first order vector autoregression for $Y_{t}$ with
+    (random) matrix coefficients $M_{t}$.
+\end{Theorem}
+Let $A_{t}$ be a stationary sequence of random $p+q-1 \times p+q-1$ matrices, and define,
+for an arbitrary norm on matrices $\norm{}$ the scalar random variables.
+\[ r_{t}=\norm{A_{t} A_{t-1} \ldots A_{1}} \]
+under some relatively mild conditions (ergodicity)
+\[ \gamma=\lim\limits_{{t} \to {\infty}}\biggl[\frac{1}{t} \E[\big]{\log(r_{t})}\biggr] \]
+is well-defined and is called the top Lyapounov exponent of the sequence
+$A_{t}$ for $t \in \mathbf{Z}$.
+This result is coming from Ergodic theory in the 1970s.
+\begin{Theorem}{}{}
+    A stationary solution to the $ \GARCH{p,q} $ equations exists if and only if
+    \[ \gamma<0 \]
+    where $\gamma$ is the top Lyapounov exponent of sequence
+    $M_{t}$ for $t \in \mathbb{Z}$ appearing in the Markov representation.
+    When a stationary solution exists, it is causal and unique.
+\end{Theorem}
+\begin{Theorem}{Theorem 1 of Bollerslev (1986)}{thm_1_bollerslev_1986}
+    A necessary and sufficient condition for there to exist a second order stationary
+    solution to the $ \GARCH{p,q} $ equations is that
+    \[ \sum_{j=1}^{p} \alpha_{j}+\sum_{\ell=1}^{q} \beta_{\ell}<1 \]
+\end{Theorem}
 
 \section{Identifying GARCH Models}
+The decision to fit a volatility (GARCH) model to a time series often
+arises from
+\begin{enumerate}[(1)]
+    \item Observing volatility (conditional heteroskedasticity)
+          in a series.
+    \item Conditional variance forecasting is of specific interest
+          (e.g., risk analysis, financial TS analysis).
+\end{enumerate}
+If strong serial correlation is observed in the series, one
+often fits initially an ARMA model, and then
+fits a GARCH model to the residuals.
+\subsection*{Identifying Serial Correlation}
+Recall that the normal ACF bounds (blue lines)
+are constructed based on the assumption that
+the series is a \emph{strong} white noise. A GARCH
+model is a \emph{weak} white noise.
+
+\subsection*{ACF Bounds for Weak White Noise}
+Suppose for example that $ X_t \sim \GARCH{1,1} $, then
+\[ \gamma_X(h)=0\quad(h\ge 1) \]
+\[ \hat{\gamma}_X(h)\approx \frac{1}{T} \sum_{j=1}^{T-h} X_t X_{t+h}\implies \E{\hat{\gamma}_X(h)}=0 \]
+\begin{align*}
+    \Var*{\sqrt{T}\hat{\gamma}_X(h)}
+     & =\frac{1}{T} \sum_{j=1}^{T-h} \sum_{k=1}^{T-h} \E{X_{j}X_{j+h}X_{k}X_{k+h}}                                            \\
+     & =\frac{1}{T} \sum_{j=1}^{T-h} \sum_{k=1}^{T-h} \E{\sigma_j W_j \sigma_{j+h}W_{j+h}\sigma_{k+h}W_{k+h}\sigma_k W_{k+h}} \\
+     & =\frac{1}{T} \sum_{j=1}^{T-h} \E{X_j+h^2 X_j^2}                                                                        \\
+     & \approx \E{X_0^2 X_{-h}^2}
+\end{align*}
+Note that $ \E{X_j+h^2 X_j^2} $ does not simplify to a product $ \sigma_X^4 $ since
+$ X_{j+h}^2 $ is correlated with $ X_j^2 $.
+\begin{Theorem}{}{}
+    If $ X_t $ is a weak white noise (suitably weakly dependent), then
+    \[ \sqrt{T}\hat{\gamma}_X(h)\xrightarrow{D}\N{0,\E{X_0 X_{-h}^2}} \]
+\end{Theorem}
+\begin{Remark}{}{}
+    \begin{enumerate}[(1)]
+        \item $ \E{X_0^2 X_{-h}^2} $ can be consistently estimated by
+              \[ \hat{\sigma}_h^2=\frac{1}{T} \sum_{j=1}^{T-h} X_{j+h}^2 X_j^2 \]
+              An approximate $ (1-\alpha) $ prediction interval for $ \hat{\rho}(h) $
+              under the assumption of a weak white noise is
+              \[ \pm \frac{1}{\sqrt{T}}z_{1-\alpha/2}\frac{\hat{\sigma}_h}{\hat{\gamma}(0)}   \]
+        \item Note that
+              \[ \E{X_0 X_{-h}^2}=\bigl(\E{X_0^2}\bigr)^2+\Uunderbracket{\Cov{X_0^2,X_{-h}^2}}_{>0\iff\text{GARCH}} \]
+              In GARCH setting, weak white noise intervals for ACF are larger.
+    \end{enumerate}
+\end{Remark}
+TODO Code
