@@ -8,7 +8,7 @@ All my university notes done in LaTeX.
 |  Course  |    Completion    |       Online       |
 | :------: | :--------------: | :----------------: |
 | STAT 341 | ETA: End of term | :heavy_check_mark: |
-| STAT 443 |      Week 7      | :heavy_check_mark: |
+| STAT 443 |      Week 8      | :heavy_check_mark: |
 | STAT 332 |       ***        | :heavy_check_mark: |
 
 *** Please e-mail me if you want my notes for this course. The professor
