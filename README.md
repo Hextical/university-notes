@@ -5,44 +5,44 @@ All my university notes done in LaTeX.
 
 ## Year 3
 ### Semester 2
-|  Course  |    Completion    |       Online       |
-| :------: | :--------------: | :----------------: |
-| STAT 341 | ETA: End of term | :heavy_check_mark: |
-| STAT 443 |      Week 8      | :heavy_check_mark: |
-| STAT 332 |       ***        | :heavy_check_mark: |
+|                                              Course                                              |    Completion    |       Online       |
+| :----------------------------------------------------------------------------------------------: | :--------------: | :----------------: |
+|                                             STAT 332                                             |       ***        | :heavy_check_mark: |
+|                                             STAT 341                                             | ETA: End of term | :heavy_check_mark: |
+| [STAT 443](https://hextical.github.io/university-notes/year-3/semester-2/STAT%20443/stat443.pdf) |      Week 8      | :heavy_check_mark: |
 
-*** Please e-mail me if you want my notes for this course. The professor
-has too many copyright things on his Word (lol) documents.
+*** E-mail me at `c2roopna@uwaterloo.ca` for my notes because the professor
+has too many copyright claims on his Word documents.
 
 ### Semester 1
-|     Course      | Completion |       Online       |
-| :-------------: | :--------: | :----------------: |
-| AMATH/PMATH 331 | ETA: Never | :heavy_check_mark: |
-|    STAT 330     |    100%    | :heavy_check_mark: |
-|    STAT 331     |    100%    | :heavy_check_mark: |
+|                                                  Course                                                   | Completion |       Online       |
+| :-------------------------------------------------------------------------------------------------------: | :--------: | :----------------: |
+| [AMATH/PMATH 331](https://hextical.github.io/university-notes/year-3/semester-1/PMATH%20331/pmath331.pdf) | ETA: Never | :heavy_check_mark: |
+|     [STAT 330](https://hextical.github.io/university-notes/year-3/semester-1/STAT%20330/stat330.pdf)      |    100%    | :heavy_check_mark: |
+|     [STAT 331](https://hextical.github.io/university-notes/year-3/semester-1/STAT%20331/stat331.pdf)      |    100%    | :heavy_check_mark: |
 
 ## Year 2
 ### Semester 2
-|  Course  |        Completion        |          Online          |
-| :------: | :----------------------: | :----------------------: |
-| MATH 239 |   Online Lectures Only   | :heavy_exclamation_mark: |
-|  CO 331  |           100%           | :heavy_exclamation_mark: |
-|  CS 246  | 100% \ {Online Lectures} | :heavy_exclamation_mark: |
-| STAT 231 | 100% \ {Online Lectures} | :heavy_exclamation_mark: |
+|                                              Course                                              |        Completion        |          Online          |
+| :----------------------------------------------------------------------------------------------: | :----------------------: | :----------------------: |
+|    [CO 331](https://hextical.github.io/university-notes/year-2/semester-2/CO%20331/co331.pdf)    |           100%           | :heavy_exclamation_mark: |
+|    [CS 246](https://hextical.github.io/university-notes/year-2/semester-2/CS%20246/cs246.pdf)    | 100% \ {Online Lectures} | :heavy_exclamation_mark: |
+| [MATH 239](https://hextical.github.io/university-notes/year-2/semester-2/MATH%20239/math239.pdf) |   Online Lectures Only   | :heavy_exclamation_mark: |
+| [STAT 231](https://hextical.github.io/university-notes/year-2/semester-2/STAT%20231/stat231.pdf) | 100% \ {Online Lectures} | :heavy_exclamation_mark: |
 
 :heavy_exclamation_mark: COVID-19 caused the last month of the term to be online
 
 ### Semester 1
-|  Course  | Completion | Online |
-| :------: | :--------: | :----: |
-|  CO 250  |    100%    |  :x:   |
-| STAT 230 |    90%     |  :x:   |
+|                                              Course                                              | Completion | Online |
+| :----------------------------------------------------------------------------------------------: | :--------: | :----: |
+|    [CO 250](https://hextical.github.io/university-notes/year-2/semester-1/CO%20250/co250.pdf)    |    100%    |  :x:   |
+| [STAT 230](https://hextical.github.io/university-notes/year-2/semester-1/STAT%20230/stat230.pdf) |    90%     |  :x:   |
 
 ## Year 1
 ### Semester 2
-|  Course  | Completion | Online |
-| :------: | :--------: | :----: |
-| MATH 138 |    100%    |  :x:   |
+|                                              Course                                              | Completion | Online |
+| :----------------------------------------------------------------------------------------------: | :--------: | :----: |
+| [MATH 138](https://hextical.github.io/university-notes/year-1/semester-2/MATH%20138/math138.pdf) |    100%    |  :x:   |
 
 ### Semester 1
 N/A

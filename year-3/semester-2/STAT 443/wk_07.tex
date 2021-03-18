@@ -9,10 +9,12 @@
 \subsection*{Simple Exponential Smoothing}
 Suppose we wish to forecast a time series $ X_1,\ldots,X_T $. Two extreme
 forecasts are
-\[ \hat{X}_{T+1\mid T}=X_t\quad\text{[Random Walk]} \]
+\[ \hat{X}_{T+1\mid T}=X_T\quad\text{[Random Walk]} \]
 \[ \hat{X}_{T+1\mid T}=\bar{X}=\frac{1}{T} \sum_{t=1}^{T} X_t \quad\text{[IID Sequence]} \]
 \underline{Compromise}: \emph{Exponential Smoothing}.
-\[ \hat{X}_{T+1\mid T}=\alpha X_T+\alpha(1-\alpha)X_{T-1}+\cdots+\alpha(1-\alpha)^{T-1}X_1\quad(\alpha\in[0,1]) \]
+\[ \hat{X}_{T+1\mid T}=\alpha X_T+\alpha(1-\alpha)X_{T-1}+\cdots+\alpha(1-\alpha)^{T-1}X_1 \]
+where $ \alpha\in[0,1] $ is the \textbf{smoothing parameter}.
+
 Weights applied to past observations decrease exponentially quickly.
 
 Simple exponential smoothing can be stated as a recursive system of equations.
@@ -50,9 +52,9 @@ period $ p $. Set $ k=\lfloor (h-1)/p\rfloor $.
       \item Prediction Equation: $ \hat{X}_{T+1}=\ell_T+h b_T+s_{T+h-p(k+1)} $
             where $ \ell_T $ is the level, $ b_T $ is the slope, and
             $ s_{T+1-p(k+1)} $ is the seasonal effect.
-      \item Level Equation: $ \ell_T=\alpha(X_t-s_{T-p})+(1-\alpha)(\ell_{T-1}+b_{T-1}) $.
+      \item Level Equation: $ \ell_T=\alpha(X_T-s_{T-p})+(1-\alpha)(\ell_{T-1}+b_{T-1}) $.
       \item Slope Equation: $ b_T=\beta(\ell_T-\ell_{T-1})+(1-\beta)b_{T-1} $.
-      \item Seasonal Equation: $ s_T=\gamma(X_T-\ell_{T-1}+b_{T-1})+(1-\gamma)s_{T-p} $.
+      \item Seasonal Equation: $ s_T=\gamma(X_T-\ell_{T-1}-b_{T-1})+(1-\gamma)s_{T-p} $.
       \item Initial Conditions: $ \ell_0,\beta_0,s_0,\ldots,s_{-p+1} $.
       \item Parameters: $ \alpha,\beta,\gamma\in[0,1] $, $ \ell_0,\beta_0,s_0,\ldots,s_{-p+1}\in\mathbf{R} $.
 \end{itemize}
@@ -60,7 +62,7 @@ period $ p $. Set $ k=\lfloor (h-1)/p\rfloor $.
 \section{Exponential Smoothing as a State Space Model}
 Consider Simple Exponential Smoothing:
 \begin{itemize}
-      \item Prediction Equation: $ X_{t\mid t-1}=\ell_{t-1} $.
+      \item Prediction Equation: $ \hat{X}_{t\mid t-1}=\ell_{t-1} $.
       \item Level Equation: $ \ell_t=\alpha X_t+(1-\alpha)\ell_{t-1} $.
 \end{itemize}
 Re-arranging the level equation gives
