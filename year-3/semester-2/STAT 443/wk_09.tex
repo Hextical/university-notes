@@ -1,1 +1,143 @@
 \chapter{Week 9}
+\section{Tests for GARCH Models}
+Conditional heteroscedasticity is characterized by
+correlation in $ X_t^2 $. Formally,
+we can use a white noise test to $ X_t^2 $
+to evaluate if $ X_t $ exhibits conditional heteroscedasticity.
+\begin{Theorem}{Portmanteau (White Noise) Test of $ X_t^2 $}{}
+    Let $ \hat{\rho}_{X^2}(h) $ denote the empirical ACF of the
+    series $ X_t^2 $ for $ t=1,\ldots,T $. If $ X_t $
+    is a strong white noise with $ \E{X^4}<\infty $, we define
+    \[ Q(T,H)=T \sum_{h=1}^{H} \hat{\rho}_{X^2}(h)\xrightarrow[T\to\infty]{D}\chi^2(H) \]
+    where $ H $ is the number of lags we use. If $ X_t \sim \text{GARCH} $
+    model, then
+    \[ Q(T,H)\xrightarrow[T\to\infty]{P}\infty \]
+    The $ p $-value of test for homoscedasticity versus conditional
+    heteroscedasticity is given by
+    \[ p=\Prob*{\chi^2(H)\ge Q(T,H)} \]
+\end{Theorem}
+\begin{Remark}{}{}
+    \begin{enumerate}[(1)]
+        \item This test has several names in the literature, including
+              ``McLeod-Li Test.''
+        \item Often, it is applied to the GARCH models in order to evaluate goodness-of-fit
+              of a GARCH model (and decide on $ p $ and $ q $).
+    \end{enumerate}
+\end{Remark}
+\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT%20443/code/9.1%20-%20Tests%20for%20GARCH%20Models.R}{[R Code] Tests for GARCH Models}
+\section{GARCH Parameter Estimation}
+Consider $ \ARCH{1} $ case. We showed that if $ X_t \sim \ARCH{1} $,
+then $ X_t^2 \sim \AR{1} $; that is, $ X_t^2=\omega+\alpha X_{t-1}^2+V_t $,
+where $ V_t=\sigma_t^2(W_t^2-1) $ is a weak white noise.
+
+Suggests estimating $ \omega,\alpha $ using least squares.
+\[ (\hat{\omega},\alpha)=\argmin_{\omega\ge 0,\, 0<\alpha<1}\sum_{t=2}^{T} \bigl[X_t^2-(\omega+\alpha X_{t-1}^2)\bigr]^2 \]
+\begin{Remark}{}{}
+    This leads to consistent estimation for an $ \ARCH{1} $ model.
+\end{Remark}
+
+For a general $ \ARCH{p} $ model, we can also use least squares:
+\[ \mathcal{L}(\symbf{\alpha})=\sum_{j=p+1}^{T} \bigl[X_j^2-(\omega+\alpha_1 X_{j-1}^2+\cdots+\alpha_p X_{j-p}^2)\bigr]^2 \]
+where $ \symbf{\alpha}=(\omega,\alpha_1,\ldots,\alpha_p)^\top $. Minimized by
+\[ \hat{\symbf{\alpha}}=(X^\top X)^{-1}X^\top \symbf{Y} \]
+\[ X=\begin{bmatrix}
+        1      & X_p^2     & \cdots & X_1^2     \\
+        \vdots & \vdots    & \ddots & \vdots    \\
+        1      & X_{T-1}^2 & \cdots & X_{T-p}^2
+    \end{bmatrix}\in\mathbf{R}^{(T-p)\times (p+1)} \]
+\[ \symbf{Y}=(X_{p+1}^2,\ldots,X_T^2)^\top \in\mathbf{R}^{T-p} \]
+\begin{Theorem}{Chapter 7, Francq and Zakoïan}{}
+    The OLS estimators of the $ \ARCH{p} $ process are
+    consistent if $ \E{X_t^4}<\infty $, and are $ \sqrt{T} $-consistent
+    and asymptotically Gaussian if $ \E{X_t^8}<\infty $ under
+    ``regularity conditions'' including
+    \begin{enumerate}[(1)]
+        \item The true ARCH parameters admit a stationary and causal solution.
+        \item The innovations $ W_t $ have a non-degenerate distribution.
+    \end{enumerate}
+\end{Theorem}
+\subsection*{Quasi-Maximum Likelihood Estimation}
+Let $ X_t \sim \ARCH{1} $; that is, $ X_t=\sigma_t W_t $ and $ \sigma_t^2=\omega+\alpha X_{t-1}^2 $.
+
+We make a \textbf{parametric assumption} that $ W_t \sim \N{0,1} $. Assuming the model
+admits a stationary and causal solution ($ \omega>0 $ and $ 0\le \alpha<1 $), then
+\[ \Uunderbracket{X_t\mid X_{t-1}}_{\sigma_t^2\text{ is known}} \sim \N{0,\omega+\alpha X_{t-1}^2} \]
+\[ \mathcal{L}(\omega,\alpha)=\prod_{t=2}^T \Uunderbracket{\mathcal{L}(\omega,\alpha, X_t\mid X_{t-1},\ldots,X_1)}_{\N{0,\omega+\alpha X_{t-1}^2}} \]
+which is maximized numerically.
+
+\subsection*{General $ \GARCH{p,q} $ Case}
+\[ X_t\mid X_{t-1},\ldots,X_1 \stackrel{D}{\approx} X_t\mid \Uunderbracket{X_{t-1},X_{t-2},\ldots}_{\text{infinte past}} \sim \N{0,\sigma_t^2} \]
+\[ \sigma_t^2=\omega+\sum_{j=1}^{p} a_j X_{t-j}^2+\sum_{\ell=1}^{q} \beta_\ell \sigma_{t-\ell}^2=\sigma_t^2(\omega,\symbf{\alpha},\symbf{\beta}) \]
+\[ \mathcal{L}(\omega,\symbf{\alpha},\symbf{\beta})=
+    \prod_{j=\max(p,q)+1}^T f_{\omega,\symbf{\alpha},\symbf{\beta}}(X_j\mid X_{j-1},\ldots,X_1) \]
+where $ f_{\omega,\symbf{\alpha},\symbf{\beta}}(X_j\mid X_{j-1},\ldots,X_1) $ is the conditional density of
+$ \N{0,\sigma_j^2(\omega,\symbf{\alpha},\symbf{\beta})} $.
+
+\begin{Remark}{}{}
+    There is a catch to Quasi-Maximum Likelihood Estimation. As the equation
+    \[ \sigma_t^2=\sigma_t^2=\omega+\sum_{j=1}^{p} a_j X_{t-j}^2+\sum_{\ell=1}^{q} \beta_\ell \sigma_{t-\ell}^2=\sigma_t^2(\omega,\symbf{\alpha},\symbf{\beta}) \]
+    is iterated to calculate the conditional likelihood eventually things arise that are unknown:
+    \[ \set{X_j:j\le 0} \]
+    \[ \set{\sigma_j^2,j\le 0} \]
+    Therefore, we do some initializations:
+    \begin{itemize}
+        \item $ \sigma_t^2=\omega $ and $ X_t^2=\omega $ for $ t\le 0 $.
+        \item $ \sigma_t^2=\omega $ and $ X_t^2=0 $ for $ t\le 0 $.
+    \end{itemize}
+    Note: if the series is ``long,'' the initializations won't have much of an effect.
+    However, we must be careful when fitting a GARCH model to short series.
+\end{Remark}
+\underline{Parameter Constraints}:
+\[ (\hat{\omega},\hat{\symbf{\alpha}},\hat{\symbf{\beta}})=\argmax_{\hat{\omega},\hat{\symbf{\alpha}},\hat{\symbf{\beta}}}\mathcal{L}(\omega,\symbf{\alpha},\symbf{\beta}) \]
+admits a stationary solution.
+\begin{enumerate}[(1)]
+    \item ``Hyper-Pyramid:''
+          \[ (\omega,\symbf{\alpha},\symbf{\beta})\in\set*{\omega>0,\sum_{i=1}^{p} \alpha_i+\sum_{j=1}^{q} \beta_j<1,\alpha_i,\beta_j\ge 0} \]
+          solution is second-order stationary. Frequently, parameter
+          estimates lie near the boundary (i.e., $ \alpha + \beta = 1$) Most packages consider this region.
+    \item $ (\omega,\symbf{\alpha},\symbf{\beta}) $: Top Lyapunov exponent $ <0 $. Entire
+          stationary region is searched. Some ``better'' packages implement this (e.g., SAS).
+\end{enumerate}
+\begin{Theorem}{Chapter 6, Francq and Zakoïan}{}
+    If $ X_t \sim \GARCH{p,q} $ admits a stationary and causal solution, then
+    the Quasi-MLE (QMLE) estimators are consistent.
+
+    \begin{itemize}
+        \item If $ W_t \sim \N{0,1} $ (actually, so that QMLE = MLE),
+              then the estimators are \underline{efficient} (achieve the smallest variance among consistent estimators).
+        \item If $ W_t\not\sim \N{0,1} $, the QMLE may not be efficient, but it is in several cases.
+    \end{itemize}
+
+    \underline{Takeaway}: QMLE estimation is the benchmark of GARCH model parameter estimation.
+\end{Theorem}
+
+\subsection*{GARCH Residuals and Forecasting the Conditional Variance}
+If $ X_t \sim \GARCH{p,q} $, then $ (\omega,\symbf{\alpha},\symbf{\beta}) $
+can be estimated using QMLE to obtain $ (\hat{\omega},\hat{\symbf{\alpha}},\hat{\symbf{\beta}}) $,
+
+Then, estimates of conditional variance can be computed by:
+\begin{flalign*}
+     &  & \hat{\sigma}_{t}^2 & =\hat{\omega}+\sum_{j=1}^{p} \hat{\alpha}_j X_{t-j}^2+\sum_{\ell=1}^{q} \hat{\beta}_\ell \hat{\sigma}_{t-\ell}^2 &  & q+1\le t\le T \\
+     &  & \hat{\sigma}_j^2   & =\hat{\omega}+\sum_{\ell=1}^{\min(j,p)}\hat{\alpha}_\ell X_{j-\ell}^2                                            &  & 1\le t\le q
+\end{flalign*}
+\subsection*{GARCH Residuals}
+\[ X_t=\sigma_t W_t\implies W_t=\frac{X_t}{\sigma_t}\quad (\omega>0)  \]
+Therefore, the residuals are given by
+\[ \hat{W}_t=\frac{X_t}{\hat{\sigma}_t}  \]
+Model diagnostics can be applied to $ \hat{W}_t $ to check:
+\begin{enumerate}[(1)]
+    \item ``Whiteness'' or ``Squared Correlation.''
+    \item Normality.
+    \item These also may be used in bootstrap procedures.
+\end{enumerate}
+\subsection*{Forecasting the Conditional Variance}
+$ 1 $-step ahead:
+\[ \hat{\sigma}_{T+1}^2=\hat{\omega}+\sum_{j=1}^{p} \hat{\alpha}_j X_{T-j}^2 + \sum_{\ell=1}^{q} \hat{\beta}_\ell \hat{\sigma}_{T-\ell}^2 \]
+Initializations: $ X_t^2=\hat{\omega} $, $ \hat{\sigma}_t^2=\hat{\omega} $ for $ t\le 0 $.
+
+$ h $-step ahead:
+\[ \hat{\sigma}_{T+h}^2=\hat{\omega}+\sum_{j=1}^{p} \hat{\alpha}_j \hat{X}_{T+h-j}^2+\sum_{\ell=1}^{q} \hat{\beta}_\ell \hat{\sigma}_{T+h-\ell}^2 \]
+\[ \hat{X}_t^2=\begin{dcases}
+        X_t^2                                                                                                                & t\le T \\
+        \hat{\omega}\; \text{ or }\; \frac{\hat{\omega}}{1-\sum_{j=1}^{p} \hat{\alpha}_j-\sum_{\ell=1}^{q} \hat{\beta}_\ell} & t>T
+    \end{dcases} \]
