@@ -1,2 +1,290 @@
 \chapter{Week 10}
 \section{Choosing the Orders of a GARCH Model}
+\begin{enumerate}[(1)]
+    \item Use a $ \GARCH{1,1} $ model. ``We do not find much evidence
+          that the $ \GARCH{1,1} $ model is outperformed.'' ---Hansen and Lunde (2001).
+    \item Model Diagnostics: Consider the GARCH residuals
+          \[ \hat{W}_t=\frac{X_t}{\hat{\sigma}_t}  \]
+          \begin{enumerate}[(a)]
+              \item Check for whiteness, BLP test applied for $ \hat{W}_t $,
+                    and $ \hat{W}_t^2 $ (check for residual correlation in the squares).
+              \item Plot the ACF of $ \hat{W}_t $ and $ \hat{W}_t^2 $.
+          \end{enumerate}
+    \item Use information criteria. If $ \mathcal{L}(\hat{\omega},\hat{\symbf{\alpha}},\hat{\symbf{\beta}}) $
+          is the maximized likelihood, then
+          \[ \text{IC}=-2\log\bigl[\mathcal{L}(\hat{\omega},\hat{\symbf{\alpha}},\hat{\symbf{\beta}})\bigr]+P(T,k) \]
+          where $ k=1+p+q $ and $ P(T,k) $ is the penalty term (AIC or BIC).
+\end{enumerate}
+\begin{Remark}{Cross-validation}{}
+    It is difficult to apply cross-validation in GARCH modelling since
+    $ \hat{\sigma}_t^2 $ (object we are modelling) is unobserved.
+
+    Possible cross-validation criterion: Compare $ X_t^2 $ to $ \hat{\sigma}_t^2 $
+    where $ \hat{\sigma}_t^2 $ is estimated from $ X_{t-1},\ldots,X_1 $. It is
+    not typical to do this (although maybe it should be).
+\end{Remark}
+TODO code
+\section{Value at Risk Forecasting}
+One common application of GARCH modelling is to forecast the conditional quantile
+of the loss in price of financial assets.
+\begin{Definition}{Horizon $ h $ loss}{}
+    Suppose $ V_t $ is the price (value) of an asset at time $ t $.
+    The \textbf{horizon $h$ loss} is denoted
+    \[ L_{t,t+h}=-(V_{t+h}-V_t) \]
+    where $ V_{t+h}-V_t $ is known as the horizon $ h $ return.
+\end{Definition}
+\begin{Definition}{Value at risk}{}
+    Let $ \mathcal{F}_t $ denote all ``information'' available up to time $ t $.
+    For example, $ \mathcal{F}_t=X_t,X_{t-1},\ldots,V_t,V_{t-1},\ldots $.
+
+    The horizon $ h $ \textbf{value at risk} at level $ \alpha $
+    is denoted $ \text{VaR}_{t,h}(\alpha) $, satisfies
+    \[ \Prob{L_{t,h}>\text{VaR}_{t,h}(\alpha)\given \mathcal{F}_t}\le \alpha \]
+\end{Definition}
+In practice, we take
+\[ \text{VaR}_{t,h}(\alpha)=\text{inf}\{x: \Prob{L_{t,h}>x\given\mathcal{F}_t}\le \alpha\} \]
+That is, $ \text{VaR}_{t,h}(\alpha) $ is the $ (1-\alpha) $ conditional quantile
+of the loss distribution.
+\begin{Remark}{}{}
+    If $ L_{t,h}\mid \mathcal{F}_t $ is a continuous random variable, then
+    $ \text{VaR}_{t,h}(\alpha) $ satisfies
+    \[ \Prob{L_{t,h}>\text{VaR}_{t,h}(\alpha)}=\alpha \]
+\end{Remark}
+\begin{Example}{}{}
+    If $ L_{t,t+h}\mid\mathcal{F}_t \sim \N*{m_{t,h},\sigma^2_{t,h}} $, then
+    \[ \text{VaR}_{t,h}(\alpha)=m_{t,h}+\sigma_{t,h}\Phi^{-1}(1-\alpha) \]
+    where
+    \begin{itemize}
+        \item $ m_{t,h}=\E*{L_{t,t+h}\given \mathcal{F}_t} $.
+        \item $ \sigma^2_{t,h}=\Var*{L_{t,t+h}\given \mathcal{F}_t} $.
+        \item $ \Phi^{-1} $ is the standard normal quantile function.
+    \end{itemize}
+\end{Example}
+\begin{Remark}{}{}
+    Let $ r_t =V_t-V_{t-1} $ be the simple returns, then
+    \[ L_{t,t+h}=-\sum_{j=t+1}^{t+h}r_j\quad[Telescoping Sum]  \]
+    Hence, if we can derive a model for $ \set{r_t}_{t\in\mathbf{Z}} $
+    (e.g., a GARCH model), we can also obtain a model for $ L_{t,t+h} $.
+
+    Similarly, if $ r_t=\log(V_t/V_{t-1})=\log(V_t)-\log(V_{t-1}) $
+    denotes the log-returns, and $ q_t(h,a) $ is the quantile
+    of the conditional distribution of $ r_{t+1}+\cdots+r_{t+h} $,
+    then
+    \[ \text{VaR}_{t,h}(\alpha)=\bigl[1-e^{q_t(h,a)}\bigr]V_t \]
+    ``Model for returns/log-returns $ \implies  $ model for loss.''
+\end{Remark}
+\begin{Definition}{Risk metrics model}{}
+    Let $ r_t $ denote the returns (or log-returns). The
+    \textbf{Risk Metrics model} is defined by
+    \begin{flalign*}
+         &  & r_t                      & =\sigma_t W_t                               &  & W_t \sim \N{0,1}                            \\
+         &  & \sigma_t^2               & =\lambda\sigma_{t-1}^2+(1-\lambda)r_{t-1}^2 &  & \text{[ETS Model for Conditional Variance]} \\
+         &  & \text{VaR}_{t,1}(\alpha) & =\begin{cases}
+            \sigma_{t+1}\Phi^{-1}(\alpha) & \text{if returns}     \\
+            \bigl[1-e^{q_t(h,a)}\bigr]V_t & \text{if log-returns}
+        \end{cases}                  &  &
+    \end{flalign*}
+\end{Definition}
+The $ h $-step ahead VaR is approximated by
+\[ \text{VaR}_{t,h}(\alpha)=\sqrt{h}\text{VaR}_{t,1}(\alpha)\quad\text{[$\sqrt{h}$-scaling]} \]
+\begin{Remark}{}{}
+    \begin{enumerate}[(1)]
+        \item $ \sqrt{h} $-scaling derives from the assumption that
+              $ r_t=V_t-V_{t-1}\stackrel{\text{iid}}{\sim}\N*{0,\sigma^2} $. Therefore,
+              \[ L_{t,t+h}=-\sum_{j=t+1}^{t+h} r_j \sim \N*{0,\sigma^2 h}\quad\text{[Somewhat Dubious!]} \]
+        \item The Risk Metrics model leads to a degenerate GARCH model ($ \omega=0 $). It tends
+              to underestimate $ \sigma_{t}^2 $.
+    \end{enumerate}
+\end{Remark}
+\subsection*{A General Approach Using GARCH Models}
+\begin{itemize}
+    \item Step 1: Fit a GARCH model to returns $ r_t $.
+    \item Step 2: Use the GARCH model to forecast $ \hat{\sigma}_{t+1}^2 $.
+    \item \underline{Step 3}: Set $ q_t(1,\alpha)=\text{a quantile of $r_{t+1}$}=\hat{\sigma}_{t+h}\hat{F}^{-1}(\alpha) $
+          where $ \hat{F} $ is the distribution estimated from the GARCH residuals:
+          \begin{enumerate}[(a)]
+              \item $ \hat{F}\sim \N{0,1} $ CDF\@.
+              \item $ \hat{F}\sim t $ distribution, Pareto, etc.
+              \item $ \hat{F}\sim $ Empirical CDF (Bootstrap)\@.
+          \end{enumerate}
+\end{itemize}
+For $ h $-step ahead VaR forecasting:
+\begin{itemize}
+    \item Option 1: Appoly $ \sqrt{h} $-scaling.
+    \item Option 2: Use the GARCH model to simulate $ r_{T+h}^{(b)},\ldots,r_{T+h}^{(b)} $,
+          where the errors $ W_t $ are drawn from $ \hat{F} $. Set $ q_t(h,\alpha)=\text{a quantile of $\sum_{j=t+1}^{t+h} $}$
+          to be the empirical quantile of
+          \[ \sum_{j=T+1}^{T+h} r_{T+j}^{(b)}\quad(b=1,\ldots,B) \]
+          where $ B $ is large, (e.g., $B=10^{6} $).
+\end{itemize}
+\section{Backtesting and VaR Forecasts of NYSE}
+\begin{Definition}{Backtesting}{}
+    \textbf{Backtesting} returns to the practice of testing predictive
+    models accuracy by applying it to historic data.
+\end{Definition}
+\begin{Remark}{}{}
+    Backtesting is a fancy finance term for cross-validation.
+\end{Remark}
+When backtesting VaR forecasts, we would be looking for:
+\begin{itemize}
+    \item Correct Coverage: $ \Prob*{L_{t,t+h}>\text{VaR}_{t,h}(\alpha)}\approx \alpha $.
+    \item ``Tightness/Sharpness to the Data:'' If
+          \[ \Prob*{L_{t,t+h}>\text{VaR}^\prime_{t,h}(\alpha)}=\Prob*{L_{t,t+h}>\text{VaR}^2_{t,h}(\alpha)} \]
+          then whichever is larger is better.
+\end{itemize}
+\subsection*{1-step VaR Backtesting}
+Let $ \mathbb{I}_{t+1}(\alpha)=\Ind*{L_{t,t+1}>\text{VaR}_{t,1}(\alpha)} $. We should
+have
+\[ \frac{1}{T} \sum_{t=1}^{T} \mathbb{I}_{t+1}(\alpha)\approx \alpha \]
+\begin{itemize}
+    \item Historical Data Approach: $ \hat{q}_t(1,\alpha) $ is the $ \alpha $
+          empirical quantile of the last $ 250 $ returns.
+    \item Risk Metrics: $ \hat{q}_t(1,\alpha)=\hat{\sigma}_{t+1}\Phi^{-1}(\alpha) $,
+          $ \hat{\sigma}_{t+1} $ coming from the Risk Metrics ``recursion'' with $ \lambda=0.94 $
+          and initialized by variance estimate from previous $ 250 $ observations.
+    \item $ \GARCH{1,1} $-Gaussian: $ \hat{q}_{t}(1,\alpha)=\hat{\sigma}_{t+1}\Phi^{-1}(\alpha) $,
+          $ \hat{\sigma}_{t+1} $ coming from $ \GARCH{1,1} $ fit.
+    \item Non-parametric GARCH Bootstrap: $ \hat{q}_{t}(1,\alpha) $ set to be a
+          $ \alpha $ quantile of simulated $ 1 $-step return from $ \GARCH{1,1} $
+          with errors drawn from $ \GARCH{1,1} $ residuals.
+\end{itemize}
+TODO Code
+\section{Asymptotics of Partial Sums of Stationary Random Variables}
+Suppose $ \set{X_t}_{t\in\mathbf{Z}} $ is a strictly stationary
+time series; that is, $ \E{X_t}=\mu $, and $ \gamma_x(h)=\E{(X_t-\mu)(X_{t+h}-\mu)} $.
+We denote the estimator for $ \mu $ by:
+\[ \bar{X}=\frac{1}{T} \sum_{i=1}^{T} X_i \]
+Note that
+\[ \E{\bar{X}}=\mu \]
+\begin{align*}
+    \Var{\bar{X}}
+     & =\frac{1}{T^2} \sum_{j=1}^{T} \sum_{i=1}^{T} \E{(X_i-\mu)(X_j-\mu)}           \\
+     & =\frac{1}{T^2} \sum_{h=1-T}^{T-1} (T-\abs{h})\gamma_X(h)                      \\
+     & \approx \frac{1}{T} \sum_{h=-\infty}^{\infty} \gamma_X(h)\text{as }T\to\infty
+\end{align*}
+where $ \gamma_X(h) $ is called the ``long-run'' variance of $ \set{X_t}_{t\in\mathbf{Z}} $.
+\begin{Theorem}{}{}
+    Under weak dependence conditions on $ \set{X_t}_{t\in\mathbf{Z}} $
+    (e.g., if $ X_t $ is a linear process with $ \sum_{\ell=0}^{\infty}\psi_\ell^2<\infty $),
+    then
+    \[ \sqrt{T}(\bar{X}-\mu)\xrightarrow[T\to\infty]{D}\N[\bigg]{0,\sum_{h=-\infty}^{\infty} \gamma(h)} \]
+\end{Theorem}
+Application: Inference for the mean of a stationary time series.
+Suppose $ \set{X_t}_{t\in\mathbf{Z}} $ is strictly stationary, $ \E{X_t}=\mu $.
+\begin{itemize}
+    \item $ H_0 $: $ \mu=\mu_0 $
+    \item $ H_A $: $ \mu\ne \mu_0 $
+\end{itemize}
+Test statistic:
+\[ Z_T=\frac{\sqrt{T}(\bar{X}-\mu_0)}{\sqrt{\sum_{h=-\infty}^{\infty} \gamma_X(h)}}\stackrel{D}{\approx}\N{0,1}
+    \implies p=\Prob{\abs{Z}>\abs{Z_T}} \]
+where $ Z \sim \N{0,1} $.
+\subsection*{Estimating the Long-Run Variance (LRV)}
+$ \sigma_{\text{LRV}}^2=
+    \sum_{h=-\infty}^{\infty} \gamma_X(h) $, a natural estimator is
+$ \sum_{h=1-T}^{T-1} \hat{\gamma}_X(h) $. A problem here is that $ \hat{\gamma}(T-1) $
+is only based on a pair of observations.
+\subsection*{Truncated Long-Run Variance Estimator}
+\[ \hat{\sigma}_{\text{LRV}}^2=\sum_{h=-H}^{H} \hat{\gamma}_X(h) \]
+$ H $ is the ``bandwidth'' or ``truncation parameter.'' Normally,
+in order that $ \hat{\sigma}_{\text{LRV}}^2 $ would be consistent, we take
+$ H=H(T)\xrightarrow{T\to\infty}\infty $. So,
+\[ \frac{H(T)}{T} \xrightarrow{T\to\infty}0 \]
+\subsection*{Standard Choices of $ H $}
+Default in most R functions that use truncated LRV estimators:
+\[ H(T)=\biggl\lfloor 4\biggl(\frac{T}{100} \biggr)^{1/4}\biggr\rfloor \]
+Another one:
+\[ H(T)=\biggl\lfloor 12\biggl(\frac{T}{100} \biggr)^{1/4}\biggr\rfloor \]
+\subsection*{Dependent $ Z $-test or $ t $-test}
+\[ Z_T=\frac{\sqrt{T}(\bar{X}-\mu_0)}{\hat{\sigma}_{\text{LRV}}}  \]
+More conservative:
+\[ p=\Prob{\abs{t_{T-1}}>\abs{Z_T}} \]
+Another one:
+\[ p=\Prob{\abs{Z}>\abs{Z_T}} \]
+\subsection*{Partial Sum Process}
+Suppose $ X_1,\ldots,X_T $ are i.i.d. with $ \E{X_i}=0 $ and $ \Var{X_i}=\sigma^2 $.
+Define
+\[ S_T(x)=\frac{1}{\sqrt{T}} \sum_{i=1}^{\lfloor T_x\rfloor}X_i\quad\text{[Partial Sum Process]}  \]
+By CLT, $ S_T(1)\stackrel{D}{\approx}\sigma \N{0,1} $ as $ T\to\infty $. Also,
+\[ S_T(x)\xrightarrow[T\to\infty]{D}\sigma W(x)\quad\text{[Standard Wiener Process or Brownian-Motion]} \]
+\begin{Theorem}{}{}
+    If $ \set{X_t}_{t\in\mathbf{Z}} $ is strictly stationary and sutiably weakly
+    dependent, then
+    \[ S_T(x)=\frac{1}{\sqrt{T}} \sum_{t=1}^{\lfloor T_x\rfloor}(X_t-\mu)\xrightarrow[T\to\infty]{D}\sigma_{\text{LRV}}W(x)  \]
+    where
+    \[ \sigma_{\text{LRV}}^2=\sum_{h=-\infty}^{\infty} \gamma_X(h) \]
+\end{Theorem}
+\section{KPSS Test}
+We are often interested in evaluating:
+\begin{itemize}
+    \item $ H_0 $: $ \set{X_t}_{t\in\mathbf{Z}} $ is stationary.
+    \item $ H_A $: $ \set{X_t}_{t\in\mathbf{Z}} $ is non-stationary.
+\end{itemize}
+Other possible alternatives are:
+\begin{itemize}
+    \item $ H_{A,1} $: Change in level:
+          \[ \E{X_1}=\cdots=\E{X_{k^*}}\ne \E{X_{k^*+1}}=\cdots=\E{X_T} \]
+    \item $ H_{A,2} $: Trend: $ X_t=f(t)+\varepsilon_t $ where $ \varepsilon_t $ is stationary.
+    \item $ H_{A,3} $: Random-Walk [Unit Root]: $ X_t=X_{t-1}+\varepsilon_t $.
+\end{itemize}
+\subsection*{Kwiatowski-Phillips-Schmidt-Shin (KPSS) Test}
+Consider
+\[ Z_T(x)=\frac{1}{\sqrt{T}} \sum_{i=1}^{\lfloor T_x \rfloor} (X_i-\bar{X})=S_T-\frac{\lfloor T_x\rfloor}{T}S_T(1)  \]
+where $ S_T(x)=\frac{1}{\sqrt{T}} \sum_{t=1}^{\lfloor T_x\rfloor} (X_i-\mu) $. As we mentioned,
+fluctuations in $ Z_T(x) $ as a function of $ x $ that are ``large'' indicate change in the
+level or random variable.
+\[ \text{KPPS}_T=\text{Measure of Fluctuations}=\frac{1}{T\hat{\sigma}^2_{\text{LRV}}}\sum_{k=1}^{T} Z_T^2(k/T)  \]
+Under $ H_0 $: $ \set{X_t}_{t\in\mathbf{Z}} $ is strictly stationary and weakly dependent
+with $ \Var{X_t}<\infty $.
+\[ \text{KPSS}_T=\frac{1}{T\hat{\sigma}_{\text{LRV}}^2}\sum_{t=1}^{T} Z_T^2(t/T)\approx
+    \int_{0}^1 \biggl[\frac{Z_T(x)}{\sigma_{\text{LRV}}}\biggr]^{2}\, dx   \]
+\[ Z_T(x)=S_T(x)-\frac{\lfloor T_x\rfloor}{T}S_T(1)\xrightarrow[T\to\infty]{D}
+    \sigma_{\text{LRV}}\bigl[W(x)-x W(1)\bigr]  \]
+Define $ W(x)-x W(1) $ as the \textbf{Brownian Bridge} $ B(x) $. Therefore,
+\[ \text{KPSS}_T\xrightarrow[T\to\infty]{D}\int_0^1 B^2(x)\, dx\quad\text{[Cramér-Von Mises Distribution]} \]
+Under $ H_{A,1} $ to $ H_{A,3} $, $ \text{KPSS}_T\xrightarrow[T\to\infty]{p}\infty $. If
+$ \text{CVM}\coloneq \int_{0}^{1} B^2(x)\, d{x} $,
+then $ p=\Prob{\text{CVM}>\text{KPSS}_T} $. Small $ p $ suggest non-stationarity.
+\begin{Remark}{}{}
+    \begin{enumerate}[(1)]
+        \item Note that the null hypothesis of the KPSS test is stationarity, and so we only
+              reject if there is \emph{strong} evidence against stationarity.
+
+              ``KPSS test is unlikely to identify series that only have mild non-stationarity.''
+        \item Test is powerful against:
+              \begin{itemize}
+                  \item Changes in level.
+                  \item Trends.
+                  \item Random walk.
+              \end{itemize}
+        \item Test is not powerful against:
+              \begin{itemize}
+                  \item Heteroscedasticity (change in variance).
+              \end{itemize}
+    \end{enumerate}
+\end{Remark}
+TODO Code
+\section{Diebold-Mariano Tests}
+Notice that if we have two models
+\begin{align*}
+    M_1 & \xrightarrow{\text{Forecasts}} \hat{X}_{t,1} \xrightarrow{\text{CV Errors}} \hat{e}_{t,1}=X_t-X_{t,1} \xrightarrow{\text{Loss}} \hat{L}_{t,1}=L(\hat{e}_{t,1})     \\
+    M_2 & \xrightarrow[\text{Forecasts}]{}\hat{X}_{t,2}\xrightarrow[\text{CV Errors}]{} \hat{e}_{t,2}=X_t-X_{t,2} \xrightarrow[\text{Loss}]{} \hat{L}_{t,2}=L(\hat{e}_{t,2}) \\
+\end{align*}
+where $ L(x)=x^2 \implies \text{MSE} $ for example.
+\[ \text{CV Error}=\sum_{t\in\text{test sample}}\hat{L}_{t,i}  \]
+\begin{Remark}{}{}
+    Even if the models have the same predictive power, one of them will have ``better''
+    cross-validation error.
+
+    \underline{Question}: Is the model ``really'' better?
+\end{Remark}
+Diebold-Mariano (1995) suggest testing
+\[ \text{$H_0$: }\E*{\hat{L}_{t,1}-\hat{L}_{t,2}}=0 \]
+Statistic: $ D=\hat{L}_{t,1}-\hat{L}_{t,2} $ (average loss difference between models).
+\[ \bar{D}=\frac{1}{T} \sum_{t=1}^{T} D_t\quad\text{[$T$-length of test sample]} \]
+Under the assumption that $ D_t $ is weakly dependent and stationarity, and if $ H_0 $
+holds, then
+\[ \text{DM}_T=\frac{\sqrt{T}\bar{D}}{\hat{\sigma}_{\text{LRV}}(D)}\xrightarrow{D}\N{0,1}  \]
+Test of Equivalent Mean Loss:
+\[ p=\Prob[\big]{\abs{Z}>\abs{\text{DM}_T}} \]
+TODO Code
