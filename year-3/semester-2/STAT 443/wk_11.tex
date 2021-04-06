@@ -1,0 +1,202 @@
+\chapter{Week 11}
+\section{Multivariate Time Series Analysis}
+So far we have considered the case where
+$ \set{X_t}_{t\in\mathbf{Z}} $,
+or an observed stretch $ X_1,\ldots,X_T $
+are real numbers (take values in $ \mathbf{R} $).
+
+Frequently, we observe multiple time series at the same time.
+Suppose we observe $ d $ time series of length $ T $.
+\[ \begin{matrix}
+        X_{1,1} & \cdots & X_{1,T} \\
+        X_{2,1} & \cdots & X_{2,T} \\
+        \vdots  & \ddots & \vdots  \\
+        X_{d,1} & \cdots & X_{d,T}
+    \end{matrix} \]
+Conceptually, we might imagine that what we observe
+is a vector $ \symbf{X}_t=(X_{1,t},\ldots,X_{d,t})^\top\in\mathbf{R}^d $
+for $ 1\le t\le T $.
+\begin{Definition}{Multivariate time series}{}
+    Consider a vector valued stochastic process
+    $ \symbf{X}_t=(X_{1,t},\ldots,X_{d,t})^\top\in\mathbf{R}^d $,
+    $ t\in\mathbf{Z} $. We call such a process indexed
+    by the integers, or an observed stretch
+    $ \symbf{X}_1,\ldots,\symbf{X}_{T} $,
+    a \textbf{multivariate} (\textbf{vector-valued}, \textbf{$d$-variate}) time series.
+\end{Definition}
+\begin{Example}{}{}
+    \begin{itemize}
+        \item $ X_{1,t},\ldots,X_{d,t} $ could denote the log-returns of $ d $-stocks.
+        \item $ (X_{1,t},X_{2,t},X_{3,t}) $ could denote the measurements of the position
+              of an object at time $ t $.
+    \end{itemize}
+\end{Example}
+TODO Code
+\begin{Definition}{}{}
+    Consider a multivariate time series $ \set{\symbf{X}_t}_{t\in\mathbf{Z}} $
+    of dimension $ \symbf{d} $. The mean of the process is
+    \[ \mu_t=\E{\symbf{X}_t}=\begin{pmatrix}
+            \E{X_{1,t}} \\
+            \vdots      \\
+            \E{X_{d,t}}
+        \end{pmatrix} \]
+    The autocovariance matrix is
+    \[ \Gamma(t,s)=\E*{(\symbf{X}_t-\mu_t)(\symbf{X}_s-\mu_s)^\top}\in\mathbf{R}^{d\times d} \]
+    where $ \Gamma(t,s) $ encodes the variances/covariances between all coordinates
+    of the time series at times $ t $ and $ s $.
+\end{Definition}
+\begin{Definition}{}{}
+    We say a vector-valued time series $ \set{\symbf{X}_t}_{t\in\mathbf{Z}} $
+    is \textbf{weakly stationary} if
+    \[ \mu_t=\E{\symbf{X}_t}=\mu\quad[\text{does not depend on $ t $}] \]
+    \[ \Gamma(t+h,t)=\Gamma(h)\quad[\text{autocovariance only depends on the lag}] \]
+    We say $ \set{\symbf{X}_t}_{t\in\mathbf{Z}} $ is strictly stationary
+    if for all $ h\in\mathbf{Z} $, $ m\in\mathbf{N} $, $ i_1,\ldots,i_m\in\mathbf{Z} $,
+    $ \mathcal{B}_1,\ldots,\mathcal{B}_m\subseteq \mathbf{R}^d $ (``measurable subsets'') we have
+    \[ \Prob{\symbf{X}_{i_1}\in \mathcal{B}_1,\ldots,\symbf{X}_{i_m}\in\mathcal{B}_m}=
+        \Prob{\symbf{X}_{i_1+h}\in \mathcal{B}_1,\ldots, \symbf{X}_{i_m+h}\in \mathcal{B}_m} \]
+\end{Definition}
+\begin{Proposition}{Properties of Multivariate Stationary Processes}{}
+    \begin{itemize}
+        \item $ \Gamma(h)=\Gamma(-h)^\top $.
+              \begin{align*}
+                  \Gamma(-h)^\top
+                   & =\Bigl\{\E*{(X_{t-h}-\mu)(X_t-\mu)^\top}\Bigr\}^\top                               \\
+                   & =\E*{(X_t-\mu)(X_{t-h}-\mu)^\top}                                                  \\
+                   & =\E*{(\symbf{X}_{t+h}-\mu)(\symbf{X}_t-\mu)^\top}    &  & \text{weak stationarity} \\
+                   & =\Gamma(h)
+              \end{align*}
+        \item By CS,
+              \[ \abs*{\Gamma(h)[i,j]}\le \Bigl\{\Gamma(0)[i,i]\Gamma(0)[j,j]\Bigr\}^{1/2} \]
+              \begin{itemize}
+                  \item $ \Gamma(h)[i,j] $ is the covariance between $ X_{i,t+h} $ and $ X_{j,t} $.
+                  \item $ \Gamma(0)[i,i] $ is the variance of $ X_{i,0} $.
+                  \item $ \Gamma(0)[j,j] $ is the variance of $ X_{j,0} $.
+              \end{itemize}
+    \end{itemize}
+\end{Proposition}
+\begin{Definition}{Autocorrelation matrix}{}
+    The \textbf{autocorrelation matrix} is defined as
+    \[ R(h)[i,j]=\frac{\Gamma(h)[i,j]}{\Bigl\{\Gamma(0)[i,i]\Gamma(0)[j,j]\Bigr\}^{1/2}}  \]
+\end{Definition}
+\begin{Remark}{}{}
+    \begin{itemize}
+        \item $ \Gamma(h)[i,i]=\gamma_i(h) $ is the autocovariance of the component
+              series $ X_{i,t} $.
+        \item $ R(h)[i,i] $ is the ACF of the time series $ X_{i,t} $.
+    \end{itemize}
+\end{Remark}
+\begin{Definition}{Cross-covariance, Cross-correlation function}{}
+    The \textbf{cross-covariance} between series $ X_{1,t} $ and $ X_{2,t} $
+    assumed to be stationary is
+    \[ \gamma_{1,2}(h)=\E*{(X_{1,t+h}-\mu_1)(X_{2,t}-\mu_2)}=\Gamma(h)[1,2] \]
+    The \textbf{cross-correlation function} is
+    \[ \rho_{1,2}(h)=\frac{\gamma_{1,2}(h)}{\Bigl[\gamma_1(0)\gamma_2(0)\Bigr]^{1/2}}=R(h)[1,2]  \]
+\end{Definition}
+\begin{Definition}{Empirical autocovariance matrix}{}
+    If $ \symbf{X}_1,\ldots,\symbf{X}_T $ is an observed series of length $ T $
+    (assumed to arise from a weakly stationary series), then the
+    \textbf{empirical autocovariance matrix} is
+    \[ \hat{\Gamma}_h=\frac{1}{T} \sum_{t=1}^{T-h}(\symbf{X}_{t+h}-\bar{X})(\symbf{X}_t-\bar{X})^\top  \]
+    where $ \bar{X}=\frac{1}{T} \sum_{t=1}^{T} \symbf{X}_t $.
+    \[ \hat{R}_h=\text{diag}\bigl[\hat{\Gamma}(0)\bigr]^{1/2}\hat{\Gamma}(h)\, \text{diag}\bigl[\hat{\Gamma}(0)\bigr]^{1/2} \]
+\end{Definition}
+\begin{Theorem}{}{}
+    If $ \set{\symbf{X}_t}_{t\in\mathbf{Z}} $ is weakly stationary and suitably weakly dependent,
+    then
+    \[ \norm*{\hat{\gamma}(h)-\gamma(h)}=\mathcal{O}_p\biggl(\frac{1}{\sqrt{T}}\biggr) \]
+    where $ \norm{} $ is any norm on matrices.
+
+    If $ \set{X_{1,t}} $ and $ \set{X_{2,t}} $ are each strong white noises with finite variance,
+    then
+    \[ \sqrt{T}\hat{R}(h)[1,2]\xrightarrow[T\to\infty]{D}\N{0,1} \]
+    \underline{Takeaway}: The usual ``blue lines'' $ \bigl[\pm 1.96/\sqrt{T}\bigr] $
+    can be used to measure for ``strong cross correlation.''
+\end{Theorem}
+TODO Code
+\section{Vector Autoregressive and Vector ARMA Models}
+Suppose $ \set{\symbf{X}_t}_{t\in\mathbf{Z}} $ is a strictly stationary
+vector-valued process in $ \mathbf{R}^d $.
+\begin{Definition}{Vector autoregressive process}{}
+    We say $ \set{X_t}_{t\in\mathbf{Z}} $ follows a
+    \textbf{vector autoregressive process} of order $ 1 $
+    $ \text{VAR}(1) $ if there exists a matrix $ A\in\mathbf{R}^{d\times d} $
+    so that
+    \[ X_t=A X_{t-1}+W_t \]
+    where $ \set{W_t}_{t\in\mathbf{Z}} $ is a strong white noise in $ \mathbf{R}^d $;
+    that is, $ \set{W_t}_{t\in\mathbf{Z}} $ is i.i.d., $ \E{W_t}=0 $,
+    and $ \Var{W_t}=\symbf{\Sigma}_W $.
+\end{Definition}
+\subsection*{Stationary Solution to $ \text{VAR}(1) $}
+Suppose $ A $ satisfies $ \norm{A}_{op}=\sup_{\norm{x}=1}\norm{Ax}<1 $.
+Then,
+\begin{align*}
+    X_t
+     & =A X_{t-1}+W_t                                   \\
+     & =A\bigl[A X_{t-2}+W_{t-1}\bigr]+W_t              \\
+     & =A^2 X_{t-2}+ A W_{t-1}+W_t                      \\
+     & \vdotswithin{=}                                  \\
+     & =\sum_{j=0}^{M} A^j W_{t-j}+ A^{M+1} X_{t-(M+1)}
+\end{align*}
+\begin{Remark}{}{}
+    For any $ y\in\mathbf{R}^d $,
+    \begin{enumerate}[(1)]
+        \item $ \displaystyle \norm{A y}=\norm*{A \frac{y}{\norm{y}}}\norm{y}\le \norm{A}_{op}\norm{y} $
+        \item $ \displaystyle \norm*{A^M y}=\norm {A A^{M-1}y}\le \norm{A}_{op}\norm*{A^{M-1}y}\le \cdots\le \norm{A}_{op}^M\norm{y} $.
+              Therefore,
+              \[ \norm*{A^{M+1}X_{t-(M+1)}}\le \norm{A}_{op}^{M+1}\norm {X_{t-(M+1)}}\xrightarrow{M\to\infty}0 \]
+    \end{enumerate}
+\end{Remark}
+\begin{Theorem}{}{}
+    If $ \norm{A}_{op}\le 1 $, there exists a stationary process $ X_t\in\mathbf{R}^d $
+    so that
+    \[ X_t= A X_{t-1}+W_t \]
+    \[ X_t=\sum_{\ell=0}^{\infty} A^\ell W_{t-\ell}\quad\text{[vector-valued linear process]} \]
+    \begin{itemize}
+        \item $ A^\ell $ is well-defined since $ A $ is a contraction.
+    \end{itemize}
+\end{Theorem}
+\begin{Definition}{Vector ARMA}{}
+    We say $ \set{X_t}_{t\in\mathbf{Z}} $ follows a \textbf{vector ARMA} model of orders
+    $ p $ and $ q $ if there exists coefficient matrices $ A_1,\ldots, A_p,
+        B_1,\ldots,B_q\in\mathbf{R}^{d\times d} $ so that
+    \[ X_t=\Uunderbracket{A_1 X_{t-1}+\cdots+ A_p X_{t-p}}_{\text{VAR}}+W_t+\Uunderbracket{B_1 W_{t-1}+\cdots+B_p W_{t-q}}_{\text{VMA}} \]
+\end{Definition}
+\begin{Theorem}{}{}
+    There exist a stationary and causal solution to the vector ARMA recursion if and only if
+    \[ \det(I-\symbf{A}(z))\ne 0\quad(\abs{z}\le 1,z\in\mathbf{C}) \]
+    where $ A(z)=A_1 z+\cdots A_p z^p $ is a matrix-valued polynomial.
+\end{Theorem}
+\begin{Remark}{}{}
+    \begin{enumerate}[(1)]
+        \item Due to the difficulties of estimating the MA components in even moderate dimensions,
+              it is common to use pure VAR models.
+        \item Parameter estimation is simple using least squares.
+              \[ \hat{A}_1,\ldots,\hat{A}_p=\argmin_{A_1,\ldots,A_p}\sum_{t=p+1}^{T}\norm*{X_t-A_1 X_{t-1}-\cdots -A_p X_{t-p}}^2  \]
+        \item Model selection can be conducted using AIC/BIC, cross-validation.
+    \end{enumerate}
+\end{Remark}
+\section{Other Multivariate Time Series Odds and Ends}
+As with the VARMA models, many other similar results and models
+from scalar time series have counterparts for multivariate time series.
+\begin{Theorem}{Vector $ M $-dependent CLT}{}
+    If $ \set{X_t}_{t\in\mathbf{Z}} $ is a strictly stationary $ M $-dependent
+    time series in $ \mathbf{R}^d $ with $ \E*{\norm{X_t}^2}\le \infty $, then
+    \[ \sqrt{T}\bigl(\bar{X}-\mu\bigr)\xrightarrow{D}G \]
+    where $ G $ is a Gaussian vector in $ \mathbf{R}^d $
+    with $ \E{G}=\symbf{0} $ and $ \Var{G}=\sum_{h=-M}^{M} \Gamma_h $.
+\end{Theorem}
+Results like this can be extended to suitably weakly dependent processes, e.g.,
+\[ X_t=\sum_{\ell=0}^{\infty} A_\ell W_{t-\ell} \]
+Such results can be used to establish CLT's for $ \hat{\gamma}_h $,
+the empirical autocovariance matrix:
+\[ \sqrt{T}\bigl(\hat{\Gamma}_h-\Gamma_h\bigr)\xrightarrow[T\to\infty]{D}G \]
+where $ G $ is a mean-zero Gaussian matrix.
+\subsection*{Application: Multivariate White Noise/Portmanteau Tests (Hosking, Li and Mcleod, 1980s)}
+If $ X_1,\ldots,X_T $ is a $ d $-dimensional time series sampled from a strong white noise process, then
+\[ P_{T,H}=T \sum_{h=1}^{H} \tr*{\hat{\Gamma}_h^\top \hat{\Gamma}_0^{-1}\hat{\Gamma}_h\hat{\Gamma}_0^{-1}}
+    \xrightarrow[T\to\infty]{D}\chi^2(d^2 H) \]
+Approximate $ p $-value of white noise test:
+\[ p=\Prob*{\chi^2(d^2 H)>P_{T,H}} \]
+\section{VaR Example}
+TODO Code
