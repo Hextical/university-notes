@@ -197,15 +197,14 @@ a lower bound on their distance is known.
 \end{Theorem}
 
 \begin{Proof}{\Cref{thm:bch_bound}}{}
-    Let the block code of $ C $ be $ n $. Let $ g(x) $ be
-    the generator polynomial for $ C $. Suppose
-    \[ \beta,\beta^2,\ldots ,\beta^{\delta-1} \]
-    are the roots of $ g(x) $ where $ \beta\in GF(q^m) $
-    is an element of order $ n $. For simplicity, we have taken
+    Let $ g(x) $ be
+    the generator polynomial for $ C $. Suppose that
+    $ \beta,\beta^2,\ldots ,\beta^{\delta-1} $
+    are the roots of $ g(x) $, where $ \beta\in GF(q^m) $
+    is an element of order $ n $. For simplicity, we have chosen
     $ a=1 $.
-
-    Hence, $ g(x)=\lcm \set{m_{\beta^i}(x):1\leqslant i\leqslant \delta-1} $.
-
+    Hence,
+    \[ g(x)=\lcm \set{m_{\beta^i}(x):1\leqslant i\leqslant \delta-1} \]
     Now, let $ \symbf{r}\in V_n(GF(q)) $. Then,
     \[ \begin{aligned}
             \symbf{r}\in C
@@ -223,20 +222,22 @@ a lower bound on their distance is known.
         \end{bmatrix}_{(\delta-1)\times n} \]
     Now, $ \symbf{r}\in C\iff H_1\symbf{r}^\top=\symbf{0} $. Furthermore, no $ t=\delta-1 $
     columns of $ H_1 $ are linearly dependent over $ GF(q^m) $
-    because
+    since
     \[ \det
         \begin{bmatrix}
-            \beta^{i1}              & \beta^{i2}              & \cdots & \beta^{it}              \\
-            (\beta^2)^{i1}          & (\beta^2)^{i2}          & \cdots & (\beta^2)^{it}          \\
-            \vdots                                                                               \\
-            (\beta^{\delta-1})^{i1} & (\beta^{\delta-1})^{i2} & \cdots & (\beta^{\delta-1})^{it}
-        \end{bmatrix}_{t\times t}=\prod_{j=1}^t\beta^{ij}\det(A(\beta^{i1},\ldots,\beta^{it}))\neq 0 \]
-    since $ \beta^{i1},\ldots ,\beta^{it} $ are distinct.
+            \beta^{i_1}              & \beta^{i_2}              & \cdots & \beta^{i_t}              \\
+            (\beta^2)^{i_1}          & (\beta^2)^{i_2}          & \cdots & (\beta^2)^{i_t}          \\
+            \vdots                                                                                  \\
+            (\beta^{\delta-1})^{i_1} & (\beta^{\delta-1})^{i_2} & \cdots & (\beta^{\delta-1})^{i_t}
+        \end{bmatrix}_{t\times t}=\prod_{j=1}^t\beta^{i_j}\det\bigl[\Uunderbracket{A(\beta^{i_1},\ldots,\beta^{i_t})}_{\text{Vandermonde Matrix}}\bigr]\neq 0 \]
+    since $ \beta^{i_1},\ldots ,\beta^{i_t} $ are distinct.
+
+    \vspace{1mm}
 
     Since $ GF(q)\subseteq GF(q^m) $, we also have that no $ \delta-1 $ columns
     of $ H_1 $ are linearly dependent over $ GF(q) $.
 
-    Now, if $ \symbf{c}\in C $, $ \symbf{c}\neq \symbf{0} $, with $ w(\symbf{c})<\delta $,
+    Now, if $ \symbf{c}\in C $, $ \symbf{c}\neq \symbf{0} $, $ w(\symbf{c})<\delta $,
     then $ H_1\symbf{c}^\top=\symbf{0} $ gives $ 0 $ as a non-trivial
     linear combination of $ \delta-1 $ (or fewer) columns of $ H_1 $,
     contradicting the fact what we just proved. Hence, every
