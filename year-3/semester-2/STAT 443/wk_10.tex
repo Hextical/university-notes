@@ -2,7 +2,7 @@
 \section{Choosing the Orders of a GARCH Model}
 \begin{enumerate}[(1)]
     \item Use a $ \GARCH{1,1} $ model. ``We do not find much evidence
-          that the $ \GARCH{1,1} $ model is outperformed.'' ---Hansen and Lunde (2001).
+          that the $ \GARCH{1,1} $ model is outperformed.'' Hansen, Peter R., and Asger Lunde (2001).
     \item Model Diagnostics: Consider the GARCH residuals
           \[ \hat{W}_t=\frac{X_t}{\hat{\sigma}_t}  \]
           \begin{enumerate}[(a)]
@@ -19,8 +19,10 @@
     It is difficult to apply cross-validation in GARCH modelling since
     $ \hat{\sigma}_t^2 $ (object we are modelling) is unobserved.
 
+    \vspace{1mm}
+
     Possible cross-validation criterion: Compare $ X_t^2 $ to $ \hat{\sigma}_t^2 $
-    where $ \hat{\sigma}_t^2 $ is estimated from $ X_{t-1},\ldots,X_1 $. It is
+    (estimated from $ X_{t-1},\ldots,X_1 $). It is
     not typical to do this (although maybe it should be).
 \end{Remark}
 TODO code
@@ -30,8 +32,7 @@ of the loss in price of financial assets.
 \begin{Definition}{Horizon $ h $ loss}{}
     Suppose $ V_t $ is the price (value) of an asset at time $ t $.
     The \textbf{horizon $h$ loss} is denoted
-    \[ L_{t,t+h}=-(V_{t+h}-V_t) \]
-    where $ V_{t+h}-V_t $ is known as the horizon $ h $ return.
+    \[ L_{t,t+h}=-(\Uunderbracket{V_{t+h}-V_t}_{\text{horizon $ h $ return}}) \]
 \end{Definition}
 \begin{Definition}{Value at risk}{}
     Let $ \mathcal{F}_t $ denote all ``information'' available up to time $ t $.
@@ -42,13 +43,13 @@ of the loss in price of financial assets.
     \[ \Prob{L_{t,h}>\text{VaR}_{t,h}(\alpha)\given \mathcal{F}_t}\le \alpha \]
 \end{Definition}
 In practice, we take
-\[ \text{VaR}_{t,h}(\alpha)=\text{inf}\{x: \Prob{L_{t,h}>x\given\mathcal{F}_t}\le \alpha\} \]
+\[ \text{VaR}_{t,h}(\alpha)=\text{inf}\bigl\{x: \Prob{L_{t,h}>x\given\mathcal{F}_t}\le \alpha\bigr\} \]
 That is, $ \text{VaR}_{t,h}(\alpha) $ is the $ (1-\alpha) $ conditional quantile
 of the loss distribution.
 \begin{Remark}{}{}
     If $ L_{t,h}\mid \mathcal{F}_t $ is a continuous random variable, then
     $ \text{VaR}_{t,h}(\alpha) $ satisfies
-    \[ \Prob{L_{t,h}>\text{VaR}_{t,h}(\alpha)}=\alpha \]
+    \[ \Prob[\big]{L_{t,h}>\text{VaR}_{t,h}(\alpha)}=\alpha \]
 \end{Remark}
 \begin{Example}{}{}
     If $ L_{t,t+h}\mid\mathcal{F}_t \sim \N*{m_{t,h},\sigma^2_{t,h}} $, then
@@ -62,9 +63,11 @@ of the loss distribution.
 \end{Example}
 \begin{Remark}{}{}
     Let $ r_t =V_t-V_{t-1} $ be the simple returns, then
-    \[ L_{t,t+h}=-\sum_{j=t+1}^{t+h}r_j\quad[Telescoping Sum]  \]
+    \[ L_{t,t+h}=-\sum_{j=t+1}^{t+h}r_j\quad[\text{Telescoping Sum}]  \]
     Hence, if we can derive a model for $ \set{r_t}_{t\in\mathbf{Z}} $
     (e.g., a GARCH model), we can also obtain a model for $ L_{t,t+h} $.
+
+    \vspace{1mm}
 
     Similarly, if $ r_t=\log(V_t/V_{t-1})=\log(V_t)-\log(V_{t-1}) $
     denotes the log-returns, and $ q_t(h,a) $ is the quantile
@@ -73,9 +76,9 @@ of the loss distribution.
     \[ \text{VaR}_{t,h}(\alpha)=\bigl[1-e^{q_t(h,a)}\bigr]V_t \]
     ``Model for returns/log-returns $ \implies  $ model for loss.''
 \end{Remark}
-\begin{Definition}{Risk metrics model}{}
+\begin{Definition}{RiskMetrics model}{}
     Let $ r_t $ denote the returns (or log-returns). The
-    \textbf{Risk Metrics model} is defined by
+    \textbf{RiskMetrics model} is defined by
     \begin{flalign*}
          &  & r_t                      & =\sigma_t W_t                               &  & W_t \sim \N{0,1}                            \\
          &  & \sigma_t^2               & =\lambda\sigma_{t-1}^2+(1-\lambda)r_{t-1}^2 &  & \text{[ETS Model for Conditional Variance]} \\
@@ -92,13 +95,13 @@ The $ h $-step ahead VaR is approximated by
         \item $ \sqrt{h} $-scaling derives from the assumption that
               $ r_t=V_t-V_{t-1}\stackrel{\text{iid}}{\sim}\N*{0,\sigma^2} $. Therefore,
               \[ L_{t,t+h}=-\sum_{j=t+1}^{t+h} r_j \sim \N*{0,\sigma^2 h}\quad\text{[Somewhat Dubious!]} \]
-        \item The Risk Metrics model leads to a degenerate GARCH model ($ \omega=0 $). It tends
+        \item The RiskMetrics model leads to a degenerate GARCH model ($ \omega=0 $). It tends
               to underestimate $ \sigma_{t}^2 $.
     \end{enumerate}
 \end{Remark}
 \subsection*{A General Approach Using GARCH Models}
 \begin{itemize}
-    \item Step 1: Fit a GARCH model to returns $ r_t $.
+    \item Step 1: Fit a GARCH model to the returns $ r_t $.
     \item Step 2: Use the GARCH model to forecast $ \hat{\sigma}_{t+1}^2 $.
     \item \underline{Step 3}: Set $ q_t(1,\alpha)=\text{a quantile of $r_{t+1}$}=\hat{\sigma}_{t+h}\hat{F}^{-1}(\alpha) $
           where $ \hat{F} $ is the distribution estimated from the GARCH residuals:
@@ -110,7 +113,7 @@ The $ h $-step ahead VaR is approximated by
 \end{itemize}
 For $ h $-step ahead VaR forecasting:
 \begin{itemize}
-    \item Option 1: Appoly $ \sqrt{h} $-scaling.
+    \item Option 1: Apply $ \sqrt{h} $-scaling.
     \item Option 2: Use the GARCH model to simulate $ r_{T+h}^{(b)},\ldots,r_{T+h}^{(b)} $,
           where the errors $ W_t $ are drawn from $ \hat{F} $. Set $ q_t(h,\alpha)=\text{a quantile of $\sum_{j=t+1}^{t+h} $}$
           to be the empirical quantile of
@@ -119,8 +122,8 @@ For $ h $-step ahead VaR forecasting:
 \end{itemize}
 \section{Backtesting and VaR Forecasts of NYSE}
 \begin{Definition}{Backtesting}{}
-    \textbf{Backtesting} returns to the practice of testing predictive
-    models accuracy by applying it to historic data.
+    \textbf{Backtesting} returns to the practice of testing a predictive
+    models' accuracy by applying it to historic data.
 \end{Definition}
 \begin{Remark}{}{}
     Backtesting is a fancy finance term for cross-validation.
@@ -129,7 +132,7 @@ When backtesting VaR forecasts, we would be looking for:
 \begin{itemize}
     \item Correct Coverage: $ \Prob*{L_{t,t+h}>\text{VaR}_{t,h}(\alpha)}\approx \alpha $.
     \item ``Tightness/Sharpness to the Data:'' If
-          \[ \Prob*{L_{t,t+h}>\text{VaR}^\prime_{t,h}(\alpha)}=\Prob*{L_{t,t+h}>\text{VaR}^2_{t,h}(\alpha)} \]
+          \[ \Prob*{L_{t,t+h}>\text{VaR}^1_{t,h}(\alpha)}=\Prob*{L_{t,t+h}>\text{VaR}^2_{t,h}(\alpha)} \]
           then whichever is larger is better.
 \end{itemize}
 \subsection*{1-step VaR Backtesting}
@@ -139,8 +142,8 @@ have
 \begin{itemize}
     \item Historical Data Approach: $ \hat{q}_t(1,\alpha) $ is the $ \alpha $
           empirical quantile of the last $ 250 $ returns.
-    \item Risk Metrics: $ \hat{q}_t(1,\alpha)=\hat{\sigma}_{t+1}\Phi^{-1}(\alpha) $,
-          $ \hat{\sigma}_{t+1} $ coming from the Risk Metrics ``recursion'' with $ \lambda=0.94 $
+    \item RiskMetrics: $ \hat{q}_t(1,\alpha)=\hat{\sigma}_{t+1}\Phi^{-1}(\alpha) $,
+          $ \hat{\sigma}_{t+1} $ coming from the RiskMetrics ``recursion'' with $ \lambda=0.94 $
           and initialized by variance estimate from previous $ 250 $ observations.
     \item $ \GARCH{1,1} $-Gaussian: $ \hat{q}_{t}(1,\alpha)=\hat{\sigma}_{t+1}\Phi^{-1}(\alpha) $,
           $ \hat{\sigma}_{t+1} $ coming from $ \GARCH{1,1} $ fit.
@@ -151,16 +154,15 @@ have
 TODO Code
 \section{Asymptotics of Partial Sums of Stationary Random Variables}
 Suppose $ \set{X_t}_{t\in\mathbf{Z}} $ is a strictly stationary
-time series; that is, $ \E{X_t}=\mu $, and $ \gamma_x(h)=\E{(X_t-\mu)(X_{t+h}-\mu)} $.
+time series; that is, $ \E{X_t}=\mu $, and $ \gamma_X(h)=\E{(X_t-\mu)(X_{t+h}-\mu)} $.
 We denote the estimator for $ \mu $ by:
 \[ \bar{X}=\frac{1}{T} \sum_{i=1}^{T} X_i \]
-Note that
-\[ \E{\bar{X}}=\mu \]
+Note that $ \E{\bar{X}}=\mu $ and
 \begin{align*}
     \Var{\bar{X}}
-     & =\frac{1}{T^2} \sum_{j=1}^{T} \sum_{i=1}^{T} \E{(X_i-\mu)(X_j-\mu)}           \\
-     & =\frac{1}{T^2} \sum_{h=1-T}^{T-1} (T-\abs{h})\gamma_X(h)                      \\
-     & \approx \frac{1}{T} \sum_{h=-\infty}^{\infty} \gamma_X(h)\text{as }T\to\infty
+     & =\frac{1}{T^2} \sum_{j=1}^{T} \sum_{i=1}^{T} \E{(X_i-\mu)(X_j-\mu)}                \\
+     & =\frac{1}{T^2} \sum_{h=1-T}^{T-1} (T-\abs{h})\gamma_X(h)                           \\
+     & \approx \frac{1}{T} \sum_{h=-\infty}^{\infty} \gamma_X(h)\quad\text{as }T\to\infty
 \end{align*}
 where $ \gamma_X(h) $ is called the ``long-run'' variance of $ \set{X_t}_{t\in\mathbf{Z}} $.
 \begin{Theorem}{}{}
@@ -202,13 +204,13 @@ More conservative:
 Another one:
 \[ p=\Prob{\abs{Z}>\abs{Z_T}} \]
 \subsection*{Partial Sum Process}
-Suppose $ X_1,\ldots,X_T $ are i.i.d. with $ \E{X_i}=0 $ and $ \Var{X_i}=\sigma^2 $.
+Suppose $ X_1,\ldots,X_T $ are i.i.d.\ with $ \E{X_i}=0 $ and $ \Var{X_i}=\sigma^2 $.
 Define
 \[ S_T(x)=\frac{1}{\sqrt{T}} \sum_{i=1}^{\lfloor T_x\rfloor}X_i\quad\text{[Partial Sum Process]}  \]
 By CLT, $ S_T(1)\stackrel{D}{\approx}\sigma \N{0,1} $ as $ T\to\infty $. Also,
 \[ S_T(x)\xrightarrow[T\to\infty]{D}\sigma W(x)\quad\text{[Standard Wiener Process or Brownian-Motion]} \]
 \begin{Theorem}{}{}
-    If $ \set{X_t}_{t\in\mathbf{Z}} $ is strictly stationary and sutiably weakly
+    If $ \set{X_t}_{t\in\mathbf{Z}} $ is strictly stationary and suitably weakly
     dependent, then
     \[ S_T(x)=\frac{1}{\sqrt{T}} \sum_{t=1}^{\lfloor T_x\rfloor}(X_t-\mu)\xrightarrow[T\to\infty]{D}\sigma_{\text{LRV}}W(x)  \]
     where
@@ -227,10 +229,10 @@ Other possible alternatives are:
     \item $ H_{A,2} $: Trend: $ X_t=f(t)+\varepsilon_t $ where $ \varepsilon_t $ is stationary.
     \item $ H_{A,3} $: Random-Walk [Unit Root]: $ X_t=X_{t-1}+\varepsilon_t $.
 \end{itemize}
-\subsection*{Kwiatowski-Phillips-Schmidt-Shin (KPSS) Test}
+\subsection*{Kwiatkowski-Phillips-Schmidt-Shin (KPSS) Test}
 Consider
 \[ Z_T(x)=\frac{1}{\sqrt{T}} \sum_{i=1}^{\lfloor T_x \rfloor} (X_i-\bar{X})=S_T-\frac{\lfloor T_x\rfloor}{T}S_T(1)  \]
-where $ S_T(x)=\frac{1}{\sqrt{T}} \sum_{t=1}^{\lfloor T_x\rfloor} (X_i-\mu) $. As we mentioned,
+where $ S_T(x)=\frac{1}{\sqrt{T}} \sum_{t=1}^{\lfloor T_x\rfloor} (X_t-\mu) $. As we mentioned,
 fluctuations in $ Z_T(x) $ as a function of $ x $ that are ``large'' indicate change in the
 level or random variable.
 \[ \text{KPPS}_T=\text{Measure of Fluctuations}=\frac{1}{T\hat{\sigma}^2_{\text{LRV}}}\sum_{k=1}^{T} Z_T^2(k/T)  \]
@@ -278,7 +280,7 @@ where $ L(x)=x^2 \implies \text{MSE} $ for example.
 
     \underline{Question}: Is the model ``really'' better?
 \end{Remark}
-Diebold-Mariano (1995) suggest testing
+Diebold-Mariano (1995) suggested testing
 \[ \text{$H_0$: }\E*{\hat{L}_{t,1}-\hat{L}_{t,2}}=0 \]
 Statistic: $ D=\hat{L}_{t,1}-\hat{L}_{t,2} $ (average loss difference between models).
 \[ \bar{D}=\frac{1}{T} \sum_{t=1}^{T} D_t\quad\text{[$T$-length of test sample]} \]
