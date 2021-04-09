@@ -1,12 +1,274 @@
 \chapter{Week 12}
 \section{Multiple Time Series Regression and Transfer Function Models}
+\subsection*{Problem}
+Suppose that we observe a bivariate time series $ (Y_t,X_t)_{1\le t\le T} $,
+and we are interested solely in forecasting $ Y_{T+h} $. $ X_t $
+can be thought of as an \emph{exogenous} or \emph{covariate} series that
+we would like to use to improve the forecast of $ Y_t $.
+
+\textbf{Wrinkles on this theme include}:
+\begin{itemize}
+    \item $ Y_t $ is vector-valued.
+    \item $ X_t $ is vector-valued.
+    \item Both $ X_t $ and $ Y_t $ are vector-valued.
+\end{itemize}
+
+\begin{Definition}{ARMAX}{}
+    $ Y_t $ is said to follow an \textbf{ARMAX} model (ARMA model with eXogenous variables)
+    if there exists a (strong) white noise $ \set{Z_t}_{t\in\mathbf{Z}} $
+    such that
+    \[ Y_t=\beta X_t+\phi_1 Y_{t-1}+\cdots+\phi_p Y_{t-p}+Z_t+\theta Z_{t-1}+\cdots+\theta_q Z_{t-q} \]
+    where $ \beta X_t $ is the regression on $ X_t $ (contemporaneous). Using the Backshift
+    operator, we may write this model as:
+    \[ \phi(B)Y_t=\beta X_t+\theta(B)Z_t\implies Y_t=\frac{\beta}{\phi(B)}X_t +\frac{\theta(B)}{\phi(B)} Z_t \]
+\end{Definition}
+\begin{Definition}{Simple linear regression model}{}
+    $ Y_t $ is said to follow a \textbf{simple linear regression model} model
+    with ARMA errors if there exists a white noise sequence $ \set{Z_t}_{t\in\mathbf{Z}} $
+    so that
+    \[ Y_t=\beta X_t+V_t\implies Y_t=\beta X_t+\frac{\theta(B)}{\phi(B)} Z_t \]
+    \[ \phi(B)V_t=\theta(B)Z_t\implies V_t=\frac{\theta(B)}{\phi(B)} Z_t \]
+    where $ \phi(B),\theta(B) $ are $ p,q $-degree polynomials respectively.
+\end{Definition}
+\begin{Definition}{Transfer function model}{}
+    $ Y_t $ is said to follow a \textbf{transfer function model} with $ X_t $
+    if there exist finite degree polynomials $ \beta,\nu,\phi,\theta $, and a strong
+    white noise sequence $ \set{Z_t}_{t\in\mathbf{Z}} $ such that
+    \[ Y_t=\frac{\beta(B)}{\nu(B)} +\frac{\theta(B)}{\phi(B)} Z_t \]
+\end{Definition}
+\begin{Example}{Full Transfer Function Models}{}
+    ARMAX and Simple contemporaneous regression models are special examples
+    of \emph{full transfer function models}.
+\end{Example}
+\begin{Remark}{Non-Stationarity}{}
+    If a certain degree of differencing is required to make $ Y_t $, $ X_t $
+    stationary, then we write the transfer function model as:
+    \[ (1-B)^d Y_t=\frac{\beta(B)}{\nu(B)} (1-B)^d X_t+\frac{\theta(B)}{\phi(B)} Z_t \]
+    \begin{itemize}
+        \item When $ d\ge 1 $, $ \beta(z)=\beta $, $ \nu(z)=\phi(z) $, this is called
+              an \textbf{ARIMAX} model.
+        \item When $ d=0 $, $ \beta(z)=\beta $, $ \nu(z)=1 $, $ \phi(z)=(1-z)^q \phi^\star (z) $,
+              this is called a \textbf{regression model with ARIMA errors}.
+        \item Seasonality can be incorporated by using seasonal lags in the differencing
+              and transfer function polynomials.
+    \end{itemize}
+\end{Remark}
 
 \section{Fitting and Forecasting Transfer Function Models}
+Transfer function models:
+\[ Y_t=\frac{\beta(B)}{\nu(B)} X_t+\frac{\theta(B)}{\phi(B)} Z_t \]
+\begin{itemize}
+    \item Regression model with ARIMA errors:
+          \begin{itemize}
+              \item $ \beta(B)=\beta $ where $ \beta $ is a constant.
+              \item $ \nu(B)=1 $.
+              \item $ \phi(B)=(1-B)^d \phi^\star(B) $.
+          \end{itemize}
+\end{itemize}
+Two-step estimation:
+\begin{enumerate}[(1)]
+    \item Estimate $ \hat{\beta} $ using ordinary least squares:
+          \[ \argmin_{\beta}\sum_{t=1}^{T} \bigl(Y_t-\beta X_t\bigr)^2 \]
+    \item Calculate residuals:
+          \[ \hat{V}_t=Y_t-\hat{\beta}X_t \]
+          and then fit an ARIMA model to $ \hat{V}_t $. This is what most packages do!
+\end{enumerate}
+For general transfer function models, the parameters can be estimated by
+positing a likelihood (usually Gaussian) for the innovations $ Z_t $, or
+``pre-whitening'' the input and output series to identify and estimate the
+transfer function, and then fitting an ARIMA model to the residuals.
+\[ Y_t=\frac{\beta(B)}{\nu(B)} X_t+N_t=\sum_{j=0}^{\infty} v_j B^j\cong \sum_{j=0}^{k} v_j \beta_j\quad\text{where $ N_t $ is ARIMA} \]
+Suppose there exists $ \theta_x $ and $ \phi_x $ so that
+\[ \frac{\theta_x(B)}{\phi_x(B)} X_t=\alpha_t\leftarrow\text{ white noise (i.e., $ X_t \sim $ ARIMA)} \]
+By then defining
+\[ \beta_t=\frac{\theta_x(B)}{\phi_x(B)} y_t \]
+\[ N_t^\star = \frac{\theta_x(B)}{\phi_x(B)} N_t\quad\text{(still follows ARIMA model)} \]
+we get the transfer function equation that
+\[ \beta_t=V(B)\alpha_t+N_t^\star\cong \sum_{j=0}^{\infty} v_k \beta^j+N_t^\star \]
+\begin{Remark}{}{}
+    If $ X_t $ and $ N_t $ are independent, then $ \alpha_t $ and $ W_t^\star $ are independent.
+    Multiply LHS and RHS by $ \alpha_{t-j} $, take expectation.
+    \[ \E{\beta_t\alpha_{t-j}}=v_j \sigma_\alpha^2\implies
+        v_j=\frac{\E{\beta_t\alpha_{t-j}}}{\sigma_\alpha^2}\implies
+        \hat{v}_j=\frac{\widehat{\E{\beta_t\alpha_{t-j}}}}{\hat{\sigma}_\alpha^2}  \]
+    where $ \E{\beta_t \alpha_{t-j}} $ is the CCF of $ \alpha_t $ with $ \beta_t $ at
+    lag $ j $.
+\end{Remark}
+We may then estimate an ARIMA model for the noise:
+\[ \hat{N}_t^\star=\beta_t-\hat{V}(B)\alpha_t \]
+Can be reverse-engineered by applying $ \dfrac{\phi_x(B)}{\theta_x(B)} $
+to estimate the original transfer function model from $ Y $ to $ X $ (Box-Jenkins, 1970s).
+\subsection*{Forecasting Treansfer Function Models}
+Having estimated the parameters, a forecast for $ Y_{T+h} $ can be obtained by:
+\begin{enumerate}[(1)]
+    \item Forecasting covariate series $ \hat{X}_{T+h} $ for $ j=1,\ldots,h $.
+    \item Inputting forecast covariate series and forecasted noise series (ARIMA forecast)
+          into the transfer function model.
+\end{enumerate}
+\begin{Remark}{}{}
+    In many cases, the covariate series $ X_t $ does not need to be forecast since it is known in advance.
+    \begin{Example}{}{}
+        \begin{itemize}
+            \item $ X_t $ is a trend.
+            \item $ X_t $ is a dummy (indicator) variable coding calendar effects:
+                  \[ X_t=\begin{cases*}
+                          1 & day $ t $ is a holiday \\
+                          0 & otherwise
+                      \end{cases*} \]
+
+        \end{itemize}
+    \end{Example}
+\end{Remark}
 
 \section{Regression with ARIMA Errors Example}
 \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT%20443/code/12.3%20-%20Regression%20with%20ARIMA%20Errors%20Example.R}{[R Code] Regression with ARIMA Errors Example}
 
 \section{State Space Models and Kalman Filtering and Smoothing}
+Suppose $ Y_t\in\mathbf{R}^d $, a very good class of models for $ Y_t $
+are state space models or Dynamic Linear Models.
+\begin{itemize}
+    \item Observation Equation:
+          \[ Y_t=A_t X_t+\Gamma u_t+V_t \]
+    \item State Equation:
+          \[ X_t=\Phi X_{t-1}+\xi u_t+W_t\quad(X_t\in\mathbf{R}^p) \]
+          \begin{itemize}
+              \item $ A_t $ is a known design matrix.
+              \item $ X_t $ is a state variable.
+              \item $ u_t $ are exogenous variables.
+              \item $ V_t $ and $ W_t $ are noise.
+              \item $ V_t \sim \mathcal{N}_d(0,R) $.
+              \item $ W_t \sim \mathcal{N}_p(0,Q) $.
+          \end{itemize}
+\end{itemize}
+State space models originated in Aerospace and Signal processing research:
+\begin{Example}{}{}
+    We are interested in the position $ X_t\in\mathbf{R}^3 $
+    of a spacecraft. We cannot measure the position exactly, but we can measure:
+    \[ Y_t=\begin{pmatrix}
+            \text{velocity}_t \\
+            \text{azimuth}_t  \\
+            \text{altitude}_t
+        \end{pmatrix} \]
+    We assume $ X_t $ is related to $ Y_t $ through a state space model:
+    $ Y_t $ is obtained after linearly transforming $ X_t $ and adding noise.
+\end{Example}
+Every model that we have discussed so far has a state space formulation:
+\begin{Example}{$ \ARMA{p,q} $ State Space Formulation}{}
+    \begin{itemize}
+        \item $ \phi(B)Y_t=\theta(B)W_t $.
+        \item Let $ r=\max(p,q+1) $.
+        \item $ \phi_j=0 $ for $ j>p $ and $ \theta_j=0 $ for $ j>q $ where $ \theta_0=1 $.
+    \end{itemize}
+    Then, one can check that
+    \[ Y_t=\bigl[\theta_{r-1},\theta_{r-2},\ldots,\theta_0\bigr]\symbf{X}_t\quad\text{Observation Equation} \]
+    \[ \symbf{X}_t=\begin{pmatrix}
+            X_{t-r+1} \\
+            \vdots    \\
+            X_t
+        \end{pmatrix}\in\mathbf{R}^r \]
+    \[ \symbf{X}_{t+1}=\begin{pmatrix}
+            0      & 1          & 0          & \cdots & 0      \\
+            \vdots & 0          & 1          &        & \vdots \\
+            \vdots & \vdots     & 0          &        & \vdots \\
+            \vdots & \vdots     & \vdots     &        & \vdots \\
+            0      & 0          & 0          &        & 1      \\
+            \phi_r & \phi_{r-1} & \phi_{r-2} & \cdots & \phi_1
+        \end{pmatrix}\symbf{X}_t+\begin{pmatrix}
+            0      \\
+            \vdots \\
+            0      \\
+            1
+        \end{pmatrix}W_{t-1} \]
+    which is our State Equation.
+\end{Example}
+\begin{Remark}{}{}
+    ETS, ARIMA, and GARCH models all have state space representations.
+\end{Remark}
+Why are state space models nice?
+\begin{enumerate}[(1)]
+    \item Unifying Framework.
+    \item Extra Flexibility/Generality. By specifying design matrices $ A_t $
+          and exogenous variables $ u_t $, we can handle:
+          \begin{enumerate}[(a)]
+              \item Missing data.
+              \item Full transfer function models.
+          \end{enumerate}
+\end{enumerate}
+\textbf{Big Problem with State-Space Represtnation}: Having observed $ Y_t $,
+what can we say about $ X_t $?
+\subsection*{Kalman Filter (Rudolf Kalman, 1960s)}
+\begin{itemize}
+    \item A method for estimating $ X-t $ based in $ \set{Y_s:s\le t} $
+          which is an online estimation of $ X_t $.
+\end{itemize}
+\subsection*{Kalman Smoothing}
+\begin{itemize}
+    \item A method to estimate $ X_t $ based on $ \set{Y_s:1\le s\le T} $
+          which is a retrospective estimation of $ X_t $.
+\end{itemize}
+\begin{Remark}{}{}
+    If $ (Y_t,X_t) $ follow the state space model with Gaussian innovations,
+    they are jointly Gaussian. Therefore, the best guess of
+    \[ (X_t\mid Y_s)_{s\le t}=\E{X_t\given Y_s:s\le t} \]
+    This would be the best in mean-square sense even if $ (X_t,Y_t) $ are not
+    jointly Gaussian.
+\end{Remark}
+State Space Model:
+\[ Y_t=A_t X_t+\Gamma u_t+V_t\quad (V_t \sim \mathcal{N}_d(0,R)) \]
+\[ X_t=\Phi X_{t-1}+\xi u_t+W_t\quad (W_t \sim \mathcal{N}(0,Q)) \]
+Initial conditions: $ X_0 $ and $ P_0 $ (initial variance of $ X_0 $).
 
+Let $ X_t^s=\E{X_t\given Y_k:k\le s} $ and $ P_t^s=\E*{(X_t-X_t^s)(X_t-X_t^s)^\top} $
+where $ P_t^s $ is the covariance matrix of forecast error of $ X_t $ based on $ X_t^s $.
+\subsection*{Kalman Filter}
+\[ X_t^{t-1}=\Phi X_{t-1}^{t-1}+\xi u_t \]
+\[ P_t^{t-1}=\Phi P_{t-1}^{t-1}\Phi^\top +Q \]
+\[ X_t^t = X_t^{t-1}+K_t(y_t-A_t X_t^{t-1}-\Gamma u_t) \]
+\[ P_t^t=\bigl[I-K_t A-t\bigr]P_t^{t-1} \]
+where $ K_t=P_t^{t-1}A_t^\top\bigl[A_t P_t^{t-1}A_t^\top +R\bigr]^{-1} $
+is the \textbf{Kalman Gain} which defines how much we alter $ X_t^t $ based on
+observing the deviation $ Y_t $ from $ A_t X_t^{t-1}+\Gamma u_t $.
+\begin{Remark}{}{}
+    \begin{enumerate}[(1)]
+        \item $ (X_t^t,P_t^t)=f(X_{t-1}^{t-1},P_{t-1}^{t-1}) $ where $ f $ is linear.
+              The term $ (X_{t-1}^{t-1},P_{t-1}^{t-1}) $ says we only have to store
+              and do the linear algebra with $ X_{t-1}^{t-1}, P_{t-1}^{t-1} $
+              and $ Y_t $ to update state prediction. Can be done in real time.
+        \item Formulas look complicated, but they are quite simple! Just came
+              from calculating
+              \[ \Uunderbracket{(X_t\given Y_s)_{s\le t}}_{\text{Jointly Gaussian}} \]
+    \end{enumerate}
+\end{Remark}
+\subsection*{Kalman Smoother}
+Infer $ X_t $ based on $ \set{Y_s:1\le s\le T} $ with initial conditions
+$ X_0 $ and $ P_0 $ for $ t=T,T-1,\ldots, $ (we start from the end of the series).
+\[ X_{t-1}^\top = X_{t-1}^{t-1}+J_{t-1}(X_t^\top - X_t^{t-1}) \]
+\[ P_{t-1}^\top = P_{t-1}^{t-1}+J_{t-1}(P_t^\top - P_t^{t-1})J_{t-1}^\top \]
+\[ J_{t-1}=P_{t-1}^{t-1}+\phi^\top\bigl[P_t^{t-1}\bigr]^{-1} \]
+\begin{Remark}{}{}
+    Estimating of model parameters of state space model can be obtained using MLE\@.
+    \[ \varepsilon_t=y_t-A_t X_t^{t-1}-\Gamma u_t \sim \N{0,R} \]
+    where $ X_t^{t-1} $ is our best guess of $ X_t $ based on $ \set{y_s:s\le t-1} $
+    implicitly a function of parameters.
+    \[ \mathcal{L}(\symbf{\theta})=\prod_{j=1}^T f_{\varepsilon_j}(\symbf{\theta}) \]
+    which is maximizing as a function of $ \symbf{\theta}=(R,Q,\xi,\Gamma,\Phi)^\top $.
+    \begin{itemize}
+        \item Very difficult optimization problem (Newton-Raphson, EM, MCMC)
+    \end{itemize}
+\end{Remark}
+\subsection*{Application to Missing Data}
+Suppose we observe a time series $ Y_t $ with missing values, we would like to
+infer the time series
+\[ X_t=\begin{cases*}
+        Y_t       & $ Y_t $ known                          \\
+        Y_t^\star & unknown values of $ Y_t $ when missing
+    \end{cases*} \]
+\[ Y_t=A_t X_t \]
+$ X_t \sim \text{ARIMA} $ (or other) specification thought to model $ Y_t $ well.
+\[ A_t=\begin{cases*}
+        1 & $ Y_t $ is observed \\
+        0 & $ Y_t $ is missing
+    \end{cases*} \]
+Infer $ X_t $ using Kalman Smoothing.
 \section{Kalman Smoothing Time Series Imputation Example}
 \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT%20443/code/12.5%20-%20Kalman%20Smoothing%20Time%20Series%20Imputation%20Example.R}{[R Code] Kalman Smoothing Time Series Imputation Example}
