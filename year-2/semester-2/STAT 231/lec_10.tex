@@ -11,21 +11,21 @@
     \item Invariance property of the MLE
     \item Relative likelihood function
 \end{itemize}
-\begin{defbox}
-    \begin{definition}
-        The \textbf{\emph{relative likelihood function}} is defined as
-        \[ R(\theta)=\frac{L(\theta)}{L(\hat{\theta})} \]
-        for $ \theta\in\Omega $. Note that $ 0\leqslant R(\theta)\leqslant 1 $
-        for all $ \theta\in\Omega $.
-    \end{definition}
-\end{defbox}
-\begin{defbox}
-    \begin{definition}
-        The \textbf{\emph{log likelihood function}} is defined as
-        \[ \ell(\theta)=\ln\left[ L(\theta) \right] \]
-        for $ \theta\in\Omega $.
-    \end{definition}
-\end{defbox}
+
+\begin{Definition}{}{}
+    The \textbf{\emph{relative likelihood function}} is defined as
+    \[ R(\theta)=\frac{L(\theta)}{L(\hat{\theta})} \]
+    for $ \theta\in\Omega $. Note that $ 0\leqslant R(\theta)\leqslant 1 $
+    for all $ \theta\in\Omega $.
+\end{Definition}
+
+
+\begin{Definition}{}{}
+    The \textbf{\emph{log likelihood function}} is defined as
+    \[ \ell(\theta)=\ln\left[ L(\theta) \right] \]
+    for $ \theta\in\Omega $.
+\end{Definition}
+
 $ \dagger $ Why does maximizing $ \ell(\theta) $ also maximize $ L(\theta) $?
 Answer: $ \ln(\cdot) $ is an increasing function, in fact it will work for all increasing functions.
 
@@ -35,32 +35,32 @@ That means $ f(\hat{x})>f(x) $ for all $ x $. Thus,
 \[ g(f(\hat{x}))>g(f(x)) \]
 Let $ t=f(\hat{x}) $ and $ s=f(x) $. The result now follows.
 
-\begin{thmbox}
-    \begin{prop}
-        If $ Y \sim \bin(n,\theta) $ with $ y $ successes, then the
-        maximum likelihood estimate for $ \theta $ is given by
-        \[ \hat{\theta}=\frac{y}{n} \]
-    \end{prop}
-\end{thmbox}
-\begin{proof}
-    If $ y=0 $, then
-    \[ L(\theta)=P(Y=0;\theta)=\binom{n}{0}\theta^0(1-\theta)^n=(1-\theta)^{n-0} \]
-    for $ 0\leqslant \theta \leqslant 1 $. $ L(\theta) $ is a decreasing function
-    for $ \theta\in[0,1] $ and its maximum on the interval $ [0,1] $
-    occurs at the endpoint $ \theta=0 $ and so $ \hat{\theta}=0=\frac{0}{n} $.
 
-    If $ y=n $, then
-    \[ L(\theta)=P(Y=n;\theta)=\binom{n}{n}\theta^n(1-\theta)^{n-n}=\theta^n \]
-    for $ 0\leqslant \theta \leqslant 1 $. $ L(\theta) $ is an increasing function
-    for $ \theta\in[0,1] $ and its maximum on the interval $ [0,1] $
-    occurs at the endpoint $ \theta=1 $ and so $ \hat{\theta}=1=\frac{n}{n} $.
+\begin{Proposition}{}{}
+    If $ Y \sim \bin(n,\theta) $ with $ y $ successes, then the
+    maximum likelihood estimate for $ \theta $ is given by
+    \[ \hat{\theta}=\frac{y}{n} \]
+\end{Proposition}
 
-    If $ y\neq 0 $ and $ y\neq n $, then
-    \[ L(\theta)=P(Y=y;\theta)=\binom{n}{y}\theta^y(1-\theta)^{n-y} \]
-    for $ 0\leqslant \theta\leqslant 1 $. Then,
-    \[ \ell(\theta)=\ln\left[ \binom{n}{y} \right]+y\ln(\theta)+(n-y)\ln(1-\theta) \]
-    for $ 0<\theta<1 $.
-    \[ \frac{d\ell}{d\theta}=\frac{y}{\theta}-\frac{n-y}{1-\theta}=\frac{y-n\theta}{\theta(1-\theta)}:=0  \]
-    \[ \implies \hat{\theta}=\frac{y}{n} \]
-\end{proof}
+\begin{Proof}{}{}
+If $ y=0 $, then
+\[ L(\theta)=P(Y=0;\theta)=\binom{n}{0}\theta^0(1-\theta)^n=(1-\theta)^{n-0} \]
+for $ 0\leqslant \theta \leqslant 1 $. $ L(\theta) $ is a decreasing function
+for $ \theta\in[0,1] $ and its maximum on the interval $ [0,1] $
+occurs at the endpoint $ \theta=0 $ and so $ \hat{\theta}=0=\frac{0}{n} $.
+
+If $ y=n $, then
+\[ L(\theta)=P(Y=n;\theta)=\binom{n}{n}\theta^n(1-\theta)^{n-n}=\theta^n \]
+for $ 0\leqslant \theta \leqslant 1 $. $ L(\theta) $ is an increasing function
+for $ \theta\in[0,1] $ and its maximum on the interval $ [0,1] $
+occurs at the endpoint $ \theta=1 $ and so $ \hat{\theta}=1=\frac{n}{n} $.
+
+If $ y\neq 0 $ and $ y\neq n $, then
+\[ L(\theta)=P(Y=y;\theta)=\binom{n}{y}\theta^y(1-\theta)^{n-y} \]
+for $ 0\leqslant \theta\leqslant 1 $. Then,
+\[ \ell(\theta)=\ln\left[ \binom{n}{y} \right]+y\ln(\theta)+(n-y)\ln(1-\theta) \]
+for $ 0<\theta<1 $.
+\[ \frac{d\ell}{d\theta}=\frac{y}{\theta}-\frac{n-y}{1-\theta}=\frac{y-n\theta}{\theta(1-\theta)}:=0  \]
+\[ \implies \hat{\theta}=\frac{y}{n} \]
+\end{Proof}
 

@@ -7,84 +7,84 @@
     \item Relationship between likelihood intervals and confidence intervals
 \end{enumerate}
 
-\begin{thmbox}
-    \begin{theorem}
-        Let $ Y_1,\ldots ,Y_n $ be iid $ N(\mu,\sigma^2) $ where $ \mu $ and $ \sigma $ are
-        unknown. Let
-        \[ \bar{Y}=\frac{1}{n} \sum\limits_{i=1}^{n} Y_i \]
-        and
-        \[ S^2=\frac{1}{n-1} \sum\limits_{i=1}^{n} (Y_i-\bar{Y})^2 \]
-        Then,
-        \begin{enumerate}[label=(\roman*)]
-            \item The pivotal quantity for $ \mu $ is:
-                  \[ \frac{\bar{Y}-\mu}{\frac{S}{\sqrt{n}}} \sim T_{n-1}  \]
-            \item The pivotal quantity for $ \sigma^2 $ is:
-                  \[ \frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}  \]
-        \end{enumerate}
-    \end{theorem}
-\end{thmbox}
-\begin{remark}
+
+\begin{Theorem}{}{}
+    Let $ Y_1,\ldots ,Y_n $ be iid $ N(\mu,\sigma^2) $ where $ \mu $ and $ \sigma $ are
+    unknown. Let
+    \[ \bar{Y}=\frac{1}{n} \sum\limits_{i=1}^{n} Y_i \]
+    and
+    \[ S^2=\frac{1}{n-1} \sum\limits_{i=1}^{n} (Y_i-\bar{Y})^2 \]
+    Then,
+    \begin{enumerate}[label=(\roman*)]
+        \item The pivotal quantity for $ \mu $ is:
+              \[ \frac{\bar{Y}-\mu}{\frac{S}{\sqrt{n}}} \sim T_{n-1}  \]
+        \item The pivotal quantity for $ \sigma^2 $ is:
+              \[ \frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}  \]
+    \end{enumerate}
+\end{Theorem}
+
+\begin{Remark}{}{}
     (i) Shows that if we replace $ \sigma $ by its estimator $ S $, then it follows a $ T $-distribution
     with $ (n-1) $ degrees of freedom.
-\end{remark}
+\end{Remark}
 
-\begin{exbox}
-    \begin{example}
-        An independent sample of $ 25 $ students are taken and STAT 231 scores are recorded.
-        \begin{itemize}
-            \item $ \bar{y}=75 $
-            \item $ s^2=\frac{1}{n-1} \sum\limits_{i=1}^{n} (y_i-\bar{y})^2=64 $
-        \end{itemize}
-        \begin{enumerate}[label=(\alph*)]
-            \item Find the $ 99\% $ confidence interval for $ \mu $.
-            \item Find the $ 95\% $ confidence interval for $ \sigma^2 $.
-            \item Find the $ 99\% $ prediction interval for $ Y_{26} $.
-        \end{enumerate}
-        \textbf{Solution.} We know $ Y_1,\ldots ,Y_{25} \sim N(\mu,\sigma^2) $
-        where $ Y_i= $ STAT 231 score of the $ i^{\text{th}} $ student.
 
-        (a) We know
-        \[ \frac{\bar{Y}-\mu}{\frac{S}{\sqrt{n}}} \sim T_{24} \]
-        We want a $ t^* $ such that
-        \[ P(|T_{24}|\leqslant t^*)=0.99\iff 2F(t^*)-1=0.99\iff p=0.995=F(t^*) \]
-        Using the table we see that $ t^*=2.80 $. Now,
-        \[ P(-2.8\leqslant T_{24}\leqslant 2.8)=0.99 \]
-        \[ \implies P\left(-2.8\leqslant \frac{\bar{Y}-\mu}{\frac{S}{\sqrt{n}}}
-            \leqslant 2.8\right)=0.99 \]
-        \[ \implies P\left(\bar{Y}-2.8 \frac{S}{\sqrt{n}}\leqslant \mu\leqslant \bar{Y}+
-            2.8 \frac{S}{\sqrt{n}}\right)=0.99 \]
-        Thus, the $ 99\% $ confidence interval for $ \mu $ is:
-        \[ \bar{y}\pm 2.8 \frac{s}{\sqrt{n}}\implies \left[ 62.2, 87.8 \right] \]
+\begin{Example}{}{}
+    An independent sample of $ 25 $ students are taken and STAT 231 scores are recorded.
+    \begin{itemize}
+        \item $ \bar{y}=75 $
+        \item $ s^2=\frac{1}{n-1} \sum\limits_{i=1}^{n} (y_i-\bar{y})^2=64 $
+    \end{itemize}
+    \begin{enumerate}[label=(\alph*)]
+        \item Find the $ 99\% $ confidence interval for $ \mu $.
+        \item Find the $ 95\% $ confidence interval for $ \sigma^2 $.
+        \item Find the $ 99\% $ prediction interval for $ Y_{26} $.
+    \end{enumerate}
+    \textbf{Solution.} We know $ Y_1,\ldots ,Y_{25} \sim N(\mu,\sigma^2) $
+    where $ Y_i= $ STAT 231 score of the $ i^{\text{th}} $ student.
 
-        (b) We know
-        \[ \frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{24}  \]
-        We want any value $ a $ and $ b $ such that
-        \[ P(a\leqslant \chi^2_{24}\leqslant b)=0.95 \]
-        We choose the symmetric solution with $ a=0.025\rightarrow 13.120 $ and $ b=0.975\rightarrow 40.646 $.
-        Now,
-        \[ P\left( 13.120\leqslant \chi^2_{24}\leqslant 40.646 \right)=0.95 \]
-        \[ \implies P\left( 13.120\leqslant \frac{(n-1) S^2}{\sigma^2}\leqslant 40.646 \right)=0.95 \]
-        \[ \implies P\left( \frac{(n-1)S^2}{40.646}\leqslant \sigma^2 \leqslant \frac{(n-1)S^2}{13.120} \right)=0.95 \]
-        Thus, the $ 95\% $ confidence interval for $ \sigma^2 $ is:
-        \[ \left[ \frac{(n-1)s^2}{40.646} , \frac{(n-1)s^2}{13.120} \right]\implies
-            \left[ 37.79, 117.07 \right] \]
+    (a) We know
+    \[ \frac{\bar{Y}-\mu}{\frac{S}{\sqrt{n}}} \sim T_{24} \]
+    We want a $ t^* $ such that
+    \[ P(|T_{24}|\leqslant t^*)=0.99\iff 2F(t^*)-1=0.99\iff p=0.995=F(t^*) \]
+    Using the table we see that $ t^*=2.80 $. Now,
+    \[ P(-2.8\leqslant T_{24}\leqslant 2.8)=0.99 \]
+    \[ \implies P\left(-2.8\leqslant \frac{\bar{Y}-\mu}{\frac{S}{\sqrt{n}}}
+        \leqslant 2.8\right)=0.99 \]
+    \[ \implies P\left(\bar{Y}-2.8 \frac{S}{\sqrt{n}}\leqslant \mu\leqslant \bar{Y}+
+        2.8 \frac{S}{\sqrt{n}}\right)=0.99 \]
+    Thus, the $ 99\% $ confidence interval for $ \mu $ is:
+    \[ \bar{y}\pm 2.8 \frac{s}{\sqrt{n}}\implies \left[ 62.2, 87.8 \right] \]
 
-        (c) Prediction interval.
-        \[ Y_{26} \sim N(\mu,\sigma^2) \]
-        \[ \bar{Y} \sim N(\mu,\sfrac{\sigma^2}{n}) \]
-        \[ \implies Y_{26}-\bar{Y} \sim N\left(0,\sigma^2\left( 1+\frac{1}{n}  \right)\right) \]
-        Therefore, the pivotal quantity is:
-        \[ \frac{Y_{26}-\bar{Y}}{\sigma \sqrt{1+\frac{1}{n}}} =Z \sim N(0,1) \]
-        we replace $ \sigma $ by its estimator and get
-        \[ \frac{Y_{26}-\bar{Y}}{S \sqrt{1+\frac{1}{n}}} \sim T_{24} \]
-        Thus,
-        \[ P(|T_{24}|\leqslant 2.8)=0.99 \]
-        yields the general $ 99\% $ prediction interval:
-        \[ \bar{y}\pm t^* s \sqrt{1+\frac{1}{n}} \]
-    \end{example}
-\end{exbox}
+    (b) We know
+    \[ \frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{24}  \]
+    We want any value $ a $ and $ b $ such that
+    \[ P(a\leqslant \chi^2_{24}\leqslant b)=0.95 \]
+    We choose the symmetric solution with $ a=0.025\rightarrow 13.120 $ and $ b=0.975\rightarrow 40.646 $.
+    Now,
+    \[ P\left( 13.120\leqslant \chi^2_{24}\leqslant 40.646 \right)=0.95 \]
+    \[ \implies P\left( 13.120\leqslant \frac{(n-1) S^2}{\sigma^2}\leqslant 40.646 \right)=0.95 \]
+    \[ \implies P\left( \frac{(n-1)S^2}{40.646}\leqslant \sigma^2 \leqslant \frac{(n-1)S^2}{13.120} \right)=0.95 \]
+    Thus, the $ 95\% $ confidence interval for $ \sigma^2 $ is:
+    \[ \left[ \frac{(n-1)s^2}{40.646} , \frac{(n-1)s^2}{13.120} \right]\implies
+        \left[ 37.79, 117.07 \right] \]
+
+    (c) Prediction interval.
+    \[ Y_{26} \sim N(\mu,\sigma^2) \]
+    \[ \bar{Y} \sim N(\mu,\sfrac{\sigma^2}{n}) \]
+    \[ \implies Y_{26}-\bar{Y} \sim N\left(0,\sigma^2\left( 1+\frac{1}{n}  \right)\right) \]
+    Therefore, the pivotal quantity is:
+    \[ \frac{Y_{26}-\bar{Y}}{\sigma \sqrt{1+\frac{1}{n}}} =Z \sim N(0,1) \]
+    we replace $ \sigma $ by its estimator and get
+    \[ \frac{Y_{26}-\bar{Y}}{S \sqrt{1+\frac{1}{n}}} \sim T_{24} \]
+    Thus,
+    \[ P(|T_{24}|\leqslant 2.8)=0.99 \]
+    yields the general $ 99\% $ prediction interval:
+    \[ \bar{y}\pm t^* s \sqrt{1+\frac{1}{n}} \]
+\end{Example}
+
 We make the following remark:
-\begin{remark} Let $ Y_1,\ldots ,Y_{n} $ be iid $ N(\mu,\sigma^2) $. Then,
+\begin{Remark}{}{} Let $ Y_1,\ldots ,Y_{n} $ be iid $ N(\mu,\sigma^2) $. Then,
     \begin{enumerate}[label=(\roman*)]
         \item The general confidence interval for $ \mu $ is:
               \[ \bar{y}\pm z^* \frac{\sigma}{\sqrt{n}} \quad\text{if $\sigma$ is known} \]
@@ -96,32 +96,32 @@ We make the following remark:
         \item The general prediction interval for $ Y_{n+1} $ is:
               \[ \bar{y}\pm t^* s \sqrt{1+\frac{1}{n}} \]
     \end{enumerate}
-\end{remark}
+\end{Remark}
 
-\begin{thmbox}
-    \begin{theorem}
-        As $ n\to \infty $,
-        \[ \Lambda(\theta)=-2\ln\left[  \frac{L(\theta)}{L(\tilde{\theta})} \right] \sim \chi^2_1  \]
-        where $ \tilde{\theta} $ is the maximum likelihood estimator. We call the random
-        variable $ \Lambda(\theta) $ the likelihood ratio statistic.
-    \end{theorem}
-\end{thmbox}
 
-\begin{exbox}
-    \begin{example}
-        Suppose $ n $ is large, and we have a $ 10\% $ likelihood interval. What is the corresponding
-        coverage probability?
+\begin{Theorem}{}{}
+    As $ n\to \infty $,
+    \[ \Lambda(\theta)=-2\ln\left[  \frac{L(\theta)}{L(\tilde{\theta})} \right] \sim \chi^2_1  \]
+    where $ \tilde{\theta} $ is the maximum likelihood estimator. We call the random
+    variable $ \Lambda(\theta) $ the likelihood ratio statistic.
+\end{Theorem}
 
-        \textbf{Solution.} $ 10\% $ likelihood interval $ \implies R(\theta)\geqslant 0.1 $
-        \[ \implies \frac{L(\theta)}{L(\hat{\theta})}\geqslant 0.1  \]
-        \[ \implies -2\ln\left[  \frac{L(\theta)}{L(\hat{\theta})} \right]\leqslant -2\ln(0.1)  \]
-        \[ \implies \lambda(\theta)\leqslant -2\ln(0.1) \]
-        Thus, the corresponding coverage:
-        \begin{align*}
-            P(\Lambda(\theta)\leqslant -2\ln(0.1))
-             & = P(Z^2\leqslant -2\ln(0.1))        \\
-             & = P(|Z|\leqslant \sqrt{-2\ln(0.1)}) \\
-             & \approx 97\%
-        \end{align*}
-    \end{example}
-\end{exbox}
+
+
+\begin{Example}{}{}
+    Suppose $ n $ is large, and we have a $ 10\% $ likelihood interval. What is the corresponding
+    coverage probability?
+
+    \textbf{Solution.} $ 10\% $ likelihood interval $ \implies R(\theta)\geqslant 0.1 $
+    \[ \implies \frac{L(\theta)}{L(\hat{\theta})}\geqslant 0.1  \]
+    \[ \implies -2\ln\left[  \frac{L(\theta)}{L(\hat{\theta})} \right]\leqslant -2\ln(0.1)  \]
+    \[ \implies \lambda(\theta)\leqslant -2\ln(0.1) \]
+    Thus, the corresponding coverage:
+    \begin{align*}
+        P(\Lambda(\theta)\leqslant -2\ln(0.1))
+         & = P(Z^2\leqslant -2\ln(0.1))        \\
+         & = P(|Z|\leqslant \sqrt{-2\ln(0.1)}) \\
+         & \approx 97\%
+    \end{align*}
+\end{Example}
+

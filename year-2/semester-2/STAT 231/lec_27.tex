@@ -7,34 +7,34 @@
     \item What if we don't know how to construct a Test-Statistic?
 \end{enumerate}
 
-\begin{exbox}
-    \begin{example}
-        $ Y_1,\ldots Y_n $ iid $ N(\mu,\sigma^2) $
-        \begin{itemize}
-            \item $ \sigma^2= $ known
-            \item $ \mu= $ unknown
-            \item Sample: $ \{y_1,\ldots ,y_n\} $
-            \item $ \bar{y}= $ sample mean
-            \item $ H_0 $: $ \mu=\mu_0 $ where $ \mu_0 $ is given
-            \item $ H_1 $: $ \mu \neq \mu_0 $
-        \end{itemize}
-        \[
-            \begin{aligned}
-                D= & \left|\frac{\bar{Y}-\mu_0}{\frac{\sigma}{\sqrt{n}}} \right|
-                   & \quad                                                       & \rightarrow &  & \text{Test-Statistic (r.v.)}       \\
-                d= & \left|\frac{\bar{y}-\mu_0}{\frac{\sigma}{\sqrt{n}}} \right|
-                   &                                                             & \rightarrow &  & \text{Value of the Test-Statistic}
-            \end{aligned}
-        \]
-        \[
-            \begin{aligned}
-                p\text{-value}
-                 & =P(D\geqslant d)   & \quad & \text{assuming }H_0\text{ is true} \\
-                 & =P(|Z|\geqslant d) &       & Z \sim N(0,1)
-            \end{aligned}
-        \]
-    \end{example}
-\end{exbox}
+
+\begin{Example}{}{}
+    $ Y_1,\ldots Y_n $ iid $ N(\mu,\sigma^2) $
+    \begin{itemize}
+        \item $ \sigma^2= $ known
+        \item $ \mu= $ unknown
+        \item Sample: $ \{y_1,\ldots ,y_n\} $
+        \item $ \bar{y}= $ sample mean
+        \item $ H_0 $: $ \mu=\mu_0 $ where $ \mu_0 $ is given
+        \item $ H_1 $: $ \mu \neq \mu_0 $
+    \end{itemize}
+    \[
+        \begin{aligned}
+            D= & \left|\frac{\bar{Y}-\mu_0}{\frac{\sigma}{\sqrt{n}}} \right|
+               & \quad                                                       & \rightarrow &  & \text{Test-Statistic (r.v.)}       \\
+            d= & \left|\frac{\bar{y}-\mu_0}{\frac{\sigma}{\sqrt{n}}} \right|
+               &                                                             & \rightarrow &  & \text{Value of the Test-Statistic}
+        \end{aligned}
+    \]
+    \[
+        \begin{aligned}
+            p\text{-value}
+             & =P(D\geqslant d)   & \quad & \text{assuming }H_0\text{ is true} \\
+             & =P(|Z|\geqslant d) &       & Z \sim N(0,1)
+        \end{aligned}
+    \]
+\end{Example}
+
 \underline{Question}: Suppose the $ p $-value for the test $ >0.05 $
 if and only if $ \mu_0 $ belongs in the $ 95\% $ confidence interval for $ \mu $?
 
@@ -57,64 +57,64 @@ $ p $-value of a test $ H_0 $: $ \theta=\theta_0 $ vs $ H_1 $: $ \theta\neq \the
 is more than $ q\% $, then $ \theta_0 $ belongs to the $ 100(1-q)\% $
 confidence interval and vice versa.
 
-\begin{exbox}
-    \begin{example}[Bias]
-        A $ 10 $ kg weight is weighed $ 20 $ times ($ y_1,\ldots ,y_n $).
-        \begin{itemize}
-            \item $ \bar{y}=10.5 $
-            \item $ s=0.4 $
-            \item $ H_0 $: The scale is unbiased
-            \item $ H_1 $: The scale is biased
-        \end{itemize}
-        If the scale was unbiased,
-        \[ Y_1,\ldots ,Y_n \sim N(10,\sigma^2) \]
-        If the scale was biased,
-        \[ Y_1,\ldots ,Y_n \sim N(10+\delta,\sigma^2) \]
-        \begin{itemize}
-            \item $ H_0 $: $ \delta=0 $ (unbiased)
-            \item $ H_1 $: $ \delta\neq 0 $ (biased)
-        \end{itemize}
-        is equivalent to
-        \begin{itemize}
-            \item $ H_0 $: $ \mu=10 $
-            \item $ H_1 $: $ \mu\neq 10 $
-        \end{itemize}
-        Test-statistic:
-        \[ D=\left|\frac{\bar{Y}-10}{\frac{S}{\sqrt{n}}} \right| \]
-        Compute $ d $.
-        \[ d=
-            \left|\frac{\bar{y}-10}{\frac{s}{\sqrt{n}}} \right|=
-            \left|\frac{10.5-10}{\frac{0.4}{\sqrt{20}}} \right|=5.59017 \]
-        \[
-            \begin{aligned}
-                p\text{-value}
-                 & =P(D\geqslant d)                             \\
-                 & =P(|T_{19}|\geqslant 5.59)                   \\
-                 & = 1-P(|T_{19}|\leqslant 5.59)                \\
-                 & =1-\left[ 2P(T_{19}\leqslant 5.59)-1 \right] \\
-                 & \approx 1-(2-1)                              \\
-                 & =0
-            \end{aligned}
-        \]
-        Very strong evidence against $ H_0 $.
-    \end{example}
-\end{exbox}
 
-\begin{exbox}
-    \begin{example}[Draw Conclusions]
-        $ Y_1,\ldots ,Y_n = $ co-op salaries. $ Y_1,\ldots ,Y_n \sim N(\mu,\sigma^2) $
-        \begin{itemize}
-            \item $ H_0 $: $ \mu=3000 $
-            \item $ H_1 $: $ \mu<3000 $ ($ \mu\neq 3000 $)
-        \end{itemize}
-        \[ D=\left|\frac{\bar{Y}-\mu_0}{\frac{S}{\sqrt{n}}} \right| \]
-        \[ D=
-            \begin{cases}
-                0                                        & \bar{Y}>\mu_0 \\
-                \frac{\bar{Y}-\mu_0}{\frac{S}{\sqrt{n}}} & \bar{Y}<\mu_0
-            \end{cases} \]
-    \end{example}
-\end{exbox}
+\begin{Example}{Bias}{}
+    A $ 10 $ kg weight is weighed $ 20 $ times ($ y_1,\ldots ,y_n $).
+    \begin{itemize}
+        \item $ \bar{y}=10.5 $
+        \item $ s=0.4 $
+        \item $ H_0 $: The scale is unbiased
+        \item $ H_1 $: The scale is biased
+    \end{itemize}
+    If the scale was unbiased,
+    \[ Y_1,\ldots ,Y_n \sim N(10,\sigma^2) \]
+    If the scale was biased,
+    \[ Y_1,\ldots ,Y_n \sim N(10+\delta,\sigma^2) \]
+    \begin{itemize}
+        \item $ H_0 $: $ \delta=0 $ (unbiased)
+        \item $ H_1 $: $ \delta\neq 0 $ (biased)
+    \end{itemize}
+    is equivalent to
+    \begin{itemize}
+        \item $ H_0 $: $ \mu=10 $
+        \item $ H_1 $: $ \mu\neq 10 $
+    \end{itemize}
+    Test-statistic:
+    \[ D=\left|\frac{\bar{Y}-10}{\frac{S}{\sqrt{n}}} \right| \]
+    Compute $ d $.
+    \[ d=
+        \left|\frac{\bar{y}-10}{\frac{s}{\sqrt{n}}} \right|=
+        \left|\frac{10.5-10}{\frac{0.4}{\sqrt{20}}} \right|=5.59017 \]
+    \[
+        \begin{aligned}
+            p\text{-value}
+             & =P(D\geqslant d)                             \\
+             & =P(|T_{19}|\geqslant 5.59)                   \\
+             & = 1-P(|T_{19}|\leqslant 5.59)                \\
+             & =1-\left[ 2P(T_{19}\leqslant 5.59)-1 \right] \\
+             & \approx 1-(2-1)                              \\
+             & =0
+        \end{aligned}
+    \]
+    Very strong evidence against $ H_0 $.
+\end{Example}
+
+
+
+\begin{Example}{Draw Conclusions}{}
+    $ Y_1,\ldots ,Y_n = $ co-op salaries. $ Y_1,\ldots ,Y_n \sim N(\mu,\sigma^2) $
+    \begin{itemize}
+        \item $ H_0 $: $ \mu=3000 $
+        \item $ H_1 $: $ \mu<3000 $ ($ \mu\neq 3000 $)
+    \end{itemize}
+    \[ D=\left|\frac{\bar{Y}-\mu_0}{\frac{S}{\sqrt{n}}} \right| \]
+    \[ D=
+        \begin{cases}
+            0                                        & \bar{Y}>\mu_0 \\
+            \frac{\bar{Y}-\mu_0}{\frac{S}{\sqrt{n}}} & \bar{Y}<\mu_0
+        \end{cases} \]
+\end{Example}
+
 If $ n $ is large, then
 \[ Y_1,\ldots ,Y_n \sim f(y_i;\theta) \]
 \begin{itemize}

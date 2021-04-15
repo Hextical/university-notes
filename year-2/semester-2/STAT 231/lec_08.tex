@@ -1,33 +1,29 @@
-\chapter{Statistical Models and Maximum Likelihood Estimation}
-\makeheading{2020-01-22}
-
-\section{Choosing a Statistical Model}
-
+\section{2020-01-22}
 \underline{STAT 231}: Characteristics of the population
 are unknown.
 
-Data Summary:
+\subsection*{Data Summary}
 \begin{itemize}
-    \item Extract important properties
-    \item Fit the right model
+    \item Extract important properties.
+    \item Fit the right model.
 \end{itemize}
 
-\underline{Disappearance of the 400 hitter}
+\subsection*{Disappearance of the 400 hitter}
 \begin{itemize}
-    \item Batting average $ \stackrel{?}{=} $ proportion of successes
-    \item Battling champion = person with the highest batting average
-    \item Before $ 1950 $: 3 champions $ \geqslant 400 $
-    \item Since $ 1953 $: 0
+    \item Batting average $ \stackrel{?}{=} $ proportion of successes.
+    \item Battling champion = person with the highest batting average.
+    \item Before $ 1950 $: 3 champions $ \geqslant 400 $.
+    \item Since $ 1953 $: 0.
 \end{itemize}
-\underline{Question}: Why?
+\emph{Question}: Why?
 
-\underline{Arguments}
+\subsection*{Arguments}
 \begin{itemize}
-    \item Absolute
-    \item Relative
-    \item Better pitchers: Relief
-    \item Better fielding: Glove sizes
-    \item Better managing
+    \item Absolute.
+    \item Relative.
+    \item Better pitchers: Relief.
+    \item Better fielding: Glove sizes.
+    \item Better managing.
 \end{itemize}
 All these arguments are incorrect.
 
@@ -37,48 +33,43 @@ distribution for the model today compared to back then since the average
 player is pretty good (before there was huge variability).
 
 \textbf{``The median isn't the message''---Stephen Jay Gould}
+\subsection*{Intro to Statistical Models}
+\begin{Definition}{}{}
+    A \textbf{\emph{statistical model}} is a specification of the
+    distribution from which the data set is drawn, where the attribute of interest
+    is a parameter of that distribution.
+\end{Definition}
+\begin{Example}{}{}
+    A coin is tossed $ 200 $ times with $ y=110 $ heads. What can we say
+    about the ``fairness'' of the coin?
 
-\begin{defbox}
-    \begin{definition}
-        A \textbf{\emph{statistical model}} is a specification of the
-        distribution from which the data set is drawn, where the attribute of interest
-        is a parameter of that distribution.
-    \end{definition}
-\end{defbox}
+    The attribute of interest is
+    \[ \Prob{H}=\text{probability of heads}=\theta=\text{unknown} \]
+    Based on our sample, we try to ``estimate'' $ \theta $.
+    Let $ Y $ be the number of heads when we toss a coin $ 200 $ times,
+    then our statistical model is: $ Y \sim \bin{200,\theta} $
+    with $ y=110 $.
+\end{Example}
 
-\section{Maximum Likelihood Estimation}
 
-\begin{exbox}
-    \begin{example}
-        A coin is tossed $ 200 $ times with $ y=110 $ heads. What can we say
-        about the ``fairness'' of the coin?
-        
-        The attribute of interest is
-        \[ P(\text{H})=\text{probability of heads}=\theta=\text{unknown} \]
-        Based on our sample, we try to ``estimate'' $ \theta $.
-        Let $ Y $ be the number of heads when we toss a coin $ 200 $ times,
-        then our statistical model is: $ Y \sim \bin(200,\theta) $
-        with $ y=110 $.
-    \end{example}
-\end{exbox}
 
-\begin{exbox}
-    \begin{example}
-        How good are Canadians on Jeopardy? Let $ \{y_1,\ldots ,y_{10}\} $
-        be our data set where $ y_i $ is the number of shows that the
-        $ i^{\text{th}} $ Canadian appeared on.
-        \[ \theta=P(\text{Canadian wins Jeopardy}) \]
-        Is $ \hat{\theta}\gg\sfrac{1}{3} $?
-        \[ \{y_1=2,y_2=3,y_3=1,y_4=5\} \]
-        \begin{itemize}
-            \item $ y_1=\theta(1-\theta) $
-            \item $ y_4=\theta^4(1-\theta) $
-        \end{itemize}
-        Then, our statistical model is $ Y_i \sim \geo(1-\theta) $
-        for $ i=1,\ldots ,10 $.
-    \end{example}
-\end{exbox}
-\underline{Objective}: The average salary of a UW co-op student is $ \$10000 $ per term.
+\begin{Example}{}{}
+    How good are Canadians on Jeopardy? Let $ \{y_1,\ldots ,y_{10}\} $
+    be our data set where $ y_i $ is the number of shows that the
+    $ i^{\text{th}} $ Canadian appeared on.
+    \[ \theta=\Prob{\text{Canadian wins Jeopardy}} \]
+    Is $ \hat{\theta}\gg 1/3 $?
+    \[ \{y_1=2,y_2=3,y_3=1,y_4=5\} \]
+    \begin{itemize}
+        \item $ y_1=\theta(1-\theta) $
+        \item $ y_4=\theta^4(1-\theta) $
+    \end{itemize}
+    Then, our statistical model is $ Y_i \sim \geo{1-\theta} $
+    for $ i=1,\ldots ,10 $.
+\end{Example}
+
+\subsection*{Objective}
+The average salary of a UW co-op student is $ \$10000 $ per term.
 Is this claim true? Suppose $ \{y_1,\ldots ,y_{100}\} $ is given and
-\[ Y_i \sim N(\mu,\sigma^2) \]
+\[ Y_i \sim \N{\mu,\sigma^2} \]
 where each $ i\in[1,100] $ are independent. We will answer this question later in the course.

@@ -41,44 +41,44 @@ where $ Z $ is the pivotal distribution.
 \[ \left[ \bar{y}-1.96 \frac{\sigma}{\sqrt{n}} ,\; \bar{y}+1.96 \frac{\sigma}{\sqrt{n}}  \right] \]
 For the normal problem with $ \sigma= $ known, the confidence interval is given by
 \[ \bar{y}\pm z^* \frac{\sigma}{\sqrt{n}}  \]
-\begin{exbox}
-    \begin{example}[Binomial Distribution]
-        In the 2020 US election, CNN does an exit poll in Wisconsin of 1200 voters.
-        \begin{itemize}
-            \item $ 56\% $ voted for Trump
-            \item $ 44\% $ voted for Bernie Sanders
-        \end{itemize}
-        Find the $ 95\% $ confidence interval for $ \theta= $ proportion of votes that
-        Trump gets.
 
-        \underline{Model}: $ Y \sim \bin(1200,\theta) $ with $ \theta= $ probability of
-        voting for Trump.
+\begin{Example}{Binomial Distribution}{}
+    In the 2020 US election, CNN does an exit poll in Wisconsin of 1200 voters.
+    \begin{itemize}
+        \item $ 56\% $ voted for Trump
+        \item $ 44\% $ voted for Bernie Sanders
+    \end{itemize}
+    Find the $ 95\% $ confidence interval for $ \theta= $ proportion of votes that
+    Trump gets.
 
-        \textbf{Solution.}
+    \underline{Model}: $ Y \sim \bin(1200,\theta) $ with $ \theta= $ probability of
+    voting for Trump.
 
-        \underline{Step 1}: $ \hat{\theta}=y/n=0.56 $, $ \tilde{\theta}=Y/n $
-        where $ Y \sim N(n\theta,n\theta(1-\theta)) $
-        \[ \frac{Y-n\theta}{\sqrt{n\theta(1-\theta)}}=Z  \]
-        \[ \implies \frac{\tilde{\theta}-\theta}{\sqrt{\frac{\theta(1-\theta)}{n}}}=Z  \]
-        However, if we use this pivotal quantity separating $ \theta $ could be problematic.
-        Thus, using version 2 of CLT we get
-        \[ \frac{\tilde{\theta}-\theta}{\sqrt{\frac{\tilde{\theta}(1-\tilde{\theta})}{n}}}=Z \]
-        is a better pivotal quantity.
-        Thus, the general confidence interval for Binomial is
-        \[ \hat{\theta}\pm z^*\sqrt{\frac{\hat{\theta}\left(1-\hat{\theta}\right)}{n} } \]
-        \[ \implies 0.56\pm 1.96\sqrt{\frac{0.56\times 0.44}{1200}}\iff \left[ 0.53,0.59 \right] \]
-        Even in the worst case scenario, Trump wins (call the election for CNN).
+    \textbf{Solution.}
 
-        Note that
-        \[ z^*\sqrt{\frac{\hat{\theta}\left(1-\hat{\theta}\right)} {n}} \]
-        is called the \textbf{\emph{margin of error}}.
+    \underline{Step 1}: $ \hat{\theta}=y/n=0.56 $, $ \tilde{\theta}=Y/n $
+    where $ Y \sim N(n\theta,n\theta(1-\theta)) $
+    \[ \frac{Y-n\theta}{\sqrt{n\theta(1-\theta)}}=Z  \]
+    \[ \implies \frac{\tilde{\theta}-\theta}{\sqrt{\frac{\theta(1-\theta)}{n}}}=Z  \]
+    However, if we use this pivotal quantity separating $ \theta $ could be problematic.
+    Thus, using version 2 of CLT we get
+    \[ \frac{\tilde{\theta}-\theta}{\sqrt{\frac{\tilde{\theta}(1-\tilde{\theta})}{n}}}=Z \]
+    is a better pivotal quantity.
+    Thus, the general confidence interval for Binomial is
+    \[ \hat{\theta}\pm z^*\sqrt{\frac{\hat{\theta}\left(1-\hat{\theta}\right)}{n} } \]
+    \[ \implies 0.56\pm 1.96\sqrt{\frac{0.56\times 0.44}{1200}}\iff \left[ 0.53,0.59 \right] \]
+    Even in the worst case scenario, Trump wins (call the election for CNN).
 
-        Suppose we want the margin of error to be $ \leqslant 0.03 $ for a $ 95\% $ interval, then
-        \[ z^*\sqrt{\frac{\hat{\theta}\left(1-\hat{\theta}\right)}{n}}\leqslant 0.03\iff
-            n\geqslant \left( \frac{z^*}{0.03}  \right)^2\hat{\theta}\left(1-\hat{\theta}\right) \]
-        We note that $ \hat{\theta}=0.5 $ is the maximum, so we choose $ n $ such that
-        \[ n\geqslant \left( \frac{z^*}{0.03}  \right)^2(0.5)(0.5) \]
-        Thus, for the $ 95\% $ confidence interval we get
-        \[ n\geqslant \left( \frac{1.96}{0.03} \right)^2(0.5)(0.5)\approx 1048 \]
-    \end{example}
-\end{exbox}
+    Note that
+    \[ z^*\sqrt{\frac{\hat{\theta}\left(1-\hat{\theta}\right)} {n}} \]
+    is called the \textbf{\emph{margin of error}}.
+
+    Suppose we want the margin of error to be $ \leqslant 0.03 $ for a $ 95\% $ interval, then
+    \[ z^*\sqrt{\frac{\hat{\theta}\left(1-\hat{\theta}\right)}{n}}\leqslant 0.03\iff
+        n\geqslant \left( \frac{z^*}{0.03}  \right)^2\hat{\theta}\left(1-\hat{\theta}\right) \]
+    We note that $ \hat{\theta}=0.5 $ is the maximum, so we choose $ n $ such that
+    \[ n\geqslant \left( \frac{z^*}{0.03}  \right)^2(0.5)(0.5) \]
+    Thus, for the $ 95\% $ confidence interval we get
+    \[ n\geqslant \left( \frac{1.96}{0.03} \right)^2(0.5)(0.5)\approx 1048 \]
+\end{Example}
+

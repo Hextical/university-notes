@@ -1,102 +1,107 @@
 \section{2020-01-24}
-\underline{Roadmap}:
+\subsection*{Roadmap}
 \begin{itemize}
-    \item Statistical models
-    \item Notations and Definitions
-    \item Likelihood function for discrete data
-    \item MLE (Maximum Likelihood Estimate)
+    \item Statistical models.
+    \item Notations and Definitions.
+    \item Likelihood function for discrete data.
+    \item MLE (Maximum Likelihood Estimate).
 \end{itemize}
-
-A coin is tossed $ 100 $ times with $ y=40 $ heads. What can we say
-about the fairness of the coin?
-
-\underline{Step 1}: Identify the attribute of interest.
+\begin{Example}{}{}
+    A coin is tossed $ 100 $ times with $ y=40 $ heads. What can we say
+    about the fairness of the coin?
+\end{Example}
+\subsection*{Step 1}
+Identify the attribute of interest.
 \begin{align*}
     \theta & =P(\text{H})                           \\
            & =\text{population proportion of heads} \\
            & =\text{population parameter}           \\
            & =\text{unknown constant}
 \end{align*}
-\underline{Step 2}: Estimate $ \theta $ using your data. Based on your data
+\subsection*{Step 2}
+Estimate $ \theta $ using your data. Based on your data
 set, what is the ``likely'' value of $ \theta $?
 \begin{align*}
     \hat{\theta}(y_1,\ldots ,y_n) & =
     \text{number that can be calculated using our data set}           \\
                                   & =\text{point estimate of } \theta
 \end{align*}
-\underline{Step 3}: Given $ \hat{\theta} $, is $ \theta=0.5 $ ``reasonable''?
-
-\underline{Notation}:
+\subsection*{Step 3}
+Given $ \hat{\theta} $, is $ \theta=0.5 $ ``reasonable''?
+\subsection*{Notation}
 \begin{itemize}
-    \item Population parameters are denoted with greek letter such as:
-          $ \theta,\,\mu,\,\sigma^2,\,\tilde{n} $
+    \item Population parameters are denoted with Greek letter such as:
+          $ \theta,\,\mu,\,\sigma^2,\,\tilde{n} $.
     \item Data sets are denoted with English letter such as:
           $ y,\,y_1,\ldots ,y_n $ when the data set is unknown or
           $ \hat{\theta},\,\hat{\mu} $ if your data set is known.
     \item Random variables are denoted with upper case English letters such as:
-          $ Y_1,\ldots ,Y_n,\,Y,\,Z $
-    \item $ y=40 $ heads where $ y $ is an outcome of a Binomial experiment. Model:
-          \[ Y \sim \bin(100,\theta) \]
+          $ Y_1,\ldots ,Y_n,\, Y,\, Z $.
+    \item $ y=40 $ heads where $ y $ is an outcome of a Binomial experiment:
+          \[ Y \sim \bin{100,\theta} \]
 \end{itemize}
 
-\begin{exbox}
-    \begin{example}
-        Question: Will trump win Wisconsin in 2020? A sample of 500 people
-        are picked up and 200 of them said that they will vote for Trump. Based
-        on this data will Trump win in 2020?
 
-        Let $ \theta=\text{proportion of the population that vote for Trump} $
-        \[ Y \sim \bin(500,\theta) \]
-    \end{example}
-\end{exbox}
+\begin{Example}{}{}
+    A sample of 500 people
+    are picked up and 200 of them said that they will vote for Trump. Based
+    on this data will Trump win in 2020?
 
-\begin{exbox}
-    \begin{example}
-        Suppose we are interested in the average number of texts a UW math student
-        receives every half hour and $ n $ students were interviewed.
+    \textbf{Solution.}
 
-        Let $ \mu $ be the population average of texts received by a UW student.
-        \[ Y_i \sim \poi(\mu) \]
-        for $ i=1,\ldots ,n $.
-    \end{example}
-\end{exbox}
+    Let $ \theta=\text{proportion of the population that vote for Trump} $. Our model is:
+    \[ Y \sim \bin{500,\theta} \]
+\end{Example}
 
-\begin{defbox}
-    \begin{definition}
-        A \textbf{\emph{point estimate}} of a parameter is the value of a function
-        of the observed data $ y_1,\ldots ,y_n $ and other known quantities such as
-        the sample size $ n $. We use $ \hat{\theta} $ to denote an estimate
-        of the parameter $ \theta $.
-    \end{definition}
-\end{defbox}
 
-\begin{defbox}
-    \begin{definition}
-        The \textbf{\emph{likelihood function}} for $ \theta $ is defined as
-        \[ L(\theta)=L(\theta;\bm{y})=P(\bm{Y}=\bm{y}; \theta) \]
-        for $ \theta\in\Omega $ where the \textbf{\emph{parameter space}} $ \Omega $
-        is the set of all possible values for $ \theta $.
-    \end{definition}
-\end{defbox}
 
-\begin{defbox}
-    \begin{definition}
-        The value of $ \theta $ which maximizes $ L(\theta) $ for given data $ \bm{y} $
-        is called the \textbf{\emph{maximum likelihood estimate}} (m.l.\ estimate) of $ \theta $.
-        It is the value of $ \theta $ which maximizes the probability of observing the data
-        $ \bm{y} $. This value is denoted $ \hat{\theta} $.
-    \end{definition}
-\end{defbox}
+\begin{Example}{}{}
+    Suppose we are interested in the average number of texts a UW math student
+    receives every half hour and $ n $ students were interviewed.
 
-\begin{exbox}
-    \begin{example}
-        A coin is tossed 100 times and we get $ y=40 $ heads. Let $ \theta $
-        be the probability of heads. Find the MLE of $ \theta $.
+    \vspace{1mm}
 
-        \[ L(\theta)=\binom{100}{40}\theta^{40}(1-\theta)^{60} \]
-        \[ \ell(\theta)=\ln\left[ \binom{100}{40} \right]+40\ln(\theta)+60\ln(1-\theta) \]
-        \[ \frac{d\ell}{d\theta}=\frac{40}{\theta} -\frac{60}{1-\theta} :=0 \]
-        \[ \implies \hat{\theta}=0.4 \]
-    \end{example}
-\end{exbox}
-We can generalize this further.
+    Let $ \mu $ be the population average of texts received by a UW student.
+    \[ Y_i \sim \poi{\mu} \]
+    for $ i=1,\ldots ,n $.
+\end{Example}
+
+
+
+\begin{Definition}{}{}
+    A \textbf{\emph{point estimate}} of a parameter is the value of a function
+    of the observed data $ y_1,\ldots ,y_n $ and other known quantities such as
+    the sample size $ n $. We use $ \hat{\theta} $ to denote an estimate
+    of the parameter $ \theta $.
+\end{Definition}
+
+
+
+\begin{Definition}{}{}
+    The \textbf{\emph{likelihood function}} for $ \theta $ is defined as
+    \[ \mathcal{L}(\theta)= \mathcal{L}(\theta;\symbf{y})=\Prob{\symbf{Y}=\symbf{y}; \theta} \]
+    for $ \theta\in\Omega $ where the \textbf{\emph{parameter space}} $ \Omega $
+    is the set of all possible values for $ \theta $.
+\end{Definition}
+
+
+
+\begin{Definition}{}{}
+    The value of $ \theta $ which maximizes $ \mathcal{L}(\theta) $ for given data $ \symbf{y} $
+    is called the \textbf{\emph{maximum likelihood estimate}} (m.l.\ estimate) of $ \theta $.
+    It is the value of $ \theta $ which maximizes the probability of observing the data
+    $ \symbf{y} $. This value is denoted $ \hat{\theta} $.
+\end{Definition}
+
+
+
+\begin{Example}{}{}
+    A coin is tossed 100 times, and we get $ y=40 $ heads. Let $ \theta $
+    be the probability of heads. Find the MLE of $ \theta $.
+
+    \textbf{Solution.}
+    \[ \mathcal{L}(\theta)=\Prob{Y=40}=\binom{100}{40}\theta^{40}(1-\theta)^{60} \]
+    \[ \ell(\theta)=\ln\left[ \binom{100}{40} \right]+40\ln(\theta)+60\ln(1-\theta) \]
+    \[ \frac{d\ell}{d\theta}=\frac{40}{\theta} -\frac{60}{1-\theta} :=0 \]
+    \[ \implies \hat{\theta}=0.4 \]
+\end{Example}

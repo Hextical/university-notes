@@ -1,46 +1,41 @@
-\makeheading{2020-01-20}
-\underline{Roadmap}:
+\section{2020-01-20}
+\subsection*{Roadmap}
 \begin{itemize}
-    \item Intro
-    \item Big picture of STAT 230 and STAT 231
-    \item Quiz Recap
+    \item Intro.
+    \item Big picture of STAT 230 and STAT 231.
+    \item Quiz Recap.
 \end{itemize}
-\begin{exbox}
-    \begin{example}[STAT 230]
-        A \textbf{fair} die is rolled $ 60 $ times. What is the
-        probability that $ 12 $ of them are sixes?
-        
-        \textbf{Solution.}
-        Let $ X= $ the number of successes (sixes), then $ X \sim \bin(60,\sfrac{1}{6}) $.
-        \[ P(X=12)
-            =\binom{60}{12}\left( \frac{1}{6}  \right)^{12}\left( 1-\frac{1}{6} \right)^{60-12}
-            \approx 0.11\]
-    \end{example}
-\end{exbox}
-\begin{exbox}
-    \begin{example}[STAT 231]
-        A die is rolled $ 60 $ times and $ 12 $ of them were sixes.
-        What can we say about the ``fairness'' of the die?
-        
-        \textbf{Solution.} We will solve this answer later.
-    \end{example}
-\end{exbox}
-\begin{enumerate}
-    \item STAT 230: Population $ \rightarrow $ Sample
-    \item STAT 231: Sample $ \rightarrow $ Population
-\end{enumerate}
-Think of STAT 231 as the ``reverse'' of STAT 230.
+\begin{Example}{STAT 230}{}
+    A fair die is rolled $ 60 $ times. What is the
+    probability that $ 12 $ of them are sixes?
 
-\underline{Errors are inevitable}
+    \textbf{Solution.}
+    Let $ X $ be the number of successes (sixes), then $ X \sim \bin{60,1/6} $.
+    \[ \Prob{X=12}
+        =\binom{60}{12}\left( \frac{1}{6}  \right)^{12}\left( 1-\frac{1}{6} \right)^{60-12}
+        \approx 0.11\]
+\end{Example}
 
-Data collection is extremely important. Why do we summarize data?
 
-\begin{enumerate}[label=(\alph*)]
-    \item To identify the ``model''.
+\begin{Example}{STAT 231}{}
+    A die is rolled $ 60 $ times and $ 12 $ of them were sixes.
+    What can we say about the ``fairness'' of the die?
+
+    \textbf{Solution.} We will solve this answer later.
+\end{Example}
+
+\begin{itemize}
+    \item STAT 230: Population $ \rightarrow $ Sample.
+    \item STAT 231: Sample $ \rightarrow $ Population.
+    \item Think of STAT 231 as the ``reverse'' of STAT 230.
+    \item Errors are inevitable.
+    \item Data collection is extremely important.
+\end{itemize}
+Why do we summarize data?
+\begin{enumerate}[(1)]
+    \item To identify the ``model.''
     \item To extract important properties.
 \end{enumerate}
-
-\section{Data Summaries}
 
 We summarize our data into two categories:
 \begin{enumerate}[label=(\arabic*)]
@@ -48,16 +43,15 @@ We summarize our data into two categories:
     \item Graphical
 \end{enumerate}
 
-\subsection{Numerical Summaries}
-
+\subsection*{Numerical Summaries}
 \begin{itemize}
-    \item Location: mean, median, and mode
-    \item Variability: variance and standard deviation
-    \item Shape: skewness and kurtosis
-    \item Quantiles and Percentiles
+    \item Location: centre.
+    \item Variability: ``spread.''
+    \item Skewness: right-tailed or left-tailed.
+    \item Kurtosis: how frequent extreme observations are.
 \end{itemize}
 
-\underline{Location}
+\subsection*{Location}
 \begin{itemize}
     \item Sample mean $ \left( \bar{y} \right) $:
           \[ \bar{y}=\frac{1}{n} \sum_{i=1}^{n} y_{i} \]
@@ -70,13 +64,13 @@ We summarize our data into two categories:
                         y_{\left(\left\lceil n/2\right\rceil\right)}\right) \]
           \end{itemize}
     \item Sample mode: value of $ y $ which appears in the sample with the highest frequency
-          (not necessarily unique)
+          (not necessarily unique).
 \end{itemize}
-The sample mean, median and mode describe the ``center'' of the distribution
+The sample mean, median, and mode describe the ``centre'' of the distribution
 of variate values in a data set. Since the median is less affected by a few extreme
 observations, it is a more robust measure of location.
 
-\underline{Variability}
+\subsection*{Variability}
 \begin{itemize}
     \item Sample variance $ \left( s^2 \right) $:
           \[ s^{2}=\frac{1}{n-1} \sum_{i=1}^{n}\left(y_{i}-\bar{y}\right)^{2}
@@ -93,8 +87,7 @@ observations, it is a more robust measure of location.
 The sample variance and standard deviation measure the variability or spread of the
 variate values in a data set. Since the interquartile range is less affected
 by a few extreme observations, it is a more robust measure of variability.
-
-\underline{Shape}
+\subsection*{Shape}
 \begin{itemize}
     \item Sample skewness $ (g_1) $:
           \[g_{1}=\frac{\frac{1}{n}
@@ -107,86 +100,84 @@ histogram, differ from the Normal bell-shaped curve. The sample skewness is a me
 of (lack of) symmetry in the data. If the relative frequency histogram
 of the data has a long right tail, then the sample skewness will be positive.
 The sample kurtosis measures the heaviness of the tails and the peakedness of the data
-relative to to data that are Normally distributed. If the sample kurtosis is greater than 3,
-then this indicates heavier tails (and a more peaked center) than data that are Normally distributed.
+relative to the data that are Normally distributed. If the sample kurtosis is greater than 3,
+then this indicates heavier tails (and a more peaked centre) than data that are Normally distributed.
 For data that arise from a model with no tails, for example the Uniform distribution, the sample
 kurtosis will be less than 3.
 
-\begin{exbox}
-    \begin{example}
-        Suppose we have $ 20 $ observations and the following data is given.
-        \begin{itemize}
-            \item $ \bar{y}=50 $
-            \item $ s^2=5000 $
-        \end{itemize}
-        Suppose one observation is unreliable, say $ y_i=60 $. Calculate
-        the new mean.
-        
-        \textbf{Solution.}
-        \begin{align*}
-            \bar{y}_{\text{new}}
-             & =\frac{\text{New Total}}{19}          \\
-             & =\frac{\text{Old Total $ - 60 $}}{19} \\
-             & =\frac{50\times 20-60}{19}            \\
-             & =\frac{940}{19}                       \\
-             & \approx 49.47
-        \end{align*}
-    \end{example}
-\end{exbox}
 
-\underline{Sample Quantiles and Percentiles}
-\begin{defbox}
-    \begin{definition}
-        Let $ \{y_{(1)},\ldots ,y_{(n)}\} $ where $ y_{(1)}\leqslant \cdots y_{(n)} $
-        be the \textbf{\emph{order statistic}} for the data set $ \{y_1,\ldots ,y_n\} $.
-        For $ 0<p<1 $, the $ p^{\text{th}} $ sample quantile (also called the $ 100p^{\text{th}} $
-        sample percentile), is a value, call it $ q(p) $, determined as follows:
-        \begin{itemize}
-            \item Let $ m=(n+1)p $ where $ n $ is the sample size.
-            \item If $ m $ is an integer and $ 1\leqslant m\leqslant n $, then $ q(p)=y_{(m)} $.
-            \item If $ m $ is not an integer, but $ 1<m<n $, then we determine the closest integer $ j $ such
-                  that $ j < m < j+1 $ and then $ q(p)=\frac{1}{2} \left[ y_{(j)}+y_{(j+1)} \right] $.
-        \end{itemize}
-    \end{definition}
-\end{defbox}
+\begin{Example}{}{}
+    Suppose we have $ 20 $ observations and the following data is given.
+    \begin{itemize}
+        \item $ \bar{y}=50 $
+        \item $ s^2=5000 $
+    \end{itemize}
+    Suppose one observation is unreliable, say $ y_i=60 $. Calculate
+    the new mean.
 
-\begin{defbox}
-    \begin{definition}
-        The quantiles $ q(0.25) $, $ q(0.5) $ and $ q(0.75) $ are called the
-        \textbf{\emph{lower (first) quartile}}, the \textbf{\emph{median}},
-        and the \textbf{\emph{upper (third) quartile}} respectively.
-    \end{definition}
-\end{defbox}
+    \textbf{Solution.}
+    \begin{align*}
+        \bar{y}_{\text{new}}
+         & =\frac{\text{New Total}}{19}    \\
+         & =\frac{\text{Old Total}-60}{19} \\
+         & =\frac{50\times 20-60}{19}      \\
+         & =\frac{940}{19}                 \\
+         & \approx 49.47
+    \end{align*}
+\end{Example}
 
-\begin{defbox}
-    \begin{definition}
-        The \textbf{\emph{interquartile range}} is $ \text{IQR}=q(0.75)-q(0.25) $.
-    \end{definition}
-\end{defbox}
 
-\begin{defbox}
-    \begin{definition}
-        The \textbf{\emph{five number summary}} of a data set consist of the smallest observation,
-        the lower quartile, the median, the upper quartile, and the largest value, that is,
-        the five values: $ y_{(1)},\;q(0.25),\;q(0.5)=\hat{m},\;q(0.75),\;y_{(n)} $.
-    \end{definition}
-\end{defbox}
+\subsection*{Sample Quantiles and Percentiles}
+\begin{Definition}{}{}
+    Let $ \{y_{(1)},\ldots ,y_{(n)}\} $ where $ y_{(1)}\leqslant \cdots y_{(n)} $
+    be the \textbf{\emph{order statistic}} for the data set $ \{y_1,\ldots ,y_n\} $.
+    For $ 0<p<1 $, the $ p^{\text{th}} $ sample quantile (also called the $ 100p^{\text{th}} $
+    sample percentile), is a value, call it $ q(p) $, determined as follows:
+    \begin{itemize}
+        \item Let $ m=(n+1)p $ where $ n $ is the sample size.
+        \item If $ m $ is an integer and $ 1\leqslant m\leqslant n $, then $ q(p)=y_{(m)} $.
+        \item If $ m $ is not an integer, but $ 1<m<n $, then we determine the closest integer $ j $ such
+              that $ j < m < j+1 $ and then $ q(p)=\frac{1}{2} \left[ y_{(j)}+y_{(j+1)} \right] $.
+    \end{itemize}
+\end{Definition}
 
-\subsection{Graphical Summaries}
 
+
+\begin{Definition}{}{}
+    The quantiles $ q(0.25) $, $ q(0.5) $ and $ q(0.75) $ are called the
+    \textbf{\emph{lower (first) quartile}}, the \textbf{\emph{median}},
+    and the \textbf{\emph{upper (third) quartile}} respectively.
+\end{Definition}
+
+
+
+\begin{Definition}{}{}
+    The \textbf{\emph{interquartile range}} is $ \text{IQR}=q(0.75)-q(0.25) $.
+\end{Definition}
+
+
+
+\begin{Definition}{}{}
+    The \textbf{\emph{five number summary}} of a data set consist of the smallest observation,
+    the lower quartile, the median, the upper quartile, and the largest value, that is,
+    the five values: $ y_{(1)},\;q(0.25),\;q(0.5)=\hat{m},\;q(0.75),\;y_{(n)} $.
+\end{Definition}
+
+
+\subsection*{Graphical Summaries}
 \begin{itemize}
-    \item Frequency histogram
-    \item Empirical cumulative distribution function
-    \item Box plots
-    \item Scatter plot
-    \item Run charts
+    \item Frequency histogram.
+    \item Empirical cumulative distribution function.
+    \item Box plots.
+    \item Scatter plot.
+    \item Run charts.
 \end{itemize}
-\begin{defbox}
-    \begin{definition}
-        For a data set $ \{y_1,\ldots ,y_n\} $, the \textbf{\emph{empirical cumulative distribution function}}
-        (e.c.d.f) is defined by
-        \[ \hat{F}(y)=\frac{\text{number of values in $ \{y_1,y_2,\ldots ,y_n\} $ which are $ \leqslant y $}}{n} \]
-        for all $ y\in\mathbb{R} $.
-        The e.c.d.f is an estimate, based on the data, of the population cumulative distribution function.
-    \end{definition}
-\end{defbox}
+
+\begin{Definition}{}{}
+    For a data set $ \{y_1,\ldots ,y_n\} $, the \textbf{\emph{empirical cumulative distribution function}}
+    (e.c.d.f) is defined by
+    \[ \hat{F}(y)=\frac{\text{number of values in $ \{y_1,y_2,\ldots ,y_n\} $ which are $ \leqslant y $}}{n} \]
+    for all $ y\in\mathbb{R} $.
+    The e.c.d.f is an estimate, based on the data, of the population cumulative distribution function.
+\end{Definition}
+
