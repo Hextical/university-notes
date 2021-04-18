@@ -103,7 +103,7 @@ The $ h $-step ahead VaR is approximated by
 \begin{itemize}
     \item Step 1: Fit a GARCH model to the returns $ r_t $.
     \item Step 2: Use the GARCH model to forecast $ \hat{\sigma}_{t+1}^2 $.
-    \item \underline{Step 3}: Set $ q_t(1,\alpha)=\text{a quantile of $r_{t+1}$}=\hat{\sigma}_{t+h}\hat{F}^{-1}(\alpha) $
+    \item \underline{Step 3}: Set $ q_t(1,\alpha)=\text{a quantile of $r_{t+1}$}=\hat{\sigma}_{t+1}\hat{F}^{-1}(\alpha) $
           where $ \hat{F} $ is the distribution estimated from the GARCH residuals:
           \begin{enumerate}[(a)]
               \item $ \hat{F}\sim \N{0,1} $ CDF\@.
@@ -115,7 +115,7 @@ For $ h $-step ahead VaR forecasting:
 \begin{itemize}
     \item Option 1: Apply $ \sqrt{h} $-scaling.
     \item Option 2: Use the GARCH model to simulate $ r_{T+h}^{(b)},\ldots,r_{T+h}^{(b)} $,
-          where the errors $ W_t $ are drawn from $ \hat{F} $. Set $ q_t(h,\alpha)=\text{a quantile of $\sum_{j=t+1}^{t+h} $}$
+          where the errors $ W_t $ are drawn from $ \hat{F} $. Set $ q_t(h,\alpha)=\text{a quantile of $\sum_{j=t+1}^{t+h}r_j $}$
           to be the empirical quantile of
           \[ \sum_{j=T+1}^{T+h} r_{T+j}^{(b)}\quad(b=1,\ldots,B) \]
           where $ B $ is large, (e.g., $B=10^{6} $).
