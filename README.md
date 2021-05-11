@@ -5,9 +5,9 @@ All my university notes done in LaTeX.
 
 ## Year 3
 ### Semester 3
-|  Course  | Completion |       Online       |
-| :------: | :--------: | :----------------: |
-| STAT 430 |   Week 1   | :heavy_check_mark: |
+|                                              Course                                              | Completion |       Online       |
+| :----------------------------------------------------------------------------------------------: | :--------: | :----------------: |
+| [STAT 430](https://hextical.github.io/university-notes/year-3/semester-3/STAT%20430/stat430.pdf) |   Week 1   | :heavy_check_mark: |
 ## Year 3
 ### Semester 2
 |                                              Course                                              |    Completion    |       Online       |
