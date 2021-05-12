@@ -1,13 +1,13 @@
 \chapter{Week 1}
 \section{Notation and Nomenclature}
-\begin{Example}{Experiment 1: List View vs. Tile View}{nike_ex}
+\begin{Example}{Experiment 1 --- List View vs. Tile View}{nike_ex}
     Suppose that \href{https://www.nike.com/ca/}{Nike}, the athletic apparel company,
     is experimenting with their mobile shopping interface, and they are interested in determining
     whether changing the user interface from \emph{list view}
     to \emph{tile view} will increase the proportion
     of customers that proceed to checkout.
 \end{Example}
-\begin{Example}{Experiment 2: Ad Themes}{nixon_ex}
+\begin{Example}{Experiment 2 --- Ad Themes}{nixon_ex}
     Suppose that \href{https://www.nixon.com/ca/en}{Nixon},
     the watch and accessories brand, is experimenting
     with four different video ads that are to be shown on Instagram.
@@ -28,12 +28,14 @@
     \begin{itemize}
         \item Key performance indicators (KPIs): a statistic that
               quantifies something about a business.
-        \item Click-through rates.
-        \item Bounce rate.
-        \item Average time on page.
-        \item $ 95^{\text{th}} $ percentile page load time.
-        \item \emph{\hyperref[ex:nike_ex]{Nike Example}}: Checkout rate (COR).
-        \item \emph{\hyperref[ex:nixon_ex]{Nixon Example}}: Average viewing duration (AVD).
+              \begin{itemize}
+                  \item Click-through rates (CTRs).
+                  \item Bounce rate.
+                  \item Average time on page.
+                  \item $ 95^{\text{th}} $ percentile page load time.
+              \end{itemize}
+        \item \emph{\hyperref[ex:nike_ex]{Nike Example}}: checkout rate (COR).
+        \item \emph{\hyperref[ex:nixon_ex]{Nixon Example}}: average viewing duration (AVD).
     \end{itemize}
 \end{Example}
 \begin{Definition}{Response variable}{}
@@ -44,26 +46,37 @@
 \end{Remark}
 \begin{Example}{Response Variable}{}
     \begin{itemize}
-        \item \emph{\hyperref[ex:nike_ex]{Nike Example}}: Binary indicator indicating
+        \item \emph{\hyperref[ex:nike_ex]{Nike Example}}: binary indicator indicating
               whether a customer checked out.
-        \item \emph{\hyperref[ex:nixon_ex]{Nixon Example}}: The continuous measurement
+        \item \emph{\hyperref[ex:nixon_ex]{Nixon Example}}: the continuous measurement
               of viewing duration for each user.
     \end{itemize}
 \end{Example}
 \begin{Definition}{Factor}{}
     The \textbf{factor}, denoted $ x $, is the variable(s) of secondary interest.
-    Also known as: \textbf{covariates}/\textbf{explanatory variates},
-    \textbf{predictors}/\textbf{features}/\textbf{independent variables}.
+
+    \vspace{2mm}
+
+    Also known as: \textbf{covariates}, \textbf{explanatory variates}, \textbf{predictors},
+    \textbf{features}, \textbf{independent variables}.
 \end{Definition}
 \begin{Remark}{}{}
     The factors are thought to influence the response (dependent) variable.
 \end{Remark}
 \begin{Example}{Factor}{}
     \begin{itemize}
-        \item \emph{\hyperref[ex:nike_ex]{Nike Example}}: The factor is the \emph{visual layout}.
-        \item \emph{\hyperref[ex:nixon_ex]{Nixon Example}}: The factor is the \emph{ad theme}.
+        \item \emph{\hyperref[ex:nike_ex]{Nike Example}}: the factor is the \emph{visual layout}.
+        \item \emph{\hyperref[ex:nixon_ex]{Nixon Example}}: the factor is the \emph{ad theme}.
     \end{itemize}
 \end{Example}
+\begin{Definition}{Experimental conditions}{}
+    The \textbf{experimental conditions} are the unique combinations of levels of one or more
+    factors.
+
+    \vspace{2mm}
+
+    Also known as: \textbf{treatments}, \textbf{variants}, \textbf{buckets}.
+\end{Definition}
 \begin{Definition}{Levels}{}
     The \textbf{levels} are the values that a factor takes on in an experiment.
 \end{Definition}
@@ -93,7 +106,7 @@
 \section{Experiments versus Observational Studies}
 \begin{Definition}{Experiment}{}
     An \textbf{experiment} is composed of a collection of conditions defined by
-    \emph{purposeful changes} to one or more factors. We intervene in the data collection.
+    \emph{purposeful changes} to one or more factors. Here, we intervene in the data collection.
 \end{Definition}
 \begin{itemize}
     \item The goal is to identify and quantify the differences in response variable values
@@ -105,28 +118,29 @@
     \item However, it would be nice if we could observe how the \emph{same} units behave in
           each of the experimental conditions, but we can't. We only observe their response in a
           single condition.
-    \item \textbf{Counterfactual}: the hypothetical and observable value of a unit's response
+    \item \textbf{Counterfactual}: the hypothetical and unobservable value of a unit's response
           in a condition to which they were not assigned. We may think of this
           as an ``alternate reality.''
           \begin{Example}{}{}
-              \emph{\hyperref[ex:nixon_ex]{Nixon Example}}: The ``camping'' response
+              \emph{\hyperref[ex:nixon_ex]{Nixon Example}}: the ``camping'' response
               variable for units assigned to the ``surfing'' condition.
           \end{Example}
     \item Because counterfactual outcomes cannot be observed, we require a \textbf{proxy}.
-          Instead, we randomly assign \emph{different units} to \emph{different conditions},
+          Instead, we randomly assign \emph{different units} to \emph{different experimental
+              conditions},
           and we compare their responses.
     \item Ideally, the only difference between the units in each condition is the fact that
           they are in different conditions.
           \begin{itemize}
               \item We want the units to be as homogenous as possible, this will help facilitate
                     \textbf{causal inference} (establishing causal connections between variables).
-              \item This is typically guaranteed by randomization.
+              \item This is typically guaranteed by \emph{randomization}.
           \end{itemize}
     \item The key here is that the factors are purposefully controlled in order to
           observe the resulting effect on the response. This facilitates causal conclusions.
     \item In an \textbf{observational study}, on the other hand, there is no measure of control
-          in the data collection process. Instead, data are recorded passively and
-          any relationship between the response and factors is observed organically.
+          in the data collection process. Instead, data is collected passively and
+          the relationship between the response and factor(s) is observed organically.
     \item This hinders our ability to establish causal connections between the factor(s)
           and the response variables. However, sometimes we have no choice.
           \begin{Example}{Unethical Experiments}{}
@@ -198,7 +212,7 @@
         % Text Node
         \draw (60.05,96.05) node   [align=left] {Conclusion};
     \end{tikzpicture}
-    \caption{QPDAC\@: Cycle}
+    \caption{QPDAC Cycle}
 \end{figure}
 \begin{framed}
     \textbf{Question}: Develop a clear statement of the question that needs to be answered.
@@ -210,10 +224,10 @@
     \end{itemize}
     \begin{Example}{}{}
         \begin{itemize}
-            \item \emph{\hyperref[ex:nike_ex]{Nike Example}}: ``Which visual layout, tile view
+            \item \emph{\hyperref[ex:nike_ex]{Nike Example}}: ``which visual layout, tile view
                   or list view, corresponds to the highest checkout rate?''
             \item \emph{\hyperref[ex:nixon_ex]{Nixon Example}}:
-                  ``Which ad theme, camping, surfing, rock climbing, business, corresponds to
+                  ``which ad theme, camping, surfing, rock climbing, business, corresponds to
                   the highest average viewing duration?''
         \end{itemize}
     \end{Example}
@@ -295,8 +309,8 @@
 \section{Fundamental Principles of Experimental Design}
 \begin{Definition}{Randomization}{}
     \textbf{Randomization} refers both to the manner in which experimental units
-    are selected for inclusion in the experiment and the manner in which they
-    are assigned to experimental conditions.
+    are \emph{selected for inclusion} in the experiment and the manner in which they
+    are \emph{assigned to experimental conditions}.
 \end{Definition}
 \begin{Remark}{}{}
     Typically, we don't include the entire target/study population.
@@ -304,12 +318,12 @@
 Thus, we have two levels of randomization:
 \begin{itemize}
     \item The first level of randomization exists to ensure the sample of units included in
-          the experiment is representative of those that were not.
+          the experiment is \emph{representative of those that were not}.
           \begin{itemize}
               \item Allows us to generalize conclusions beyond just the experimental units to units
                     in the population not in the experiment.
           \end{itemize}
-    \item The second level of randomization exists to balance the effects of extraneous variables
+    \item The second level of randomization exists to \emph{balance} the effects of \emph{extraneous variables}
           not under study (i.e., the allowed-to-vary factors).
           \begin{itemize}
               \item Balancing the effects of allowed-to-vary factors makes our conditions homogenous
@@ -344,7 +358,7 @@ Thus, we have two levels of randomization:
     \item Thus, we run the experiment \emph{at fixed levels of the nuisance factors}, i.e.,
           within \textbf{blocks}.
 
-          \begin{Example}{}{}
+          \begin{Example}{GAP}{}
               Consider an email promotion experiment in which the primary goal is to
               test different variations of the \emph{message in the subject} line with the goal of
               maximizing `\emph{open rate}.' However, suppose that it is known that the
@@ -355,6 +369,6 @@ Thus, we have two levels of randomization:
 
               We send all the emails at the same time of day and on the same day of week
               to control/eliminate the effect of time/day nuisance factor. By \emph{blocking},
-              in this way, the nuisance factor cannot interfere with our conclusions.
+              in this way, the nuisance factor can't confound our conclusions.
           \end{Example}
 \end{itemize}
