@@ -62,7 +62,7 @@
                   \item $ H_0 $: $ \theta_1\le\theta_2 $ versus $ H_\text{A} $: $ \theta_1>\theta_2 $ (one-sided).
                   \item $ H_0 $: $ \theta_1\ge\theta_2 $ versus $ H_\text{A} $: $ \theta_1<\theta_2 $ (one-sided).
             \end{itemize}
-      \item ``Absense of evidence $ \ne  $ evidence of absence.''
+      \item ``Absence of evidence $ \ne  $ evidence of absence.''
       \item No matter which hypothesis is appropriate, the goal is always the same: based on the
             observed data, we will decide to \emph{reject} $ H_0 $ or \emph{not reject} $ H_0 $.
       \item In order to draw such a conclusion, we will define a \textbf{test statistic} $ T $,
@@ -277,7 +277,7 @@
                         reduces average session duration.
             \end{itemize}
       \end{framed}
-      \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT%20430/code/2.2%20-%20Comparing_two_means.R}{[R Code] \texttt{Comparing\_two\_means}}
+      \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/2.2 - Comparing_two_means.R}{[R Code] \texttt{Comparing\_two\_means}}
 \end{Example}
 \section{Comparing Two Proportions}
 \begin{itemize}
@@ -289,7 +289,7 @@
                         0 & if unit $ i $ in condition $ j $ does not perform the action of interest
                   \end{cases*}\quad i=1,2,\ldots,n_j\text{ for } j=1,2. \]
       \item Because the $ Y_{ij} $'s are binary, it is common to assume that they follow
-            a Bernoulli distribution; that is, $ Y_{ij}\sim \bern{1,\pi_j} $ where
+            a Bernoulli distribution; that is, $ Y_{ij}\sim \bin{1,\pi_j} $ where
             $ \pi_j $ represents the probability that $ Y_{ij}=1 $. That is,
             the probability that unit $ i $ from condition $ j $ performs the ``action of interest.''
       \item Using the observed data, we test hypotheses of the form:
@@ -315,7 +315,7 @@
                   in the same way as in the $ t $-tests, except here that $ T \sim \N{0,1} $.
       \end{itemize}
 \end{Statistical_Test}
-\begin{Example}{Optimizing Optimizely}{}
+\begin{Example}{Optimizing Optimizely}{optimizely_ex1}
       \begin{itemize}
             \item During a website redesign, Optimizely was interested in how new versions
                   of certain pages influenced things like conversion and engagement relative to the old version.
@@ -331,41 +331,24 @@
 
                   \centerline{$ H_0 $: $ \pi_1\ge \pi_2 $ versus $ H_\text{A} $: $ \pi_1<\pi_2 $}
             \item The data from this experiment may be summarized in a $ 2\times 2 $ contingency table:
-                  \[
-                        \begin{array}{c}
-                              \\
-                              \emph{Conversion}
-                              \\
-                        \end{array}
-                        \begin{array}{ccc}
-                                                         & \emph{Condition}           &                            \\
-                                                         & \begin{matrix}
-                                    1 & 2
-                              \end{matrix} &                            \\
-                              \midrule
-                              \begin{matrix}
-                                    \text{Yes} \\
-                                    \text{No}
-                              \end{matrix} & \begin{matrix}
-                                    280  & 399  \\
-                                    8592 & 8243
-                              \end{matrix} & \begin{matrix}
-                                    679 \\
-                                    16835
-                              \end{matrix} \\
-                              \midrule
-                                                         & \begin{matrix}
-                                    8872 & 8642
-                              \end{matrix} & 17514
-                        \end{array}
-                  \]
+                  \begin{center}
+                        \begin{tabularx}{0.75\linewidth}{@{}BYYYY@{}}
+                              \multicolumn{2}{c}{}        & \multicolumn{2}{c}{\textbf{Condition}} &                                                                                       \\
+                              \multicolumn{2}{c}{}        & 1                                      & 2                          & \multicolumn{1}{c}{}                                     \\
+                              \cmidrule{2-5}
+                              \multirow{2}{*}{Conversion} & Yes                                    & $280$                      & $399$                      & $679$                       \\
+                                                          & No                                     & $8592$                     & $8243$                     & $16835$                     \\
+                              \cmidrule{2-5}
+                              \multicolumn{1}{c}{}        & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$8872$} & \multicolumn{1}{c}{$8642$} & \multicolumn{1}{c}{$17514$} \\
+                        \end{tabularx}
+                  \end{center}
             \item $ \hat{\pi}_1=280/8872=0.0316 $ and $ \hat{\pi}_2=399/8642=0.0462 $. Thus,
                   \[ \hat{\pi}=\frac{8872(0.0316)+8642(0.0462)}{17514} \]
                   \[ t=\frac{0.0316-0.0462}{\sqrt{(0.0388)(1-0.0388)(1/8872+1/8642)}}=-5.002  \]
             \item $ p\text{-value}=\Prob*{T\le -5.002}=2.84\times 10^{-7}\approx 0 $ where $ T \sim \N{0,1} $.
             \item We reject $ H_0 $ and conclude that the redesigned homepage significantly
                   increases conversion rate.
-            \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT%20430/code/2.3%20-%20Comparing_two_proportions.R}{[R Code] \texttt{Comparing\_two\_proportions}}
+            \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/2.3 - Comparing_two_proportions.R}{[R Code] \texttt{Comparing\_two\_proportions}}
       \end{itemize}
 \end{Example}
 \section{A Power Calculation}

@@ -27,5 +27,56 @@
 			"-n21",
 			"-n29"
 		],
+		"latex-workshop.view.pdf.viewer": "external",
+		"latex-workshop.view.pdf.external.viewer.command": "zathura",
+		"latex-workshop.view.pdf.external.viewer.args": [
+			"--synctex-editor-command",
+			"vscodium --reuse-window -g \"%{input}:%{line}\"",
+			"%PDF%"
+		],
+		"latex-workshop.view.pdf.external.synctex.command": "zathura",
+		"latex-workshop.view.pdf.external.synctex.args": [
+			"--synctex-forward=%LINE%:0:%TEX%",
+			"%PDF%"
+		],
+		"latex-workshop.latex.tools": [
+			{
+				"name": "notes",
+				"command": "xelatex",
+				"args": [
+					"-synctex=1",
+					"-interaction=nonstopmode",
+					"-file-line-error",
+					"-shell-escape",
+					"-output-directory=%OUTDIR%",
+					"%DOC%"
+				]
+			},
+			{
+				"name": "crowdmark",
+				"command": "pdflatex",
+				"args": [
+					"-interaction=batchmode",
+					"-file-line-error",
+					"-output-directory=%OUTDIR%",
+					"%DOC%",
+				]
+			}
+		],
+		"latex-workshop.latex.recipes": [
+			{
+				"name": "notes (xelatex)",
+				"tools": [
+					"notes"
+				]
+			},
+			{
+				"name": "crowdmark (pdflatex)",
+				"tools": [
+					"crowdmark"
+				]
+			}
+		]
 	}
+	
 }

@@ -239,7 +239,7 @@ Since our assumed model is
 where $ x_i $ is assumed to be a known constant, the likelihood function for $ \alpha $
 and $ \beta $ (assuming for the moment that $ \sigma $ is known) is
 \[\begin{aligned}
-        L(\alpha, \beta)
+        \mathcal{L}(\alpha, \beta)
          & =\prod_{i=1}^{n} \exp \left[-\frac{1}{2 \sigma^{2}}\left(y_{i}-\alpha-\beta x_{i}\right)^{2}\right] \\
          & =\exp \left[-\frac{1}{2 \sigma^{2}} \sum_{i=1}^{n}\left(y_{i}-\alpha-\beta x_{i}\right)^{2}\right]
     \end{aligned}
@@ -248,7 +248,7 @@ where we have ignored terms not involving $ \alpha $ and $ \beta $.
 
 To obtain the maximum likelihood estimates of $ \alpha $ and $ \beta $,
 we would maximize
-\[L(\alpha, \beta)=\exp \left[-\frac{1}{2 \sigma^{2}} \sum_{i=1}^{n}\left(y_{i}-\alpha-\beta x_{i}\right)^{2}\right],
+\[\mathcal{L}(\alpha, \beta)=\exp \left[-\frac{1}{2 \sigma^{2}} \sum_{i=1}^{n}\left(y_{i}-\alpha-\beta x_{i}\right)^{2}\right],
     \alpha \in \mathbb{R}, \beta \in \mathbb{R}\]
 with respect to $ \alpha $ and $ \beta $, or equivalently minimize
 \[\sum_{i=1}^{n}\left(y_{i}-\alpha-\beta x_{i}\right)^{2}\]
@@ -1260,7 +1260,7 @@ and the maximum likelihood estimators are
 
 For testing $H_{0}: \theta=\theta_{0}=\left(\frac{1}{k}, \frac{1}{k}, \ldots, \frac{1}{k}\right)$, we use
 \[
-    \Lambda\left(\theta_{0}\right)=-2 \log \left[\frac{L\left(\theta_{0}\right)}{L(\tilde{\theta})}\right]=2 l(\tilde{\theta})-2 l\left(\theta_{0}\right)
+    \Lambda\left(\theta_{0}\right)=-2 \log \left[\frac{L\left(\theta_{0}\right)}{\mathcal{L}(\tilde{\theta})}\right]=2 l(\tilde{\theta})-2 l\left(\theta_{0}\right)
 \]
 where
 \[
@@ -1269,7 +1269,7 @@ where
 Now
 \[
     \begin{aligned}
-        \frac{L\left(\theta_{0}\right)}{L(\tilde{\theta})} & =\left[\prod_{j=1}^{k}\left(\frac{1}{k}\right)^{Y_{j}}\right] \div\left[\prod_{j=1}^{k}\left(\frac{Y_{j}}{n}\right)^{Y_{j}}\right]                                               \\
+        \frac{L\left(\theta_{0}\right)}{\mathcal{L}(\tilde{\theta})} & =\left[\prod_{j=1}^{k}\left(\frac{1}{k}\right)^{Y_{j}}\right] \div\left[\prod_{j=1}^{k}\left(\frac{Y_{j}}{n}\right)^{Y_{j}}\right]                                               \\
                                                            & =\prod_{j=1}^{k}\left(\frac{n / k}{Y_{j}}\right)^{Y_{j}}=\prod_{j=1}^{k}\left(\frac{E_{j}}{Y_{j}}\right)^{Y_{j}}, \quad \text{where} E_{j}=n\left(\frac{1}{k}\right)=\frac{n}{k}
     \end{aligned}
 \]
@@ -1278,7 +1278,7 @@ Note that $Y_{j}$ is the observed number, and $E_{j}$ is the expected number of 
 Therefore, the likelihood ratio test statistic for testing $H_{0}: \theta=\theta_{0}=\left(\frac{1}{k}, \frac{1}{k}, \ldots, \frac{1}{k}\right)$ is
 \[
     \begin{aligned}
-        \Lambda\left(\theta_{0}\right) & =-2 \log \left[\frac{L\left(\theta_{0}\right)}{L(\tilde{\theta})}\right]=-2 \log \left[\prod_{j=1}^{k}\left(\frac{E_{j}}{Y_{j}}\right)^{Y_{j}}\right] \\
+        \Lambda\left(\theta_{0}\right) & =-2 \log \left[\frac{L\left(\theta_{0}\right)}{\mathcal{L}(\tilde{\theta})}\right]=-2 \log \left[\prod_{j=1}^{k}\left(\frac{E_{j}}{Y_{j}}\right)^{Y_{j}}\right] \\
                                        & =2 \sum_{j=1}^{k} Y_{j} \log \left(\frac{Y_{j}}{E_{j}}\right)                                                                                         \\
                                        & =2 \sum_{j=1}^{k}(\text{observed frequency }) \times \log \left(\frac{\text{ observed frequency }}{\text{ expected frequency}}\right)
     \end{aligned}
@@ -1302,7 +1302,7 @@ So large values of $\Lambda\left(\theta_{0}\right)$ give evidence against $H_{0}
 The likelihood ratio test statistic for testing $H_{0}: \theta_{j}=\frac{1}{8}, j=1,2, \ldots, 8$ is
 \[
     \begin{aligned}
-        \Lambda\left(\theta_{0}\right) & =-2 \log \left[\frac{L\left(\theta_{0}\right)}{L(\tilde{\theta})}\right]                          \\
+        \Lambda\left(\theta_{0}\right) & =-2 \log \left[\frac{L\left(\theta_{0}\right)}{\mathcal{L}(\tilde{\theta})}\right]                          \\
                                        & =2 \sum_{j=1}^{8} Y_{j} \log \left(\frac{Y_{j}}{E_{j}}\right)                                     \\
                                        & =2 \sum_{j=1}^{8}(\text{observed frequency }) \times \log \left(\frac{\text{ observed frequency}}
         {\text{expected frequency}}\right)
@@ -1587,7 +1587,7 @@ and the maximum likelihood estimators are
 If $H_{0}: \theta_{11}=\alpha \beta$ is true, then the likelihood function under $H_{0}$ is
 \[
     \begin{aligned}
-        L(\alpha, \beta) & =(\alpha \beta)^{y_{11}}[\alpha(1-\beta)]^{y_{12}}[(1-\alpha) \beta]^{y_{21}}[(1-\alpha)(1-\beta)]^{y_{22}}                               \\
+        \mathcal{L}(\alpha, \beta) & =(\alpha \beta)^{y_{11}}[\alpha(1-\beta)]^{y_{12}}[(1-\alpha) \beta]^{y_{21}}[(1-\alpha)(1-\beta)]^{y_{22}}                               \\
                          & =\alpha^{y_{11}+y_{12}}(1-\alpha)^{y_{21}+y_{22}} \cdot \beta^{y_{11}+y_{21}}(1-\beta)^{y_{12}+y_{22}}, \quad 0<\alpha<1, \quad 0<\beta<1
     \end{aligned}
 \]
@@ -1606,7 +1606,7 @@ Why do these estimates make sense?
 
 \[
     \begin{array}{c}
-        -2 \log \left[\frac{L(\tilde{\alpha}, \tilde{\beta})}{L\left(\tilde{\theta}_{11}, \tilde{\theta}_{12}, \tilde{\theta}_{21}, \tilde{\theta}_{22}\right)}\right] \\
+        -2 \log \left[\frac{\mathcal{L}(\tilde{\alpha}, \tilde{\beta})}{L\left(\tilde{\theta}_{11}, \tilde{\theta}_{12}, \tilde{\theta}_{21}, \tilde{\theta}_{22}\right)}\right] \\
         =2\left[Y_{11} \log \left(\frac{Y_{11}}{E_{11}}\right)+Y_{12} \log \left(\frac{Y_{12}}{E_{12}}\right)+Y_{21} \log \left(\frac{Y_{21}}{E_{21}}\right)+Y_{22} \log \left(\frac{Y_{22}}{E_{22}}\right)\right]
     \end{array}
 \]
