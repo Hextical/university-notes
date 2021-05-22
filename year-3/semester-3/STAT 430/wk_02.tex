@@ -1,4 +1,5 @@
-\chapter{Week 2 --- Experiments with Two Conditions}
+\chapter{Experiments with Two Conditions}
+\makeheading{Week 2}
 \section{Anatomy of an A/B Test}
 \begin{itemize}
       \item One design factor at two levels.
@@ -68,9 +69,9 @@
       \item In order to draw such a conclusion, we will define a \textbf{test statistic} $ T $,
             which is a random variable that satisfies three properties:
             \begin{enumerate}[(i)]
-                  \item it must be a function of the observed data.
-                  \item it must be a function of the parameters $ \theta_1 $ and $ \theta_2 $.
-                  \item its distribution must not depend on $ \theta_1 $ or $ \theta_2 $.
+                  \item It must be a function of the observed data.
+                  \item It must be a function of the parameters $ \theta_1 $ and $ \theta_2 $.
+                  \item Its distribution must not depend on $ \theta_1 $ or $ \theta_2 $.
             \end{enumerate}
       \item Assuming the null hypothesis is true, the test statistic $ T $ follows
             a particular distribution which we call the \textbf{null distribution}.
@@ -145,7 +146,7 @@
             occur.
       \item It is desirable to have a test with a small significance level, and a large power.
 \end{itemize}
-\section{Comparing Two Means}
+\section{Comparing Means in Two Conditions}
 \begin{itemize}
       \item Here, we restrict attention to the situation in which the response variable
             of interest is measured on a continuous scale.
@@ -162,7 +163,7 @@
                   \item $ H_0 $: $ \mu_1\ge\mu_2 $ versus $ H_\text{A} $: $ \mu_1<\mu_2 $.
             \end{itemize}
 \end{itemize}
-\subsection*{$ t $-tests, $ F $-tests, and an Example}
+\subsection{The Two-Sample \texorpdfstring{$ t $}{t}-Test}
 \begin{Statistical_Test}{Student's $ \symbf{t} $-test}{st_t_test}
       \begin{itemize}
             \item \emph{Purpose}: Compare $ \mu_1 $ versus $ \mu_2 $ (assuming $ \sigma_1=\sigma_2 $ are unknown).
@@ -194,6 +195,7 @@
                   \end{Remark}
       \end{itemize}
 \end{Statistical_Test}
+\subsection{When Assumptions are Invalid}
 \begin{Statistical_Test}{Welch's $ \symbf{t} $-test}{}
       \begin{itemize}
             \item \emph{Purpose}: Compare $ \mu_1 $ versus $ \mu_2 $ (assuming $ \sigma_1\ne\sigma_2 $ are unknown).
@@ -232,6 +234,7 @@
                   \end{Remark}
       \end{itemize}
 \end{Statistical_Test}
+\subsection{Example: Instagram Ad Frequency}
 \begin{Example}{Instagram Ad frequency}{}
       \begin{itemize}
             \item Suppose that you are a data scientist at Instagram, and you are interested
@@ -279,7 +282,7 @@
       \end{framed}
       \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/2.2 - Comparing_two_means.R}{[R Code] \texttt{Comparing\_two\_means}}
 \end{Example}
-\section{Comparing Two Proportions}
+\section{Comparing Proportions in Two Conditions}
 \begin{itemize}
       \item Here, we restrict attention to the situation in which the response variable of interest
             is binary, indicating whether an experimental unit did, or did not, perform
@@ -299,7 +302,7 @@
                   \item $ H_0 $: $ \pi_1\ge\pi_2 $ versus $ H_\text{A} $: $ \pi_1<\pi_2 $.
             \end{itemize}
 \end{itemize}
-\subsection*{$ Z $-tests and an Example}
+\subsection{\texorpdfstring{$ Z $}{Z}-tests for Proportions}
 \begin{Statistical_Test}{$ \symbf{Z} $-test for Proportions}{}
       \begin{itemize}
             \item \emph{Purpose}: Compare $ \pi_1 $ versus $ \pi_2 $.
@@ -315,6 +318,7 @@
                   in the same way as in the $ t $-tests, except here that $ T \sim \N{0,1} $.
       \end{itemize}
 \end{Statistical_Test}
+\subsection{Example: Optimizing Optimizely}
 \begin{Example}{Optimizing Optimizely}{optimizely_ex1}
       \begin{itemize}
             \item During a website redesign, Optimizely was interested in how new versions
@@ -351,7 +355,7 @@
             \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/2.3 - Comparing_two_proportions.R}{[R Code] \texttt{Comparing\_two\_proportions}}
       \end{itemize}
 \end{Example}
-\section{A Power Calculation}
+\section{Power Analysis and Sample Size Calculations}
 \begin{itemize}
       \item Used to control Type II Error.
       \item Power analyses help determine required sample sizes.
