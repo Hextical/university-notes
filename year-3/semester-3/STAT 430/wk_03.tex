@@ -30,6 +30,8 @@
             consider all possible rearrangements.
             \begin{itemize}
                   \item We just consider a large number $ N $ of them.
+                  \item We use this in practice instead of a permutation test because
+                        the exact permutation tests have too many permutations to consider.
             \end{itemize}
 \end{itemize}
 \begin{framed}
@@ -49,7 +51,7 @@
                   \[ t_k^\star=\hat{\theta}_{1,k}^\star-\hat{\theta}_{2,k}^\star\quad\text{or}\quad t_k^\star=\frac{\hat{\theta}_{1,k}^\star}{\hat{\theta}_{2,k}^\star}  \]
             \item Compare to $ t $ to $ \set*{t_1^\star,t_2^\star,\ldots,t_N^\star} $, the empirical
                   null distribution, and calculate the $ p $-value:
-                  \[ p\text{-value}=\frac{\text{\# of $t$'s that are at least as extreme as $t$}}{N}  \]
+                  \[ p\text{-value}=\frac{\text{\# of $t$'s that are at least as extreme as $t$}}{N}=\frac{1}{N} \sum_{k=1}^{N} \Ind*{t_k^\star\text{ at least as extreme as $t$}}  \]
                   \begin{itemize}
                         \item $ H_0 $: $ \theta_1=\theta_2 $ versus $ H_\text{A} $: $ \theta_1\ne \theta_2 $. If $ t=\hat{\theta}_1-\hat{\theta}_2 $, then
                               the $ p $-value is:
@@ -83,7 +85,7 @@
                   \end{itemize}
                   Using R, we performed a randomization test with $ N=10\,000 $ with respect to the mean
                   we found that the control and free coin conditions did not significantly differ.
-                  But there was a significant increase in the amount of money spend in the discount condition
+                  But there was a significant increase in the amount of money spent in the discount condition
                   relative to the other two.
 
                   \vspace{2mm}
@@ -134,10 +136,10 @@
                   \item Collect the data and estimate the metric of interest in each condition:
                         \[ \hat{\theta}_1,\hat{\theta}_2,\ldots,\hat{\theta}_m \]
             \end{enumerate}
-      \item Determining which conditional is optimal typically involves a series of pairwise
-            comparisons: $ t $-tests or $ z $-tests.
+      \item Determining which conditions are optimal typically involves a series of pairwise
+            comparisons: $ t $-tests, $ z $-tests, or randomization tests.
       \item But it is useful to begin such an investigation with a \emph{gatekeeper}
-            test (overall equality) which serves to determine whether
+            test (test of overall equality) which serves to determine whether
             there is \emph{any} difference between the $ m $ experimental conditions.
             Formally, such a question is phrased as the following statistical hypothesis:
 
@@ -157,17 +159,17 @@
             and we assume that the mean of the distribution depends on the condition
             in which the measurements were taken, and that the variance
             is the same across all conditions.
-            \[ Y_{ij}\sim \N{\mu_j,\sigma^2}\quad\text{for }i=1,2,\ldots,n_j\text{ and }j=1,2 \]
+            \[ Y_{ij}\sim \N{\mu_j,\sigma^2}\quad\text{for }i=1,2,\ldots,n_j\text{ and }j=1,2,\ldots,m \]
       \item The ``gatekeeper'' test for means is tested using an $ F $-test:
 
-            \centerline{$ H_0 $: $ \mu_1=\mu_2=\cdots=\mu_m $}
+            \centerline{$ H_0 $: $ \mu_1=\mu_2=\cdots=\mu_m $ versus $H_\text{A}$: $ \mu_j\ne \mu_k $ for some $ j\ne k $}
 \end{itemize}
 \subsection{The \texorpdfstring{$ F $}{F}-test for Overall Significance in a Linear Regression}
 \begin{itemize}
       \item In particular, we use the $ F $-test for overall significance in an
             \emph{approximately defined linear regression model}:
             \begin{itemize}
-                  \item The appropriately defined linear regression model
+                  \item The \emph{approximately defined linear regression model}
                         in this situation is one in which the response
                         variable depends on $ m-1 $ indicator variables:
                         \[ x_{ij}=\begin{cases*}
@@ -191,8 +193,9 @@
                                     \[ \E{Y_i\given x_{ij}=1}=\beta_0+\beta_j=\mu_j\quad\text{for }j=1,2,\ldots,m-1 \]
                         \end{itemize}
                         \begin{itemize}
-                              \item $ \beta_j $ is interpreted as the expected difference in response value
-                                    in condition $ j $ versus condition $ m $.
+                              \item $ \beta_0 $ is the expected response in condition $ m $.
+                              \item $ \beta_j $ is the expected difference in response value in condition $ j $
+                                    versus condition $ m $ for $ j=1,2,\ldots,m-1 $.
                                     \begin{align*}
                                           \mu_1     & =\beta_0+\beta_1      \\
                                           \mu_2     & =\beta_0+\beta_2      \\
@@ -262,8 +265,9 @@
                   of game play (i.e., $ \mu_1=\mu_2=\mu_3 $).
             \item In order to do this we fit the linear regression model:
                   \[ Y=\beta_0+\beta_1 x_1+\beta_2 x_2+\varepsilon \]
-                  where the $ x $'s are indicator variables indicating whether a particular value
-                  of the response was observed in the jelly fish or colour bomb conditions.
+                  where $ x_1 $ and $ x_2 $ are indicator variables indicating
+                  whether a particular value of the response was observed in the
+                  jelly fish or colour bomb conditions, respectively.
                   The lollipop hammer is therefore the reference condition.
             \item In R, we found that the test statistic for testing:
 
@@ -285,7 +289,7 @@
                         1 & if unit $ i $ in condition $ j $ performs an action of interest         \\
                         0 & if unit $ i $ in condition $ j $ deos not perform an action of interest
                   \end{cases*}i=1,2,\ldots,n_j;j=1,2,\ldots,m \]
-            \[ Y_{ij}\sim \bin{1,\pi_j} \]
+      \item $ Y_{ij}\sim \bin{1,\pi_j} $
             where $ \pi_j $ is the probability of a unit in condition $ j $ performing the action.
       \item The ``gatekeeper'' test for proportions is tested using the \textbf{chi-squared test
                   of independence} (also known as Pearson $ \chi^2 $-test).
@@ -390,7 +394,7 @@
                               \item $ \hat{\pi}=O_1/N $.
                               \item $ 1-\hat{\pi}=O_0/N $.
                         \end{itemize}
-                  \item We contract each of the observed frequencies $ O_{1,j} $ with the corresponding expected
+                  \item We compare each of the observed frequencies $ O_{1,j} $ with the corresponding expected
                         frequency $ E_{\ell,j} $.
                         \[ E_{1,j}=n_j\hat{\pi}\quad\text{and}\quad E_{0,j}=n_j(1-\hat{\pi}) \]
                         \begin{itemize}
@@ -415,7 +419,7 @@
                   and interest lies in determining
                   which ad is most popular and hence most profitable
                   by comparing the viewing rates of the five
-                  different videos.
+                  different videos. $ Y=1 $ if ad was viewed and $ 0 $ otherwise.
             \item Each of these 5 videos is shown to $ n_1=5014 $, $ n_2=4971 $, $ n_3=5030 $,
                   $ n_4=5007 $, and $ n_5=4980 $ users, and the results are summarized in the table below.
                   \begin{center}
