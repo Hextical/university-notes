@@ -109,36 +109,86 @@ legend("topleft", legend = c("Bonferroni", "Sidak", "Holmes"),
 
 library(latex2exp)
 x <- seq(0, 0.5, by = 0.01)
-plot(x, 1 - exp(-x),
-     ylim = c(0,0.5),
-     xlab = TeX(r'($\alpha^*$)'),
-     ylab = TeX(r'($1-e^{-\alpha^*}$)'),
-     type = "l", col = "darkblue")
-lines(x, x, type = "l", col = "red", lty = 2)
-legend("bottomright",
-       legend = c("Asym. Error Rate", "Line of Equality"),
-       col = c("darkblue", "red"),
-       lty = c(1,2), bty = "n")
+plot(
+  x,
+  1 - exp(-x),
+  ylim = c(0, 0.5),
+  xlab = TeX(r'($\alpha^*$)'),
+  ylab = TeX(r'($1-e^{-\alpha^*}$)'),
+  type = "l",
+  col = "darkblue"
+)
+lines(x,
+      x,
+      type = "l",
+      col = "red",
+      lty = 2)
+legend(
+  "bottomright",
+  legend = c("Asym. Error Rate", "Line of Equality"),
+  col = c("darkblue", "red"),
+  lty = c(1, 2),
+  bty = "n"
+)
 
-# 6 x 6
-p <- c(0.015, 0.029, 0.008, 0.026)
-plot(rank(p), p, pch = 20,
-     xlab = "Rank (k)",
-     ylab = "Sorted p-values",
-     xlim = c(1, 4), ylim = c(0,0.05),
-     xaxt = "n")
-axis(1, at = seq(1, 4))
-M <- 4
-alpha_star <- 0.05
-k <- seq(1, 4, by = 0.01)
-lines(k, alpha_star / (M - k + 1),
-      col = "red", lty = 2, lwd = 1.5)
-lines(k, rep(alpha_star / M, times = length(k)),
-      col = "blue", lty = 2, lwd = 1.5)
-lines(k, rep(1 - (1 - alpha_star) ^ (1 / M),  times = length(k)),
-      col = "chartreuse4", lty = 2, lwd = 1.5)
-lines(k, k*alpha_star/M,
-      col = "purple", lty = 2, lwd = 1.5)
-legend("topleft", legend = c("Bonferroni", "Sidak", "Holmes", "BH"),
-       col = c("blue", "green", "red", "purple"),
-       lty = 2, lwd = 1.5, bty = "n")
+## The Four-Test Example
+
+## These were the p-values
+p1 <- 0.015
+p2 <- 0.029
+p3 <- 0.008
+p4 <- 0.026
+
+## The plot of ordered p-values vs. rank + significance thresholds is created below:
+
+# Define some useful variables:
+alpha.star <- 0.05
+p <- c(p1, p2, p3, p4)
+M <- length(p)
+rank <- seq(0, M + 1, 0.001)
+
+# Make the plot:
+plot(
+  x = 1:M,
+  y = sort(p),
+  pch = 16,
+  ylab = "Sorted p-values",
+  xlab = "Rank (k)",
+  ylim = c(0, max(alpha.star, max(p))),
+  xaxt = "n"
+)
+axis(side = 1,
+     at = 1:M,
+     labels = 1:M)
+
+# Holm's threshold:
+lines(
+  x = rank,
+  y = alpha.star / (M - rank + 1),
+  col = "red",
+  lty = 2
+)
+
+# Bonferroni's threshold:
+abline(h = alpha.star / M, col = "blue", lty = 2)
+
+# Šidák's threshold
+abline(h = 1 - (1 - alpha.star) ^ (1 / M),
+       col = "green",
+       lty = 2)
+
+# BH threshold
+abline(a = 0,
+       b = alpha.star / M,
+       col = "purple",
+       lty = 2)
+
+# Legend:
+legend(
+  "topleft",
+  legend = c("Bonferroni", "Sidak", "Holmes"),
+  bty = "n",
+  col = c("blue", "green", "red", "purple"),
+  lty = 2,
+  cex = 0.7
+)
