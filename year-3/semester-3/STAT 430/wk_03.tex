@@ -9,9 +9,9 @@
       \item This is precisely the purpose of permutation and randomization tests.
             \begin{itemize}
                   \item These tests are \emph{non-parametric} and rely on sampling.
-                  \item The motivation is that if $ H_0 $: $ \theta_1=\theta_2 $
+                  \item The motivation is that if $ \mathbf{H}_0 $: $ \theta_1=\theta_2 $
                         is true, any random rearrangement of the data is \emph{equally likely
-                              to have been observed}. If $ H_0 $ is true, then we have a single population
+                              to have been observed}. If $ \mathbf{H}_0 $ is true, then we have a single population
                         from which our data has been drawn.
                   \item With $ n_1 $ and $ n_2 $ units in each condition, there are
                         \[ \binom{n_1+n_2}{n_1}=\binom{n_1+n_2}{n_2} \]
@@ -53,13 +53,13 @@
                   null distribution, and calculate the $ p $-value:
                   \[ p\text{-value}=\frac{\text{\# of $t$'s that are at least as extreme as $t$}}{N}=\frac{1}{N} \sum_{k=1}^{N} \Ind*{t_k^\star\text{ at least as extreme as $t$}}  \]
                   \begin{itemize}
-                        \item $ H_0 $: $ \theta_1=\theta_2 $ versus $ H_\text{A} $: $ \theta_1\ne \theta_2 $. If $ t=\hat{\theta}_1-\hat{\theta}_2 $, then
+                        \item $ \mathbf{H}_0 $: $ \theta_1=\theta_2 $ versus $ \mathbf{H}_\text{A} $: $ \theta_1\ne \theta_2 $. If $ t=\hat{\theta}_1-\hat{\theta}_2 $, then
                               the $ p $-value is:
                               \[ p\text{-value}=\frac{1}{N} \sum_{k=1}^{N} \Ind*{t_k^\star\ge \abs{t}\cup t_k^\star\le -\abs{t}} \]
-                        \item $ H_0 $: $ \theta_1\ge \theta_2 $ versus $ H_\text{A} $: $ \theta_1<\theta_2 $. If $ t=\hat{\theta}_1-\hat{\theta}_2 $, then
+                        \item $ \mathbf{H}_0 $: $ \theta_1\ge \theta_2 $ versus $ \mathbf{H}_\text{A} $: $ \theta_1<\theta_2 $. If $ t=\hat{\theta}_1-\hat{\theta}_2 $, then
                               the $ p $-value is:
                               \[ p\text{-value}=\frac{1}{N} \sum_{k=1}^{N} \Ind*{t_k^\star\le t} \]
-                        \item $ H_0 $: $ \theta_1\le \theta_2 $ versus $ H_\text{A} $: $ \theta_1>\theta_2 $. If $ t=\hat{\theta}_1-\hat{\theta}_2 $, then
+                        \item $ \mathbf{H}_0 $: $ \theta_1\le \theta_2 $ versus $ \mathbf{H}_\text{A} $: $ \theta_1>\theta_2 $. If $ t=\hat{\theta}_1-\hat{\theta}_2 $, then
                               the $ p $-value is:
                               \[ p\text{-value}=\frac{1}{N} \sum_{k=1}^{N} \Ind*{t_k^\star\ge t} \]
                   \end{itemize}
@@ -91,24 +91,49 @@
                   \vspace{2mm}
 
                   The hypotheses that we tested to determine these conclusions were:
-
-                  \centerline{$ H_0 $: $ \mu_1=\mu_2 $ versus $ H_\text{A} $: $ \mu_1\ne \mu_2 $}
-                  \centerline{$ H_0 $: $ \mu_1\ge \mu_2 $ versus $ H_\text{A} $: $ \mu_1<\mu_2 $}
-
+                  \begin{tightcenter}
+                        $ \mathbf{H}_0 $: $ \mu_1=\mu_2 $ versus $ \mathbf{H}_\text{A} $: $ \mu_1\ne \mu_2 $\\
+                        $ \mathbf{H}_0 $: $ \mu_1\ge \mu_2 $ versus $ \mathbf{H}_\text{A} $: $ \mu_1<\mu_2 $
+                  \end{tightcenter}
                   Interestingly, when you run these same tests, but on the basis of the median, we find
                   no significant difference between any of the conditions.
             \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/Randomization_test.R}{[R Code] \texttt{Randomization\_test}}
       \end{itemize}
 \end{Example}
 \chapter{Experiments with More than Two Conditions}
-\section*{Anatomy of an ``A/B/m'' Test}
+\section*{Anatomy of an ``A/B/$ m $'' Test}
 \begin{itemize}
       \item One design factor at $ m $ levels.
       \item We will now consider a design and analysis of an experiment consisting
             of more than two experimental conditions --- or what many data scientists
             broadly refer to as ``A/B/$m$ Testing.''
             \begin{itemize}
-                  \item Canonical A/B/$ m $ test: What colour maximizes click-through rate?
+                  \item Canonical A/B/$ m $ test:
+                        \begin{figure}[!htbp]
+                              \centering
+                              \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1.5,xscale=1.5]
+                                    %Rounded Rect [id:dp8976617722511913] 
+                                    \draw  [draw opacity=0][fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (10,19.53) .. controls (10,15.12) and (13.58,11.53) .. (18,11.53) -- (81.3,11.53) .. controls (85.72,11.53) and (89.3,15.12) .. (89.3,19.53) -- (89.3,43.53) .. controls (89.3,47.95) and (85.72,51.53) .. (81.3,51.53) -- (18,51.53) .. controls (13.58,51.53) and (10,47.95) .. (10,43.53) -- cycle ;
+                                    %Rounded Rect [id:dp05576705853009267] 
+                                    \draw  [draw opacity=0][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (102,19.07) .. controls (102,14.65) and (105.58,11.07) .. (110,11.07) -- (173.3,11.07) .. controls (177.72,11.07) and (181.3,14.65) .. (181.3,19.07) -- (181.3,43.07) .. controls (181.3,47.48) and (177.72,51.07) .. (173.3,51.07) -- (110,51.07) .. controls (105.58,51.07) and (102,47.48) .. (102,43.07) -- cycle ;
+                                    %Rounded Rect [id:dp1316893319581255] 
+                                    \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (191,18.33) .. controls (191,13.92) and (194.58,10.33) .. (199,10.33) -- (262.3,10.33) .. controls (266.72,10.33) and (270.3,13.92) .. (270.3,18.33) -- (270.3,42.33) .. controls (270.3,46.75) and (266.72,50.33) .. (262.3,50.33) -- (199,50.33) .. controls (194.58,50.33) and (191,46.75) .. (191,42.33) -- cycle ;
+                                    %Rounded Rect [id:dp1823408740718886] 
+                                    \draw  [draw opacity=0][fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ] (281,18.33) .. controls (281,13.92) and (284.58,10.33) .. (289,10.33) -- (352.3,10.33) .. controls (356.72,10.33) and (360.3,13.92) .. (360.3,18.33) -- (360.3,42.33) .. controls (360.3,46.75) and (356.72,50.33) .. (352.3,50.33) -- (289,50.33) .. controls (284.58,50.33) and (281,46.75) .. (281,42.33) -- cycle ;
+
+                                    % Text Node
+                                    \draw (49.65,31.53) node  [color={rgb, 255:red, 255; green, 255; blue, 255 }  ,opacity=1 ] [align=left] {CLICK ME};
+                                    % Text Node
+                                    \draw (141.65,31.07) node  [color={rgb, 255:red, 255; green, 255; blue, 255 }  ,opacity=1 ] [align=left] {CLICK ME};
+                                    % Text Node
+                                    \draw (230.65,30.33) node  [color={rgb, 255:red, 255; green, 255; blue, 255 }  ,opacity=1 ] [align=left] {CLICK ME};
+                                    % Text Node
+                                    \draw (320.65,30.33) node  [color={rgb, 255:red, 255; green, 255; blue, 255 }  ,opacity=1 ] [align=left] {CLICK ME};
+                              \end{tikzpicture}
+                              \caption{Canonical Button Colour Test.}
+                        \end{figure}
+
+                        What colour maximizes click-through rate?
             \end{itemize}
       \item Other, more tangible, examples:
             \begin{itemize}
@@ -142,16 +167,17 @@
             test (test of overall equality) which serves to determine whether
             there is \emph{any} difference between the $ m $ experimental conditions.
             Formally, such a question is phrased as the following statistical hypothesis:
-
-            \centerline{$ H_0 $: $ \theta_1=\theta_2=\cdots=\theta_m $ versus $ H_\text{A} $: $ \theta_j\ne \theta_k $ for some $ j\ne k $}
-
+            \begin{tightcenter}
+                  $ \mathbf{H}_0 $: $ \theta_1=\theta_2=\cdots=\theta_m $ versus $ \mathbf{H}_\text{A} $: $ \theta_j\ne \theta_k $ for some $ j\ne k $
+            \end{tightcenter}
             In the case of means:
-
-            \centerline{$ H_0 $: $ \mu_1=\mu_2=\cdots=\mu_m $ versus $ H_\text{A} $: $ \mu_j\ne \mu_k $ for some $ j\ne k $}
-
+            \begin{tightcenter}
+                  $ \mathbf{H}_0 $: $ \mu_1=\mu_2=\cdots=\mu_m $ versus $ \mathbf{H}_\text{A} $: $ \mu_j\ne \mu_k $ for some $ j\ne k $
+            \end{tightcenter}
             In the case of proportions:
-
-            \centerline{$ H_0 $: $ \pi_1=\pi_2=\cdots=\pi_m $ versus $ H_\text{A} $: $ \pi_j\ne \pi_k $ for some $ j\ne k $}
+            \begin{tightcenter}
+                  $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_m $ versus $ \mathbf{H}_\text{A} $: $ \pi_j\ne \pi_k $ for some $ j\ne k $
+            \end{tightcenter}
 \end{itemize}
 \section{Comparing Means in Multiple Conditions}
 \begin{itemize}
@@ -161,15 +187,16 @@
             is the same across all conditions.
             \[ Y_{ij}\sim \N{\mu_j,\sigma^2}\quad\text{for }i=1,2,\ldots,n_j\text{ and }j=1,2,\ldots,m \]
       \item The ``gatekeeper'' test for means is tested using an $ F $-test:
-
-            \centerline{$ H_0 $: $ \mu_1=\mu_2=\cdots=\mu_m $ versus $H_\text{A}$: $ \mu_j\ne \mu_k $ for some $ j\ne k $}
+            \begin{tightcenter}
+                  $ \mathbf{H}_0 $: $ \mu_1=\mu_2=\cdots=\mu_m $ versus $\mathbf{H}_\text{A}$: $ \mu_j\ne \mu_k $ for some $ j\ne k $
+            \end{tightcenter}
 \end{itemize}
 \subsection{The \texorpdfstring{$ F $}{F}-test for Overall Significance in a Linear Regression}
 \begin{itemize}
       \item In particular, we use the $ F $-test for overall significance in an
-            \emph{approximately defined linear regression model}:
+            \emph{appropriately defined linear regression model}:
             \begin{itemize}
-                  \item The \emph{approximately defined linear regression model}
+                  \item The \emph{appropriately defined linear regression model}
                         in this situation is one in which the response
                         variable depends on $ m-1 $ indicator variables:
                         \[ x_{ij}=\begin{cases*}
@@ -204,11 +231,12 @@
                                           \mu_m     & =\beta_0
                                     \end{align*}
                         \end{itemize}
-                  \item Based on these assumptions $ H_0 $: $ \theta_1=\theta_2=\cdots=\theta_m $
+                  \item Based on these assumptions $ \mathbf{H}_0 $: $ \theta_1=\theta_2=\cdots=\theta_m $
                         is true if and only if $ \beta_1=\beta_2=\cdots=\beta_{m-1}=0 $, and hence is equivalent
                         to testing:
-
-                        \centerline{$ H_0 $: $ \beta_1=\beta_2=\cdots=\beta_{m-1} $ versus $ H_\text{A} $: $ \beta_j\ne 0 $ for some $ j$}
+                        \begin{tightcenter}
+                              $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{m-1} $ versus $ \mathbf{H}_\text{A} $: $ \beta_j\ne 0 $ for some $ j$
+                        \end{tightcenter}
                   \item This hypothesis corresponds, as noted, to the $ F $-test for overall significance in the model.
             \end{itemize}
       \item  In regression parlance, the test statistic is defined to be the ratio of the
@@ -270,13 +298,14 @@
                   jelly fish or colour bomb conditions, respectively.
                   The lollipop hammer is therefore the reference condition.
             \item In R, we found that the test statistic for testing:
-
-                  \centerline{$ H_0 $: $ \mu_1=\mu_2=\mu_3 $ versus $ H_\text{A} $: $ \mu_j\ne \mu_k $
-                        for some $ j\ne k $}
+                  \begin{tightcenter}
+                        $ \mathbf{H}_0 $: $ \mu_1=\mu_2=\mu_3 $ versus $ \mathbf{H}_\text{A} $: $ \mu_j\ne \mu_k $
+                        for some $ j\ne k $
+                  \end{tightcenter}
                   was $ t=851.8947 $ and the null distribution was $ T \sim F(2,370) $. The corresponding
                   $ p $-value was:
                   \[ p\text{-value}=\Prob{T\ge 851.8947}=3.28\times 10^{-139} \]
-            \item Therefore, we have very strong evidence against $ H_0 $ and conclude that the average
+            \item Therefore, we have very strong evidence against $ \mathbf{H}_0 $ and conclude that the average
                   length of game play is not the same in the three booster conditions.
             \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/Comparing_multiple_means.R}{[R Code] \texttt{Comparing\_multiple\_means}}
       \end{itemize}
@@ -293,8 +322,9 @@
             where $ \pi_j $ is the probability of a unit in condition $ j $ performing the action.
       \item The ``gatekeeper'' test for proportions is tested using the \textbf{chi-squared test
                   of independence} (also known as Pearson $ \chi^2 $-test).
-
-            \centerline{$ H_0 $: $ \pi_1=\pi_2=\cdots=\pi_m $}
+            \begin{tightcenter}
+                  $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_m $
+            \end{tightcenter}
 \end{itemize}
 \subsection{The Chi-squared Test of Independence}
 \begin{itemize}
@@ -328,9 +358,9 @@
                               \end{tabularx}
                         \end{table}
                         \begin{itemize}
-                              \item $ O_{\ell,j} = $ the observed number of conversions ($ \ell=1 $),
+                              \item $ O_{\ell,j} $: observed number of conversions ($ \ell=1 $),
                                     and the observed number of non-conversions ($ \ell=0 $) in condition $ j=1,2 $.
-                              \item $ O_\ell= $ overall number of conversions ($ \ell=1 $) or non-conversions
+                              \item $ O_\ell $: overall number of conversions ($ \ell=1 $) or non-conversions
                                     ($ \ell=0 $)
                         \end{itemize}
                   \item So,
@@ -342,7 +372,7 @@
                         $ j=1,2 $,
                         \[ E_{1,j}=n_j\hat{\pi}\quad \text{ and }\quad E_{0,j}=n_j(1-\hat{\pi}) \]
                         \begin{itemize}
-                              \item This is what we expect if $ H_0 $: $ \pi_1=\pi_2 $ is true.
+                              \item This is what we expect if $ \mathbf{H}_0 $: $ \pi_1=\pi_2 $ is true.
                         \end{itemize}
                   \item The $ \chi^2 $ test statistic compares the observed count
                         in each cell to the corresponding expected
@@ -399,7 +429,7 @@
                         \[ E_{1,j}=n_j\hat{\pi}\quad\text{and}\quad E_{0,j}=n_j(1-\hat{\pi}) \]
                         \begin{itemize}
                               \item Expected number of conversions/non-conversions in condition $ j $
-                                    assuming $ H_0 $: $ \pi_1=\pi_2=\cdots=\pi_m $ is true.
+                                    assuming $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_m $ is true.
                         \end{itemize}
                   \item The $ \chi^2 $ test statistic
                         compares the observed count in each cell to the corresponding expected
@@ -409,6 +439,7 @@
                         $ p\text{-value} = \Prob{T\ge t} $ where $ T \sim \chi^2(m-1) $.
             \end{itemize}
 \end{itemize}
+\subsection{Example: Nike SB Ads}
 \begin{Example}{Nike SB Ads}{}
       \begin{itemize}
             \item Suppose that Nike is running an ad campaign for Nike SB, their
@@ -451,7 +482,7 @@
             \item The resultant test statistic and $ p $-value (where $ T \sim \chi^2(4) $) are:
                   \[ t=\sum_{\ell=0}^{1} \sum_{j=1}^{m} \frac{(O_{\ell,j}-E_{\ell,j})^2}{E_{\ell,j}} =129.1686 \]
                   \[ p\text{-value}=\Prob{T\ge 129.1686}=5.86\times 10^{-27} \]
-            \item Therefore, we reject $ H_0 $: $ \pi_1=\pi_2=\cdots=\pi_5 $ and conclude that
+            \item Therefore, we reject $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_5 $ and conclude that
                   the ``watch-rate'' is not the same for each of the video ads.
             \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/Comparing_multiple_proportions.R}{[R Code] \texttt{Comparing\_multiple\_proportions}}
       \end{itemize}

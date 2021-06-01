@@ -79,3 +79,66 @@ text(-2.6, 0.04, TeX(r'($\alpha$)'), col = "chartreuse4")
 text(-2.1, -0.01, TeX(r'($-z_\alpha$)'), col = "chartreuse4")
 
 text(0, -0.01, TeX(r'($0$)'), col = "red")
+
+M <- seq(1, 100)
+plot(M, 1 - (1 - 0.05) ^ M, type = "l", col = "darkblue", lwd = 2,
+     ylab = "Family-wise Error Rate (FWER)", xlab = "Number of Tests (M)")
+abline(a = 0.05, b = 0, col = "red", lwd = 2, lty = 2)
+text(85, 0.1, TeX(r'($\alpha$)'))
+text(93, 0.105, "=0.05")
+
+p <- c(0.015, 0.029, 0.008, 0.026)
+plot(rank(p), p, pch = 20,
+     xlab = "Rank (k)",
+     ylab = "Sorted p-values",
+     xlim = c(1, 4), ylim = c(0,0.05),
+     xaxt = "n")
+axis(1, at = seq(1, 4))
+M <- 4
+alpha_star <- 0.05
+k <- seq(1, 4, by = 0.01)
+lines(k, alpha_star / (M - k + 1),
+      col = "red", lty = 2, lwd = 1.5)
+lines(k, rep(alpha_star / M, times = length(k)),
+      col = "blue", lty = 2, lwd = 1.5)
+lines(k, rep(1 - (1 - alpha_star) ^ (1 / M),  times = length(k)),
+      col = "chartreuse4", lty = 2, lwd = 1.5)
+legend("topleft", legend = c("Bonferroni", "Sidak", "Holmes"),
+       col = c("blue", "green", "red"),
+       lty = 2, lwd = 1.5, bty = "n")
+
+library(latex2exp)
+x <- seq(0, 0.5, by = 0.01)
+plot(x, 1 - exp(-x),
+     ylim = c(0,0.5),
+     xlab = TeX(r'($\alpha^*$)'),
+     ylab = TeX(r'($1-e^{-\alpha^*}$)'),
+     type = "l", col = "darkblue")
+lines(x, x, type = "l", col = "red", lty = 2)
+legend("bottomright",
+       legend = c("Asym. Error Rate", "Line of Equality"),
+       col = c("darkblue", "red"),
+       lty = c(1,2), bty = "n")
+
+# 6 x 6
+p <- c(0.015, 0.029, 0.008, 0.026)
+plot(rank(p), p, pch = 20,
+     xlab = "Rank (k)",
+     ylab = "Sorted p-values",
+     xlim = c(1, 4), ylim = c(0,0.05),
+     xaxt = "n")
+axis(1, at = seq(1, 4))
+M <- 4
+alpha_star <- 0.05
+k <- seq(1, 4, by = 0.01)
+lines(k, alpha_star / (M - k + 1),
+      col = "red", lty = 2, lwd = 1.5)
+lines(k, rep(alpha_star / M, times = length(k)),
+      col = "blue", lty = 2, lwd = 1.5)
+lines(k, rep(1 - (1 - alpha_star) ^ (1 / M),  times = length(k)),
+      col = "chartreuse4", lty = 2, lwd = 1.5)
+lines(k, k*alpha_star/M,
+      col = "purple", lty = 2, lwd = 1.5)
+legend("topleft", legend = c("Bonferroni", "Sidak", "Holmes", "BH"),
+       col = c("blue", "green", "red", "purple"),
+       lty = 2, lwd = 1.5, bty = "n")
