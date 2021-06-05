@@ -8,79 +8,79 @@ $ X_t $ is ``similar'' to $ X_{t-s} $.
 Some sources of seasonality are weather or scheduled events.
 These typically lead to yearly, weekly, monthly, or quarterly cycles.
 \begin{Remark}{}{}
-      ARIMA models are not ideal for modelling seasonality.
-      \[ \text{ARIMA Models}\implies\text{Random Walk with Stationary Errors} \]
-      Random walks do not seasonality.
+    ARIMA models are not ideal for modelling seasonality.
+    \[ \text{ARIMA Models}\implies\text{Random Walk with Stationary Errors} \]
+    Random walks do not seasonality.
 \end{Remark}
 \begin{Definition}{Seasonal ARIMA}{}
-      $ X_t $ is said to follow a \textbf{Seasonal ARIMA} model (SARIMA)
-      of orders $ p,d,q $ and $ P,D,Q $ and seasonal period $ s $
-      if
-      \[ \Phi_P(B^s)\phi_p(B)(1-B^s)^D(1-B)^d Y_t=\Theta_Q(B^s)\theta_q(B)W_t \]
-      We abbreviate the SARIMA $ p,d,q,P,D,Q $ model with seasonal
-      period $ s $ as $ \text{SARIMA}(p,d,q)\times(P,D,Q)_s $.
-      \[ \begin{array}{ccccccccc}
-                  \Phi_P(B)     & = & 1 & - & \Phi_1 B     & - & \cdots & - & \Phi_P B^P      \\
-                  \Phi_P(B^s)   & = & 1 & - & \Phi_1 B^s   & - & \cdots & - & \Phi_P B^{Ps}   \\
-                  \phi_p(B)     & = & 1 & - & \phi_1 B     & - & \cdots & - & \phi_p B^p      \\
-                  \Theta_Q(B)   & = & 1 & + & \Theta_1 B   & + & \cdots & + & \Theta_Q B^Q    \\
-                  \Theta_Q(B^s) & = & 1 & + & \Theta_1 B^s & + & \cdots & + & \Theta_Q B^{Qs} \\
-                  \theta_q(B)   & = & 1 & + & \theta_1 B   & + & \cdots & + & \theta_q B^q    \\
-            \end{array} \]
+    $ X_t $ is said to follow a \textbf{Seasonal ARIMA} model (SARIMA)
+    of orders $ p,d,q $ and $ P,D,Q $ and seasonal period $ s $
+    if
+    \[ \Phi_P(B^s)\phi_p(B)(1-B^s)^D(1-B)^d Y_t=\Theta_Q(B^s)\theta_q(B)W_t \]
+    We abbreviate the SARIMA $ p,d,q,P,D,Q $ model with seasonal
+    period $ s $ as $ \text{SARIMA}(p,d,q)\times(P,D,Q)_s $.
+    \[ \begin{array}{ccccccccc}
+            \Phi_P(B)     & = & 1 & - & \Phi_1 B     & - & \cdots & - & \Phi_P B^P      \\
+            \Phi_P(B^s)   & = & 1 & - & \Phi_1 B^s   & - & \cdots & - & \Phi_P B^{Ps}   \\
+            \phi_p(B)     & = & 1 & - & \phi_1 B     & - & \cdots & - & \phi_p B^p      \\
+            \Theta_Q(B)   & = & 1 & + & \Theta_1 B   & + & \cdots & + & \Theta_Q B^Q    \\
+            \Theta_Q(B^s) & = & 1 & + & \Theta_1 B^s & + & \cdots & + & \Theta_Q B^{Qs} \\
+            \theta_q(B)   & = & 1 & + & \theta_1 B   & + & \cdots & + & \theta_q B^q    \\
+        \end{array} \]
 \end{Definition}
 \begin{Definition}{}{}
-      The \textbf{seasonal} autoregressive and moving average polynomials are
-      defined by
-      \[ \Phi(z)=1-\Phi_1 z-\cdots \Phi_P z^P \]
-      \[ \Theta(z)=1+\Theta_1 z+\cdots+\Theta_Q z^Q \]
+    The \textbf{seasonal} autoregressive and moving average polynomials are
+    defined by
+    \[ \Phi(z)=1-\Phi_1 z-\cdots \Phi_P z^P \]
+    \[ \Theta(z)=1+\Theta_1 z+\cdots+\Theta_Q z^Q \]
 \end{Definition}
 \begin{Example}{}{}
-      Let $ X_t \sim \text{SARIMA}(1,1,1)\times(1,1,1)_{13} $.
-      \[ \Phi(z)=1-\Phi_1 z \]
-      \[ \phi(z)=1-\phi_1 z \]
-      \[ \Theta(z)=1+\Theta_1 z \]
-      \[ \theta(z)=1+\theta_1 z \]
-      Therefore,
-      \[ (1-\Phi_1 B^{13})(1-\phi_1 B)\Uunderbracket{(1-B^{13})(1-B)X_t}_{Y_t}=\Theta(B^{13})\theta(B)W_t \]
-      \[ Y_t-\Phi_1 Y_{t-13}-\phi_1 Y_{t-1}-\phi_1 \Phi_1 Y_{t-14}=\text{MA term} \]
-      \[ Y_t=f(Y_{t-13},Y_{t-1},\text{MA noise}, Y_{t-14}) \]
-      where $ Y_{t-13} $ is the seasonal lag.
+    Let $ X_t \sim \text{SARIMA}(1,1,1)\times(1,1,1)_{13} $.
+    \[ \Phi(z)=1-\Phi_1 z \]
+    \[ \phi(z)=1-\phi_1 z \]
+    \[ \Theta(z)=1+\Theta_1 z \]
+    \[ \theta(z)=1+\theta_1 z \]
+    Therefore,
+    \[ (1-\Phi_1 B^{13})(1-\phi_1 B)\Uunderbracket{(1-B^{13})(1-B)X_t}_{Y_t}=\Theta(B^{13})\theta(B)W_t \]
+    \[ Y_t-\Phi_1 Y_{t-13}-\phi_1 Y_{t-1}-\phi_1 \Phi_1 Y_{t-14}=\text{MA term} \]
+    \[ Y_t=f(Y_{t-13},Y_{t-1},\text{MA noise}, Y_{t-14}) \]
+    where $ Y_{t-13} $ is the seasonal lag.
 \end{Example}
 \begin{Remark}{}{}
-      \begin{enumerate}[(1)]
-            \item $ Y_t=(1-B^s)^D(1-B)^d X_t $, a SARIMA model is just one big ARMA
-                  model for $ Y_t $.
-            \item Advantage over ARMA and ARIMA models is \textbf{parsimony}.
-                  Since seasonal series have the feature that $ X_t $ is similar to $ X_{t-s} $,
-                  we introduce just a few additional terms to model $ X_t $ as a function of
-                  $ X_{t-s} $.
-      \end{enumerate}
+    \begin{enumerate}[(1)]
+        \item $ Y_t=(1-B^s)^D(1-B)^d X_t $, a SARIMA model is just one big ARMA
+              model for $ Y_t $.
+        \item Advantage over ARMA and ARIMA models is \textbf{parsimony}.
+              Since seasonal series have the feature that $ X_t $ is similar to $ X_{t-s} $,
+              we introduce just a few additional terms to model $ X_t $ as a function of
+              $ X_{t-s} $.
+    \end{enumerate}
 \end{Remark}
 \subsection*{Fitting SARIMA Models}
 \begin{enumerate}[(1)]
-      \item Usually the seasonal lag $ s $ is known.
-      \item Differencing and seasonal differencing can be decided upon by:
-            \begin{enumerate}[(a)]
-                  \item Eye-ball test and/or examining the ACF and PACF\@.
-                  \item Stationarity tests.
-                  \item Cross-validation.
-            \end{enumerate}
-            {\color{blue}We will discuss (b) and (c).}
-      \item Choosing the order and estimating the components of $ \Phi,\phi,\Theta,\theta $
-            can be done in the same was as with ARMA models.
+    \item Usually the seasonal lag $ s $ is known.
+    \item Differencing and seasonal differencing can be decided upon by:
+          \begin{enumerate}[(a)]
+              \item Eye-ball test and/or examining the ACF and PACF\@.
+              \item Stationarity tests.
+              \item Cross-validation.
+          \end{enumerate}
+          {\color{blue}We will discuss (b) and (c).}
+    \item Choosing the order and estimating the components of $ \Phi,\phi,\Theta,\theta $
+          can be done in the same was as with ARMA models.
 \end{enumerate}
 \section{SARIMA Cardiovascular Mortality Example}
-\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT%20443/code/6.2%20-%20SARIMA%20Cmort%20Example.R}{[R Code] SARIMA Cardiovascular Mortality Example}
+\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT 443/code/6.2 - SARIMA Cmort Example.R}{[R Code] SARIMA Cardiovascular Mortality Example}
 \section{Time Series Cross-Validation}
 \begin{Definition}{Cross-validation}{}
-      \textbf{Cross-validation} is a data driven model evaluation
-      and selection tool for predictive models that entails the following.
-      \begin{enumerate}[(1)]
-            \item Splitting the available data into training and testing sets.
-            \item Fitting models on the training sets.
-            \item Evaluating predictions of the model on the tests sets as an overall
-                  evaluation of model quality.
-      \end{enumerate}
+    \textbf{Cross-validation} is a data driven model evaluation
+    and selection tool for predictive models that entails the following.
+    \begin{enumerate}[(1)]
+        \item Splitting the available data into training and testing sets.
+        \item Fitting models on the training sets.
+        \item Evaluating predictions of the model on the tests sets as an overall
+              evaluation of model quality.
+    \end{enumerate}
 \end{Definition}
 \subsection*{Standard Cross-Validation}
 Suppose $ (Y_i,X_i) $ for $ 1\le i\le n $ satisfy $ Y_i=f(X_i)+\varepsilon_i $.
@@ -88,53 +88,53 @@ Let $ M $ be a model used to estimate $ f $ using $ \hat{f} $,
 with the goal of minimizing $ L(Y_i,\hat{f}(X_i)) $.
 \subsection*{$ K $-fold Cross-Validation}
 \begin{enumerate}[(1)]
-      \item Split $ (Y_i,X_i) $ for $ 1\le i\le n $ randomly into $ K $-groups
-            $ G_1,\ldots,G_k $.
-      \item For each $ 1\le i\le K $, use $ M $ to estimate $ \hat{f}^{(-j)} $
-            when the data $ G_i $ is left out.
-      \item Evaluate error on $ G_i $ with
-            \[ \text{CV}_j=\sum_{(Y_i,X_i)\in G_j}L(Y_i,\hat{f}^{-j}(X_i))  \]
-      \item The total cross-validation error of the model is:
-            \[ \text{CV}(M)=\sum_{j=1}^{k} \text{CV}_j \]
+    \item Split $ (Y_i,X_i) $ for $ 1\le i\le n $ randomly into $ K $-groups
+          $ G_1,\ldots,G_k $.
+    \item For each $ 1\le i\le K $, use $ M $ to estimate $ \hat{f}^{(-j)} $
+          when the data $ G_i $ is left out.
+    \item Evaluate error on $ G_i $ with
+          \[ \text{CV}_j=\sum_{(Y_i,X_i)\in G_j}L(Y_i,\hat{f}^{-j}(X_i))  \]
+    \item The total cross-validation error of the model is:
+          \[ \text{CV}(M)=\sum_{j=1}^{k} \text{CV}_j \]
 \end{enumerate}
 \begin{Remark}{}{}
-      \begin{itemize}
-            \item $ K $ is often called the number of \textbf{folds}.
-            \item If $ K=n $, the procedure is often called the ``leave-one-out''
-                  cross-validation.
-            \item $ K=10 $ is called ``10-fold cross validation.''
-      \end{itemize}
+    \begin{itemize}
+        \item $ K $ is often called the number of \textbf{folds}.
+        \item If $ K=n $, the procedure is often called the ``leave-one-out''
+              cross-validation.
+        \item $ K=10 $ is called ``10-fold cross validation.''
+    \end{itemize}
 \end{Remark}
 \subsection*{Problems with Time Series Cross-Validation}
 \begin{enumerate}[(1)]
-      \item Randomly splitting the data scrambles up any serial dependence relationships.
-      \item In time series forecasting, it is often most natural to use
-            the past (recent past) to predict future values.
+    \item Randomly splitting the data scrambles up any serial dependence relationships.
+    \item In time series forecasting, it is often most natural to use
+          the past (recent past) to predict future values.
 \end{enumerate}
 \subsection*{Time Series Cross-Validation Algorithm}
 \begin{enumerate}[(1)]
-      \item Split the data into training and testing ranges $ 1\le t_r\le T $
-            where $ t_r\approx 0.75T $ is $ 75\% $ of the training sample.
-            The test sample is $ X_{t_r+1},\ldots,X_T $.
-      \item For each $ j $ in $ t_r+1,\ldots,T $, use model to forecast
-            $ \hat{X}_{j+1\mid j} $ based on $ X_1,\ldots,X_j $. Calculate loss
-            \[ L(\hat{X}_{j+1\mid j};X_{j+1})=L_j \]
-      \item Cross-validation score of model
-            \[ \text{CV}(M)=\sum_{j=t_r+1}^{T} L_j \]
+    \item Split the data into training and testing ranges $ 1\le t_r\le T $
+          where $ t_r\approx 0.75T $ is $ 75\% $ of the training sample.
+          The test sample is $ X_{t_r+1},\ldots,X_T $.
+    \item For each $ j $ in $ t_r+1,\ldots,T $, use model to forecast
+          $ \hat{X}_{j+1\mid j} $ based on $ X_1,\ldots,X_j $. Calculate loss
+          \[ L(\hat{X}_{j+1\mid j};X_{j+1})=L_j \]
+    \item Cross-validation score of model
+          \[ \text{CV}(M)=\sum_{j=t_r+1}^{T} L_j \]
 \end{enumerate}
 \begin{Remark}{}{}
-      \begin{enumerate}[(1)]
-            \item If interested in longer horizon forecasting, you can compare
-                  \[ \hat{X}_{j+1\mid j},\ldots,\hat{X}_{j+h\mid j}\quad\text{to}\quad X_{j+1},\ldots,X_{j+h} \]
-                  in the loss calculation step.
-            \item Stationarity is \emph{crucial} in time series cross validation
-                  since the model errors in the present must be similar to errors in the future.
-            \item One normally cannot cross-validate everything as this is computationally
-                  infeasible.
-      \end{enumerate}
+    \begin{enumerate}[(1)]
+        \item If interested in longer horizon forecasting, you can compare
+              \[ \hat{X}_{j+1\mid j},\ldots,\hat{X}_{j+h\mid j}\quad\text{to}\quad X_{j+1},\ldots,X_{j+h} \]
+              in the loss calculation step.
+        \item Stationarity is \emph{crucial} in time series cross validation
+              since the model errors in the present must be similar to errors in the future.
+        \item One normally cannot cross-validate everything as this is computationally
+              infeasible.
+    \end{enumerate}
 \end{Remark}
 \section{Cross-Validation Example}
-\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT%20443/code/6.4%20-%20Cross-Validation%20Example.R}{[R Code] Cross-Validation Example} % chktex 15
+\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT 443/code/6.4 - Cross-Validation Example.R}{[R Code] Cross-Validation Example} % chktex 15
 \section{Simulated and Bootstrapped Prediction Intervals}
 Usually forecasts are of the form
 \[ \hat{X}_{T+1\mid T}=g(X_T,X_{T-1},\ldots,X_1,W_{T+1}) \]
@@ -146,33 +146,33 @@ Simple and powerful models to produce prediction intervals
 use simulation!
 \subsection*{Simulated Prediction Intervals}
 \begin{enumerate}[(1)]
-      \item Choose a distribution for $ \set{W_t} $. A common choice is $ W_t \sim \N{0,\hat{\sigma}_W^2} $.
-      \item For $ b=1,\ldots,B $ where $ B $ is a large number, simulate $ \set*{W_{T+1}^{(b)}} $.
-      \item Compute $ \hat{X}_{T+1\mid T}^{(b)}=g(X_{T},\ldots,X_1)+W_{T+1}^{(b)} $
-            for $ b=1,\ldots,B $.
-      \item Denote the empirical $ q^{\text{th}} $ quantile of $ \set*{\hat{X}_{T+1}^{(b)}:b=1,\ldots,B} $
-            by $ \hat{Q}_{T+1}(q) $. We set the $ (1-\alpha) $ prediction interval as
-            \[ \biggl(\hat{Q}_{T+1}\biggl(\frac{\alpha}{2} \biggr),\hat{Q}_{T+1}\biggl(1-\frac{\alpha}{2} \biggr)\biggr) \]
+    \item Choose a distribution for $ \set{W_t} $. A common choice is $ W_t \sim \N{0,\hat{\sigma}_W^2} $.
+    \item For $ b=1,\ldots,B $ where $ B $ is a large number, simulate $ \set*{W_{T+1}^{(b)}} $.
+    \item Compute $ \hat{X}_{T+1\mid T}^{(b)}=g(X_{T},\ldots,X_1)+W_{T+1}^{(b)} $
+          for $ b=1,\ldots,B $.
+    \item Denote the empirical $ q^{\text{th}} $ quantile of $ \set*{\hat{X}_{T+1}^{(b)}:b=1,\ldots,B} $
+          by $ \hat{Q}_{T+1}(q) $. We set the $ (1-\alpha) $ prediction interval as
+          \[ \biggl(\hat{Q}_{T+1}\biggl(\frac{\alpha}{2} \biggr),\hat{Q}_{T+1}\biggl(1-\frac{\alpha}{2} \biggr)\biggr) \]
 \end{enumerate}
 \begin{Remark}{}{}
-      For longer horizon forecasts, prediction intervals can be obtained by iteration:
-      \[ \hat{X}_{T+h\mid T}^{(b)}=g(\hat{X}_{T+h-1\mid T}^{(b)},\ldots,\hat{X}_{T+1\mid T}^{(b)},X_T,\ldots,X_1)+W_{T+h}^{(b)} \]
-      The prediction interval is
-      \[ \biggl(\hat{Q}_{T+h}\biggl(\frac{\alpha}{2} \biggr),\hat{Q}_{T+h}\biggl(1-\frac{\alpha}{2} \biggr)\biggr) \]
-      where $ \hat{Q}_{T+h}(q) $ the empirical $ q^{\text{th}} $ quantile of $ \hat{X}_{T+h}^{(b)} $.
+    For longer horizon forecasts, prediction intervals can be obtained by iteration:
+    \[ \hat{X}_{T+h\mid T}^{(b)}=g(\hat{X}_{T+h-1\mid T}^{(b)},\ldots,\hat{X}_{T+1\mid T}^{(b)},X_T,\ldots,X_1)+W_{T+h}^{(b)} \]
+    The prediction interval is
+    \[ \biggl(\hat{Q}_{T+h}\biggl(\frac{\alpha}{2} \biggr),\hat{Q}_{T+h}\biggl(1-\frac{\alpha}{2} \biggr)\biggr) \]
+    where $ \hat{Q}_{T+h}(q) $ the empirical $ q^{\text{th}} $ quantile of $ \hat{X}_{T+h}^{(b)} $.
 \end{Remark}
 \subsection*{Distributions to Choose for $ W_t $}
 \begin{enumerate}[(1)]
-      \item $ W_t \sim \N{0,\hat{\sigma}_W^2} $ where $ \hat{\sigma}_W^2 $ is estimated from residuals which
-            leads to approximately the same ``well known'' prediction intervals.
-      \item A distribution fit to the estimated residuals $ \hat{W}_t $; e.g., a $ t $-distribution,
-            Pareto, etc.
-      \item The empirical distribution of the residuals $ \hat{W}_t $; that is,
-            randomly drawing $ \set*{\hat{W}_1,\ldots,\hat{W}_{T}} $ which is commonly known
-            as \textbf{bootstrapping}.
+    \item $ W_t \sim \N{0,\hat{\sigma}_W^2} $ where $ \hat{\sigma}_W^2 $ is estimated from residuals which
+          leads to approximately the same ``well known'' prediction intervals.
+    \item A distribution fit to the estimated residuals $ \hat{W}_t $; e.g., a $ t $-distribution,
+          Pareto, etc.
+    \item The empirical distribution of the residuals $ \hat{W}_t $; that is,
+          randomly drawing $ \set*{\hat{W}_1,\ldots,\hat{W}_{T}} $ which is commonly known
+          as \textbf{bootstrapping}.
 
-            \underline{Note}: An important consideration of the bootstrap is that the residuals should be white!
-            We can check the whiteness of the residuals using the ACF or a white noise test.
+          \underline{Note}: An important consideration of the bootstrap is that the residuals should be white!
+          We can check the whiteness of the residuals using the ACF or a white noise test.
 \end{enumerate}
 \section{Bootstrap Prediction Intervals Example}
-\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT%20443/code/6.6%20-%20Bootstrap%20Prediction%20Intervals%20Example.R}{[R Code] Bootstrap Prediction Intervals Example}
+\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT 443/code/6.6 - Bootstrap Prediction Intervals Example.R}{[R Code] Bootstrap Prediction Intervals Example}

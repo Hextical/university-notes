@@ -32,25 +32,25 @@
                   \item $ T $: the number of false null hypotheses that were incorrectly accepted; that is, the number of Type II Errors.
                   \item $ M=M_0+M_A $.
             \end{itemize}
-      \item The outcomes of these $ M $ decisions are nicely summarized in~\Cref{multipletesttable}.
+      \item We summarize the outcomes of these $ M $ decisions in~\Cref{multipletesttable}.
             \begin{table}[!htbp]
                   \centering
-                  \begin{tabularx}{0.75\linewidth}{@{}BYYYY@{}}
-                        \multicolumn{2}{c}{}   & \multicolumn{2}{c}{\textbf{Decision}} &                                                                               \\
+                  \caption{Outcomes From $M$ Simultaneous Hypothesis Tests}
+                  \begin{NiceTabular}{cc|cc|c}
+                        \multicolumn{2}{c}{}   & \multicolumn{2}{c}{\emph{Decision}} &                                                                               \\
                         \multicolumn{2}{c}{}   & Reject $ \mathbf{H}_0 $               & Accept $ \mathbf{H}_0 $ & \multicolumn{1}{c}{}                                \\
                         \cmidrule{2-5}
-                        \multirow{2}{*}{Truth} & $ \mathbf{H}_0 $ is True              & $V$                     & $U$                       & $M_0$                   \\
-                                               & $ \mathbf{H}_0 $ is False             & $S$                     & $T$                       & $M_A$                   \\
+                        \multirow{2}{*}{\emph{Truth}} & $ \mathbf{H}_0 $ is True              & $V$                     & $U$                       & $M_0$                   \\
+                        & $ \mathbf{H}_0 $ is False             & $S$                     & $T$                       & $M_A$                   \\
                         \cmidrule{2-5}
-                        \multicolumn{1}{c}{}   & \multicolumn{1}{c}{}                  & \multicolumn{1}{c}{$R$} & \multicolumn{1}{c}{$M-R$} & \multicolumn{1}{c}{$M$} \\
-                  \end{tabularx}
-                  \caption{Outcomes from $M$ simultaneous hypothesis tests}\label{multipletesttable}
+                        \multicolumn{1}{c}{}   & \multicolumn{1}{c}{}                  & \multicolumn{1}{c}{$R$} & \multicolumn{1}{c}{$M-R$} & \multicolumn{1}{c}{$M$}
+                  \end{NiceTabular}\label{multipletesttable}
             \end{table}
             \begin{itemize}
                   \item $ R $ and $ M-R $ are observable.
-                  \item $ M_0,M_A,V,U,S,T $ are random variables; that is, their values are
-                        determined by the random process of collecting data and testing the $ M $
-                        hypotheses. Therefore, they are all unobservable.
+                  \item $ M_0,M_A,V,U,S,T $ are random variables; that is, the
+                        random process of collecting data and testing the $ M $
+                        hypotheses determines their values. Therefore, they are all unobservable.
             \end{itemize}
       \item Ideally, we would like $ V $ and $ T $ to be small.
             \begin{itemize}
@@ -60,13 +60,13 @@
 \end{itemize}
 \subsection{Family-Wise Error Rate}
 \begin{Definition}{Family-wise error rate}{}
-      The \textbf{family-wise error rate} is defined as the probability of committing a Type I Error in \emph{any} of the
+      The \textbf{family-wise error rate} is the probability of committing a Type I Error in \emph{any} of the
       $M$ hypothesis tests.
       \[ \FWER=\Prob{V\ge 1} \]
       That is, the probability of making at least one Type I Error in $ M $ tests.
 \end{Definition}
 \begin{itemize}
-      \item If each of the $M$ tests are carried out with a significance level $ \alpha $, the FWER will be much greater
+      \item If we use a significance level of $ \alpha $ for each of the $ M $ tests, the FWER will be much greater
             than $ \alpha $.
       \item Boole's Inequality, which is $ \Prob{A\cup B}=\Prob{A}+\Prob{B}-\Prob{A\cap B}\le \Prob{A}+\Prob{B} $, provides an upper bound:
             \begin{align*}
@@ -97,7 +97,7 @@
             \begin{figure}[!htbp]
                   \centering
                   \includegraphics[width=0.5\textwidth]{FWER.pdf}
-                  \caption{Family-wise error rate versus the number of hypothesis tests, $M$.}\label{fig:FWER}
+                  \caption{Family-Wise Error Rate Versus the Number of Hypothesis Tests, $M$.}\label{fig:FWER}
             \end{figure}
       \item A common value of $ M $ is $ \binom{m}{2} $: the number of pairwise comparisons necessary to compare each condition
             to every other condition.
@@ -114,7 +114,7 @@
                   \end{itemize}
             \end{Remark}
             \begin{Example}{}{}
-                  Suppose $ M =4 $ hypotheses are tested and the resulting $ p $-values are $ p_1 =0.015$, $ p_2=0.029 $,
+                  Suppose we test $ M =4 $ hypotheses, and the resulting $ p $-values are $ p_1 =0.015$, $ p_2=0.029 $,
                   $ p_3=0.008 $, and $ p_4=0.026 $.
             \end{Example}
 \end{itemize}
@@ -127,7 +127,7 @@
       \item The procedure ensures $ \FWER\le \alpha^\star $. From Boole's Inequality,
             we know that
             \[ \FWER\le M\biggl(\frac{\alpha^\star}{M}\biggr)=\alpha^\star \]
-      \item When independence is assumed the Bonferroni-corrected FWER becomes
+      \item If we assume independence, the Bonferroni-corrected FWER becomes
             \[ 1-\biggl(1-\frac{\alpha^\star}{M} \biggr)^{\! M} \]
             Taking the limit of $ M \to\infty $ yields,
             \[ \lim\limits_{{M} \to {\infty}}\Biggl[1-\biggl(1-\frac{\alpha^\star}{M} \biggr)^{\! M}\Biggr]=1-e^{-\alpha^\star}  \]
@@ -137,7 +137,7 @@
             \begin{figure}[!htbp]
                   \centering
                   \includegraphics[width=0.5\textwidth]{asymrate.pdf}
-                  \caption{Illustration of the Bonferroni correction for asymptotically large $M$.}\label{fig:asymrate}
+                  \caption{Illustration of the Bonferroni Correction for Asymptotically Large $M$.}\label{fig:asymrate}
             \end{figure}
 \end{itemize}
 \begin{Example}{Four-test Example --- Bonferroni Correction}{}
@@ -275,7 +275,7 @@
             \begin{figure}[!htbp]
                   \centering
                   \includegraphics[width=0.5\textwidth]{pvsrank1.pdf}
-                  \caption{Significance thresholds for several methods of correction.}\label{fig:pvsrank1}
+                  \caption{Significance Thresholds for Several Methods of Correction (1).}\label{fig:pvsrank1}
             \end{figure}
       \item The Bonferroni correction is most strict, followed by the Šidák correction, then by Holm's procedure.
 \end{itemize}
@@ -325,20 +325,20 @@
 \end{itemize}
 \subsection{False Discovery Rate}
 \begin{itemize}
-      \item FWER methods were developed in the mid-1900's and with $ M\approx 20 $ comparisons in mind.
+      \item In the mid-1900s, Statisticians developed FWER methods with $ M\approx 20 $ comparisons in mind.
       \item In the era of Big Data, much larger values of $M$ are typical.
       \item For larger values of $M$, traditional methods tend to be very conservative, and so FWER is perhaps
             not the best metric to control.
       \item More recently, emphasis has been placed on controlling the \emph{rate} at which Type I Errors occur.
             \begin{Definition}{False discovery proportion}{}
-                  The \textbf{false discovery proportion} (FDP) is defined as
+                  The \textbf{false discovery proportion} (FDP) is
                   \[ Q=\frac{V}{R} \]
                   Thus, $ Q $ is the proportion of all rejected null hypotheses that were rejected
                   in error.
             \end{Definition}
       \item In particular, interest lies in controlling the \textbf{false discovery rate} (FDR).
             \begin{Definition}{False discovery rate}{}
-                  The \textbf{false discovery rate} is defined as
+                  The \textbf{false discovery rate} is
                   \[ \E{Q}=\E*{\frac{V}{R}} \]
             \end{Definition}
       \item Unlike the FWER, the FDR is adaptive in the sense that the number of Type I Errors $V$ has different
@@ -358,7 +358,7 @@
       \item The Benjamini-Hochberg (BH) procedure for controlling FDR is a sequentially rejective procedure
             much like Holm's procedure for controlling FWER\@. The main difference is the threshold we
             compare the ordered $ p $-values to.
-      \item The BH procedure, which aims to ensure $ \text{FDR}\le \alpha^\star $, may be summarized as follows:
+      \item We summarize the BH procedure, which aims to ensure $ \text{FDR}\le \alpha^\star $:
             \begin{framed}
                   \begin{enumerate}
                         \item Order the $M$ $p$-values from smallest to largest:
@@ -381,7 +381,7 @@
             \begin{figure}[!htbp]
                   \centering
                   \includegraphics[width=0.5\textwidth]{pvsrank2.pdf}
-                  \caption{Significance thresholds for several methods of correction.}\label{fig:pvsrank2}
+                  \caption{Significance Thresholds for Several Methods of Correction (2).}\label{fig:pvsrank2}
             \end{figure}
             \begin{Example}{Four-test Example --- Benjamini-Hochberg Procedure}{}
                   Let $ p_1=0.015 $, $ p_2=0.029 $, $ p_3=0.008 $, and $ p_4=0.026 $. Suppose that we wish to ensure
@@ -390,8 +390,8 @@
             \end{Example}
       \item This threshold is much less strict than any of the FWER-control thresholds, but this is the appeal of
             the approach.
-      \item The proof that this procedure guarantees $ \text{FDR}\le \alpha^\star $ is outside the scope of this course, but the
-            interested reader is referred to Benjamini and Hochberg (1995) and Storey et al. (2004).
+      \item The procedure that guarantees $ \text{FDR}\le \alpha^\star $ is beyond the scope of this course.
+            However, the proof can be found in Benjamini and Hochberg (1995) and Storey et al. (2004).
       \item Like the FWER controlling methods we can define Benjamini-Hochberg-adjusted $p$-values and invert
             the decision framework by comparing the adjusted $ p $-values to $ \alpha^\star $.
             \begin{itemize}
@@ -402,8 +402,8 @@
                               \[ \begin{array}{cccl}
                                           k & p_{(k)} & M p_{(k)}/k & p_{(k)}^\star=\min_{j\ge k}\set*{Mp_{(j)}/j}          \\
                                           \midrule
-                                          1 & 0.008   & 0.0032      & \min\set{0.0032,0.03,0.035,0.029}=0.029=p_{(1)}^\star \\
-                                          2 & 0.015   & 0.03        & \min\set{0.03,0.035,0.029}=0.029=p_{(2)}^\star        \\
+                                          1 & 0.008   & 0.032       & \min\set{0.032,0.030,0.035,0.029}=0.029=p_{(1)}^\star \\
+                                          2 & 0.015   & 0.030       & \min\set{0.030,0.035,0.029}=0.029=p_{(2)}^\star       \\
                                           3 & 0.026   & 0.035       & \min\set{0.035,0.029}=0.029=p_{(3)}^\star             \\
                                           4 & 0.029   & 0.029       & \min\set{0.029}=0.029=p_{(4)}^\star
                                     \end{array} \]
@@ -413,6 +413,7 @@
                         \end{Example}
             \end{itemize}
 \end{itemize}
+\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/Multiple_testing_example.R}{[R Code] \texttt{Multiple\_testing\_example}}
 \subsection{Sample Size Determination}
 \begin{itemize}
       \item So what does all of this mean for power analyses and sample size calculations?
@@ -429,8 +430,8 @@
                                     \end{itemize}
                         \end{itemize}
             \end{itemize}
-      \item Since all of our correction methods decrease the effective significance levels, the power of such tests is
-            negatively impacted.
+      \item Thus, all the correction procedures discussed (which decrease the effective significance level)
+            negatively impact power.
       \item In order to maintain power at some pre-specified level, we must compensate by increasing the sample
             size.
       \item Therefore, the more complicated your experiment (i.e., the more conditions it has), the larger your
@@ -438,7 +439,7 @@
             \begin{itemize}
                   \item Such modifications can be accounted for when selecting a sample size.
                   \item The significance level you use in your sample size calculations should be the adjusted one based
-                        on whichever correction method you use.
+                        on the correction method you use.
                   \item This is easier to do with \emph{some} correction methods than others.
             \end{itemize}
 \end{itemize}

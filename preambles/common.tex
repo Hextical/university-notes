@@ -47,6 +47,7 @@
 \newcolumntype{Z}{>{\centering\arraybackslash\columncolor{light-gray}}X}
 \newcolumntype{B}{>{\centering\arraybackslash\bfseries}X}
 \usepackage{multirow}
+\usepackage{caption}
 
 % -----------------------------------------------------------------------------
 
@@ -136,6 +137,8 @@
 \DeclarePairedDelimiterXPP{\ARCH}[1]{\text{ARCH}}(){}{#1}
 
 \DeclareMathOperator{\FWER}{FWER}
+\let\log\relax
+\DeclarePairedDelimiterXPP{\log}[1]{\text{log}}(){}{#1}
 
 % -----------------------------------------------------------------------------
 
@@ -175,7 +178,8 @@
     common/.style={
             fonttitle=\bfseries,
             coltitle=black,
-            boxrule=0pt
+            boxrule=0pt,
+            breakable
         },
     theorem/.style={
             common,
@@ -198,7 +202,6 @@
     common,
     colback=mygreen,
     colframe=mygreen!95!black,
-    breakable
 }{ex}
 
 \newtcbtheorem[use counter from=Definition, crefname={exercise}{exercises}]
@@ -206,7 +209,6 @@
     common,
     colback=myred,
     colframe=myred!95!black,
-    breakable
 }{exercise}
 
 \newtcbtheorem[use counter from=Definition, crefname={remark}{remarks}]
@@ -214,7 +216,6 @@
     common,
     colback=mycyan,
     colframe=mycyan!95!black,
-    breakable,
 }{remark}
 
 \newtcbtheorem[use counter from=Definition, crefname={statistical Test}{statistical Tests}]
@@ -222,7 +223,6 @@
     common,
     colback=Magenta!25!white,
     colframe=Magenta!50!white,
-    breakable
 }{stest}
 
 \newtcbtheorem[use counter from=Definition, crefname={theorem}{theorems}]
@@ -249,7 +249,6 @@
 {Proof}{Proof of}{
     common,
     colframe=black!10,
-    breakable,
     separator sign={}
 }{pf}
 
@@ -282,3 +281,5 @@
     \setlength\topsep{0pt}%
     \setlength\parskip{0pt}%
     \par\centering}{\par\noindent\ignorespacesafterend}
+
+\usepackage{nicematrix}

@@ -62,10 +62,10 @@ forecast $ 1 $-step ahead. This process can be iterated multiple
 times to produce forecasts as well as prediction intervals for
 forecasts at longer time horizons.
 
-\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT%20443/code/8.1%20-%20Neural%20Network%20Autoregression.R}{[R Code] Neural Network Autoregression}
+\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT 443/code/8.1 - Neural Network Autoregression.R}{[R Code] Neural Network Autoregression}
 \section{Comparing Various Forecasting Methods}
 \begin{itemize}
-    \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT%20443/code/8.2%20-%20Comparing%20Various%20Forecasting%20Methods.R}{[R Code] Comparing Various Forecasting Methods}
+    \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT 443/code/8.2 - Comparing Various Forecasting Methods.R}{[R Code] Comparing Various Forecasting Methods}
     \item The M3-Competition: Results, Conclusions and Implications
 \end{itemize}
 \section{Conditional Heteroscedasticity}
@@ -94,12 +94,12 @@ time series. Suppose $ X_t= $ price of an asset at time $ t $.
     Furthermore, the \textbf{log-returns}
     of a positive asset price series $ X_t $
     are
-    \[ Y_t=\log\biggl(\frac{X_t}{X_{t-1}} \biggr)=\log(X_t)-\log(X_{t-1}) \]
+    \[ Y_t=\log*{\frac{X_t}{X_{t-1}}}=\log{X_t}-\log{X_{t-1}} \]
 \end{Definition}
 \begin{Remark}{}{}
     ``Volatility'' $ \iff $ ``Variance''.
 \end{Remark}
-\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT%20443/code/8.3%20-%20ARCH%20and%20GARCH%20Introduction.R}{[R Code] ARCH and GARCH Introduction}
+\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT 443/code/8.3 - ARCH and GARCH Introduction.R}{[R Code] ARCH and GARCH Introduction}
 
 A common observation, especially prominent with financial and asset
 price data, is that periods of volatility or heteroscedastic
@@ -215,7 +215,7 @@ homoscedastic, but is also conditionally heteroscedastic.
               \[ X_t \sim \GARCH{p,q}\implies X_t^2\text{ is serially correlated (ARMA).} \]
     \end{enumerate}
 \end{Proposition}
-\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT%20443/code/8.4%20-%20ARCH%20and%20GARCH%20Update.R}{[R Code] ARCH and GARCH Models}
+\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT 443/code/8.4 - ARCH and GARCH Update.R}{[R Code] ARCH and GARCH Models}
 \section{Stationarity of GARCH Models}
 Suppose $ X_t \sim \GARCH{p,q} $ model.
 
@@ -260,18 +260,18 @@ Iterate GARCH recursion:
 Posit solution
 \[ \sigma_t^2=\omega\biggl(1+\sum_{j=1}^{\infty} \prod_{i=1}^j f(W_{t-i})\biggr) \]
 \underline{Question}: When is this series well-defined?
-\[ \prod_{i=1}^j f(W_{t-i})=\expon[\bigg]{\sum_{i=1}^{j} \log\bigl[f(W_{t-j})\bigr]} \]
-Now, note that $ \sum_{i=1}^{j} \log\bigl[f(W_{t-j})\bigr] $ is a random walk. Therefore,
-\[ \sum_{i=1}^{j} \log\bigl[f(W_{t-j})\bigr]\to
+\[ \prod_{i=1}^j f(W_{t-i})=\expon[\bigg]{\sum_{i=1}^{j} \log*{f(W_{t-j})}} \]
+Now, note that $ \sum_{i=1}^{j} \log*{f(W_{t-j})} $ is a random walk. Therefore,
+\[ \sum_{i=1}^{j} \log*{f(W_{t-j})}\to
     \begin{cases*}
-        +\infty                                               & with probability $ 1 $ if $ \E*{\log\bigl[f(W_0)\bigr]}>0 $ \\
-        -\infty                                               & with probability $ 1 $ if $ \E*{\log\bigl[f(W_0)\bigr]}<0 $ \\
-        \text{oscillates between $ -\infty $ and $ +\infty $} & if $\E*{\log\bigl[f(W_0)\bigr]}=0$
+        +\infty                                               & with probability $ 1 $ if $ \E*{\log*{f(W_0)}}>0 $ \\
+        -\infty                                               & with probability $ 1 $ if $ \E*{\log*{f(W_0)}}<0 $ \\
+        \text{oscillates between $ -\infty $ and $ +\infty $} & if $\E*{\log*{f(W_0)}}=0$
     \end{cases*} \]
-The good case is when $ \E*{\log\bigl[f(W_0)\bigr]}<0 $, and it causes the terms to tend to zero fast.
+The good case is when $ \E*{\log*{f(W_0)}}<0 $, and it causes the terms to tend to zero fast.
 \begin{Theorem}{}{}
     A stationary solution $ X_t $ exists to the $ \GARCH{1,1} $ equations if and only if
-    \[ \gamma=\E[\big]{\log(\alpha W_0^2+\beta)}<0\quad\text{[Top Lyapunov Exponent]} \]
+    \[ \gamma=\E[\big]{\log{\alpha W_0^2+\beta}}<0\quad\text{[Top Lyapunov Exponent]} \]
     The solution is of the form
     \[ X_t=\sigma_t W_t \]
     \[ \sigma_t^2=\omega\biggl(1+\sum_{j=1}^{\infty} \prod_{i=1}^j (\alpha W_{t-j}^2+\beta)\biggr)=
@@ -282,7 +282,7 @@ The good case is when $ \E*{\log\bigl[f(W_0)\bigr]}<0 $, and it causes the terms
     \begin{enumerate}[(1)]
         \item If $ \gamma<0 $, $ \omega=0 $ forces $ X_t\equiv 0 $. Therefore, we will
               normally assume $ \omega>0 $.
-        \item The condition $ \gamma=\E[\big]{\log(\alpha W_0^2+\beta)}<0 $ depends
+        \item The condition $ \gamma=\E[\big]{\log{\alpha W_0^2+\beta}}<0 $ depends
               on the distribution of $ W_t $.
         \item A sufficient condition is $ \alpha_1+\beta_1<1 $.
     \end{enumerate}
@@ -290,9 +290,9 @@ The good case is when $ \E*{\log\bigl[f(W_0)\bigr]}<0 $, and it causes the terms
 \begin{Proof}{\Cref{remark:rem_garch11} (3)}{}
     Jensen's Inequality: If $ f:\mathbf{R}\to\mathbf{R} $ is convex, then
     \[ f\bigl(\E{X}\bigr)\le \E[\big]{f(X)} \]
-    and the opposite holds if $ f $ is concave. We note that $ \log(x) $
+    and the opposite holds if $ f $ is concave. We note that $ \log{x} $
     is concave, hence
-    \[ \E[\big]{\log(\alpha W_0^2+\beta)}\le \log\bigl(\E{\alpha W_0^2+\beta}\bigr)=\log(\alpha+\beta)<0 \]
+    \[ \E[\big]{\log{\alpha W_0^2+\beta}}\le \log*{\E{\alpha W_0^2+\beta}}=\log{\alpha+\beta}<0 \]
     only when $ \alpha+\beta<1 $.
 \end{Proof}
 \begin{Remark}{Second-order Stationarity of $ \GARCH{1,1} $ Equation}{}
@@ -338,7 +338,7 @@ Let $A_{t}$ be a stationary sequence of random $(p+q-1) \times (p+q-1)$ matrices
 for an arbitrary norm on matrices $\norm{}$ the scalar random variables.
 \[ r_{t}=\norm{A_{t} A_{t-1} \ldots A_{1}} \]
 under some relatively mild conditions (ergodicity)
-\[ \gamma=\lim\limits_{{t} \to {\infty}}\biggl[\frac{1}{t} \E[\big]{\log(r_{t})}\biggr] \]
+\[ \gamma=\lim\limits_{{t} \to {\infty}}\biggl[\frac{1}{t} \E[\big]{\log{r_{t}}}\biggr] \]
 is well-defined and is called the top Lyapunov exponent of the sequence
 $A_{t}$ for $t \in \mathbf{Z}$.
 This result is coming from Ergodic theory in the 1970s.
@@ -407,4 +407,4 @@ Suppose for example that $ X_t \sim \GARCH{1,1} $, then
               Hence, in a GARCH setting, the weak white noise intervals for ACF are (often) larger.
     \end{enumerate}
 \end{Remark}
-\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT%20443/code/8.7%20-%20Identifying%20GARCH%20models.R}{[R Code] Identifying GARCH Models}
+\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-2/STAT 443/code/8.7 - Identifying GARCH models.R}{[R Code] Identifying GARCH Models}

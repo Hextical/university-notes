@@ -18,8 +18,8 @@
     is watched the longest.
 \end{Example}
 \begin{Definition}{Metric of interest}{}
-    The \textbf{metric of interest} (MOI) is the statistic the experiment is
-    meant to investigate.
+    The \textbf{metric of interest} (MOI) is the statistic we wish
+    the experiment investigates.
 \end{Definition}
 \begin{Remark}{}{}
     Typically, we want to optimize for the metric of interest; that is,
@@ -62,7 +62,7 @@
     \textbf{features}, \textbf{independent variables}.
 \end{Definition}
 \begin{Remark}{}{}
-    The factors are thought to influence the response (dependent) variable.
+    We usually think the factors influence the response (dependent) variable.
 \end{Remark}
 \begin{Example}{Factor}{}
     \begin{itemize}
@@ -89,7 +89,7 @@
 \end{Example}
 \begin{Definition}{Experimental units}{}
     The \textbf{experimental units} are what is assigned to the experimental conditions,
-    and on which the response variable is measured.
+    and on which we measure the response variable.
 \end{Definition}
 \begin{Example}{Experimental Units}{}
     \begin{itemize}
@@ -106,7 +106,7 @@
 \end{Remark}
 \section{Experiments versus Observational Studies}
 \begin{Definition}{Experiment}{}
-    An \textbf{experiment} is composed of a collection of conditions defined by
+    An \textbf{experiment} is a collection of conditions defined by
     \emph{purposeful changes} to one or more factors. Here, we intervene in the data collection.
 \end{Definition}
 \begin{itemize}
@@ -137,18 +137,18 @@
                     \textbf{causal inference} (establishing causal connections between variables).
               \item This is typically guaranteed by \emph{randomization}.
           \end{itemize}
-    \item The key here is that the factors are purposefully controlled in order to
+    \item The key here is that we purposefully control the factors to
           observe the resulting effect on the response. This facilitates causal conclusions.
     \item In an \textbf{observational study}, on the other hand, there is no measure of control
-          in the data collection process. Instead, data is collected passively and
+          in the data collection process. Instead, we collect the data passively and
           the relationship between the response and factor(s) is observed organically.
     \item This hinders our ability to establish causal connections between the factor(s)
           and the response variables. However, sometimes we have no choice.
           \begin{Example}{Unethical Experiments}{}
               \begin{itemize}
                   \item \emph{Unethical Experiment 1}: In evaluating whether smoking lung cancer,
-                        it would be unethical to have a `\emph{smoking}' condition in which subjects are
-                        forced to smoke.
+                        it would be unethical to have a `\emph{smoking}' condition in which we force the
+                        subjects to smoke.
                   \item \emph{Unethical Experiment 2}: In dynamic pricing experiments, it would be unethical
                         to show different users different prices for the same products. For example, surge pricing
                         in Uber/Lyft.
@@ -165,12 +165,14 @@
 \end{itemize}
 \begin{table}[!htbp]
     \centering
-    \begin{tabularx}{\linewidth}{@{}YYY@{}}
-                                     & \emph{Advantages}                             & \emph{Disadvantages}                             \\
+    \begin{NiceTabular}{|>{\raggedright\arraybackslash}m{33mm}|m{50mm}|m{50mm}|}
+        \toprule
+        & \multicolumn{1}{c}{\emph{Advantages}}                            & \multicolumn{1}{c}{\emph{Disadvantages}}                             \\
         \midrule
-        \textbf{Experiment}          & causal inference is clean                     & experiments might be unethical, risky, or costly \\
-        \textbf{Observational Study} & no additional cost, risk, or ethical concerns & causal inference is muddy
-    \end{tabularx}
+        \emph{Experiment}          & Causal inference is clean.                     & Experiments might be unethical, risky, or costly. \\
+        \emph{Observational Study} & No additional cost, risk, or ethical concerns. & Causal inference is muddy.\\
+        \bottomrule
+    \end{NiceTabular}
 \end{table}
 \section{QPDAC: A Strategy for Answering Questions with Data}
 \begin{figure}[!htbp]
@@ -234,7 +236,7 @@
     \end{Example}
 \end{framed}
 \begin{framed}
-    \textbf{Plan}: In this stage, the experiment is designed and all pre-experimental questions
+    \textbf{Plan}: In this stage, we design the experiment, and all pre-experimental questions
     should be answered.
     \begin{itemize}
         \item Choose the response variable. This should be dictated by the \textbf{Question} and the metric
@@ -254,7 +256,7 @@
                                   users' age, gender, nationality.
                         \end{itemize}
               \end{enumerate}
-        \item Choose the experimental units. These are what the response variable is measured on.
+        \item Choose the experimental units. These are what we measure the response variable on.
         \item Choose the sample size and sampling mechanism.
               \begin{itemize}
                   \item Sample size: how many units per experimental condition?
@@ -263,21 +265,23 @@
     \end{itemize}
 \end{framed}
 \begin{framed}
-    \textbf{Data}: In this stage, the data are collected according to the \textbf{Plan}.
-    It is extremely important that this step be done correctly; the suitability and effectiveness
-    of the analysis relies on the data being collected correctly. Computer scientists often
+    \textbf{Data}: In this stage, we collect the data according to the \textbf{Plan}.
+    It is extremely important that we do this step correctly; the suitability and effectiveness
+    of the analysis relies on the correctness of the data. Computer scientists often
     use the phrase
     ``garbage in, garbage out'' to describe the phenomenon whereby poor
     quality input will always provide faulty output.
     \begin{itemize}
-        \item A/A Test: units are assigned to one of two \emph{identical} conditions.
+        \item A/A Test: we assign units to one of two \emph{identical} conditions.
               \begin{itemize}
                   \item We do this to ensure the assignment of units to conditions is truly random.
                   \item Two groups should be indistinguishable in terms of response distribution
                         and other demographics.
                   \item If things aren't indistinguishable, there is a problem.
-                  \item \emph{Simple Ratio Mismatch Test}: check whether the observed sample ratios
-                        match what would be expected if assignment was truly done at random.
+                  \item \emph{Sample Ratio Mismatch Test}: If the ratio of users
+                        (or any randomization unit) between the variants is not close
+                        to the designed ratio, the experiment suffers from a Sample Ratio Mismatch
+                        (SRM).
                         \begin{itemize}
                             \item Hypothesis test can be used to determine whether the proportion
                                   of units in each condition match what would have been expected under
@@ -287,21 +291,21 @@
     \end{itemize}
 \end{framed}
 \begin{framed}
-    \textbf{Analysis}: In this stage, the \textbf{Data} are statistically analyzed
+    \textbf{Analysis}: In this stage, we statistically analyze \textbf{Data}
     to provide an objective answer to the \textbf{Question}.
     \begin{itemize}
         \item This is typically achieved by way of estimating parameters, fitting models,
               and carrying out statistical hypothesis tests. This is where we spend most of
               our time in the course.
-        \item If the experiment was well-designed and the data was collected correctly, this
+        \item If the experiment was well-designed, and we collected the data correctly, this
               step should be straight-forward.
     \end{itemize}
 \end{framed}
 \begin{framed}
-    \textbf{Conclusion}: In this stage, the results of the \textbf{Analysis} are considered
+    \textbf{Conclusion}: In this stage, we consider the results of the \textbf{Analysis},
     and one must draw conclusions about what has been learned.
     \begin{itemize}
-        \item These conclusions should then be clearly communicated to all parties involved
+        \item We clearly communicate these conclusions to all parties involved
               in --- or impacted by --- the experiment.
         \item Communicating ``wins'' and ``loses'' will help to foster the culture
               of experimentation.
@@ -309,9 +313,9 @@
 \end{framed}
 \section{Fundamental Principles of Experimental Design}
 \begin{Definition}{Randomization}{}
-    \textbf{Randomization} refers both to the manner in which experimental units
-    are \emph{selected for inclusion} in the experiment and the manner in which they
-    are \emph{assigned to experimental conditions}.
+    \textbf{Randomization} refers both to the manner in which we select experimental units
+    for \emph{inclusion} in the experiment and the manner in which we \emph{assign} them
+    to \emph{experimental conditions}.
 \end{Definition}
 \begin{Remark}{}{}
     Typically, we don't include the entire target/study population.
@@ -334,7 +338,7 @@ Thus, we have two levels of randomization:
 \begin{Definition}{Replication}{}
     \textbf{Replication} refers to the existence of multiple response observations
     within each experimental condition and thus corresponds to the situation in which
-    more than one unit is assigned to each condition.
+    we assign more than one unit to each condition.
 \end{Definition}
 \begin{itemize}
     \item Assigning multiple units to each condition provides \emph{assurance} that the
@@ -344,14 +348,14 @@ Thus, we have two levels of randomization:
           \emph{tile view} conditions were 0.5 and 1 respectively. This conclusion would be
           a lot more convincing if each condition had $ n=1000 $ units as opposed to $ n=2 $,
           where $ n $ is the sample size in \emph{each} condition.
-    \item How much replication is needed?
+    \item How much replication do we need?
           \begin{itemize}
-              \item How big a sample size is needed?
+              \item How big a sample size do we need?
               \item Power analysis + sample size calculations will help answer this.
           \end{itemize}
 \end{itemize}
 \begin{Definition}{Blocking}{}
-    \textbf{Blocking} is the mechanism by which the nuisance factors are controlled for.
+    \textbf{Blocking} is the mechanism that we control the nuisance factors.
 \end{Definition}
 \begin{itemize}
     \item To \emph{eliminate} the influence of nuisance factors, we hold them fixed during
@@ -359,12 +363,12 @@ Thus, we have two levels of randomization:
     \item Thus, we run the experiment \emph{at fixed levels of the nuisance factors}, i.e.,
           within \textbf{blocks}.
 
-          \begin{Example}{GAP}{}
-              Consider an email promotion experiment in which the primary goal is to
+          \begin{Example}{GAP --- Email Promotion}{}
+              Consider an experiment in which the primary goal is to
               test different variations of the \emph{message in the subject} line with the goal of
-              maximizing `\emph{open rate}.' However, suppose that it is known that the
-              `open rate' is also influenced by the time of the day and the day of the week that
-              the email is sent.
+              maximizing `\emph{open rate}.' However, suppose we know that the
+              `open rate' is also influenced by the ``send time'' (time of the day and the day of the week)
+              of an email.
 
               \vspace{2mm}
 

@@ -43,8 +43,8 @@ text(0, -0.01, TeX(r'($0$)'), col = "red")
 legend(
   "topright",
   legend = c(
-    TeX(r'($p$-value, we do not reject $H_0$)'),
-    TeX(r'($p$-value, we reject $H_0$)'),
+    TeX(r'($p$-value, we do not reject $\mathbf{H}_0$)'),
+    TeX(r'($p$-value, we reject $\mathbf{H}_0$)'),
     TeX(r'(Rejection Region)')
   ),
   fill = c("purple", "blue", "chartreuse4"), bty = "n"

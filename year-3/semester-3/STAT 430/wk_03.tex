@@ -26,7 +26,7 @@
                         its rearrangements.
                   \item This collection of test statistic values generate the empirical null distribution.
             \end{itemize}
-      \item A \textbf{randomization test} is carried out similarly, except that we do not
+      \item In a \textbf{randomization test}, we do not
             consider all possible rearrangements.
             \begin{itemize}
                   \item We just consider a large number $ N $ of them.
@@ -74,9 +74,9 @@
                         \item Condition 2: Give users 200 free Pokécoins.
                         \item Condition 3: Give users a 50\% discount on Shop purchases.
                   \end{itemize}
-            \item In a small pilot experiment $ n_1=n_2=n_3=100 $ users are randomized to each condition.
-            \item For each user, the amount of real money (in USD) they spend in the 30 days following
-                  the experiment is recorded.
+            \item In a small pilot experiment, we randomize $ n_1=n_2=n_3=100 $ users to each condition.
+            \item For each user, we record the amount of real money (in USD) they spend in the 30 days
+                  following the experiment.
             \item The data summaries are:
                   \begin{itemize}
                         \item $ \bar{y}_1=\$10.74 $, $ Q_{y_1}(0.5)=\$9 $.
@@ -166,7 +166,7 @@
       \item But it is useful to begin such an investigation with a \emph{gatekeeper}
             test (test of overall equality) which serves to determine whether
             there is \emph{any} difference between the $ m $ experimental conditions.
-            Formally, such a question is phrased as the following statistical hypothesis:
+            Formally, we phrase such a question as the following statistical hypothesis:
             \begin{tightcenter}
                   $ \mathbf{H}_0 $: $ \theta_1=\theta_2=\cdots=\theta_m $ versus $ \mathbf{H}_\text{A} $: $ \theta_j\ne \theta_k $ for some $ j\ne k $
             \end{tightcenter}
@@ -183,10 +183,10 @@
 \begin{itemize}
       \item We assume that our response variable follows a normal distribution,
             and we assume that the mean of the distribution depends on the condition
-            in which the measurements were taken, and that the variance
+            where we take the measurements, and that the variance
             is the same across all conditions.
             \[ Y_{ij}\sim \N{\mu_j,\sigma^2}\quad\text{for }i=1,2,\ldots,n_j\text{ and }j=1,2,\ldots,m \]
-      \item The ``gatekeeper'' test for means is tested using an $ F $-test:
+      \item We use an $ F $-test to test for means:
             \begin{tightcenter}
                   $ \mathbf{H}_0 $: $ \mu_1=\mu_2=\cdots=\mu_m $ versus $\mathbf{H}_\text{A}$: $ \mu_j\ne \mu_k $ for some $ j\ne k $
             \end{tightcenter}
@@ -210,8 +210,8 @@
                               \item $ \varepsilon_i = $ random error term which we assume follows a $ \N{0,\sigma^2} $ distribution.
                               \item Because we're about to do a regression analysis, the usual \emph{residual diagnostics} are relevant.
                         \end{itemize}
-                  \item In this model the $ \beta $'s are unknown parameters
-                        and may be interpreted in the context of the
+                  \item In this model the $ \beta $'s are unknown parameters,
+                        and we interpret them in the context of the
                         following expectations:
                         \begin{itemize}
                               \item Expected response in condition $ m $:
@@ -239,7 +239,7 @@
                         \end{tightcenter}
                   \item This hypothesis corresponds, as noted, to the $ F $-test for overall significance in the model.
             \end{itemize}
-      \item  In regression parlance, the test statistic is defined to be the ratio of the
+      \item In regression parlance, the test statistic is the ratio of the
             regression mean squares (MSR)
             to the mean squared error (MSE) in a standard regression-based analysis of variance (ANOVA):
             \[ t=\frac{\text{MSR}}{\text{MSE}} \]
@@ -257,28 +257,30 @@
                         $ \displaystyle \text{SS}_\text{T}=\sum_{j=1}^{m} \sum_{i=1}^{n_j} \bigl(y_{ij}-\bar{y}_{\bullet\bullet}\bigr)^2=\text{SS}_\text{C}+\text{SS}_\text{E} $.
             \end{itemize}
       \item The null distribution for this test is $ F(m-1,N-m) $.
-      \item The $ p $-value for this test is calculated by
+      \item We calculate the $ p $-value for this test by:
             $ p\text{-value}=\Prob{T\ge t} $ where $ T \sim F(m-1,N-m) $.
 \end{itemize}
 \begin{table}[!htbp]
       \centering
-      \caption{ANOVA Table}\vspace{1mm}
-      \begin{tabularx}{0.85\linewidth}{@{}YYYYY@{}}
+      \caption{ANOVA Table}
+      \begin{NiceTabular}{|l|c|c|c|c|}
             \toprule
-            Source    & SS                     & d.f.    & MS                           & Test Stat.                                                   \\
+            Source    & SS                     & d.f.    & MS                                                               & Test Statistic                                                   \\
             \midrule
-            Condition & $ \text{SS}_\text{C} $ & $ m-1 $ & $ \text{SS}_\text{C}/(m-1) $ & \multirow{2}{*}{$ t=\text{MS}_\text{C}/\text{MS}_\text{E} $} \\
-            Error     & $ \text{SS}_\text{E} $ & $ N-m $ & $ \text{SS}_\text{E}/(N-m) $                                                                \\
+            Condition & $ \text{SS}_\text{C} $ & $ m-1 $ & $ \text{MS}_\text{C}=\text{SS}_\text{C}/(m-1) $ & \multirow{2}{*}{$ t=\text{MS}_\text{C}/\text{MS}_\text{E} $} \\
+            Error     & $ \text{SS}_\text{E} $ & $ N-m $ & $ \text{MS}_\text{E}=\text{SS}_\text{E}/(N-m) $                                                               \\
             \midrule
-            Total     & $ \text{SS}_\text{T} $ & $ N-1 $                                                                                               \\
-      \end{tabularx}
+            Total     & $ \text{SS}_\text{T} $ & $ N-1 $\\
+            \bottomrule
+      \end{NiceTabular}
 \end{table}
+\pagebreak
 \subsection{Example: Candy Crush Boosters}
 \begin{Example}{Candy Crush Boosters}{}
       \begin{itemize}
             \item Candy Crush is experimenting with three different versions of
                   in-game ``boosters'': the lollipop hammer, the jelly fish, and the colour bomb.
-            \item Users are randomized to one of these three conditions ($ n_1 = 121 $,
+            \item We randomize each user to one of these three conditions ($ n_1 = 121 $,
                   $ n_2 = 135 $, $ n_3 = 117$) and they
                   receive (for free) 5
                   boosters corresponding to their condition.
@@ -294,13 +296,12 @@
             \item In order to do this we fit the linear regression model:
                   \[ Y=\beta_0+\beta_1 x_1+\beta_2 x_2+\varepsilon \]
                   where $ x_1 $ and $ x_2 $ are indicator variables indicating
-                  whether a particular value of the response was observed in the
+                  whether we observe a particular value of the response in the
                   jelly fish or colour bomb conditions, respectively.
                   The lollipop hammer is therefore the reference condition.
             \item In R, we found that the test statistic for testing:
                   \begin{tightcenter}
-                        $ \mathbf{H}_0 $: $ \mu_1=\mu_2=\mu_3 $ versus $ \mathbf{H}_\text{A} $: $ \mu_j\ne \mu_k $
-                        for some $ j\ne k $
+                        $ \mathbf{H}_0 $: $ \mu_1=\mu_2=\mu_3 $ versus $ \mathbf{H}_\text{A} $: $ \mu_j\ne \mu_k $ for some $ j\ne k $
                   \end{tightcenter}
                   was $ t=851.8947 $ and the null distribution was $ T \sim F(2,370) $. The corresponding
                   $ p $-value was:
@@ -316,19 +317,18 @@
             is binary:
             \[ Y_{ij}=\begin{cases*}
                         1 & if unit $ i $ in condition $ j $ performs an action of interest         \\
-                        0 & if unit $ i $ in condition $ j $ deos not perform an action of interest
+                        0 & if unit $ i $ in condition $ j $ does not perform an action of interest
                   \end{cases*}i=1,2,\ldots,n_j;j=1,2,\ldots,m \]
       \item $ Y_{ij}\sim \bin{1,\pi_j} $
             where $ \pi_j $ is the probability of a unit in condition $ j $ performing the action.
-      \item The ``gatekeeper'' test for proportions is tested using the \textbf{chi-squared test
-                  of independence} (also known as Pearson $ \chi^2 $-test).
+      \item We use a \textbf{chi-squared test of independence} (Pearson $ \chi^2 $ test) to test for proportions:
             \begin{tightcenter}
                   $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_m $
             \end{tightcenter}
 \end{itemize}
 \subsection{The Chi-squared Test of Independence}
 \begin{itemize}
-      \item The chi-squared test of independence is typically used as a test for `no association'
+      \item We use the chi-squared test of independence as a test for `no association'
             between two categorical variables that are summarized in a \emph{contingency table}.
       \item We apply this methodology here to test the independence of the binary outcome
             (whether a unit performs the action of interest) and the particular condition they are in.
@@ -344,18 +344,19 @@
                         was observed and what is expected under the null hypothesis is large enough
                         to be considered \emph{significantly} different.
                   \item The \emph{general} $ 2\times 2 $ contingency table for a scenario like this
-                        is shown below.
+                        is shown in~\Cref{general_22_contingency}.
                         \begin{table}[!htbp]
                               \centering
-                              \begin{tabularx}{0.8\linewidth}{@{}BYYYY@{}}
-                                    \multicolumn{2}{c}{}        & \multicolumn{2}{c}{\textbf{Condition}} &                                                                                       \\
-                                    \multicolumn{2}{c}{}        & 1                                      & 2                         & \multicolumn{1}{c}{}                                      \\
+                              \caption{A General $ 2\times 2 $ Contingency Table}\label{general_22_contingency}
+                              \begin{NiceTabular}{cc|cc|c}
+                                    \multicolumn{2}{c}{}        & \multicolumn{2}{c}{\emph{Condition}} &                                                                                       \\
+                                    \multicolumn{2}{c}{}        & 1                             & 2                         & \multicolumn{1}{c}{}                                      \\
                                     \cmidrule{2-5}
-                                    \multirow{2}{*}{Conversion} & Yes                                    & $O_{1,1}$                 & $O_{1,2}$                 & $O_1$                         \\
-                                                                & No                                     & $O_{0,1}$                 & $O_{0,2}$                 & $O_2$                         \\
+                                    \multirow{2}{*}{\emph{Conversion}} & Yes                           & $O_{1,1}$                 & $O_{1,2}$                 & $O_1$                         \\
+                                    & No                            & $O_{0,1}$                 & $O_{0,2}$                 & $O_0$                         \\
                                     \cmidrule{2-5}
-                                    \multicolumn{1}{c}{}        & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$n_1$} & \multicolumn{1}{c}{$n_2$} & \multicolumn{1}{c}{$n_1+n_2$} \\
-                              \end{tabularx}
+                                    \multicolumn{1}{c}{}        & \multicolumn{1}{c}{}          & \multicolumn{1}{c}{$n_1$} & \multicolumn{1}{c}{$n_2$} & \multicolumn{1}{c}{$n_1+n_2$}
+                              \end{NiceTabular}
                         \end{table}
                         \begin{itemize}
                               \item $ O_{\ell,j} $: observed number of conversions ($ \ell=1 $),
@@ -378,20 +379,21 @@
                         in each cell to the corresponding expected
                         count, and is defined as
                         \[ T=\sum_{\ell=0}^{1} \sum_{j=1}^{2} \frac{(O_{\ell_j}-E_{\ell,j})^2}{E_{\ell,j}}\sim \chi^2(1)  \]
-                  \item The $ p $-value for this test is calculated by $ p\text{-value} = \Prob{T\ge t} $ where
+                  \item We calculate the $ p $-value for this test by: $ p\text{-value} = \Prob{T\ge t} $ where
                         $ T \sim \chi^2(1) $.
-                  \item Returning to the Optimizely example, the \emph{expected} table is:
+                  \item Returning to the Optimizely example, the \emph{expected} table is~\Cref{optimizely_contingency}.
                         \begin{table}[!htbp]
                               \centering
-                              \begin{tabularx}{0.8\linewidth}{@{}BYYYY@{}}
-                                    \multicolumn{2}{c}{}        & \multicolumn{2}{c}{\textbf{Condition}} &                                                                                       \\
+                              \caption{$ 2\times 2 $ Contingency Table for Optimizely's Homepage Experiment}\label{optimizely_contingency}
+                              \begin{NiceTabular}{cc|cc|c}
+                                    \multicolumn{2}{c}{}        & \multicolumn{2}{c}{\emph{Condition}} &                                                                                       \\
                                     \multicolumn{2}{c}{}        & 1                                      & 2                          & \multicolumn{1}{c}{}                                     \\
                                     \cmidrule{2-5}
-                                    \multirow{2}{*}{Conversion} & Yes                                    & $343.96$                   & $335.04$                   & $679$                       \\
-                                                                & No                                     & $8528.04$                  & $8306.96$                  & $16835$                     \\
+                                    \multirow{2}{*}{\emph{Conversion}} & Yes                                    & $343.96$                   & $335.04$                   & $679$                       \\
+                                    & No                                     & $8528.04$                  & $8306.96$                  & $16835$                     \\
                                     \cmidrule{2-5}
-                                    \multicolumn{1}{c}{}        & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$8872$} & \multicolumn{1}{c}{$8642$} & \multicolumn{1}{c}{$17514$} \\
-                              \end{tabularx}
+                                    \multicolumn{1}{c}{}        & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$8872$} & \multicolumn{1}{c}{$8642$} & \multicolumn{1}{c}{$17514$}
+                              \end{NiceTabular}
                         \end{table}
                   \item And the resultant test statistic and $p$-value are:
                         \[ t=\frac{(280-343.96)^2}{343.96} +\frac{(399-335.04)^2}{335.04}+\frac{(8592-8528.04)^2}{8528.04}+\frac{(8243-8306.96)^2}{8306.96}=25.075    \]
@@ -405,18 +407,19 @@
                               \item But there is no requirement that there be only two conditions.
                               \item Here we generalize the test to any number of experimental conditions.
                         \end{itemize}
-                  \item The information associated with this test can be summarized in a $ 2\times m $ contingency table:
+                  \item The information associated with this test can be summarized in a $ 2\times m $ contingency table as seen in~\Cref{general_2m_contingency}.
                         \begin{table}[!htbp]
                               \centering
-                              \begin{tabularx}{\linewidth}{@{}BYYYYYY@{}}
-                                    \multicolumn{2}{c}{}        & \multicolumn{4}{c}{\textbf{Condition}} &                                                                                                                                           \\
+                              \caption{A General $ 2\times m $ Contingency Table}\label{general_2m_contingency}
+                              \begin{NiceTabular}{cc|cccc|c}
+                                    \multicolumn{2}{c}{}        & \multicolumn{4}{c}{\emph{Condition}} &                                                                                                                                           \\
                                     \multicolumn{2}{c}{}        & 1                                      & 2                         & $\cdots$                  & $m$      & \multicolumn{1}{c}{}                                                   \\
                                     \cmidrule{2-7}
-                                    \multirow{2}{*}{Conversion} & Yes                                    & $O_{1,1}$                 & $O_{1,2}$                 & $\cdots$ & $O_{1,m}$                 & $O_1$                                      \\
-                                                                & No                                     & $O_{0,1}$                 & $O_{0,2}$                 & $\cdots$ & $O_{0,m}$                 & $O_2$                                      \\
+                                    \multirow{2}{*}{\emph{Conversion}} & Yes                                    & $O_{1,1}$                 & $O_{1,2}$                 & $\cdots$ & $O_{1,m}$                 & $O_1$                                      \\
+                                    & No                                     & $O_{0,1}$                 & $O_{0,2}$                 & $\cdots$ & $O_{0,m}$                 & $O_0$                                      \\
                                     \cmidrule{2-7}
-                                    \multicolumn{1}{c}{}        & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$n_1$} & \multicolumn{1}{c}{$n_2$} & $\cdots$ & \multicolumn{1}{c}{$n_m$} & \multicolumn{1}{c}{$N=\sum_{j=1}^{m} n_j$} \\
-                              \end{tabularx}
+                                    \multicolumn{1}{c}{}        & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$n_1$} & \multicolumn{1}{c}{$n_2$} & $\cdots$ & \multicolumn{1}{c}{$n_m$} & \multicolumn{1}{c}{$N=\sum_{j=1}^{m} n_j$}
+                              \end{NiceTabular}
                         \end{table}
                         \begin{itemize}
                               \item \# of conversions ($ \ell=1 $) or non-conversions ($ \ell=0 $) is condition
@@ -435,7 +438,7 @@
                         compares the observed count in each cell to the corresponding expected
                         count, and is defined as:
                         \[ T=\sum_{\ell=0}^{1} \sum_{j=1}^{m} \frac{(O_{\ell,j}-E_{\ell,j})^2}{E_{\ell_j}}\sim \chi^2(m-1)  \]
-                  \item The $ p $-value associated with this test is calculated as
+                  \item We calculate the $ p $-value of this test by:
                         $ p\text{-value} = \Prob{T\ge t} $ where $ T \sim \chi^2(m-1) $.
             \end{itemize}
 \end{itemize}
@@ -450,34 +453,38 @@
                   and interest lies in determining
                   which ad is most popular and hence most profitable
                   by comparing the viewing rates of the five
-                  different videos. $ Y=1 $ if ad was viewed and $ 0 $ otherwise.
-            \item Each of these 5 videos is shown to $ n_1=5014 $, $ n_2=4971 $, $ n_3=5030 $,
-                  $ n_4=5007 $, and $ n_5=4980 $ users, and the results are summarized in the table below.
+                  different videos.
+            \item We show each of these 5 videos to $ n_1=5014 $, $ n_2=4971 $, $ n_3=5030 $,
+                  $ n_4=5007 $, and $ n_5=4980 $ users, and summarize the results in the table below.
                   \begin{center}
-                        \begin{tabularx}{\linewidth}{@{}BYYYYYYY@{}}
-                              \multicolumn{2}{c}{}  & \multicolumn{5}{c}{\textbf{Condition}} &                                                                                                                                                                              \\
+                        \captionsetup{type=table}
+                        \captionof{table}{A $ 2\times 5 $ Observed Contingency Table for the Nike Example}
+                        \begin{NiceTabular}{cc|ccccc|c}
+                              \multicolumn{2}{c}{}  & \multicolumn{5}{c}{\emph{Condition}} &                                                                                                                                                                              \\
                               \multicolumn{2}{c}{}  & 1                                      & 2                          & 3                          & 4                          & 5                          & \multicolumn{1}{c}{}                                     \\
                               \cmidrule{2-8}
-                              \multirow{2}{*}{View} & Yes                                    & $160$                      & $95$                       & $141$                      & $293$                      & $197$                      & $886$                       \\
-                                                    & No                                     & $4854$                     & $4876$                     & $4889$                     & $4714$                     & $4783$                     & $24116$                     \\
+                              \multirow{2}{*}{\emph{View}} & Yes                                    & $160$                      & $95$                       & $141$                      & $293$                      & $197$                      & $886$                       \\
+                              & No                                     & $4854$                     & $4876$                     & $4889$                     & $4714$                     & $4783$                     & $24116$                     \\
                               \cmidrule{2-8}
-                              \multicolumn{1}{c}{}  & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$5014$} & \multicolumn{1}{c}{$4971$} & \multicolumn{1}{c}{$5030$} & \multicolumn{1}{c}{$5007$} & \multicolumn{1}{c}{$4980$} & \multicolumn{1}{c}{$25002$} \\
-                        \end{tabularx}
+                              \multicolumn{1}{c}{}  & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$5014$} & \multicolumn{1}{c}{$4971$} & \multicolumn{1}{c}{$5030$} & \multicolumn{1}{c}{$5007$} & \multicolumn{1}{c}{$4980$} & \multicolumn{1}{c}{$25002$}
+                        \end{NiceTabular}
                   \end{center}
             \item The overall watch rate (and its complement) are:
                   \[ \hat{\pi}=\frac{O_1}{N} =\frac{886}{25002}=0.0354\quad\text{and}\quad 1-\hat{\pi}=\frac{24116}{25002} =0.9649 \]
-            \item The expected cell frequencies are found by multiplying $ n_j $ by $ \hat{\pi} $
-                  and $ (1-\hat{\pi}) $ for $ j=1,2,3,4,5 $.
+            \item We multiply $ n_j $ by $ \hat{\pi} $ and $ (1-\hat{\pi}) $ for $ j=1,2,3,4,5 $
+                  to get the expected cell frequencies.
                   \begin{center}
-                        \begin{tabularx}{\linewidth}{@{}BYYYYYYY@{}}
-                              \multicolumn{2}{c}{}  & \multicolumn{5}{c}{\textbf{Condition}} &                                                                                                                                                                              \\
+                        \captionsetup{type=table}
+                        \captionof{table}{A $ 2\times 5 $ Expected Contingency Table for the Nike Example}
+                        \begin{NiceTabular}{cc|ccccc|c}
+                              \multicolumn{2}{c}{}  & \multicolumn{5}{c}{\emph{Condition}} &                                                                                                                                                                              \\
                               \multicolumn{2}{c}{}  & 1                                      & 2                          & 3                          & 4                          & 5                          & \multicolumn{1}{c}{}                                     \\
                               \cmidrule{2-8}
-                              \multirow{2}{*}{View} & Yes                                    & $177.68$                   & $176.16$                   & $178.25$                   & $177.43$                   & $176.48$                   & $886$                       \\
-                                                    & No                                     & $4836.32$                  & $4794.84$                  & $4851.75$                  & $4829.57$                  & $4803.52$                  & $24116$                     \\
+                              \multirow{2}{*}{\emph{View}} & Yes                                    & $177.68$                   & $176.16$                   & $178.25$                   & $177.43$                   & $176.48$                   & $886$                       \\
+                              & No                                     & $4836.32$                  & $4794.84$                  & $4851.75$                  & $4829.57$                  & $4803.52$                  & $24116$                     \\
                               \cmidrule{2-8}
-                              \multicolumn{1}{c}{}  & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$5014$} & \multicolumn{1}{c}{$4971$} & \multicolumn{1}{c}{$5030$} & \multicolumn{1}{c}{$5007$} & \multicolumn{1}{c}{$4980$} & \multicolumn{1}{c}{$25002$} \\
-                        \end{tabularx}
+                              \multicolumn{1}{c}{}  & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$5014$} & \multicolumn{1}{c}{$4971$} & \multicolumn{1}{c}{$5030$} & \multicolumn{1}{c}{$5007$} & \multicolumn{1}{c}{$4980$} & \multicolumn{1}{c}{$25002$}
+                        \end{NiceTabular}
                   \end{center}
             \item The resultant test statistic and $ p $-value (where $ T \sim \chi^2(4) $) are:
                   \[ t=\sum_{\ell=0}^{1} \sum_{j=1}^{m} \frac{(O_{\ell,j}-E_{\ell,j})^2}{E_{\ell,j}} =129.1686 \]
