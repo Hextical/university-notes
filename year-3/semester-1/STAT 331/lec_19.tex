@@ -48,28 +48,23 @@ over $ m $ observations.
 Ideally, we have lots of data, conceptualize having three parts.
 \begin{table}[ht]
     \centering
-    \begin{tabularx}{\linewidth}{@{}YYY@{}}
+    \begin{NiceTabular}{|>{\raggedright\arraybackslash}m{50mm}|m{50mm}|m{50mm}|}
         \toprule
-        Train $ (y_1,y_2,\ldots,y_n) $ & Validation $ (y_{n+1},\ldots,y_{n+v}) $ & Test $ (y_{n+v+1},\ldots,y_{n+v+t}) $ \\
+        \multicolumn{1}{c}{Train $ (y_1,y_2,\ldots,y_n) $} & \multicolumn{1}{c}{Validation $ (y_{n+1},\ldots,y_{n+v}) $} & \multicolumn{1}{c}{Test $ (y_{n+v+1},\ldots,y_{n+v+t}) $} \\
         \midrule
-        \begin{itemize}
-            \item $ n $ observations
-            \item Fit models, as many as we want.
-        \end{itemize}
-                                       &
-        \begin{itemize}
-            \item $ v $ observations
-            \item Estimate prediction error
-                  for each fitted model.
-        \end{itemize}
-                                       &
-        \begin{itemize}
-            \item $ t $ observations
-            \item Used at the very end for final assessment
-                  of our selected model.
-        \end{itemize}                                                                                        \\
+        \textbullet~$ n $ observations.
+
+        \textbullet~Fit models, as many as we want.
+        &
+        \textbullet~$ v $ observations.
+
+        \textbullet~Estimate prediction error for each fitted model.
+        &
+        \textbullet~$ t $ observations.
+
+        \textbullet~Used at the very end for final assessment of our selected model.\\
         \bottomrule
-    \end{tabularx}
+    \end{NiceTabular}
 \end{table}
 
 We have access to train and validation. Test data is from the future,
@@ -81,18 +76,18 @@ For example, using MSE as a metric, based on a fitted model we can
 compute and compare:
 \begin{table}[ht]
     \centering
-    \begin{tabularx}{\linewidth}{@{}YYY@{}}
+    \begin{NiceTabular}{|c|c|c|}
         \toprule
         MSE Train & MSE Validation & MSE Test \\
         \midrule
-        \[ \frac{1}{n} \sum_{i=1}^{n} (y_i-\hat{y}_i)^2 \]
-                  &
-        \[ \frac{1}{m} \sum_{i=n+1}^{n+v} (y_i-\hat{y_i})^2 \]
-                  &
-        \[ \frac{1}{t} \sum_{i=n+v+1}^{n+v+t}(y_i-\hat{y}_i)^2  \]
+        $ \frac{1}{n} \sum_{i=1}^{n} (y_i-\hat{y}_i)^2 $
+        &
+        $ \frac{1}{m} \sum_{i=n+1}^{n+v} (y_i-\hat{y_i})^2 $
+        &
+        $ \frac{1}{t} \sum_{i=n+v+1}^{n+v+t}(y_i-\hat{y}_i)^2 $
         \\
         \bottomrule
-    \end{tabularx}
+    \end{NiceTabular}
 \end{table}
 
 \begin{itemize}
