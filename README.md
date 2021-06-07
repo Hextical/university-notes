@@ -7,14 +7,14 @@ All my university notes done in LaTeX.
 ### Semester 3
 |                                              Course                                              | Completion |       Online       |
 | :----------------------------------------------------------------------------------------------: | :--------: | :----------------: |
-| [STAT 430](https://hextical.github.io/university-notes/year-3/semester-3/STAT%20430/stat430.pdf) |   Week 5   | :heavy_check_mark: |
+| [STAT 430](https://hextical.github.io/university-notes/year-3/semester-3/STAT%20430/stat430.pdf) |   Week 6   | :heavy_check_mark: |
 ## Year 3
 ### Semester 2
-|                                              Course                                              |    Completion    |       Online       |
-| :----------------------------------------------------------------------------------------------: | :--------------: | :----------------: |
-|                                             STAT 332                                             |     100%***      | :heavy_check_mark: |
-|                                             STAT 341                                             | ETA: End of term | :heavy_check_mark: |
-| [STAT 443](https://hextical.github.io/university-notes/year-3/semester-2/STAT%20443/stat443.pdf) |       100%       | :heavy_check_mark: |
+|                                              Course                                              | Completion |       Online       |
+| :----------------------------------------------------------------------------------------------: | :--------: | :----------------: |
+|                                             STAT 332                                             |  100%***   | :heavy_check_mark: |
+|                                             STAT 341                                             |  ETA: TBA  | :heavy_check_mark: |
+| [STAT 443](https://hextical.github.io/university-notes/year-3/semester-2/STAT%20443/stat443.pdf) |    100%    | :heavy_check_mark: |
 
 *** E-mail me at `c2roopna@uwaterloo.ca` for my notes because the professor
 has too many copyright claims on his Word documents.

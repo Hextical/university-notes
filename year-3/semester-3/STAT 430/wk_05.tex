@@ -219,12 +219,12 @@
             \end{itemize}
       \item Two relevant hypotheses are:
             \begin{enumerate}[(1)]
-                  \item $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{m-1} $ versus $ \mathbf{H}_\text{A} $: $ \beta_j\ne 0 $ for some $ j $.
+                  \item $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{m-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \beta_j\ne 0 $ for some $ j $.
                         \begin{itemize}
                               \item If we don't reject $ \mathbf{H}_0 $, this suggests the $ x $'s don't need to be in the model
                                     and hence the design factor doesn't significantly influence the response.
                         \end{itemize}
-                  \item $ \mathbf{H}_0 $: $ \gamma_1=\gamma_2=\cdots=\gamma_{b-1} $ versus $ \mathbf{H}_\text{A} $: $ \gamma_k\ne 0 $ for some $ k $.
+                  \item $ \mathbf{H}_0 $: $ \gamma_1=\gamma_2=\cdots=\gamma_{b-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \gamma_k\ne 0 $ for some $ k $.
                         \begin{itemize}
                               \item If we don't reject $ \mathbf{H}_0 $, this suggests the $ z $'s don't need to be in the model
                                     and hence the nuisance factor doesn't significantly influence the response. Therefore, blocking wasn't necessary.
@@ -246,7 +246,7 @@
             \end{tightcenter}
       \item We do this by testing:
             \begin{tightcenter}
-                  $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{m-1} $ versus $ \mathbf{H}_\text{A} $: $ \beta_j\ne 0 $ for some $ j $
+                  $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{m-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \beta_j\ne 0 $ for some $ j $
             \end{tightcenter}
             with an ANOVA in the context of the following linear regression model.
             \[ Y_i=\alpha+\sum_{j=1}^{m-1} \beta_j x_{ij}+\sum_{k=1}^{b-1} \gamma_k z_{ij}+\varepsilon_i \]
@@ -312,9 +312,23 @@
       The regression model fit to these response observations is:
       \[ Y_i=\alpha+\beta_2 x_{i2}+\beta_3 x_{i3}+\gamma_1 z_{i1}+\gamma_2 z_{i2}+\gamma_3 z_{i3}+\gamma_4 z_{i4}+\varepsilon_i \]
       where $x_{i2}$ and $x_{i3}$ are condition indicators for promotions 2 and 3 (promotion 1 is the baseline) and $ z_{i1},\ldots,z_{i4} $
-      are block indicators for Monday-Thursday (Friday is the baseline).
+      are block indicators for Monday-Thursday (Friday is the baseline). The ANOVA Table for this experiment is~\Cref{GAPANOVA}.
+      \begin{center}
+            \captionsetup{type=table}
+            \captionof{table}{The Gap RCBD ANOVA Table}\label{GAPANOVA}
+            \begin{NiceTabular}{|l|c|c|c|c|}
+                  \toprule
+                  Source    & SS           & d.f.    & MS           & Test Statistic             \\
+                  \midrule
+                  Condition & $ 49618.34 $ & $ 2 $   & $ 24809.17 $ & $ t_\text{C}=2165.39 $ \\
+                  Block     & $ 19258.30 $ & $ 4 $   & $ 4814.58 $  & $ t_\text{B}=420.22 $  \\
+                  Error     & $ 8512.67 $  & $ 743 $ & $ 11.46 $    &                        \\
+                  \midrule
+                  Total     & $ 77389.32 $ & $ 749 $\\
+                  \bottomrule
+            \end{NiceTabular}
+      \end{center}
       \begin{itemize}
-            \item ANOVA Table for this experiment:~\Cref{GAPANOVA}.
             \item $ \mathbf{H}_0 $: $ \beta_2=\beta_3=0 $ tells us whether the design factor is significant.
                   \begin{itemize}
                         \item $ p\text{-value}=\Prob{T\ge t_\text{C}}=\Prob{T\ge 2165.39}=1.101\times 10^{-310} $ where $ T \sim F(2,743) $.
@@ -327,21 +341,6 @@
                   \end{itemize}
       \end{itemize}
 \end{Example}
-\begin{table}[!htbp]
-      \centering
-      \caption{The Gap RCBD ANOVA Table}\label{GAPANOVA}
-      \begin{NiceTabular}{|l|c|c|c|c|}
-            \toprule
-            Source    & SS           & d.f.    & MS           & Test Statistic             \\
-            \midrule
-            Condition & $ 49618.34 $ & $ 2 $   & $ 24809.17 $ & $ t_\text{C}=2165.39 $ \\
-            Block     & $ 19258.30 $ & $ 4 $   & $ 4814.58 $  & $ t_\text{B}=420.22 $  \\
-            Error     & $ 8512.67 $  & $ 743 $ & $ 11.46 $    &                        \\
-            \midrule
-            Total     & $ 77389.32 $ & $ 749 $\\
-            \bottomrule
-      \end{NiceTabular}
-\end{table}
 \subsection{RCBD to Compare Proportions}
 \begin{itemize}
       \item Here we're interested in testing the following hypothesis (while accounting for the influence of the
@@ -351,7 +350,7 @@
             \end{tightcenter}
       \item We do this by testing:
             \begin{tightcenter}
-                  $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{m-1} $ versus $ \mathbf{H}_\text{A} $: $ \beta_j\ne 0 $ for some $ j$
+                  $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{m-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \beta_j\ne 0 $ for some $ j$
             \end{tightcenter}
             with a likelihood ratio test (LRT) in the context of the following logistic regression model:
             \[ \log*{\frac{\pi_i}{1-\pi_i}}=\alpha+\sum_{j=1}^{m-1} \beta_j x_{ij}+\sum_{k=1}^{b-1} \gamma_k z_{ik} \]
@@ -374,33 +373,31 @@
       \item The $ p $-value is: $ p\text{-value}=\Prob{T\ge t} $ where $ T \sim \chi^2(\ell) $.
 \end{itemize}
 \subsection{Example: Enterprise Banner Ads}
-\begin{Example}{Enterprise Banner Ads}{}
-      Enterprise is experimenting with $m = 3$ banner ads as a mechanism to drive traffic to their website. Since
-      there are known regional differences in consumer preferences in the US, they wish to control for the nuisance
-      factor ``region'' with $b = 4$ blocks corresponding to the four major US geographic regions: Northeast (NE),
-      Northwest (NW), Southeast (SE), and Southwest (SW). We randomize a total of $n_{jk} = 5000$ for all $ (j,k) $ people
-      to each ad condition in each region.
+Enterprise is experimenting with $m = 3$ banner ads as a mechanism to drive traffic to their website. Since
+there are known regional differences in consumer preferences in the US, they wish to control for the nuisance
+factor ``region'' with $b = 4$ blocks corresponding to the four major US geographic regions: Northeast (NE),
+Northwest (NW), Southeast (SE), and Southwest (SW). We randomize a total of $n_{jk} = 5000$ for all $ (j,k) $ people
+to each ad condition in each region.
 
-      \vspace{2mm}
+\vspace{2mm}
 
-      Interest lies in determining whether the different ads perform similarly with respect to click-
-      through-rate (CTR) --- and we wish to determine which one maximizes CTR --- but we want to control for
-      the effect of region. We do so with the following logistic regression model:
-      \[ \log*{\frac{\pi_i}{1-\pi_i}}=\alpha+\beta_2 x_{i2}+\beta_3 x_{i3}+\gamma_1 z_{i1}+\gamma_2 z_{i2}+\gamma_3 z_{i3} \]
-      where $ x_{i2} $ and $ x_{i3} $ are condition indicators for ads 2 and 3 (ad 1 is the baseline),
-      and $ z_{i1},z_{i2},z_{i3} $ are block indicators for NW, SE, SW regions (NE is the baseline).
-      \begin{itemize}
-            \item $ \mathbf{H}_0 $: $ \beta_2=\beta_3=0 $.
-                  \begin{itemize}
-                        \item $ p\text{-value}=\Prob{T\ge t_\text{C}}=\Prob{T\ge 249.922}=5.37\times 10^{-55} $ where $ T \sim \chi^2(2) $.
-                        \item Therefore, we reject $ \mathbf{H}_0 $ and conclude that the design factor is significant and the CTR is not
-                              the same in every condition.
-                  \end{itemize}
-            \item $ \mathbf{H}_0 $: $ \gamma_1=\gamma_2=\gamma_3=0 $.
-                  \begin{itemize}
-                        \item $ p\text{-value}=\Prob{T\ge t_\text{B}}=\Prob{T\ge 139.824}=4.13\times 10^{-30} $ where $ T \sim \chi^2(3) $.
-                        \item Therefore, we reject $ \mathbf{H}_0 $ and conclude that the nuisance factor is significant
-                              and therefore blocking was a good thing to do.
-                  \end{itemize}
-      \end{itemize}
-\end{Example}
+Interest lies in determining whether the different ads perform similarly with respect to click-
+through-rate (CTR) --- and we wish to determine which one maximizes CTR --- but we want to control for
+the effect of region. We do so with the following logistic regression model:
+\[ \log*{\frac{\pi_i}{1-\pi_i}}=\alpha+\beta_2 x_{i2}+\beta_3 x_{i3}+\gamma_1 z_{i1}+\gamma_2 z_{i2}+\gamma_3 z_{i3} \]
+where $ x_{i2} $ and $ x_{i3} $ are condition indicators for ads 2 and 3 (ad 1 is the baseline),
+and $ z_{i1},z_{i2},z_{i3} $ are block indicators for NW, SE, SW regions (NE is the baseline).
+\begin{itemize}
+      \item $ \mathbf{H}_0 $: $ \beta_2=\beta_3=0 $.
+            \begin{itemize}
+                  \item $ p\text{-value}=\Prob{T\ge t_\text{C}}=\Prob{T\ge 249.922}=5.37\times 10^{-55} $ where $ T \sim \chi^2(2) $.
+                  \item Therefore, we reject $ \mathbf{H}_0 $ and conclude that the design factor is significant and the CTR is not
+                        the same in every condition.
+            \end{itemize}
+      \item $ \mathbf{H}_0 $: $ \gamma_1=\gamma_2=\gamma_3=0 $.
+            \begin{itemize}
+                  \item $ p\text{-value}=\Prob{T\ge t_\text{B}}=\Prob{T\ge 139.824}=4.13\times 10^{-30} $ where $ T \sim \chi^2(3) $.
+                  \item Therefore, we reject $ \mathbf{H}_0 $ and conclude that the nuisance factor is significant
+                        and therefore blocking was a good thing to do.
+            \end{itemize}
+\end{itemize}

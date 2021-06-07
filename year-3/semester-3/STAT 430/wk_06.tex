@@ -1,225 +1,528 @@
 \makeheading{Week 6}
 \section{Balanced Incomplete Block Designs}
 \begin{itemize}
-    \item Randomized Complete Block Designs (RCBD) were a tool for the exploration of \emph{one} design factor ($ m $ levels)
-          while controlling for the effect of \emph{one} nuisance factor ($ b $ blocks).
-          \begin{itemize}
-              \item In a RCBD we carry out \emph{every} experimental condition inside \emph{every} block.
-              \item But sometimes, due to practical constraints, this is not possible.
-          \end{itemize}
-    \item The Gap is experimenting with $ m=3 $ promotional offers:
-          \begin{itemize}
-              \item Version 1: $ 50\% $ discount on one item.
-              \item Version 2: $ 20\% $ discount on your entire order.
-              \item Version 3: Spend $ \$ 50 $ and get a $ \$ 10 $ gift card.
-          \end{itemize}
-    \item Experimenters would like to control for a possible day-of-week effect (block by day).
-          \begin{itemize}
-              \item Naturally, one might consider a RCBD\@. Suppose we observe data in \emph{every} block-condition combination.
-                    \begin{table}[!htbp]
-                        \centering
-                        \caption{Complete Block Design}
-                        \begin{NiceTabular}{|cc|cccccc|}
-                            \toprule         &   & \multicolumn{6}{c} {\emph{Day}}                                                                            \\
-                            &   & 1                               & 2            & 3            & 4            & 5            & 6            \\
-                            \midrule         & 1 & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$     \\
-                            \emph{Promotion} & 2 & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
-                            & 3 & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
-                            \bottomrule
-                        \end{NiceTabular}
-                    \end{table}
-          \end{itemize}
-    \item But the experiments may only offer two of the three promotions in a single day.
-          \begin{itemize}
-              \item So we must consider an \textbf{incomplete} block design. Suppose we observe data in only \emph{some} block-condition combinations.
-          \end{itemize}
-          \begin{table}[!htbp]
-              \centering
-              \caption{Incomplete Block Design}
-              \begin{NiceTabular}{|cc|cccccc|}
-                  \toprule         &   & \multicolumn{6}{c} {\emph{Day}}                                                                            \\
-                  &   & 1                               & 2            & 3            & 4            & 5            & 6            \\
-                  \midrule         & 1 & $\checkmark$                    & $\checkmark$ & $\times$     & $\checkmark$ & $\checkmark$ & $\times$     \\
-                  \emph{Promotion} & 2 & $\checkmark$                    & $\times$     & $\checkmark$ & $\checkmark$ & $\times$     & $\checkmark$ \\
-                  & 3 & $\times$                        & $\checkmark$ & $\checkmark$ & $\times$     & $\checkmark$ & $\checkmark$ \\
-                  \bottomrule
-              \end{NiceTabular}
-          \end{table}
-    \item We refer to the design above as a \textbf{balanced incomplete block design} (BIBD).
-          \begin{Remark}{Notation}{}
-              \begin{itemize}
-                  \item $ m $: number of experimental conditions. In our previous example, $ m=3 $.
-                  \item $ b $: number of blocks. In our previous example, $ b=6 $.
-                  \item $ m^\star $: number of experimental conditions that can be run in each block. Also known as ``block size.'' In our previous example, $ m^\star=2 $.
-                  \item $ r $: number of blocks in which each condition appears. In our previous example, $ r=4 $.
-                  \item $ \lambda $: number of blocks that \emph{any} pair of conditions appear in together. In our previous example, $ \lambda=2 $.
-              \end{itemize}
-          \end{Remark}
-    \item The BIBD is ``balanced'' in the sense that:
-          \begin{itemize}
-              \item The number of conditions in each block is the same for every block ($ m^\star $).
-              \item The number of blocks each condition appears in is the same for every condition ($ r $).
-              \item The number of blocks each pair of conditions appear in together is the same for every possible
-                    condition pairing ($ \lambda $).
-          \end{itemize}
-    \item This balance allows for the comparison of a metric of interest across m conditions while still accounting
-          for a nuisance factor with $b$ levels
-          \begin{itemize}
-              \item But despite this balance, the ``incompleteness'' requires some sacrifice.
-          \end{itemize}
+      \item Randomized Complete Block Designs (RCBD) were a tool for the exploration of \emph{one} design factor ($ m $ levels)
+            while controlling for the effect of \emph{one} nuisance factor ($ b $ blocks).
+            \begin{itemize}
+                  \item In a RCBD we carry out \emph{every} experimental condition inside \emph{every} block.
+                  \item But sometimes, due to practical constraints, this is not possible.
+            \end{itemize}
+      \item The Gap is experimenting with $ m=3 $ promotional offers:
+            \begin{itemize}
+                  \item Version 1: $ 50\% $ discount on one item.
+                  \item Version 2: $ 20\% $ discount on your entire order.
+                  \item Version 3: Spend $ \$ 50 $ and get a $ \$ 10 $ gift card.
+            \end{itemize}
+      \item Experimenters would like to control for a possible day-of-week effect (block by day).
+            \begin{itemize}
+                  \item Naturally, one might consider a RCBD\@. Suppose we observe data in \emph{every} block-condition combination.
+                        \begin{table}[!htbp]
+                              \centering
+                              \caption{Complete Block Design}
+                              \begin{NiceTabular}{|cc|cccccc|}
+                                    \toprule         &   & \multicolumn{6}{c} {\emph{Day}}                                                                            \\
+                                    &   & 1                               & 2            & 3            & 4            & 5            & 6            \\
+                                    \midrule         & 1 & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$     \\
+                                    \emph{Promotion} & 2 & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+                                    & 3 & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+                                    \bottomrule
+                              \end{NiceTabular}
+                        \end{table}
+            \end{itemize}
+      \item But the experiments may only offer two of the three promotions in a single day.
+            \begin{itemize}
+                  \item So we must consider an \textbf{incomplete} block design. Suppose we observe data in only \emph{some} block-condition combinations.
+            \end{itemize}
+            \begin{table}[!htbp]
+                  \centering
+                  \caption{Incomplete Block Design}
+                  \begin{NiceTabular}{|cc|cccccc|}
+                        \toprule         &   & \multicolumn{6}{c} {\emph{Day}}                                                                            \\
+                        &   & 1                               & 2            & 3            & 4            & 5            & 6            \\
+                        \midrule         & 1 & $\checkmark$                    & $\checkmark$ & $\times$     & $\checkmark$ & $\checkmark$ & $\times$     \\
+                        \emph{Promotion} & 2 & $\checkmark$                    & $\times$     & $\checkmark$ & $\checkmark$ & $\times$     & $\checkmark$ \\
+                        & 3 & $\times$                        & $\checkmark$ & $\checkmark$ & $\times$     & $\checkmark$ & $\checkmark$ \\
+                        \bottomrule
+                  \end{NiceTabular}
+            \end{table}
+      \item We refer to the design above as a \textbf{balanced incomplete block design} (BIBD).
+            \begin{Remark}{Notation}{}
+                  \begin{itemize}
+                        \item $ m $: number of experimental conditions. In our previous example, $ m=3 $.
+                        \item $ b $: number of blocks. In our previous example, $ b=6 $.
+                        \item $ m^\star $: number of experimental conditions that can be run in each block. Also known as ``block size.'' In our previous example, $ m^\star=2 $.
+                        \item $ r $: number of blocks in which each condition appears. In our previous example, $ r=4 $.
+                        \item $ \lambda $: number of blocks that \emph{any} pair of conditions appear in together. In our previous example, $ \lambda=2 $.
+                  \end{itemize}
+            \end{Remark}
+      \item The BIBD is ``balanced'' in the sense that:
+            \begin{itemize}
+                  \item The number of conditions in each block is the same for every block ($ m^\star $).
+                  \item The number of blocks each condition appears in is the same for every condition ($ r $).
+                  \item The number of blocks each pair of conditions appear in together is the same for every possible
+                        condition pairing ($ \lambda $).
+            \end{itemize}
+      \item This balance allows for the comparison of a metric of interest across m conditions while still accounting
+            for a nuisance factor with $b$ levels
+            \begin{itemize}
+                  \item But despite this balance, the ``incompleteness'' requires some sacrifice.
+            \end{itemize}
 \end{itemize}
 \subsection{General Comments on the Design of a BIBD}
 \begin{itemize}
-    \item Not just any haphazard combination of $ (m,b,m^\star,r,\lambda) $ values will yield a BIBD\@.
-    \item Great care must go into planning a BIBD to ensure all forms of balance.
-    \item A variety of restrictions must be met:
-          \begin{itemize}
-              \item Consequences of ``incompleteness:''
-                    \[ m^\star<m \]
-                    \[ r<b \]
-                    \[ \lambda<r \]
-          \end{itemize}
-          \[ mr=bm^\star \]
-          \[ r(m^\star-1)=\lambda(m-1) \]
-    \item We use these restrictions as follows:
-          \begin{enumerate}
-              \item Specify $ m $, $ m^\star $, and $ \lambda $.
-              \item Calculate $ r=\lambda(m-1)/(m^\star-1) $, noting that it must be an integer.
-              \item Calculate $ b=mr/m^\star $, noting that it must be an integer.
-          \end{enumerate}
-          \begin{Example}{}{}
-              Let $ m=3 $, $ m^\star=2 $, and $ \lambda=1 $. We have
-              $ r=(1)(2)/(1) =2 $, and
-              $ b=(3)(2)/2 =3 $.
-          \end{Example}
-          \begin{Example}{Pizza Table}{}
-              Let $ m=3 $, $ m^\star=2 $, and $ \lambda=2 $. We have
-              $ r=(2)(2)/(1) =4 $, and
-              $ b=(3)(4)/2 =6 $.
-          \end{Example}
-          \begin{Example}{}{}
-              Let $ m=3 $, $ m^\star=2 $, and $ \lambda=3 $. We have
-              $ r=(3)(2)/(1) =6 $, and
-              $ b=(3)(6)/2 =9 $.
-          \end{Example}
-    \item We select the design based on a trade-off between larger $ \lambda $ values and smaller $ b $ values.
-          \begin{itemize}
-              \item Larger $ \lambda $ provides more information for pairwise comparisons.
-              \item Smaller $ b $ corresponds to fewer blocks and hence a smaller experiment.
-          \end{itemize}
+      \item Not just any haphazard combination of $ (m,b,m^\star,r,\lambda) $ values will yield a BIBD\@.
+      \item Great care must go into planning a BIBD to ensure all forms of balance.
+      \item A variety of restrictions must be met:
+            \begin{itemize}
+                  \item Consequences of ``incompleteness:''
+                        \[ m^\star<m \]
+                        \[ r<b \]
+                        \[ \lambda<r \]
+            \end{itemize}
+            \[ mr=bm^\star \]
+            \[ r(m^\star-1)=\lambda(m-1) \]
+      \item We use these restrictions as follows:
+            \begin{enumerate}
+                  \item Specify $ m $, $ m^\star $, and $ \lambda $.
+                  \item Calculate $ r=\lambda(m-1)/(m^\star-1) $, noting that it must be an integer.
+                  \item Calculate $ b=mr/m^\star $, noting that it must be an integer.
+            \end{enumerate}
+            \begin{Example}{}{}
+                  Let $ m=3 $, $ m^\star=2 $, and $ \lambda=1 $. We have
+                  $ r=(1)(2)/(1) =2 $, and
+                  $ b=(3)(2)/2 =3 $.
+            \end{Example}
+            \begin{Example}{Pizza Table}{}
+                  Let $ m=3 $, $ m^\star=2 $, and $ \lambda=2 $. We have
+                  $ r=(2)(2)/(1) =4 $, and
+                  $ b=(3)(4)/2 =6 $.
+            \end{Example}
+            \begin{Example}{}{}
+                  Let $ m=3 $, $ m^\star=2 $, and $ \lambda=3 $. We have
+                  $ r=(3)(2)/(1) =6 $, and
+                  $ b=(3)(6)/2 =9 $.
+            \end{Example}
+      \item We select the design based on a trade-off between larger $ \lambda $ values and smaller $ b $ values.
+            \begin{itemize}
+                  \item Larger $ \lambda $ provides more information for pairwise comparisons.
+                  \item Smaller $ b $ corresponds to fewer blocks and hence a smaller experiment.
+            \end{itemize}
 \end{itemize}
 \begin{table}[!htbp]
-    \centering
-    \caption{Incomplete Block Design}
-    \begin{NiceTabular}{|cc|ccc|}
-        \toprule         &   & \multicolumn{3}{c} {\emph{Block}}                               \\
-        &   & 1                                 & 2            & 3            \\
-        \midrule         & 1 & $\checkmark$                      & $\checkmark$ & $\times$     \\
-        \emph{Condition} & 2 & $\checkmark$                      & $\times$     & $\checkmark$ \\
-        & 3 & $\times$                          & $\checkmark$ & $\checkmark$ \\
-        \bottomrule
-    \end{NiceTabular}
+      \centering
+      \caption{Incomplete Block Design}
+      \begin{NiceTabular}{|cc|ccc|}
+            \toprule         &   & \multicolumn{3}{c} {\emph{Block}}                               \\
+            &   & 1                                 & 2            & 3            \\
+            \midrule         & 1 & $\checkmark$                      & $\checkmark$ & $\times$     \\
+            \emph{Condition} & 2 & $\checkmark$                      & $\times$     & $\checkmark$ \\
+            & 3 & $\times$                          & $\checkmark$ & $\checkmark$ \\
+            \bottomrule
+      \end{NiceTabular}
 \end{table}
 \begin{table}[!htbp]
-    \centering
-    \caption{Incomplete Block Design}
-    \begin{NiceTabular}{|cc|ccccccccc|}
-        \toprule         &   & \multicolumn{9}{c} {\emph{Block}}                                                                                                                         \\
-        &   & 1                                 & 2            & 3            & 4            & 5            & 6            & 7            & 8            & 9            \\
-        \midrule         & 1 & $\checkmark$                      & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\times$     & $\times$     & $\times$     \\
-        \emph{Condition} & 2 & $\checkmark$                      & $\checkmark$ & $\checkmark$ & $\times$     & $\times$     & $\times$     & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
-        & 3 & $\times$                          & $\times$     & $\times$     & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
-        \bottomrule
-    \end{NiceTabular}
+      \centering
+      \caption{Incomplete Block Design}
+      \begin{NiceTabular}{|cc|ccccccccc|}
+            \toprule         &   & \multicolumn{9}{c} {\emph{Block}}                                                                                                                         \\
+            &   & 1                                 & 2            & 3            & 4            & 5            & 6            & 7            & 8            & 9            \\
+            \midrule         & 1 & $\checkmark$                      & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\times$     & $\times$     & $\times$     \\
+            \emph{Condition} & 2 & $\checkmark$                      & $\checkmark$ & $\checkmark$ & $\times$     & $\times$     & $\times$     & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+            & 3 & $\times$                          & $\times$     & $\times$     & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+            \bottomrule
+      \end{NiceTabular}
 \end{table}
 \subsection*{General Comments on the Analysis of a BIBD}
 \begin{itemize}
-    \item Primary analysis goal:
-          \begin{itemize}
-              \item Determine whether there exist significant differences among the expected response values from
-                    one experimental condition to another.
-          \end{itemize}
-    \item In a RCBD, we do this by comparing the condition-specific means $ \bar{y}_{\bullet j\bullet} $ to the overall mean $ \bar{y}_{\bullet\bullet\bullet} $.
-          This isn't fair in a BIBD because $ \bar{y}_{\bullet\bullet\bullet} $ is calculated from data from blocks that condition $ j $ didn't appear in.
-    \item In a BIBD, due to incompleteness, we compare $ \bar{y}_{\bullet j\bullet} $ with the average response from the blocks that
-          condition $j$ appeared in:
-          \[ \frac{1}{r} \sum_{k=1}^{b} \bar{y}_{\bullet\bullet k}\Ind*{\text{condition $ j $ appears in block $ k $}} \]
-    \item In general, the analysis of BIBDs involves an adjustment of this form when evaluating the effect of the
-          design factor.
+      \item Primary analysis goal:
+            \begin{itemize}
+                  \item Determine whether there exist significant differences among the expected response values from
+                        one experimental condition to another.
+            \end{itemize}
+      \item In a RCBD, we do this by comparing the condition-specific means $ \bar{y}_{\bullet j\bullet} $ to the overall mean $ \bar{y}_{\bullet\bullet\bullet} $.
+            This isn't fair in a BIBD because $ \bar{y}_{\bullet\bullet\bullet} $ is calculated from data from blocks that condition $ j $ didn't appear in.
+      \item In a BIBD, due to incompleteness, we compare $ \bar{y}_{\bullet j\bullet} $ with the average response from the blocks that
+            condition $j$ appeared in:
+            \[ \frac{1}{r} \sum_{k=1}^{b} \bar{y}_{\bullet\bullet k}\Ind*{\text{condition $ j $ appears in block $ k $}} \]
+      \item In general, the analysis of BIBDs involves an adjustment of this form when evaluating the effect of the
+            design factor.
 \end{itemize}
 \section{Latin Square Designs}
 \begin{itemize}
-    \item Until now, we have discussed experimental designs that employ blocking to control for one nuisance
-          factor:
-          \begin{itemize}
-              \item If we want to control for \emph{two} nuisance factors, we should use a \textbf{Latin square design}.
-              \item If we want to control for \emph{three} nuisance factors, we should use a \textbf{Graeco-Latin square design}.
-              \item If we want to control for \emph{four} nuisance factors, we should use a \textbf{Hyper-Graeco-Latin square design}.
-          \end{itemize}
-    \item A Latin square of order $ p $ is a $ p\times p $ grid containing $ p $ unique symbols.
-          \begin{itemize}
-              \item Each of these symbols occurs exactly once in each column.
-              \item Each of these symbols occurs exactly once in each row.
-              \item These ``symbols'' are typically denoted by Latin letters.
-          \end{itemize}
-          \begin{table}[!htbp]
-              \centering
-              \caption{$ 3\times 3 $, $ 4\times 4 $, and $ 5\times 5 $ Latin Square Examples}
-              \begin{NiceTabular}{|ccc|}
-                  \toprule
-                  A & C & B \\
-                  C & B & A \\
-                  B & A & C\\
-                  \bottomrule
-              \end{NiceTabular}\quad
-              \begin{NiceTabular}{|cccc|}
-                  \toprule
-                  A & B & C & D\\
-                  C & D & A & B\\
-                  B & C & D & A\\
-                  D & A & B & C\\
-                  \bottomrule
-              \end{NiceTabular}\quad
-              \begin{NiceTabular}{|ccccc|}
-                  \toprule
-                  A & B & C & D & E\\
-                  E & A & B & C & D\\
-                  D & E & A & B & C\\
-                  C & D & E & A & B\\
-                  B & C & D & E & A\\
-                  \bottomrule
-              \end{NiceTabular}
-          \end{table}
-    \item A Sudoku puzzle is a special example of a $ 9\times 9 $ Latin square.
-    \item We exploit this combinatorial structure to help us design experiments that facilitate blocking by two
-          nuisance factors.
-          \begin{itemize}
-              \item We randomly associate the $p$ rows with the levels of the first nuisance factor.
-              \item We randomly associate the $p$ columns with the levels of the second nuisance factor.
-              \item We randomly associate the $p$ Latin letters with the levels of the design factor.
-          \end{itemize}
-    \item We present an example with $ p=4 $ in~\Cref{latinsquarex1}.
-          \begin{table}[!htbp]
-              \centering
-              \caption{$ 4\times 4 $ Latin Square Design}\label{latinsquarex1}
-              \begin{NiceTabular}{|cc|cccc|}
-                  \toprule            &   & \multicolumn{4}{c} {\emph{NF 2}}             \\
-                  &   & 1                                          & 2 & 3 & 4 \\
-                  \midrule            & 1 & A                                          & B & C & D \\
-                  \multirow{2}{*}{\emph{NF 1}} & 2 & D                                          & A & B & C \\
-                  & 3 & C                                          & D & A & B \\
-                  & 4 & B                                          & C & D & A \\
-                  \bottomrule
-              \end{NiceTabular}
-          \end{table}
-          \begin{itemize}
-              \item \textbf{Limitation}: we need to experiment with \emph{all} of these factors at $ p $ levels.
-              \item $ (3,2) $ element represents the block where NF 1 is at level 3, NF 2 is at level 2, and DF is at level ``D.''
-          \end{itemize}
-    \item Each cell in this table represents a ``block'' in which we fix the nuisance factors' levels, and the
-          Latin letter indicates which the execution of an experimental condition.
-    \item Rows, columns, and letters are all orthogonal, allowing us to separately estimate the effects of the
-          design factor and each of the two nuisance factors.
-    \item We may informally summarize these effects with the overall average and level-specific averages of the
-          response variables.
+      \item Until now, we have discussed experimental designs that employ blocking to control for one nuisance
+            factor:
+            \begin{itemize}
+                  \item If we want to control for \emph{two} nuisance factors, we should use a \textbf{Latin square design}.
+                  \item If we want to control for \emph{three} nuisance factors, we should use a \textbf{Graeco-Latin square design}.
+                  \item If we want to control for \emph{four} nuisance factors, we should use a \textbf{Hyper-Graeco-Latin square design}.
+            \end{itemize}
+      \item A Latin square of order $ p $ is a $ p\times p $ grid containing $ p $ unique symbols.
+            \begin{itemize}
+                  \item Each of these symbols occurs exactly once in each column.
+                  \item Each of these symbols occurs exactly once in each row.
+                  \item These ``symbols'' are typically denoted by Latin letters.
+            \end{itemize}
+            \begin{table}[!htbp]
+                  \centering
+                  \caption{$ 3\times 3 $, $ 4\times 4 $, and $ 5\times 5 $ Latin Square Examples}
+                  \begin{NiceTabular}{|ccc|}
+                        \toprule
+                        A & C & B \\
+                        C & B & A \\
+                        B & A & C\\
+                        \bottomrule
+                  \end{NiceTabular}\quad
+                  \begin{NiceTabular}{|cccc|}
+                        \toprule
+                        A & B & C & D\\
+                        C & D & A & B\\
+                        B & C & D & A\\
+                        D & A & B & C\\
+                        \bottomrule
+                  \end{NiceTabular}\quad
+                  \begin{NiceTabular}{|ccccc|}
+                        \toprule
+                        A & B & C & D & E\\
+                        E & A & B & C & D\\
+                        D & E & A & B & C\\
+                        C & D & E & A & B\\
+                        B & C & D & E & A\\
+                        \bottomrule
+                  \end{NiceTabular}
+            \end{table}
+      \item A Sudoku puzzle is a special example of a $ 9\times 9 $ Latin square.
+      \item We exploit this combinatorial structure to help us design experiments that facilitate blocking by two
+            nuisance factors.
+            \begin{itemize}
+                  \item We randomly associate the $p$ rows with the levels of the first nuisance factor.
+                  \item We randomly associate the $p$ columns with the levels of the second nuisance factor.
+                  \item We randomly associate the $p$ Latin letters with the levels of the design factor.
+            \end{itemize}
+      \item We present an example with $ p=4 $ in~\Cref{latinsquarex1}.
+            \begin{table}[!htbp]
+                  \centering
+                  \caption{$ 4\times 4 $ Latin Square Design}\label{latinsquarex1}
+                  \begin{NiceTabular}{|cc|cccc|}
+                        \toprule            &   & \multicolumn{4}{c} {\emph{NF 2}}             \\
+                        &   & 1                                          & 2 & 3 & 4 \\
+                        \midrule            & 1 & A                                          & B & C & D \\
+                        \multirow{2}{*}{\emph{NF 1}} & 2 & D                                          & A & B & C \\
+                        & 3 & C                                          & D & A & B \\
+                        & 4 & B                                          & C & D & A \\
+                        \bottomrule
+                  \end{NiceTabular}
+            \end{table}
+            \begin{itemize}
+                  \item \textbf{Limitation}: we need to experiment with \emph{all} of these factors at $ p $ levels.
+                  \item $ (3,2) $ element represents the block where NF 1 is at level 3, NF 2 is at level 2, and DF is at level ``D.''
+            \end{itemize}
+      \item Each cell in this table represents a ``block'' in which we fix the nuisance factors' levels, and the
+            Latin letter indicates which the execution of an experimental condition.
+      \item Rows, columns, and letters are all orthogonal, allowing us to separately estimate the effects of the
+            design factor and each of the two nuisance factors.
+      \item We may informally summarize these effects with the overall average and level-specific averages of the
+            response variables.
+            \begin{itemize}
+                  \item Average across letters:
+                        \[ \bar{y}_{\bullet j\bullet\bullet}=\frac{1}{np}\sum_{(j,k,\ell)\in S_j}\sum_{i=1}^{n} y_{ijkl}  \]
+                  \item Average across rows:
+                        \[ \bar{y}_{\bullet\bullet k\bullet}=\frac{1}{np}\sum_{(j,k,\ell)\in S_k}\sum_{i=1}^{n} y_{ijkl}  \]
+                  \item Average across columns:
+                        \[ \bar{y}_{\bullet\bullet\bullet\ell}=\frac{1}{np}\sum_{(j,k,\ell)\in S_\ell}\sum_{i=1}^{n} y_{ijkl}  \]
+                  \item Overall average:
+                        \[ \bar{y}_{\bullet\bullet\bullet\bullet}=\frac{1}{N}\sum_{(j,k,\ell)\in S}\sum_{i=1}^{n} y_{ijkl}  \]
+                        \begin{itemize}
+                              \item $ y_{ijkl} $ is the response observation for unit $ i $ in block $ (k,\ell) $ and hence condition $ j $.
+                              \item $ j,k,\ell=1,2,\ldots,p $.
+                              \item $ n $ is the number of units in each block.
+                        \end{itemize}
+            \end{itemize}
+      \item A comment about notation:
+            \begin{itemize}
+                  \item Each block contains just one condition, so each pair $(k, \ell)$ uniquely determines the value of $j$.
+                  \item Consequently, there exist just $p^2$ tuples $(j, k, \ell)$.
+                  \item Denote them by the set $ S $.
+                  \item From~\Cref{latinsquarex1}, we have:
+                        \begin{table}[!htbp]
+                              \centering
+                              \begin{NiceTabular}{|cccc|}
+                                    \toprule
+                                    $ (1,1,1) $ & $ (2,1,2) $ & $ (3,1,3) $ & $ (4,1,4) $\\
+                                    $ (4,2,1) $ & $ (1,2,2) $ & $ (2,2,3) $ & $ (3,2,4) $\\
+                                    $ (3,3,1) $ & $ (4,3,2) $ & $ (1,3,3) $ & $ (2,3,4) $\\
+                                    $ (2,4,1) $ & $ (3,4,2) $ & $ (4,4,3) $ & $ (1,4,4) $\\
+                                    \bottomrule
+                              \end{NiceTabular}
+                        \end{table}
+                        \begin{itemize}
+                              \item We also define:
+                                    \begin{itemize}
+                                          \item $ S_j\subset S $: all tuples for which the design factor is level $ j $.
+                                          \item $ S_k\subset S $: all tuples for which the nuisance factor $ 1 $'s is level $ k $.
+                                          \item $ S_\ell\subset S $: all tuples for which the nuisance factor $ 2 $'s is level $ \ell $.
+                                    \end{itemize}
+                        \end{itemize}
+            \end{itemize}
+      \item The primary analysis goal in a Latin square design is to determine whether the expected response differs significantly
+            from one condition to another.
+            \begin{itemize}
+                  \item If so, to identify the optimal condition.
+                  \item While controlling for the potential effect of the nuisance factors.
+            \end{itemize}
+      \item We've previously done this with gatekeeper tests of the form:
+            \begin{tightcenter}
+                  $ \mathbf{H}_0 $: $ \theta_1=\theta_2=\cdots=\theta_p $ versus $ \mathbf{H}_\text{A} $: $ \theta_j\ne \theta_{j^\prime} $ for some $ j\ne j^\prime $.
+            \end{tightcenter}
+      \item We do the same thing here, while accounting for the nuisance factors, with \emph{appropriately defined} linear
+            or logistic regression models which contain:
+            \begin{itemize}
+                  \item An intercept.
+                  \item $ p-1 $ indicator variables for the design factor's levels.
+                  \item $ p-1 $ indicator variables for nuisance factor 1's levels.
+                  \item $ p-1 $ indicator variables for nuisance factor 2's levels.
+            \end{itemize}
+      \item We write the linear predictor as
+            \[ \alpha+\sum_{j=1}^{p-1} \beta_j x_{ij}+\sum_{k=1}^{p-1} \gamma_j z_{ik}+\sum_{\ell=1}^{p-1} \delta_\ell w_{i\ell} \]
+            \begin{itemize}
+                  \item $ x_{ij}=1 $ if unit $ i $ is in condition $ j $ (zero otherwise).
+                  \item $ z_{ik}=1 $ if unit $ i $ is in a block for which nuisance factor 1 is at level $ k $ (zero otherwise).
+                  \item $ w_{i\ell}=1 $ if unit $ i $ is in a block for which nuisance factor 2 is at level $ \ell $ (zero otherwise).
+                  \item The $\beta$'s jointly quantify the effect of the design factor.
+                  \item The $\gamma$'s jointly quantify the effect of nuisance factor 1.
+                  \item The $\delta$'s jointly quantify the effect of nuisance factor 2.
+            \end{itemize}
+      \item Three relevant hypotheses are:
+            \begin{tightcenter}
+                  $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{p-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \beta_j\ne 0$ for some $ j $.
+                  \begin{itemize}
+                        \item Provides insight whether DF is important.
+                  \end{itemize}
+                  $ \mathbf{H}_0 $: $ \gamma_1=\beta_2=\cdots=\gamma_{p-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \gamma_k\ne 0$ for some $ k $.
+                  \begin{itemize}
+                        \item Provides insight whether NF 1 is important.
+                  \end{itemize}
+                  $ \mathbf{H}_0 $: $ \delta_1=\delta_2=\cdots=\delta_{p-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \delta_\ell\ne 0$ for some $ \ell $.
+                  \begin{itemize}
+                        \item Provides insight whether NF 2 is important.
+                  \end{itemize}
+            \end{tightcenter}
+      \item We test these hypotheses by comparing a \emph{full} (linear predictor) and \emph{reduced} ($ \mathbf{H}_0 $ is true) model.
+            \begin{itemize}
+                  \item We try to determine whether the full model fits the data significantly better than the reduced one.
+            \end{itemize}
 \end{itemize}
+\subsection{Latin Squares to Compare Means}
+\begin{itemize}
+      \item Here we're interested in testing the following hypothesis (while accounting for the influence of the
+            nuisance factors):
+            \begin{tightcenter}
+                  $ \mathbf{H}_0 $: $ \mu_1=\mu_2=\cdots=\mu_p $ versus $ \mathbf{H}_\text{A} $: $ \mu_j\ne \mu_{j^\prime} $ for some $ j\ne j^\prime $.
+            \end{tightcenter}
+      \item We do this by testing:
+            \begin{tightcenter}
+                  $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{p-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \beta_j\ne 0$ for some $ j $
+            \end{tightcenter}
+            with an ANOVA in the context of the following linear regression model:
+            \[ Y_i=\alpha+\sum_{j=1}^{p-1} \beta_j x_{ij}+\sum_{k=1}^{p-1} \gamma_k z_{ik}+\sum_{\ell=1}^{p-1} \delta_\ell w_{i\ell}+\varepsilon_i\quad \text{(Full Model)} \]
+            \begin{itemize}
+                  \item $ Y_i $ is the response observation for unit $ i=1,2,\ldots,N=np^2 $.
+                  \item $ \varepsilon_i \sim \N{0,\sigma^2} $ is the random error term.
+            \end{itemize}
+      \item The relevant sums of squares are:
+            \begin{itemize}
+                  \item The total sum of squares, which quantifies overall variation in response values:
+                        \[ \text{SS}_\text{T}=\sum_{(j,k,\ell)\in S}\sum_{i=1}^{n} (y_{ijk\ell}-\bar{y}_{\bullet\bullet\bullet\bullet})^2=\text{SS}_{\text{C}}+\text{SS}_{\text{B}_1}+\text{SS}_{\text{B}_2}+\text{SS}_{\text{E}}  \]
+                  \item The condition sum of squares, which quantifies variability in the response from one condition to another:
+                        \[ \text{SS}_{\text{C}}=\sum_{(j,k,\ell)\in S}\sum_{i=1}^{n} (\bar{y}_{\bullet j\bullet\bullet}-\bar{y}_{\bullet\bullet\bullet\bullet})^2=np \sum_{j=1}^{p} (\bar{y}_{\bullet j\bullet\bullet}-\bar{y}_{\bullet\bullet\bullet\bullet})^2  \]
+                  \item The first block sum of squares, which quantifies variability in the response from one level of nuisance factor 1 to another:
+                        \[ \text{SS}_{\text{B}_1}=\sum_{(j,k,\ell)\in S}\sum_{i=1}^{n} (\bar{y}_{\bullet\bullet k\bullet}-\bar{y}_{\bullet\bullet\bullet\bullet})^2=np \sum_{k=1}^{p} (\bar{y}_{\bullet\bullet k\bullet}-\bar{y}_{\bullet\bullet\bullet\bullet})^2  \]
+                  \item The second block sum of squares, which quantifies variability in the response from one level of nuisance factor 2 to another:
+                        \[ \text{SS}_{\text{B}_2}=\sum_{(j,k,\ell)\in S}\sum_{i=1}^{n} (\bar{y}_{\bullet\bullet\bullet\ell}-\bar{y}_{\bullet\bullet\bullet\bullet})^2=np \sum_{\ell=1}^{p} (\bar{y}_{\bullet\bullet\bullet\ell}-\bar{y}_{\bullet\bullet\bullet\bullet})^2  \]
+                  \item The error sum of squares, which quantifies variability in the response that was not explained by conditions or blocks (i.e., the design and nuisance factors):
+                        \[ \text{SS}_\text{E}=\sum_{(j,k,\ell)}\sum_{i=1}^{n} (y_{ijk\ell}-\bar{y}_{\bullet j\bullet\bullet}-\bar{y}_{\bullet\bullet k\bullet}-\bar{y}_{\bullet\bullet\bullet\ell}-2\bar{y}_{\bullet\bullet\bullet\bullet})^2 \]
+            \end{itemize}
+      \item We show the corresponding ANOVA table in~\Cref{three_way_anova_LS}.
+            \begin{table}[!htbp]
+                  \centering
+                  \caption{Three-Way ANOVA Table Associated with a Latin Square Design}\label{three_way_anova_LS}
+                  \begin{NiceTabular}{|l|c|c|c|c|}
+                        \toprule
+                        Source    & SS                     & d.f.        & MS                                                                   & Test Statistic                                           \\
+                        \midrule
+                        Design Factor & $ \text{SS}_\text{C} $ & $ p-1 $     & $ \text{MS}_\text{C}=\text{SS}_\text{C}/(p-1) $     & $ t_\text{C}=\text{MS}_\text{C}/\text{MS}_\text{E} $ \\
+                        Nuisance Factor 1     & $ \text{SS}_{\text{B}_1} $ & $ p-1 $     & $ \text{MS}_{\text{B}_1}=\text{SS}_{\text{B}_1}/(p-1) $     & $ t_{\text{B}_1}=\text{MS}_{\text{B}_1}/\text{MS}_\text{E} $ \\
+                        Nuisance Factor 2     & $ \text{SS}_{\text{B}_2} $ & $ p-1 $     & $ \text{MS}_{\text{B}_2}=\text{SS}_{\text{B}_2}/(p-1) $     & $ t_{\text{B}_2}=\text{MS}_{\text{B}_2}/\text{MS}_\text{E} $ \\
+                        Error     & $ \text{SS}_\text{E} $ & $ N-3p+2 $ & $ \text{MS}_\text{E}=\text{SS}_\text{E}/(N-3p+2) $ &                                                      \\
+                        \midrule
+                        Total     & $ \text{SS}_\text{T} $ & $ N-1 $\\
+                        \bottomrule
+                  \end{NiceTabular}
+            \end{table}
+      \item So, how do we use this table?
+            \begin{itemize}
+                  \item We test $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{p-1}=0 $ using $ t_\text{C}=\text{MS}_\text{C}/\text{MS}_\text{E} $.
+                        \begin{itemize}
+                              \item $ p $-value: $ \Prob[\big]{F(p-1,N-3p+2)\ge t_\text{C}} $.
+                        \end{itemize}
+                  \item We test: $ \mathbf{H}_0 $: $ \gamma_1=\gamma_2=\cdots=\gamma_{p-1}=0 $ using $ t_{\text{B}_1}=\text{MS}_{\text{B}_1}/\text{MS}_{\text{E}} $.
+                        \begin{itemize}
+                              \item $ p $-value: $ \Prob*{F(p-1,N-3p+2)\ge t_{\text{B}_1}} $.
+                        \end{itemize}
+                  \item We test: $ \mathbf{H}_0 $: $ \delta_1=\delta_2=\cdots=\delta_{p-1}=0 $ using $ t_{\text{B}_2}=\text{MS}_{\text{B}_2}/\text{MS}_{\text{E}} $.
+                        \begin{itemize}
+                              \item $ p $-value: $ \Prob*{F(p-1,N-3p+2)\ge t_{\text{B}_2}} $.
+                        \end{itemize}
+            \end{itemize}
+\end{itemize}
+\subsection{Example: Netflix Latency}
+\begin{Example}{Netflix Latency}{}
+      Consider the latency experiment described at the beginning of the chapter in which Netflix is experimenting
+      with server-side modifications to improve (reduce) the latency of Netflix.com. In particular, they have four
+      different experimental conditions (A, B, C, D) that are intended to reduce average latency (in milliseconds).
+      Two nuisance factors that may also influence latency are browser (Chrome, Microsoft Edge, Firefox,
+      Safari), and time of day ([00:01,06:00], [06:01,12:00], [12:01,18:00], [18:01,00:00]). The design of the experiment
+      is the $ 4\times 4 $ Latin square shown in~\Cref{netflixex1}. In order to determine whether the expected latency in each condition
+      differs significantly, we randomize $n = 500$ users to each of the $p^2 = 16$ blocks.
+      \begin{center}
+            \captionsetup{type=table}\captionof{table}{$ 4\times 4 $ Latin Square Design for the Netflix Experiment}\label{netflixex1}
+            \begin{NiceTabular}{|cc|cccc|}
+                  \toprule            &   & \multicolumn{4}{c} {\emph{Browser}}             \\
+                  &   & Chrome                                          & Edge & Firefox & Safari \\
+                  \midrule            & [00:01,06:00] & A                                          & B & C & D \\
+                  \multirow{2}{*}{\emph{Time}} & [06:01,12:00] & D                                          & A & B & C \\
+                  & [12:01,18:00] & C                                          & D & A & B \\
+                  & [18:01,00:00] & B                                          & C & D & A \\
+                  \bottomrule
+            \end{NiceTabular}
+      \end{center}
+      We analyze the data with the following linear regression model:
+      \[ Y_i=\alpha+\beta_2 x_{i2}+\beta_3 x_{i3}+\beta_4 x_{i4}+\gamma_1 z_{i1}+\gamma_2 z_{i2}+\gamma_3 z_{i3}+\delta_2 w_{i2}+\delta_3 w_{i3}+\delta_4 w_{i4}+\varepsilon_i \]
+      \begin{itemize}
+            \item $ x_{i2} $, $ x_{i3} $, $ x_{i4} $ are indicators for conditions B, C, D, where A is the baseline.
+            \item $ z_{i1} $, $ z_{i2} $, $ z_{i3} $ are browser indicators for Microsoft Edge, Firefox, Safari, where Chrome is the baseline.
+            \item $ w_{i2} $, $ w_{i3} $, $ w_{i4} $ are time indicators for time periods [06:01,12:00], [12:01,18:00], [18:01,00:00], where [00:01,06:00] is the baseline.
+      \end{itemize}
+      The ANOVA table associated with this model is~\Cref{netflixex2}.
+      \begin{center}
+            \captionsetup{type=table}\captionof{table}{Netflix Latin Square ANOVA Table}\label{netflixex2}
+            \begin{NiceTabular}{|l|c|c|c|c|}
+                  \toprule
+                  Source    & SS                     & d.f.        & MS                                                                   & Test Statistic                                           \\
+                  \midrule
+                  Condition & $ 203903.38 $ & $ 3 $     & $ 67967.79 $     & $ 679.14 $ \\
+                  Browser     & $ 32.95 $ & $ 3 $     & $ 10.98 $     & $ 0.1097 $ \\
+                  Time     & $ 333242.01 $ & $ 3 $     & $ 111080.67 $     & $ 1109.92 $ \\
+                  Error     & $ 799636.18 $ & $ 7990 $ & $ 100.08 $ &                                                      \\
+                  \midrule
+                  Total     & $ 1336815 $ & $ 7999 $\\
+                  \bottomrule
+            \end{NiceTabular}
+      \end{center}
+      \begin{itemize}
+            \item $ \mathbf{H}_0 $: $ \beta_2=\beta_3=\beta_4=0 $.
+                  \begin{itemize}
+                        \item $ p\text{-value}=\Prob*{T\ge t_\text{C}}=\Prob*{T\ge 679.14}\approx 0 $ where $ T \sim F(3,7990) $.
+                        \item Therefore, we reject $ \mathbf{H}_0 $ and conclude that the design factor significantly influences the response
+                              and hence the expected response is \underline{not} the same in each condition.
+                  \end{itemize}
+            \item $ \mathbf{H}_0 $: $ \gamma_1=\gamma_2=\gamma_3=0 $.
+                  \begin{itemize}
+                        \item $ p\text{-value}=\Prob*{T\ge t_{\text{B}_1}}=\Prob*{T\ge 0.1097}=0.9545 $ where $ T \sim F(3,7990) $.
+                        \item Therefore, we do not reject $ \mathbf{H}_0 $ and conclude that ``browser'' does not
+                              significantly influence average latency, and thus we probably did not block by it.
+                  \end{itemize}
+            \item $ \mathbf{H}_0 $: $ \delta_2=\delta_3=\delta_4=0 $.
+                  \begin{itemize}
+                        \item $ p\text{-value}=\Prob*{T\ge t_{\text{B}_2}}=\Prob*{T\ge 1109.92}\approx 0 $ where $ T \sim F(3,7990) $.
+                        \item Therefore, we reject $ \mathbf{H}_0 $ and conclude that the time of day significantly influences average latency.
+                  \end{itemize}
+      \end{itemize}
+\end{Example}
+\subsection{Latin Squares to Compare Proportions}
+\begin{itemize}
+      \item Here we're interested in testing the following hypothesis (while accounting for the influence of the
+            nuisance factors):
+            \begin{tightcenter}
+                  $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_p $ versus $ \mathbf{H}_\text{A} $: $ \pi_j\ne \pi_{j^\prime }$ for some $ j\ne j^\prime $.
+            \end{tightcenter}
+      \item We do this by testing:
+            \begin{tightcenter}
+                  $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{p-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \beta_j\ne 0$ for some $ j $
+            \end{tightcenter}
+            with a likelihood ratio test (LRT) in the context of the following logistic regression model:
+            \[ \log*{\frac{\pi_i}{1-\pi_i}}=\alpha+\sum_{j=1}^{p-1} \beta_j x_{ij}+\sum_{k=1}^{p-1} \gamma_k z_{ik}+\sum_{\ell=1}^{p-1} \delta_\ell w_{i\ell} \]
+            \begin{itemize}
+                  \item The likelihood ratio test compares the full model to the one without the $ x $'s.
+            \end{itemize}
+      \item Similarly, we test:
+            \begin{tightcenter}
+                  $ \mathbf{H}_0 $: $ \gamma_1=\beta_2=\cdots=\gamma_{p-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \gamma_k\ne 0$ for some $ k $
+            \end{tightcenter}
+            with a LRT that compares the full model to the reduced one without the $ z $'s.
+      \item And we test:
+            \begin{tightcenter}
+                  $ \mathbf{H}_0 $: $ \delta_1=\delta_2=\cdots=\delta_{p-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \delta_\ell\ne 0$ for some $ \ell $
+            \end{tightcenter}
+            with a LRT that compares the full model to the reduced one without the $ w $'s.
+      \item The observed test statistic for all of these tests is:
+            \begin{align*}
+                  t & =2\,\log*{\frac{\text{Likelihood}_{\text{Full Model}}}{\text{Likelihood}_{\text{Reduced Model}}}}    \\
+                    & =2\Bigl[\text{Log-Likelihood}_{\text{Full Model}}-\text{Log-Likelihood}_{\text{Reduced Model}}\Bigr]
+            \end{align*}
+            which, if $ \mathbf{H}_0 $ is true, follows an approximate $ \chi^2(p-1) $.
+      \item The $ p $-value is: $ p\text{-value}=\Prob{T\ge t} $ where $ T \sim \chi^2(p-1) $.
+\end{itemize}
+\subsection{Example: Uber Weekend Promos}
+\begin{Example}{Uber Weekend Promos}{}
+      Consider an experiment in which Uber is investigating the influence of three different promotional offers on
+      ride-booking-rate (RBR).
+      \begin{itemize}
+            \item Promo A\@: None.
+            \item Promo B\@: One free ride today.
+            \item Promo C\@: Book a ride today and get 50\% off your next 2 rides.
+      \end{itemize}
+      The experimenters would like to control for a possible day-of-week effect, and so they want to block by day.
+      They would also like to control for possible city-to-city differences, and so they also want to block by city.
+      To do so they run a $3\times 3$ Latin square design as illustrated in~\Cref{uberex1}. Interest lies in determining whether
+      the different promotions perform similarly with respect to RBR --- and they wish to determine which
+      one maximizes RBR --- while controlling for the effects of day and city. In order to do this they randomize
+      $n = 1000$ users to each of the $p^2 = 9$ blocks.
+      \begin{center}
+            \captionsetup{type=table}
+            \captionof{table}{$ 3\times 3 $ Latin Square Design for the Uber Experiment}\label{uberex1}
+            \begin{NiceTabular}{|cc|ccc|}
+                  \toprule            &   & \multicolumn{3}{c} {\emph{City}}             \\
+                  &   & Toronto                                          & Vancouver & Montreal \\
+                  \midrule            & Friday & A                                          & B & C \\
+                  \emph{Day} & Saturday & C                                          & A & B \\
+                  & Sunday & B                                          & C & A \\
+                  \bottomrule
+            \end{NiceTabular}
+      \end{center}
+      We analyze the data with the following logistic regression model:
+      \[ \log*{\frac{\pi_i}{1-\pi_i}}=\alpha+\beta_2 x_{i2}+\beta_3 x_{i3}+\gamma_1 z_{i1}+\gamma_2 z_{i2}+\delta_1 w_{i1}+\delta_2 w_{i2} \]
+      \begin{itemize}
+            \item $ x_{i2} $, $ x_{i3} $, are condition indicators for promotions B, C, where A is the baseline.
+            \item $ z_{i1} $, $ z_{i2} $, are day indicators for Saturday, Sunday, where Friday is the baseline.
+            \item $ w_{i1} $, $ w_{i2} $, are city indicators for Toronto, Vancouver, where Montreal is the baseline.
+      \end{itemize}
+      \begin{itemize}
+            \item $ \mathbf{H}_0 $: $ \beta_2=\beta_3=0 $.
+                  \begin{itemize}
+                        \item $ p\text{-value}=\Prob*{T\ge t_\text{C}}=\Prob*{T\ge 16.648}=0.00024 $ where $ T \sim \chi^2(2) $.
+                        \item Therefore, we reject $ \mathbf{H}_0 $ and conclude that the booking rate is \underline{not} the same
+                              for each promotional offer.
+                  \end{itemize}
+            \item $ \mathbf{H}_0 $: $ \gamma_1=\gamma_2=0 $.
+                  \begin{itemize}
+                        \item $ p\text{-value}=\Prob*{T\ge t_{\text{B}_1}}=\Prob*{T\ge 8.9107}=0.0116 $ where $ T \sim \chi^2(2) $.
+                        \item Therefore, we reject $ \mathbf{H}_0 $ and conclude that the day-of-week significantly influences booking, and so it is good that we blocked by this factor.
+                  \end{itemize}
+            \item $ \mathbf{H}_0 $: $ \delta_1=\delta_2=0 $.
+                  \begin{itemize}
+                        \item $ p\text{-value}=\Prob*{T\ge t_{\text{B}_2}}=\Prob*{T\ge 2.1193}=0.3466 $ where $ T \sim \chi^2(2) $.
+                        \item Therefore, we do not reject $ \mathbf{H}_0 $ and conclude that ``city'' does not significantly influence booking rate, and so blocking by city was not necessary.
+                  \end{itemize}
+      \end{itemize}
+
+\end{Example}
