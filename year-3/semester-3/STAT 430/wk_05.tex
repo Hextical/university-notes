@@ -2,7 +2,7 @@
 \section*{Primer on Logistic Regression}
 \begin{itemize}
       \item Linear regression is an effective method of modelling the relationship between a single response variable
-            $ Y $, and one or more explanatory variables $ (x_1,x_2,\ldots,x_p) $.
+            $ (Y) $, and one or more explanatory variables $ (x_1,x_2,\ldots,x_p) $.
             \begin{itemize}
                   \item However, ordinary linear regression assumes that the response variable follows a normal distribution
                         (i.e., $ Y \sim \N{\mu,\sigma^2} $).
@@ -39,14 +39,18 @@
                         Exponentiating both sides yields
                         \[ \frac{\pi}{1-\pi}=e^{\beta_0}  \]
             \end{itemize}
+            \begin{Definition}{Odds}{}
+                  The \textbf{odds} of an event $ A $ is:
+                  \[ \frac{\Prob{A}}{\Prob{A^c}}=\frac{\Prob{A}}{1-\Prob{A}} \]
+            \end{Definition}
       \item The interpretation of $\beta_j$, for $ j=1,2,\ldots,p $, is uncovered by considering the Logistic Regression equation
             for different values of $ x_j $.
             \begin{itemize}
                   \item Let $ \pi_x $ be the value of $ \pi $ when $ x_j=x $ and let $ \pi_{x+1} $ be the value of $ \pi $ when $ x_j=x+1 $.
                         \begin{align*}
                               \log*{\frac{\pi_{x+1}}{1-\pi_{x+1}}}-\log*{\frac{\pi_x}{1-\pi_x}}
-                               & =(\beta_0+\beta_1x_1+\cdots+\beta_j(x+1)+\cdots+\beta_p x_p) \\
-                               & \quad\quad-(\beta_0+\beta_1x_1+\cdots+\beta_j x+\beta_p x_p) \\
+                               & =(\beta_0+\beta_1x_1+\cdots+\beta_j(x+1)+\cdots+\beta_p x_p)        \\
+                               & \quad\quad-(\beta_0+\beta_1x_1+\cdots+\beta_j x+\cdots+\beta_p x_p) \\
                                & =\beta_j
                         \end{align*}
                   \item Thus:
@@ -77,8 +81,8 @@
             \begin{itemize}
                   \item \emph{Design} factors: we manipulate these to quantify their impact on the response.
                         They define the experimental conditions.
-                  \item \emph{Allowed-to-vary} factors: these are unknown or known but uncontrollable and thus
-                        are \underline{not} controlled in the experiment.
+                  \item \emph{Allowed-to-vary} factors: these are unknown, or known but uncontrollable
+                        factors that are \underline{not} controlled in the experiment.
                   \item \emph{Nuisance} factors: we control these to eliminate their effect on the response.
             \end{itemize}
       \item But remember: in practice, context dictates whether a factor should be considered a design factor, a
@@ -138,16 +142,15 @@
 \section{Randomized Complete Block Designs}
 \begin{itemize}
       \item The randomized complete block design (RCBD) is a simple experimental design that may be applied
-            when we wish to investigate.
+            when we wish to investigate:
             \begin{itemize}
-                  \item A single design factor; e.g., $ m $ levels, $ m $ conditions.
-                  \item While controlling for a single nuisance factor; e.g., $ b $ levels, $ b $ blocks.
+                  \item A single design factor; e.g., $ m $ levels, $ m $ conditions, while controlling for a single nuisance factor; e.g., $ b $ levels, $ b $ blocks.
             \end{itemize}
       \item In a RCBD, we carry out each of the experimental conditions in every one of the blocks.
             \begin{itemize}
                   \item $ m $ conditions happening inside each of $ b $ blocks.
             \end{itemize}
-      \item The observed data in such an experiment is $ y_{ijk} $.
+      \item The \emph{observed} data in such an experiment is $ y_{ijk} $.
             \begin{itemize}
                   \item Response observation for unit $ i=1,2,\ldots,n_{jk} $ in condition $ j=1,2,\ldots,m $
                         within block $ k=1,2,\ldots,b $.
@@ -193,8 +196,7 @@
       \item The primary analysis goal in a RCBD is to determine whether the expected response differs significantly
             from one condition to another.
             \begin{itemize}
-                  \item And if so, to identify the optimal condition.
-                  \item While controlling for the potential effect of the nuisance factor.
+                  \item And if so, to identify the optimal condition, while controlling for the potential effect of the nuisance factor.
             \end{itemize}
       \item We've previously done this with gatekeeper tests of the form:
             \begin{tightcenter}
@@ -252,10 +254,10 @@
             \[ Y_i=\alpha+\sum_{j=1}^{m-1} \beta_j x_{ij}+\sum_{k=1}^{b-1} \gamma_k z_{ij}+\varepsilon_i \]
             where $ Y_i $ is the response observation for unit $ i=1,2,\ldots,N=\sum_{k=1}^{b} \sum_{j=1}^{m} n_{jk} $
             and $ \varepsilon_i \stackrel{\text{iid}}{\sim}\N{0,\sigma^2} $ is a random error term.
-      \item We show the relevant ANOVA table below:
+      \item The relevant ANOVA table is~\Cref{two_way_ANOVA_RCBD}.
             \begin{table}[!htbp]
                   \centering
-                  \caption{Two-Way ANOVA Table Associated With a Randomized Complete Block Design}
+                  \caption{Two-Way ANOVA Table Associated With a Randomized Complete Block Design}\label{two_way_ANOVA_RCBD}
                   \begin{NiceTabular}{|l|c|c|c|c|}
                         \toprule
                         Source    & SS                     & d.f.        & MS                                                                   & Test Statistic                                           \\
@@ -268,7 +270,7 @@
                         \bottomrule
                   \end{NiceTabular}
             \end{table}
-      \item The sums of squares given in the table are:
+      \item The sums of squares given in~\Cref{two_way_ANOVA_RCBD} are:
             \begin{itemize}
                   \item Total sum of squares (quantifies overall response variation):
                         \[ \text{SS}_\text{T}=\sum_{k=1}^{b} \sum_{j=1}^{m} \sum_{i=1}^{n_{jk}} (y_{ijk}-\bar{y}_{\bullet\bullet\bullet})^2=\text{SS}_\text{C}+\text{SS}_\text{B}+\text{SS}_\text{E} \]
@@ -281,18 +283,14 @@
             \end{itemize}
       \item So how do we use this table?
             \begin{itemize}
-                  \item We test:
-                        \begin{tightcenter}
-                              $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{m-1}=0 $
-                        \end{tightcenter}
-                        using $ t_\text{C}=\text{MS}_\text{C}/\text{MS}_\text{E} $.
-                  \item The $ p $-value is: $ p\text{-value}=\Prob{T\ge t_\text{C}} $ where $ T \sim F(m-1,N-m-b+1) $.
-                  \item We test:
-                        \begin{tightcenter}
-                              $ \mathbf{H}_0 $: $ \gamma_1=\gamma_2=\cdots=\gamma_{b-1}=0 $
-                        \end{tightcenter}
-                        using $ t_\text{B}=\text{MS}_\text{B}/\text{MS}_\text{E} $.
-                  \item The $ p $-value is: $ p\text{-value}=\Prob{T\ge t_\text{B}} $ where $ T \sim F(b-1,N-m-b+1) $.
+                  \item We test: $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{m-1}=0 $ using $ t_\text{C}=\text{MS}_\text{C}/\text{MS}_\text{E} $.
+                        \begin{itemize}
+                              \item $ p\text{-value}=\Prob{T\ge t_\text{C}} $ where $ T \sim F(m-1,N-m-b+1) $.
+                        \end{itemize}
+                  \item We test: $ \mathbf{H}_0 $: $ \gamma_1=\gamma_2=\cdots=\gamma_{b-1}=0 $ using $ t_\text{B}=\text{MS}_\text{B}/\text{MS}_\text{E} $.
+                        \begin{itemize}
+                              \item $ p\text{-value}=\Prob{T\ge t_\text{B}} $ where $ T \sim F(b-1,N-m-b+1) $.
+                        \end{itemize}
             \end{itemize}
 \end{itemize}
 \subsection{Example: Promotions at The Gap}
@@ -370,34 +368,38 @@
             \end{align*}
             which follows an approximate $ \chi^2(\ell) $, if $ \mathbf{H}_0 $ is true, where
             \[ \ell=(\#\text{ coefficients in full model})-(\#\text{ coefficients in reduced model}) \]
-      \item The $ p $-value is: $ p\text{-value}=\Prob{T\ge t} $ where $ T \sim \chi^2(\ell) $.
+            \begin{itemize}
+                  \item $ p\text{-value}=\Prob{T\ge t} $ where $ T \sim \chi^2(\ell) $.
+            \end{itemize}
 \end{itemize}
 \subsection{Example: Enterprise Banner Ads}
-Enterprise is experimenting with $m = 3$ banner ads as a mechanism to drive traffic to their website. Since
-there are known regional differences in consumer preferences in the US, they wish to control for the nuisance
-factor ``region'' with $b = 4$ blocks corresponding to the four major US geographic regions: Northeast (NE),
-Northwest (NW), Southeast (SE), and Southwest (SW). We randomize a total of $n_{jk} = 5000$ for all $ (j,k) $ people
-to each ad condition in each region.
+\begin{Example}{Enterprise Banner Ads}{}
+      Enterprise is experimenting with $m = 3$ banner ads as a mechanism to drive traffic to their website. Since
+      there are known regional differences in consumer preferences in the US, they wish to control for the nuisance
+      factor ``region'' with $b = 4$ blocks corresponding to the four major US geographic regions: Northeast (NE),
+      Northwest (NW), Southeast (SE), and Southwest (SW). We randomize a total of $n_{jk} = 5000$ for all $ (j,k) $ people
+      to each ad condition in each region.
 
-\vspace{2mm}
+      \vspace{2mm}
 
-Interest lies in determining whether the different ads perform similarly with respect to click-
-through-rate (CTR) --- and we wish to determine which one maximizes CTR --- but we want to control for
-the effect of region. We do so with the following logistic regression model:
-\[ \log*{\frac{\pi_i}{1-\pi_i}}=\alpha+\beta_2 x_{i2}+\beta_3 x_{i3}+\gamma_1 z_{i1}+\gamma_2 z_{i2}+\gamma_3 z_{i3} \]
-where $ x_{i2} $ and $ x_{i3} $ are condition indicators for ads 2 and 3 (ad 1 is the baseline),
-and $ z_{i1},z_{i2},z_{i3} $ are block indicators for NW, SE, SW regions (NE is the baseline).
-\begin{itemize}
-      \item $ \mathbf{H}_0 $: $ \beta_2=\beta_3=0 $.
-            \begin{itemize}
-                  \item $ p\text{-value}=\Prob{T\ge t_\text{C}}=\Prob{T\ge 249.922}=5.37\times 10^{-55} $ where $ T \sim \chi^2(2) $.
-                  \item Therefore, we reject $ \mathbf{H}_0 $ and conclude that the design factor is significant and the CTR is not
-                        the same in every condition.
-            \end{itemize}
-      \item $ \mathbf{H}_0 $: $ \gamma_1=\gamma_2=\gamma_3=0 $.
-            \begin{itemize}
-                  \item $ p\text{-value}=\Prob{T\ge t_\text{B}}=\Prob{T\ge 139.824}=4.13\times 10^{-30} $ where $ T \sim \chi^2(3) $.
-                  \item Therefore, we reject $ \mathbf{H}_0 $ and conclude that the nuisance factor is significant
-                        and therefore blocking was a good thing to do.
-            \end{itemize}
-\end{itemize}
+      Interest lies in determining whether the different ads perform similarly with respect to click-
+      through-rate (CTR) --- and we wish to determine which one maximizes CTR --- but we want to control for
+      the effect of region. We do so with the following logistic regression model:
+      \[ \log*{\frac{\pi_i}{1-\pi_i}}=\alpha+\beta_2 x_{i2}+\beta_3 x_{i3}+\gamma_1 z_{i1}+\gamma_2 z_{i2}+\gamma_3 z_{i3} \]
+      where $ x_{i2} $ and $ x_{i3} $ are condition indicators for ads 2 and 3 (ad 1 is the baseline),
+      and $ z_{i1},z_{i2},z_{i3} $ are block indicators for NW, SE, SW regions (NE is the baseline).
+      \begin{itemize}
+            \item $ \mathbf{H}_0 $: $ \beta_2=\beta_3=0 $.
+                  \begin{itemize}
+                        \item $ p\text{-value}=\Prob{T\ge t_\text{C}}=\Prob{T\ge 249.924}=5.367\times 10^{-55} $ where $ T \sim \chi^2(2) $.
+                        \item Therefore, we reject $ \mathbf{H}_0 $ and conclude that the design factor is significant and the CTR is not
+                              the same in every condition.
+                  \end{itemize}
+            \item $ \mathbf{H}_0 $: $ \gamma_1=\gamma_2=\gamma_3=0 $.
+                  \begin{itemize}
+                        \item $ p\text{-value}=\Prob{T\ge t_\text{B}}=\Prob{T\ge 139.824}=4.126\times 10^{-30} $ where $ T \sim \chi^2(3) $.
+                        \item Therefore, we reject $ \mathbf{H}_0 $ and conclude that the nuisance factor is significant
+                              and therefore blocking was a good thing to do.
+                  \end{itemize}
+      \end{itemize}
+\end{Example}
