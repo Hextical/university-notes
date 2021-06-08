@@ -1,0 +1,60 @@
+\subsection{R Demo}
+<<>>=
+## Effect of individual observations
+
+## Python data revisited
+python <- read.csv("csv/FLpython.csv")
+python$male <- ifelse(python$sex == 'M', 1, 0) # 1 = M, 0 =F
+mpf2 <- lm(fat ~ male + mass + svl, data = python)
+
+# Last time we used a Box-Cox transformation
+library(MASS)
+bc <- boxcox(mpf2)
+lambda <- bc$x[which.max(bc$y)]
+      mpf3 <- lm((fat ^ lambda - 1) / lambda ~ male + mass + svl, data = python)
+      summary(mpf3)
+      plot(mpf3$fitted.values, mpf3$residuals)
+      qqnorm(mpf3$residuals)
+qqline(mpf3$residuals, col = "blue", lwd = 2)
+      @
+      <<eval=FALSE>>=
+      # Quantities for individual observations
+      studres(mpf3)  # studentized residuals
+      hatvalues(mpf3) # leverage
+      cooks.distance(mpf3) # Cook's distance
+      @
+      <<>>=
+      # Residual plots with studentized residuals
+      plot(mpf3$fitted.values,
+studres(mpf3),
+xlab = "Fitted values",
+ylab = "Studentized residuals")
+abline(h = c(3, -3), col = "red", lty = 2)
+which(abs(studres(mpf3)) > 3)
+qqnorm(studres(mpf3))
+qqline(studres(mpf3), col = "blue", lwd = 2)
+
+# Leverage
+plot(hatvalues(mpf3), ylab = "Leverage")
+abline(h = 2 * mean(hatvalues(mpf3)),
+col = "red",
+lty = 2)
+which(hatvalues(mpf3) > 2 * mean(hatvalues(mpf3)))
+python[which(hatvalues(mpf3) > 2 * mean(hatvalues(mpf3))), ]
+
+# Cook's distance
+plot(cooks.distance(mpf3), ylab = "Cook's distance")
+abline(h = 0.5, col = "red", lty = 2)
+which(cooks.distance(mpf3) > 0.5)
+
+# Let's look at actual changes in beta estimates
+mpf3$coefficients # with all the data
+      # e.g., fit without obs 248
+      mpf4 <-
+      lm((fat ^ lambda - 1) / lambda ~ male + mass + svl, data = python[-248, ])
+      mpf4$coefficients
+# e.g., fit without obs 50
+mpf5 <-
+lm((fat ^ lambda - 1) / lambda ~ male + mass + svl, data = python[-50, ])
+mpf5$coefficients
+@

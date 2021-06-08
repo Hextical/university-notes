@@ -1,6 +1,349 @@
-\input{../../../preambles/book.tex}
-\input{../../../preambles/font-unicode.tex}
-\input{../../../preambles/common.tex}
+\documentclass[oneside]{book}\usepackage[]{graphicx}\usepackage[dvipsnames,table,xcdraw]{xcolor}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[dvipsnames,table,xcdraw]{xcolor}
+
+\usepackage{fontspec}
+\setmainfont{XCharter}
+\usepackage{anyfontsize}
+\usepackage{microtype}
+\usepackage[math-style=ISO,bold-style=ISO,warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
+
+% -----------------------------------------------------------------------------
+
+% CS 246
+\usepackage{float}
+\usepackage{listings}
+
+\definecolor{light-gray}{gray}{0.95}
+\newcommand{\code}[1]{\texttt{#1}}
+
+% -----------------------------------------------------------------------------
+
+% CO 250
+\usepackage{tkz-berge}
+
+% -----------------------------------------------------------------------------
+
+% Core Packages
+\usepackage{xfrac}
+\usepackage[margin=1in]{geometry}
+\usepackage[unicode,pdfversion=1.7]{hyperref}
+\usepackage[shortlabels]{enumitem}
+\usepackage[parfill]{parskip}
+\usepackage[theorems,breakable]{tcolorbox}
+\usepackage{graphicx}
+\usepackage[ruled,linesnumbered,vlined,dotocloa]{algorithm2e}
+\usepackage[delims=\lbrack\rbrack]{spalign}
+\usepackage{mathtools}
+\usepackage{cleveref}
+\usepackage{pdfpages}
+\usepackage{minted}
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+\usetikzlibrary{positioning}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{framed}
+
+
+% -----------------------------------------------------------------------------
+
+% Better Tables
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{tabularx}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{Z}{>{\centering\arraybackslash\columncolor{light-gray}}X}
+\newcolumntype{B}{>{\centering\arraybackslash\bfseries}X}
+\usepackage{multirow}
+\usepackage[skip=1ex]{caption}
+
+% -----------------------------------------------------------------------------
+
+% Intervals
+\usepackage{interval}
+\intervalconfig{
+    soft open fences,
+    separator symbol={,}
+}
+
+% -----------------------------------------------------------------------------
+
+\graphicspath{ {./figures/} }
+
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\slack}{slack}
+\DeclareMathOperator{\row}{row}
+\DeclareMathOperator{\cone}{cone}
+\DeclareMathOperator{\nullspace}{Null}
+\DeclareMathOperator{\ch}{char}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\lcm}{lcm}
+
+\usepackage{etoolbox}
+
+% Functions
+\providecommand\given{} % just to make sure it exists
+\DeclarePairedDelimiterXPP{\E}[1]{\mathbb{E}}[]{}{
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
+    #1}
+\DeclarePairedDelimiterXPP{\Var}[1]{\mathbb{V}}(){}{
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
+    #1}
+\DeclarePairedDelimiterXPP\Prob[1]{\mathbb{P}}(){}{
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
+    \ifblank{#1}{\:\cdot\:}
+    #1}
+\DeclarePairedDelimiterXPP\Ind[1]{\mathbb{I}}\{\}{}{
+\renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
+\ifblank{#1}{\:\cdot\:}
+#1}
+\newcommand{\indep}{\perp\!\!\!\perp}
+\DeclarePairedDelimiterXPP{\Corr}[1]{\text{Corr}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Cov}[1]{\text{Cov}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Sd}[1]{\text{Sd}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Se}[1]{\text{Se}}(){}{#1}
+\let\SS=\relax
+\DeclarePairedDelimiterXPP{\SS}[1]{\text{SS}}(){}{\text{#1}}
+\DeclarePairedDelimiterXPP{\MS}[1]{\text{MS}}(){}{\text{#1}}
+\DeclarePairedDelimiterXPP{\Span}[1]{\text{Span}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Spanc}[1]{\overline{\text{Span}}}(){}{#1}
+\DeclareMathOperator{\VIF}{VIF}
+\DeclarePairedDelimiterXPP{\expon}[1]{\text{exp}}\{\}{}{#1}
+
+% Distributions
+\DeclarePairedDelimiterXPP{\N}[1]{\mathcal{N}}(){}{#1}
+\DeclarePairedDelimiterXPP{\uniform}[1]{\text{Uniform}}(){}{#1}
+\DeclarePairedDelimiterXPP{\hyp}[1]{\text{Hypergeometric}}(){}{#1}
+\DeclarePairedDelimiterXPP{\bern}[1]{\text{Bernoulli}}(){}{#1}
+\DeclarePairedDelimiterXPP{\bin}[1]{\text{Binomial}}(){}{#1}
+\DeclarePairedDelimiterXPP{\nb}[1]{\text{Negative Binomial}}(){}{#1}
+\DeclarePairedDelimiterXPP{\geo}[1]{\text{Geometric}}(){}{#1}
+\DeclarePairedDelimiterXPP{\poi}[1]{\text{Poisson}}(){}{#1}
+\DeclarePairedDelimiterXPP{\mult}[1]{\text{Multinomial}}(){}{#1}
+\DeclarePairedDelimiterXPP{\gam}[1]{\text{Gamma}}(){}{#1}
+\DeclarePairedDelimiterXPP{\weib}[1]{\text{Weibull}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Mvn}[1]{\text{MVN}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Bvn}[1]{\text{BVN}}(){}{#1}
+\DeclarePairedDelimiterXPP{\exponential}[1]{\text{Exponential}}(){}{#1}
+
+\DeclarePairedDelimiterXPP{\tr}[1]{\text{trace}}(){}{#1}
+
+\DeclarePairedDelimiterX\innerp[2]{\langle}{\rangle}{
+    \ifblank{#1}{\:\cdot\:,}#1,
+    \ifblank{#2}{\:\cdot\:}#2
+}
+
+\DeclarePairedDelimiterXPP{\MA}[1]{\text{MA}}(){}{#1}
+\DeclarePairedDelimiterXPP{\AR}[1]{\text{AR}}(){}{#1}
+\DeclarePairedDelimiterXPP{\ARMA}[1]{\text{ARMA}}(){}{#1}
+\DeclarePairedDelimiterXPP{\AIC}[1]{\text{AIC}}(){}{#1}
+\DeclarePairedDelimiterXPP{\BIC}[1]{\text{BIC}}(){}{#1}
+\DeclarePairedDelimiterXPP{\ARIMA}[1]{\text{ARIMA}}(){}{#1}
+\DeclarePairedDelimiterXPP{\GARCH}[1]{\text{GARCH}}(){}{#1}
+\DeclarePairedDelimiterXPP{\NNAR}[1]{\text{NNAR}}(){}{#1}
+\DeclarePairedDelimiterXPP{\NNSAR}[2]{\text{NNSAR}}(){_{#2}}{#1}
+\DeclarePairedDelimiterXPP{\ARCH}[1]{\text{ARCH}}(){}{#1}
+
+\DeclareMathOperator{\FWER}{FWER}
+\let\log\relax
+\DeclarePairedDelimiterXPP{\log}[1]{\text{log}}(){}{#1}
+
+% -----------------------------------------------------------------------------
+
+% Table of Contents
+\hypersetup{colorlinks, linkcolor=[rgb]{0,0.5,1}}
+
+% -----------------------------------------------------------------------------
+
+% Heading Dates
+\newcommand{\makeheading}[1]
+{
+    \begin{figure}[H]
+        \centering
+        \rule{\columnwidth}{1pt}\\
+        {\large \scshape{#1}}\\[-0.6\baselineskip]
+        \rule{\columnwidth}{1pt}
+        \vspace*{-20pt}
+    \end{figure}
+}
+
+% -----------------------------------------------------------------------------
+
+% Definitions
+\definecolor{myyellow}{RGB}{255,255,168}
+% Theorems
+\definecolor{mypurple}{RGB}{216,216,255}
+% Algorithms
+\definecolor{mygray}{RGB}{232,232,232}
+% Examples
+\definecolor{mygreen}{RGB}{216,255,216}
+% Exercises
+\definecolor{myred}{RGB}{255,216,216}
+% Remarks
+\definecolor{mycyan}{RGB}{204,229,229}
+
+\tcbset{
+    common/.style={
+            fonttitle=\bfseries,
+            coltitle=black,
+            boxrule=0pt,
+            breakable
+        },
+    theorem/.style={
+            common,
+            colback=mypurple,
+            colframe=mypurple!95!black,
+            fontupper=\itshape{}
+        },
+}
+
+
+\newtcbtheorem[number within=section, crefname={definition}{definitions}]
+{Definition}{DEFINITION}{
+    common,
+    colback=myyellow,
+    colframe=myyellow!95!black
+}{def}
+
+\newtcbtheorem[use counter from=Definition, crefname={example}{examples}]
+{Example}{EXAMPLE}{
+    common,
+    colback=mygreen,
+    colframe=mygreen!95!black,
+}{ex}
+
+\newtcbtheorem[use counter from=Definition, crefname={exercise}{exercises}]
+{Exercise}{EXERCISE}{
+    common,
+    colback=myred,
+    colframe=myred!95!black,
+}{exercise}
+
+\newtcbtheorem[use counter from=Definition, crefname={remark}{remarks}]
+{Remark}{REMARK}{
+    common,
+    colback=mycyan,
+    colframe=mycyan!95!black,
+}{remark}
+
+\newtcbtheorem[use counter from=Definition, crefname={statistical Test}{statistical Tests}]
+{Statistical_Test}{STATISTICAL TEST}{
+    common,
+    colback=Magenta!25!white,
+    colframe=Magenta!50!white,
+}{stest}
+
+\newtcbtheorem[use counter from=Definition, crefname={theorem}{theorems}]
+{Theorem}{THEOREM}{
+    theorem
+}{thm}
+
+\newtcbtheorem[use counter from=Definition, crefname={proposition}{propositions}]
+{Proposition}{PROPOSITION}{
+    theorem
+}{prop}
+
+\newtcbtheorem[use counter from=Definition, crefname={corollary}{corollaries}]
+{Corollary}{COROLLARY}{
+    theorem
+}{cor}
+
+\newtcbtheorem[use counter from=Definition, crefname={lemma}{lemmas}]
+{Lemma}{LEMMA}{
+    theorem
+}{lem}
+
+\newtcbtheorem[no counter]
+{Proof}{Proof of}{
+    common,
+    colframe=black!10,
+    separator sign={}
+}{pf}
+
+\DeclarePairedDelimiterX\norm[1]\lVert\rVert{\ifblank{#1}{\:\cdot\:}{#1}}
+\DeclarePairedDelimiterX\abs[1]\lvert\rvert{\ifblank{#1}{\:\cdot\:}{#1}}
+\DeclarePairedDelimiter\set\{\}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\arginf}{arg\,inf}
+\DeclareMathOperator*{\argsup}{arg\,sup}
+
+% just to make sure it exists
+\providecommand\onto{}
+% can be useful to refer to this outside \Set
+\newcommand\SetSymbol[1][]{%
+    \nonscript\:#1\vert{}
+    \allowbreak\nonscript\:
+    \mathopen{}}
+\DeclarePairedDelimiterXPP\Proj[1]{\text{Proj}}(){}{%
+    \renewcommand\onto{\SetSymbol[\delimsize]}
+    #1
+}
+
+\AtBeginDocument{%
+    \let\mathbb\relax
+    \DeclareMathAlphabet{\mathbb}{U}{msb}{m}{n}%
+}
+
+\newenvironment{tightcenter}{%
+    \setlength\topsep{0pt}%
+    \setlength\parskip{0pt}%
+    \par\centering}{\par\noindent\ignorespacesafterend}
+
+\usepackage{nicematrix}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
 
 \hypersetup{pdftitle={Applied Linear Models (STAT 331)},
 pdfauthor={Cameron Roopnarine, Samuel Wong},
@@ -13,33 +356,2873 @@ pdfkeywords={University of Waterloo, Fall 2020 (1209)}}
 \normalsize Fall 2020 (1209)}
 \author{\LaTeX{}er: \emph{Cameron Roopnarine}\\Instructor: \emph{Samuel Wong}}
 \date{\today}
-
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 
 \maketitle
 
 \tableofcontents
 
+
+
 \input{lec_01.tex}
 \input{lec_02.tex}
 \input{lec_03.tex}
-\input{lec_04.tex}
+\input{lec_04.tex}r
+
+\subsection{R Demo}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Read data from florange.csv and input it into the dat}
+\hlcom{# vector.}
+\hlstd{dat} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/florange.csv"}\hlstd{)}
+\hlcom{# Done to make the predict function work well.}
+\hlstd{x} \hlkwb{<-} \hlstd{dat}\hlopt{$}\hlstd{acres}
+\hlstd{y} \hlkwb{<-} \hlstd{dat}\hlopt{$}\hlstd{boxes}
+\hlcom{# Output the first 6 rows in dat.}
+\hlkwd{head}\hlstd{(dat)}
+\end{alltt}
+\begin{verbatim}
+##      county boxes acres
+## 1   Brevard    51   696
+## 2 Charlotte   821 13447
+## 3   Collier  2088 29351
+## 4    DeSoto  7688 66365
+## 5    Glades   368  5396
+## 6    Hardee  5306 43126
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Draw a scatterplot with x-axis as 'acres' and y-axis as}
+\hlcom{# 'boxes'.}
+\hlkwd{plot}\hlstd{(x, y)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-12-1} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{# Compute some common variables with common functions.}
+\hlstd{r} \hlkwb{<-} \hlkwd{cor}\hlstd{(x, y)}
+\hlstd{xbar} \hlkwb{<-} \hlkwd{mean}\hlstd{(x)}
+\hlstd{ybar} \hlkwb{<-} \hlkwd{mean}\hlstd{(y)}
+\hlkwd{cat}\hlstd{(}\hlstr{"r:"}\hlstd{, r,} \hlstr{"xbar:"}\hlstd{, xbar,} \hlstr{"ybar:"}\hlstd{, ybar)}
+\end{alltt}
+\begin{verbatim}
+## r: 0.9635098 xbar: 16132.64 ybar: 1797.56
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Therefore, $r=0.9635098$,
+$\bar{x}=16132.64$, and $\bar{y}= 1797.56$.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Compute some common variables manually.}
+\hlstd{Sxx} \hlkwb{<-} \hlkwd{sum}\hlstd{((x} \hlopt{-} \hlstd{xbar)}\hlopt{^}\hlnum{2}\hlstd{)}
+\hlstd{Sxy} \hlkwb{<-} \hlkwd{sum}\hlstd{((x} \hlopt{-} \hlstd{xbar)} \hlopt{*} \hlstd{(y} \hlopt{-} \hlstd{ybar))}
+\hlkwd{cat}\hlstd{(}\hlstr{"Sxx: "}\hlstd{, Sxx,} \hlstr{"Sxy: "}\hlstd{, Sxy)}
+\end{alltt}
+\begin{verbatim}
+## Sxx:  12450023404 Sxy:  1453128337
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Therefore, $S_{xx}=12450023404=1.245\times10^{10}$ and
+$S_{xy}=1453128337=1.453\times 10^{9}$.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# R's lm function fits linear models}
+\hlstd{lm.1} \hlkwb{<-} \hlkwd{lm}\hlstd{(y} \hlopt{~} \hlstd{x)}
+\hlkwd{summary}\hlstd{(lm.1)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ x)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2470.81    -6.17    71.72   106.46  1677.32 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -85.391989 186.178031  -0.459    0.651    
+## x             0.116717   0.006761  17.263 1.16e-14 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 754.4 on 23 degrees of freedom
+## Multiple R-squared:  0.9284,	Adjusted R-squared:  0.9252 
+## F-statistic:   298 on 1 and 23 DF,  p-value: 1.164e-14
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+From the summary, we can see that
+$\hat{\beta}_0=-85.391989$,
+$\hat{\beta}_1=0.116717$,
+$\Se*{\hat{\beta}_1}=0.006761$,
+$t=17.263$, $p\text{-value}=1.64\times 10^{-14}$, and
+$\hat{\sigma}=754.4$.
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Sum Squared Fitted Values}
+\hlkwd{sum}\hlstd{(lm.1}\hlopt{$}\hlstd{fitted.values}\hlopt{^}\hlnum{2}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 250385207
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Sum Squared Residuals}
+\hlkwd{sum}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals}\hlopt{^}\hlnum{2}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 13089860
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Therefore, $\SS{\text{Res}}=\sum_{i=1}^n e_i^2=13089860=1.31\times10^7$.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Manual calculation of sigma^2 estimate}
+\hlkwd{sum}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals}\hlopt{^}\hlnum{2}\hlstd{)}\hlopt{/}\hlnum{23}
+\end{alltt}
+\begin{verbatim}
+## [1] 569124.3
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+    Therefore, $\hat{\sigma}^2=69124.3=5.7\times 10^{5}$.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Manual calculation of sigma estimate}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{sum}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals}\hlopt{^}\hlnum{2}\hlstd{)}\hlopt{/}\hlnum{23}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 754.4033
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Therefore, $\hat{\sigma}= 754.4$.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# t distribution values}
+\hlkwd{qt}\hlstd{(}\hlnum{0.975}\hlstd{,} \hlnum{23}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 2.068658
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Therefore, $c=2.07$.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# 95% confidence interval}
+\hlkwd{confint}\hlstd{(lm.1)}
+\end{alltt}
+\begin{verbatim}
+##                    2.5 %      97.5 %
+## (Intercept) -470.5305905 299.7466119
+## x              0.1027305   0.1307034
+\end{verbatim}
+\begin{alltt}
+\hlcom{# 95% prediction interval with predicted boxes if we had}
+\hlcom{# 10000 acres}
+\hlkwd{predict}\hlstd{(lm.1,} \hlkwd{data.frame}\hlstd{(}\hlkwc{x} \hlstd{=} \hlnum{10000}\hlstd{),} \hlkwc{interval} \hlstd{=} \hlstr{"prediction"}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+##        fit       lwr      upr
+## 1 1081.777 -512.0407 2675.595
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Q: Is $\sigma$ the same for all values of $y$?
+
+A: It appears to not in the sense that the variance
+appears to be higher with respect to higher acres.
+Sigma will be smaller when there's less acres.
+Later, this will be testing equal variance or homoscedastic
+assumption. Later, when we talk about variable
+transformations we can consider taking the logarithm.
+
+Q: Are the error terms plausibly independent?
+In other words,
+does knowing one $e_i$ (residual) help predict $e_j$
+(another residual) for a different county?
+
+A: There's diagnostics for checking this. However,
+intuitively there could be some common factors
+at play when two counties are geographically close.
 \input{lec_05.tex}
 \input{lec_06.tex}
 \input{lec_07.tex}
+
+\makeheading{Lecture 8 | 2020-09-30}
+\section{Categorical Predictors}
+\subsection{R Demo}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## NASA rocket data example}
+\hlcom{## From: R.S. Jankovsky, T.D. Smith, A.J. Pavli (1999).}
+\hlcom{## 'High-Area-Ratio Rocket Nozzle at High Combustion}
+\hlcom{## Chamber Pressure-Experimental and Analytical}
+\hlcom{## Validation'.}
+\hlcom{# setwd(...) first if your CSV file is somewhere else}
+\hlstd{rocket} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/rocket.csv"}\hlstd{)}
+\hlcom{# output all data in rocket vector}
+\hlstd{rocket}
+\end{alltt}
+\begin{verbatim}
+##    thrust nozzle propratio
+## 1   488.0      1      3.97
+## 2   481.6      1      5.91
+## 3   485.9      1      4.98
+## 4   486.0      1      4.91
+## 5   484.5      1      3.89
+## 6   483.8      1      5.80
+## 7   463.2      0      5.99
+## 8   471.2      0      4.95
+## 9   469.5      0      3.91
+## 10  470.5      0      5.85
+## 11  469.5      0      4.71
+## 12  465.7      0      3.84
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+$Y$ (thrust) is the response variable, and there
+are two explanatory variables $x_1,x_2$
+(nozzle, propratio) where nozzle is coded
+as 1 if it's large.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Scatter plots where mfrow is used to put multiple plots}
+\hlcom{# on one image}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{))}
+\hlkwd{plot}\hlstd{(rocket}\hlopt{$}\hlstd{nozzle, rocket}\hlopt{$}\hlstd{thrust,} \hlkwc{ylab} \hlstd{=} \hlstr{"Thrust"}\hlstd{,} \hlkwc{xlab} \hlstd{=} \hlstr{"Nozzle size (1 = large)"}\hlstd{)}
+\hlkwd{plot}\hlstd{(rocket}\hlopt{$}\hlstd{propratio, rocket}\hlopt{$}\hlstd{thrust,} \hlkwc{ylab} \hlstd{=} \hlstr{"Thrust"}\hlstd{,} \hlkwc{xlab} \hlstd{=} \hlstr{"Propellant to fuel ratio"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-21-1} 
+
+}
+
+
+\end{knitrout}
+
+Left is nozzle size vs thrust. Right is propellant
+relationship vs thrust.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Fit MLR using lm}
+\hlstd{m1} \hlkwb{<-} \hlkwd{lm}\hlstd{(thrust} \hlopt{~} \hlstd{nozzle} \hlopt{+} \hlstd{propratio,} \hlkwc{data} \hlstd{= rocket)}
+\hlkwd{summary}\hlstd{(m1)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = thrust ~ nozzle + propratio, data = rocket)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.8459 -1.7555  0.5934  1.2906  3.3008 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 473.6039     4.7158 100.430 4.88e-15 ***
+## nozzle       16.7383     1.5329  10.919 1.71e-06 ***
+## propratio    -1.0948     0.9414  -1.163    0.275    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.655 on 9 degrees of freedom
+## Multiple R-squared:  0.9303,	Adjusted R-squared:  0.9148 
+## F-statistic: 60.05 on 2 and 9 DF,  p-value: 6.238e-06
+\end{verbatim}
+\begin{alltt}
+\hlstd{m2} \hlkwb{<-} \hlkwd{lm}\hlstd{(thrust} \hlopt{~} \hlnum{0} \hlopt{+} \hlstd{nozzle,} \hlkwc{data} \hlstd{= rocket)}
+\hlkwd{summary}\hlstd{(m2)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = thrust ~ 0 + nozzle, data = rocket)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+##  -3.37   0.58 233.12 469.50 471.20 
+## 
+## Coefficients:
+##        Estimate Std. Error t value Pr(>|t|)   
+## nozzle    485.0      141.2   3.435  0.00558 **
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 345.8 on 11 degrees of freedom
+## Multiple R-squared:  0.5175,	Adjusted R-squared:  0.4736 
+## F-statistic:  11.8 on 1 and 11 DF,  p-value: 0.005575
+\end{verbatim}
+\begin{alltt}
+\hlkwd{anova}\hlstd{(m1)}
+\end{alltt}
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: thrust
+##           Df Sum Sq Mean Sq  F value    Pr(>F)    
+## nozzle     1 836.67  836.67 118.7377 1.743e-06 ***
+## propratio  1   9.53    9.53   1.3524    0.2748    
+## Residuals  9  63.42    7.05                       
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+On the left it's $Y$ (response variable) and on the
+right it's $x_1,x_2$ (explanatory variables).
+From summary, we get the estimate vector
+$\hat{\symbf{\beta}}=(473.6039, 16.7383,-1.0948)^\top$.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Manual beta estimates where rep is used to make the}
+\hlcom{# columns of 1s}
+\hlstd{X} \hlkwb{<-} \hlkwd{cbind}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{12}\hlstd{), rocket}\hlopt{$}\hlstd{nozzle, rocket}\hlopt{$}\hlstd{propratio)}  \hlcom{# X matrix}
+\hlstd{y} \hlkwb{<-} \hlkwd{matrix}\hlstd{(rocket}\hlopt{$}\hlstd{thrust,} \hlkwc{ncol} \hlstd{=} \hlnum{1}\hlstd{)}  \hlcom{# response vector}
+\hlstd{beta_hat} \hlkwb{<-} \hlkwd{solve}\hlstd{(}\hlkwd{t}\hlstd{(X)} \hlopt{%*%} \hlstd{X)} \hlopt{%*%} \hlkwd{t}\hlstd{(X)} \hlopt{%*%} \hlstd{y}
+\hlstd{beta_hat}
+\end{alltt}
+\begin{verbatim}
+##            [,1]
+## [1,] 473.603924
+## [2,]  16.738319
+## [3,]  -1.094822
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+  \code{solve} is used for the inverse. \code{\%*\%} is used
+  for matrix-matrix multiplication, and \code{t(X)}
+  is used for transposing $X$.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Manual sigma estimate}
+\hlstd{mu_hat} \hlkwb{<-} \hlstd{X} \hlopt{%*%} \hlstd{beta_hat}  \hlcom{# fitted values}
+\hlstd{e} \hlkwb{<-} \hlstd{y} \hlopt{-} \hlstd{mu_hat}  \hlcom{# residuals}
+\hlstd{sigma_hat} \hlkwb{<-} \hlkwd{sqrt}\hlstd{((}\hlkwd{t}\hlstd{(e)} \hlopt{%*%} \hlstd{e)}\hlopt{/}\hlnum{9}\hlstd{)}  \hlcom{# Note n-p-1 = 12-2-1 = 9}
+\hlstd{sigma_hat}
+\end{alltt}
+\begin{verbatim}
+##        [,1]
+## [1,] 2.6545
+\end{verbatim}
+\begin{alltt}
+\hlstd{sigma_hat} \hlkwb{<-} \hlkwd{sqrt}\hlstd{(}\hlkwd{sum}\hlstd{(e}\hlopt{^}\hlnum{2}\hlstd{)}\hlopt{/}\hlnum{9}\hlstd{)}  \hlcom{# equivalent}
+\hlstd{sigma_hat}
+\end{alltt}
+\begin{verbatim}
+## [1] 2.6545
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+  \begin{itemize}
+    \item $\hat{\symbf{\mu}}=X\hat{\symbf{\beta}}$
+    \item $\symbf{e}=\symbf{y}-\hat{\symbf{\mu}}$
+    \item $\hat{\sigma}=\sqrt{\biggl(\sum_{i=1}^{n}e_i^2\biggr)/9}=2.6545$, or
+    \item $\hat{\sigma}=\sqrt{(\symbf{e}^\top\symbf{e})/9}=2.6545$
+  \end{itemize}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Covariance matrix of beta_hat}
+\hlkwd{vcov}\hlstd{(m1)}
+\end{alltt}
+\begin{verbatim}
+##             (Intercept)      nozzle   propratio
+## (Intercept)   22.238325 -1.02316688 -4.32080608
+## nozzle        -1.023167  2.34987593 -0.03102117
+## propratio     -4.320806 -0.03102117  0.88631920
+\end{verbatim}
+\begin{alltt}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{diag}\hlstd{(}\hlkwd{vcov}\hlstd{(m1)))}  \hlcom{# SEs of individual betas}
+\end{alltt}
+\begin{verbatim}
+## (Intercept)      nozzle   propratio 
+##   4.7157528   1.5329305   0.9414453
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Manual}
+\hlstd{se_beta} \hlkwb{<-} \hlstd{sigma_hat} \hlopt{*} \hlkwd{sqrt}\hlstd{(}\hlkwd{diag}\hlstd{(}\hlkwd{solve}\hlstd{(}\hlkwd{t}\hlstd{(X)} \hlopt{%*%} \hlstd{X)))}
+\hlstd{se_beta}
+\end{alltt}
+\begin{verbatim}
+## [1] 4.7157528 1.5329305 0.9414453
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+  \begin{itemize}
+    \item $\Se*{\hat{\symbf{\beta}}}=\hat{\sigma}\sqrt{(X^\top X)^{-1}}=(4.71, 1.53, 0.94)^{\top}$
+  \end{itemize}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Estimate the mean response for units with small nozzle}
+\hlcom{# and propellant ratio 5.5 include a 95% CI}
+\hlkwd{predict}\hlstd{(}\hlkwc{object} \hlstd{= m1,} \hlkwc{newdata} \hlstd{=} \hlkwd{data.frame}\hlstd{(}\hlkwc{nozzle} \hlstd{=} \hlnum{0}\hlstd{,} \hlkwc{propratio} \hlstd{=} \hlnum{5.5}\hlstd{),}
+  \hlkwc{interval} \hlstd{=} \hlstr{"confidence"}\hlstd{,} \hlkwc{level} \hlstd{=} \hlnum{0.95}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+##        fit      lwr      upr
+## 1 467.5824 464.7929 470.3719
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+  Therefore, $\hat{y}_0=467.58$. The 95\% confidence interval for the mean
+  response given $\symbf{x}_0$ is $[464.7929,470.3719]$.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Manual calculation}
+\hlstd{x0} \hlkwb{<-} \hlkwd{matrix}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{5.5}\hlstd{),} \hlkwc{nrow} \hlstd{=} \hlnum{1}\hlstd{)}
+\hlstd{y0_hat} \hlkwb{<-} \hlstd{x0} \hlopt{%*%} \hlstd{beta_hat}
+\hlstd{y0_hat}
+\end{alltt}
+\begin{verbatim}
+##          [,1]
+## [1,] 467.5824
+\end{verbatim}
+\begin{alltt}
+\hlcom{# mu0 is also known as \textbackslash{}hat\{Y\}_0}
+\hlstd{se_mu0} \hlkwb{<-} \hlstd{sigma_hat} \hlopt{*} \hlkwd{sqrt}\hlstd{(x0} \hlopt{%*%} \hlkwd{solve}\hlstd{(}\hlkwd{t}\hlstd{(X)} \hlopt{%*%} \hlstd{X)} \hlopt{%*%} \hlkwd{t}\hlstd{(x0))}
+\hlstd{se_mu0}
+\end{alltt}
+\begin{verbatim}
+##          [,1]
+## [1,] 1.233132
+\end{verbatim}
+\begin{alltt}
+\hlstd{crit_val} \hlkwb{<-} \hlkwd{qt}\hlstd{(}\hlnum{0.975}\hlstd{,} \hlnum{9}\hlstd{)}
+\hlstd{ci_lo} \hlkwb{<-} \hlstd{y0_hat} \hlopt{-} \hlstd{crit_val} \hlopt{*} \hlstd{se_mu0}
+\hlstd{ci_hi} \hlkwb{<-} \hlstd{y0_hat} \hlopt{+} \hlstd{crit_val} \hlopt{*} \hlstd{se_mu0}
+\hlkwd{c}\hlstd{(y0_hat, ci_lo, ci_hi)}
+\end{alltt}
+\begin{verbatim}
+## [1] 467.5824 464.7929 470.3719
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+  \begin{itemize}
+    \item $\symbf{x}_0=\begin{bmatrix}1&0&5.5\end{bmatrix}$
+    \item $\hat{y}_0=\symbf{x}_0\hat{\symbf{\beta}}=467.5824$
+    \item $\Se*{\hat{Y}_0}=\hat{\sigma}\sqrt{\symbf{x}_0(X^\top X)^{-1}\symbf{x}_0^\top}=
+            1.233132$
+  \end{itemize}
+  Therefore, $\hat{y}_0=467.58$. The 95\% confidence interval for the mean
+  response given $\symbf{x}_0$ is $[464.7929,470.3719]$.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Predict the value of the response for a unit with small}
+\hlcom{# nozzle and propellant ratio 5.5 include a 95% PI}
+\hlkwd{predict}\hlstd{(}\hlkwc{object} \hlstd{= m1,} \hlkwc{newdata} \hlstd{=} \hlkwd{data.frame}\hlstd{(}\hlkwc{nozzle} \hlstd{=} \hlnum{0}\hlstd{,} \hlkwc{propratio} \hlstd{=} \hlnum{5.5}\hlstd{),}
+  \hlkwc{interval} \hlstd{=} \hlstr{"prediction"}\hlstd{,} \hlkwc{level} \hlstd{=} \hlnum{0.95}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+##        fit      lwr      upr
+## 1 467.5824 460.9612 474.2036
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+  Therefore, $y_0=467.5824$. The 95\% prediction interval for the
+  response $(y_0)$ given $\symbf{x}_0$ is $[460.9612, 474.2036]$.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Manual calculation for an individual}
+\hlstd{x0} \hlkwb{<-} \hlkwd{matrix}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{5.5}\hlstd{),} \hlkwc{nrow} \hlstd{=} \hlnum{1}\hlstd{)}
+\hlstd{y0_hat} \hlkwb{<-} \hlstd{x0} \hlopt{%*%} \hlstd{beta_hat}
+\hlstd{se_y0} \hlkwb{<-} \hlstd{sigma_hat} \hlopt{*} \hlkwd{sqrt}\hlstd{(}\hlnum{1} \hlopt{+} \hlstd{x0} \hlopt{%*%} \hlkwd{solve}\hlstd{(}\hlkwd{t}\hlstd{(X)} \hlopt{%*%} \hlstd{X)} \hlopt{%*%} \hlkwd{t}\hlstd{(x0))}
+\hlstd{se_y0}
+\end{alltt}
+\begin{verbatim}
+##          [,1]
+## [1,] 2.926941
+\end{verbatim}
+\begin{alltt}
+\hlstd{crit_val} \hlkwb{<-} \hlkwd{qt}\hlstd{(}\hlnum{0.975}\hlstd{,} \hlnum{9}\hlstd{)}
+\hlstd{pi_lo} \hlkwb{<-} \hlstd{y0_hat} \hlopt{-} \hlstd{crit_val} \hlopt{*} \hlstd{se_y0}
+\hlstd{pi_hi} \hlkwb{<-} \hlstd{y0_hat} \hlopt{+} \hlstd{crit_val} \hlopt{*} \hlstd{se_y0}
+\hlkwd{c}\hlstd{(y0_hat, pi_lo, pi_hi)}
+\end{alltt}
+\begin{verbatim}
+## [1] 467.5824 460.9612 474.2036
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{itemize}
+  \item $\Se*{Y_0-\hat{Y}_0}=\hat{\sigma}\sqrt{1+\symbf{x}_0(X^\top X)^{-1}\symbf{x}_0^\top}=2.926941$
+\end{itemize}
 \input{lec_08.tex}
 \input{lec_09.tex}
 \input{lec_10.tex}
 \input{lec_11.tex}
+
+\subsection{R Demo}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## R demo for Oct 19 Plotting functions and histograms, F}
+\hlcom{## distribution, ANOVA tables, F tests, MLR with}
+\hlcom{## categorical variables}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+Evaluate the function at many $x$ values, then plot it.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Plotting functions (e.g., probability density functions)}
+\hlcom{# Create sequence from -4 to 4 increasing 0.01 each time.}
+\hlstd{x} \hlkwb{<-} \hlkwd{seq}\hlstd{(}\hlopt{-}\hlnum{4}\hlstd{,} \hlnum{4}\hlstd{,} \hlnum{0.01}\hlstd{)}
+\hlkwd{head}\hlstd{(x)}
+\end{alltt}
+\begin{verbatim}
+## [1] -4.00 -3.99 -3.98 -3.97 -3.96 -3.95
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Normal probability density function with mean 0, and}
+\hlcom{# standard deviation 1.}
+\hlstd{y} \hlkwb{<-} \hlkwd{dnorm}\hlstd{(x,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\code{dnorm} is for density normal.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{plot}\hlstd{(x, y,} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-32-1} 
+
+}
+
+
+\end{knitrout}
+
+\code{type = "l"} is for a smooth line (instead of dots).
+
+We can also plot $y=x^2$ for example.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{y} \hlkwb{<-} \hlstd{x}\hlopt{^}\hlnum{2}
+\hlkwd{plot}\hlstd{(x, y,} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-33-1} 
+
+}
+
+
+\end{knitrout}
+
+\subsubsection{F-distribution Examples}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{x} \hlkwb{<-} \hlkwd{seq}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{5}\hlstd{,} \hlnum{0.01}\hlstd{)}
+\hlkwd{head}\hlstd{(x)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.00 0.01 0.02 0.03 0.04 0.05
+\end{verbatim}
+\begin{alltt}
+\hlcom{# df is degrees of freedom.  type = 'l' is for a smooth}
+\hlcom{# curve}
+\hlkwd{plot}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{1}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{1}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{xlab} \hlstd{=} \hlstr{"x"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"density"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-34-1} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{# ylim is for the y-axis limits lwd is for line width}
+\hlkwd{plot}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{1}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{1}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"black"}\hlstd{,}
+  \hlkwc{xlab} \hlstd{=} \hlstr{"x"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"density"}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{2.5}\hlstd{),} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlcom{# Add lines to the existing plot.}
+\hlkwd{lines}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{1}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{100}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"green"}\hlstd{,}
+  \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{lines}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{5}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{1}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,}
+  \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{lines}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{5}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{100}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"purple"}\hlstd{,}
+  \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{lines}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{10}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{1}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"red"}\hlstd{,}
+  \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{lines}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{10}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{100}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"orange"}\hlstd{,}
+  \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlcom{# Add a legend to the top-right.  lty = 1 is for a straight}
+\hlcom{# solid line.}
+\hlkwd{legend}\hlstd{(}\hlstr{"topright"}\hlstd{,} \hlkwc{legend} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"df1=1, df2=1"}\hlstd{,} \hlstr{"df1=1, df2=100"}\hlstd{,}
+  \hlstr{"df1=5, df2=1"}\hlstd{,} \hlstr{"df1=5, df2=100"}\hlstd{,} \hlstr{"df1=10, df2=1"}\hlstd{,} \hlstr{"df1=10, df2=100"}\hlstd{),}
+  \hlkwc{lty} \hlstd{=} \hlnum{1}\hlstd{,} \hlkwc{col} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"black"}\hlstd{,} \hlstr{"green"}\hlstd{,} \hlstr{"blue"}\hlstd{,} \hlstr{"purple"}\hlstd{,} \hlstr{"red"}\hlstd{,}
+    \hlstr{"orange"}\hlstd{))}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-34-2} 
+
+}
+
+
+\end{knitrout}
+
+\subsubsection{Random numbers for the F-distribution}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# set.seed allows for exact reproduction.}
+\hlkwd{set.seed}\hlstd{(}\hlnum{12345678}\hlstd{)}
+\hlstd{randF} \hlkwb{<-} \hlkwd{rf}\hlstd{(}\hlnum{1000}\hlstd{,} \hlnum{5}\hlstd{,} \hlnum{100}\hlstd{)}
+\hlcom{# Generate histogram for the random numbers with exact.}
+\hlkwd{hist}\hlstd{(randF)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-35-1} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{# Generate histogram for the random numbers with relative}
+\hlcom{# frequency.  This is normalized, so we can superimpose an}
+\hlcom{# F-distribution to it.}
+\hlkwd{hist}\hlstd{(randF,} \hlkwc{freq} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\hlcom{# Superimpose an F-distribution on the histogram.}
+\hlkwd{lines}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{5}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{100}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"purple"}\hlstd{,}
+  \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-35-2} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{# Set y-axis limits and more detailed histogram bins using}
+\hlcom{# 'breaks = 25'}
+\hlkwd{hist}\hlstd{(randF,} \hlkwc{freq} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{0.8}\hlstd{),} \hlkwc{breaks} \hlstd{=} \hlnum{25}\hlstd{)}
+\hlkwd{lines}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{5}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{100}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"purple"}\hlstd{,}
+  \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-35-3} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{# Generate more random F-distributions to get closer to the}
+\hlcom{# 'true' density.}
+\hlstd{randF} \hlkwb{<-} \hlkwd{rf}\hlstd{(}\hlnum{10000}\hlstd{,} \hlnum{5}\hlstd{,} \hlnum{100}\hlstd{)}
+\hlkwd{hist}\hlstd{(randF,} \hlkwc{freq} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{0.8}\hlstd{),} \hlkwc{breaks} \hlstd{=} \hlnum{25}\hlstd{)}
+\hlkwd{lines}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{5}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{100}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"purple"}\hlstd{,}
+  \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-35-4} 
+
+}
+
+
+\end{knitrout}
+
+\subsubsection{Revisit Rocket Example}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{rocket} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/rocket.csv"}\hlstd{)}
+\hlstd{m1} \hlkwb{<-} \hlkwd{lm}\hlstd{(thrust} \hlopt{~} \hlstd{nozzle} \hlopt{+} \hlstd{propratio,} \hlkwc{data} \hlstd{= rocket)}
+\hlkwd{summary}\hlstd{(m1)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = thrust ~ nozzle + propratio, data = rocket)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.8459 -1.7555  0.5934  1.2906  3.3008 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 473.6039     4.7158 100.430 4.88e-15 ***
+## nozzle       16.7383     1.5329  10.919 1.71e-06 ***
+## propratio    -1.0948     0.9414  -1.163    0.275    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.655 on 9 degrees of freedom
+## Multiple R-squared:  0.9303,	Adjusted R-squared:  0.9148 
+## F-statistic: 60.05 on 2 and 9 DF,  p-value: 6.238e-06
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Compare summary with ANOVA table on board from Oct. 5.}
+\hlkwd{anova}\hlstd{(m1)}
+\end{alltt}
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: thrust
+##           Df Sum Sq Mean Sq  F value    Pr(>F)    
+## nozzle     1 836.67  836.67 118.7377 1.743e-06 ***
+## propratio  1   9.53    9.53   1.3524    0.2748    
+## Residuals  9  63.42    7.05                       
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+\begin{alltt}
+\hlkwd{anova}\hlstd{(m1)}\hlopt{$}\hlstd{`Sum Sq`}
+\end{alltt}
+\begin{verbatim}
+## [1] 836.670000   9.529332  63.417335
+\end{verbatim}
+\begin{alltt}
+\hlkwd{sum}\hlstd{(}\hlkwd{anova}\hlstd{(m1)}\hlopt{$}\hlstd{`Sum Sq`[}\hlnum{1}\hlopt{:}\hlnum{2}\hlstd{])}
+\end{alltt}
+\begin{verbatim}
+## [1] 846.1993
+\end{verbatim}
+\begin{alltt}
+\hlstd{SSRes} \hlkwb{<-} \hlkwd{anova}\hlstd{(m1)}\hlopt{$}\hlstd{`Sum Sq`[}\hlnum{3}\hlstd{]}
+\hlcom{# Test of overall significance.}
+\hlstd{m_red} \hlkwb{<-} \hlkwd{lm}\hlstd{(thrust} \hlopt{~} \hlnum{1}\hlstd{,} \hlkwc{data} \hlstd{= rocket)}
+\hlkwd{summary}\hlstd{(m_red)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = thrust ~ 1, data = rocket)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -13.4167  -7.1167  -0.2167   8.2333  11.3833 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  476.617      2.625   181.6   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 9.094 on 11 degrees of freedom
+\end{verbatim}
+\begin{alltt}
+\hlkwd{anova}\hlstd{(m_red)}
+\end{alltt}
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: thrust
+##           Df Sum Sq Mean Sq F value Pr(>F)
+## Residuals 11 909.62  82.692
+\end{verbatim}
+\begin{alltt}
+\hlstd{SSRes_A} \hlkwb{<-} \hlkwd{anova}\hlstd{(m_red)}\hlopt{$}\hlstd{`Sum Sq`[}\hlnum{1}\hlstd{]}
+\hlcom{# Manually calculate F-statistic.}
+\hlstd{l} \hlkwb{<-} \hlnum{2}
+\hlstd{n} \hlkwb{<-} \hlkwd{nrow}\hlstd{(rocket)}
+\hlstd{p} \hlkwb{<-} \hlnum{2}
+\hlstd{Fstat} \hlkwb{<-} \hlstd{((SSRes_A} \hlopt{-} \hlstd{SSRes)}\hlopt{/}\hlstd{l)}\hlopt{/}\hlstd{(SSRes}\hlopt{/}\hlstd{(n} \hlopt{-} \hlstd{p} \hlopt{-} \hlnum{1}\hlstd{))}
+\hlstd{Fstat}
+\end{alltt}
+\begin{verbatim}
+## [1] 60.04505
+\end{verbatim}
+\begin{alltt}
+\hlstd{pval} \hlkwb{<-} \hlnum{1} \hlopt{-} \hlkwd{pf}\hlstd{(Fstat,} \hlkwc{df1} \hlstd{= l,} \hlkwc{df2} \hlstd{= n} \hlopt{-} \hlstd{p} \hlopt{-} \hlnum{1}\hlstd{)}
+\hlstd{pval}
+\end{alltt}
+\begin{verbatim}
+## [1] 6.238398e-06
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Automatically calculate F-statistic.}
+\hlkwd{anova}\hlstd{(m1, m_red)}\hlopt{$}\hlstd{F[}\hlnum{2}\hlstd{]}
+\end{alltt}
+\begin{verbatim}
+## [1] 60.04505
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+    \subsubsection{Revist Coffee Example (Coffee Quality Institute, 2018)}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{coffee} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/coffee_arabica.csv"}\hlstd{)}
+\hlstd{mfull} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlkwd{factor}\hlstd{(Processing.Method)} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+}
+  \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,}
+  \hlkwc{dat} \hlstd{= coffee)}
+\hlkwd{summary}\hlstd{(mfull)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Flavor ~ factor(Processing.Method) + Aroma + Aftertaste + 
+##     Body + Acidity + Balance + Sweetness + Uniformity + Moisture, 
+##     data = coffee)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.68587 -0.08465  0.00079  0.08910  0.63633 
+## 
+## Coefficients:
+##                                                     Estimate Std. Error t value
+## (Intercept)                                        -0.728757   0.168516  -4.325
+## factor(Processing.Method)Semi-washed / Semi-pulped -0.001396   0.022021  -0.063
+## factor(Processing.Method)Washed / Wet              -0.033061   0.011024  -2.999
+## Aroma                                               0.220302   0.020447  10.774
+## Aftertaste                                          0.468759   0.023912  19.603
+## Body                                                0.096140   0.024334   3.951
+## Acidity                                             0.216751   0.021194  10.227
+## Balance                                             0.046806   0.022558   2.075
+## Sweetness                                           0.025507   0.010150   2.513
+## Uniformity                                          0.016297   0.009803   1.663
+## Moisture                                            0.169012   0.102480   1.649
+##                                                    Pr(>|t|)    
+## (Intercept)                                        1.67e-05 ***
+## factor(Processing.Method)Semi-washed / Semi-pulped  0.94947    
+## factor(Processing.Method)Washed / Wet               0.00277 ** 
+## Aroma                                               < 2e-16 ***
+## Aftertaste                                          < 2e-16 ***
+## Body                                               8.28e-05 ***
+## Acidity                                             < 2e-16 ***
+## Balance                                             0.03823 *  
+## Sweetness                                           0.01211 *  
+## Uniformity                                          0.09669 .  
+## Moisture                                            0.09938 .  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.148 on 1108 degrees of freedom
+## Multiple R-squared:  0.8091,	Adjusted R-squared:  0.8073 
+## F-statistic: 469.5 on 10 and 1108 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\begin{alltt}
+\hlkwd{anova}\hlstd{(mfull)}
+\end{alltt}
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Flavor
+##                             Df Sum Sq Mean Sq   F value    Pr(>F)    
+## factor(Processing.Method)    2  2.313   1.156   52.8096 < 2.2e-16 ***
+## Aroma                        1 67.258  67.258 3071.2889 < 2.2e-16 ***
+## Aftertaste                   1 29.097  29.097 1328.6722 < 2.2e-16 ***
+## Body                         1  1.129   1.129   51.5460  1.28e-12 ***
+## Acidity                      1  2.522   2.522  115.1618 < 2.2e-16 ***
+## Balance                      1  0.116   0.116    5.2963 0.0215553 *  
+## Sweetness                    1  0.251   0.251   11.4392 0.0007442 ***
+## Uniformity                   1  0.064   0.064    2.9154 0.0880167 .  
+## Moisture                     1  0.060   0.060    2.7200 0.0993839 .  
+## Residuals                 1108 24.264   0.022                        
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+\begin{alltt}
+\hlstd{SSRes} \hlkwb{<-} \hlkwd{anova}\hlstd{(mfull)}\hlopt{$}\hlstd{`Sum Sq`[}\hlnum{10}\hlstd{]}
+\hlcom{# Reduced model without Uniformity and Moisture}
+\hlcom{# (beta9=beta10=0):}
+\hlstd{m_red} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlkwd{factor}\hlstd{(Processing.Method)} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+}
+  \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness,} \hlkwc{dat} \hlstd{= coffee)}
+\hlkwd{summary}\hlstd{(m_red)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Flavor ~ factor(Processing.Method) + Aroma + Aftertaste + 
+##     Body + Acidity + Balance + Sweetness, data = coffee)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.67907 -0.08487  0.00054  0.08490  0.64763 
+## 
+## Coefficients:
+##                                                     Estimate Std. Error t value
+## (Intercept)                                        -0.606791   0.159741  -3.799
+## factor(Processing.Method)Semi-washed / Semi-pulped  0.002275   0.021969   0.104
+## factor(Processing.Method)Washed / Wet              -0.031115   0.011009  -2.826
+## Aroma                                               0.221362   0.020472  10.813
+## Aftertaste                                          0.470849   0.023858  19.735
+## Body                                                0.087671   0.024102   3.637
+## Acidity                                             0.219257   0.021182  10.351
+## Balance                                             0.047526   0.022283   2.133
+## Sweetness                                           0.032406   0.009597   3.377
+##                                                    Pr(>|t|)    
+## (Intercept)                                        0.000153 ***
+## factor(Processing.Method)Semi-washed / Semi-pulped 0.917539    
+## factor(Processing.Method)Washed / Wet              0.004795 ** 
+## Aroma                                               < 2e-16 ***
+## Aftertaste                                          < 2e-16 ***
+## Body                                               0.000288 ***
+## Acidity                                             < 2e-16 ***
+## Balance                                            0.033160 *  
+## Sweetness                                          0.000759 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.1482 on 1110 degrees of freedom
+## Multiple R-squared:  0.8081,	Adjusted R-squared:  0.8067 
+## F-statistic: 584.2 on 8 and 1110 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\begin{alltt}
+\hlkwd{anova}\hlstd{(m_red)}
+\end{alltt}
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Flavor
+##                             Df Sum Sq Mean Sq  F value    Pr(>F)    
+## factor(Processing.Method)    2  2.313   1.156   52.637 < 2.2e-16 ***
+## Aroma                        1 67.258  67.258 3061.263 < 2.2e-16 ***
+## Aftertaste                   1 29.097  29.097 1324.335 < 2.2e-16 ***
+## Body                         1  1.129   1.129   51.378 1.387e-12 ***
+## Acidity                      1  2.522   2.522  114.786 < 2.2e-16 ***
+## Balance                      1  0.116   0.116    5.279 0.0217690 *  
+## Sweetness                    1  0.251   0.251   11.402 0.0007591 ***
+## Residuals                 1110 24.387   0.022                       
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+\begin{alltt}
+\hlstd{SSRes_A} \hlkwb{<-} \hlkwd{anova}\hlstd{(m_red)}\hlopt{$}\hlstd{`Sum Sq`[}\hlnum{8}\hlstd{]}
+\hlcom{# Manually calculate F-statistic.}
+\hlstd{l} \hlkwb{<-} \hlnum{2}
+\hlstd{n} \hlkwb{<-} \hlkwd{nrow}\hlstd{(coffee)}
+\hlstd{p} \hlkwb{<-} \hlnum{10}
+\hlstd{Fstat} \hlkwb{<-} \hlstd{((SSRes_A} \hlopt{-} \hlstd{SSRes)}\hlopt{/}\hlstd{l)}\hlopt{/}\hlstd{(SSRes}\hlopt{/}\hlstd{(n} \hlopt{-} \hlstd{p} \hlopt{-} \hlnum{1}\hlstd{))}
+\hlstd{Fstat}
+\end{alltt}
+\begin{verbatim}
+## [1] 2.81769
+\end{verbatim}
+\begin{alltt}
+\hlstd{pval} \hlkwb{<-} \hlnum{1} \hlopt{-} \hlkwd{pf}\hlstd{(Fstat,} \hlkwc{df1} \hlstd{= l,} \hlkwc{df2} \hlstd{= n} \hlopt{-} \hlstd{p} \hlopt{-} \hlnum{1}\hlstd{)}
+\hlstd{pval}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.06017197
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Automatically calculate F-statistic.}
+\hlkwd{anova}\hlstd{(mfull, m_red)}\hlopt{$}\hlstd{F[}\hlnum{2}\hlstd{]}
+\end{alltt}
+\begin{verbatim}
+## [1] 2.81769
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Reduced model without Uniformity and Moisture and setting}
+\hlcom{# effect of Dry = Semi (beta1=beta9=beta10=0) 1 = wet, 0}
+\hlcom{# otherwise}
+\hlstd{coffee}\hlopt{$}\hlstd{method2} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{%in%} \hlkwd{c}\hlstd{(}\hlstr{"Natural / Dry"}\hlstd{,}
+  \hlstr{"Semi-washed / Semi-pulped"}\hlstd{),} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{)}
+\hlcom{# 1 = semi/dry, 0 o.w}
+\hlstd{coffee}\hlopt{$}\hlstd{wet} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{"Washed / Wet"}\hlstd{,}
+  \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{)}
+\hlstd{m_red2} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{method2} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+}
+  \hlstd{Balance} \hlopt{+} \hlstd{Sweetness,} \hlkwc{dat} \hlstd{= coffee)}
+\hlkwd{summary}\hlstd{(m_red2)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Flavor ~ method2 + Aroma + Aftertaste + Body + Acidity + 
+##     Balance + Sweetness, data = coffee)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.67906 -0.08508  0.00052  0.08490  0.64722 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -0.606597   0.159659  -3.799 0.000153 ***
+## method2     -0.031543   0.010200  -3.092 0.002036 ** 
+## Aroma        0.221408   0.020458  10.823  < 2e-16 ***
+## Aftertaste   0.470861   0.023847  19.745  < 2e-16 ***
+## Body         0.087561   0.024068   3.638 0.000287 ***
+## Acidity      0.219266   0.021173  10.356  < 2e-16 ***
+## Balance      0.047527   0.022273   2.134 0.033077 *  
+## Sweetness    0.032462   0.009577   3.389 0.000725 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.1482 on 1111 degrees of freedom
+## Multiple R-squared:  0.8081,	Adjusted R-squared:  0.8069 
+## F-statistic: 668.3 on 7 and 1111 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\begin{alltt}
+\hlkwd{anova}\hlstd{(m_red2)}
+\end{alltt}
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Flavor
+##              Df Sum Sq Mean Sq   F value    Pr(>F)    
+## method2       1  2.313   2.313  105.3648 < 2.2e-16 ***
+## Aroma         1 67.255  67.255 3063.8526 < 2.2e-16 ***
+## Aftertaste    1 29.100  29.100 1325.6571 < 2.2e-16 ***
+## Body          1  1.126   1.126   51.3088 1.434e-12 ***
+## Acidity       1  2.522   2.522  114.9115 < 2.2e-16 ***
+## Balance       1  0.116   0.116    5.2882 0.0216552 *  
+## Sweetness     1  0.252   0.252   11.4883 0.0007249 ***
+## Residuals  1111 24.388   0.022                        
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+\begin{alltt}
+\hlstd{SSRes_A} \hlkwb{<-} \hlkwd{anova}\hlstd{(m_red2)}\hlopt{$}\hlstd{`Sum Sq`[}\hlnum{8}\hlstd{]}
+\hlcom{## Manually calculate F-statistic.}
+\hlstd{l} \hlkwb{<-} \hlnum{3}
+\hlstd{n} \hlkwb{<-} \hlkwd{nrow}\hlstd{(coffee)}
+\hlstd{p} \hlkwb{<-} \hlnum{10}
+\hlstd{Fstat} \hlkwb{<-} \hlstd{((SSRes_A} \hlopt{-} \hlstd{SSRes)}\hlopt{/}\hlstd{l)}\hlopt{/}\hlstd{(SSRes}\hlopt{/}\hlstd{(n} \hlopt{-} \hlstd{p} \hlopt{-} \hlnum{1}\hlstd{))}
+\hlstd{Fstat}
+\end{alltt}
+\begin{verbatim}
+## [1] 1.882046
+\end{verbatim}
+\begin{alltt}
+\hlstd{pval} \hlkwb{<-} \hlnum{1} \hlopt{-} \hlkwd{pf}\hlstd{(Fstat,} \hlkwc{df1} \hlstd{= l,} \hlkwc{df2} \hlstd{= n} \hlopt{-} \hlstd{p} \hlopt{-} \hlnum{1}\hlstd{)}
+\hlstd{pval}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1308207
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Automatically calculate F-statistic.}
+\hlkwd{anova}\hlstd{(mfull, m_red2)}\hlopt{$}\hlstd{F[}\hlnum{2}\hlstd{]}
+\end{alltt}
+\begin{verbatim}
+## [1] 1.882046
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 \input{lec_12.tex}
+
+\subsection{R Demo}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Coffee example (Coffee Quality Institute, 2018)}
+\hlcom{## continued}
+\hlstd{coffee} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/coffee_arabica.csv"}\hlstd{)}
+\hlcom{# cor(coffee) doesn't work as there's a categorical}
+\hlcom{# variable.}
+\hlkwd{cor}\hlstd{(coffee[,} \hlopt{-}\hlnum{1}\hlstd{])}  \hlcom{# e.g., remove first column}
+\end{alltt}
+\begin{verbatim}
+##                  Aroma     Flavor Aftertaste        Body     Acidity    Balance
+## Aroma       1.00000000  0.7339782  0.6892744  0.56699932  0.60115765  0.6156508
+## Flavor      0.73397820  1.0000000  0.8582783  0.67694834  0.73845546  0.7324530
+## Aftertaste  0.68927440  0.8582783  1.0000000  0.67407704  0.69408861  0.7657979
+## Body        0.56699932  0.6769483  0.6740770  1.00000000  0.60795391  0.6924568
+## Acidity     0.60115765  0.7384555  0.6940886  0.60795391  1.00000000  0.6417994
+## Balance     0.61565084  0.7324530  0.7657979  0.69245676  0.64179938  1.0000000
+## Sweetness   0.06955938  0.1345364  0.1185760  0.03977892  0.06906093  0.1016718
+## Uniformity  0.14785498  0.2132347  0.2143116  0.07195778  0.14876428  0.2180726
+## Moisture   -0.11567549 -0.1327342 -0.1745366 -0.21009097 -0.10391684 -0.2161964
+##             Sweetness Uniformity    Moisture
+## Aroma      0.06955938 0.14785498 -0.11567549
+## Flavor     0.13453644 0.21323472 -0.13273418
+## Aftertaste 0.11857600 0.21431157 -0.17453658
+## Body       0.03977892 0.07195778 -0.21009097
+## Acidity    0.06906093 0.14876428 -0.10391684
+## Balance    0.10167183 0.21807265 -0.21619640
+## Sweetness  1.00000000 0.34756414  0.08049300
+## Uniformity 0.34756414 1.00000000  0.02105693
+## Moisture   0.08049300 0.02105693  1.00000000
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Plot the pairs (disabled due to loading time on PDF).
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{pairs}\hlstd{(}\hlopt{~}\hlstd{Flavor} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+}
+  \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,} \hlkwc{data} \hlstd{= coffee)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Code our own indicators, so that we can more easily}
+\hlcom{# interpret VIFs.  1 = wet, 0 otherwise}
+\hlstd{coffee}\hlopt{$}\hlstd{wet} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{"Washed / Wet"}\hlstd{,}
+  \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}
+\hlcom{# 1 = semi/dry, 0 otherwise}
+\hlstd{coffee}\hlopt{$}\hlstd{semi} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{"Semi-washed / Semi-pulped"}\hlstd{,}
+  \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Model:
+$$y_i=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}+
+    \beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6}+\beta_7x_{i7}+\beta_8x_{i8}+
+    \beta_9x_{i9}+\beta_{10}x_{i(10)}+\varepsilon_i$$
+where
+\begin{itemize}
+    \item $y=$ flavour
+    \item $x_1=1$ if wet, 0 otherwise
+    \item $x_2=1$ if semi, 0 otherwise
+    \item $x_3=$ Aroma
+    \item $x_4=$ Aftertaste
+    \item $x_5=$ Body
+    \item $x_6=$ Acidity
+    \item $x_7=$ Balance
+    \item $x_8=$ Sweetness
+    \item $x_9=$ Uniformity
+    \item $x_{10}=$ Moisture
+\end{itemize}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Full MLR with our manually coded indicators.}
+\hlstd{mfull} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{semi} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+}
+  \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,} \hlkwc{dat} \hlstd{= coffee)}
+\hlkwd{summary}\hlstd{(mfull)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Flavor ~ wet + semi + Aroma + Aftertaste + Body + 
+##     Acidity + Balance + Sweetness + Uniformity + Moisture, data = coffee)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.68587 -0.08465  0.00079  0.08910  0.63633 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -0.728757   0.168516  -4.325 1.67e-05 ***
+## wet         -0.033061   0.011024  -2.999  0.00277 ** 
+## semi        -0.001396   0.022021  -0.063  0.94947    
+## Aroma        0.220302   0.020447  10.774  < 2e-16 ***
+## Aftertaste   0.468759   0.023912  19.603  < 2e-16 ***
+## Body         0.096140   0.024334   3.951 8.28e-05 ***
+## Acidity      0.216751   0.021194  10.227  < 2e-16 ***
+## Balance      0.046806   0.022558   2.075  0.03823 *  
+## Sweetness    0.025507   0.010150   2.513  0.01211 *  
+## Uniformity   0.016297   0.009803   1.663  0.09669 .  
+## Moisture     0.169012   0.102480   1.649  0.09938 .  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.148 on 1108 degrees of freedom
+## Multiple R-squared:  0.8091,	Adjusted R-squared:  0.8073 
+## F-statistic: 469.5 on 10 and 1108 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Full MLR alternative, using the factor command.}
+\hlstd{mfull_alternative} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlkwd{factor}\hlstd{(Processing.Method)} \hlopt{+}
+  \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+}
+  \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,} \hlkwc{dat} \hlstd{= coffee)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Suppose we want to check the VIF for $j=1$; that is,
+$x_1$. Now, we fit:
+$$x_{i1}=\alpha_0+\alpha_2x_{i2}+\alpha_3x_{i3}+
+    \alpha_4x_{i4}+\alpha_5x_{i5}+\alpha_6x_{i6}+\alpha_7x_{i7}+\alpha_8x_{i8}+
+    \alpha_9x_{i9}+\alpha_{10}x_{i(10)}+\varepsilon_i$$
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{wet_reg} \hlkwb{<-} \hlkwd{lm}\hlstd{(wet} \hlopt{~} \hlstd{semi} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+}
+  \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,} \hlkwc{dat} \hlstd{= coffee)}
+\hlkwd{summary}\hlstd{(wet_reg)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = wet ~ semi + Aroma + Aftertaste + Body + Acidity + 
+##     Balance + Sweetness + Uniformity + Moisture, data = coffee)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.0015 -0.0283  0.1770  0.2522  0.7704 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  0.81748    0.45838   1.783 0.074794 .  
+## semi        -0.75675    0.05551 -13.632  < 2e-16 ***
+## Aroma        0.09690    0.05562   1.742 0.081774 .  
+## Aftertaste  -0.13169    0.06502  -2.026 0.043054 *  
+## Body        -0.21885    0.06596  -3.318 0.000936 ***
+## Acidity      0.18696    0.05746   3.254 0.001173 ** 
+## Balance     -0.10804    0.06136  -1.761 0.078563 .  
+## Sweetness    0.08373    0.02753   3.041 0.002413 ** 
+## Uniformity   0.03547    0.02668   1.329 0.184053    
+## Moisture     0.59486    0.27858   2.135 0.032956 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.4031 on 1109 degrees of freedom
+## Multiple R-squared:  0.1911,	Adjusted R-squared:  0.1845 
+## F-statistic: 29.11 on 9 and 1109 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\begin{alltt}
+\hlstd{r2_wet} \hlkwb{<-} \hlkwd{summary}\hlstd{(wet_reg)}\hlopt{$}\hlstd{r.squared}
+\hlstd{r2_wet}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.191077
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+$R_j$: In our case, $R_1=0.191077$.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{VIF_wet} \hlkwb{<-} \hlnum{1}\hlopt{/}\hlstd{(}\hlnum{1} \hlopt{-} \hlstd{r2_wet)}
+\hlstd{VIF_wet}
+\end{alltt}
+\begin{verbatim}
+## [1] 1.236212
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+$\text{VIF}_{j}$: $\text{VIF}_1=1.236212$.
+    Interpretation: in a regression with all
+    the variables compared to a regression with just this one,
+    the estimated variance has increased by a factor of 1.24,
+    which is not a very large inflation. The variable wet is not
+    very linearly correlated or dependent on the other predictors
+    that we have in the model.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{Aroma_reg} \hlkwb{<-} \hlkwd{lm}\hlstd{(Aroma} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{semi} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+}
+  \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,} \hlkwc{dat} \hlstd{= coffee)}
+\hlstd{r2_Aroma} \hlkwb{<-} \hlkwd{summary}\hlstd{(Aroma_reg)}\hlopt{$}\hlstd{r.squared}
+\hlstd{r2_Aroma}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.5204716
+\end{verbatim}
+\begin{alltt}
+\hlstd{VIF_Aroma} \hlkwb{<-} \hlnum{1}\hlopt{/}\hlstd{(}\hlnum{1} \hlopt{-} \hlstd{r2_Aroma)}
+\hlstd{VIF_Aroma}
+\end{alltt}
+\begin{verbatim}
+## [1] 2.085382
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+$R_3=0.5204716$, $\text{VIF}_3=2.085382$.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{Aftertaste_reg} \hlkwb{<-} \hlkwd{lm}\hlstd{(Aftertaste} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{semi} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Body} \hlopt{+}
+  \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,} \hlkwc{dat} \hlstd{= coffee)}
+\hlstd{r2_Aftertaste} \hlkwb{<-} \hlkwd{summary}\hlstd{(Aftertaste_reg)}\hlopt{$}\hlstd{r.squared}
+\hlstd{r2_Aftertaste}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.7101012
+\end{verbatim}
+\begin{alltt}
+\hlstd{VIF_Aftertaste} \hlkwb{<-} \hlnum{1}\hlopt{/}\hlstd{(}\hlnum{1} \hlopt{-} \hlstd{r2_Aftertaste)}
+\hlstd{VIF_Aftertaste}
+\end{alltt}
+\begin{verbatim}
+## [1] 3.449479
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Load car library for automatic VIF calculation using}
+\hlcom{# vif()}
+\hlkwd{library}\hlstd{(car)}
+\hlkwd{vif}\hlstd{(mfull)}
+\end{alltt}
+\begin{verbatim}
+##        wet       semi      Aroma Aftertaste       Body    Acidity    Balance 
+##   1.236212   1.178004   2.085382   3.449479   2.317728   2.232210   3.002813 
+##  Sweetness Uniformity   Moisture 
+##   1.159602   1.209901   1.086101
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+    No serious signs of inflation, all VIFs are less than 10.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Python in FL everglades example (2017) Sex, length,}
+\hlcom{## total mass, fat mass, and specimen condition data for}
+\hlcom{## 248 Burmese pythons (Python bivittatus) collected in the}
+\hlcom{## Florida Everglades}
+\hlstd{python} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/FLpython.csv"}\hlstd{)}
+\hlkwd{head}\hlstd{(python)}
+\end{alltt}
+\begin{verbatim}
+##   sex  svl mass length    fat
+## 1   F 70.0  186   77.5  6.000
+## 2   M 76.0  310   83.8 11.000
+## 3   M 77.0  260   86.1  6.000
+## 4   M 78.0  262   87.1  8.000
+## 5   M 81.0  306   91.1  4.000
+## 6   M 93.5  605  104.6 18.959
+\end{verbatim}
+\begin{alltt}
+\hlstd{python}\hlopt{$}\hlstd{male} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(python}\hlopt{$}\hlstd{sex} \hlopt{==} \hlstr{"M"}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}  \hlcom{# 1 = M, 0 =F}
+\hlkwd{cor}\hlstd{(python[,} \hlopt{-}\hlnum{1}\hlstd{])}
+\end{alltt}
+\begin{verbatim}
+##               svl       mass     length        fat       male
+## svl     1.0000000  0.8843022  0.9994935  0.8098652 -0.1602418
+## mass    0.8843022  1.0000000  0.8858256  0.9419114 -0.2190993
+## length  0.9994935  0.8858256  1.0000000  0.8114658 -0.1593512
+## fat     0.8098652  0.9419114  0.8114658  1.0000000 -0.2933111
+## male   -0.1602418 -0.2190993 -0.1593512 -0.2933111  1.0000000
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{pairs}\hlstd{(python[,} \hlopt{-}\hlnum{1}\hlstd{])}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{mpf} \hlkwb{<-} \hlkwd{lm}\hlstd{(fat} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{svl} \hlopt{+} \hlstd{mass} \hlopt{+} \hlstd{length,} \hlkwc{data} \hlstd{= python)}
+\hlkwd{summary}\hlstd{(mpf)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = fat ~ male + svl + mass + length, data = python)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2445.77  -137.41    -5.29   110.00  1527.27 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  2.021e+02  1.331e+02   1.518    0.130    
+## male        -1.971e+02  4.732e+01  -4.165 4.32e-05 ***
+## svl         -3.370e+00  1.125e+01  -0.300    0.765    
+## mass         1.178e-01  5.302e-03  22.210  < 2e-16 ***
+## length       1.594e+00  1.010e+01   0.158    0.875    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 360.9 on 243 degrees of freedom
+## Multiple R-squared:  0.897,	Adjusted R-squared:  0.8953 
+## F-statistic:   529 on 4 and 243 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\begin{alltt}
+\hlkwd{vif}\hlstd{(mpf)}
+\end{alltt}
+\begin{verbatim}
+##        male         svl        mass      length 
+##    1.058699  994.546545    4.813078 1007.484200
+\end{verbatim}
+\begin{alltt}
+\hlstd{mpf_l} \hlkwb{<-} \hlkwd{lm}\hlstd{(length} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{svl} \hlopt{+} \hlstd{mass,} \hlkwc{data} \hlstd{= python)}
+\hlnum{1}\hlopt{/}\hlstd{(}\hlnum{1} \hlopt{-} \hlkwd{summary}\hlstd{(mpf_l)}\hlopt{$}\hlstd{r.squared)}
+\end{alltt}
+\begin{verbatim}
+## [1] 1007.484
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Misleading conclusion: \code{svl} and \code{length} are both irrelevant
+(this is not the case). Also, the standard errors are very large.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# remove 'length' based on VIF}
+\hlstd{mpf2} \hlkwb{<-} \hlkwd{lm}\hlstd{(fat} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{mass} \hlopt{+} \hlstd{svl,} \hlkwc{data} \hlstd{= python)}
+\hlkwd{summary}\hlstd{(mpf2)}\hlopt{$}\hlstd{adj}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.8957164
+\end{verbatim}
+\begin{alltt}
+\hlkwd{vif}\hlstd{(mpf2)}
+\end{alltt}
+\begin{verbatim}
+##     male     mass      svl 
+## 1.056139 4.720065 4.611903
+\end{verbatim}
+\begin{alltt}
+\hlkwd{anova}\hlstd{(mpf2)}
+\end{alltt}
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: fat
+##            Df    Sum Sq   Mean Sq   F value  Pr(>F)    
+## male        1  26435988  26435988  203.7689 < 2e-16 ***
+## mass        1 248624259 248624259 1916.3988 < 2e-16 ***
+## svl         1    567377    567377    4.3734 0.03754 *  
+## Residuals 244  31655372    129735                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+\begin{alltt}
+\hlkwd{AIC}\hlstd{(mpf2)}
+\end{alltt}
+\begin{verbatim}
+## [1] 3629.527
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+    \code{svl} now has a significant $t$-statistic.
 \input{lec_13.tex}
 \input{lec_14.tex}
+
+\subsection{R Demo}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Coffee example (Coffee Quality Institute, 2018)}
+\hlcom{## continued.}
+\hlstd{coffee} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/coffee_arabica.csv"}\hlstd{)}
+\hlstd{mfull} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlkwd{factor}\hlstd{(Processing.Method)} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+}
+  \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,}
+  \hlkwc{dat} \hlstd{= coffee)}
+\hlkwd{summary}\hlstd{(mfull)}\hlopt{$}\hlstd{adj.r.squared}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.8073297
+\end{verbatim}
+\begin{alltt}
+\hlkwd{AIC}\hlstd{(mfull)}
+\end{alltt}
+\begin{verbatim}
+## [1] -1087.524
+\end{verbatim}
+\begin{alltt}
+\hlkwd{BIC}\hlstd{(mfull)}
+\end{alltt}
+\begin{verbatim}
+## [1] -1027.282
+\end{verbatim}
+\begin{alltt}
+\hlkwd{library}\hlstd{(leaps)}
+\hlcom{# Exhaustive, brute-force search.}
+\hlstd{all_regs} \hlkwb{<-} \hlkwd{regsubsets}\hlstd{(Flavor} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= coffee,} \hlkwc{nvmax} \hlstd{=} \hlnum{10}\hlstd{,}
+  \hlkwc{nbest} \hlstd{=} \hlnum{2}\hlopt{^}\hlnum{10}\hlstd{,} \hlkwc{really.big} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{all_regs_summ} \hlkwb{<-} \hlkwd{summary}\hlstd{(all_regs)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{all_regs_summ}\hlopt{$}\hlstd{which}
+\hlstd{all_regs_summ}\hlopt{$}\hlstd{adjr2}
+\hlstd{all_regs_summ}\hlopt{$}\hlstd{bic}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Organize results according to number of variables in}
+\hlcom{# model.}
+\hlstd{p} \hlkwb{<-} \hlnum{10}
+\hlstd{k} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{1}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{2}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{2}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{3}\hlstd{,} \hlkwd{choose}\hlstd{(p,}
+  \hlnum{3}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{4}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{4}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{5}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{5}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{6}\hlstd{,} \hlkwd{choose}\hlstd{(p,}
+  \hlnum{6}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{7}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{7}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{8}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{8}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{9}\hlstd{,} \hlkwd{choose}\hlstd{(p,}
+  \hlnum{9}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{10}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{10}\hlstd{)))}
+\hlkwd{boxplot}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{adjr2} \hlopt{~} \hlstd{k,} \hlkwc{xlab} \hlstd{=} \hlstr{"Number of predictors"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlkwd{expression}\hlstd{(R[adj]}\hlopt{^}\hlnum{2}\hlstd{),} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1}\hlstd{))}
+\hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1}\hlstd{),} \hlkwc{lty} \hlstd{=} \hlnum{2}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"red"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-53-1} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{boxplot}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{bic} \hlopt{~} \hlstd{k,} \hlkwc{xlab} \hlstd{=} \hlstr{"Number of predictors"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"BIC"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-53-2} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{max}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{adjr2)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.8075027
+\end{verbatim}
+\begin{alltt}
+\hlstd{bestR2adj} \hlkwb{<-} \hlkwd{which.max}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{adjr2)}
+\hlkwd{min}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{bic)}
+\end{alltt}
+\begin{verbatim}
+## [1] -1793.389
+\end{verbatim}
+\begin{alltt}
+\hlstd{bestBIC} \hlkwb{<-} \hlkwd{which.min}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{bic)}
+\hlcom{# Find out which predictors in those models.}
+\hlstd{all_regs_summ}\hlopt{$}\hlstd{which[bestR2adj, ]}
+\end{alltt}
+\begin{verbatim}
+##                                (Intercept) 
+##                                       TRUE 
+## Processing.MethodSemi-washed / Semi-pulped 
+##                                      FALSE 
+##              Processing.MethodWashed / Wet 
+##                                       TRUE 
+##                                      Aroma 
+##                                       TRUE 
+##                                 Aftertaste 
+##                                       TRUE 
+##                                       Body 
+##                                       TRUE 
+##                                    Acidity 
+##                                       TRUE 
+##                                    Balance 
+##                                       TRUE 
+##                                  Sweetness 
+##                                       TRUE 
+##                                 Uniformity 
+##                                       TRUE 
+##                                   Moisture 
+##                                       TRUE
+\end{verbatim}
+\begin{alltt}
+\hlstd{all_regs_summ}\hlopt{$}\hlstd{which[bestBIC, ]}
+\end{alltt}
+\begin{verbatim}
+##                                (Intercept) 
+##                                       TRUE 
+## Processing.MethodSemi-washed / Semi-pulped 
+##                                      FALSE 
+##              Processing.MethodWashed / Wet 
+##                                       TRUE 
+##                                      Aroma 
+##                                       TRUE 
+##                                 Aftertaste 
+##                                       TRUE 
+##                                       Body 
+##                                       TRUE 
+##                                    Acidity 
+##                                       TRUE 
+##                                    Balance 
+##                                      FALSE 
+##                                  Sweetness 
+##                                       TRUE 
+##                                 Uniformity 
+##                                      FALSE 
+##                                   Moisture 
+##                                      FALSE
+\end{verbatim}
+\begin{alltt}
+\hlstd{coffee}\hlopt{$}\hlstd{wet} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{"Washed / Wet"}\hlstd{,}
+  \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}  \hlcom{# 1 = wet, 0 otherwise}
+\hlstd{coffee}\hlopt{$}\hlstd{semi} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{"Semi-washed / Semi-pulped"}\hlstd{,}
+  \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}  \hlcom{# 1 = semi/dry, 0 otherwise}
+\hlstd{coffee}\hlopt{$}\hlstd{Processing.Method} \hlkwb{<-} \hlkwa{NULL}
+\hlstd{m_bestr2adj} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+}
+  \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,} \hlkwc{dat} \hlstd{= coffee)}
+\hlkwd{summary}\hlstd{(m_bestr2adj)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Flavor ~ wet + Aroma + Aftertaste + Body + Acidity + 
+##     Balance + Sweetness + Uniformity + Moisture, data = coffee)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.68587 -0.08469  0.00080  0.08923  0.63660 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -0.728709   0.168439  -4.326 1.65e-05 ***
+## wet         -0.032797   0.010197  -3.216  0.00134 ** 
+## Aroma        0.220278   0.020434  10.780  < 2e-16 ***
+## Aftertaste   0.468749   0.023901  19.612  < 2e-16 ***
+## Body         0.096194   0.024308   3.957 8.06e-05 ***
+## Acidity      0.216754   0.021185  10.232  < 2e-16 ***
+## Balance      0.046793   0.022547   2.075  0.03819 *  
+## Sweetness    0.025480   0.010136   2.514  0.01209 *  
+## Uniformity   0.016291   0.009798   1.663  0.09665 .  
+## Moisture     0.168439   0.102033   1.651  0.09906 .  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.1479 on 1109 degrees of freedom
+## Multiple R-squared:  0.8091,	Adjusted R-squared:  0.8075 
+## F-statistic: 522.1 on 9 and 1109 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\begin{alltt}
+\hlkwd{AIC}\hlstd{(m_bestr2adj)}
+\end{alltt}
+\begin{verbatim}
+## [1] -1089.52
+\end{verbatim}
+\begin{alltt}
+\hlkwd{BIC}\hlstd{(m_bestr2adj)}
+\end{alltt}
+\begin{verbatim}
+## [1] -1034.298
+\end{verbatim}
+\begin{alltt}
+\hlstd{m_bestBIC} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+}
+  \hlstd{Sweetness,} \hlkwc{dat} \hlstd{= coffee)}
+\hlkwd{summary}\hlstd{(m_bestBIC)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Flavor ~ wet + Aroma + Aftertaste + Body + Acidity + 
+##     Sweetness, data = coffee)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.65627 -0.08781  0.00032  0.08529  0.63010 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -0.609003   0.159910  -3.808 0.000148 ***
+## wet         -0.032852   0.010198  -3.221 0.001313 ** 
+## Aroma        0.225969   0.020378  11.089  < 2e-16 ***
+## Aftertaste   0.490988   0.021938  22.381  < 2e-16 ***
+## Body         0.103438   0.022926   4.512 7.11e-06 ***
+## Acidity      0.225638   0.020994  10.748  < 2e-16 ***
+## Sweetness    0.033445   0.009582   3.491 0.000501 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.1484 on 1112 degrees of freedom
+## Multiple R-squared:  0.8073,	Adjusted R-squared:  0.8063 
+## F-statistic: 776.4 on 6 and 1112 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\begin{alltt}
+\hlkwd{AIC}\hlstd{(m_bestBIC)}
+\end{alltt}
+\begin{verbatim}
+## [1] -1085.26
+\end{verbatim}
+\begin{alltt}
+\hlkwd{BIC}\hlstd{(m_bestBIC)}
+\end{alltt}
+\begin{verbatim}
+## [1] -1045.098
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Let's also try stepwise methods.}
+\hlkwd{library}\hlstd{(MASS)}
+\hlcom{# Full model and empty model with just intercept.}
+\hlstd{full} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= coffee)}
+\hlstd{empty} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlnum{1}\hlstd{,} \hlkwc{data} \hlstd{= coffee)}
+\hlcom{# Default stepAIC uses AIC criterion.}
+\hlstd{m_f_AIC} \hlkwb{<-} \hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,}
+  \hlkwc{lower} \hlstd{= empty),} \hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,} \hlkwc{trace} \hlstd{=} \hlnum{0}\hlstd{)}
+\hlcom{# Let's get stepAIC to use BIC by specifying the penalty k}
+\hlcom{# = log(n).  Add 'trace = 0' to hide the output.  Forward.}
+\hlstd{m_f} \hlkwb{<-} \hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,} \hlkwc{lower} \hlstd{= empty),}
+  \hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,} \hlkwc{trace} \hlstd{=} \hlnum{0}\hlstd{,} \hlkwc{k} \hlstd{=} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(coffee)))}
+\hlkwd{summary}\hlstd{(m_f)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Flavor ~ Aftertaste + Acidity + Aroma + Body + Sweetness + 
+##     wet, data = coffee)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.65627 -0.08781  0.00032  0.08529  0.63010 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -0.609003   0.159910  -3.808 0.000148 ***
+## Aftertaste   0.490988   0.021938  22.381  < 2e-16 ***
+## Acidity      0.225638   0.020994  10.748  < 2e-16 ***
+## Aroma        0.225969   0.020378  11.089  < 2e-16 ***
+## Body         0.103438   0.022926   4.512 7.11e-06 ***
+## Sweetness    0.033445   0.009582   3.491 0.000501 ***
+## wet         -0.032852   0.010198  -3.221 0.001313 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.1484 on 1112 degrees of freedom
+## Multiple R-squared:  0.8073,	Adjusted R-squared:  0.8063 
+## F-statistic: 776.4 on 6 and 1112 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Backward.}
+\hlstd{m_b} \hlkwb{<-} \hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= full,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,} \hlkwc{lower} \hlstd{= empty),}
+  \hlkwc{direction} \hlstd{=} \hlstr{"backward"}\hlstd{,} \hlkwc{trace} \hlstd{=} \hlnum{0}\hlstd{,} \hlkwc{k} \hlstd{=} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(coffee)))}
+\hlkwd{summary}\hlstd{(m_b)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Flavor ~ Aroma + Aftertaste + Body + Acidity + Sweetness + 
+##     wet, data = coffee)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.65627 -0.08781  0.00032  0.08529  0.63010 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -0.609003   0.159910  -3.808 0.000148 ***
+## Aroma        0.225969   0.020378  11.089  < 2e-16 ***
+## Aftertaste   0.490988   0.021938  22.381  < 2e-16 ***
+## Body         0.103438   0.022926   4.512 7.11e-06 ***
+## Acidity      0.225638   0.020994  10.748  < 2e-16 ***
+## Sweetness    0.033445   0.009582   3.491 0.000501 ***
+## wet         -0.032852   0.010198  -3.221 0.001313 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.1484 on 1112 degrees of freedom
+## Multiple R-squared:  0.8073,	Adjusted R-squared:  0.8063 
+## F-statistic: 776.4 on 6 and 1112 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Forward-backward.}
+\hlstd{m_h} \hlkwb{<-} \hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,} \hlkwc{lower} \hlstd{= empty),}
+  \hlkwc{direction} \hlstd{=} \hlstr{"both"}\hlstd{,} \hlkwc{trace} \hlstd{=} \hlnum{0}\hlstd{,} \hlkwc{k} \hlstd{=} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(coffee)))}
+\hlkwd{summary}\hlstd{(m_h)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Flavor ~ Aftertaste + Acidity + Aroma + Body + Sweetness + 
+##     wet, data = coffee)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.65627 -0.08781  0.00032  0.08529  0.63010 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -0.609003   0.159910  -3.808 0.000148 ***
+## Aftertaste   0.490988   0.021938  22.381  < 2e-16 ***
+## Acidity      0.225638   0.020994  10.748  < 2e-16 ***
+## Aroma        0.225969   0.020378  11.089  < 2e-16 ***
+## Body         0.103438   0.022926   4.512 7.11e-06 ***
+## Sweetness    0.033445   0.009582   3.491 0.000501 ***
+## wet         -0.032852   0.010198  -3.221 0.001313 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.1484 on 1112 degrees of freedom
+## Multiple R-squared:  0.8073,	Adjusted R-squared:  0.8063 
+## F-statistic: 776.4 on 6 and 1112 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+10 variables is still a fairly small problem:
+in this example all 3 approaches identify the same BIC-based model as
+the exhaustive search.
 \input{lec_15.tex}
+
+\subsection{R Demo}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{### Residual plots/diagnostics demo.}
+\hlcom{## Florida oranges revisited.}
+\hlstd{dat} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/florange.csv"}\hlstd{)}
+\hlkwd{plot}\hlstd{(dat}\hlopt{$}\hlstd{acres, dat}\hlopt{$}\hlstd{boxes)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-1} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlstd{lm.1} \hlkwb{<-} \hlkwd{lm}\hlstd{(dat}\hlopt{$}\hlstd{boxes} \hlopt{~} \hlstd{dat}\hlopt{$}\hlstd{acres)}
+\hlkwd{summary}\hlstd{(lm.1)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = dat$boxes ~ dat$acres)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2470.81    -6.17    71.72   106.46  1677.32 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -85.391989 186.178031  -0.459    0.651    
+## dat$acres     0.116717   0.006761  17.263 1.16e-14 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 754.4 on 23 degrees of freedom
+## Multiple R-squared:  0.9284,	Adjusted R-squared:  0.9252 
+## F-statistic:   298 on 1 and 23 DF,  p-value: 1.164e-14
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Residual plot: vs fitted values.}
+\hlkwd{plot}\hlstd{(lm.1}\hlopt{$}\hlstd{fitted.values, lm.1}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-2} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{# Residual plot: vs predictor (just one in this case).}
+\hlkwd{plot}\hlstd{(dat}\hlopt{$}\hlstd{acres, lm.1}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Acres"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-3} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{# Residual plot: vs i (just to demo plot; no time/space}
+\hlcom{# ordering here).}
+\hlkwd{plot}\hlstd{(}\hlnum{1}\hlopt{:}\hlkwd{nrow}\hlstd{(dat), lm.1}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Index"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-4} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{# Histogram of residuals.}
+\hlkwd{hist}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-5} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{# QQ plot of residuals.}
+\hlkwd{qqnorm}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals)}
+\hlkwd{qqline}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-6} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{## Rocket data revisited.}
+\hlstd{rocket} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/rocket.csv"}\hlstd{)}
+\hlstd{mr} \hlkwb{<-} \hlkwd{lm}\hlstd{(thrust} \hlopt{~} \hlstd{nozzle} \hlopt{+} \hlstd{propratio,} \hlkwc{data} \hlstd{= rocket)}
+\hlkwd{summary}\hlstd{(mr)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = thrust ~ nozzle + propratio, data = rocket)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.8459 -1.7555  0.5934  1.2906  3.3008 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 473.6039     4.7158 100.430 4.88e-15 ***
+## nozzle       16.7383     1.5329  10.919 1.71e-06 ***
+## propratio    -1.0948     0.9414  -1.163    0.275    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.655 on 9 degrees of freedom
+## Multiple R-squared:  0.9303,	Adjusted R-squared:  0.9148 
+## F-statistic: 60.05 on 2 and 9 DF,  p-value: 6.238e-06
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Residual plot: vs fitted values.}
+\hlkwd{plot}\hlstd{(mr}\hlopt{$}\hlstd{fitted.values, mr}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-7} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{# Residual plot: vs predictors.}
+\hlkwd{plot}\hlstd{(rocket}\hlopt{$}\hlstd{nozzle, mr}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Nozzle (1 = large)"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-8} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{plot}\hlstd{(rocket}\hlopt{$}\hlstd{propratio, mr}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Propellant to fuel ratio"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-9} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{# Histogram of residuals,}
+\hlkwd{hist}\hlstd{(mr}\hlopt{$}\hlstd{residuals)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-10} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{# QQ plot of residuals,}
+\hlkwd{qqnorm}\hlstd{(mr}\hlopt{$}\hlstd{residuals)}
+\hlkwd{qqline}\hlstd{(mr}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-11} 
+
+}
+
+
+\end{knitrout}
 \input{lec_16.tex}
+
+\subsection{R Demo}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(MASS)}
+\hlcom{## Demo for transformations and interactions}
+\hlcom{## Florida oranges revisited}
+\hlstd{dat} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/florange.csv"}\hlstd{)}
+\hlstd{lm.1} \hlkwb{<-} \hlkwd{lm}\hlstd{(dat}\hlopt{$}\hlstd{boxes} \hlopt{~} \hlstd{dat}\hlopt{$}\hlstd{acres)}
+\hlkwd{summary}\hlstd{(lm.1)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = dat$boxes ~ dat$acres)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2470.81    -6.17    71.72   106.46  1677.32 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -85.391989 186.178031  -0.459    0.651    
+## dat$acres     0.116717   0.006761  17.263 1.16e-14 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 754.4 on 23 degrees of freedom
+## Multiple R-squared:  0.9284,	Adjusted R-squared:  0.9252 
+## F-statistic:   298 on 1 and 23 DF,  p-value: 1.164e-14
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Recall: residuals had non-constant variance (variance}
+\hlcom{# increases with fitted values)}
+\hlkwd{plot}\hlstd{(lm.1}\hlopt{$}\hlstd{fitted.values, lm.1}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-1} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{qqnorm}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals)}
+\hlkwd{qqline}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-2} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{# Try log-transforming y}
+\hlstd{lm.log} \hlkwb{<-} \hlkwd{lm}\hlstd{(}\hlkwd{log}\hlstd{(dat}\hlopt{$}\hlstd{boxes)} \hlopt{~} \hlstd{dat}\hlopt{$}\hlstd{acres)}
+\hlkwd{summary}\hlstd{(lm.log)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = log(dat$boxes) ~ dat$acres)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.0175 -0.7767  0.1142  0.7106  1.6102 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 5.093e+00  2.425e-01  20.997  < 2e-16 ***
+## dat$acres   6.748e-05  8.808e-06   7.661 8.95e-08 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.9828 on 23 degrees of freedom
+## Multiple R-squared:  0.7184,	Adjusted R-squared:  0.7062 
+## F-statistic: 58.69 on 1 and 23 DF,  p-value: 8.948e-08
+\end{verbatim}
+\begin{alltt}
+\hlkwd{plot}\hlstd{(lm.log}\hlopt{$}\hlstd{fitted.values, lm.log}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-3} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{plot}\hlstd{(dat}\hlopt{$}\hlstd{acres, lm.log}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-4} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{qqnorm}\hlstd{(lm.log}\hlopt{$}\hlstd{residuals)}
+\hlkwd{qqline}\hlstd{(lm.log}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-5} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{# Does the plot of residuals vs x suggest a problem Let's}
+\hlcom{# take a closer look}
+\hlkwd{plot}\hlstd{(dat}\hlopt{$}\hlstd{acres,} \hlkwd{log}\hlstd{(dat}\hlopt{$}\hlstd{boxes))}  \hlcom{# evidently not linear!}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-6} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{# Log-transform x as well}
+\hlkwd{plot}\hlstd{(}\hlkwd{log}\hlstd{(dat}\hlopt{$}\hlstd{acres),} \hlkwd{log}\hlstd{(dat}\hlopt{$}\hlstd{boxes))}  \hlcom{# looks much more linear!}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-7} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlstd{lm.loglog} \hlkwb{<-} \hlkwd{lm}\hlstd{(}\hlkwd{log}\hlstd{(dat}\hlopt{$}\hlstd{boxes)} \hlopt{~} \hlkwd{log}\hlstd{(dat}\hlopt{$}\hlstd{acres))}
+\hlkwd{qqnorm}\hlstd{(lm.loglog}\hlopt{$}\hlstd{residuals)}
+\hlkwd{qqline}\hlstd{(lm.loglog}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-8} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{plot}\hlstd{(lm.loglog}\hlopt{$}\hlstd{fitted.values, lm.loglog}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-9} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{plot}\hlstd{(}\hlkwd{log}\hlstd{(dat}\hlopt{$}\hlstd{acres), lm.loglog}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-10} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{## Python data revisited}
+\hlstd{python} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/FLpython.csv"}\hlstd{)}
+\hlstd{python}\hlopt{$}\hlstd{male} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(python}\hlopt{$}\hlstd{sex} \hlopt{==} \hlstr{"M"}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}  \hlcom{# 1 = M, 0 =F}
+\hlstd{mpf2} \hlkwb{<-} \hlkwd{lm}\hlstd{(fat} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{mass} \hlopt{+} \hlstd{svl,} \hlkwc{data} \hlstd{= python)}
+\hlkwd{summary}\hlstd{(mpf2)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = fat ~ male + mass + svl, data = python)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2444.44  -137.38    -6.66   109.22  1530.81 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  204.09840  132.30121   1.543   0.1242    
+## male        -196.71705   47.16396  -4.171 4.22e-05 ***
+## mass           0.11788    0.00524  22.495  < 2e-16 ***
+## svl           -1.59841    0.76433  -2.091   0.0375 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 360.2 on 244 degrees of freedom
+## Multiple R-squared:  0.897,	Adjusted R-squared:  0.8957 
+## F-statistic: 708.2 on 3 and 244 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Residual plot: vs fitted values}
+\hlkwd{plot}\hlstd{(mpf2}\hlopt{$}\hlstd{fitted.values, mpf2}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-11} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{## QQ plot of residuals}
+\hlkwd{qqnorm}\hlstd{(mpf2}\hlopt{$}\hlstd{residuals)}
+\hlkwd{qqline}\hlstd{(mpf2}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-12} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{# Try a Box-Cox transformation}
+\hlstd{bc} \hlkwb{<-} \hlkwd{boxcox}\hlstd{(mpf2)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-13} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlstd{lambda} \hlkwb{<-} \hlstd{bc}\hlopt{$}\hlstd{x[}\hlkwd{which.max}\hlstd{(bc}\hlopt{$}\hlstd{y)]}
+\hlstd{mpf3} \hlkwb{<-} \hlkwd{lm}\hlstd{((fat}\hlopt{^}\hlstd{lambda} \hlopt{-} \hlnum{1}\hlstd{)}\hlopt{/}\hlstd{lambda} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{mass} \hlopt{+} \hlstd{svl,} \hlkwc{data} \hlstd{= python)}
+\hlkwd{summary}\hlstd{(mpf3)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = (fat^lambda - 1)/lambda ~ male + mass + svl, data = python)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -19.146  -2.910   0.297   3.688  15.568 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -8.0558134  2.1813183  -3.693 0.000273 ***
+## male        -1.7849310  0.7776166  -2.295 0.022560 *  
+## mass         0.0004461  0.0000864   5.164 5.03e-07 ***
+## svl          0.1431492  0.0126019  11.359  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5.939 on 244 degrees of freedom
+## Multiple R-squared:  0.8356,	Adjusted R-squared:  0.8336 
+## F-statistic: 413.5 on 3 and 244 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\begin{alltt}
+\hlkwd{plot}\hlstd{(mpf3}\hlopt{$}\hlstd{fitted.values, mpf3}\hlopt{$}\hlstd{residuals)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-14} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{plot}\hlstd{(python}\hlopt{$}\hlstd{mass, mpf3}\hlopt{$}\hlstd{residuals)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-15} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{plot}\hlstd{(python}\hlopt{$}\hlstd{svl, mpf3}\hlopt{$}\hlstd{residuals)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-16} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{qqnorm}\hlstd{(mpf3}\hlopt{$}\hlstd{residuals)}
+\hlkwd{qqline}\hlstd{(mpf3}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-17} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{# still some skew, but better!}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 \input{lec_17.tex}
 \input{lec_18.tex}
+
+\subsection{R Demo}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Effect of individual observations}
+\hlcom{## Python data revisited}
+\hlstd{python} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/FLpython.csv"}\hlstd{)}
+\hlstd{python}\hlopt{$}\hlstd{male} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(python}\hlopt{$}\hlstd{sex} \hlopt{==} \hlstr{"M"}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}  \hlcom{# 1 = M, 0 =F}
+\hlstd{mpf2} \hlkwb{<-} \hlkwd{lm}\hlstd{(fat} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{mass} \hlopt{+} \hlstd{svl,} \hlkwc{data} \hlstd{= python)}
+\hlcom{# Last time we used a Box-Cox transformation}
+\hlkwd{library}\hlstd{(MASS)}
+\hlstd{bc} \hlkwb{<-} \hlkwd{boxcox}\hlstd{(mpf2)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-56-1} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlstd{lambda} \hlkwb{<-} \hlstd{bc}\hlopt{$}\hlstd{x[}\hlkwd{which.max}\hlstd{(bc}\hlopt{$}\hlstd{y)]}
+\hlstd{mpf3} \hlkwb{<-} \hlkwd{lm}\hlstd{((fat}\hlopt{^}\hlstd{lambda} \hlopt{-} \hlnum{1}\hlstd{)}\hlopt{/}\hlstd{lambda} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{mass} \hlopt{+} \hlstd{svl,} \hlkwc{data} \hlstd{= python)}
+\hlkwd{summary}\hlstd{(mpf3)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = (fat^lambda - 1)/lambda ~ male + mass + svl, data = python)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -19.146  -2.910   0.297   3.688  15.568 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -8.0558134  2.1813183  -3.693 0.000273 ***
+## male        -1.7849310  0.7776166  -2.295 0.022560 *  
+## mass         0.0004461  0.0000864   5.164 5.03e-07 ***
+## svl          0.1431492  0.0126019  11.359  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5.939 on 244 degrees of freedom
+## Multiple R-squared:  0.8356,	Adjusted R-squared:  0.8336 
+## F-statistic: 413.5 on 3 and 244 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\begin{alltt}
+\hlkwd{plot}\hlstd{(mpf3}\hlopt{$}\hlstd{fitted.values, mpf3}\hlopt{$}\hlstd{residuals)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-56-2} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{qqnorm}\hlstd{(mpf3}\hlopt{$}\hlstd{residuals)}
+\hlkwd{qqline}\hlstd{(mpf3}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-56-3} 
+
+}
+
+
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Quantities for individual observations}
+\hlkwd{studres}\hlstd{(mpf3)}  \hlcom{# studentized residuals}
+\hlkwd{hatvalues}\hlstd{(mpf3)}  \hlcom{# leverage}
+\hlkwd{cooks.distance}\hlstd{(mpf3)}  \hlcom{# Cook's distance}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Residual plots with studentized residuals}
+\hlkwd{plot}\hlstd{(mpf3}\hlopt{$}\hlstd{fitted.values,} \hlkwd{studres}\hlstd{(mpf3),} \hlkwc{xlab} \hlstd{=} \hlstr{"Fitted values"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Studentized residuals"}\hlstd{)}
+\hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{3}\hlstd{,} \hlopt{-}\hlnum{3}\hlstd{),} \hlkwc{col} \hlstd{=} \hlstr{"red"}\hlstd{,} \hlkwc{lty} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-58-1} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{which}\hlstd{(}\hlkwd{abs}\hlstd{(}\hlkwd{studres}\hlstd{(mpf3))} \hlopt{>} \hlnum{3}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## 122 181 245 
+## 122 181 245
+\end{verbatim}
+\begin{alltt}
+\hlkwd{qqnorm}\hlstd{(}\hlkwd{studres}\hlstd{(mpf3))}
+\hlkwd{qqline}\hlstd{(}\hlkwd{studres}\hlstd{(mpf3),} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-58-2} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{# Leverage}
+\hlkwd{plot}\hlstd{(}\hlkwd{hatvalues}\hlstd{(mpf3),} \hlkwc{ylab} \hlstd{=} \hlstr{"Leverage"}\hlstd{)}
+\hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlnum{2} \hlopt{*} \hlkwd{mean}\hlstd{(}\hlkwd{hatvalues}\hlstd{(mpf3)),} \hlkwc{col} \hlstd{=} \hlstr{"red"}\hlstd{,} \hlkwc{lty} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-58-3} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{which}\hlstd{(}\hlkwd{hatvalues}\hlstd{(mpf3)} \hlopt{>} \hlnum{2} \hlopt{*} \hlkwd{mean}\hlstd{(}\hlkwd{hatvalues}\hlstd{(mpf3)))}
+\end{alltt}
+\begin{verbatim}
+##   1   2   3   4   5   6   8 219 236 241 242 243 244 245 246 247 248 
+##   1   2   3   4   5   6   8 219 236 241 242 243 244 245 246 247 248
+\end{verbatim}
+\begin{alltt}
+\hlstd{python[}\hlkwd{which}\hlstd{(}\hlkwd{hatvalues}\hlstd{(mpf3)} \hlopt{>} \hlnum{2} \hlopt{*} \hlkwd{mean}\hlstd{(}\hlkwd{hatvalues}\hlstd{(mpf3))), ]}
+\end{alltt}
+\begin{verbatim}
+##     sex   svl  mass length      fat male
+## 1     F  70.0   186   77.5    6.000    0
+## 2     M  76.0   310   83.8   11.000    1
+## 3     M  77.0   260   86.1    6.000    1
+## 4     M  78.0   262   87.1    8.000    1
+## 5     M  81.0   306   91.1    4.000    1
+## 6     M  93.5   605  104.6   18.959    1
+## 8     F 105.0   800  117.5   17.000    0
+## 219   M 285.0 27000  316.2 3230.000    1
+## 236   M 330.0 32600  370.9 4374.000    1
+## 241   F 376.0 38280  424.2 3156.000    0
+## 242   F 381.0 43910  424.9 4002.000    0
+## 243   F 384.5 34540  432.4 3500.000    0
+## 244   F 405.5 41660  455.3 5688.000    0
+## 245   F 409.0 49900  460.2 2988.000    0
+## 246   F 416.0 55260  469.1 4618.000    0
+## 247   F 422.0 49350  473.4 6818.000    0
+## 248   F 482.0 75500  545.0 8406.000    0
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Cook's distance}
+\hlkwd{plot}\hlstd{(}\hlkwd{cooks.distance}\hlstd{(mpf3),} \hlkwc{ylab} \hlstd{=} \hlstr{"Cook's distance"}\hlstd{)}
+\hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlnum{0.5}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"red"}\hlstd{,} \hlkwc{lty} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-58-4} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{which}\hlstd{(}\hlkwd{cooks.distance}\hlstd{(mpf3)} \hlopt{>} \hlnum{0.5}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## 248 
+## 248
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Let's look at actual changes in beta estimates}
+\hlstd{mpf3}\hlopt{$}\hlstd{coefficients}  \hlcom{# with all the data}
+\end{alltt}
+\begin{verbatim}
+##   (Intercept)          male          mass           svl 
+## -8.0558134354 -1.7849310101  0.0004461197  0.1431491887
+\end{verbatim}
+\begin{alltt}
+\hlcom{# e.g., fit without obs 248}
+\hlstd{mpf4} \hlkwb{<-} \hlkwd{lm}\hlstd{((fat}\hlopt{^}\hlstd{lambda} \hlopt{-} \hlnum{1}\hlstd{)}\hlopt{/}\hlstd{lambda} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{mass} \hlopt{+} \hlstd{svl,} \hlkwc{data} \hlstd{= python[}\hlopt{-}\hlnum{248}\hlstd{,}
+  \hlstd{])}
+\hlstd{mpf4}\hlopt{$}\hlstd{coefficients}
+\end{alltt}
+\begin{verbatim}
+##   (Intercept)          male          mass           svl 
+## -6.6475616056 -1.6605858218  0.0005743312  0.1313793189
+\end{verbatim}
+\begin{alltt}
+\hlcom{# e.g., fit without obs 50}
+\hlstd{mpf5} \hlkwb{<-} \hlkwd{lm}\hlstd{((fat}\hlopt{^}\hlstd{lambda} \hlopt{-} \hlnum{1}\hlstd{)}\hlopt{/}\hlstd{lambda} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{mass} \hlopt{+} \hlstd{svl,} \hlkwc{data} \hlstd{= python[}\hlopt{-}\hlnum{50}\hlstd{,}
+  \hlstd{])}
+\hlstd{mpf5}\hlopt{$}\hlstd{coefficients}
+\end{alltt}
+\begin{verbatim}
+##   (Intercept)          male          mass           svl 
+## -8.0628754675 -1.7805093651  0.0004462354  0.1431573753
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 \input{lec_19.tex}
+
+\subsection{R Demo}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Cross-validation}
+\hlcom{## Coffee example (Coffee Quality Institute, 2018)}
+\hlcom{## continued}
+\hlstd{coffee} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/coffee_arabica.csv"}\hlstd{)}
+\hlcom{# 1 = wet, 0 otherwise}
+\hlstd{coffee}\hlopt{$}\hlstd{wet} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{"Washed / Wet"}\hlstd{,}
+  \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}
+\hlcom{# 1 = semi/dry, 0 otherwise}
+\hlstd{coffee}\hlopt{$}\hlstd{semi} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{"Semi-washed / Semi-pulped"}\hlstd{,}
+  \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}
+\hlstd{coffee}\hlopt{$}\hlstd{Processing.Method} \hlkwb{<-} \hlkwa{NULL}
+\hlstd{N} \hlkwb{<-} \hlkwd{nrow}\hlstd{(coffee)}
+\hlcom{## Train and validation set split}
+\hlkwd{set.seed}\hlstd{(}\hlnum{12345678}\hlstd{)}
+\hlstd{trainInd} \hlkwb{<-} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlstd{N,} \hlkwd{round}\hlstd{(N} \hlopt{*} \hlnum{0.8}\hlstd{),} \hlkwc{replace} \hlstd{= F)}
+\hlstd{trainSet} \hlkwb{<-} \hlstd{coffee[trainInd, ]}
+\hlstd{validSet} \hlkwb{<-} \hlstd{coffee[}\hlopt{-}\hlstd{trainInd, ]}
+\hlcom{# Calculate RMSE on three models each with different}
+\hlcom{# variables included}
+\hlstd{m1} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{semi} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body,} \hlkwc{dat} \hlstd{= trainSet)}
+\hlstd{pred1} \hlkwb{<-} \hlkwd{predict}\hlstd{(m1,} \hlkwc{newdata} \hlstd{= validSet)}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred1)}\hlopt{^}\hlnum{2}\hlstd{))}  \hlcom{# RMSE}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1577479
+\end{verbatim}
+\begin{alltt}
+\hlkwd{mean}\hlstd{(}\hlkwd{abs}\hlstd{(validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred1))}  \hlcom{# MAE}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.113643
+\end{verbatim}
+\begin{alltt}
+\hlstd{m2} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+}
+  \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,} \hlkwc{dat} \hlstd{= trainSet)}
+\hlstd{pred2} \hlkwb{<-} \hlkwd{predict}\hlstd{(m2,} \hlkwc{newdata} \hlstd{= validSet)}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred2)}\hlopt{^}\hlnum{2}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1426565
+\end{verbatim}
+\begin{alltt}
+\hlstd{m3} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste,} \hlkwc{dat} \hlstd{= trainSet)}
+\hlstd{pred3} \hlkwb{<-} \hlkwd{predict}\hlstd{(m3,} \hlkwc{newdata} \hlstd{= validSet)}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred3)}\hlopt{^}\hlnum{2}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1615385
+\end{verbatim}
+\begin{alltt}
+\hlcom{# K fold cross validation}
+\hlstd{K} \hlkwb{<-} \hlnum{5}
+\hlstd{validSetSplits} \hlkwb{<-} \hlkwd{sample}\hlstd{((}\hlnum{1}\hlopt{:}\hlstd{N)}\hlopt{%%}\hlstd{K} \hlopt{+} \hlnum{1}\hlstd{)}
+\hlstd{RMSE1} \hlkwb{<-} \hlkwd{c}\hlstd{()}
+\hlstd{RMSE2} \hlkwb{<-} \hlkwd{c}\hlstd{()}
+\hlstd{RMSE3} \hlkwb{<-} \hlkwd{c}\hlstd{()}
+\hlkwa{for} \hlstd{(k} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{K) \{}
+  \hlstd{validSet} \hlkwb{<-} \hlstd{coffee[validSetSplits} \hlopt{==} \hlstd{k, ]}
+  \hlstd{trainSet} \hlkwb{<-} \hlstd{coffee[validSetSplits} \hlopt{!=} \hlstd{k, ]}
+  \hlstd{m1} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{semi} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body,}
+    \hlkwc{dat} \hlstd{= trainSet)}
+  \hlstd{pred1} \hlkwb{<-} \hlkwd{predict}\hlstd{(m1,} \hlkwc{newdata} \hlstd{= validSet)}
+  \hlstd{RMSE1[k]} \hlkwb{<-} \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred1)}\hlopt{^}\hlnum{2}\hlstd{))}
+  \hlstd{m2} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+}
+    \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,} \hlkwc{dat} \hlstd{= trainSet)}
+  \hlstd{pred2} \hlkwb{<-} \hlkwd{predict}\hlstd{(m2,} \hlkwc{newdata} \hlstd{= validSet)}
+  \hlstd{RMSE2[k]} \hlkwb{<-} \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred2)}\hlopt{^}\hlnum{2}\hlstd{))}
+  \hlstd{m3} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste,} \hlkwc{dat} \hlstd{= trainSet)}
+  \hlstd{pred3} \hlkwb{<-} \hlkwd{predict}\hlstd{(m3,} \hlkwc{newdata} \hlstd{= validSet)}
+  \hlstd{RMSE3[k]} \hlkwb{<-} \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred3)}\hlopt{^}\hlnum{2}\hlstd{))}
+\hlstd{\}}
+\hlstd{RMSE1}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1479415 0.1653329 0.1556385 0.1656876 0.1482716
+\end{verbatim}
+\begin{alltt}
+\hlstd{RMSE2}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1427025 0.1525461 0.1478815 0.1620440 0.1384244
+\end{verbatim}
+\begin{alltt}
+\hlstd{RMSE3}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1513836 0.1667202 0.1616626 0.1675113 0.1532496
+\end{verbatim}
+\begin{alltt}
+\hlkwd{mean}\hlstd{(RMSE1)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1565744
+\end{verbatim}
+\begin{alltt}
+\hlkwd{mean}\hlstd{(RMSE2)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1487197
+\end{verbatim}
+\begin{alltt}
+\hlkwd{mean}\hlstd{(RMSE3)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1601055
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 \input{lec_20.tex}
+
+\subsection{R Demo}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Cross-validation with model selection}
+\hlcom{# Dataset from paper 'Where does Haydn end and Mozart}
+\hlcom{# begin?  Composer classification of string quartets'}
+\hlcom{# (Journal of New Music Research, vol 49, 457-476)}
+\hlstd{HM} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"haydn-mozart.csv"}\hlstd{)}
+\hlstd{HM[,} \hlnum{1}\hlstd{]} \hlkwb{<-} \hlkwa{NULL}  \hlcom{# first col is just name of quartet, remove it}
+\hlkwd{dim}\hlstd{(HM)}  \hlcom{# 285 observations, 1116 columns}
+\hlcom{# Let's treat 'number of notes in violin part' as the}
+\hlcom{# response That's variable name 'count_pitch_1' and column}
+\hlcom{# 683 of data matrix So we have 1115 possible predictors}
+\hlcom{# More model selection, for clarity start with one}
+\hlcom{# train/validation split}
+\hlstd{N} \hlkwb{<-} \hlkwd{nrow}\hlstd{(HM)}
+\hlkwd{set.seed}\hlstd{(}\hlnum{12345678}\hlstd{)}
+\hlstd{trainInd} \hlkwb{<-} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlstd{N,} \hlkwd{round}\hlstd{(N} \hlopt{*} \hlnum{0.8}\hlstd{),} \hlkwc{replace} \hlstd{= F)}
+\hlstd{trainSet} \hlkwb{<-} \hlstd{HM[trainInd, ]}
+\hlstd{validSet} \hlkwb{<-} \hlstd{HM[}\hlopt{-}\hlstd{trainInd, ]}
+\hlkwd{library}\hlstd{(MASS)}
+\hlcom{# Full model and empty model with just intercept}
+\hlstd{full} \hlkwb{<-} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= trainSet)}
+\hlstd{empty} \hlkwb{<-} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlnum{1}\hlstd{,} \hlkwc{data} \hlstd{= trainSet)}
+\hlcom{# Stepwise forward with BIC}
+\hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,} \hlkwc{lower} \hlstd{= empty),}
+  \hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,} \hlkwc{k} \hlstd{=} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
+\hlstd{m1} \hlkwb{<-} \hlkwd{lm}\hlstd{(}\hlkwc{formula} \hlstd{= count_pitch_1} \hlopt{~} \hlstd{Prop_m3_num_0_8.1} \hlopt{+} \hlstd{count_pitch_3} \hlopt{+}
+  \hlstd{Prop_m3_num_0_8.3} \hlopt{+} \hlstd{Prop_m3_mean_8.1} \hlopt{+} \hlstd{count_pitch_4} \hlopt{+} \hlstd{Dev_count_8_thresh4.393.1} \hlopt{+}
+  \hlstd{Prop_m3_mean_8.3} \hlopt{+} \hlstd{mean_time_3} \hlopt{+} \hlstd{Dev_count_t_14_thresh0.216.3} \hlopt{+}
+  \hlstd{voicepair_int_dist_6_1.2} \hlopt{+} \hlstd{Prop_m3_sd_8.3} \hlopt{+} \hlstd{Prop_m3_sd_8.1} \hlopt{+}
+  \hlstd{Prop_m3_num_.6_8.1} \hlopt{+} \hlstd{simult_rest_perc} \hlopt{+} \hlstd{Dev_perc_t_14.1} \hlopt{+}
+  \hlstd{count_pitch_2} \hlopt{+} \hlstd{Prop_m3_num_0_8.2} \hlopt{+} \hlstd{Prop_m3_mean_8.2} \hlopt{+} \hlstd{Dev_count_8_thresh4.024.2} \hlopt{+}
+  \hlstd{Dev_count_18_thresh3.899.2} \hlopt{+} \hlstd{Expo_t_count_14.thresh0.7.1} \hlopt{+}
+  \hlstd{Prop_m3_num_0_12.1} \hlopt{+} \hlstd{Expo_acc_8.1} \hlopt{+} \hlstd{Expo_perc_8.2} \hlopt{+} \hlstd{Prop_m3_num_0_12.2} \hlopt{+}
+  \hlstd{Dev_count_t_8_thresh0.247.1} \hlopt{+} \hlstd{Expo_t_count_8.thresh0.7.1} \hlopt{+}
+  \hlstd{voicepair_int_dist_1_1.3} \hlopt{+} \hlstd{Expo_perc_12.3} \hlopt{+} \hlstd{Pairwise_voice_int_mean.1.3} \hlopt{+}
+  \hlstd{Expo_t_count_18.thresh0.7.3} \hlopt{+} \hlstd{Prop_m3_q3_16.2} \hlopt{+} \hlstd{Dev_perc_t_14.4} \hlopt{+}
+  \hlstd{Prop_m3_q3_14.4} \hlopt{+} \hlstd{Dev_count_t_14_thresh0.187.3,} \hlkwc{data} \hlstd{= trainSet)}
+\hlcom{# we can use the AIC function with our own k for the L0}
+\hlcom{# penalty}
+\hlkwd{AIC}\hlstd{(m1,} \hlkwc{k} \hlstd{=} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
+\hlkwd{BIC}\hlstd{(m1)}  \hlcom{# in this case matches BIC as we expect (1977.6)}
+\hlstd{pred1} \hlkwb{<-} \hlkwd{predict}\hlstd{(m1,} \hlkwc{newdata} \hlstd{= validSet)}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{count_pitch_1} \hlopt{-} \hlstd{pred1)}\hlopt{^}\hlnum{2}\hlstd{))}  \hlcom{# RMSE on validation}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{(m1}\hlopt{$}\hlstd{residuals}\hlopt{^}\hlnum{2}\hlstd{))}  \hlcom{# RMSE on train}
+\hlcom{# Try ICM to search for a model with a potentially better}
+\hlcom{# BIC than the one found with stepwise}
+\hlstd{pen} \hlkwb{<-} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet))}  \hlcom{#}
+\hlstd{varlist} \hlkwb{=} \hlkwd{c}\hlstd{()}
+\hlstd{varnames} \hlkwb{=} \hlkwd{names}\hlstd{(trainSet)}
+\hlstd{n} \hlkwb{=} \hlkwd{nrow}\hlstd{(trainSet)}
+\hlstd{varorder} \hlkwb{<-} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlkwd{ncol}\hlstd{(trainSet))}  \hlcom{# random order of variables}
+\hlstd{minCrit} \hlkwb{=} \hlnum{Inf}
+\hlstd{noChange} \hlkwb{=} \hlstd{F}
+\hlkwa{while} \hlstd{(}\hlopt{!}\hlstd{noChange) \{}
+  \hlstd{noChange} \hlkwb{=} \hlstd{T}
+  \hlkwa{for} \hlstd{(i} \hlkwa{in} \hlstd{varorder) \{}
+    \hlkwa{if} \hlstd{(i} \hlopt{==} \hlnum{683}\hlstd{)}
+      \hlkwa{next}
+    \hlkwa{if} \hlstd{(i} \hlopt{%in%} \hlstd{varlist} \hlopt{&} \hlkwd{length}\hlstd{(varlist)} \hlopt{>} \hlnum{1}\hlstd{) \{}
+      \hlstd{index} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{683}\hlstd{, varlist[varlist} \hlopt{!=} \hlstd{i])}
+      \hlstd{trainVars} \hlkwb{=} \hlstd{trainSet[, index]}
+      \hlstd{fit} \hlkwb{=} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= trainVars)}
+      \hlkwa{if} \hlstd{(}\hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)} \hlopt{<} \hlstd{minCrit) \{}
+        \hlstd{minCrit} \hlkwb{=} \hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)}
+        \hlstd{varlist} \hlkwb{=} \hlstd{varlist[varlist} \hlopt{!=} \hlstd{i]}
+        \hlkwd{print}\hlstd{(}\hlkwd{paste0}\hlstd{(}\hlstr{"Criterion: "}\hlstd{,} \hlkwd{round}\hlstd{(minCrit,} \hlnum{1}\hlstd{),}
+          \hlstr{", variables: "}\hlstd{,} \hlkwd{paste0}\hlstd{(varnames[varlist],}
+          \hlkwc{collapse} \hlstd{=} \hlstr{" "}\hlstd{)))}
+        \hlstd{best.model} \hlkwb{=} \hlstd{fit}
+        \hlstd{noChange} \hlkwb{=} \hlstd{F}
+      \hlstd{\}}
+    \hlstd{\}} \hlkwa{else if} \hlstd{(}\hlopt{!}\hlstd{i} \hlopt{%in%} \hlstd{varlist) \{}
+      \hlstd{index} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{683}\hlstd{, varlist, i)}
+      \hlstd{trainVars} \hlkwb{=} \hlstd{trainSet[, index]}
+      \hlstd{fit} \hlkwb{=} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= trainVars)}
+      \hlkwa{if} \hlstd{(}\hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)} \hlopt{<} \hlstd{minCrit) \{}
+        \hlstd{minCrit} \hlkwb{=} \hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)}
+        \hlstd{varlist} \hlkwb{=} \hlkwd{c}\hlstd{(varlist, i)}
+        \hlkwd{print}\hlstd{(}\hlkwd{paste0}\hlstd{(}\hlstr{"Criterion: "}\hlstd{,} \hlkwd{round}\hlstd{(minCrit,} \hlnum{1}\hlstd{),}
+          \hlstr{", variables: "}\hlstd{,} \hlkwd{paste0}\hlstd{(varnames[varlist],}
+          \hlkwc{collapse} \hlstd{=} \hlstr{" "}\hlstd{)))}
+        \hlstd{best.model} \hlkwb{=} \hlstd{fit}
+        \hlstd{noChange} \hlkwb{=} \hlstd{F}
+      \hlstd{\}}
+    \hlstd{\}}
+  \hlstd{\}}
+\hlstd{\}}
+\hlkwd{summary}\hlstd{(best.model)}
+\hlstd{predICM} \hlkwb{<-} \hlkwd{predict}\hlstd{(best.model,} \hlkwc{newdata} \hlstd{= validSet)}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{count_pitch_1} \hlopt{-} \hlstd{predICM)}\hlopt{^}\hlnum{2}\hlstd{))}  \hlcom{# RMSE on validation}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{(best.model}\hlopt{$}\hlstd{residuals}\hlopt{^}\hlnum{2}\hlstd{))}  \hlcom{# RMSE on train}
+\hlcom{# Try stepwise again, with a larger L0 penalty (e.g., twice}
+\hlcom{# the usual BIC penalty)}
+\hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,} \hlkwc{lower} \hlstd{= empty),}
+  \hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,} \hlkwc{k} \hlstd{=} \hlnum{2} \hlopt{*} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
+\hlstd{m2} \hlkwb{<-} \hlkwd{lm}\hlstd{(}\hlkwc{formula} \hlstd{= count_pitch_1} \hlopt{~} \hlstd{Prop_m3_num_0_8.1} \hlopt{+} \hlstd{count_pitch_3} \hlopt{+}
+  \hlstd{Prop_m3_num_0_8.3} \hlopt{+} \hlstd{Prop_m3_mean_8.1} \hlopt{+} \hlstd{count_pitch_4} \hlopt{+} \hlstd{Dev_count_8_thresh4.393.1} \hlopt{+}
+  \hlstd{Prop_m3_mean_8.3} \hlopt{+} \hlstd{mean_time_3} \hlopt{+} \hlstd{Dev_count_t_14_thresh0.216.3,}
+  \hlkwc{data} \hlstd{= trainSet)}
+\hlkwd{AIC}\hlstd{(m2,} \hlkwc{k} \hlstd{=} \hlnum{2} \hlopt{*} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
+\hlcom{# calculate the value of criterion based on this larger L0}
+\hlcom{# penalty}
+\hlstd{pred2} \hlkwb{<-} \hlkwd{predict}\hlstd{(m2,} \hlkwc{newdata} \hlstd{= validSet)}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{count_pitch_1} \hlopt{-} \hlstd{pred2)}\hlopt{^}\hlnum{2}\hlstd{))}  \hlcom{# RMSE on validation}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{(m2}\hlopt{$}\hlstd{residuals}\hlopt{^}\hlnum{2}\hlstd{))}  \hlcom{# RMSE on train}
+\hlcom{# Try ICM as well with this penalty}
+\hlstd{pen} \hlkwb{<-} \hlnum{2} \hlopt{*} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet))}
+\hlstd{varlist} \hlkwb{=} \hlkwd{c}\hlstd{()}
+\hlstd{varnames} \hlkwb{=} \hlkwd{names}\hlstd{(trainSet)}
+\hlstd{n} \hlkwb{=} \hlkwd{nrow}\hlstd{(trainSet)}
+\hlstd{varorder} \hlkwb{<-} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlkwd{ncol}\hlstd{(trainSet))}
+\hlstd{minCrit} \hlkwb{=} \hlnum{Inf}
+\hlstd{noChange} \hlkwb{=} \hlstd{F}
+\hlkwa{while} \hlstd{(}\hlopt{!}\hlstd{noChange) \{}
+  \hlstd{noChange} \hlkwb{=} \hlstd{T}
+  \hlkwa{for} \hlstd{(i} \hlkwa{in} \hlstd{varorder) \{}
+    \hlkwa{if} \hlstd{(i} \hlopt{==} \hlnum{683}\hlstd{)}
+      \hlkwa{next}
+    \hlkwa{if} \hlstd{(i} \hlopt{%in%} \hlstd{varlist} \hlopt{&} \hlkwd{length}\hlstd{(varlist)} \hlopt{>} \hlnum{1}\hlstd{) \{}
+      \hlstd{index} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{683}\hlstd{, varlist[varlist} \hlopt{!=} \hlstd{i])}
+      \hlstd{trainVars} \hlkwb{=} \hlstd{trainSet[, index]}
+      \hlstd{fit} \hlkwb{=} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= trainVars)}
+      \hlkwa{if} \hlstd{(}\hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)} \hlopt{<} \hlstd{minCrit) \{}
+        \hlstd{minCrit} \hlkwb{=} \hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)}
+        \hlstd{varlist} \hlkwb{=} \hlstd{varlist[varlist} \hlopt{!=} \hlstd{i]}
+        \hlkwd{print}\hlstd{(}\hlkwd{paste0}\hlstd{(}\hlstr{"Criterion: "}\hlstd{,} \hlkwd{round}\hlstd{(minCrit,} \hlnum{1}\hlstd{),}
+          \hlstr{", variables: "}\hlstd{,} \hlkwd{paste0}\hlstd{(varnames[varlist],}
+          \hlkwc{collapse} \hlstd{=} \hlstr{" "}\hlstd{)))}
+        \hlstd{best.model} \hlkwb{=} \hlstd{fit}
+        \hlstd{noChange} \hlkwb{=} \hlstd{F}
+      \hlstd{\}}
+    \hlstd{\}} \hlkwa{else if} \hlstd{(}\hlopt{!}\hlstd{i} \hlopt{%in%} \hlstd{varlist) \{}
+      \hlstd{index} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{683}\hlstd{, varlist, i)}
+      \hlstd{trainVars} \hlkwb{=} \hlstd{trainSet[, index]}
+      \hlstd{fit} \hlkwb{=} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= trainVars)}
+      \hlkwa{if} \hlstd{(}\hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)} \hlopt{<} \hlstd{minCrit) \{}
+        \hlstd{minCrit} \hlkwb{=} \hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)}
+        \hlstd{varlist} \hlkwb{=} \hlkwd{c}\hlstd{(varlist, i)}
+        \hlkwd{print}\hlstd{(}\hlkwd{paste0}\hlstd{(}\hlstr{"Criterion: "}\hlstd{,} \hlkwd{round}\hlstd{(minCrit,} \hlnum{1}\hlstd{),}
+          \hlstr{", variables: "}\hlstd{,} \hlkwd{paste0}\hlstd{(varnames[varlist],}
+          \hlkwc{collapse} \hlstd{=} \hlstr{" "}\hlstd{)))}
+        \hlstd{best.model} \hlkwb{=} \hlstd{fit}
+        \hlstd{noChange} \hlkwb{=} \hlstd{F}
+      \hlstd{\}}
+    \hlstd{\}}
+  \hlstd{\}}
+\hlstd{\}}
+\hlstd{predICM} \hlkwb{<-} \hlkwd{predict}\hlstd{(best.model,} \hlkwc{newdata} \hlstd{= validSet)}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{count_pitch_1} \hlopt{-} \hlstd{predICM)}\hlopt{^}\hlnum{2}\hlstd{))}  \hlcom{# RMSE on validation}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{(best.model}\hlopt{$}\hlstd{residuals}\hlopt{^}\hlnum{2}\hlstd{))}  \hlcom{# RMSE on train}
+\hlcom{# K fold cross validation to choose model selection method}
+\hlstd{K} \hlkwb{<-} \hlnum{5}
+\hlstd{validSetSplits} \hlkwb{<-} \hlkwd{sample}\hlstd{((}\hlnum{1}\hlopt{:}\hlstd{N)}\hlopt{%%}\hlstd{K} \hlopt{+} \hlnum{1}\hlstd{)}
+\hlstd{RMSE1} \hlkwb{<-} \hlkwd{c}\hlstd{()}
+\hlstd{RMSE2} \hlkwb{<-} \hlkwd{c}\hlstd{()}
+\hlkwa{for} \hlstd{(k} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{K) \{}
+  \hlstd{validSet} \hlkwb{<-} \hlstd{HM[validSetSplits} \hlopt{==} \hlstd{k, ]}
+  \hlstd{trainSet} \hlkwb{<-} \hlstd{HM[validSetSplits} \hlopt{!=} \hlstd{k, ]}
+  \hlstd{full} \hlkwb{<-} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= trainSet)}
+  \hlstd{empty} \hlkwb{<-} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlnum{1}\hlstd{,} \hlkwc{data} \hlstd{= trainSet)}
+  \hlstd{m1} \hlkwb{<-} \hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,}
+    \hlkwc{lower} \hlstd{= empty),} \hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,} \hlkwc{k} \hlstd{=} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
+  \hlstd{pred1} \hlkwb{<-} \hlkwd{predict}\hlstd{(m1,} \hlkwc{newdata} \hlstd{= validSet)}
+  \hlstd{RMSE1[k]} \hlkwb{<-} \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{count_pitch_1} \hlopt{-} \hlstd{pred1)}\hlopt{^}\hlnum{2}\hlstd{))}
+  \hlstd{m2} \hlkwb{<-} \hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,}
+    \hlkwc{lower} \hlstd{= empty),} \hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,} \hlkwc{k} \hlstd{=} \hlnum{2} \hlopt{*} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
+  \hlstd{pred2} \hlkwb{<-} \hlkwd{predict}\hlstd{(m2,} \hlkwc{newdata} \hlstd{= validSet)}
+  \hlstd{RMSE2[k]} \hlkwb{<-} \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{count_pitch_1} \hlopt{-} \hlstd{pred2)}\hlopt{^}\hlnum{2}\hlstd{))}
+\hlstd{\}}
+\hlstd{RMSE1}
+\hlstd{RMSE2}
+\hlkwd{mean}\hlstd{(RMSE1)}
+\hlkwd{mean}\hlstd{(RMSE2)}
+\hlcom{# turns out m2 is indeed the better procedure among these}
+\hlcom{# two based on CV prediction error if we decide on}
+\hlcom{# procedure m2, we can apply procedure m2 to the entire 285}
+\hlcom{# observations to get a final model for future prediction}
+\hlcom{# e.g.,}
+\hlstd{full} \hlkwb{<-} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= HM)}
+\hlstd{empty} \hlkwb{<-} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlnum{1}\hlstd{,} \hlkwc{data} \hlstd{= HM)}
+\hlstd{mfinal} \hlkwb{<-} \hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,}
+  \hlkwc{lower} \hlstd{= empty),} \hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,} \hlkwc{k} \hlstd{=} \hlnum{2} \hlopt{*} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 \input{lec_21.tex}
 \input{lec_22.tex}
 

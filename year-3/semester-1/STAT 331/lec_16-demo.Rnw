@@ -1,0 +1,73 @@
+\subsection{R Demo}
+<<>>=
+library(MASS)
+## Demo for transformations and interactions
+
+## Florida oranges revisited
+dat <- read.csv("csv/florange.csv")
+lm.1 <- lm(dat$boxes ~ dat$acres)
+summary(lm.1)
+
+# Recall: residuals had non-constant variance
+#  (variance increases with fitted values)
+plot(lm.1$fitted.values,
+      lm.1$residuals,
+xlab = "Fitted Values",
+ylab = "Residuals")
+qqnorm(lm.1$residuals)
+      qqline(lm.1$residuals, col = "blue", lwd = 2)
+
+# Try log-transforming y
+lm.log <- lm(log(dat$boxes) ~ dat$acres)
+summary(lm.log)
+plot(lm.log$fitted.values,
+      lm.log$residuals,
+xlab = "Fitted Values",
+ylab = "Residuals")
+plot(dat$acres, lm.log$residuals, xlab = "Fitted Values", ylab = "Residuals")
+qqnorm(lm.log$residuals)
+      qqline(lm.log$residuals, col = "blue", lwd = 2)
+# Does the plot of residuals vs x suggest a problem
+# Let's take a closer look
+plot(dat$acres, log(dat$boxes)) # evidently not linear!
+
+# Log-transform x as well
+plot(log(dat$acres), log(dat$boxes)) # looks much more linear!
+lm.loglog <- lm(log(dat$boxes) ~ log(dat$acres))
+qqnorm(lm.loglog$residuals)
+      qqline(lm.loglog$residuals, col = "blue", lwd = 2)
+plot(lm.loglog$fitted.values,
+      lm.loglog$residuals,
+xlab = "Fitted Values",
+ylab = "Residuals")
+plot(log(dat$acres),
+      lm.loglog$residuals,
+xlab = "Fitted Values",
+ylab = "Residuals")
+
+## Python data revisited
+python <- read.csv("csv/FLpython.csv")
+python$male <- ifelse(python$sex == 'M', 1, 0) # 1 = M, 0 =F
+mpf2 <- lm(fat ~ male + mass + svl, data = python)
+summary(mpf2)
+
+# Residual plot: vs fitted values
+plot(mpf2$fitted.values,
+      mpf2$residuals,
+xlab = "Fitted Values",
+ylab = "Residuals")
+## QQ plot of residuals
+qqnorm(mpf2$residuals)
+      qqline(mpf2$residuals, col = "blue", lwd = 2)
+# Try a Box-Cox transformation
+bc <- boxcox(mpf2)
+lambda <- bc$x[which.max(bc$y)]
+      mpf3 <- lm((fat ^ lambda - 1) / lambda ~ male + mass + svl, data = python)
+      summary(mpf3)
+      plot(mpf3$fitted.values, mpf3$residuals)
+      plot(python$mass, mpf3$residuals)
+      plot(python$svl, mpf3$residuals)
+      qqnorm(mpf3$residuals)
+qqline(mpf3$residuals, col = "blue", lwd = 2)
+# still some skew, but better!
+@

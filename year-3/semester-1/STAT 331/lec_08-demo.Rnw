@@ -1,0 +1,158 @@
+\makeheading{Lecture 8 | 2020-09-30}
+\section{Categorical Predictors}
+\subsection{R Demo}
+<<>>=
+## NASA rocket data example
+
+## From: R.S. Jankovsky, T.D. Smith, A.J. Pavli (1999). "High-Area-Ratio Rocket
+## Nozzle at High Combustion Chamber Pressure-Experimental and Analytical
+## Validation".
+
+# setwd(...) first if your CSV file is somewhere else
+rocket <- read.csv("csv/rocket.csv")
+# output all data in rocket vector
+rocket
+@
+
+$Y$ (thrust) is the response variable, and there
+are two explanatory variables $x_1,x_2$
+(nozzle, propratio) where nozzle is coded
+as 1 if it's large.
+
+<<>>=
+# Scatter plots where mfrow is used to put multiple plots on one image
+par(mfrow = c(1, 2))
+plot(rocket$nozzle,
+  rocket$thrust,
+ylab = "Thrust",
+xlab = "Nozzle size (1 = large)")
+plot(rocket$propratio,
+  rocket$thrust,
+ylab = "Thrust",
+xlab = "Propellant to fuel ratio")
+@
+
+Left is nozzle size vs thrust. Right is propellant
+relationship vs thrust.
+
+<<>>=
+# Fit MLR using lm
+m1 <- lm(thrust ~ nozzle + propratio, data = rocket)
+summary(m1)
+m2 <- lm(thrust ~ 0 + nozzle, data = rocket)
+summary(m2)
+anova(m1)
+@
+
+On the left it's $Y$ (response variable) and on the
+right it's $x_1,x_2$ (explanatory variables).
+From summary, we get the estimate vector
+$\hat{\symbf{\beta}}=(473.6039, 16.7383,-1.0948)^\top$.
+
+<<>>=
+# Manual beta estimates where rep is used to make the columns of 1s
+X <- cbind(rep(1, 12), rocket$nozzle, rocket$propratio) # X matrix
+y <- matrix(rocket$thrust, ncol = 1) # response vector
+  beta_hat <- solve(t(X) %*% X) %*% t(X) %*% y
+  beta_hat
+  @
+
+  \code{solve} is used for the inverse. \code{\%*\%} is used
+  for matrix-matrix multiplication, and \code{t(X)}
+  is used for transposing $X$.
+
+  <<>>=
+  # Manual sigma estimate
+  mu_hat <- X %*% beta_hat # fitted values
+  e <- y - mu_hat # residuals
+  sigma_hat <- sqrt((t(e) %*% e) / 9) # Note n-p-1 = 12-2-1 = 9
+  sigma_hat
+  sigma_hat <- sqrt(sum(e ^ 2) / 9) # equivalent
+  sigma_hat
+  @
+  \begin{itemize}
+    \item $\hat{\symbf{\mu}}=X\hat{\symbf{\beta}}$
+    \item $\symbf{e}=\symbf{y}-\hat{\symbf{\mu}}$
+    \item $\hat{\sigma}=\sqrt{\biggl(\sum_{i=1}^{n}e_i^2\biggr)/9}=2.6545$, or
+    \item $\hat{\sigma}=\sqrt{(\symbf{e}^\top\symbf{e})/9}=2.6545$
+  \end{itemize}
+  <<>>=
+  # Covariance matrix of beta_hat
+  vcov(m1)
+  sqrt(diag(vcov(m1))) # SEs of individual betas
+
+  # Manual
+  se_beta <- sigma_hat * sqrt(diag(solve(t(X) %*% X)))
+  se_beta
+  @
+
+  \begin{itemize}
+    \item $\Se*{\hat{\symbf{\beta}}}=\hat{\sigma}\sqrt{(X^\top X)^{-1}}=(4.71, 1.53, 0.94)^{\top}$
+  \end{itemize}
+
+  <<>>=
+  # Estimate the mean response for units with small nozzle and propellant ratio 5.5
+  # include a 95% CI
+  predict(
+  object = m1,
+  newdata = data.frame(nozzle = 0, propratio = 5.5),
+  interval = "confidence",
+  level = 0.95
+  )
+  @
+
+  Therefore, $\hat{y}_0=467.58$. The 95\% confidence interval for the mean
+  response given $\symbf{x}_0$ is $[464.7929,470.3719]$.
+
+  <<>>=
+  # Manual calculation
+  x0 <- matrix(c(1, 0, 5.5), nrow = 1)
+  y0_hat <- x0 %*% beta_hat
+  y0_hat
+  # mu0 is also known as \hat{Y}_0
+  se_mu0 <- sigma_hat * sqrt(x0 %*% solve(t(X) %*% X) %*% t(x0))
+  se_mu0
+  crit_val <- qt(0.975, 9)
+  ci_lo <- y0_hat - crit_val * se_mu0
+  ci_hi <- y0_hat + crit_val * se_mu0
+  c(y0_hat, ci_lo, ci_hi)
+  @
+
+  \begin{itemize}
+    \item $\symbf{x}_0=\begin{bmatrix}1&0&5.5\end{bmatrix}$
+    \item $\hat{y}_0=\symbf{x}_0\hat{\symbf{\beta}}=467.5824$
+    \item $\Se*{\hat{Y}_0}=\hat{\sigma}\sqrt{\symbf{x}_0(X^\top X)^{-1}\symbf{x}_0^\top}=
+            1.233132$
+  \end{itemize}
+  Therefore, $\hat{y}_0=467.58$. The 95\% confidence interval for the mean
+  response given $\symbf{x}_0$ is $[464.7929,470.3719]$.
+
+  <<>>=
+  # Predict the value of the response for a unit with small nozzle and propellant ratio 5.5
+  # include a 95% PI
+  predict(
+  object = m1,
+  newdata = data.frame(nozzle = 0, propratio = 5.5),
+  interval = "prediction",
+  level = 0.95
+  )
+  @
+
+  Therefore, $y_0=467.5824$. The 95\% prediction interval for the
+  response $(y_0)$ given $\symbf{x}_0$ is $[460.9612, 474.2036]$.
+
+<<>>=
+# Manual calculation for an individual
+x0 <- matrix(c(1, 0, 5.5), nrow = 1)
+y0_hat <- x0 %*% beta_hat
+se_y0 <- sigma_hat * sqrt(1 + x0 %*% solve(t(X) %*% X) %*% t(x0))
+se_y0
+crit_val <- qt(0.975, 9)
+pi_lo <- y0_hat - crit_val * se_y0
+pi_hi <- y0_hat + crit_val * se_y0
+c(y0_hat, pi_lo, pi_hi)
+@
+
+\begin{itemize}
+  \item $\Se*{Y_0-\hat{Y}_0}=\hat{\sigma}\sqrt{1+\symbf{x}_0(X^\top X)^{-1}\symbf{x}_0^\top}=2.926941$
+\end{itemize}

@@ -1,0 +1,170 @@
+\subsection{R Demo}
+<<>>=
+## Coffee example (Coffee Quality Institute, 2018) continued
+coffee <- read.csv("csv/coffee_arabica.csv")
+
+# cor(coffee) doesn't work as there's a categorical variable.
+cor(coffee[, -1]) # e.g., remove first column
+@
+
+Plot the pairs (disabled due to loading time on PDF).
+
+<<eval=FALSE>>=
+pairs(
+~ Flavor + Aroma + Aftertaste + Body +
+Acidity + Balance + Sweetness + Uniformity + Moisture,
+data = coffee
+)
+@
+
+<<>>=
+# Code our own indicators, so that we can more easily interpret VIFs.
+# 1 = wet, 0 otherwise
+coffee$wet <-
+    ifelse(coffee$Processing.Method == 'Washed / Wet', 1, 0)
+# 1 = semi/dry, 0 otherwise
+coffee$semi <-
+    ifelse(coffee$Processing.Method == 'Semi-washed / Semi-pulped',
+1, 0)
+@
+
+Model:
+$$y_i=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}+
+    \beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6}+\beta_7x_{i7}+\beta_8x_{i8}+
+    \beta_9x_{i9}+\beta_{10}x_{i(10)}+\varepsilon_i$$
+where
+\begin{itemize}
+    \item $y=$ flavour
+    \item $x_1=1$ if wet, 0 otherwise
+    \item $x_2=1$ if semi, 0 otherwise
+    \item $x_3=$ Aroma
+    \item $x_4=$ Aftertaste
+    \item $x_5=$ Body
+    \item $x_6=$ Acidity
+    \item $x_7=$ Balance
+    \item $x_8=$ Sweetness
+    \item $x_9=$ Uniformity
+    \item $x_{10}=$ Moisture
+\end{itemize}
+
+<<>>=
+# Full MLR with our manually coded indicators.
+mfull <- lm(
+Flavor ~ wet + semi + Aroma + Aftertaste +
+Body + Acidity + Balance + Sweetness + Uniformity + Moisture,
+dat = coffee
+)
+summary(mfull)
+
+# Full MLR alternative, using the factor command.
+mfull_alternative <-
+lm(
+Flavor ~ factor(Processing.Method) + Aroma + Aftertaste +
+Body + Acidity + Balance + Sweetness + Uniformity + Moisture,
+dat = coffee
+)
+@
+
+Suppose we want to check the VIF for $j=1$; that is,
+$x_1$. Now, we fit:
+$$x_{i1}=\alpha_0+\alpha_2x_{i2}+\alpha_3x_{i3}+
+    \alpha_4x_{i4}+\alpha_5x_{i5}+\alpha_6x_{i6}+\alpha_7x_{i7}+\alpha_8x_{i8}+
+    \alpha_9x_{i9}+\alpha_{10}x_{i(10)}+\varepsilon_i$$
+
+<<>>=
+wet_reg <-
+lm(
+wet ~ semi + Aroma + Aftertaste + Body + Acidity + Balance +
+Sweetness + Uniformity + Moisture,
+dat = coffee
+)
+summary(wet_reg)
+r2_wet <- summary(wet_reg)$r.squared
+    r2_wet
+    @
+
+$R_j$: In our case, $R_1=0.191077$.
+
+    <<>>=
+    VIF_wet <- 1 / (1 - r2_wet)
+    VIF_wet
+    @
+
+$\text{VIF}_{j}$: $\text{VIF}_1=1.236212$.
+    Interpretation: in a regression with all
+    the variables compared to a regression with just this one,
+    the estimated variance has increased by a factor of 1.24,
+    which is not a very large inflation. The variable wet is not
+    very linearly correlated or dependent on the other predictors
+    that we have in the model.
+
+    <<>>=
+    Aroma_reg <- lm(
+    Aroma ~ wet + semi + Aftertaste +
+    Body + Acidity + Balance + Sweetness + Uniformity + Moisture,
+    dat = coffee
+    )
+    r2_Aroma <- summary(Aroma_reg)$r.squared
+r2_Aroma
+VIF_Aroma <- 1 / (1 - r2_Aroma)
+VIF_Aroma
+@
+
+$R_3=0.5204716$, $\text{VIF}_3=2.085382$.
+
+<<>>=
+Aftertaste_reg <- lm(
+Aftertaste ~ wet + semi + Aroma +
+Body + Acidity + Balance + Sweetness + Uniformity + Moisture,
+dat = coffee
+)
+r2_Aftertaste <- summary(Aftertaste_reg)$r.squared
+    r2_Aftertaste
+    VIF_Aftertaste <- 1 / (1 - r2_Aftertaste)
+    VIF_Aftertaste
+    @
+
+    <<>>=
+    # Load car library for automatic VIF calculation using vif()
+    library(car)
+    vif(mfull)
+    @
+
+    No serious signs of inflation, all VIFs are less than 10.
+
+    <<>>=
+    ## Python in FL everglades example (2017)
+    ## Sex, length, total mass, fat mass, and specimen condition data for
+    ## 248 Burmese pythons (Python bivittatus) collected in the Florida Everglades
+
+    python <- read.csv("csv/FLpython.csv")
+    head(python)
+    python$male <- ifelse(python$sex == 'M', 1, 0) # 1 = M, 0 =F
+
+    cor(python[, -1])
+    @
+
+    <<eval=FALSE>>=
+    pairs(python[, -1])
+    @
+
+    <<>>=
+    mpf <- lm(fat ~ male + svl + mass + length, data = python)
+    summary(mpf)
+    vif(mpf)
+    mpf_l <- lm(length ~ male + svl + mass, data = python)
+    1 / (1 - summary(mpf_l)$r.squared)
+@
+
+Misleading conclusion: \code{svl} and \code{length} are both irrelevant
+(this is not the case). Also, the standard errors are very large.
+
+<<>>=
+# remove "length" based on VIF
+mpf2 <- lm(fat ~ male + mass + svl, data = python)
+summary(mpf2)$adj
+    vif(mpf2)
+    anova(mpf2)
+    AIC(mpf2)
+    @
+    \code{svl} now has a significant $t$-statistic.

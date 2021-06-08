@@ -1,0 +1,56 @@
+\subsection{R Demo}
+<<>>=
+### Residual plots/diagnostics demo.
+
+## Florida oranges revisited.
+dat <- read.csv("csv/florange.csv")
+plot(dat$acres, dat$boxes)
+lm.1 <- lm(dat$boxes ~ dat$acres)
+summary(lm.1)
+
+# Residual plot: vs fitted values.
+plot(lm.1$fitted.values,
+    lm.1$residuals,
+xlab = "Fitted Values",
+ylab = "Residuals")
+
+# Residual plot: vs predictor (just one in this case).
+plot(dat$acres, lm.1$residuals, xlab = "Acres", ylab = "Residuals")
+
+# Residual plot: vs i (just to demo plot; no time/space ordering here).
+plot(1:nrow(dat), lm.1$residuals, xlab = "Index", ylab = "Residuals")
+
+    # Histogram of residuals.
+    hist(lm.1$residuals)
+
+# QQ plot of residuals.
+qqnorm(lm.1$residuals)
+    qqline(lm.1$residuals, col = "blue", lwd = 2)
+
+
+## Rocket data revisited.
+rocket <- read.csv("csv/rocket.csv")
+mr <- lm(thrust ~ nozzle + propratio, data = rocket)
+summary(mr)
+
+# Residual plot: vs fitted values.
+plot(mr$fitted.values,
+    mr$residuals,
+xlab = "Fitted Values",
+ylab = "Residuals")
+
+# Residual plot: vs predictors.
+plot(rocket$nozzle, mr$residuals, xlab = "Nozzle (1 = large)",
+ylab = "Residuals")
+plot(rocket$propratio,
+    mr$residuals,
+xlab = "Propellant to fuel ratio",
+ylab = "Residuals")
+
+# Histogram of residuals,
+hist(mr$residuals)
+
+    # QQ plot of residuals,
+    qqnorm(mr$residuals)
+qqline(mr$residuals, col = "blue", lwd = 2)
+@

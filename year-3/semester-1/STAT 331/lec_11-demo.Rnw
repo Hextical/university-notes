@@ -1,0 +1,255 @@
+\subsection{R Demo}
+<<>>=
+## R demo for Oct 19
+## Plotting functions and histograms, F distribution,
+## ANOVA tables, F tests, MLR with categorical variables
+@
+Evaluate the function at many $x$ values, then plot it.
+<<>>=
+# Plotting functions (e.g., probability density functions)
+# Create sequence from -4 to 4 increasing 0.01 each time.
+x <- seq(-4, 4, 0.01)
+head(x)
+# Normal probability density function with mean 0, and standard deviation 1.
+y <- dnorm(x, 0, 1)
+@
+
+\code{dnorm} is for density normal.
+
+<<>>=
+plot(x, y, type = "l")
+@
+
+\code{type = "l"} is for a smooth line (instead of dots).
+
+We can also plot $y=x^2$ for example.
+<<>>=
+y <- x ^ 2
+plot(x, y, type = "l")
+@
+
+\subsubsection{F-distribution Examples}
+
+<<>>=
+x <- seq(0,5,0.01)
+head(x)
+# df is degrees of freedom.
+# type = "l" is for a smooth curve
+plot(
+x,
+y = df(x, df1 = 1, df2 = 1),
+type = "l",
+xlab = "x",
+ylab = "density"
+)
+# ylim is for the y-axis limits
+# lwd is for line width
+plot(
+x,
+y = df(x, df1 = 1, df2 = 1),
+type = "l",
+col = "black",
+xlab = "x",
+ylab = "density",
+ylim = c(0, 2.5),
+lwd = 2
+)
+# Add lines to the existing plot.
+lines(
+x,
+y = df(x, df1 = 1, df2 = 100),
+type = "l",
+col = "green",
+lwd = 2
+)
+lines(
+x,
+y = df(x, df1 = 5, df2 = 1),
+type = "l",
+col = "blue",
+lwd = 2
+)
+lines(
+x,
+y = df(x, df1 = 5, df2 = 100),
+type = "l",
+col = "purple",
+lwd = 2
+)
+lines(
+x,
+y = df(x, df1 = 10, df2 = 1),
+type = "l",
+col = "red",
+lwd = 2
+)
+lines(
+x,
+y = df(x, df1 = 10, df2 = 100),
+type = "l",
+col = "orange",
+lwd = 2
+)
+# Add a legend to the top-right.
+# lty = 1 is for a straight solid line.
+legend(
+"topright",
+legend = c(
+"df1=1, df2=1",
+"df1=1, df2=100",
+"df1=5, df2=1",
+"df1=5, df2=100",
+"df1=10, df2=1",
+"df1=10, df2=100"
+),
+lty = 1,
+col = c("black", "green", "blue", "purple", "red", "orange")
+)
+@
+
+\subsubsection{Random numbers for the F-distribution}
+
+<<>>=
+# set.seed allows for exact reproduction.
+set.seed(12345678)
+randF <- rf(1000, 5, 100)
+# Generate histogram for the random numbers with exact.
+hist(randF)
+# Generate histogram for the random numbers with relative frequency.
+# This is normalized, so we can superimpose an F-distribution to it.
+hist(randF, freq = FALSE)
+# Superimpose an F-distribution on the histogram.
+lines(
+x,
+y = df(x, df1 = 5, df2 = 100),
+type = "l",
+col = "purple",
+lwd = 2
+)
+# Set y-axis limits and more detailed histogram bins using 'breaks = 25'
+hist(randF,
+freq = FALSE,
+ylim = c(0, 0.8),
+breaks = 25)
+lines(
+x,
+y = df(x, df1 = 5, df2 = 100),
+type = "l",
+col = "purple",
+lwd = 2
+)
+
+# Generate more random F-distributions to get closer to the 'true' density.
+randF <- rf(10000, 5, 100)
+hist(randF,
+freq = FALSE,
+ylim = c(0, 0.8),
+breaks = 25)
+lines(
+x,
+y = df(x, df1 = 5, df2 = 100),
+type = "l",
+col = "purple",
+lwd = 2
+)
+@
+
+\subsubsection{Revisit Rocket Example}
+
+<<>>=
+rocket <- read.csv("csv/rocket.csv")
+m1 <- lm(thrust ~ nozzle + propratio, data = rocket)
+summary(m1)
+# Compare summary with ANOVA table on board from Oct. 5.
+anova(m1)
+anova(m1)$`Sum Sq`
+    sum(anova(m1)$`Sum Sq`[1:2])
+SSRes <- anova(m1)$`Sum Sq`[3]
+
+    # Test of overall significance.
+    m_red <- lm(thrust ~ 1, data = rocket)
+    summary(m_red)
+    anova(m_red)
+    SSRes_A <- anova(m_red)$`Sum Sq`[1]
+
+# Manually calculate F-statistic.
+l <- 2
+n <- nrow(rocket)
+p <- 2
+Fstat <- ((SSRes_A - SSRes) / l) / (SSRes / (n - p - 1))
+Fstat
+pval <- 1 - pf(Fstat, df1 = l, df2 = n - p - 1)
+pval
+
+# Automatically calculate F-statistic.
+anova(m1, m_red)$F[2]
+    @
+
+    \subsubsection{Revist Coffee Example (Coffee Quality Institute, 2018)}
+
+    <<>>=
+    coffee <- read.csv("csv/coffee_arabica.csv")
+
+    mfull <-
+    lm(
+    Flavor ~ factor(Processing.Method) + Aroma + Aftertaste +
+    Body + Acidity + Balance + Sweetness + Uniformity + Moisture,
+    dat = coffee
+    )
+    summary(mfull)
+    anova(mfull)
+    SSRes <- anova(mfull)$`Sum Sq`[10]
+
+# Reduced model without Uniformity and Moisture (beta9=beta10=0):
+m_red <-
+lm(
+Flavor ~ factor(Processing.Method) + Aroma + Aftertaste +
+Body + Acidity + Balance + Sweetness,
+dat = coffee
+)
+summary(m_red)
+anova(m_red)
+SSRes_A <- anova(m_red)$`Sum Sq`[8]
+
+    # Manually calculate F-statistic.
+    l <- 2
+    n <- nrow(coffee)
+    p <- 10
+    Fstat <- ((SSRes_A - SSRes) / l) / (SSRes / (n - p - 1))
+    Fstat
+    pval <- 1 - pf(Fstat, df1 = l, df2 = n - p - 1)
+    pval
+
+    # Automatically calculate F-statistic.
+    anova(mfull, m_red)$F[2]
+
+# Reduced model without Uniformity and Moisture and
+# setting effect of Dry = Semi (beta1=beta9=beta10=0)
+# 1 = wet, 0 otherwise
+coffee$method2 <- ifelse(coffee$Processing.Method %in%
+c('Natural / Dry', 'Semi-washed / Semi-pulped'),
+0,
+1)
+# 1 = semi/dry, 0 o.w
+coffee$wet <-
+    ifelse(coffee$Processing.Method == 'Washed / Wet', 0, 1)
+
+m_red2 <- lm(Flavor ~ method2 + Aroma + Aftertaste +
+Body + Acidity + Balance + Sweetness,
+dat = coffee)
+summary(m_red2)
+anova(m_red2)
+SSRes_A <- anova(m_red2)$`Sum Sq`[8]
+
+    ## Manually calculate F-statistic.
+    l <- 3
+    n <- nrow(coffee)
+    p <- 10
+    Fstat <- ((SSRes_A - SSRes) / l) / (SSRes / (n - p - 1))
+    Fstat
+    pval <- 1 - pf(Fstat, df1 = l, df2 = n - p - 1)
+    pval
+
+    # Automatically calculate F-statistic.
+    anova(mfull, m_red2)$F[2]
+@
