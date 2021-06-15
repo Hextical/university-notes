@@ -4,7 +4,7 @@
     \item Randomized Complete Block Designs (RCBD) were a tool for the exploration of \emph{one} design factor ($ m $ levels)
           while controlling for the effect of \emph{one} nuisance factor ($ b $ blocks).
           \begin{itemize}
-              \item In a RCBD we carry out \emph{every} experimental condition inside \emph{every} block.
+              \item In a RCBD, we carry out \emph{every} experimental condition inside \emph{every} block.
               \item But sometimes, due to practical constraints, this is not possible.
           \end{itemize}
     \item The Gap is experimenting with $ m=3 $ promotional offers:
@@ -15,10 +15,11 @@
           \end{itemize}
     \item Experimenters would like to control for a possible day-of-week effect (block by day).
           \begin{itemize}
-              \item Naturally, one might consider a RCBD\@. Suppose we observe data in \emph{every} block-condition combination.
+              \item Naturally, one might consider a RCBD\@; that is, suppose we observe data in \emph{every} block-condition combination
+                    as seen in~\Cref{rcbd_GAP}.
                     \begin{table}[!htbp]
                         \centering
-                        \caption{Complete Block Design}
+                        \caption{Complete Block Design}\label{rcbd_GAP}
                         \begin{NiceTabular}{|cc|cccccc|}
                             \toprule         &   & \multicolumn{6}{c} {\emph{Day}}                                                                            \\
                             &   & 1                               & 2            & 3            & 4            & 5            & 6            \\
@@ -29,13 +30,13 @@
                         \end{NiceTabular}
                     \end{table}
           \end{itemize}
-    \item But the experiments may only offer two of the three promotions in a single day.
+    \item But The Gap may only offer two of the three promotions in a single day.
           \begin{itemize}
-              \item So we must consider an \textbf{incomplete} block design. Suppose we observe data in only \emph{some} block-condition combinations.
+              \item So we must consider an \textbf{incomplete} block design; that is, suppose we observe data in only \emph{some} block-condition combinations.
           \end{itemize}
           \begin{table}[!htbp]
               \centering
-              \caption{Incomplete Block Design}
+              \caption{Incomplete Block Design}\label{bibd_GAP}
               \begin{NiceTabular}{|cc|cccccc|}
                   \toprule         &   & \multicolumn{6}{c} {\emph{Day}}                                                                            \\
                   &   & 1                               & 2            & 3            & 4            & 5            & 6            \\
@@ -45,12 +46,16 @@
                   \bottomrule
               \end{NiceTabular}
           \end{table}
-    \item We refer to the design above as a \textbf{balanced incomplete block design} (BIBD).
+    \item We refer to~\Cref{bibd_GAP} as a \textbf{balanced incomplete block design} (BIBD).
           \begin{Remark}{Notation}{}
               \begin{itemize}
                   \item $ m $: number of experimental conditions. In our previous example, $ m=3 $.
                   \item $ b $: number of blocks. In our previous example, $ b=6 $.
                   \item $ m^\star $: number of experimental conditions that can be run in each block. Also known as ``block size.'' In our previous example, $ m^\star=2 $.
+                        \begin{itemize}
+                            \item RCBD\@: $ m^\star=m $.
+                            \item BIBD\@: $ m^\star<m $.
+                        \end{itemize}
                   \item $ r $: number of blocks in which each condition appears. In our previous example, $ r=4 $.
                   \item $ \lambda $: number of blocks that \emph{any} pair of conditions appear in together. In our previous example, $ \lambda=2 $.
               \end{itemize}
@@ -75,12 +80,22 @@
     \item A variety of restrictions must be met:
           \begin{itemize}
               \item Consequences of ``incompleteness:''
-                    \[ m^\star<m \]
-                    \[ r<b \]
-                    \[ \lambda<r \]
+                    \begin{itemize}
+                        \item $ m^\star<m $.
+                        \item $ r<b $.
+                        \item $ \lambda<r $.
+                    \end{itemize}
+              \item Number of block-condition combinations for which we observe data:
+                    \begin{itemize}
+                        \item $ mr=bm^\star $
+                    \end{itemize}
+              \item For condition $ X $ (doesn't matter which condition this is), $ r(m^\star-1)=\lambda(m-1) $ is the
+                    total number of conditions that condition $ X $ appears with in the same blocks.
+                    \begin{itemize}
+                        \item Condition $ X $ appears in $ r $ blocks, and in each, it's grouped with $ m^\star-1 $ \emph{other} conditions.
+                        \item We pair each of the other $ m-1 $ conditions with condition $ X $ $ \Lambda $ times.
+                    \end{itemize}
           \end{itemize}
-          \[ mr=bm^\star \]
-          \[ r(m^\star-1)=\lambda(m-1) \]
     \item We use these restrictions as follows:
           \begin{enumerate}
               \item Specify $ m $, $ m^\star $, and $ \lambda $.
@@ -90,7 +105,7 @@
           \begin{Example}{}{}
               Let $ m=3 $, $ m^\star=2 $, and $ \lambda=1 $. We have
               $ r=(1)(2)/(1) =2 $, and
-              $ b=(3)(2)/2 =3 $.
+              $ b=(3)(2)/2 =3 $. See~\Cref{bibd1}.
           \end{Example}
           \begin{Example}{Pizza Table}{}
               Let $ m=3 $, $ m^\star=2 $, and $ \lambda=2 $. We have
@@ -100,17 +115,17 @@
           \begin{Example}{}{}
               Let $ m=3 $, $ m^\star=2 $, and $ \lambda=3 $. We have
               $ r=(3)(2)/(1) =6 $, and
-              $ b=(3)(6)/2 =9 $.
+              $ b=(3)(6)/2 =9 $. See~\Cref{bibd2}.
           \end{Example}
     \item We select the design based on a trade-off between larger $ \lambda $ values and smaller $ b $ values.
           \begin{itemize}
-              \item Larger $ \lambda $ provides more information for pairwise comparisons.
+              \item Larger $ \lambda $ provides more information about pairwise comparisons.
               \item Smaller $ b $ corresponds to fewer blocks and hence a smaller experiment.
           \end{itemize}
 \end{itemize}
 \begin{table}[!htbp]
     \centering
-    \caption{Incomplete Block Design}
+    \caption{Incomplete Block Design}\label{bibd1}
     \begin{NiceTabular}{|cc|ccc|}
         \toprule         &   & \multicolumn{3}{c} {\emph{Block}}                               \\
         &   & 1                                 & 2            & 3            \\
@@ -122,7 +137,7 @@
 \end{table}
 \begin{table}[!htbp]
     \centering
-    \caption{Incomplete Block Design}
+    \caption{Incomplete Block Design}\label{bibd2}
     \begin{NiceTabular}{|cc|ccccccccc|}
         \toprule         &   & \multicolumn{9}{c} {\emph{Block}}                                                                                                                         \\
         &   & 1                                 & 2            & 3            & 4            & 5            & 6            & 7            & 8            & 9            \\
@@ -143,8 +158,9 @@
           This isn't fair in a BIBD because $ \bar{y}_{\bullet\bullet\bullet} $ is calculated from data from blocks that condition $ j $ didn't appear in.
     \item In a BIBD, due to incompleteness, we compare $ \bar{y}_{\bullet j\bullet} $ with the average response from the blocks that
           condition $j$ appeared in:
-          \[ \frac{1}{r} \sum_{k=1}^{b} \bar{y}_{\bullet\bullet k}\Ind*{\text{condition $ j $ appears in block $ k $}} \]
-    \item In general, the analysis of BIBDs involves an adjustment of this form when evaluating the effect of the
+          \[ \frac{\sum_{k\in\mathcal{B}_j}\sum_{i=1}^{n_{jk}} y_{ijk}}{\sum_{k\in\mathcal{B}_j}n_{jk} }  \]
+          where $ \mathcal{B}_j\subset\set{1,2,\ldots,B} $ is the subset of indices indicating which blocks condition $ j $ appeared in.
+    \item In general, the analysis of BIBDs involves an \emph{adjustment} of this form when evaluating the effect of the
           design factor.
 \end{itemize}
 \section{Latin Square Designs}
@@ -194,9 +210,9 @@
     \item We exploit this combinatorial structure to help us design experiments that facilitate blocking by two
           nuisance factors.
           \begin{itemize}
-              \item We randomly associate the $p$ rows with the levels of the first nuisance factor.
-              \item We randomly associate the $p$ columns with the levels of the second nuisance factor.
-              \item We randomly associate the $p$ Latin letters with the levels of the design factor.
+              \item We arbitrarily associate the $p$ rows with the levels of the first nuisance factor.
+              \item We arbitrarily associate the $p$ columns with the levels of the second nuisance factor.
+              \item We arbitrarily associate the $p$ Latin letters with the levels of the design factor.
           \end{itemize}
     \item We present an example with $ p=4 $ in~\Cref{latinsquarex1}.
           \begin{table}[!htbp]
@@ -224,13 +240,13 @@
           response variables.
           \begin{itemize}
               \item Average across letters:
-                    \[ \bar{y}_{\bullet j\bullet\bullet}=\frac{1}{np}\sum_{(j,k,\ell)\in S_j}\sum_{i=1}^{n} y_{ijk\ell}  \]
+                    \[ \bar{y}_{\bullet j\bullet\bullet}=\frac{1}{np}\sum_{(j,k,\ell)\in \mathcal{S}_j}\sum_{i=1}^{n} y_{ijk\ell}  \]
               \item Average across rows:
-                    \[ \bar{y}_{\bullet\bullet k\bullet}=\frac{1}{np}\sum_{(j,k,\ell)\in S_k}\sum_{i=1}^{n} y_{ijk\ell}  \]
+                    \[ \bar{y}_{\bullet\bullet k\bullet}=\frac{1}{np}\sum_{(j,k,\ell)\in \mathcal{S}_k}\sum_{i=1}^{n} y_{ijk\ell}  \]
               \item Average across columns:
-                    \[ \bar{y}_{\bullet\bullet\bullet\ell}=\frac{1}{np}\sum_{(j,k,\ell)\in S_\ell}\sum_{i=1}^{n} y_{ijk\ell}  \]
+                    \[ \bar{y}_{\bullet\bullet\bullet\ell}=\frac{1}{np}\sum_{(j,k,\ell)\in \mathcal{S}_\ell}\sum_{i=1}^{n} y_{ijk\ell}  \]
               \item Overall average:
-                    \[ \bar{y}_{\bullet\bullet\bullet\bullet}=\frac{1}{N}\sum_{(j,k,\ell)\in S}\sum_{i=1}^{n} y_{ijk\ell}  \]
+                    \[ \bar{y}_{\bullet\bullet\bullet\bullet}=\frac{1}{N}\sum_{(j,k,\ell)\in \mathcal{S}}\sum_{i=1}^{n} y_{ijk\ell}  \]
                     \begin{itemize}
                         \item $ y_{ijk\ell} $ is the response observation for unit $ i $ in block $ (k,\ell) $ and hence condition $ j $.
                         \item $ j,k,\ell=1,2,\ldots,p $.
@@ -241,7 +257,7 @@
           \begin{itemize}
               \item Each block contains just one condition, so each pair $(k, \ell)$ uniquely determines the value of $j$.
               \item Consequently, there exist just $p^2$ tuples $(j, k, \ell)$.
-              \item Denote them by the set $ S $.
+              \item Denote them by the set $ \mathcal{S} $.
               \item From~\Cref{latinsquarex1}, we have:
                     \begin{table}[!htbp]
                         \centering
@@ -257,9 +273,9 @@
                     \begin{itemize}
                         \item We also define:
                               \begin{itemize}
-                                  \item $ S_j\subset S $: all tuples for which the design factor is level $ j $.
-                                  \item $ S_k\subset S $: all tuples for which the nuisance factor $ 1 $'s is level $ k $.
-                                  \item $ S_\ell\subset S $: all tuples for which the nuisance factor $ 2 $'s is level $ \ell $.
+                                  \item $ \mathcal{S}_j\subset \mathcal{S} $: all tuples for which the design factor is level $ j $.
+                                  \item $ \mathcal{S}_k\subset \mathcal{S} $: all tuples for which the nuisance factor $ 1 $'s is level $ k $.
+                                  \item $ \mathcal{S}_\ell\subset \mathcal{S} $: all tuples for which the nuisance factor $ 2 $'s is level $ \ell $.
                               \end{itemize}
                     \end{itemize}
           \end{itemize}
@@ -331,15 +347,15 @@
     \item The relevant sums of squares are:
           \begin{itemize}
               \item The total sum of squares, which quantifies overall variation in response values:
-                    \[ \text{SS}_\text{T}=\sum_{(j,k,\ell)\in S}\sum_{i=1}^{n} (y_{ijk\ell}-\bar{y}_{\bullet\bullet\bullet\bullet})^2=\text{SS}_{\text{C}}+\text{SS}_{\text{B}_1}+\text{SS}_{\text{B}_2}+\text{SS}_{\text{E}}  \]
+                    \[ \text{SS}_\text{T}=\sum_{(j,k,\ell)\in \mathcal{S}}\sum_{i=1}^{n} (y_{ijk\ell}-\bar{y}_{\bullet\bullet\bullet\bullet})^2=\text{SS}_{\text{C}}+\text{SS}_{\text{B}_1}+\text{SS}_{\text{B}_2}+\text{SS}_{\text{E}}  \]
               \item The condition sum of squares, which quantifies variability in the response from one condition to another:
-                    \[ \text{SS}_{\text{C}}=\sum_{(j,k,\ell)\in S}\sum_{i=1}^{n} (\bar{y}_{\bullet j\bullet\bullet}-\bar{y}_{\bullet\bullet\bullet\bullet})^2=np \sum_{j=1}^{p} (\bar{y}_{\bullet j\bullet\bullet}-\bar{y}_{\bullet\bullet\bullet\bullet})^2  \]
+                    \[ \text{SS}_{\text{C}}=\sum_{(j,k,\ell)\in \mathcal{S}}\sum_{i=1}^{n} (\bar{y}_{\bullet j\bullet\bullet}-\bar{y}_{\bullet\bullet\bullet\bullet})^2=np \sum_{j=1}^{p} (\bar{y}_{\bullet j\bullet\bullet}-\bar{y}_{\bullet\bullet\bullet\bullet})^2  \]
               \item The first block sum of squares, which quantifies variability in the response from one level of nuisance factor 1 to another:
-                    \[ \text{SS}_{\text{B}_1}=\sum_{(j,k,\ell)\in S}\sum_{i=1}^{n} (\bar{y}_{\bullet\bullet k\bullet}-\bar{y}_{\bullet\bullet\bullet\bullet})^2=np \sum_{k=1}^{p} (\bar{y}_{\bullet\bullet k\bullet}-\bar{y}_{\bullet\bullet\bullet\bullet})^2  \]
+                    \[ \text{SS}_{\text{B}_1}=\sum_{(j,k,\ell)\in \mathcal{S}}\sum_{i=1}^{n} (\bar{y}_{\bullet\bullet k\bullet}-\bar{y}_{\bullet\bullet\bullet\bullet})^2=np \sum_{k=1}^{p} (\bar{y}_{\bullet\bullet k\bullet}-\bar{y}_{\bullet\bullet\bullet\bullet})^2  \]
               \item The second block sum of squares, which quantifies variability in the response from one level of nuisance factor 2 to another:
-                    \[ \text{SS}_{\text{B}_2}=\sum_{(j,k,\ell)\in S}\sum_{i=1}^{n} (\bar{y}_{\bullet\bullet\bullet\ell}-\bar{y}_{\bullet\bullet\bullet\bullet})^2=np \sum_{\ell=1}^{p} (\bar{y}_{\bullet\bullet\bullet\ell}-\bar{y}_{\bullet\bullet\bullet\bullet})^2  \]
+                    \[ \text{SS}_{\text{B}_2}=\sum_{(j,k,\ell)\in \mathcal{S}}\sum_{i=1}^{n} (\bar{y}_{\bullet\bullet\bullet\ell}-\bar{y}_{\bullet\bullet\bullet\bullet})^2=np \sum_{\ell=1}^{p} (\bar{y}_{\bullet\bullet\bullet\ell}-\bar{y}_{\bullet\bullet\bullet\bullet})^2  \]
               \item The error sum of squares, which quantifies variability in the response that was not explained by conditions or blocks (i.e., the design and nuisance factors):
-                    \[ \text{SS}_\text{E}=\sum_{(j,k,\ell)}\sum_{i=1}^{n} (y_{ijk\ell}-\bar{y}_{\bullet j\bullet\bullet}-\bar{y}_{\bullet\bullet k\bullet}-\bar{y}_{\bullet\bullet\bullet\ell}-2\bar{y}_{\bullet\bullet\bullet\bullet})^2 \]
+                    \[ \text{SS}_\text{E}=\sum_{(j,k,\ell)\in \mathcal{S}}\sum_{i=1}^{n} (y_{ijk\ell}-\bar{y}_{\bullet j\bullet\bullet}-\bar{y}_{\bullet\bullet k\bullet}-\bar{y}_{\bullet\bullet\bullet\ell}-2\bar{y}_{\bullet\bullet\bullet\bullet})^2 \]
           \end{itemize}
     \item We show the corresponding ANOVA table in~\Cref{three_way_anova_LS}.
           \begin{table}[!htbp]
@@ -377,7 +393,7 @@
 \subsection{Example: Netflix Latency}
 \begin{Example}{Netflix Latency}{}
     Consider the latency experiment described at the beginning of the chapter in which Netflix is experimenting
-    with server-side modifications to improve (reduce) the latency of Netflix.com. In particular, they have four
+    with server-side modifications to improve (reduce) the latency of \href{netflix.com}{netflix.com}. In particular, they have four
     different experimental conditions (A, B, C, D) that are intended to reduce average latency (in milliseconds).
     Two nuisance factors that may also influence latency are browser (Chrome, Microsoft Edge, Firefox,
     Safari), and time of day ([00:01,06:00], [06:01,12:00], [12:01,18:00], [18:01,00:00]). The design of the experiment
@@ -429,12 +445,13 @@
               \begin{itemize}
                   \item $ p\text{-value}=\Prob*{T\ge t_{\text{B}_1}}=\Prob*{T\ge 0.1097}=0.9545 $ where $ T \sim F(3,7990) $.
                   \item Therefore, we do not reject $ \mathbf{H}_0 $ and conclude that ``browser'' does not
-                        significantly influence average latency, and thus we probably did not block by it.
+                        significantly influence average latency, and so blocking by browser was probably not necessary.
               \end{itemize}
         \item $ \mathbf{H}_0 $: $ \delta_2=\delta_3=\delta_4=0 $.
               \begin{itemize}
                   \item $ p\text{-value}=\Prob*{T\ge t_{\text{B}_2}}=\Prob*{T\ge 1109.92}\approx 0 $ where $ T \sim F(3,7990) $.
-                  \item Therefore, we reject $ \mathbf{H}_0 $ and conclude that the time of day significantly influences average latency.
+                  \item Therefore, we reject $ \mathbf{H}_0 $ and conclude that the time of day significantly influences average latency
+                        and so blocking by it was sensible.
               \end{itemize}
     \end{itemize}
 \end{Example}
@@ -456,7 +473,7 @@
           \end{itemize}
     \item Similarly, we test:
           \begin{tightcenter}
-              $ \mathbf{H}_0 $: $ \gamma_1=\beta_2=\cdots=\gamma_{p-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \gamma_k\ne 0$ for some $ k $
+              $ \mathbf{H}_0 $: $ \gamma_1=\gamma_2=\cdots=\gamma_{p-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \gamma_k\ne 0$ for some $ k $
           \end{tightcenter}
           with a LRT that compares the full model to the reduced one without the $ z $'s.
     \item And we test:
@@ -470,7 +487,7 @@
                 & =2\Bigl[\text{Log-Likelihood}_{\text{Full Model}}-\text{Log-Likelihood}_{\text{Reduced Model}}\Bigr]
           \end{align*}
           which, if $ \mathbf{H}_0 $ is true, follows an approximate $ \chi^2(p-1) $.
-    \item The $ p $-value is: $ p\text{-value}=\Prob{T\ge t} $ where $ T \sim \chi^2(p-1) $.
+    \item $ p\text{-value}=\Prob{T\ge t} $ where $ T \sim \chi^2(p-1) $.
 \end{itemize}
 \subsection{Example: Uber Weekend Promos}
 \begin{Example}{Uber Weekend Promos}{}
@@ -515,13 +532,13 @@
               \end{itemize}
         \item $ \mathbf{H}_0 $: $ \gamma_1=\gamma_2=0 $.
               \begin{itemize}
-                  \item $ p\text{-value}=\Prob*{T\ge t_{\text{B}_1}}=\Prob*{T\ge 8.9107}=0.0116 $ where $ T \sim \chi^2(2) $.
+                  \item $ p\text{-value}=\Prob*{T\ge t_{\text{B}_1}}=\Prob*{T\ge 8.9107}=0.01162 $ where $ T \sim \chi^2(2) $.
                   \item Therefore, we reject $ \mathbf{H}_0 $ and conclude that the day-of-week significantly influences booking, and so it is good that we blocked by this factor.
               \end{itemize}
         \item $ \mathbf{H}_0 $: $ \delta_1=\delta_2=0 $.
               \begin{itemize}
                   \item $ p\text{-value}=\Prob*{T\ge t_{\text{B}_2}}=\Prob*{T\ge 2.1193}=0.3466 $ where $ T \sim \chi^2(2) $.
-                  \item Therefore, we do not reject $ \mathbf{H}_0 $ and conclude that ``city'' does not significantly influence booking rate, and so blocking by city was not necessary.
+                  \item Therefore, we do not reject $ \mathbf{H}_0 $ and conclude that ``city'' does not significantly influence booking rate, and so blocking by city may have not been necessary.
               \end{itemize}
     \end{itemize}
 
