@@ -67,7 +67,7 @@
               \item The number of blocks each pair of conditions appear in together is the same for every possible
                     condition pairing ($ \lambda $).
           \end{itemize}
-    \item This balance allows for the comparison of a metric of interest across m conditions while still accounting
+    \item This balance allows for the comparison of a metric of interest across $m$ conditions while still accounting
           for a nuisance factor with $b$ levels
           \begin{itemize}
               \item But despite this balance, the ``incompleteness'' requires some sacrifice.
@@ -90,10 +90,10 @@
                         \item $ mr=bm^\star $
                     \end{itemize}
               \item For condition $ X $ (doesn't matter which condition this is), $ r(m^\star-1)=\lambda(m-1) $ is the
-                    total number of conditions that condition $ X $ appears with in the same blocks.
+                    total number of conditions that condition $ X $ appears within the same blocks.
                     \begin{itemize}
                         \item Condition $ X $ appears in $ r $ blocks, and in each, it's grouped with $ m^\star-1 $ \emph{other} conditions.
-                        \item We pair each of the other $ m-1 $ conditions with condition $ X $ $ \Lambda $ times.
+                        \item We pair each of the other $ m-1 $ conditions with condition $ X $ $ \lambda $ times.
                     \end{itemize}
           \end{itemize}
     \item We use these restrictions as follows:
@@ -147,7 +147,7 @@
         \bottomrule
     \end{NiceTabular}
 \end{table}
-\subsection*{General Comments on the Analysis of a BIBD}
+\subsection{General Comments on the Analysis of a BIBD}
 \begin{itemize}
     \item Primary analysis goal:
           \begin{itemize}
@@ -165,7 +165,7 @@
 \end{itemize}
 \section{Latin Square Designs}
 \begin{itemize}
-    \item Until now, we have discussed experimental designs that employ blocking to control for one nuisance
+    \item Until now, we have discussed experimental designs that employ blocking to control for \emph{one} nuisance
           factor:
           \begin{itemize}
               \item If we want to control for \emph{two} nuisance factors, we should use a \textbf{Latin square design}.
@@ -229,28 +229,29 @@
               \end{NiceTabular}
           \end{table}
           \begin{itemize}
-              \item \textbf{Limitation}: we need to experiment with \emph{all} of these factors at $ p $ levels.
-              \item $ (3,2) $ element represents the block where NF 1 is at level 3, NF 2 is at level 2, and DF is at level ``D.''
+              \item \textbf{Limitation of LSD's}: we need to experiment with \emph{all} of these factors at $ p $ levels.
+              \item $ (3,2) $ element represents the block where NF 1 is at level 3, NF 2 is at level 2, and DF is at level D.
           \end{itemize}
     \item Each cell in this table represents a ``block'' in which we fix the nuisance factors' levels, and the
-          Latin letter indicates which the execution of an experimental condition.
+          Latin letter indicates the execution of an experimental condition.
     \item Rows, columns, and letters are all orthogonal, allowing us to separately estimate the effects of the
           design factor and each of the two nuisance factors.
     \item We may informally summarize these effects with the overall average and level-specific averages of the
           response variables.
           \begin{itemize}
-              \item Average across letters:
+              \item Average response in a particular condition:
                     \[ \bar{y}_{\bullet j\bullet\bullet}=\frac{1}{np}\sum_{(j,k,\ell)\in \mathcal{S}_j}\sum_{i=1}^{n} y_{ijk\ell}  \]
-              \item Average across rows:
+              \item Average response in a given row:
                     \[ \bar{y}_{\bullet\bullet k\bullet}=\frac{1}{np}\sum_{(j,k,\ell)\in \mathcal{S}_k}\sum_{i=1}^{n} y_{ijk\ell}  \]
-              \item Average across columns:
+              \item Average response in a given column:
                     \[ \bar{y}_{\bullet\bullet\bullet\ell}=\frac{1}{np}\sum_{(j,k,\ell)\in \mathcal{S}_\ell}\sum_{i=1}^{n} y_{ijk\ell}  \]
               \item Overall average:
                     \[ \bar{y}_{\bullet\bullet\bullet\bullet}=\frac{1}{N}\sum_{(j,k,\ell)\in \mathcal{S}}\sum_{i=1}^{n} y_{ijk\ell}  \]
                     \begin{itemize}
-                        \item $ y_{ijk\ell} $ is the response observation for unit $ i $ in block $ (k,\ell) $ and hence condition $ j $.
+                        \item $ y_{ijk\ell} $ is the response observation for unit $ i=1,2,\ldots,n $ in block $ (k,\ell) $ and hence condition $ j $.
                         \item $ j,k,\ell=1,2,\ldots,p $.
                         \item $ n $ is the number of units in each block.
+                        \item $ N=np^2 $.
                     \end{itemize}
           \end{itemize}
     \item A comment about notation:
@@ -271,6 +272,7 @@
                         \end{NiceTabular}
                     \end{table}
                     \begin{itemize}
+                        \item $ S_{j=1}=\set{(1,1,1),(1,2,2),(1,3,3),(1,4,4)} $.
                         \item We also define:
                               \begin{itemize}
                                   \item $ \mathcal{S}_j\subset \mathcal{S} $: all tuples for which the design factor is level $ j $.
@@ -282,8 +284,7 @@
     \item The primary analysis goal in a Latin square design is to determine whether the expected response differs significantly
           from one condition to another.
           \begin{itemize}
-              \item If so, to identify the optimal condition.
-              \item While controlling for the potential effect of the nuisance factors.
+              \item If so, to identify the optimal condition while controlling for the potential effect of the nuisance factors.
           \end{itemize}
     \item We've previously done this with gatekeeper tests of the form:
           \begin{tightcenter}
@@ -297,12 +298,12 @@
               \item $ p-1 $ indicator variables for nuisance factor 1's levels.
               \item $ p-1 $ indicator variables for nuisance factor 2's levels.
           \end{itemize}
-    \item We write the linear predictor as
+    \item We write the linear predictor as:
           \[ \alpha+\sum_{j=1}^{p-1} \beta_j x_{ij}+\sum_{k=1}^{p-1} \gamma_j z_{ik}+\sum_{\ell=1}^{p-1} \delta_\ell w_{i\ell} \]
           \begin{itemize}
-              \item $ x_{ij}=1 $ if unit $ i $ is in condition $ j $ (zero otherwise).
-              \item $ z_{ik}=1 $ if unit $ i $ is in a block for which nuisance factor 1 is at level $ k $ (zero otherwise).
-              \item $ w_{i\ell}=1 $ if unit $ i $ is in a block for which nuisance factor 2 is at level $ \ell $ (zero otherwise).
+              \item $ x_{ij}=1 $ if unit $ i $ is in condition $ j=1,2,\ldots,p-1 $ (zero otherwise).
+              \item $ z_{ik}=1 $ if unit $ i $ is in a block for which nuisance factor 1 is at level $ k=1,2,\ldots,p-1 $ (zero otherwise).
+              \item $ w_{i\ell}=1 $ if unit $ i $ is in a block for which nuisance factor 2 is at level $ \ell=1,2,\ldots,p-1 $ (zero otherwise).
               \item The $\beta$'s jointly quantify the effect of the design factor.
               \item The $\gamma$'s jointly quantify the effect of nuisance factor 1.
               \item The $\delta$'s jointly quantify the effect of nuisance factor 2.
@@ -311,15 +312,15 @@
           \begin{tightcenter}
               $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{p-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \beta_j\ne 0$ for some $ j $.
               \begin{itemize}
-                  \item Provides insight whether DF is important.
+                  \item Provides insight into whether DF is important.
               \end{itemize}
               $ \mathbf{H}_0 $: $ \gamma_1=\beta_2=\cdots=\gamma_{p-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \gamma_k\ne 0$ for some $ k $.
               \begin{itemize}
-                  \item Provides insight whether NF 1 is important.
+                  \item Provides insight into whether NF 1 is important.
               \end{itemize}
               $ \mathbf{H}_0 $: $ \delta_1=\delta_2=\cdots=\delta_{p-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \delta_\ell\ne 0$ for some $ \ell $.
               \begin{itemize}
-                  \item Provides insight whether NF 2 is important.
+                  \item Provides insight into whether NF 2 is important.
               \end{itemize}
           \end{tightcenter}
     \item We test these hypotheses by comparing a \emph{full} (linear predictor) and \emph{reduced} ($ \mathbf{H}_0 $ is true) model.
@@ -332,8 +333,9 @@
     \item Here we're interested in testing the following hypothesis (while accounting for the influence of the
           nuisance factors):
           \begin{tightcenter}
-              $ \mathbf{H}_0 $: $ \mu_1=\mu_2=\cdots=\mu_p $ versus $ \mathbf{H}_\text{A} $: $ \mu_j\ne \mu_{j^\prime} $ for some $ j\ne j^\prime $.
+              $ \mathbf{H}_0 $: $ \mu_1=\mu_2=\cdots=\mu_p $ versus $ \mathbf{H}_\text{A} $: $ \mu_j\ne \mu_{j^\prime} $ for some $ j\ne j^\prime $
           \end{tightcenter}
+          where $ \mu_j $ is the expected response in condition $ j=1,2,\ldots,p $.
     \item We do this by testing:
           \begin{tightcenter}
               $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{p-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \beta_j\ne 0$ for some $ j $
@@ -342,7 +344,7 @@
           \[ Y_i=\alpha+\sum_{j=1}^{p-1} \beta_j x_{ij}+\sum_{k=1}^{p-1} \gamma_k z_{ik}+\sum_{\ell=1}^{p-1} \delta_\ell w_{i\ell}+\varepsilon_i\quad \text{(Full Model)} \]
           \begin{itemize}
               \item $ Y_i $ is the response observation for unit $ i=1,2,\ldots,N=np^2 $.
-              \item $ \varepsilon_i \sim \N{0,\sigma^2} $ is the random error term.
+              \item $ \varepsilon_i \stackrel{\text{iid}}{\sim} \N{0,\sigma^2} $ is the random error term.
           \end{itemize}
     \item The relevant sums of squares are:
           \begin{itemize}
@@ -378,15 +380,15 @@
           \begin{itemize}
               \item We test $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{p-1}=0 $ using $ t_\text{C}=\text{MS}_\text{C}/\text{MS}_\text{E} $.
                     \begin{itemize}
-                        \item $ p $-value: $ \Prob[\big]{F(p-1,N-3p+2)\ge t_\text{C}} $.
+                        \item $ p $-value: $ \Prob[\big]{T\ge t_\text{C}} $ where $ T \sim F(p-1,N-3p+2) $.
                     \end{itemize}
               \item We test: $ \mathbf{H}_0 $: $ \gamma_1=\gamma_2=\cdots=\gamma_{p-1}=0 $ using $ t_{\text{B}_1}=\text{MS}_{\text{B}_1}/\text{MS}_{\text{E}} $.
                     \begin{itemize}
-                        \item $ p $-value: $ \Prob*{F(p-1,N-3p+2)\ge t_{\text{B}_1}} $.
+                        \item $ p $-value: $ \Prob*{T\ge t_{\text{B}_1}} $ where $ T \sim F(p-1,N-3p+2) $.
                     \end{itemize}
               \item We test: $ \mathbf{H}_0 $: $ \delta_1=\delta_2=\cdots=\delta_{p-1}=0 $ using $ t_{\text{B}_2}=\text{MS}_{\text{B}_2}/\text{MS}_{\text{E}} $.
                     \begin{itemize}
-                        \item $ p $-value: $ \Prob*{F(p-1,N-3p+2)\ge t_{\text{B}_2}} $.
+                        \item $ p $-value: $ \Prob*{T\ge t_{\text{B}_2}} $ where $ T \sim F(p-1,N-3p+2) $.
                     \end{itemize}
           \end{itemize}
 \end{itemize}
@@ -461,8 +463,9 @@
     \item Here we're interested in testing the following hypothesis (while accounting for the influence of the
           nuisance factors):
           \begin{tightcenter}
-              $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_p $ versus $ \mathbf{H}_\text{A} $: $ \pi_j\ne \pi_{j^\prime }$ for some $ j\ne j^\prime $.
+              $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_p $ versus $ \mathbf{H}_\text{A} $: $ \pi_j\ne \pi_{j^\prime }$ for some $ j\ne j^\prime $
           \end{tightcenter}
+          where $ \pi_j $ is the expected response in condition $ j=1,2,\ldots,p $.
     \item We do this by testing:
           \begin{tightcenter}
               $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{p-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \beta_j\ne 0$ for some $ j $
@@ -470,6 +473,8 @@
           with a likelihood ratio test (LRT) in the context of the following logistic regression model:
           \[ \log*{\frac{\pi_i}{1-\pi_i}}=\alpha+\sum_{j=1}^{p-1} \beta_j x_{ij}+\sum_{k=1}^{p-1} \gamma_k z_{ik}+\sum_{\ell=1}^{p-1} \delta_\ell w_{i\ell} \]
           \begin{itemize}
+              \item $ Y_i=1 $ if unit $ i $ performs some action of interest, and $ Y_i=0 $ otherwise.
+              \item $ \pi_i=\E{Y_i}=\text{expected response of unit $i$} $.
               \item The likelihood ratio test compares the full model to the one without the $ x $'s.
           \end{itemize}
     \item Similarly, we test:
