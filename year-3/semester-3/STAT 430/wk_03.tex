@@ -8,10 +8,10 @@
             assumptions.
       \item This is precisely the purpose of permutation and randomization tests.
             \begin{itemize}
-                  \item These tests are \emph{non-parametric} and rely on sampling.
+                  \item These tests are \emph{non-parametric} and rely on resampling.
                   \item The motivation is that if $ \mathbf{H}_0 $: $ \theta_1=\theta_2 $
                         is true, any random rearrangement of the data is \emph{equally likely
-                              to have been observed}. If $ \mathbf{H}_0 $ is true, then we have a single population
+                              to have been observed}. If $ \mathbf{H}_0 $ is true, then we have a single population/distribution
                         from which our data has been drawn.
                   \item With $ n_1 $ and $ n_2 $ units in each condition, there are
                         \[ \binom{n_1+n_2}{n_1}=\binom{n_1+n_2}{n_2} \]
@@ -44,14 +44,14 @@
                   \[ t=\hat{\theta}_1-\hat{\theta}_2\quad\text{or}\quad t=\frac{\hat{\theta}_1}{\hat{\theta}_2} \]
             \item Pool all the observations together and randomly sample (without replacement)
                   $ n_1 $ observations which will be assigned to ``Condition 1'' and the remaining $ n_2 $
-                  observations that are assigned to ``Condition 2.''
+                  observations that are assigned to ``Condition 2.'' Repeat this $ N $ times.
                   \[ \set{y_{11}^\star,y_{21}^\star,\ldots,y_{n_1 1}^\star}\to \hat{\theta}_1^\star \]
                   \[ \set{y_{12}^\star,y_{22}^\star,\ldots,y_{n_2 2}^\star}\to \hat{\theta}_2^\star \]
             \item Calculate the test statistic $ t_k^\star $ on each of the ``shuffled'' datasets, $ k=1,2,\ldots,N $.
                   \[ t_k^\star=\hat{\theta}_{1,k}^\star-\hat{\theta}_{2,k}^\star\quad\text{or}\quad t_k^\star=\frac{\hat{\theta}_{1,k}^\star}{\hat{\theta}_{2,k}^\star}  \]
             \item Compare to $ t $ to $ \set*{t_1^\star,t_2^\star,\ldots,t_N^\star} $, the empirical
                   null distribution, and calculate the $ p $-value:
-                  \[ p\text{-value}=\frac{\text{\# of $t$'s that are at least as extreme as $t$}}{N}=\frac{1}{N} \sum_{k=1}^{N} \Ind*{t_k^\star\text{ at least as extreme as $t$}}  \]
+                  \[ p\text{-value}=\frac{\text{\# of $t^\star$'s that are at least as extreme as $t$}}{N}=\frac{1}{N} \sum_{k=1}^{N} \Ind*{t_k^\star\text{ at least as extreme as $t$}}  \]
                   \begin{itemize}
                         \item $ \mathbf{H}_0 $: $ \theta_1=\theta_2 $ versus $ \mathbf{H}_\text{A} $: $ \theta_1\ne \theta_2 $. If $ t=\hat{\theta}_1-\hat{\theta}_2 $, then
                               the $ p $-value is:
@@ -161,7 +161,7 @@
                   \item Collect the data and estimate the metric of interest in each condition:
                         \[ \hat{\theta}_1,\hat{\theta}_2,\ldots,\hat{\theta}_m \]
             \end{enumerate}
-      \item Determining which conditions are optimal typically involves a series of pairwise
+      \item Determining which condition is optimal typically involves a series of pairwise
             comparisons: $ t $-tests, $ z $-tests, or randomization tests.
       \item But it is useful to begin such an investigation with a \emph{gatekeeper}
             test (test of overall equality) which serves to determine whether
@@ -183,7 +183,7 @@
 \begin{itemize}
       \item We assume that our response variable follows a normal distribution,
             and we assume that the mean of the distribution depends on the condition
-            where we take the measurements, and that the variance
+            in which we take the measurements, and that the variance
             is the same across all conditions.
             \[ Y_{ij}\sim \N{\mu_j,\sigma^2}\quad\text{for }i=1,2,\ldots,n_j\text{ and }j=1,2,\ldots,m \]
       \item We use an $ F $-test to test for means:
@@ -202,12 +202,13 @@
                         \[ x_{ij}=\begin{cases*}
                                     1 & if unit $ i $ is in condition $ j $ \\
                                     0 & otherwise
-                              \end{cases*}\quad\text{for}j=1,2,\ldots,m-1. \]
+                              \end{cases*}\quad\text{for }j=1,2,\ldots,m-1. \]
                   \item For a particular unit $ i $, we adopt the model:
                         \[ Y_{i}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\cdots+\beta_{m-1}x_{i,m-1}+\varepsilon_i \]
                         \begin{itemize}
                               \item $ Y_i = $ response observation for unit $ i=1,2,\ldots,N=\sum_{j=1}^{m} n_j $.
-                              \item $ \varepsilon_i = $ random error term which we assume follows a $ \N{0,\sigma^2} $ distribution.
+                              \item $ \varepsilon_i = $ random error term which we assume follows a $ \N{0,\sigma^2} $ distribution
+                                    independently for all $ i=1,2,\ldots,N $.
                               \item Because we're about to do a regression analysis, the usual \emph{residual diagnostics} are relevant.
                         \end{itemize}
                   \item In this model the $ \beta $'s are unknown parameters,
@@ -258,6 +259,7 @@
             \end{itemize}
       \item The null distribution for this test is $ F(m-1,N-m) $.
       \item $ p\text{-value}=\Prob{T\ge t} $ where $ T \sim F(m-1,N-m) $.
+      \item If $ \mathbf{H}_0 $: $ \mu_1=\cdots=\mu_m $ is true, then $ \E*{\text{MS}_\text{C}}=\sigma^2 $ and $ \E*{\text{MS}_\text{E}}=\sigma^2 $.
 \end{itemize}
 \begin{table}[!htbp]
       \centering
@@ -273,7 +275,6 @@
             \bottomrule
       \end{NiceTabular}
 \end{table}
-\pagebreak
 \subsection{Example: Candy Crush Boosters}
 \begin{Example}{Candy Crush Boosters}{}
       \begin{itemize}
@@ -322,7 +323,7 @@
             where $ \pi_j $ is the probability of a unit in condition $ j $ performing the action.
       \item We use a \textbf{chi-squared test of independence} (Pearson $ \chi^2 $ test) to test for proportions:
             \begin{tightcenter}
-                  $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_m $
+                  $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_m $ versus $ \mathbf{H}_\text{A} $: $ \pi_j\ne \pi_k $ for some $ j\ne k $.
             \end{tightcenter}
 \end{itemize}
 \subsection{The Chi-squared Test of Independence}
@@ -331,7 +332,7 @@
             between two categorical variables that are summarized in a \emph{contingency table}.
       \item We apply this methodology here to test the independence of the binary outcome
             (whether a unit performs the action of interest) and the particular condition they are in.
-      \item To start, let's assume that $ m=2 $, and let's use the \hyperref[ex:optimizely_ex1]{Optimizely experiment}.
+      \item To start, let's assume that $ m=2 $, and let's use the \hyperref[ex:optimizely_ex1]{Optimizely experiment} as a reference.
             \begin{itemize}
                   \item If $ \pi_1=\pi_2=\pi $, then we would expect the conversion rate in each condition to be the same.
                   \item An estimate of the pooled conversion rate in this case is $ \hat{\pi}=679/17514=0.0388 $.
@@ -365,7 +366,7 @@
                         \end{itemize}
                   \item So,
                         \[ \hat{\pi}=\frac{O_1}{n_1+n_2}\quad \text{ and }\quad 1-\hat{\pi}=\frac{O_0}{n_1+n_2} \]
-                        represent the overall proportions of units that did or did not convert, they
+                        represent the overall proportions of units that did or did not convert, and they
                         are estimates of overall conversion and non-conversion rates.
                   \item Let $ E_{1,j} $ and $ E_{0,j} $
                         represent the expected number of conversions and non-conversions in condition
@@ -395,7 +396,7 @@
                         \end{table}
                   \item And the resultant test statistic and $p$-value are:
                         \[ t=\frac{(280-343.96)^2}{343.96} +\frac{(399-335.04)^2}{335.04}+\frac{(8592-8528.04)^2}{8528.04}+\frac{(8243-8306.96)^2}{8306.96}=25.075    \]
-                        \[ p\text{-value}=\Prob{T\ge 25.075}=5.52\times 10^{-7} \]
+                        \[ p\text{-value}=\Prob{T\ge 25.075}=5.52\times 10^{-7}\quad\text{where }T \sim \chi^2(1) \]
             \end{itemize}
       \item Let's now extend this for $ m>2 $.
             \begin{itemize}
