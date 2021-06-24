@@ -1,0 +1,62 @@
+\chapter{Assignment 4}
+\section{Lecture 27.00: Model 6}
+\begin{Definition}{Unbalanced CRD, Model 6}{}
+    The \textbf{unbalanced completely randomized design} is
+    \[ Y_{ij}=\mu+\tau_i+R_{ij}\quad(R_{ij}\sim \N{0,\sigma^2}) \]
+    for $ i=1,2,\ldots,t $ (no.\ of treatments),
+    $ j=1,2,\ldots,r_i $ (no.\ of replicates/treatment).
+    In this course, this is \textbf{Model 6}.
+
+    \underline{Constraint}: $ \sum_{i=1}^{t} r_i \tau_i=0 $.
+\end{Definition}
+\begin{Example}{LS for Model 6}{}
+    The LS for Model 6 is
+    \[ W=\sum r_{ij}^2 +\lambda\biggl(\sum_{i=1}^{t} r_i\tau_i\biggr)  \]
+    and results in
+    \[ \hat{\mu}=\bar{y}_{++} \]
+    \[ \hat{\tau}_i=\bar{y}_{i+}-\bar{y}_{++} \]
+    \[ \hat{\sigma}^2=\frac{W}{(r_1+r_2+\cdots+r_t)-(t+1)+1}  \]
+\end{Example}
+\subsection{Unbalanced CRD Example}
+Refer to~\Cref{section21}, we remove the last element of group 2.
+<<>>=
+grp1 = c(50, 53, 52, 58)
+grp2 = c(62, 55, 58)
+Y = c(grp1, grp2)
+x = as.factor(c(rep(1, 4), rep(2, 3)))
+# Group Averages
+grp_av = tapply(Y, x, mean, na.rm = T)
+mu = mean(Y)
+# Treatment Effects
+tau1 = (grp_av - mean(Y))[1]
+tau2 = (grp_av - mean(Y))[2]
+# Estimated Sigma
+sigma = summary(lm(Y ~ x))$sigma
+    # Values
+    sigma ; tau1; tau2; mu
+    @
+    We obtain
+    \begin{itemize}
+        \item $ \hat{\sigma}=3.447221 $
+        \item $ \hat{\tau}_1=-2.178571 $
+        \item $ \hat{\tau}_2=2.904762 $
+        \item $ \hat{\mu}=55.42857 $
+        \item Obviously, $ 4(\hat{\tau}_1)+3(\hat{\tau}_2)=0 $
+    \end{itemize}
+    \subsubsection*{What is the treatment effect for being inebriated?}
+$ \hat{\tau}_1=-2.18 $
+    \subsubsection*{Is there a difference between the treatment effect of group 1 and 2? Use a 95\% CI.}
+$ \theta=\tau_1-\tau_2\implies \tilde{\theta}=\tilde{\tau}_1-\tilde{\tau}_2 $.
+\[ \E{\tilde{\theta}}=\tau_1-\tau_2 \]
+\[ \Var{\tilde{\theta}}=\Var{\bar{Y}_{1+}-\bar{Y}_{2+}}=\frac{\sigma^2}{4} +\frac{\sigma^2}{3}=\frac{7\sigma^2}{12}  \]
+Confidence interval:
+\[ \hat{\tau}_1-\hat{\tau}_2\pm c\sqrt{\frac{7\hat{\sigma}^2}{12}}=(-11.85,1.68) \]
+In R,
+<<>>=
+tau1 - tau2 + c(-1,1) * qt(0.975, 5) * sqrt((7 * sigma ^ 2) / 12)
+@
+\subsubsection*{Is there a difference between the treatment effect of group 1 and 2? Use a HT.}
+<<>>=
+anova(lm(Y ~ x))
+@
+No evidence against $ H_0 $: $ \tau_1=\cdots=\tau_t=0 $, so this model is not great.

@@ -1,0 +1,75 @@
+\chapter{Assignment 3}
+\section{Lecture 21.00: Model 5, Example 1}\label{section21}
+A study of intoxication measured two groups of students,
+one of which was drunk while the other was not as
+they drove a computer-simulated driving course with a max speed limit of 50 km/h.
+Of interest was the maximum speed of an individual doing the computer-simulated driving
+course. Group 1 was intoxicated, while Group 2 was not.
+
+\subsection*{Is there a difference in speed between those that drive while
+    intoxicated versus those that do not?}
+<<>>=
+# Data frames
+grp1 <- c(50, 53, 52, 58)
+grp2 <- c(62, 55, 58, 60)
+# Must run to get same results as textbook
+options(contrasts = c('contr.sum', 'contr.poly'))
+Y <- c(grp1, grp2)
+# Makes a discrete variable
+x <- as.factor(c(rep(1, 4), rep(2, 4)))
+# Builds the model
+model <- lm(Y ~ x)
+# Displays the output
+summary(model)
+@
+
+\begin{enumerate}[(1)]
+    \item \code{Residuals}: Helps test our residuals.
+    \item \code{Coefficients}: $ \hat{\mu}=56 $, $ \hat{\tau}_1=-2.75 $, $ \hat{\tau}_2=2.75 $.
+    \item \code{Residual standard error}: $ \hat{\sigma}=3.202 $ on 6 degrees of freedom.
+    \item \code{Coefficients (Error to P(>|t|))}: This line tests $ H_0 $: $ \mu=0 $ versus $ H_a $: $ \mu\ne 0 $
+          \[ d=\frac{56-0}{1.132} =49.473 \]
+          \[ p\text{-value}=2\Prob{D>49.473}=4.57\times 10^{-9} \]
+          We have tons of evidence to reject $ H_0 $.
+    \item $ H_0 $: $ \tau_1=0 $ versus $ H_a $: $ \tau_1\ne 0 $
+          \[ d=\frac{-2.75-0}{1.132} =-2.429 \]
+          \[ p\text{-value}=2\Prob{D>\abs{-2.429}}=2(1-\Prob{D\le 2.429})=0.0512 \]
+          There is evidence to reject $ H_0 $.
+\end{enumerate}
+\subsubsection*{What is the treatment effect for being inebriated?}
+$ \hat{\tau}_1=-2.75 $.
+\subsubsection*{Is there a difference between the treatment effect of group 1 and 2? Use a 95\% CI.}
+\[ \theta=\text{ave of grp1}-\text{ave of grp2}=(\mu+\tau_1)-(\mu+\tau_2)=\tau_1-\tau_2 \]
+Estimator: $ \tilde{\theta}=\tilde{\tau}_1-\tilde{\tau}_2 $ and is normal by Gauss.
+\[ \E{\tilde{\theta}}=\E{\tilde{\tau}_1-\tilde{\tau}_2}=\E{\tilde{\tau}_1}-\E{\tilde{\tau}_2}=\tau_1-\tau_2 \]
+since unbiased.
+\[ \Var{\tilde{\theta}}
+    =\Var*{\bar{Y}_{1+}-\bar{Y}_{++}-(\bar{Y}_{2+}-\bar{Y}_{++})}
+    =\Var{\bar{Y}_{1+}-\bar{Y}_{2+}}
+    =\Var{\bar{Y}_{1+}}+\Var{\bar{Y}_{2+}}
+    =\frac{\sigma^2}{4} +\frac{\sigma^2}{4}
+    =\frac{\sigma^2}{2} \]
+CI for $ \theta $:
+\[ \theta:\hat{\theta}\pm c\,\text{SE}=\hat{\tau}_1-\hat{\tau}_2\pm
+    c\sqrt{\frac{\hat{\sigma}^2}{2}}\quad(c \sim t(n-q+c)=t(8-2+1)=t(6)) \]
+In our case,
+\[ \theta:(-2.75-2.75)\pm 2.447\sqrt{\frac{3.202^2}{2}}=(-11.04,0.04) \]
+$ 0 $ is in the interval, so we conclude that there is no difference
+between the treatment effect of group 1 and 2. In R, we could do
+<<>>=
+-2.75 - 2.75 + c(-1, 1) * qt(0.975, 6) * sqrt(summary(model)$sigma ^ 2 / 2)
+    @
+    To obtain our CI $ \theta:(-11.039, 0.039) $.
+    \subsubsection*{Is there a difference between the treatment effect of group 1 and 2? Use an HT.}
+$ H_0 $: $ \tau_1=\tau_2 $ versus $ H_a $: $ \tau_1\ne \tau_2 $.
+    \[ d=\frac{\hat{\tau}_1-\hat{\tau}_2-\tau_0}{\hat{\sigma}/\sqrt{2}}=
+        \frac{(-2.75-2.75)-0}{3.202/\sqrt{2}}=-2.489 \]
+    \[ p=2\Prob{D\ge \abs{d}}=(0.05,0.10) \]
+    We have some evidence to reject $ H_0 $. In R, we could do
+    <<>>=
+    d <- (-2.75 - 2.75) / (summary(model)$sigma / sqrt(2)) ; d
+        2 * (1 - pt(abs(d), 6))
+        @
+        To obtain $ d=-2.429 $ and $ p\text{-value}=0.051 $. There is some difference
+between the treatment effect of group 1 and 2.
+

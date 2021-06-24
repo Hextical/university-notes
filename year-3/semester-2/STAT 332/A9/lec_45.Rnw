@@ -1,0 +1,106 @@
+\section{Lecture 45.00: Stratified Example}
+\subsection{Stratified 1}\label{stratified1}
+I am interested in the average tuition paid by students
+at the University of Waterloo. Additionally, I want
+to know how much each faculty student is paying on average.
+Hence, I decide to stratify by Faculty (assume students belong to a single faculty).
+\begin{table}[!htbp]
+    \centering
+    \begin{NiceTabular}{|c|c|c|c|c|c|}
+        \toprule
+        Faculty & $ N $ & $ \hat{\mu} $ & $ n $ & $ W $ & $ \hat{\sigma} $\\
+        \midrule
+        Math   & 6600  &    4500     &  15   & 0.22  &      400       \\
+        Arts   & 9000  &    3000     &  10   & 0.30  &      200       \\
+        Science  & 5400  &    4500     &  25   & 0.18  &      300       \\
+        AHS    & 1500  &    3200     &  35   & 0.05  &      100       \\
+        Engineer & 6000  &    7000     &  15   & 0.20  &      100       \\
+        EVS    & 1500  &    3500     &  20   & 0.05  &      200       \\
+        Total   & 30000 &             &  120  \\
+        \bottomrule
+    \end{NiceTabular}
+\end{table}
+\subsubsection*{Build a 95\% confidence interval for the mean tuition in Math.}
+<<>>=
+ci <- 4500 + c(-1, 1) * qnorm(0.975) * 400 / sqrt(15) * (1 - 15 / 6600)
+round(ci)
+@
+\[ \hat{\mu}_\text{math}\pm\frac{c\hat{\sigma}_\text{math}}{\sqrt{n_\text{math}}}\sqrt{1-\frac{n_\text{math}}{N_\text{math}}}=4500\pm \frac{1.96(400)}{\sqrt{15}} \sqrt{1-\frac{15}{6600} }=(4298,4702)\]
+\subsubsection*{Build a 95\% confidence interval for the mean tuition at UW.}
+Since we've used SRS in each of the strata, we have to use stratified sampling.
+<<>>=
+N_i <- c(6600, 9000, 5400, 1500, 6000, 1500)
+N <- sum(N_i)
+w_i <- N_i / N
+n_i <- c(15, 10, 25, 35, 15, 20)
+mu_i <- c(4500, 3000, 4500, 3200, 7000, 3500)
+sigma_i <- c(400, 200, 300, 100, 100, 200)
+mu <- sum(w_i * mu_i)
+variance <- sum(w_i ^ 2 * sigma_i ^ 2 / n_i * (1 - n_i / N_i))
+ci <- mu + c(-1, 1) * qnorm(0.975) * sqrt(variance)
+mu
+round(variance, 3)
+round(ci)
+@
+\[ \hat{\mu}=\sum_{i=1}^H w_i \hat{\mu}_i=4435 \]
+\[ \widehat{\mathbb{V}(\tilde{\mu})}=\sum_{i=1}^{H} \frac{w_i^2\hat{\sigma}_i^2}{n_i}\biggl(1-\frac{n_i}{N_i} \biggr)=1023.024 \]
+Therefore, a 95\% confidence interval for $\mu$ is:
+\[ \hat{\mu}\pm c\sqrt{\widehat{\mathbb{V}(\tilde{\mu})}}=4435\pm 1.96\sqrt{1023.024}=(4372, 4498) \]
+\subsection{Stratified 2}
+We continue from~\Cref{stratified1}.
+\subsubsection*{A proportional allocation of our sample values to each stratum.}
+<<>>=
+n <- 120
+round(n * w_i)
+@
+\begin{itemize}
+    \item $n_\text{math}=n w_\text{math}=120(0.22)=26$.
+    \item $n_\text{arts}=36$.
+    \item $n_\text{science}=22$.
+    \item $n_{\text{ahs}}=6$.
+    \item $n_{\text{eng}}=24$.
+    \item $n_{\text{evs}}=6$.
+\end{itemize}
+
+\subsubsection*{An optimal allocation of our sample values to each stratum.}
+<<>>=
+round(n * sigma_i * w_i / sum(w_i * sigma_i))
+@
+\begin{itemize}
+    \item $n_\text{math}=\dfrac{n\sigma_\text{math}w_\text{math}}{\sum_{j=1}^{6} w_j \sigma_j}=\frac{120(400)(0.22)}{237}=45$.
+    \item $n_\text{arts}=30$.
+    \item $n_\text{science}=27$.
+    \item $n_{\text{ahs}}=3$.
+    \item $n_{\text{eng}}=10$.
+    \item $n_{\text{evs}}=120-45-30-27-3-10=5$.
+\end{itemize}
+
+\subsection{Stratified 3}
+A course has 3 sections all taught by one instructor. There
+are $205$, $212$, and $253$ people in each of the sections
+$1$, $2$, and $3$ respectively. At the end of the term the instructor
+is curious about how well the students performed. The administration
+takes a simple random sampling of $15$, $12$, and $14$ people respectively from each section.
+The averages for each section are $75$, $70$, and $72$ respectively
+with standard deviations of $10$, $15$, and $5$. Build a 95%
+confidence interval for the mean grade of the instructors course.
+
+<<>>=
+N_i <- c(205, 212, 253)
+N <- sum(N_i)
+w_i <- N_i / N
+n_i <- c(15, 12, 14)
+mu_i <- c(75, 70, 72)
+sigma_i <- c(10, 15, 5)
+mu <- sum(w_i * mu_i)
+variance <- sum(w_i ^ 2 * sigma_i ^ 2 / n_i * (1 - n_i / N_i))
+ci <- mu + c(-1, 1) * qnorm(0.975) * sqrt(variance)
+mu
+variance
+round(ci, 3)
+@
+
+\[ \hat{\mu}=\sum_{i=1}^H w_i \hat{\mu}_i=72.28507 \]
+\[\widehat{\mathbb{V}(\tilde{\mu})}=\sum_{i=1}^{H} \frac{w_i^2\hat{\sigma}_i^2}{n_i}\biggl(1-\frac{n_i}{N_i} \biggr)=2.589983 \]
+Therefore, a 95\% confidence interval for $\mu$ is:
+\[\hat{\mu}\pm c\sqrt{\widehat{\mathbb{V}(\tilde{\mu})}}=72.28507\pm 1.96\sqrt{2.589983}=(69.131,75.439) \]

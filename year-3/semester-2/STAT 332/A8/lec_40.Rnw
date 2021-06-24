@@ -1,0 +1,109 @@
+\section{Lecture 40.00: Ratio Estimation (Ave.), Example}
+In R, the data set is \code{women}. Simply type \code{women} to see the data.
+We assume this is our population, and that we want to know the mean
+height $\mu_{\text{height}}$. We also assume we know the mean weight
+$\mu_{\text{weight}}$. In fact, directly from the data we have:
+<<>>=
+attach(women)
+mu_height <- mean(height) ; print(mu_height)
+mu_weight <- mean(weight) ; print(mu_weight)
+@
+\begin{itemize}
+    \item $\mu_{\text{height}}=65$
+    \item $\mu_{\text{weight}}=136.7333$
+    \item $y$: \code{height}.
+    \item $x$: \code{weight}.
+\end{itemize}
+Using SRSWOR, we take a sample of size 5 and use this for our estimate for
+the height:
+<<>>=
+set.seed(45376)
+sample_heights = sample(height, 5)
+muhat_height <- mean(sample_heights) ; print(muhat_height)
+sd(sample_heights)
+sample_weights = c(123, 129, 135, 146, 120)
+muhat_weight <- mean(sample_weights) ; print(muhat_weight)
+@
+\begin{itemize}
+    \item $\hat{\mu}_{\text{height}}=63.4$ which is our SRS estimate for $\mu_y$.
+    \item $\hat{\sigma}_y=3.209361$.
+    \item $\bar{x}=\hat{\mu}_{\text{weight}}=130.6$.
+\end{itemize}
+We found out that we were wrong by $1.4$ units. Going back a long time ago,
+when we used SRS, we ended up with a confidence interval which
+was $(60.6,66.2)$. We noticed how wide it was.
+
+When we deal with ratio estimation, the first thing we want is a linear
+relationship between height and weight.
+<<>>=
+plot(weight, height)
+@
+
+Thus, we decide to use Ratio Sampling.
+<<>>=
+Sqrt_weights = sqrt(sample_weights)
+sample_weights = sample_weights / Sqrt_weights
+sample_heights = sample_heights / Sqrt_weights
+@
+\begin{itemize}
+    \item \code{Sqrt\_weights = sqrt(sample\_weights)} $=\sqrt{x_i}$.
+    \item \code{sample\_weights = sample\_weights / Sqrt\_weights} $=x_i/\sqrt{x_i}$.
+    \item \code{sample\_heights = sample\_heights / Sqrt\_weights} $=y_i/\sqrt{x_i}$.
+\end{itemize}
+In order to remove the intercept, we need to use the \code{-1} in the following code.
+<<>>=
+sum <- summary(lm(sample_heights ~ sample_weights - 1)) ; print(sum)
+@
+\begin{itemize}
+    \item $\hat{\beta}=0.48545$
+    \item $\hat{\sigma}_{\text{ratio}}=0.1572$
+          $$\hat{\mu}_{\text{height}}=\hat{\beta}x_i=\frac{\bar{y}}{\bar{x}}=\frac{63.4}{130.6}x_i=0.48545x_i$$
+          which is our line of best fit.
+\end{itemize}
+
+The ratio estimate is
+$$\hat{\mu}_{\text{ratio}}=\hat{\mu}_{\text{height}}(\mu_{\text{weight}})=0.48545(136.7333)=66.4$$
+Well the real answer, was $65$, so we are $1.4$ units away from the real answer.
+However, that was closer than SRS which was $1.6$ units away from the real answer.
+
+<<>>=
+beta <- sum$coefficients[1]
+    mu_ratio <- beta * mu_weight
+    sigma_ratio <- sum$sigma
+n <- 5
+N <- 15
+c <- qnorm(0.975)
+round(mu_ratio + c(-1, 1) * ((c * sigma_ratio) / sqrt(n)) * sqrt(1 - n / N), 1)
+@
+
+A 95\% confidence interval for $\mu_y$ is:
+$$\hat{\mu}_{\text{ratio}}\pm \frac{c\hat{\sigma}_{\text{ratio}}}{\sqrt{n}}\sqrt{1-\frac{n}{N}}=66.4\pm \frac{1.96(0.1572)}{\sqrt{5}}\sqrt{1-\frac{5}{15}}=(66.3,66.5)$$
+Width: $0.2$
+
+Note:
+\begin{itemize}
+    \item Width of CI using Ratios is narrower than SRS.
+    \item There is bias in ratio estimation. Notice that the interval doesn't
+          contain 65 which is the real answer.
+\end{itemize}
+
+Requirements:
+\begin{itemize}
+    \item Regression and Ratio require highly correlated $Y_i$ and $x_i$.
+    \item Ratio requires an intercept of zero.
+    \item Both Regression and Ratio are narrower than SRS, but Regression
+          and Ratio are both biased.
+\end{itemize}
+
+\begin{table}[!htbp]
+    \centering
+    \begin{NiceTabular}{|c|c|c|}
+        \toprule
+        Technique &                               Estimate                               &                                                      CI\\
+        \midrule
+        SRS    &                            $\hat{\mu}_y$                             &              $\displaystyle\hat{\mu}_y\pm \frac{c\hat{\sigma}_y}{\sqrt{n}}\sqrt{1-\frac{n}{N}}$              \\
+        Reg    &     $\hat{\mu}_{\text{reg}}=\bar{y}+\hat{\beta}(\mu_x-\bar{x})$      &   $\displaystyle\hat{\mu}_{\text{reg}}\pm \frac{c\hat{\sigma}_{\text{reg}}}{\sqrt{n}}\sqrt{1-\frac{n}{N}}$   \\
+        Ratio   & $\hat{\mu}_{\text{ratio}}=\displaystyle\frac{\bar{y}}{\bar{x}}\mu_x$ & $\displaystyle\hat{\mu}_{\text{ratio}}\pm \frac{c\hat{\sigma}_{\text{ratio}}}{\sqrt{n}}\sqrt{1-\frac{n}{N}}$ \\
+        \bottomrule
+    \end{NiceTabular}
+\end{table}

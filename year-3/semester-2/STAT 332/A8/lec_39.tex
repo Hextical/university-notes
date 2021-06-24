@@ -1,0 +1,36 @@
+\chapter{Assignment 8}
+\section{Lecture 39.00: Ratio Estimation (Ave.)}
+\textbf{Model}:
+\begin{flalign*}
+                                  &          & Y_i                    & =\beta x_i+R_i                                        &  & \text{where }R_i \sim \N{0,x_i \sigma^2}                \\
+    \text{Divide by $\sqrt{x_i}$} & \implies & \frac{Y_i}{\sqrt{x_i}} & = \frac{\beta x_i}{\sqrt{x_i}}+\frac{R_i}{\sqrt{x_i}} &  & \text{where }\frac{R_i}{\sqrt{x_i}} \sim \N{0,\sigma^2}
+\end{flalign*}
+\begin{itemize}
+    \item It goes through the origin.
+    \item Variance that increases with $ x_i $. In fact, there is a funnel effect.
+          To fix the funnel effect, we divide by $ \sqrt{x_i} $ as done above.
+\end{itemize}
+Therefore, $ \E*{\dfrac{R_i}{\sqrt{x_i}}}=0 $ since $ \E{R_i}=0 $ and $ x_i $ is a constant. Also,
+\[ \Var*{\frac{R_i}{\sqrt{x_i}}}=\frac{\Var{R_i}}{x_i} =\frac{\sigma^2 x_i}{x_i} =\sigma^2 \]
+Let $ Y_i^\prime = \dfrac{Y_i}{\sqrt{x_i}} $, $ x_i^\prime=\dfrac{x_i}{\sqrt{x_i}} $,
+and $ R_i^\prime = \dfrac{R_i}{\sqrt{x_i}} $. So, our new model is
+\begin{flalign*}
+     &  & Y_i^\prime = \beta x_i^\prime + R_i^\prime &  & \text{where }R_i^\prime \sim \N{0,\sigma^2}
+\end{flalign*}
+We use LS to estimate our parameters. We find
+\begin{flalign*}
+     &  & \hat{\beta}                   & =\frac{\bar{y}}{\bar{x}} &  & \\
+     &  & \hat{\sigma}^2_{\text{ratio}} & = \frac{W}{n-1}          &  &
+\end{flalign*}
+Our prediction is:
+\[ \hat{y}_i=\hat{\beta}x_i^\prime = \biggl(\frac{\bar{y}}{\bar{x}}\biggr) x_i^\prime \]
+\begin{itemize}
+    \item If $ x_i^\prime=\bar{x} $, then $ \hat{y}_i=\bar{y} $.
+          Then, if $ x_i^\prime = \mu_x $, then $ \hat{\mu}_{\text{ratio}}=\biggl(\dfrac{\bar{y}}{\bar{x}}\biggr)\mu_x $.
+\end{itemize}
+Now, we're going out, and we're going to build a confidence interval for this.
+And when we build a confidence interval for this, we basically get the same logic that we got
+for regression sampling. All the same mathematics basically kicks in, there's no real
+difference between the mathematics, so I'm simply going to state it. A confidence
+interval for $ \mu_y $ is:
+\[ \hat{\mu}_{\text{ratio}}\pm \frac{c\hat{\sigma}_{\text{ratio}}}{\sqrt{n}}\sqrt{1-\frac{n}{N}}  \]

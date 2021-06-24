@@ -1,0 +1,74 @@
+\section{Lecture 38.00: Regression Sampling, Example 2}
+A student was curious about whether they performed better with
+more sleep. To test this hypothesis, she decided to write
+various tests on a certain number of hours ($x$) of sleep.
+The grade on their test was considered to be the response ($y$).
+In total, she has written $94$ tests since coming to UW.
+On average, she slept for $5.1$ hours during those $94$
+tests. We consider the $9$ below to be a random sample.
+\begin{itemize}
+    \item \textbf{Model}: $Y_i=\alpha+\beta(x_i-\bar{x})+R_i$ where $R_i \sim \mathcal{N}(0,\sigma^2)$.
+\end{itemize}
+\textbf{Questions}:
+\begin{itemize}
+    \item Assume the explanatory variate was not present. Build a 95% confidence
+          interval for her mean grade using SRSWOR.
+    \item Use Regression sampling to build a 95% confidence interval for her mean grade.
+    \item Compare your SRSWOR results to your regression results, what do you notice?
+\end{itemize}
+
+<<>>=
+x <- c(4, 6, 2, 7, 5, 9, 2, 1, 8)
+y <- c(75, 78, 69, 80, 77, 82, 65, 55, 85)
+n <- 9
+N <- 94
+mu_x <- 5.1
+
+s_xy <- sum(y * (x - mean(x))) / (n - 1) ; print(s_xy)
+s_xsq <- var(x) ; print(s_xsq)
+s_ysq <- var(y) ; print(s_ysq)
+xbar <- mean(x) ; print(xbar)
+ybar <- mean(y) ; print(ybar)
+r <- (y - ybar - (x - xbar) *
+sum((y - ybar) * (x - xbar)) / sum((x - xbar) ^ 2))
+sigma_rsq <- sum(r ^ 2) / (n - 1) ; print(sigma_rsq)
+sqrt(sigma_rsq)
+@
+\begin{itemize}
+    \item $s_{xy}=24.75$.
+    \item $s_x^2=8.11$.
+    \item $\hat{\sigma}_y^2=s_y^2=89.25$.
+    \item $\bar{x}=4.89$.
+    \item $\bar{y}=74$.
+    \item $\hat{\sigma}_{\text{reg}}^2=13.72$.
+    \item $N=94$.
+    \item $n=9$.
+    \item $\mu_x=5.1$ (given).
+\end{itemize}
+<<>>=
+alpha_hat <- ybar ; print(alpha_hat)
+beta_hat <- s_xy/s_xsq ; print(beta_hat)
+reg <- alpha_hat + beta_hat * (mu_x - xbar) ; print(reg)
+@
+$$\hat{\alpha}=\bar{y}=\hat{\mu}_y=74$$
+$$\hat{\beta}=\frac{s_{xy}}{s_x^2}=\frac{24.75}{8.11}=3.0514$$
+$$\hat{\mu}_{\text{reg}}=\hat{\alpha}+\hat{\beta}(\mu_x-\bar{x})=74+3(5.1-4.89)=74.63$$
+<<>>=
+c <- qnorm(0.975)
+round(alpha_hat + c(-1, 1) *  c * sqrt(s_ysq / n) * sqrt(1 - n / N), 1)
+@
+SRS:
+$$\hat{\mu}_y \pm \frac{c\hat{\sigma}_y}{\sqrt{n}}\sqrt{1-\frac{n}{N}}=
+    74\pm 1.96\sqrt{\frac{89.25}{9}}\sqrt{1-\frac{9}{94}}=(68.1,79.9)$$
+Roughly a width of 12.
+<<>>=
+round(reg + c(-1, 1) * c * sqrt(sigma_rsq / n) * sqrt(1 - n / N), 1)
+@
+Reg:
+$$\hat{\mu}_{\text{reg}}\pm \frac{c\hat{\sigma}_r}{\sqrt{n}}\sqrt{1-\frac{n}{N}}
+    = 74.63\pm 1.96\sqrt{\frac{13.72}{9}}\sqrt{1-\frac{9}{94}}=(72.3,76.9)$$
+Roughly a width of 5.
+
+As you will notice, the big difference between the two intervals
+is that the width of the regression interval is
+narrower than the width of the SRS interval.

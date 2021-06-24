@@ -1,0 +1,75 @@
+\section{Lecture 30.50: Factorial Designs, Example}
+An experiment was conducted by students at Ohio State to explore the nature of the
+relationship between a person's heart rate and the frequency at which that person
+stepped up and down on steps of various heights. The response, the difference in heart
+rate, was measured in beats per minute. There were two different step heights, coded
+as 0 and 1. There were two rates of stepping coded as 0 and 1. This resulted in four
+possible height/frequency combinations --- treatments. Each subject performed the
+activity for three minutes, and were kept on pace by the beat of an electric metronome.
+<<>>=
+rm(list = ls())
+options(contrasts = c('contr.sum', 'contr.poly'))
+data = read.table("stepping2.csv",
+header = T,
+sep = ",",
+as.is = T)
+attach(data)
+Y = HR - RestHR
+Trt = 2 * Height + Frequency
+Trt = as.factor(Trt)
+Model = lm(Y ~ Trt)
+
+summary(Model)
+@
+\subsection{Determining Interaction (Method 1)}
+\[ \begin{array}{ccc}
+        \text{Group Average} & 0             & 1          \\
+        \midrule
+        0                    & 19.5 - (11.7) & 19.5 - 0.9 \\
+        1                    & 19.5 + 3.9    & 19.5 + 8.7
+    \end{array} \]
+We can only do this if we have 2 levels with 2 factors. We end up creating
+a contrast.~\Cref{fig:interplot} shows that there is no interaction.
+<<interplot,fig.cap="Interaction Plot">>=
+interaction.plot(Height, Frequency, Y)
+@
+\subsection{Determining Interaction (Method 2)}
+\begin{itemize}
+    \item If $ \Delta_1=\Delta_2 $, the lines are parallel; that is, there is no interaction.
+    \item If $ \Delta_1\ne \Delta_2 $, the lines are not parallel; that is, there is interaction.
+\end{itemize}
+$ \Delta_1-\Delta_2=(\bar{Y}_{11+}-\bar{Y}_{01+})-(\bar{Y}_{10+}-\bar{Y}_{00+}) $.
+Add tildes to get $ \tilde{\theta}=(\tilde{\tau}_{11}-\tilde{\tau}_{01})-(\tilde{\tau}_{10}-\tilde{\tau}_{00}) $
+\[ \E{\tilde{\theta}}=\tau_{11}-\tau_{01}-\tau_{10}-\tau_{00} \]
+\[ \Var{\tilde{\theta}}=\frac{\sigma^2}{5} +\frac{\sigma^2}{5} +\frac{\sigma^2}{5} +\frac{\sigma^2}{5}
+    =\frac{4\sigma^2}{5}  \]
+$ H_0 $: $ \theta=0 $ (no interaction) versus $ H_a $: $ \theta\ne 0 $ (interaction)
+\[ d=\frac{\hat{\tau}_{11}-\hat{\tau}_{01}-\hat{\tau}_{10}-\hat{\tau}_{00}}{\sigma\sqrt{\frac{4}{5}}}=-0.66\quad(D \sim t(20-4-1+1)=t(16)) \]
+\[ p=2\Prob{D>0.66}=(0.4,0.6) \]
+There is no evidence to reject $ H_0 $. Therefore, there is no interaction.
+
+There is actually a \emph{third} way to determine interaction, the ANOVA table.
+\subsection{Determining Interaction (Method 3)}
+<<>>=
+rm(list = ls())
+options(contrasts = c('contr.sum','contr.poly'))
+data = read.table("stepping2.csv",header=T,sep=",",as.is=T)
+attach(data)
+Y = HR - RestHR
+Height = as.factor(Height)
+Freq = as.factor(Frequency)
+Model = lm(Y ~ Freq + Height + Freq * Height)
+anova(Model)
+@
+We calculate $ \SS{Trt} $ with
+\[ \SS{Freq}+\SS{Height}+\SS{Interaction}=\SS{Trt} \]
+In our case, $ \SS{Trt}=1143.0 $ on $ 3 $ degrees of freedom.
+\begin{itemize}
+    \item $ H_0 $: no interaction
+    \item $ H_a $: interaction
+\end{itemize}
+\[ d=\frac{\MS{Int}}{\MS{Res}} =\frac{45}{102.37}=0.4396  \]
+With $ p $-value,
+\[ p=0.51667\quad(D \sim  F(1,16)) \]
+$ p>0.1 $, so there is no evidence to reject $ H_0 $,
+so it appears there is no interaction.

@@ -1,0 +1,41 @@
+\section{Lecture 22.00: Model 5, Example 1 Cont.}
+We want to check our model assumptions of
+$ R_j \sim \N{0,\sigma^2} $ independent. Four things to check:
+\begin{itemize}
+    \item $ \E{R_j}=0 $ (zero mean)
+    \item $ \Var{R_j}=\sigma^2 $ (constant variance)
+    \item Normality
+    \item Independence
+\end{itemize}
+To check these, we can
+\begin{itemize}
+    \item plot residuals versus fitted values to check for both
+          mean and variance assumption.
+
+          \code{plot(model\$residuals)}
+    \item Q-Q plot to check for normality (straight line is normal).
+
+          \code{qqnorm(model\$residuals)}
+    \item residuals plot to check for independence assumption.
+
+          \code{plot(model\$fitted.values, model\$residuals)}
+\end{itemize}
+\subsection*{Example}
+All the diagnostics for this example seem good.
+<<>>=
+# Data frames
+grp1 <- c(50, 53, 52, 58)
+grp2 <- c(62, 55, 58, 60)
+# Must run to get same results as textbook
+options(contrasts = c('contr.sum', 'contr.poly'))
+Y <- c(grp1, grp2)
+# Makes a discrete variable
+x <- as.factor(c(rep(1, 4), rep(2, 4)))
+# Builds the model
+model <- lm(Y ~ x)
+# Residuals
+model$residuals
+    qqnorm(model$residuals)
+plot(model$residuals)
+    plot(model$fitted.values,model$residuals)
+@

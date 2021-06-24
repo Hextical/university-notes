@@ -1,0 +1,362 @@
+\documentclass[oneside]{book}
+\usepackage[dvipsnames,table,xcdraw]{xcolor}
+
+\usepackage{fontspec}
+\setmainfont{XCharter}
+\usepackage{anyfontsize}
+\usepackage{microtype}
+\usepackage[math-style=ISO,bold-style=ISO,warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
+
+% -----------------------------------------------------------------------------
+
+% CS 246
+\usepackage{float}
+\usepackage{listings}
+
+\definecolor{light-gray}{gray}{0.95}
+\newcommand{\code}[1]{\texttt{#1}}
+
+% -----------------------------------------------------------------------------
+
+% CO 250
+\usepackage{tkz-berge}
+
+% -----------------------------------------------------------------------------
+
+% Core Packages
+\usepackage{xfrac}
+\usepackage[margin=1in]{geometry}
+\usepackage[unicode,pdfversion=1.7]{hyperref}
+\usepackage[shortlabels]{enumitem}
+\usepackage[parfill]{parskip}
+\usepackage[theorems,breakable]{tcolorbox}
+\usepackage{graphicx}
+\usepackage[ruled,linesnumbered,vlined,dotocloa]{algorithm2e}
+\usepackage[delims=\lbrack\rbrack]{spalign}
+\usepackage{mathtools}
+\usepackage{cleveref}
+\usepackage{pdfpages}
+\usepackage{minted}
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+\usetikzlibrary{positioning}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{framed}
+
+
+% -----------------------------------------------------------------------------
+
+% Better Tables
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{tabularx}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{Z}{>{\centering\arraybackslash\columncolor{light-gray}}X}
+\newcolumntype{B}{>{\centering\arraybackslash\bfseries}X}
+\usepackage{multirow}
+\usepackage[skip=1ex]{caption}
+
+% -----------------------------------------------------------------------------
+
+% Intervals
+\usepackage{interval}
+\intervalconfig{
+    soft open fences,
+    separator symbol={,}
+}
+
+% -----------------------------------------------------------------------------
+
+\graphicspath{ {./figures/} }
+
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\slack}{slack}
+\DeclareMathOperator{\row}{row}
+\DeclareMathOperator{\cone}{cone}
+\DeclareMathOperator{\nullspace}{Null}
+\DeclareMathOperator{\ch}{char}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\lcm}{lcm}
+
+\usepackage{etoolbox}
+
+% Functions
+\providecommand\given{} % just to make sure it exists
+\DeclarePairedDelimiterXPP{\E}[1]{\mathbb{E}}[]{}{
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
+    #1}
+\DeclarePairedDelimiterXPP{\Var}[1]{\mathbb{V}}(){}{
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
+    #1}
+\DeclarePairedDelimiterXPP\Prob[1]{\mathbb{P}}(){}{
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
+    \ifblank{#1}{\:\cdot\:}
+    #1}
+\DeclarePairedDelimiterXPP\Ind[1]{\mathbb{I}}\{\}{}{
+\renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
+\ifblank{#1}{\:\cdot\:}
+#1}
+\newcommand{\indep}{\perp\!\!\!\perp}
+\DeclarePairedDelimiterXPP{\Corr}[1]{\text{Corr}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Cov}[1]{\text{Cov}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Sd}[1]{\text{Sd}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Se}[1]{\text{Se}}(){}{#1}
+\let\SS=\relax
+\DeclarePairedDelimiterXPP{\SS}[1]{\text{SS}}(){}{\text{#1}}
+\DeclarePairedDelimiterXPP{\MS}[1]{\text{MS}}(){}{\text{#1}}
+\DeclarePairedDelimiterXPP{\Span}[1]{\text{Span}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Spanc}[1]{\overline{\text{Span}}}(){}{#1}
+\DeclareMathOperator{\VIF}{VIF}
+\DeclarePairedDelimiterXPP{\expon}[1]{\text{exp}}\{\}{}{#1}
+
+% Distributions
+\DeclarePairedDelimiterXPP{\N}[1]{\mathcal{N}}(){}{#1}
+\DeclarePairedDelimiterXPP{\uniform}[1]{\text{Uniform}}(){}{#1}
+\DeclarePairedDelimiterXPP{\hyp}[1]{\text{Hypergeometric}}(){}{#1}
+\DeclarePairedDelimiterXPP{\bern}[1]{\text{Bernoulli}}(){}{#1}
+\DeclarePairedDelimiterXPP{\bin}[1]{\text{Binomial}}(){}{#1}
+\DeclarePairedDelimiterXPP{\nb}[1]{\text{Negative Binomial}}(){}{#1}
+\DeclarePairedDelimiterXPP{\geo}[1]{\text{Geometric}}(){}{#1}
+\DeclarePairedDelimiterXPP{\poi}[1]{\text{Poisson}}(){}{#1}
+\DeclarePairedDelimiterXPP{\mult}[1]{\text{Multinomial}}(){}{#1}
+\DeclarePairedDelimiterXPP{\gam}[1]{\text{Gamma}}(){}{#1}
+\DeclarePairedDelimiterXPP{\weib}[1]{\text{Weibull}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Mvn}[1]{\text{MVN}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Bvn}[1]{\text{BVN}}(){}{#1}
+\DeclarePairedDelimiterXPP{\exponential}[1]{\text{Exponential}}(){}{#1}
+
+\DeclarePairedDelimiterXPP{\tr}[1]{\text{trace}}(){}{#1}
+
+\DeclarePairedDelimiterX\innerp[2]{\langle}{\rangle}{
+    \ifblank{#1}{\:\cdot\:,}#1,
+    \ifblank{#2}{\:\cdot\:}#2
+}
+
+\DeclarePairedDelimiterXPP{\MA}[1]{\text{MA}}(){}{#1}
+\DeclarePairedDelimiterXPP{\AR}[1]{\text{AR}}(){}{#1}
+\DeclarePairedDelimiterXPP{\ARMA}[1]{\text{ARMA}}(){}{#1}
+\DeclarePairedDelimiterXPP{\AIC}[1]{\text{AIC}}(){}{#1}
+\DeclarePairedDelimiterXPP{\BIC}[1]{\text{BIC}}(){}{#1}
+\DeclarePairedDelimiterXPP{\ARIMA}[1]{\text{ARIMA}}(){}{#1}
+\DeclarePairedDelimiterXPP{\GARCH}[1]{\text{GARCH}}(){}{#1}
+\DeclarePairedDelimiterXPP{\NNAR}[1]{\text{NNAR}}(){}{#1}
+\DeclarePairedDelimiterXPP{\NNSAR}[2]{\text{NNSAR}}(){_{#2}}{#1}
+\DeclarePairedDelimiterXPP{\ARCH}[1]{\text{ARCH}}(){}{#1}
+
+\DeclareMathOperator{\FWER}{FWER}
+\let\log\relax
+\DeclarePairedDelimiterXPP{\log}[1]{\text{log}}(){}{#1}
+
+% -----------------------------------------------------------------------------
+
+% Table of Contents
+\hypersetup{colorlinks, linkcolor=[rgb]{0,0.5,1}}
+
+% -----------------------------------------------------------------------------
+
+% Heading Dates
+\newcommand{\makeheading}[1]
+{
+    \begin{figure}[H]
+        \centering
+        \rule{\columnwidth}{1pt}\\
+        {\large \scshape{#1}}\\[-0.6\baselineskip]
+        \rule{\columnwidth}{1pt}
+        \vspace*{-20pt}
+    \end{figure}
+}
+
+% -----------------------------------------------------------------------------
+
+% Definitions
+\definecolor{myyellow}{RGB}{255,255,168}
+% Theorems
+\definecolor{mypurple}{RGB}{216,216,255}
+% Algorithms
+\definecolor{mygray}{RGB}{232,232,232}
+% Examples
+\definecolor{mygreen}{RGB}{216,255,216}
+% Exercises
+\definecolor{myred}{RGB}{255,216,216}
+% Remarks
+\definecolor{mycyan}{RGB}{204,229,229}
+
+\tcbset{
+    common/.style={
+            fonttitle=\bfseries,
+            coltitle=black,
+            boxrule=0pt,
+            breakable
+        },
+    theorem/.style={
+            common,
+            colback=mypurple,
+            colframe=mypurple!95!black,
+            fontupper=\itshape{}
+        },
+}
+
+
+\newtcbtheorem[number within=section, crefname={definition}{definitions}]
+{Definition}{DEFINITION}{
+    common,
+    colback=myyellow,
+    colframe=myyellow!95!black
+}{def}
+
+\newtcbtheorem[use counter from=Definition, crefname={example}{examples}]
+{Example}{EXAMPLE}{
+    common,
+    colback=mygreen,
+    colframe=mygreen!95!black,
+}{ex}
+
+\newtcbtheorem[use counter from=Definition, crefname={exercise}{exercises}]
+{Exercise}{EXERCISE}{
+    common,
+    colback=myred,
+    colframe=myred!95!black,
+}{exercise}
+
+\newtcbtheorem[use counter from=Definition, crefname={remark}{remarks}]
+{Remark}{REMARK}{
+    common,
+    colback=mycyan,
+    colframe=mycyan!95!black,
+}{remark}
+
+\newtcbtheorem[use counter from=Definition, crefname={statistical Test}{statistical Tests}]
+{Statistical_Test}{STATISTICAL TEST}{
+    common,
+    colback=Magenta!25!white,
+    colframe=Magenta!50!white,
+}{stest}
+
+\newtcbtheorem[use counter from=Definition, crefname={theorem}{theorems}]
+{Theorem}{THEOREM}{
+    theorem
+}{thm}
+
+\newtcbtheorem[use counter from=Definition, crefname={proposition}{propositions}]
+{Proposition}{PROPOSITION}{
+    theorem
+}{prop}
+
+\newtcbtheorem[use counter from=Definition, crefname={corollary}{corollaries}]
+{Corollary}{COROLLARY}{
+    theorem
+}{cor}
+
+\newtcbtheorem[use counter from=Definition, crefname={lemma}{lemmas}]
+{Lemma}{LEMMA}{
+    theorem
+}{lem}
+
+\newtcbtheorem[no counter]
+{Proof}{Proof of}{
+    common,
+    colframe=black!10,
+    separator sign={}
+}{pf}
+
+\DeclarePairedDelimiterX\norm[1]\lVert\rVert{\ifblank{#1}{\:\cdot\:}{#1}}
+\DeclarePairedDelimiterX\abs[1]\lvert\rvert{\ifblank{#1}{\:\cdot\:}{#1}}
+\DeclarePairedDelimiter\set\{\}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\arginf}{arg\,inf}
+\DeclareMathOperator*{\argsup}{arg\,sup}
+
+% just to make sure it exists
+\providecommand\onto{}
+% can be useful to refer to this outside \Set
+\newcommand\SetSymbol[1][]{%
+    \nonscript\:#1\vert{}
+    \allowbreak\nonscript\:
+    \mathopen{}}
+\DeclarePairedDelimiterXPP\Proj[1]{\text{Proj}}(){}{%
+    \renewcommand\onto{\SetSymbol[\delimsize]}
+    #1
+}
+
+\AtBeginDocument{%
+    \let\mathbb\relax
+    \DeclareMathAlphabet{\mathbb}{U}{msb}{m}{n}%
+}
+
+\newenvironment{tightcenter}{%
+    \setlength\topsep{0pt}%
+    \setlength\parskip{0pt}%
+    \par\centering}{\par\noindent\ignorespacesafterend}
+
+\usepackage{nicematrix}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\usepackage{commath}
+
+\title{
+\LARGE Sampling and Experimental Design\\
+\large STAT 332\\
+\normalsize Winter 2021 (1211)}
+\author{\LaTeX{}er: \emph{Cameron Roopnarine}\\Instructor: \emph{Riley Metzger}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+<<child='setup.Rnw'>>=
+@
+\input{A1/a_01.tex}
+
+\input{A2/a_02.tex}
+
+<<child='A3/lec_21.Rnw'>>=
+@
+<<child='A3/lec_22.Rnw'>>=
+@
+<<child='A3/lec_23.Rnw'>>=
+@
+\input{A3/lec_24.tex}
+\input{A3/lec_25.tex}
+<<child='A3/lec_26.Rnw'>>=
+@
+
+<<child='A4/lec_27.Rnw'>>=
+@
+\input{A4/lec_28.tex}
+<<child='A4/lec_29.Rnw'>>=
+@
+
+\input{A5/lec_301.tex}
+<<child='A5/lec_302.Rnw'>>=
+@
+
+\input{A6/a_06.tex}
+
+\input{A7/lec_36.tex}
+<<child='A7/lec_37.Rnw'>>=
+@
+<<child='A7/lec_38.Rnw'>>=
+@
+
+\input{A8/lec_39.tex}
+<<child='A8/lec_40.Rnw'>>=
+@
+\input{A8/lec_41.tex}
+\input{A8/lec_42.tex}
+
+\input{A9/lec_43.tex}
+\input{A9/lec_44.tex}
+<<child='A9/lec_45.Rnw'>>=
+@
+\input{A9/lec_46.tex}
+\input{A9/lec_47.tex}
+
+\input{appendix.tex}
+
+\end{document}

@@ -1,0 +1,101 @@
+\section{Lecture 41.00: Ratio Estimation}
+Suppose we had six students in our class. We selected them out at random
+using SRS\@. We record their grade in Calculus 1 and their gender.
+\[ \begin{matrix}
+        \text{Gender} & \text{Grade} \\
+        \midrule
+        M             & 70           \\
+        F             & 70           \\
+        M             & 85           \\
+        F             & 85           \\
+        M             & 90           \\
+        F             & 90
+    \end{matrix} \]
+The males on average: $ \bar{x}_M=(70+85+90)/3 $.
+Let
+\begin{itemize}
+    \item $ y_i $ be the grade, and
+    \item $ z_i=\begin{cases}
+                  1 & \text{ if male}  \\
+                  0 & \text{otherwise}
+              \end{cases} $
+\end{itemize}
+Our estimate is $ \hat{\theta} $,
+\[ \hat{\theta}=\frac{\sum_{i\in\mathcal{S}}y_i z_i}{\sum_{i\in \mathcal{S}}z_i }  \]
+\begin{itemize}
+    \item $ \sum_{i\in\mathcal{S}}y_i z_i $ counts the number of grades of those males.
+    \item $ \sum_{i\in\mathcal{S}} z_i $ counts the number of males you happen to have.
+\end{itemize}
+Our parameter is $ \theta $,
+\[ \theta=\frac{\sum_{i=1}^{N} \frac{y_i z_i}{N} }{\sum_{i=1}^{N} \frac{z_i}{N} }=\frac{\mu}{\pi}   \]
+\begin{itemize}
+    \item $ \mu $ is the average of the male grades.
+    \item $ \pi $ is the proportion of the people that are male.
+\end{itemize}
+Therefore, we can write our estimate as $ \hat{\theta}=\hat{\mu}/\hat{\pi} $.
+\subsection*{Estimator}
+Our estimator asks ``what's random?''
+What's random is whether you're in the sample.
+We define an indicator variable $ I_i $ which will be 1 if it's in our population.
+\[ \tilde{\theta}=\frac{\frac{\sum_{i=1}^{N}I_i y_i z_i}{n} }{\frac{\sum_{i=1}^{N} I_i z_i}{n}}=\frac{\tilde{\mu}}{\tilde{\pi}}   \]
+Now there's a bit of math involved in this because unfortunately we have never
+looked at the ratio of two random variables, and it's very difficult to do.
+Instead, we're going to use \emph{Taylor's Approximation} (Lecture 41.50 goes more in detail).
+
+Taylor's Approximation gives:
+\[ \frac{\tilde{\mu}}{\tilde{\pi}}\approx \frac{\mu}{\pi}+\frac{1}{\pi}(\tilde{\mu}-\mu)-\frac{\mu}{\pi^2}(\tilde{\pi}-\pi)  \]
+where $ \tilde{\mu} $ and $ \tilde{\pi} $ are both obtained by SRS\@. So we obtain the proportion and average from simple random sampling.
+\begin{itemize}
+    \item The approximation is approximately normal (there's a Gaussian extension that allows
+          this to be true).
+\end{itemize}
+\subsection*{Expectation and Variance}
+\begin{align*}
+    \E*{\frac{\tilde{\mu}}{\tilde{\pi}}}
+     & \approx \E*{\frac{\mu}{\pi}+\frac{1}{\pi}(\tilde{\mu}-\mu)-\frac{\mu}{\pi^2}(\tilde{\pi}-\pi)}                         \\
+     & =\frac{\mu}{\pi}+\frac{1}{\pi} \biggl(\E*{\tilde{\mu}}-\mu\biggr)-\frac{\mu}{\pi^2} \biggl(\E*{\tilde{\pi}}-\pi\biggr) \\
+     & =\frac{\mu}{\pi}
+\end{align*}
+since $ \E{\tilde{\mu}}=\mu $ and $ \E*{\tilde{\pi}}=\pi $ (by SRS, unbiased).
+\begin{align*}
+    \Var*{\frac{\tilde{\mu}}{\tilde{\pi}}}
+     & \approx \Var*{\frac{\mu}{\pi}+\frac{1}{\pi}(\tilde{\mu}-\mu)-\frac{\mu}{\pi^2}(\tilde{\pi}-\pi)} \\
+     & =\frac{1}{\pi^2} \Var{\tilde{\mu}-\mu-\frac{\mu\tilde{\pi}}{\pi}+\mu}                            \\
+     & =\frac{1}{\pi^2} \Var*{\tilde{\mu}-\frac{\mu \tilde{\pi}}{\pi}}
+\end{align*}
+This is an average. Therefore, we end up with an estimated variance.
+\[  \Var*{\frac{\tilde{\mu}}{\tilde{\pi}}}\approx \frac{1}{\pi^2} \frac{\sigma^2_{\text{ratio}}}{n}\biggl(1-\frac{n}{N}\biggr)  \]
+A confidence interval is:
+\[ \text{EST}\pm c\,\text{SE}=\hat{\theta}\pm c\, \frac{1}{\hat{\pi}} \sqrt{1-\frac{n}{N}}\frac{\hat{\sigma}_{\text{ratio}}}{\sqrt{n}}  \]
+where
+\[ \hat{\sigma}_{\text{ratio}}^2=\frac{\sum_{i\in\mathcal{S}}\bigl(y_i-\hat{\theta}z_i\bigr)^2 }{n-1}  \]
+\section{Lecture 41.50: Taylor's Approximation}
+\emph{Calculus 1}: $ f(x)\approx f(x_0)+f^\prime(x_0)(x-x_0) $.
+\begin{Example}{Calculus 1 Taylor's Approximation}{}
+    Approximate $ f(1.1)=\ln(1.1) $ about $ x_0=1 $.
+
+    \textbf{Solution.}
+    \[ f(1.1)\approx f(1)+f^\prime(1)(1.1-1)=\ln(1)+\eval{\frac{1}{x}}_{x=1}(1.1-1)=0+1(0.1)=0.1 \]
+\end{Example}
+\emph{Calculus 3}:
+\[ f(x,y)\approx f(x_0,y_0)+\pd{f(x_0,y_0)}{x}(x-x_0)+\pd{f(x_0,y_0)}{y}(y-y_0) \]
+\begin{Example}{Calculus 3 Taylor's Approximation}{}
+    Approximate $ f(1.1,1.1)=\ln(1.1\times 1.1) $ about the point $ (1,1) $.
+
+    \textbf{Solution.}
+    \begin{align*}
+        f(1.1,1.1)
+         & \approx f(1,1)+\dpd{f(1,1)}{x}(x-x_0)+\dpd{f(1,1)}{y}(y-y_0)                    \\
+         & =\ln(1)+\eval{\frac{1}{x}}_{x=1,y=1}(1.1-1)+\eval{\frac{1}{y}}_{x=1,y=1}(1.1-1) \\
+         & =0+0.1+0.1                                                                      \\
+         & =0.2
+    \end{align*}
+\end{Example}
+Approximate: $ f(x,y)=x/y $ about the point $ (x_0,y_0) $.
+\begin{align*}
+    f(x,y)
+     & \approx f(x_0,y_0)+\frac{1}{y_0}(x-x_0)+\biggl(-\frac{x_0}{y_0^2} \biggr)(y-y_0) \\
+     & =\frac{x_0}{y_0}+\frac{1}{y_0} (x-x_0)-\frac{x_0}{y_0^2}(y-y_0)
+\end{align*}
+Therefore, approximating $ \tilde{\mu}/\tilde{\pi} $ about $ (\mu,\pi) $:
+\[ \frac{\tilde{\mu}}{\tilde{\pi}}\approx \frac{\mu}{\pi}+\frac{1}{\pi} (\tilde{\mu}-\mu)-\frac{\mu}{\pi^2}(\tilde{\pi}-\pi)   \]

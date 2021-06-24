@@ -1,0 +1,25 @@
+\section{Lecture 26.00: F Test, Example}
+
+See~\Cref{section23} for the data.
+<<echo = FALSE>>=
+options(contrasts = c('contr.sum', 'contr.poly'))
+Marks1 = c(55, 92, 48, 57, 66, 72)
+Marks2 = c(62, 95, 84, 83, 66, 75)
+Marks3 = c(89, 92, 94, 99, 87, 67)
+Marks4 = c(25, 35, 71, 42, 44, 30)
+Y = c(Marks1, Marks2, Marks3, Marks4)
+x = as.factor(c(rep(1, 6), rep(2, 6), rep(3, 6), rep(4, 6)))
+model = lm(Y ~ x)
+@
+<<>>=
+anova(model)
+@
+\begin{itemize}
+    \item $ H_0 $: $ \tau_1=\tau_2=\tau_3=\tau_4=0 $
+    \item $ H_a $: At least one $ \tau $ is not zero
+\end{itemize}
+\[ d=\frac{\MS{Trt}}{\MS{Res}} =\frac{\SS{Trt}/\text{df}_\text{Trt}}{\SS{Res}/\text{df}_\text{Res}}
+    =\frac{7315.5/3}{3928.3/20}=12.415   \]
+Note that $ D \sim F(3,20) $, so
+\[ p=\Prob{D>12.415}=8.21 \times 10^{-5} \]
+We have tons of evidence against $ H_0 $, so one of our treatment effects is not zero.

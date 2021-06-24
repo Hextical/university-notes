@@ -1,0 +1,48 @@
+\chapter{Assignment 5}
+\section{Lecture 30.00: Factorial Designs}
+\begin{Example}{Cancer}{}
+    \begin{itemize}
+        \item Chemo (high, low).
+        \item Radiation (high, low).
+    \end{itemize}
+    A treatment might be high chemo and low radiation.
+\end{Example}
+In factorial design, we're interested in the factorials individually as
+well as how they \emph{interact}. Interaction means that the effects of the factors
+differ when used alone differs from when they are used together.
+\begin{Example}{Interaction}{}
+    \begin{itemize}
+        \item Radiation: kills 1/4 of cancer cells
+        \item Chemo: kills 1/4 of cancer cells
+        \item Together: kills 5/6 cancer cells
+    \end{itemize}
+\end{Example}
+\begin{Definition}{Factorial CRD, Model 8}{}
+    \[ Y_{ijk}=\mu+\tau_{ij}+R_{ijk}\quad(R_{ijk}\sim \N{0,\sigma^2}) \]
+    where
+    \begin{itemize}
+        \item $ i=1,2,\ldots,\ell_1 $ (no.\ of levels of factor 1)
+        \item $ j=1,2,\ldots,\ell_2 $ (no.\ of levels of factor 2)
+        \item $ k=1,2,\ldots,r $
+    \end{itemize}
+    Constraint: $ \sum_{ij}\tau_{ij}=0  $
+\end{Definition}
+\begin{Example}{LS for Model 8}{}
+    \[ W=\sum_{ijk}r_{ijk}^2+\lambda\biggl(\sum_{ij}\tau_{ij} \biggr)  \]
+    Solving
+    \[ \hat{\mu}=\bar{y}_{+++} \]
+    \[ \hat{\tau}_{ij}=\bar{y}_{ij+}-\bar{y}_{+++} \]
+    \[ \hat{\sigma}^2=\frac{W}{(r\ell_1\ell_2)-(\ell_1\ell_2+1)+1}  \]
+\end{Example}
+\begin{Definition}{Factorial RBD, Model 9}{}
+    \[ Y_{ijk}=\mu+\tau_{ij}+\beta_k+R_{ijk}\quad(R_{ijk}\sim \N{0,\sigma^2}) \]
+    Constraints: $ \sum_{ij}\tau_{ij}=0 $ and $ \sum_{k} \beta_k=0 $
+\end{Definition}
+\begin{Example}{LS for Model 9}{}
+    \[ W=\sum_{ijk}r_{ijk}^2+\lambda_1 \sum_{ij}\tau_{ij}+\lambda_2 \sum_{k}\beta_k  \]
+    Solving
+    \[ \hat{\mu}=\bar{y}_{+++} \]
+    \[ \hat{\tau}_{ij}=\bar{y}_{ij+}-\bar{y}_{+++} \]
+    \[ \hat{\beta}_k=\bar{y}_{++k}-\bar{y}_{+++} \]
+    \[ \hat{\sigma}^2=\frac{W}{(r\ell_1\ell_2)-(\ell_1\ell_2+r+1)+2}  \]
+\end{Example}

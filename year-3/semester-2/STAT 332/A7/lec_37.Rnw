@@ -1,0 +1,129 @@
+\section{Lecture 37.00: Regression Sampling, Example}
+\begin{itemize}
+    \item In R the data set is \code{women}. Simply type \code{women} to see the data.
+    \item We assume this is our population and that we want to know the mean height $\mu_{\text{height}}$.
+    \item When you do regression sampling you need to have a $y$ and an $x$.
+    \item $y$: height.
+    \item $x$: weight.
+    \item Now when we talk about our $x$ being weight we have to assume that we know the mean weight $\mu_{\text{weight}}$; that is, you need to know the population value for your weight. You don't know your population value for your height that's what you're trying to build the interval about.
+\end{itemize}
+<<>>=
+attach(women)
+mean(height)
+mean(weight)
+@
+\begin{itemize}
+    \item $\mu_{\text{height}}=65$ is unknown!
+    \item $\mu_{\text{weight}}\approx 136.7333$ is known, and must be known to do regression sampling.
+\end{itemize}
+
+We're almost there where we have everything we need. Once we get everything we need,
+we can build an SRS confidence interval. We need one more thing, and that's getting
+a sample. The sample command below grabs five \code{height}s from the set of heights
+that are there. So it grabs five of them, and then we can get the mean of the sample height
+and the standard deviation of the sample heights, so this would be sigma hat for simple random sampling.
+
+Using SRSWOR, we take a sample of size $5$ and use this as our estimate for the height.
+
+<<>>=
+set.seed(45376)
+sample_heights = sample(height, 5)
+mean(sample_heights)
+sd(sample_heights)
+@
+\begin{itemize}
+    \item $\hat{\mu}_{\text{height}}=63.4$.
+    \item $\hat{\sigma}_{\text{SRS}}\approx 3.209361$.
+\end{itemize}
+
+Now we have enough information that we can actually build a confidence interval.
+
+<<>>=
+N <- nrow(women) ; print(N)
+n <- 5
+c <- qnorm(0.975)
+round(mean(sample_heights) + c(-1, 1) *
+((c * sd(sample_heights)) / sqrt(n)) * sqrt(1 - n / N), 1)
+@
+\begin{itemize}
+    \item $N=15$.
+    \item $n=5$.
+    \item $c\approx 1.96$.
+\end{itemize}
+
+$$\text{SRS: }\hat{\mu}_\text{height}\pm \frac{c\hat{\sigma}_{\text{SRS}}}{\sqrt{n}}\sqrt{1-\frac{n}{N}}=63.4\pm \frac{1.96(3.209361)}{\sqrt{5}}\sqrt{1-\frac{5}{15}}=(61.1,65.7)$$
+which has a width of $4.6$.
+
+
+<<>>=
+sample_weights = c(123, 129, 135, 146, 120)
+mean(sample_weights)
+@
+\begin{itemize}
+    \item $\hat{\mu}_{\text{weight}}=130.6$.
+\end{itemize}
+
+We are wrong by $\mu_y-\hat{\mu}_y=65-63.4=1.6$ units. We note that
+there is a linear relationship between height and weight.
+
+<<>>=
+plot(weight, height)
+@
+
+Thus, we decide to use Regression Sampling.
+
+<<>>=
+sample_weights = sample_weights - mean(sample_weights) # x_i - bar(x)
+summary(lm(sample_heights ~ sample_weights)) # Y_i ~ (x_i - bar(x))
+@
+We didn't use a factor because this is not a discrete variable.
+We consider this factor to be continuous, so we consider our weights to be a continuous value.
+
+Therefore,
+
+\begin{itemize}
+    \item $\hat{\alpha}=\hat{\mu}_y=63.4$.
+    \item $\hat{\beta}=0.309413$.
+\end{itemize}
+
+Right now, the degrees of freedom is $n-2=5-2=3$, but we want to multiply by $(n-2)/(n-1)$ as
+the degrees of freedom should be $n-1=5-1=4$, so
+<<>>=
+sigma_r <- summary(lm(formula = sample_heights ~ sample_weights))$sigma ; print(sigma_r)
+sigma_r_sq <- sigma_r^2 * (n - 2) / (n - 1) ; print(sigma_r_sq)
+@
+$$\hat{\sigma}_r^2=\hat{\sigma}_{\text{r}}^2\frac{3}{4}=0.1915^2(3/4)=0.02749$$
+
+$$\hat{\mu}_{\text{reg}}=\hat{\mu}_{\text{height}}=\hat{\alpha}+\hat{\beta}(x_i-\bar{x})=63.4-0.31(x_i-130.6)$$
+<<>>=
+alpha_hat <- summary(lm(formula = sample_heights ~ sample_weights))$coefficients[1]
+    beta_hat <- summary(lm(formula = sample_heights ~ sample_weights))$coefficients[2]
+reg <- mean(sample_heights) + beta_hat * (mean(weight) - mean(c(123, 129, 135, 146, 120)))
+print(reg)
+@
+The regression estimate is:
+$$\hat{\mu}_{\text{reg}}=\hat{\mu}_{\text{height}}(\mu_{\text{weight}})=63.4+0.31(136.7333-130.6)=65.3$$
+<<>>=
+round(reg + c(-1, 1) * c * sqrt(sigma_r_sq) / sqrt(5) * (1 - n / N), 1)
+@
+The confidence interval is:
+$$\hat{\mu}_{\text{reg}}\pm \frac{c\hat{\sigma}_r}{\sqrt{n}}\sqrt{1-\frac{n}{N}}=65.3\pm \frac{1.96\sqrt{0.02749}}{\sqrt{5}}\sqrt{1-\frac{5}{15}}=(65.2,65.4)$$
+In this case, you are only $0.3$ from the true mean.
+
+\begin{itemize}
+    \item The width of this interval is much narrower than that of the SRS.
+          In fact, for the SRS if we go back in time it had a width of 4.6.
+    \item Note that your interval does not actually contain the population mean height.
+          The population mean height is $65$, but it's not in your interval and that's
+          because of the bias that comes from a regression interval. So, the bias of a regression
+          interval means that we may not always
+          contain the actual value of interest. You won't be far off from it because of
+          the regression line, but your interval might not contain it.
+\end{itemize}
+
+<<>>=
+plot(weight, height)
+abline(h = mean(height))
+abline(v = mean(weight))
+abline(alpha_hat - beta_hat * mean(c(123, 129, 135, 146, 120)), beta_hat)
+@

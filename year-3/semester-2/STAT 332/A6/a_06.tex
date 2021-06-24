@@ -1,0 +1,261 @@
+\chapter{Assignment 6}
+\section{Lecture 31.00: Sampling}
+Let
+\begin{itemize}
+    \item $ U $ be the \textbf{frame} (study population).
+    \item $ U=\set{1,2,\ldots,N} $.
+    \item $ \mathcal{S} $ be our sample. It has size $ n\le N $
+          and $ \mathcal{S}\subset U $.
+\end{itemize}
+Also, let the \textbf{sampling protocol} refer
+the probability of selecting any particular sample.
+\begin{itemize}
+    \item Define $ \pi_{ij} $ to be the \textbf{inclusion probability}
+          for unit $ i $ and $ j $. (note: $ \pi_{ii}=\pi_{i} $)
+\end{itemize}
+\textbf{SRSWOR}
+\begin{itemize}
+    \item \underline{S}imple \underline{R}andom \underline{S}ampling \underline{w}ith\underline{o}ut
+          \underline{R}eplacement.
+    \item $ U=\set{1,2,3,4} $ we select samples of size $ n=2 $.
+    \item $ \mathcal{S}_1=\set{1,2} $, $ \mathcal{S}_2=\set{1,3} $,
+          $ \mathcal{S}_3=\set{1,4} $, $ \mathcal{S}_4=\set{2,3} $,
+          $ \mathcal{S}_5=\set{2,4} $, $ \mathcal{S}_6=\set{3,4} $
+    \item What is the probability we select sample 1?
+          \[ \Prob{\mathcal{S}_1}=\frac{1}{6} \]
+    \item What is the probability that unit 1 is in our sample?
+          That is, what is $ \pi_1$? Well, $\pi_1=3/6=1/2 $.
+\end{itemize}
+Let the \textbf{frame} be $ \set{1,2,\ldots,N} $.
+We select SRSWOR a sample of size $ n $.
+\[ \Prob{\mathcal{S}_1}=\frac{1}{\binom{N}{n}} \]
+\[ \pi_1=\frac{\binom{N-1}{n-1}}{\binom{N}{n}} =\frac{n}{N} \]
+\section{Lecture 32.00: Model 1 Revisited}
+\[ Y_{j}=\mu+R_j\quad(R_j \sim \N{0,\sigma^2}) \]
+\begin{itemize}
+    \item Parameters: $ \mu $, and $ \sigma^2 $
+    \item Estimates: $ \hat{\mu}=\bar{y}_+ $, and $ \hat{\sigma}^2=s^2 $
+    \item Estimators: $ \tilde{\mu}=\bar{Y}_+ $, and $ \tilde{\sigma}^2=S^2 $, where
+          \[ \tilde{\mu} \sim \N*{\mu,\frac{\sigma^2}{n}} \]
+    \item CI\@: $ \text{EST} \pm c\, \text{SE} $. For $ \mu $:
+          \[ \hat{\mu}\pm c \frac{\hat{\sigma}}{\sqrt{n}} \quad(c \sim t(n-1)) \]
+\end{itemize}
+Use SRS (simple random sampling without replacement):
+\begin{itemize}
+    \item Parameters:
+          \[ \mu=\frac{\sum_{i=1}^{N}y_i}{N} \]
+          \[ \sigma^2=\frac{\sum_{i=1}^{N} (y_i-\mu)^2}{N-1}  \]
+    \item Estimates:
+          \[ \hat{\mu}=\frac{\sum_{i\in\mathcal{S}}y_i}{n}   \]
+          \[ \hat{\sigma}^2=\frac{\sum_{i\in\mathcal{S}} (y_i-\hat{\mu})^2}{n-1}  \]
+    \item Estimator: $ y_i $ is not a realization of $ Y_i $. Instead, $ y_i $ is a
+          constant. What is random, is whether $ y_i $ is selected for the sample.
+          \[ I_i=\begin{cases*}
+                  0 & if $ y_i $ is not in the sample \\
+                  1 & if $ y_i $ is in the sample
+              \end{cases*} \]
+          \[ \tilde{\mu}=\frac{\sum_{i=1}^{N} I_i y_i}{n} \]
+          \[ \tilde{\sigma}^2=\frac{\sum_{i=1}^{N} I_i(y_i-\hat{\mu})^2}{n-1}  \]
+          \[ \tilde{\mu}
+              \sim \N*{\mu,\biggl(1-\frac{n}{N} \biggr)\frac{\sigma^2}{n}} \]
+          where
+          \begin{itemize}
+              \item $ \dfrac{n}{N} $ is the sampling fraction
+              \item $ 1-\dfrac{n}{N} $ is the finite population correction.
+          \end{itemize}
+\end{itemize}
+\begin{table}[!htbp]
+    \centering
+    \begin{NiceTabular}{c|c}
+        Model 1                                                        & SRS                                                                                  \\
+        \midrule
+        $ \displaystyle \hat{\mu}\pm c \frac{\hat{\sigma}}{\sqrt{n}} $ & $ \displaystyle \hat{\mu}\pm c \sqrt{1-\frac{n}{N} }\frac{\hat{\sigma}}{\sqrt{n}}  $
+    \end{NiceTabular}
+\end{table}
+Let's prove the distribution.
+\begin{itemize}
+    \item $ \displaystyle \Prob{I_i=1}=\pi_i=\frac{n}{N} $
+    \item $ \displaystyle \E{I_i}=(0)\Prob{I_i=0}+(1)\Prob{I_i=1}=\frac{n}{N}=\E{I_i^2} $
+    \item $ \displaystyle \Var{I_i}=\E{I_i^2}-\E{I_i}^2=\frac{n}{N} -\biggl(\frac{n}{N}\biggr)^2=\frac{n}{N} \biggl(1-\frac{n}{N} \biggr)  $
+    \item $ \displaystyle \E{I_i I_j}=(1)(1)\Prob{I_i=1,I_j=1}=\frac{\binom{N-2}{n-2}}{\binom{N}{n}}=\frac{n(n-1)}{N(N-1)}  $
+\end{itemize}
+Recall:
+\[ \tilde{\mu}=\frac{\sum_{i=1}^{N} I_i y_i}{n} \]
+\[ \E{\tilde{\mu}}=\frac{\sum_{i=1}^{N} \E{I_i}y_i}{n}=\frac{\sum_{i=1}^{N} (n/N) y_i}{n}=\mu  \]
+We note that $ I_i $ is not independent of $ I_j $, so we must compute covariance in our variance calculation.
+\[ \Var{\tilde{\mu}}=\Var*{\frac{\sum_{i=1}^{N} I_i y_i}{n}}=
+    \frac{\sum_{i=1}^{N} y_i^2\Var{I_i}}{n^2}+\frac{\sum_{ij}y_i y_j\Cov{I_i,I_j}}{n^2}=
+    \biggl(1-\frac{n}{N} \biggr)\frac{\sigma^2}{n}   \]
+
+\section{Lecture 33.00: Sample Size Calculation}
+\underline{Model 1}:
+$ \displaystyle  \hat{\mu}\pm \frac{c\sigma}{\sqrt{n}} $ where $\sigma$ is known.
+
+Set $ E=\displaystyle \frac{c\sigma}{\sqrt{n}} $ and solve for $ n $. Therefore,
+$ \displaystyle n=\frac{c^2\sigma^2}{E^2} $.
+
+\underline{Process}
+\begin{itemize}
+    \item First, we take a small sample, then estimate $ \sigma $.
+    \item Find $ n $.
+    \item Perform a large study with $ n $ units.
+\end{itemize}
+For SRS for our mean we have:
+\[ \hat{\mu}\pm \Uunderbracket{\frac{c\hat{\sigma}}{\sqrt{n}}\sqrt{1-\frac{n}{N}}}_{E} \]
+\[ n=\biggl(\frac{E^2}{c^2\hat{\sigma}^2}+\frac{1}{N} \biggr)^{\!-1} \]
+\begin{Example}{SRSWOR Example 1}{}
+    \textbf{Part 1}. Assume our class has 200 students in it.
+    I draw a sample of 5 students to find the average on
+    midterm 2 is 65\% with a standard deviation of 3\%.
+    Build a 95\% confidence interval for $ \mu $. Please assume
+    that $ n $ is ``large'' enough to apply the normality assumption.
+
+    \textbf{Solution.}
+    \begin{align*}
+         & \hat{\mu}\pm \frac{c\hat{\sigma}}{\sqrt{n}}\sqrt{1-\frac{n}{N}}\quad c\sim \N{0,1} \\
+         & =65\pm \frac{1.96(3)}{\sqrt{5}} \sqrt{1-\frac{5}{200} }                            \\
+         & =(0.62,0.68)
+    \end{align*}
+    The width is $ 0.68-0.62\approx 0.06 $.
+
+    \textbf{Part 2}.
+    If I want to be accurate to within 0.1, 19 times out of 20 how large should $n$ be?
+    \begin{itemize}
+        \item $ E=0.1 $.
+        \item $ \frac{19}{20} =0.95\implies 95\% $.
+        \item $ \sigma=3 $.
+        \item $ \mu=65 $.
+    \end{itemize}
+    SRS\@:
+    \[ n=\biggl(\frac{E^2}{c^2\hat{\sigma}^2}+\frac{1}{N}  \biggr)^{\!-1}
+        =\biggl(\frac{0.1^2}{1.96^2 3^2}+\frac{1}{200} \biggr)^{\!-1}=189.0634=\;\uparrow 190 \]
+    \underline{Model 1}: Assumes $ N\to \infty $.
+    \[ n=\frac{c^2\hat{\sigma}^2}{E^2}=3457.44=\;\uparrow 3458  \]
+\end{Example}
+\section{Lecture 34.00: Model 4 Revisited}
+\underline{Model 4}: $ \displaystyle \frac{Y_i}{n} \sim \N*{\pi,\frac{\pi(1-\pi)}{n} } $
+with confidence interval:
+\[ \pi:\hat{\pi}\pm c\sqrt{\frac{\hat{\pi}(1-\hat{\pi})}{n} } \]
+\subsection*{SRS for $ \pi $}
+\begin{itemize}
+    \item SP Parameter:
+          \[ \pi=\frac{\sum_{i=1}^{N} y_i}{N}\quad(y_i=\set{0,1}) \]
+    \item Statistic:
+          \[ \hat{\pi}=\frac{\sum_{i\in\mathcal{S}}y_i }{n}=\bar{y}  \]
+          \[ \hat{\sigma}^2=\frac{\sum_{i\in\mathcal{S}}(y_i-\bar{y})^2}{n-1}=
+              \frac{\sum_{i\in\mathcal{S}}(y_i^2+\bar{y}^2-2y_i\bar{y})}{n-1}    \]
+          Recall that $ y_i=\set{0,1} $. Therefore,
+          \[ \hat{\sigma}^2=
+              \frac{\sum_{i\in\mathcal{S}}(y_i+\bar{y}^2-2y_i\bar{y})}{n-1}
+              =\frac{n\bar{y}+n\bar{y}^2-2\bar{y}n\bar{y}}{n-1}
+              =\frac{n}{n-1} (\bar{y}-\bar{y}^2)=\frac{n}{n-1} \bigl[\hat{\pi}(1-\hat{\pi})\bigr]  \]
+          since $ \bar{y}=\hat{\pi} $. Now, assume that $ n\to\infty $. Therefore,
+          \[ \hat{\sigma}^2=\hat{\pi}(1-\hat{\pi}) \]
+    \item Estimators:
+          \[ \tilde{\pi}=\frac{\sum_{i=1}^{N} y_i I_i}{n} \]
+          \begin{Exercise}{}{}
+              In SRS, clearly show that $ \tilde{\pi} $ is an unbiased estimator for $ \pi $.
+
+              \textbf{Solution.} In SRS, $\tilde{\pi}$ is defined by:
+              \[ \tilde{\pi}=\frac{\sum_{i=1}^N y_i I_i}{n}\quad\text{where}\quad I_i =\begin{cases}
+                      1 & \text{if $y_i$ is in the sample}     \\
+                      0 & \text{if $y_i$ is not in the sample}
+                  \end{cases}\quad \text{and}\quad y_i=0\text{ or }1. \]
+              In \texttt{Lec 32.00: Model 1 Revisited},
+              we derived that $\E{I_i}=n/N$.
+              Hence,
+              \[
+                  \E*{\tilde{\pi}}
+                  =\E*{\frac{\sum_{i=1}^N y_i I_i}{n}}
+                  =\frac{\sum_{i=1}^N y_i\E{I_i}}{n}
+                  =\frac{\sum_{i=1}^N y_i(n/N)}{n}
+                  =\frac{\sum_{i=1}^N y_i}{N}
+                  =\pi
+              \]
+              Therefore, in SRS $\tilde{\pi}$ is an unbiased estimator for $\pi$.
+          \end{Exercise}
+          \begin{Remark}{}{}
+              $ \tilde{\pi} $ is normal.
+          \end{Remark}
+          \[
+              \Var{\tilde{\pi}}
+              =\Var*{\frac{\sum_{i=1}^{N} y_i I_i}{n}}
+              =\cdots
+              =\frac{\sigma^2}{n} \biggl(1-\frac{n}{N}\biggr)
+          \]
+          Replace $ \sigma $ by $ \hat{\sigma}^2=\hat{\pi}(1-\hat{\pi}) $.
+          Our confidence interval is:
+          \[ \hat{\pi}\pm c\sqrt{\frac{\hat{\pi}(1-\hat{\pi})}{n}\biggl(1-\frac{n}{N}\biggr)} \]
+          \underline{Model 4}:
+          \[ \hat{\pi}\pm c\sqrt{\frac{\hat{\pi}(1-\hat{\pi})}{n}} \]
+\end{itemize}
+\subsection*{Sample Size Calculation}
+\[ n=\biggl(\frac{E^2}{\sigma^2c^2} +\frac{1}{N} \biggr)^{\!-1} \]
+However, $ \hat{\sigma}^2=\hat{\pi}(1-\hat{\pi}) $. Often,
+we replace $ \hat{\sigma}^2 $ by $ 1/4 $ which is the maximum.
+
+\section{Lecture 35.00: SRS Examples}
+\begin{Example}{SRSWOR Example 2}{}
+    According to a new poll conducted by Ipsos Reid
+    on behalf of Postmedia News and Global Television,
+    $42\%$, `approve' of the performance of the Conservative
+    government under the leadership of Stephen
+    Harper. For this survey, a sample of $1053$ Canadians,
+    from Ipsos' Canadian online panel was interviewed online.
+    This result is $3\%$ lower than last years' results.
+
+    Is the difference between this year and last years' results significant;
+    that is, is there a difference? Use a
+    confidence interval with a $95\%$ level of confidence to answer the question.
+
+    \textbf{Solution.}
+    \[ \hat{\pi}\pm c\sqrt{\frac{\hat{\pi}(1-\hat{\pi})}{n}}=0.42\pm 1.96\sqrt{\frac{0.42(1-0.42)}{1053}}
+        =(0.39,0.45) \]
+    Now, $ 0.45 $ is in the interval (it's at the edge which is fine for
+    our purposes), so there is no difference between
+    this year and last years' results; that is, they are the same.
+\end{Example}
+\begin{Example}{SRSWOR Example 3}{}
+    Jeff Henry, a counsellor for Waterloo wants to know how many people
+    he should poll so that with $95\%$
+    confidence his poll (``will you vote for me?''),
+    is accurate with a margin of error of 1\%. There are $150\,000$
+    people in his Waterloo riding.
+
+    \textbf{Solution.}
+    \begin{itemize}
+        \item $ c=1.96 $.
+        \item $ E=0.01 $.
+        \item $ N=150\,000 $.
+        \item We should assume the worst-case scenario for the proportion;
+              that is, $ \hat{\pi}=1/2 $.
+        \item $ \hat{\sigma}^2=\hat{\pi}(1-\hat{\pi}) $.
+    \end{itemize}
+    \[ n=\biggl(\frac{E^2}{\hat{\sigma}^2c^2}+\frac{1}{N} \biggr)^{\!-1}
+        =9026.09=\;\uparrow 9027 \]
+\end{Example}
+\begin{Example}{SRSWOR Example 4}{}
+    Sheila is an auditor.
+    She has taken a sample of $15$ accounts across a large company
+    to see whether the company is being compliant
+    (i.e., following accounting laws). In these she has found that the
+    amount of misstated account values is, on average, $\$143.95$.
+    The variance of her sample values is $\$81.09$. If there are a total
+    of $200$ accounts to look at, and her auditing company allows a level of
+    non-compliance up to $\$25\,000$ dollars, then is this company being compliant?
+    Make your decision at a 90\% level of confidence.
+
+    \textbf{Solution.}
+    \begin{itemize}
+        \item $ c=1.645 $.
+        \item $ \hat{\mu}=143.95 $.
+        \item $ \hat{\sigma}^2=81.09 $.
+        \item $ N=200 $.
+        \item $ n=15 $.
+    \end{itemize}
+    \[ \hat{\mu}\pm \frac{c\hat{\sigma}}{\sqrt{n}}\sqrt{1-\frac{n}{N}}=(140.27,147.63) \]
+    On \underline{average} the discrepancy is $(140.27,147.63)$ with $90\%$ confidence.
+    However,
+    \[ 200(140.27,147.63)=(28\,054,29\,526)>25\,000 \]
+    We can say that the company is not being compliant.
+\end{Example}

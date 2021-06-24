@@ -1,0 +1,44 @@
+\section{Lecture 24.00: ANOVA}
+\underline{A}nalysis \underline{o}f \underline{V}ariance
+\[ Y_{ij}=\mu+\tau_i+R_{ij}\quad(R_{ij}\sim \N{0,\sigma^2}) \]
+Recall:
+\begin{align*}
+    W
+     & =\sum_{ij}r_{ij}^2                                                       \\
+     & =\sum_{ij}(y_{ij}-\hat{\mu}-\hat{\tau}_i)^2                              \\
+     & =\sum_{ij}(y_{ij}-\hat{\mu})^2+(-r)\sum_{i}(\bar{y}_{i+}-\bar{y}_{++})^2
+\end{align*}
+Rearranging
+\[ \Uunderbracket{\sum_{ij}(y_{ij}-\bar{y}_{++})^2}_{\SS{Tot}}
+    =\Uunderbracket{r \sum_{i}(\bar{y}_{i+}-\bar{y}_{++})^2}_{\SS{Trt}}+
+    \Uunderbracket{\sum_{ij}(y_{ij}-\hat{\mu}-\hat{\tau}_i)^2}_{\SS{Res}}   \]
+\[ \boxed{\SS{Tot}=\SS{Trt}+\SS{Res}} \]
+$ \SS{Tot} $
+\begin{itemize}
+    \item Represents a measure of \underline{total}
+          variability in your data
+    \item $ s^2=\dfrac{\SS{Tot}}{n-1}=\MS{Tot} $
+    \item $ \text{df}=n-1 $
+    \item You get this by fitting Model 1; $ Y_{i}=\mu+R_{i} $
+          where $ R_i \sim \N{0,\sigma^2} $
+    \item Recall $ \hat{\sigma}=s $ in Model 1
+\end{itemize}
+$ \SS{Res} $
+\begin{itemize}
+    \item The variability left over after you fit the model (unexplained)
+    \item Synonymous with $ \hat{\sigma}^2 $
+    \item $ \displaystyle \hat{\sigma}^2=\frac{W}{n-q+c} =\frac{\SS{Res}}{\text{df}_{\text{Res}}}=\MS{Res} $
+    \item $ \text{df}=n-q+c $
+\end{itemize}
+$ \SS{Trt} $
+\begin{itemize}
+    \item Due to $ \tau $ component
+    \item $ \MS{Trt}=\dfrac{\SS{Trt}}{\text{df}_{\text{Trt}}} $
+    \item $ \text{df}_{\text{Trt}}=t-1 $
+    \item $ \boxed{\text{df}_{\text{Tot}}=\text{df}_{\text{Trt}}+\text{df}_{\text{Res}}} $
+    \item Variability explained by your model
+\end{itemize}
+\[ \SS{Tot}=\SS{Trt}=\SS{Res} \]
+We want $ \SS{Trt}\gg \SS{Res} $. We compare
+$ \MS{Trt} $ to $ \MS{Res} $ using the ratio
+\[ F=\frac{\MS{Trt}}{\MS{Res}} \]

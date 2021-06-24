@@ -1,0 +1,1883 @@
+\documentclass[oneside]{book}\usepackage[]{graphicx}\usepackage[dvipsnames,table,xcdraw]{xcolor}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[dvipsnames,table,xcdraw]{xcolor}
+
+\usepackage{fontspec}
+\setmainfont{XCharter}
+\usepackage{anyfontsize}
+\usepackage{microtype}
+\usepackage[math-style=ISO,bold-style=ISO,warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
+
+% -----------------------------------------------------------------------------
+
+% CS 246
+\usepackage{float}
+\usepackage{listings}
+
+\definecolor{light-gray}{gray}{0.95}
+\newcommand{\code}[1]{\texttt{#1}}
+
+% -----------------------------------------------------------------------------
+
+% CO 250
+\usepackage{tkz-berge}
+
+% -----------------------------------------------------------------------------
+
+% Core Packages
+\usepackage{xfrac}
+\usepackage[margin=1in]{geometry}
+\usepackage[unicode,pdfversion=1.7]{hyperref}
+\usepackage[shortlabels]{enumitem}
+\usepackage[parfill]{parskip}
+\usepackage[theorems,breakable]{tcolorbox}
+\usepackage{graphicx}
+\usepackage[ruled,linesnumbered,vlined,dotocloa]{algorithm2e}
+\usepackage[delims=\lbrack\rbrack]{spalign}
+\usepackage{mathtools}
+\usepackage{cleveref}
+\usepackage{pdfpages}
+\usepackage{minted}
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+\usetikzlibrary{positioning}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{framed}
+
+
+% -----------------------------------------------------------------------------
+
+% Better Tables
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{tabularx}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{Z}{>{\centering\arraybackslash\columncolor{light-gray}}X}
+\newcolumntype{B}{>{\centering\arraybackslash\bfseries}X}
+\usepackage{multirow}
+\usepackage[skip=1ex]{caption}
+
+% -----------------------------------------------------------------------------
+
+% Intervals
+\usepackage{interval}
+\intervalconfig{
+    soft open fences,
+    separator symbol={,}
+}
+
+% -----------------------------------------------------------------------------
+
+\graphicspath{ {./figures/} }
+
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\slack}{slack}
+\DeclareMathOperator{\row}{row}
+\DeclareMathOperator{\cone}{cone}
+\DeclareMathOperator{\nullspace}{Null}
+\DeclareMathOperator{\ch}{char}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\lcm}{lcm}
+
+\usepackage{etoolbox}
+
+% Functions
+\providecommand\given{} % just to make sure it exists
+\DeclarePairedDelimiterXPP{\E}[1]{\mathbb{E}}[]{}{
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
+    #1}
+\DeclarePairedDelimiterXPP{\Var}[1]{\mathbb{V}}(){}{
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
+    #1}
+\DeclarePairedDelimiterXPP\Prob[1]{\mathbb{P}}(){}{
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
+    \ifblank{#1}{\:\cdot\:}
+    #1}
+\DeclarePairedDelimiterXPP\Ind[1]{\mathbb{I}}\{\}{}{
+\renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}
+\ifblank{#1}{\:\cdot\:}
+#1}
+\newcommand{\indep}{\perp\!\!\!\perp}
+\DeclarePairedDelimiterXPP{\Corr}[1]{\text{Corr}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Cov}[1]{\text{Cov}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Sd}[1]{\text{Sd}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Se}[1]{\text{Se}}(){}{#1}
+\let\SS=\relax
+\DeclarePairedDelimiterXPP{\SS}[1]{\text{SS}}(){}{\text{#1}}
+\DeclarePairedDelimiterXPP{\MS}[1]{\text{MS}}(){}{\text{#1}}
+\DeclarePairedDelimiterXPP{\Span}[1]{\text{Span}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Spanc}[1]{\overline{\text{Span}}}(){}{#1}
+\DeclareMathOperator{\VIF}{VIF}
+\DeclarePairedDelimiterXPP{\expon}[1]{\text{exp}}\{\}{}{#1}
+
+% Distributions
+\DeclarePairedDelimiterXPP{\N}[1]{\mathcal{N}}(){}{#1}
+\DeclarePairedDelimiterXPP{\uniform}[1]{\text{Uniform}}(){}{#1}
+\DeclarePairedDelimiterXPP{\hyp}[1]{\text{Hypergeometric}}(){}{#1}
+\DeclarePairedDelimiterXPP{\bern}[1]{\text{Bernoulli}}(){}{#1}
+\DeclarePairedDelimiterXPP{\bin}[1]{\text{Binomial}}(){}{#1}
+\DeclarePairedDelimiterXPP{\nb}[1]{\text{Negative Binomial}}(){}{#1}
+\DeclarePairedDelimiterXPP{\geo}[1]{\text{Geometric}}(){}{#1}
+\DeclarePairedDelimiterXPP{\poi}[1]{\text{Poisson}}(){}{#1}
+\DeclarePairedDelimiterXPP{\mult}[1]{\text{Multinomial}}(){}{#1}
+\DeclarePairedDelimiterXPP{\gam}[1]{\text{Gamma}}(){}{#1}
+\DeclarePairedDelimiterXPP{\weib}[1]{\text{Weibull}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Mvn}[1]{\text{MVN}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Bvn}[1]{\text{BVN}}(){}{#1}
+\DeclarePairedDelimiterXPP{\exponential}[1]{\text{Exponential}}(){}{#1}
+
+\DeclarePairedDelimiterXPP{\tr}[1]{\text{trace}}(){}{#1}
+
+\DeclarePairedDelimiterX\innerp[2]{\langle}{\rangle}{
+    \ifblank{#1}{\:\cdot\:,}#1,
+    \ifblank{#2}{\:\cdot\:}#2
+}
+
+\DeclarePairedDelimiterXPP{\MA}[1]{\text{MA}}(){}{#1}
+\DeclarePairedDelimiterXPP{\AR}[1]{\text{AR}}(){}{#1}
+\DeclarePairedDelimiterXPP{\ARMA}[1]{\text{ARMA}}(){}{#1}
+\DeclarePairedDelimiterXPP{\AIC}[1]{\text{AIC}}(){}{#1}
+\DeclarePairedDelimiterXPP{\BIC}[1]{\text{BIC}}(){}{#1}
+\DeclarePairedDelimiterXPP{\ARIMA}[1]{\text{ARIMA}}(){}{#1}
+\DeclarePairedDelimiterXPP{\GARCH}[1]{\text{GARCH}}(){}{#1}
+\DeclarePairedDelimiterXPP{\NNAR}[1]{\text{NNAR}}(){}{#1}
+\DeclarePairedDelimiterXPP{\NNSAR}[2]{\text{NNSAR}}(){_{#2}}{#1}
+\DeclarePairedDelimiterXPP{\ARCH}[1]{\text{ARCH}}(){}{#1}
+
+\DeclareMathOperator{\FWER}{FWER}
+\let\log\relax
+\DeclarePairedDelimiterXPP{\log}[1]{\text{log}}(){}{#1}
+
+% -----------------------------------------------------------------------------
+
+% Table of Contents
+\hypersetup{colorlinks, linkcolor=[rgb]{0,0.5,1}}
+
+% -----------------------------------------------------------------------------
+
+% Heading Dates
+\newcommand{\makeheading}[1]
+{
+    \begin{figure}[H]
+        \centering
+        \rule{\columnwidth}{1pt}\\
+        {\large \scshape{#1}}\\[-0.6\baselineskip]
+        \rule{\columnwidth}{1pt}
+        \vspace*{-20pt}
+    \end{figure}
+}
+
+% -----------------------------------------------------------------------------
+
+% Definitions
+\definecolor{myyellow}{RGB}{255,255,168}
+% Theorems
+\definecolor{mypurple}{RGB}{216,216,255}
+% Algorithms
+\definecolor{mygray}{RGB}{232,232,232}
+% Examples
+\definecolor{mygreen}{RGB}{216,255,216}
+% Exercises
+\definecolor{myred}{RGB}{255,216,216}
+% Remarks
+\definecolor{mycyan}{RGB}{204,229,229}
+
+\tcbset{
+    common/.style={
+            fonttitle=\bfseries,
+            coltitle=black,
+            boxrule=0pt,
+            breakable
+        },
+    theorem/.style={
+            common,
+            colback=mypurple,
+            colframe=mypurple!95!black,
+            fontupper=\itshape{}
+        },
+}
+
+
+\newtcbtheorem[number within=section, crefname={definition}{definitions}]
+{Definition}{DEFINITION}{
+    common,
+    colback=myyellow,
+    colframe=myyellow!95!black
+}{def}
+
+\newtcbtheorem[use counter from=Definition, crefname={example}{examples}]
+{Example}{EXAMPLE}{
+    common,
+    colback=mygreen,
+    colframe=mygreen!95!black,
+}{ex}
+
+\newtcbtheorem[use counter from=Definition, crefname={exercise}{exercises}]
+{Exercise}{EXERCISE}{
+    common,
+    colback=myred,
+    colframe=myred!95!black,
+}{exercise}
+
+\newtcbtheorem[use counter from=Definition, crefname={remark}{remarks}]
+{Remark}{REMARK}{
+    common,
+    colback=mycyan,
+    colframe=mycyan!95!black,
+}{remark}
+
+\newtcbtheorem[use counter from=Definition, crefname={statistical Test}{statistical Tests}]
+{Statistical_Test}{STATISTICAL TEST}{
+    common,
+    colback=Magenta!25!white,
+    colframe=Magenta!50!white,
+}{stest}
+
+\newtcbtheorem[use counter from=Definition, crefname={theorem}{theorems}]
+{Theorem}{THEOREM}{
+    theorem
+}{thm}
+
+\newtcbtheorem[use counter from=Definition, crefname={proposition}{propositions}]
+{Proposition}{PROPOSITION}{
+    theorem
+}{prop}
+
+\newtcbtheorem[use counter from=Definition, crefname={corollary}{corollaries}]
+{Corollary}{COROLLARY}{
+    theorem
+}{cor}
+
+\newtcbtheorem[use counter from=Definition, crefname={lemma}{lemmas}]
+{Lemma}{LEMMA}{
+    theorem
+}{lem}
+
+\newtcbtheorem[no counter]
+{Proof}{Proof of}{
+    common,
+    colframe=black!10,
+    separator sign={}
+}{pf}
+
+\DeclarePairedDelimiterX\norm[1]\lVert\rVert{\ifblank{#1}{\:\cdot\:}{#1}}
+\DeclarePairedDelimiterX\abs[1]\lvert\rvert{\ifblank{#1}{\:\cdot\:}{#1}}
+\DeclarePairedDelimiter\set\{\}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\arginf}{arg\,inf}
+\DeclareMathOperator*{\argsup}{arg\,sup}
+
+% just to make sure it exists
+\providecommand\onto{}
+% can be useful to refer to this outside \Set
+\newcommand\SetSymbol[1][]{%
+    \nonscript\:#1\vert{}
+    \allowbreak\nonscript\:
+    \mathopen{}}
+\DeclarePairedDelimiterXPP\Proj[1]{\text{Proj}}(){}{%
+    \renewcommand\onto{\SetSymbol[\delimsize]}
+    #1
+}
+
+\AtBeginDocument{%
+    \let\mathbb\relax
+    \DeclareMathAlphabet{\mathbb}{U}{msb}{m}{n}%
+}
+
+\newenvironment{tightcenter}{%
+    \setlength\topsep{0pt}%
+    \setlength\parskip{0pt}%
+    \par\centering}{\par\noindent\ignorespacesafterend}
+
+\usepackage{nicematrix}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\usepackage{commath}
+
+\title{
+\LARGE Sampling and Experimental Design\\
+\large STAT 332\\
+\normalsize Winter 2021 (1211)}
+\author{\LaTeX{}er: \emph{Cameron Roopnarine}\\Instructor: \emph{Riley Metzger}}
+\date{\today}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+
+
+\input{A1/a_01.tex}
+
+\input{A2/a_02.tex}
+
+
+\chapter{Assignment 3}
+\section{Lecture 21.00: Model 5, Example 1}\label{section21}
+A study of intoxication measured two groups of students,
+one of which was drunk while the other was not as
+they drove a computer-simulated driving course with a max speed limit of 50 km/h.
+Of interest was the maximum speed of an individual doing the computer-simulated driving
+course. Group 1 was intoxicated, while Group 2 was not.
+
+\subsection*{Is there a difference in speed between those that drive while
+    intoxicated versus those that do not?}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Data frames}
+\hlstd{grp1} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{50}\hlstd{,} \hlnum{53}\hlstd{,} \hlnum{52}\hlstd{,} \hlnum{58}\hlstd{)}
+\hlstd{grp2} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{62}\hlstd{,} \hlnum{55}\hlstd{,} \hlnum{58}\hlstd{,} \hlnum{60}\hlstd{)}
+\hlcom{# Must run to get same results as textbook}
+\hlkwd{options}\hlstd{(}\hlkwc{contrasts} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"contr.sum"}\hlstd{,} \hlstr{"contr.poly"}\hlstd{))}
+\hlstd{Y} \hlkwb{<-} \hlkwd{c}\hlstd{(grp1, grp2)}
+\hlcom{# Makes a discrete variable}
+\hlstd{x} \hlkwb{<-} \hlkwd{as.factor}\hlstd{(}\hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{4}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{2}\hlstd{,} \hlnum{4}\hlstd{)))}
+\hlcom{# Builds the model}
+\hlstd{model} \hlkwb{<-} \hlkwd{lm}\hlstd{(Y} \hlopt{~} \hlstd{x)}
+\hlcom{# Displays the output}
+\hlkwd{summary}\hlstd{(model)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Y ~ x)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+##  -3.75  -1.75  -0.50   1.75   4.75 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   56.000      1.132  49.473 4.57e-09 ***
+## x1            -2.750      1.132  -2.429   0.0512 .  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3.202 on 6 degrees of freedom
+## Multiple R-squared:  0.4959,	Adjusted R-squared:  0.4119 
+## F-statistic: 5.902 on 1 and 6 DF,  p-value: 0.0512
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{enumerate}[(1)]
+    \item \code{Residuals}: Helps test our residuals.
+    \item \code{Coefficients}: $ \hat{\mu}=56 $, $ \hat{\tau}_1=-2.75 $, $ \hat{\tau}_2=2.75 $.
+    \item \code{Residual standard error}: $ \hat{\sigma}=3.202 $ on 6 degrees of freedom.
+    \item \code{Coefficients (Error to P(>|t|))}: This line tests $ H_0 $: $ \mu=0 $ versus $ H_a $: $ \mu\ne 0 $
+          \[ d=\frac{56-0}{1.132} =49.473 \]
+          \[ p\text{-value}=2\Prob{D>49.473}=4.57\times 10^{-9} \]
+          We have tons of evidence to reject $ H_0 $.
+    \item $ H_0 $: $ \tau_1=0 $ versus $ H_a $: $ \tau_1\ne 0 $
+          \[ d=\frac{-2.75-0}{1.132} =-2.429 \]
+          \[ p\text{-value}=2\Prob{D>\abs{-2.429}}=2(1-\Prob{D\le 2.429})=0.0512 \]
+          There is evidence to reject $ H_0 $.
+\end{enumerate}
+\subsubsection*{What is the treatment effect for being inebriated?}
+$ \hat{\tau}_1=-2.75 $.
+\subsubsection*{Is there a difference between the treatment effect of group 1 and 2? Use a 95\% CI.}
+\[ \theta=\text{ave of grp1}-\text{ave of grp2}=(\mu+\tau_1)-(\mu+\tau_2)=\tau_1-\tau_2 \]
+Estimator: $ \tilde{\theta}=\tilde{\tau}_1-\tilde{\tau}_2 $ and is normal by Gauss.
+\[ \E{\tilde{\theta}}=\E{\tilde{\tau}_1-\tilde{\tau}_2}=\E{\tilde{\tau}_1}-\E{\tilde{\tau}_2}=\tau_1-\tau_2 \]
+since unbiased.
+\[ \Var{\tilde{\theta}}
+    =\Var*{\bar{Y}_{1+}-\bar{Y}_{++}-(\bar{Y}_{2+}-\bar{Y}_{++})}
+    =\Var{\bar{Y}_{1+}-\bar{Y}_{2+}}
+    =\Var{\bar{Y}_{1+}}+\Var{\bar{Y}_{2+}}
+    =\frac{\sigma^2}{4} +\frac{\sigma^2}{4}
+    =\frac{\sigma^2}{2} \]
+CI for $ \theta $:
+\[ \theta:\hat{\theta}\pm c\,\text{SE}=\hat{\tau}_1-\hat{\tau}_2\pm
+    c\sqrt{\frac{\hat{\sigma}^2}{2}}\quad(c \sim t(n-q+c)=t(8-2+1)=t(6)) \]
+In our case,
+\[ \theta:(-2.75-2.75)\pm 2.447\sqrt{\frac{3.202^2}{2}}=(-11.04,0.04) \]
+$ 0 $ is in the interval, so we conclude that there is no difference
+between the treatment effect of group 1 and 2. In R, we could do
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlopt{-}\hlnum{2.75} \hlopt{-} \hlnum{2.75} \hlopt{+} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{)} \hlopt{*} \hlkwd{qt}\hlstd{(}\hlnum{0.975}\hlstd{,} \hlnum{6}\hlstd{)} \hlopt{*} \hlkwd{sqrt}\hlstd{(}\hlkwd{summary}\hlstd{(model)}\hlopt{$}\hlstd{sigma}\hlopt{^}\hlnum{2}\hlopt{/}\hlnum{2}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] -11.0394323   0.0394323
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+    To obtain our CI $ \theta:(-11.039, 0.039) $.
+    \subsubsection*{Is there a difference between the treatment effect of group 1 and 2? Use an HT.}
+$ H_0 $: $ \tau_1=\tau_2 $ versus $ H_a $: $ \tau_1\ne \tau_2 $.
+    \[ d=\frac{\hat{\tau}_1-\hat{\tau}_2-\tau_0}{\hat{\sigma}/\sqrt{2}}=
+        \frac{(-2.75-2.75)-0}{3.202/\sqrt{2}}=-2.489 \]
+    \[ p=2\Prob{D\ge \abs{d}}=(0.05,0.10) \]
+    We have some evidence to reject $ H_0 $. In R, we could do
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{d} \hlkwb{<-} \hlstd{(}\hlopt{-}\hlnum{2.75} \hlopt{-} \hlnum{2.75}\hlstd{)}\hlopt{/}\hlstd{(}\hlkwd{summary}\hlstd{(model)}\hlopt{$}\hlstd{sigma}\hlopt{/}\hlkwd{sqrt}\hlstd{(}\hlnum{2}\hlstd{))}
+\hlstd{d}
+\end{alltt}
+\begin{verbatim}
+## [1] -2.429494
+\end{verbatim}
+\begin{alltt}
+\hlnum{2} \hlopt{*} \hlstd{(}\hlnum{1} \hlopt{-} \hlkwd{pt}\hlstd{(}\hlkwd{abs}\hlstd{(d),} \hlnum{6}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.05119768
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+        To obtain $ d=-2.429 $ and $ p\text{-value}=0.051 $. There is some difference
+between the treatment effect of group 1 and 2.
+
+
+\section{Lecture 22.00: Model 5, Example 1 Cont.}
+We want to check our model assumptions of
+$ R_j \sim \N{0,\sigma^2} $ independent. Four things to check:
+\begin{itemize}
+    \item $ \E{R_j}=0 $ (zero mean)
+    \item $ \Var{R_j}=\sigma^2 $ (constant variance)
+    \item Normality
+    \item Independence
+\end{itemize}
+To check these, we can
+\begin{itemize}
+    \item plot residuals versus fitted values to check for both
+          mean and variance assumption.
+
+          \code{plot(model\$residuals)}
+    \item Q-Q plot to check for normality (straight line is normal).
+
+          \code{qqnorm(model\$residuals)}
+    \item residuals plot to check for independence assumption.
+
+          \code{plot(model\$fitted.values, model\$residuals)}
+\end{itemize}
+\subsection*{Example}
+All the diagnostics for this example seem good.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Data frames}
+\hlstd{grp1} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{50}\hlstd{,} \hlnum{53}\hlstd{,} \hlnum{52}\hlstd{,} \hlnum{58}\hlstd{)}
+\hlstd{grp2} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{62}\hlstd{,} \hlnum{55}\hlstd{,} \hlnum{58}\hlstd{,} \hlnum{60}\hlstd{)}
+\hlcom{# Must run to get same results as textbook}
+\hlkwd{options}\hlstd{(}\hlkwc{contrasts} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"contr.sum"}\hlstd{,} \hlstr{"contr.poly"}\hlstd{))}
+\hlstd{Y} \hlkwb{<-} \hlkwd{c}\hlstd{(grp1, grp2)}
+\hlcom{# Makes a discrete variable}
+\hlstd{x} \hlkwb{<-} \hlkwd{as.factor}\hlstd{(}\hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{4}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{2}\hlstd{,} \hlnum{4}\hlstd{)))}
+\hlcom{# Builds the model}
+\hlstd{model} \hlkwb{<-} \hlkwd{lm}\hlstd{(Y} \hlopt{~} \hlstd{x)}
+\hlcom{# Residuals}
+\hlstd{model}\hlopt{$}\hlstd{residuals}
+\end{alltt}
+\begin{verbatim}
+##     1     2     3     4     5     6     7     8 
+## -3.25 -0.25 -1.25  4.75  3.25 -3.75 -0.75  1.25
+\end{verbatim}
+\begin{alltt}
+\hlkwd{qqnorm}\hlstd{(model}\hlopt{$}\hlstd{residuals)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-16-1} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{plot}\hlstd{(model}\hlopt{$}\hlstd{residuals)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-16-2} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{plot}\hlstd{(model}\hlopt{$}\hlstd{fitted.values, model}\hlopt{$}\hlstd{residuals)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-16-3} 
+
+}
+
+
+\end{knitrout}
+
+\section{Lecture 23.00: Model 5, Example 2}\label{section23}
+Suppose professors are coordinating 4 sections
+of the same course in a term. We want to look
+at the average mark for each section on the midterm. The
+treatment is the ``instructor.''
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{options}\hlstd{(}\hlkwc{contrasts} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"contr.sum"}\hlstd{,} \hlstr{"contr.poly"}\hlstd{))}
+\hlstd{Marks1} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{55}\hlstd{,} \hlnum{92}\hlstd{,} \hlnum{48}\hlstd{,} \hlnum{57}\hlstd{,} \hlnum{66}\hlstd{,} \hlnum{72}\hlstd{)}
+\hlstd{Marks2} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{62}\hlstd{,} \hlnum{95}\hlstd{,} \hlnum{84}\hlstd{,} \hlnum{83}\hlstd{,} \hlnum{66}\hlstd{,} \hlnum{75}\hlstd{)}
+\hlstd{Marks3} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{89}\hlstd{,} \hlnum{92}\hlstd{,} \hlnum{94}\hlstd{,} \hlnum{99}\hlstd{,} \hlnum{87}\hlstd{,} \hlnum{67}\hlstd{)}
+\hlstd{Marks4} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{25}\hlstd{,} \hlnum{35}\hlstd{,} \hlnum{71}\hlstd{,} \hlnum{42}\hlstd{,} \hlnum{44}\hlstd{,} \hlnum{30}\hlstd{)}
+\hlstd{Y} \hlkwb{=} \hlkwd{c}\hlstd{(Marks1, Marks2, Marks3, Marks4)}
+\hlstd{x} \hlkwb{=} \hlkwd{as.factor}\hlstd{(}\hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{2}\hlstd{,} \hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{3}\hlstd{,} \hlnum{6}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{4}\hlstd{,} \hlnum{6}\hlstd{)))}
+\hlstd{model} \hlkwb{=} \hlkwd{lm}\hlstd{(Y} \hlopt{~} \hlstd{x)}
+\hlkwd{summary}\hlstd{(model)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Y ~ x)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -21.0000 -10.2917   0.9167   6.1250  29.8333 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   67.917      2.861  23.741    4e-16 ***
+## x1            -2.917      4.955  -0.589 0.562699    
+## x2             9.583      4.955   1.934 0.067381 .  
+## x3            20.083      4.955   4.053 0.000621 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 14.01 on 20 degrees of freedom
+## Multiple R-squared:  0.6506,	Adjusted R-squared:  0.5982 
+## F-statistic: 12.41 on 3 and 20 DF,  p-value: 8.281e-05
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+Note that
+\begin{itemize}
+    \item $ \hat{\tau}_4=-(\hat{\tau}_1+\hat{\tau}_2+\hat{\tau}_3)=-26.749 $.
+    \item $ \text{Degrees of freedom}=n-q+c=(24)-(4+1)+1=20 $.
+\end{itemize}
+\subsection*{Is there a difference between the treatment effect of group 1 and 2? Use a 95\% CI.}
+$ \tilde{\theta}=\tilde{\tau}_1+\tilde{\tau}_2 $ and by Gauss this is normal.
+\[ \E{\tilde{\theta}}=\E{\tilde{\tau}_1-\tilde{\tau}_2}=\tau_1+\tau_2 \]
+\[ \Var{\tilde{\theta}}=\Var{\tilde{\tau}_1-\tilde{\tau}_2}
+    =\Var{\bar{Y}_{1+}-\bar{Y}_{2+}}
+    =\Var{\bar{Y}_{1+}}+\Var{\bar{Y}_{2+}}
+    =\frac{\sigma^2}{6} +\frac{\sigma^2}{6}
+    =\frac{\sigma^2}{3} \]
+The 95\% confidence interval for $ \theta $ is
+\[ \hat{\tau}_1-\hat{\tau}_2 \pm c\, \frac{\hat{\sigma}}{\sqrt{3}}=
+    -2.917-9.583\pm \frac{2.09(14.01)}{\sqrt{3}}=(-29.37,4.37) \quad(c \sim t(20))  \]
+In R, we could do
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{tau.1} \hlkwb{<-} \hlkwd{summary}\hlstd{(model)}\hlopt{$}\hlstd{coefficients[}\hlnum{2}\hlstd{]}
+\hlstd{tau.2} \hlkwb{<-} \hlkwd{summary}\hlstd{(model)}\hlopt{$}\hlstd{coefficients[}\hlnum{3}\hlstd{]}
+\hlstd{tau.3} \hlkwb{<-} \hlkwd{summary}\hlstd{(model)}\hlopt{$}\hlstd{coefficients[}\hlnum{4}\hlstd{]}
+\hlstd{tau.4} \hlkwb{<-} \hlopt{-}\hlnum{1} \hlopt{*} \hlstd{(tau.1} \hlopt{+} \hlstd{tau.2} \hlopt{+} \hlstd{tau.3)}
+\hlstd{tau.1} \hlopt{-} \hlstd{tau.2} \hlopt{+} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{)} \hlopt{*} \hlkwd{qt}\hlstd{(}\hlnum{0.975}\hlstd{,} \hlnum{20}\hlstd{)} \hlopt{*} \hlkwd{summary}\hlstd{(model)}\hlopt{$}\hlstd{sigma}\hlopt{/}\hlkwd{sqrt}\hlstd{(}\hlnum{3}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] -29.378554   4.378554
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+To get at 95\% confidence interval $ \theta $: $ (-29.38,4.38) $.
+Since $ 0\in (-29.38,4.38) $,
+there is not a difference between the treatment effect of group 1 and 2.
+
+\subsection*{Groups 2 and 3 were taught by the same instructor. Groups 1 and 4 are taught by another
+    instructor. Is there a difference between the average treatment effect of instructor 1 to instructor 2? Use an
+    HT.}
+\[ \tilde{\theta}=\frac{\tilde{\tau}_1+\tilde{\tau}_4}{2}-\biggl(\frac{\tilde{\tau}_2+\tilde{\tau}_3}{2} \biggr)  \]
+\[ \E{\tilde{\theta}}=\frac{\tau_1+\tau_4}{2}-\biggl(\frac{\tau_2+\tau_3}{2} \biggr) \]
+\begin{align*}
+    \Var{\tilde{\theta}}
+     & =\Var*{\frac{\tilde{\tau}_1+\tilde{\tau}_4}{2}-\biggl(\frac{\tilde{\tau}_2+\tilde{\tau}_3}{2} \biggr) } \\
+     & =\Var*{\frac{\bar{Y}_{1+}+\bar{Y}_{4+}}{2}-\biggl(\frac{\bar{Y}_{2+}+\bar{Y}_{3+}}{2} \biggr)}          \\
+     & =\frac{1}{4} \Var{Y_{1+}}+\cdots+\frac{1}{4} \Var{Y_{4+}}                                               \\
+     & =\frac{\sigma^2}{4(6)}+\cdots+\frac{\sigma^2}{4(6)}                                                     \\
+     & =\frac{\sigma^2}{6}
+\end{align*}
+$ H_0 $: $ \theta=0 $ versus $ H_a $: $ \theta\ne 0 $.
+\[ d=\frac{\hat{\theta}-0}{\hat{\sigma}/\sqrt{6}}=-5.19\quad(D \sim t(20))  \]
+\[ p=2\Prob{D>\abs{-5.19}}=(0,0.001) \]
+We have tons of evidence to reject $ H_0 $ in favour
+of the instructors having a different effect. In R, we could do
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{theta} \hlkwb{<-} \hlstd{((tau.1} \hlopt{+} \hlstd{tau.4)}\hlopt{/}\hlnum{2}\hlstd{)} \hlopt{-} \hlstd{((tau.2} \hlopt{+} \hlstd{tau.3)}\hlopt{/}\hlnum{2}\hlstd{)}
+\hlstd{d} \hlkwb{<-} \hlstd{(theta} \hlopt{-} \hlnum{0}\hlstd{)}\hlopt{/}\hlstd{(}\hlkwd{summary}\hlstd{(model)}\hlopt{$}\hlstd{sigma}\hlopt{/}\hlkwd{sqrt}\hlstd{(}\hlnum{6}\hlstd{))}
+\hlstd{d}
+\end{alltt}
+\begin{verbatim}
+## [1] -5.185077
+\end{verbatim}
+\begin{alltt}
+\hlnum{2} \hlopt{*} \hlstd{(}\hlnum{1} \hlopt{-} \hlkwd{pt}\hlstd{(}\hlkwd{abs}\hlstd{(d),} \hlnum{20}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## [1] 4.498007e-05
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+    To obtain a $ p $-value of $ 4.498007\times 10^{-5} $.
+\begin{Example}{}{}
+    An example of a \emph{contrast} is
+    \[ \theta=\frac{\tau_1+\tau_4}{2} -\frac{(\tau_2+\tau_3)}{2}  \]
+\end{Example}
+\begin{Definition}{Contrast}{}
+    A \textbf{contrast} has the form
+    \[ a_1\tau_1+a_2\tau_2+\cdots+a_n\tau_n \]
+    where $ \sum_{i=1}^{n} a_i=0 $.
+\end{Definition}
+\input{A3/lec_24.tex}
+\input{A3/lec_25.tex}
+
+\section{Lecture 26.00: F Test, Example}
+
+See~\Cref{section23} for the data.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{anova}\hlstd{(model)}
+\end{alltt}
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Y
+##           Df Sum Sq Mean Sq F value    Pr(>F)    
+## x          3 7315.5 2438.50  12.415 8.281e-05 ***
+## Residuals 20 3928.3  196.42                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\begin{itemize}
+    \item $ H_0 $: $ \tau_1=\tau_2=\tau_3=\tau_4=0 $
+    \item $ H_a $: At least one $ \tau $ is not zero
+\end{itemize}
+\[ d=\frac{\MS{Trt}}{\MS{Res}} =\frac{\SS{Trt}/\text{df}_\text{Trt}}{\SS{Res}/\text{df}_\text{Res}}
+    =\frac{7315.5/3}{3928.3/20}=12.415   \]
+Note that $ D \sim F(3,20) $, so
+\[ p=\Prob{D>12.415}=8.21 \times 10^{-5} \]
+We have tons of evidence against $ H_0 $, so one of our treatment effects is not zero.
+
+
+\chapter{Assignment 4}
+\section{Lecture 27.00: Model 6}
+\begin{Definition}{Unbalanced CRD, Model 6}{}
+    The \textbf{unbalanced completely randomized design} is
+    \[ Y_{ij}=\mu+\tau_i+R_{ij}\quad(R_{ij}\sim \N{0,\sigma^2}) \]
+    for $ i=1,2,\ldots,t $ (no.\ of treatments),
+    $ j=1,2,\ldots,r_i $ (no.\ of replicates/treatment).
+    In this course, this is \textbf{Model 6}.
+
+    \underline{Constraint}: $ \sum_{i=1}^{t} r_i \tau_i=0 $.
+\end{Definition}
+\begin{Example}{LS for Model 6}{}
+    The LS for Model 6 is
+    \[ W=\sum r_{ij}^2 +\lambda\biggl(\sum_{i=1}^{t} r_i\tau_i\biggr)  \]
+    and results in
+    \[ \hat{\mu}=\bar{y}_{++} \]
+    \[ \hat{\tau}_i=\bar{y}_{i+}-\bar{y}_{++} \]
+    \[ \hat{\sigma}^2=\frac{W}{(r_1+r_2+\cdots+r_t)-(t+1)+1}  \]
+\end{Example}
+\subsection{Unbalanced CRD Example}
+Refer to~\Cref{section21}, we remove the last element of group 2.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{grp1} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{50}\hlstd{,} \hlnum{53}\hlstd{,} \hlnum{52}\hlstd{,} \hlnum{58}\hlstd{)}
+\hlstd{grp2} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{62}\hlstd{,} \hlnum{55}\hlstd{,} \hlnum{58}\hlstd{)}
+\hlstd{Y} \hlkwb{=} \hlkwd{c}\hlstd{(grp1, grp2)}
+\hlstd{x} \hlkwb{=} \hlkwd{as.factor}\hlstd{(}\hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{4}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{2}\hlstd{,} \hlnum{3}\hlstd{)))}
+\hlcom{# Group Averages}
+\hlstd{grp_av} \hlkwb{=} \hlkwd{tapply}\hlstd{(Y, x, mean,} \hlkwc{na.rm} \hlstd{= T)}
+\hlstd{mu} \hlkwb{=} \hlkwd{mean}\hlstd{(Y)}
+\hlcom{# Treatment Effects}
+\hlstd{tau1} \hlkwb{=} \hlstd{(grp_av} \hlopt{-} \hlkwd{mean}\hlstd{(Y))[}\hlnum{1}\hlstd{]}
+\hlstd{tau2} \hlkwb{=} \hlstd{(grp_av} \hlopt{-} \hlkwd{mean}\hlstd{(Y))[}\hlnum{2}\hlstd{]}
+\hlcom{# Estimated Sigma}
+\hlstd{sigma} \hlkwb{=} \hlkwd{summary}\hlstd{(}\hlkwd{lm}\hlstd{(Y} \hlopt{~} \hlstd{x))}\hlopt{$}\hlstd{sigma}
+\hlcom{# Values}
+\hlstd{sigma}
+\end{alltt}
+\begin{verbatim}
+## [1] 3.447221
+\end{verbatim}
+\begin{alltt}
+\hlstd{tau1}
+\end{alltt}
+\begin{verbatim}
+##         1 
+## -2.178571
+\end{verbatim}
+\begin{alltt}
+\hlstd{tau2}
+\end{alltt}
+\begin{verbatim}
+##        2 
+## 2.904762
+\end{verbatim}
+\begin{alltt}
+\hlstd{mu}
+\end{alltt}
+\begin{verbatim}
+## [1] 55.42857
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+    We obtain
+    \begin{itemize}
+        \item $ \hat{\sigma}=3.447221 $
+        \item $ \hat{\tau}_1=-2.178571 $
+        \item $ \hat{\tau}_2=2.904762 $
+        \item $ \hat{\mu}=55.42857 $
+        \item Obviously, $ 4(\hat{\tau}_1)+3(\hat{\tau}_2)=0 $
+    \end{itemize}
+    \subsubsection*{What is the treatment effect for being inebriated?}
+$ \hat{\tau}_1=-2.18 $
+    \subsubsection*{Is there a difference between the treatment effect of group 1 and 2? Use a 95\% CI.}
+$ \theta=\tau_1-\tau_2\implies \tilde{\theta}=\tilde{\tau}_1-\tilde{\tau}_2 $.
+\[ \E{\tilde{\theta}}=\tau_1-\tau_2 \]
+\[ \Var{\tilde{\theta}}=\Var{\bar{Y}_{1+}-\bar{Y}_{2+}}=\frac{\sigma^2}{4} +\frac{\sigma^2}{3}=\frac{7\sigma^2}{12}  \]
+Confidence interval:
+\[ \hat{\tau}_1-\hat{\tau}_2\pm c\sqrt{\frac{7\hat{\sigma}^2}{12}}=(-11.85,1.68) \]
+In R,
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{tau1} \hlopt{-} \hlstd{tau2} \hlopt{+} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{)} \hlopt{*} \hlkwd{qt}\hlstd{(}\hlnum{0.975}\hlstd{,} \hlnum{5}\hlstd{)} \hlopt{*} \hlkwd{sqrt}\hlstd{((}\hlnum{7} \hlopt{*} \hlstd{sigma}\hlopt{^}\hlnum{2}\hlstd{)}\hlopt{/}\hlnum{12}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] -11.851312   1.684645
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\subsubsection*{Is there a difference between the treatment effect of group 1 and 2? Use a HT.}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{anova}\hlstd{(}\hlkwd{lm}\hlstd{(Y} \hlopt{~} \hlstd{x))}
+\end{alltt}
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Y
+##           Df Sum Sq Mean Sq F value Pr(>F)
+## x          1 44.298  44.298  3.7277 0.1114
+## Residuals  5 59.417  11.883
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+No evidence against $ H_0 $: $ \tau_1=\cdots=\tau_t=0 $, so this model is not great.
+\input{A4/lec_28.tex}
+
+\section{Lecture 29.00: Model 7, Example}
+We grow willow trees from cuttings. We grow these cuttings from 6 willow trees in
+two soils: high and low acidity. We assign two cuttings from each tree to the two levels of
+acidity. After 1 year the height, we measure the cuttings in centimetres.
+\subsection*{Is the growth in high and low acidity equal? Use an appropriate hypothesis test.}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Step 1 – Change the directory In R, select FILE, CHANGE}
+\hlcom{# DIR select the folder your data is located in.}
+\hlcom{# Step 2 – use read.table}
+\hlstd{Data} \hlkwb{=} \hlkwd{read.table}\hlstd{(}\hlstr{"blocked.csv"}\hlstd{,} \hlkwc{sep} \hlstd{=} \hlstr{","}\hlstd{,} \hlkwc{header} \hlstd{= T)}
+\hlcom{# Step 3 – Have a look at the data:}
+\hlstd{Data}
+\end{alltt}
+\begin{verbatim}
+##    Block Treatment Value
+## 1      1      High    16
+## 2      2      High    19
+## 3      3      High    32
+## 4      4      High    12
+## 5      5      High     7
+## 6      6      High    14
+## 7      1       Low    17
+## 8      2       Low    21
+## 9      3       Low    33
+## 10     4       Low    11
+## 11     5       Low     8
+## 12     6       Low    12
+\end{verbatim}
+\begin{alltt}
+\hlcom{# To build a model we type:}
+\hlkwd{options}\hlstd{(}\hlkwc{contrasts} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"contr.sum"}\hlstd{,} \hlstr{"contr.poly"}\hlstd{))}
+\hlkwd{attach}\hlstd{(Data)}
+\hlstd{Treatment} \hlkwb{=} \hlkwd{as.factor}\hlstd{(Treatment)}
+\hlstd{Block} \hlkwb{=} \hlkwd{as.factor}\hlstd{(Block)}
+\hlstd{Model} \hlkwb{=} \hlkwd{lm}\hlstd{(Value} \hlopt{~} \hlstd{Treatment} \hlopt{+} \hlstd{Block)}
+\hlcom{# To look at the output, we type:}
+\hlkwd{summary}\hlstd{(Model)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Value ~ Treatment + Block)
+## 
+## Residuals:
+##       1       2       3       4       5       6       7       8       9      10 
+## -0.3333 -0.8333 -0.3333  0.6667 -0.3333  1.1667  0.3333  0.8333  0.3333 -0.6667 
+##      11      12 
+##  0.3333 -1.1667 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  16.8333     0.3073  54.775 3.84e-08 ***
+## Treatment1   -0.1667     0.3073  -0.542 0.610881    
+## Block1       -0.3333     0.6872  -0.485 0.648131    
+## Block2        3.1667     0.6872   4.608 0.005797 ** 
+## Block3       15.6667     0.6872  22.798 3.02e-06 ***
+## Block4       -5.3333     0.6872  -7.761 0.000568 ***
+## Block5       -9.3333     0.6872 -13.582 3.88e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.065 on 5 degrees of freedom
+## Multiple R-squared:  0.9927,	Adjusted R-squared:  0.984 
+## F-statistic: 113.5 on 6 and 5 DF,  p-value: 3.532e-05
+\end{verbatim}
+\begin{alltt}
+\hlkwd{anova}\hlstd{(Model)}
+\end{alltt}
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Value
+##           Df Sum Sq Mean Sq  F value    Pr(>F)    
+## Treatment  1   0.33   0.333   0.2941    0.6109    
+## Block      5 771.67 154.333 136.1765 2.446e-05 ***
+## Residuals  5   5.67   1.133                       
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{itemize}
+    \item $ \hat{\sigma}=1.065 $ on $ n-q+c $ degrees of freedom.
+          In this case, we have 6 blocks, 2 treatments, so 12 total values.
+          One $ \mu $ and two constraints. So $ 12-6-2-1+2=5 $ degrees of freedom.
+    \item $ \tilde{\theta}=\tilde{\tau}_1-\tilde{\tau}_2 $.
+    \item $ \E{\tilde{\theta}}=\tau_1-\tau_2 $.
+    \item $ \displaystyle \Var{\tilde{\theta}}=\Var{\bar{Y}_{1+}}-\Var{\bar{Y}_{2+}}
+              =\frac{\sigma^2}{6} +\frac{\sigma^2}{6}
+              =\frac{\sigma^2}{3} $.
+\end{itemize}
+The confidence interval for the difference in treatments is:
+\[ \hat{\tau}_1-\hat{\tau}_2\pm c \sqrt{\frac{\hat{\sigma}^2}{3}}
+    =(-0.1667-0.1667)\pm 2.57 \frac{1.065}{\sqrt{3}} =(-1.91, 1.25) \]
+\subsection*{Suppose we ran a CRD instead.}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{Model} \hlkwb{=} \hlkwd{lm}\hlstd{(Value} \hlopt{~} \hlstd{Treatment)}
+\hlkwd{summary}\hlstd{(Model)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Value ~ Treatment)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -9.667 -5.250 -1.667  2.750 16.000 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  16.8333     2.5451   6.614 5.97e-05 ***
+## Treatment1   -0.1667     2.5451  -0.065    0.949    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 8.817 on 10 degrees of freedom
+## Multiple R-squared:  0.0004286,	Adjusted R-squared:  -0.09953 
+## F-statistic: 0.004288 on 1 and 10 DF,  p-value: 0.9491
+\end{verbatim}
+\begin{alltt}
+\hlkwd{anova}\hlstd{(Model)}
+\end{alltt}
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Value
+##           Df Sum Sq Mean Sq F value Pr(>F)
+## Treatment  1   0.33   0.333  0.0043 0.9491
+## Residuals 10 777.33  77.733
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+$ \hat{\sigma} $ has gone up since we are no longer accounting for the variability
+in the blocks.
+\[ \hat{\tau}_1-\hat{\tau}_2\pm c \frac{\hat{\sigma}}{\sqrt{3}}=(-11.7,11.02) \]
+which is much wider than the RBD\@. The ANOVA table for the CRD
+are just the sum of the Block and Residuals in the RBD\@.
+There was a benefit to using blocking. ANOVA gives us a simple test that we can use.
+In the RBD ANOVA table, on the Block line we are testing
+\[ H_0\text{: }\beta_1=\beta_2=\cdots=\beta_6=0 \]
+\[ H_a\text{: At least one $\beta_j$ is not zero} \]
+\[ d=\frac{\MS{Block}}{\MS{Res}}=\frac{154.333}{1.133}=136.1765   \]
+With $ p $-value:
+\[ p=\Prob{D>136.1765}=2.44\times 10^{-5} \]
+We have tons of evidence to reject $ H_0 $ in favour of $ H_a $.
+Since at least one $ \beta_j $ is not zero, RBD is a better model to use
+instead of CRD\@.
+
+\input{A5/lec_301.tex}
+
+\section{Lecture 30.50: Factorial Designs, Example}
+An experiment was conducted by students at Ohio State to explore the nature of the
+relationship between a person's heart rate and the frequency at which that person
+stepped up and down on steps of various heights. The response, the difference in heart
+rate, was measured in beats per minute. There were two different step heights, coded
+as 0 and 1. There were two rates of stepping coded as 0 and 1. This resulted in four
+possible height/frequency combinations --- treatments. Each subject performed the
+activity for three minutes, and were kept on pace by the beat of an electric metronome.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{rm}\hlstd{(}\hlkwc{list} \hlstd{=} \hlkwd{ls}\hlstd{())}
+\hlkwd{options}\hlstd{(}\hlkwc{contrasts} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"contr.sum"}\hlstd{,} \hlstr{"contr.poly"}\hlstd{))}
+\hlstd{data} \hlkwb{=} \hlkwd{read.table}\hlstd{(}\hlstr{"stepping2.csv"}\hlstd{,} \hlkwc{header} \hlstd{= T,} \hlkwc{sep} \hlstd{=} \hlstr{","}\hlstd{,} \hlkwc{as.is} \hlstd{= T)}
+\hlkwd{attach}\hlstd{(data)}
+\hlstd{Y} \hlkwb{=} \hlstd{HR} \hlopt{-} \hlstd{RestHR}
+\hlstd{Trt} \hlkwb{=} \hlnum{2} \hlopt{*} \hlstd{Height} \hlopt{+} \hlstd{Frequency}
+\hlstd{Trt} \hlkwb{=} \hlkwd{as.factor}\hlstd{(Trt)}
+\hlstd{Model} \hlkwb{=} \hlkwd{lm}\hlstd{(Y} \hlopt{~} \hlstd{Trt)}
+\hlkwd{summary}\hlstd{(Model)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Y ~ Trt)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -22.20  -5.10  -0.90   5.85  16.80 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   19.500      2.263   8.619 2.08e-07 ***
+## Trt1         -11.700      3.919  -2.986  0.00874 ** 
+## Trt2          -0.900      3.919  -0.230  0.82126    
+## Trt3           3.900      3.919   0.995  0.33444    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 10.12 on 16 degrees of freedom
+## Multiple R-squared:  0.411,	Adjusted R-squared:  0.3006 
+## F-statistic: 3.722 on 3 and 16 DF,  p-value: 0.03332
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\subsection{Determining Interaction (Method 1)}
+\[ \begin{array}{ccc}
+        \text{Group Average} & 0             & 1          \\
+        \midrule
+        0                    & 19.5 - (11.7) & 19.5 - 0.9 \\
+        1                    & 19.5 + 3.9    & 19.5 + 8.7
+    \end{array} \]
+We can only do this if we have 2 levels with 2 factors. We end up creating
+a contrast.~\Cref{fig:interplot} shows that there is no interaction.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{interaction.plot}\hlstd{(Height, Frequency, Y)}
+\end{alltt}
+\end{kframe}\begin{figure}
+
+{\centering \includegraphics[width=\maxwidth]{figure/interplot-1} 
+
+}
+
+\caption[Interaction Plot]{Interaction Plot}\label{fig:interplot}
+\end{figure}
+
+\end{knitrout}
+\subsection{Determining Interaction (Method 2)}
+\begin{itemize}
+    \item If $ \Delta_1=\Delta_2 $, the lines are parallel; that is, there is no interaction.
+    \item If $ \Delta_1\ne \Delta_2 $, the lines are not parallel; that is, there is interaction.
+\end{itemize}
+$ \Delta_1-\Delta_2=(\bar{Y}_{11+}-\bar{Y}_{01+})-(\bar{Y}_{10+}-\bar{Y}_{00+}) $.
+Add tildes to get $ \tilde{\theta}=(\tilde{\tau}_{11}-\tilde{\tau}_{01})-(\tilde{\tau}_{10}-\tilde{\tau}_{00}) $
+\[ \E{\tilde{\theta}}=\tau_{11}-\tau_{01}-\tau_{10}-\tau_{00} \]
+\[ \Var{\tilde{\theta}}=\frac{\sigma^2}{5} +\frac{\sigma^2}{5} +\frac{\sigma^2}{5} +\frac{\sigma^2}{5}
+    =\frac{4\sigma^2}{5}  \]
+$ H_0 $: $ \theta=0 $ (no interaction) versus $ H_a $: $ \theta\ne 0 $ (interaction)
+\[ d=\frac{\hat{\tau}_{11}-\hat{\tau}_{01}-\hat{\tau}_{10}-\hat{\tau}_{00}}{\sigma\sqrt{\frac{4}{5}}}=-0.66\quad(D \sim t(20-4-1+1)=t(16)) \]
+\[ p=2\Prob{D>0.66}=(0.4,0.6) \]
+There is no evidence to reject $ H_0 $. Therefore, there is no interaction.
+
+There is actually a \emph{third} way to determine interaction, the ANOVA table.
+\subsection{Determining Interaction (Method 3)}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{rm}\hlstd{(}\hlkwc{list} \hlstd{=} \hlkwd{ls}\hlstd{())}
+\hlkwd{options}\hlstd{(}\hlkwc{contrasts} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"contr.sum"}\hlstd{,} \hlstr{"contr.poly"}\hlstd{))}
+\hlstd{data} \hlkwb{=} \hlkwd{read.table}\hlstd{(}\hlstr{"stepping2.csv"}\hlstd{,} \hlkwc{header} \hlstd{= T,} \hlkwc{sep} \hlstd{=} \hlstr{","}\hlstd{,} \hlkwc{as.is} \hlstd{= T)}
+\hlkwd{attach}\hlstd{(data)}
+\hlstd{Y} \hlkwb{=} \hlstd{HR} \hlopt{-} \hlstd{RestHR}
+\hlstd{Height} \hlkwb{=} \hlkwd{as.factor}\hlstd{(Height)}
+\hlstd{Freq} \hlkwb{=} \hlkwd{as.factor}\hlstd{(Frequency)}
+\hlstd{Model} \hlkwb{=} \hlkwd{lm}\hlstd{(Y} \hlopt{~} \hlstd{Freq} \hlopt{+} \hlstd{Height} \hlopt{+} \hlstd{Freq} \hlopt{*} \hlstd{Height)}
+\hlkwd{anova}\hlstd{(Model)}
+\end{alltt}
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Y
+##             Df Sum Sq Mean Sq F value  Pr(>F)  
+## Freq         1  304.2  304.20  2.9714 0.10401  
+## Height       1  793.8  793.80  7.7538 0.01326 *
+## Freq:Height  1   45.0   45.00  0.4396 0.51677  
+## Residuals   16 1638.0  102.37                  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+We calculate $ \SS{Trt} $ with
+\[ \SS{Freq}+\SS{Height}+\SS{Interaction}=\SS{Trt} \]
+In our case, $ \SS{Trt}=1143.0 $ on $ 3 $ degrees of freedom.
+\begin{itemize}
+    \item $ H_0 $: no interaction
+    \item $ H_a $: interaction
+\end{itemize}
+\[ d=\frac{\MS{Int}}{\MS{Res}} =\frac{45}{102.37}=0.4396  \]
+With $ p $-value,
+\[ p=0.51667\quad(D \sim  F(1,16)) \]
+$ p>0.1 $, so there is no evidence to reject $ H_0 $,
+so it appears there is no interaction.
+
+\input{A6/a_06.tex}
+
+\input{A7/lec_36.tex}
+
+\section{Lecture 37.00: Regression Sampling, Example}
+\begin{itemize}
+    \item In R the data set is \code{women}. Simply type \code{women} to see the data.
+    \item We assume this is our population and that we want to know the mean height $\mu_{\text{height}}$.
+    \item When you do regression sampling you need to have a $y$ and an $x$.
+    \item $y$: height.
+    \item $x$: weight.
+    \item Now when we talk about our $x$ being weight we have to assume that we know the mean weight $\mu_{\text{weight}}$; that is, you need to know the population value for your weight. You don't know your population value for your height that's what you're trying to build the interval about.
+\end{itemize}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{attach}\hlstd{(women)}
+\hlkwd{mean}\hlstd{(height)}
+\end{alltt}
+\begin{verbatim}
+## [1] 65
+\end{verbatim}
+\begin{alltt}
+\hlkwd{mean}\hlstd{(weight)}
+\end{alltt}
+\begin{verbatim}
+## [1] 136.7333
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\begin{itemize}
+    \item $\mu_{\text{height}}=65$ is unknown!
+    \item $\mu_{\text{weight}}\approx 136.7333$ is known, and must be known to do regression sampling.
+\end{itemize}
+
+We're almost there where we have everything we need. Once we get everything we need,
+we can build an SRS confidence interval. We need one more thing, and that's getting
+a sample. The sample command below grabs five \code{height}s from the set of heights
+that are there. So it grabs five of them, and then we can get the mean of the sample height
+and the standard deviation of the sample heights, so this would be sigma hat for simple random sampling.
+
+Using SRSWOR, we take a sample of size $5$ and use this as our estimate for the height.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{45376}\hlstd{)}
+\hlstd{sample_heights} \hlkwb{=} \hlkwd{sample}\hlstd{(height,} \hlnum{5}\hlstd{)}
+\hlkwd{mean}\hlstd{(sample_heights)}
+\end{alltt}
+\begin{verbatim}
+## [1] 63.4
+\end{verbatim}
+\begin{alltt}
+\hlkwd{sd}\hlstd{(sample_heights)}
+\end{alltt}
+\begin{verbatim}
+## [1] 3.209361
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\begin{itemize}
+    \item $\hat{\mu}_{\text{height}}=63.4$.
+    \item $\hat{\sigma}_{\text{SRS}}\approx 3.209361$.
+\end{itemize}
+
+Now we have enough information that we can actually build a confidence interval.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{N} \hlkwb{<-} \hlkwd{nrow}\hlstd{(women)}
+\hlkwd{print}\hlstd{(N)}
+\end{alltt}
+\begin{verbatim}
+## [1] 15
+\end{verbatim}
+\begin{alltt}
+\hlstd{n} \hlkwb{<-} \hlnum{5}
+\hlstd{c} \hlkwb{<-} \hlkwd{qnorm}\hlstd{(}\hlnum{0.975}\hlstd{)}
+\hlkwd{round}\hlstd{(}\hlkwd{mean}\hlstd{(sample_heights)} \hlopt{+} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{)} \hlopt{*} \hlstd{((c} \hlopt{*} \hlkwd{sd}\hlstd{(sample_heights))}\hlopt{/}\hlkwd{sqrt}\hlstd{(n))} \hlopt{*}
+  \hlkwd{sqrt}\hlstd{(}\hlnum{1} \hlopt{-} \hlstd{n}\hlopt{/}\hlstd{N),} \hlnum{1}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 61.1 65.7
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\begin{itemize}
+    \item $N=15$.
+    \item $n=5$.
+    \item $c\approx 1.96$.
+\end{itemize}
+
+$$\text{SRS: }\hat{\mu}_\text{height}\pm \frac{c\hat{\sigma}_{\text{SRS}}}{\sqrt{n}}\sqrt{1-\frac{n}{N}}=63.4\pm \frac{1.96(3.209361)}{\sqrt{5}}\sqrt{1-\frac{5}{15}}=(61.1,65.7)$$
+which has a width of $4.6$.
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{sample_weights} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{123}\hlstd{,} \hlnum{129}\hlstd{,} \hlnum{135}\hlstd{,} \hlnum{146}\hlstd{,} \hlnum{120}\hlstd{)}
+\hlkwd{mean}\hlstd{(sample_weights)}
+\end{alltt}
+\begin{verbatim}
+## [1] 130.6
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\begin{itemize}
+    \item $\hat{\mu}_{\text{weight}}=130.6$.
+\end{itemize}
+
+We are wrong by $\mu_y-\hat{\mu}_y=65-63.4=1.6$ units. We note that
+there is a linear relationship between height and weight.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{plot}\hlstd{(weight, height)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-33-1} 
+
+}
+
+
+\end{knitrout}
+
+Thus, we decide to use Regression Sampling.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{sample_weights} \hlkwb{=} \hlstd{sample_weights} \hlopt{-} \hlkwd{mean}\hlstd{(sample_weights)}  \hlcom{# x_i - bar(x)}
+\hlkwd{summary}\hlstd{(}\hlkwd{lm}\hlstd{(sample_heights} \hlopt{~} \hlstd{sample_weights))}  \hlcom{# Y_i ~ (x_i - bar(x))}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = sample_heights ~ sample_weights)
+## 
+## Residuals:
+##        1        2        3        4        5 
+## -0.04846  0.09506  0.23858 -0.16496 -0.12022 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)    63.400000   0.085624  740.45 5.43e-09 ***
+## sample_weights  0.309413   0.009242   33.48 5.86e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.1915 on 3 degrees of freedom
+## Multiple R-squared:  0.9973,	Adjusted R-squared:  0.9964 
+## F-statistic:  1121 on 1 and 3 DF,  p-value: 5.858e-05
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+We didn't use a factor because this is not a discrete variable.
+We consider this factor to be continuous, so we consider our weights to be a continuous value.
+
+Therefore,
+
+\begin{itemize}
+    \item $\hat{\alpha}=\hat{\mu}_y=63.4$.
+    \item $\hat{\beta}=0.309413$.
+\end{itemize}
+
+Right now, the degrees of freedom is $n-2=5-2=3$, but we want to multiply by $(n-2)/(n-1)$ as
+the degrees of freedom should be $n-1=5-1=4$, so
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{sigma_r} \hlkwb{<-} \hlkwd{summary}\hlstd{(}\hlkwd{lm}\hlstd{(}\hlkwc{formula} \hlstd{= sample_heights} \hlopt{~} \hlstd{sample_weights))}\hlopt{$}\hlstd{sigma}
+\hlkwd{print}\hlstd{(sigma_r)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1914611
+\end{verbatim}
+\begin{alltt}
+\hlstd{sigma_r_sq} \hlkwb{<-} \hlstd{sigma_r}\hlopt{^}\hlnum{2} \hlopt{*} \hlstd{(n} \hlopt{-} \hlnum{2}\hlstd{)}\hlopt{/}\hlstd{(n} \hlopt{-} \hlnum{1}\hlstd{)}
+\hlkwd{print}\hlstd{(sigma_r_sq)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.02749301
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+$$\hat{\sigma}_r^2=\hat{\sigma}_{\text{r}}^2\frac{3}{4}=0.1915^2(3/4)=0.02749$$
+
+$$\hat{\mu}_{\text{reg}}=\hat{\mu}_{\text{height}}=\hat{\alpha}+\hat{\beta}(x_i-\bar{x})=63.4-0.31(x_i-130.6)$$
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{alpha_hat} \hlkwb{<-} \hlkwd{summary}\hlstd{(}\hlkwd{lm}\hlstd{(}\hlkwc{formula} \hlstd{= sample_heights} \hlopt{~} \hlstd{sample_weights))}\hlopt{$}\hlstd{coefficients[}\hlnum{1}\hlstd{]}
+\hlstd{beta_hat} \hlkwb{<-} \hlkwd{summary}\hlstd{(}\hlkwd{lm}\hlstd{(}\hlkwc{formula} \hlstd{= sample_heights} \hlopt{~} \hlstd{sample_weights))}\hlopt{$}\hlstd{coefficients[}\hlnum{2}\hlstd{]}
+\hlstd{reg} \hlkwb{<-} \hlkwd{mean}\hlstd{(sample_heights)} \hlopt{+} \hlstd{beta_hat} \hlopt{*} \hlstd{(}\hlkwd{mean}\hlstd{(weight)} \hlopt{-} \hlkwd{mean}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{123}\hlstd{,}
+  \hlnum{129}\hlstd{,} \hlnum{135}\hlstd{,} \hlnum{146}\hlstd{,} \hlnum{120}\hlstd{)))}
+\hlkwd{print}\hlstd{(reg)}
+\end{alltt}
+\begin{verbatim}
+## [1] 65.29773
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+The regression estimate is:
+$$\hat{\mu}_{\text{reg}}=\hat{\mu}_{\text{height}}(\mu_{\text{weight}})=63.4+0.31(136.7333-130.6)=65.3$$
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{round}\hlstd{(reg} \hlopt{+} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{)} \hlopt{*} \hlstd{c} \hlopt{*} \hlkwd{sqrt}\hlstd{(sigma_r_sq)}\hlopt{/}\hlkwd{sqrt}\hlstd{(}\hlnum{5}\hlstd{)} \hlopt{*} \hlstd{(}\hlnum{1} \hlopt{-} \hlstd{n}\hlopt{/}\hlstd{N),}
+  \hlnum{1}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 65.2 65.4
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+The confidence interval is:
+$$\hat{\mu}_{\text{reg}}\pm \frac{c\hat{\sigma}_r}{\sqrt{n}}\sqrt{1-\frac{n}{N}}=65.3\pm \frac{1.96\sqrt{0.02749}}{\sqrt{5}}\sqrt{1-\frac{5}{15}}=(65.2,65.4)$$
+In this case, you are only $0.3$ from the true mean.
+
+\begin{itemize}
+    \item The width of this interval is much narrower than that of the SRS.
+          In fact, for the SRS if we go back in time it had a width of 4.6.
+    \item Note that your interval does not actually contain the population mean height.
+          The population mean height is $65$, but it's not in your interval and that's
+          because of the bias that comes from a regression interval. So, the bias of a regression
+          interval means that we may not always
+          contain the actual value of interest. You won't be far off from it because of
+          the regression line, but your interval might not contain it.
+\end{itemize}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{plot}\hlstd{(weight, height)}
+\hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlkwd{mean}\hlstd{(height))}
+\hlkwd{abline}\hlstd{(}\hlkwc{v} \hlstd{=} \hlkwd{mean}\hlstd{(weight))}
+\hlkwd{abline}\hlstd{(alpha_hat} \hlopt{-} \hlstd{beta_hat} \hlopt{*} \hlkwd{mean}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{123}\hlstd{,} \hlnum{129}\hlstd{,} \hlnum{135}\hlstd{,} \hlnum{146}\hlstd{,} \hlnum{120}\hlstd{)),}
+  \hlstd{beta_hat)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-38-1} 
+
+}
+
+
+\end{knitrout}
+
+\section{Lecture 38.00: Regression Sampling, Example 2}
+A student was curious about whether they performed better with
+more sleep. To test this hypothesis, she decided to write
+various tests on a certain number of hours ($x$) of sleep.
+The grade on their test was considered to be the response ($y$).
+In total, she has written $94$ tests since coming to UW.
+On average, she slept for $5.1$ hours during those $94$
+tests. We consider the $9$ below to be a random sample.
+\begin{itemize}
+    \item \textbf{Model}: $Y_i=\alpha+\beta(x_i-\bar{x})+R_i$ where $R_i \sim \mathcal{N}(0,\sigma^2)$.
+\end{itemize}
+\textbf{Questions}:
+\begin{itemize}
+    \item Assume the explanatory variate was not present. Build a 95% confidence
+          interval for her mean grade using SRSWOR.
+    \item Use Regression sampling to build a 95% confidence interval for her mean grade.
+    \item Compare your SRSWOR results to your regression results, what do you notice?
+\end{itemize}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{x} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,} \hlnum{6}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{7}\hlstd{,} \hlnum{5}\hlstd{,} \hlnum{9}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{8}\hlstd{)}
+\hlstd{y} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{75}\hlstd{,} \hlnum{78}\hlstd{,} \hlnum{69}\hlstd{,} \hlnum{80}\hlstd{,} \hlnum{77}\hlstd{,} \hlnum{82}\hlstd{,} \hlnum{65}\hlstd{,} \hlnum{55}\hlstd{,} \hlnum{85}\hlstd{)}
+\hlstd{n} \hlkwb{<-} \hlnum{9}
+\hlstd{N} \hlkwb{<-} \hlnum{94}
+\hlstd{mu_x} \hlkwb{<-} \hlnum{5.1}
+\hlstd{s_xy} \hlkwb{<-} \hlkwd{sum}\hlstd{(y} \hlopt{*} \hlstd{(x} \hlopt{-} \hlkwd{mean}\hlstd{(x)))}\hlopt{/}\hlstd{(n} \hlopt{-} \hlnum{1}\hlstd{)}
+\hlkwd{print}\hlstd{(s_xy)}
+\end{alltt}
+\begin{verbatim}
+## [1] 24.75
+\end{verbatim}
+\begin{alltt}
+\hlstd{s_xsq} \hlkwb{<-} \hlkwd{var}\hlstd{(x)}
+\hlkwd{print}\hlstd{(s_xsq)}
+\end{alltt}
+\begin{verbatim}
+## [1] 8.111111
+\end{verbatim}
+\begin{alltt}
+\hlstd{s_ysq} \hlkwb{<-} \hlkwd{var}\hlstd{(y)}
+\hlkwd{print}\hlstd{(s_ysq)}
+\end{alltt}
+\begin{verbatim}
+## [1] 89.25
+\end{verbatim}
+\begin{alltt}
+\hlstd{xbar} \hlkwb{<-} \hlkwd{mean}\hlstd{(x)}
+\hlkwd{print}\hlstd{(xbar)}
+\end{alltt}
+\begin{verbatim}
+## [1] 4.888889
+\end{verbatim}
+\begin{alltt}
+\hlstd{ybar} \hlkwb{<-} \hlkwd{mean}\hlstd{(y)}
+\hlkwd{print}\hlstd{(ybar)}
+\end{alltt}
+\begin{verbatim}
+## [1] 74
+\end{verbatim}
+\begin{alltt}
+\hlstd{r} \hlkwb{<-} \hlstd{(y} \hlopt{-} \hlstd{ybar} \hlopt{-} \hlstd{(x} \hlopt{-} \hlstd{xbar)} \hlopt{*} \hlkwd{sum}\hlstd{((y} \hlopt{-} \hlstd{ybar)} \hlopt{*} \hlstd{(x} \hlopt{-} \hlstd{xbar))}\hlopt{/}\hlkwd{sum}\hlstd{((x} \hlopt{-}
+  \hlstd{xbar)}\hlopt{^}\hlnum{2}\hlstd{))}
+\hlstd{sigma_rsq} \hlkwb{<-} \hlkwd{sum}\hlstd{(r}\hlopt{^}\hlnum{2}\hlstd{)}\hlopt{/}\hlstd{(n} \hlopt{-} \hlnum{1}\hlstd{)}
+\hlkwd{print}\hlstd{(sigma_rsq)}
+\end{alltt}
+\begin{verbatim}
+## [1] 13.7286
+\end{verbatim}
+\begin{alltt}
+\hlkwd{sqrt}\hlstd{(sigma_rsq)}
+\end{alltt}
+\begin{verbatim}
+## [1] 3.705212
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\begin{itemize}
+    \item $s_{xy}=24.75$.
+    \item $s_x^2=8.11$.
+    \item $\hat{\sigma}_y^2=s_y^2=89.25$.
+    \item $\bar{x}=4.89$.
+    \item $\bar{y}=74$.
+    \item $\hat{\sigma}_{\text{reg}}^2=13.72$.
+    \item $N=94$.
+    \item $n=9$.
+    \item $\mu_x=5.1$ (given).
+\end{itemize}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{alpha_hat} \hlkwb{<-} \hlstd{ybar}
+\hlkwd{print}\hlstd{(alpha_hat)}
+\end{alltt}
+\begin{verbatim}
+## [1] 74
+\end{verbatim}
+\begin{alltt}
+\hlstd{beta_hat} \hlkwb{<-} \hlstd{s_xy}\hlopt{/}\hlstd{s_xsq}
+\hlkwd{print}\hlstd{(beta_hat)}
+\end{alltt}
+\begin{verbatim}
+## [1] 3.05137
+\end{verbatim}
+\begin{alltt}
+\hlstd{reg} \hlkwb{<-} \hlstd{alpha_hat} \hlopt{+} \hlstd{beta_hat} \hlopt{*} \hlstd{(mu_x} \hlopt{-} \hlstd{xbar)}
+\hlkwd{print}\hlstd{(reg)}
+\end{alltt}
+\begin{verbatim}
+## [1] 74.64418
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+$$\hat{\alpha}=\bar{y}=\hat{\mu}_y=74$$
+$$\hat{\beta}=\frac{s_{xy}}{s_x^2}=\frac{24.75}{8.11}=3.0514$$
+$$\hat{\mu}_{\text{reg}}=\hat{\alpha}+\hat{\beta}(\mu_x-\bar{x})=74+3(5.1-4.89)=74.63$$
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{c} \hlkwb{<-} \hlkwd{qnorm}\hlstd{(}\hlnum{0.975}\hlstd{)}
+\hlkwd{round}\hlstd{(alpha_hat} \hlopt{+} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{)} \hlopt{*} \hlstd{c} \hlopt{*} \hlkwd{sqrt}\hlstd{(s_ysq}\hlopt{/}\hlstd{n)} \hlopt{*} \hlkwd{sqrt}\hlstd{(}\hlnum{1} \hlopt{-} \hlstd{n}\hlopt{/}\hlstd{N),}
+  \hlnum{1}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 68.1 79.9
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+SRS:
+$$\hat{\mu}_y \pm \frac{c\hat{\sigma}_y}{\sqrt{n}}\sqrt{1-\frac{n}{N}}=
+    74\pm 1.96\sqrt{\frac{89.25}{9}}\sqrt{1-\frac{9}{94}}=(68.1,79.9)$$
+Roughly a width of 12.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{round}\hlstd{(reg} \hlopt{+} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{)} \hlopt{*} \hlstd{c} \hlopt{*} \hlkwd{sqrt}\hlstd{(sigma_rsq}\hlopt{/}\hlstd{n)} \hlopt{*} \hlkwd{sqrt}\hlstd{(}\hlnum{1} \hlopt{-} \hlstd{n}\hlopt{/}\hlstd{N),}
+  \hlnum{1}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 72.3 76.9
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+Reg:
+$$\hat{\mu}_{\text{reg}}\pm \frac{c\hat{\sigma}_r}{\sqrt{n}}\sqrt{1-\frac{n}{N}}
+    = 74.63\pm 1.96\sqrt{\frac{13.72}{9}}\sqrt{1-\frac{9}{94}}=(72.3,76.9)$$
+Roughly a width of 5.
+
+As you will notice, the big difference between the two intervals
+is that the width of the regression interval is
+narrower than the width of the SRS interval.
+
+\input{A8/lec_39.tex}
+
+\section{Lecture 40.00: Ratio Estimation (Ave.), Example}
+In R, the data set is \code{women}. Simply type \code{women} to see the data.
+We assume this is our population, and that we want to know the mean
+height $\mu_{\text{height}}$. We also assume we know the mean weight
+$\mu_{\text{weight}}$. In fact, directly from the data we have:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{attach}\hlstd{(women)}
+\hlstd{mu_height} \hlkwb{<-} \hlkwd{mean}\hlstd{(height)}
+\hlkwd{print}\hlstd{(mu_height)}
+\end{alltt}
+\begin{verbatim}
+## [1] 65
+\end{verbatim}
+\begin{alltt}
+\hlstd{mu_weight} \hlkwb{<-} \hlkwd{mean}\hlstd{(weight)}
+\hlkwd{print}\hlstd{(mu_weight)}
+\end{alltt}
+\begin{verbatim}
+## [1] 136.7333
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\begin{itemize}
+    \item $\mu_{\text{height}}=65$
+    \item $\mu_{\text{weight}}=136.7333$
+    \item $y$: \code{height}.
+    \item $x$: \code{weight}.
+\end{itemize}
+Using SRSWOR, we take a sample of size 5 and use this for our estimate for
+the height:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{45376}\hlstd{)}
+\hlstd{sample_heights} \hlkwb{=} \hlkwd{sample}\hlstd{(height,} \hlnum{5}\hlstd{)}
+\hlstd{muhat_height} \hlkwb{<-} \hlkwd{mean}\hlstd{(sample_heights)}
+\hlkwd{print}\hlstd{(muhat_height)}
+\end{alltt}
+\begin{verbatim}
+## [1] 63.4
+\end{verbatim}
+\begin{alltt}
+\hlkwd{sd}\hlstd{(sample_heights)}
+\end{alltt}
+\begin{verbatim}
+## [1] 3.209361
+\end{verbatim}
+\begin{alltt}
+\hlstd{sample_weights} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{123}\hlstd{,} \hlnum{129}\hlstd{,} \hlnum{135}\hlstd{,} \hlnum{146}\hlstd{,} \hlnum{120}\hlstd{)}
+\hlstd{muhat_weight} \hlkwb{<-} \hlkwd{mean}\hlstd{(sample_weights)}
+\hlkwd{print}\hlstd{(muhat_weight)}
+\end{alltt}
+\begin{verbatim}
+## [1] 130.6
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\begin{itemize}
+    \item $\hat{\mu}_{\text{height}}=63.4$ which is our SRS estimate for $\mu_y$.
+    \item $\hat{\sigma}_y=3.209361$.
+    \item $\bar{x}=\hat{\mu}_{\text{weight}}=130.6$.
+\end{itemize}
+We found out that we were wrong by $1.4$ units. Going back a long time ago,
+when we used SRS, we ended up with a confidence interval which
+was $(60.6,66.2)$. We noticed how wide it was.
+
+When we deal with ratio estimation, the first thing we want is a linear
+relationship between height and weight.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{plot}\hlstd{(weight, height)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-45-1} 
+
+}
+
+
+\end{knitrout}
+
+Thus, we decide to use Ratio Sampling.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{Sqrt_weights} \hlkwb{=} \hlkwd{sqrt}\hlstd{(sample_weights)}
+\hlstd{sample_weights} \hlkwb{=} \hlstd{sample_weights}\hlopt{/}\hlstd{Sqrt_weights}
+\hlstd{sample_heights} \hlkwb{=} \hlstd{sample_heights}\hlopt{/}\hlstd{Sqrt_weights}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\begin{itemize}
+    \item \code{Sqrt\_weights = sqrt(sample\_weights)} $=\sqrt{x_i}$.
+    \item \code{sample\_weights = sample\_weights / Sqrt\_weights} $=x_i/\sqrt{x_i}$.
+    \item \code{sample\_heights = sample\_heights / Sqrt\_weights} $=y_i/\sqrt{x_i}$.
+\end{itemize}
+In order to remove the intercept, we need to use the \code{-1} in the following code.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{sum} \hlkwb{<-} \hlkwd{summary}\hlstd{(}\hlkwd{lm}\hlstd{(sample_heights} \hlopt{~} \hlstd{sample_weights} \hlopt{-} \hlnum{1}\hlstd{))}
+\hlkwd{print}\hlstd{(sum)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = sample_heights ~ sample_weights - 1)
+## 
+## Residuals:
+##        1        2        3        4        5 
+##  0.11626  0.03317 -0.04613 -0.23802  0.15937 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(>|t|)    
+## sample_weights  0.48545    0.00615   78.93 1.54e-07 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.1572 on 4 degrees of freedom
+## Multiple R-squared:  0.9994,	Adjusted R-squared:  0.9992 
+## F-statistic:  6231 on 1 and 4 DF,  p-value: 1.544e-07
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\begin{itemize}
+    \item $\hat{\beta}=0.48545$
+    \item $\hat{\sigma}_{\text{ratio}}=0.1572$
+          $$\hat{\mu}_{\text{height}}=\hat{\beta}x_i=\frac{\bar{y}}{\bar{x}}=\frac{63.4}{130.6}x_i=0.48545x_i$$
+          which is our line of best fit.
+\end{itemize}
+
+The ratio estimate is
+$$\hat{\mu}_{\text{ratio}}=\hat{\mu}_{\text{height}}(\mu_{\text{weight}})=0.48545(136.7333)=66.4$$
+Well the real answer, was $65$, so we are $1.4$ units away from the real answer.
+However, that was closer than SRS which was $1.6$ units away from the real answer.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{beta} \hlkwb{<-} \hlstd{sum}\hlopt{$}\hlstd{coefficients[}\hlnum{1}\hlstd{]}
+\hlstd{mu_ratio} \hlkwb{<-} \hlstd{beta} \hlopt{*} \hlstd{mu_weight}
+\hlstd{sigma_ratio} \hlkwb{<-} \hlstd{sum}\hlopt{$}\hlstd{sigma}
+\hlstd{n} \hlkwb{<-} \hlnum{5}
+\hlstd{N} \hlkwb{<-} \hlnum{15}
+\hlstd{c} \hlkwb{<-} \hlkwd{qnorm}\hlstd{(}\hlnum{0.975}\hlstd{)}
+\hlkwd{round}\hlstd{(mu_ratio} \hlopt{+} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{)} \hlopt{*} \hlstd{((c} \hlopt{*} \hlstd{sigma_ratio)}\hlopt{/}\hlkwd{sqrt}\hlstd{(n))} \hlopt{*} \hlkwd{sqrt}\hlstd{(}\hlnum{1} \hlopt{-}
+  \hlstd{n}\hlopt{/}\hlstd{N),} \hlnum{1}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 66.3 66.5
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+A 95\% confidence interval for $\mu_y$ is:
+$$\hat{\mu}_{\text{ratio}}\pm \frac{c\hat{\sigma}_{\text{ratio}}}{\sqrt{n}}\sqrt{1-\frac{n}{N}}=66.4\pm \frac{1.96(0.1572)}{\sqrt{5}}\sqrt{1-\frac{5}{15}}=(66.3,66.5)$$
+Width: $0.2$
+
+Note:
+\begin{itemize}
+    \item Width of CI using Ratios is narrower than SRS.
+    \item There is bias in ratio estimation. Notice that the interval doesn't
+          contain 65 which is the real answer.
+\end{itemize}
+
+Requirements:
+\begin{itemize}
+    \item Regression and Ratio require highly correlated $Y_i$ and $x_i$.
+    \item Ratio requires an intercept of zero.
+    \item Both Regression and Ratio are narrower than SRS, but Regression
+          and Ratio are both biased.
+\end{itemize}
+
+\begin{table}[!htbp]
+    \centering
+    \begin{NiceTabular}{|c|c|c|}
+        \toprule
+        Technique &                               Estimate                               &                                                      CI\\
+        \midrule
+        SRS    &                            $\hat{\mu}_y$                             &              $\displaystyle\hat{\mu}_y\pm \frac{c\hat{\sigma}_y}{\sqrt{n}}\sqrt{1-\frac{n}{N}}$              \\
+        Reg    &     $\hat{\mu}_{\text{reg}}=\bar{y}+\hat{\beta}(\mu_x-\bar{x})$      &   $\displaystyle\hat{\mu}_{\text{reg}}\pm \frac{c\hat{\sigma}_{\text{reg}}}{\sqrt{n}}\sqrt{1-\frac{n}{N}}$   \\
+        Ratio   & $\hat{\mu}_{\text{ratio}}=\displaystyle\frac{\bar{y}}{\bar{x}}\mu_x$ & $\displaystyle\hat{\mu}_{\text{ratio}}\pm \frac{c\hat{\sigma}_{\text{ratio}}}{\sqrt{n}}\sqrt{1-\frac{n}{N}}$ \\
+        \bottomrule
+    \end{NiceTabular}
+\end{table}
+\input{A8/lec_41.tex}
+\input{A8/lec_42.tex}
+
+\input{A9/lec_43.tex}
+\input{A9/lec_44.tex}
+
+\section{Lecture 45.00: Stratified Example}
+\subsection{Stratified 1}\label{stratified1}
+I am interested in the average tuition paid by students
+at the University of Waterloo. Additionally, I want
+to know how much each faculty student is paying on average.
+Hence, I decide to stratify by Faculty (assume students belong to a single faculty).
+\begin{table}[!htbp]
+    \centering
+    \begin{NiceTabular}{|c|c|c|c|c|c|}
+        \toprule
+        Faculty & $ N $ & $ \hat{\mu} $ & $ n $ & $ W $ & $ \hat{\sigma} $\\
+        \midrule
+        Math   & 6600  &    4500     &  15   & 0.22  &      400       \\
+        Arts   & 9000  &    3000     &  10   & 0.30  &      200       \\
+        Science  & 5400  &    4500     &  25   & 0.18  &      300       \\
+        AHS    & 1500  &    3200     &  35   & 0.05  &      100       \\
+        Engineer & 6000  &    7000     &  15   & 0.20  &      100       \\
+        EVS    & 1500  &    3500     &  20   & 0.05  &      200       \\
+        Total   & 30000 &             &  120  \\
+        \bottomrule
+    \end{NiceTabular}
+\end{table}
+\subsubsection*{Build a 95\% confidence interval for the mean tuition in Math.}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{ci} \hlkwb{<-} \hlnum{4500} \hlopt{+} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{)} \hlopt{*} \hlkwd{qnorm}\hlstd{(}\hlnum{0.975}\hlstd{)} \hlopt{*} \hlnum{400}\hlopt{/}\hlkwd{sqrt}\hlstd{(}\hlnum{15}\hlstd{)} \hlopt{*} \hlstd{(}\hlnum{1} \hlopt{-} \hlnum{15}\hlopt{/}\hlnum{6600}\hlstd{)}
+\hlkwd{round}\hlstd{(ci)}
+\end{alltt}
+\begin{verbatim}
+## [1] 4298 4702
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\[ \hat{\mu}_\text{math}\pm\frac{c\hat{\sigma}_\text{math}}{\sqrt{n_\text{math}}}\sqrt{1-\frac{n_\text{math}}{N_\text{math}}}=4500\pm \frac{1.96(400)}{\sqrt{15}} \sqrt{1-\frac{15}{6600} }=(4298,4702)\]
+\subsubsection*{Build a 95\% confidence interval for the mean tuition at UW.}
+Since we've used SRS in each of the strata, we have to use stratified sampling.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{N_i} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{6600}\hlstd{,} \hlnum{9000}\hlstd{,} \hlnum{5400}\hlstd{,} \hlnum{1500}\hlstd{,} \hlnum{6000}\hlstd{,} \hlnum{1500}\hlstd{)}
+\hlstd{N} \hlkwb{<-} \hlkwd{sum}\hlstd{(N_i)}
+\hlstd{w_i} \hlkwb{<-} \hlstd{N_i}\hlopt{/}\hlstd{N}
+\hlstd{n_i} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{15}\hlstd{,} \hlnum{10}\hlstd{,} \hlnum{25}\hlstd{,} \hlnum{35}\hlstd{,} \hlnum{15}\hlstd{,} \hlnum{20}\hlstd{)}
+\hlstd{mu_i} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{4500}\hlstd{,} \hlnum{3000}\hlstd{,} \hlnum{4500}\hlstd{,} \hlnum{3200}\hlstd{,} \hlnum{7000}\hlstd{,} \hlnum{3500}\hlstd{)}
+\hlstd{sigma_i} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{400}\hlstd{,} \hlnum{200}\hlstd{,} \hlnum{300}\hlstd{,} \hlnum{100}\hlstd{,} \hlnum{100}\hlstd{,} \hlnum{200}\hlstd{)}
+\hlstd{mu} \hlkwb{<-} \hlkwd{sum}\hlstd{(w_i} \hlopt{*} \hlstd{mu_i)}
+\hlstd{variance} \hlkwb{<-} \hlkwd{sum}\hlstd{(w_i}\hlopt{^}\hlnum{2} \hlopt{*} \hlstd{sigma_i}\hlopt{^}\hlnum{2}\hlopt{/}\hlstd{n_i} \hlopt{*} \hlstd{(}\hlnum{1} \hlopt{-} \hlstd{n_i}\hlopt{/}\hlstd{N_i))}
+\hlstd{ci} \hlkwb{<-} \hlstd{mu} \hlopt{+} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{)} \hlopt{*} \hlkwd{qnorm}\hlstd{(}\hlnum{0.975}\hlstd{)} \hlopt{*} \hlkwd{sqrt}\hlstd{(variance)}
+\hlstd{mu}
+\end{alltt}
+\begin{verbatim}
+## [1] 4435
+\end{verbatim}
+\begin{alltt}
+\hlkwd{round}\hlstd{(variance,} \hlnum{3}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 1023.024
+\end{verbatim}
+\begin{alltt}
+\hlkwd{round}\hlstd{(ci)}
+\end{alltt}
+\begin{verbatim}
+## [1] 4372 4498
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\[ \hat{\mu}=\sum_{i=1}^H w_i \hat{\mu}_i=4435 \]
+\[ \widehat{\mathbb{V}(\tilde{\mu})}=\sum_{i=1}^{H} \frac{w_i^2\hat{\sigma}_i^2}{n_i}\biggl(1-\frac{n_i}{N_i} \biggr)=1023.024 \]
+Therefore, a 95\% confidence interval for $\mu$ is:
+\[ \hat{\mu}\pm c\sqrt{\widehat{\mathbb{V}(\tilde{\mu})}}=4435\pm 1.96\sqrt{1023.024}=(4372, 4498) \]
+\subsection{Stratified 2}
+We continue from~\Cref{stratified1}.
+\subsubsection*{A proportional allocation of our sample values to each stratum.}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{n} \hlkwb{<-} \hlnum{120}
+\hlkwd{round}\hlstd{(n} \hlopt{*} \hlstd{w_i)}
+\end{alltt}
+\begin{verbatim}
+## [1] 26 36 22  6 24  6
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\begin{itemize}
+    \item $n_\text{math}=n w_\text{math}=120(0.22)=26$.
+    \item $n_\text{arts}=36$.
+    \item $n_\text{science}=22$.
+    \item $n_{\text{ahs}}=6$.
+    \item $n_{\text{eng}}=24$.
+    \item $n_{\text{evs}}=6$.
+\end{itemize}
+
+\subsubsection*{An optimal allocation of our sample values to each stratum.}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{round}\hlstd{(n} \hlopt{*} \hlstd{sigma_i} \hlopt{*} \hlstd{w_i}\hlopt{/}\hlkwd{sum}\hlstd{(w_i} \hlopt{*} \hlstd{sigma_i))}
+\end{alltt}
+\begin{verbatim}
+## [1] 45 30 27  3 10  5
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\begin{itemize}
+    \item $n_\text{math}=\dfrac{n\sigma_\text{math}w_\text{math}}{\sum_{j=1}^{6} w_j \sigma_j}=\frac{120(400)(0.22)}{237}=45$.
+    \item $n_\text{arts}=30$.
+    \item $n_\text{science}=27$.
+    \item $n_{\text{ahs}}=3$.
+    \item $n_{\text{eng}}=10$.
+    \item $n_{\text{evs}}=120-45-30-27-3-10=5$.
+\end{itemize}
+
+\subsection{Stratified 3}
+A course has 3 sections all taught by one instructor. There
+are $205$, $212$, and $253$ people in each of the sections
+$1$, $2$, and $3$ respectively. At the end of the term the instructor
+is curious about how well the students performed. The administration
+takes a simple random sampling of $15$, $12$, and $14$ people respectively from each section.
+The averages for each section are $75$, $70$, and $72$ respectively
+with standard deviations of $10$, $15$, and $5$. Build a 95%
+confidence interval for the mean grade of the instructors course.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{N_i} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{205}\hlstd{,} \hlnum{212}\hlstd{,} \hlnum{253}\hlstd{)}
+\hlstd{N} \hlkwb{<-} \hlkwd{sum}\hlstd{(N_i)}
+\hlstd{w_i} \hlkwb{<-} \hlstd{N_i}\hlopt{/}\hlstd{N}
+\hlstd{n_i} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{15}\hlstd{,} \hlnum{12}\hlstd{,} \hlnum{14}\hlstd{)}
+\hlstd{mu_i} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{75}\hlstd{,} \hlnum{70}\hlstd{,} \hlnum{72}\hlstd{)}
+\hlstd{sigma_i} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{10}\hlstd{,} \hlnum{15}\hlstd{,} \hlnum{5}\hlstd{)}
+\hlstd{mu} \hlkwb{<-} \hlkwd{sum}\hlstd{(w_i} \hlopt{*} \hlstd{mu_i)}
+\hlstd{variance} \hlkwb{<-} \hlkwd{sum}\hlstd{(w_i}\hlopt{^}\hlnum{2} \hlopt{*} \hlstd{sigma_i}\hlopt{^}\hlnum{2}\hlopt{/}\hlstd{n_i} \hlopt{*} \hlstd{(}\hlnum{1} \hlopt{-} \hlstd{n_i}\hlopt{/}\hlstd{N_i))}
+\hlstd{ci} \hlkwb{<-} \hlstd{mu} \hlopt{+} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{)} \hlopt{*} \hlkwd{qnorm}\hlstd{(}\hlnum{0.975}\hlstd{)} \hlopt{*} \hlkwd{sqrt}\hlstd{(variance)}
+\hlstd{mu}
+\end{alltt}
+\begin{verbatim}
+## [1] 72.28507
+\end{verbatim}
+\begin{alltt}
+\hlstd{variance}
+\end{alltt}
+\begin{verbatim}
+## [1] 2.589983
+\end{verbatim}
+\begin{alltt}
+\hlkwd{round}\hlstd{(ci,} \hlnum{3}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 69.131 75.439
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\[ \hat{\mu}=\sum_{i=1}^H w_i \hat{\mu}_i=72.28507 \]
+\[\widehat{\mathbb{V}(\tilde{\mu})}=\sum_{i=1}^{H} \frac{w_i^2\hat{\sigma}_i^2}{n_i}\biggl(1-\frac{n_i}{N_i} \biggr)=2.589983 \]
+Therefore, a 95\% confidence interval for $\mu$ is:
+\[\hat{\mu}\pm c\sqrt{\widehat{\mathbb{V}(\tilde{\mu})}}=72.28507\pm 1.96\sqrt{2.589983}=(69.131,75.439) \]
+\input{A9/lec_46.tex}
+\input{A9/lec_47.tex}
+
+\input{appendix.tex}
+
+\end{document}

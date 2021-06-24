@@ -1,0 +1,60 @@
+\chapter{Assignment 9}
+\section{Lecture 43.00: Stratified Sampling}
+Suppose that you're interested in the population as a whole,
+but at the same time you're interested in some sub-population of the population.
+For example suppose you're interested in University of Waterloo students,
+but we're also interested in Math faculty students.
+You would use a \emph{stratified} sample.
+In this case, you might perform SRS over a sub-population and then
+combine that together to get the entire population so what would that notationally
+look like?
+
+Suppose we have a frame $ U $, and we divide $ U $ into sub-frames
+$ U_1,U_2,\ldots,U_H $ where
+\begin{enumerate}[(1)]
+    \item $ U_1\cup U_2\cup U_3\cup \cdots \cup U_H=U $.
+    \item For any $ i\ne j $, $ U_i\cap U_j=\emptyset $.
+    \item Define $ \abs{U_h}=N_h $ and $ \abs{U}=N $.
+    \item $ N_1+N_2+\cdots+N_h=N $.
+\end{enumerate}
+\subsubsection*{Parameter}
+\begin{align*}
+    \mu
+     & =\frac{N_1 \mu_1+N_2 \mu_2+\cdots+N_H \mu_H}{N}                     \\
+     & =\frac{N_1}{N} \mu_1+\frac{N_2}{N} \mu_2+\cdots+\frac{N_h}{N} \mu_H \\
+     & =w_1 \mu_1+\cdots+w_H \mu_H                                         \\
+     & =\sum_{i=1}^{H} w_i \mu_i
+\end{align*}
+\subsubsection*{Estimate}
+We would use SRS to estimate the strata's average.
+\[ \hat{\mu}=\sum_{i=1}^{H} w_i\hat{\mu}_i \]
+When we get the strata's average,
+and we multiply by the weight we add over the strata's to
+get the population average.
+\subsubsection*{Estimator}
+\[ \tilde{\mu}=\sum_{i=1}^{H} w_i\tilde{\mu}_i \]
+where $ \tilde{\mu}_i $ is the SRS random variable, hence it is unbiased
+and normally distributed. Therefore, the weighted average of the estimator
+will be normally distributed. Now, we need to find the expectation and variance
+of $ \tilde{\mu} $.
+\subsubsection*{Expectation of $ \tilde{\mu} $}
+\[ \E*{\tilde{\mu}}=\E*{\sum_{i=1}^{H} w_i\tilde{\mu}_i}=\sum_{i=1}^{H} w_i\E{\tilde{\mu}_i}=
+    \sum_{i=1}^{H} w_i \mu_i\quad\text{since SRS is unbiased.} \]
+\subsubsection*{Variance of $ \tilde{\mu} $}
+At this point in the course the formulas become ugly.
+\[ \Var*{\tilde{\mu}}=\Var*{\sum_{i=1}^{H} w_i\tilde{\mu}_i}=\sum_{i=1}^{H} w_i^2\Var*{\tilde{\mu}_i} \]
+where $ \tilde{\mu}_i\indep \tilde{\mu}_j $ since no unit is in both groups. Therefore,
+\[ \Var*{\tilde{\mu}}=\sum_{i=1}^{H}w_i^2 \frac{\sigma_i^2}{n_i} \biggl(1-\frac{n_i}{N_i} \biggr) \]
+\subsubsection*{Confidence Interval for $ \mu $}
+\[ \hat{\mu}\pm c\sqrt{\sum_{i=1}^{H}w_i^2 \frac{\sigma_i^2}{n_i} \biggl(1-\frac{n_i}{N_i} \biggr)}\quad\text{where $ c \sim \N{0,1} $.} \]
+\subsection*{Proportion}
+For a proportion, we want to estimate $ \pi $.
+\subsubsection*{Parameter}
+\[ \pi=\sum_{i=1}^{H} w_i \pi_i \]
+\subsubsection*{Estimate}
+\[ \hat{\pi}=\sum_{i=1}^{H} w_i\hat{\pi}_i\quad\text{which uses SRS.} \]
+\subsubsection*{Estimator}
+\[ \tilde{\pi}=\sum_{i=1}^{H} w_i\tilde{\pi}_i \]
+\subsubsection*{Confidence Interval for $ \pi $}
+\[ \hat{\pi}\pm c\sqrt{\sum_{i=1}^{H}w_i^2 \frac{\sigma_i^2}{n_i} \biggl(1-\frac{n_i}{N_i} \biggr)}\quad\text{where $ c \sim \N{0,1} $.} \]
+You'll remember that we have worked out before that $ \sigma_i^2=\pi_i(1-\pi_i) $.

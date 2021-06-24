@@ -20,12 +20,9 @@ All my university notes done in LaTeX.
 
 |                                              Course                                              | Completion |       Online       |
 | :----------------------------------------------------------------------------------------------: | :--------: | :----------------: |
-|                                             STAT 332                                             |  100%\*\*  | :heavy_check_mark: |
+| [STAT 332](https://hextical.github.io/university-notes/year-3/semester-2/STAT%20332/stat332.pdf) |    100%    | :heavy_check_mark: |
 |                                             STAT 341                                             |  ETA: TBA  | :heavy_check_mark: |
 | [STAT 443](https://hextical.github.io/university-notes/year-3/semester-2/STAT%20443/stat443.pdf) |    100%    | :heavy_check_mark: |
-
-\*\* E-mail me at `c2roopna@uwaterloo.ca` for these notes since the professor
-has copyright claims on his Word documents.
 
 ### Semester 1
 

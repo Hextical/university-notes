@@ -1,0 +1,796 @@
+\chapter{Assignment 1}
+\section{Lecture 1.00: PPDAC + Example}
+PPDAC\@: \underline{P}roblem, \underline{P}lan, \underline{D}ata,
+\underline{A}nalysis, \underline{C}onclusion.
+\begin{enumerate}
+    \item \underline{P}roblem: Define the problem.
+          \begin{itemize}
+              \item \textbf{Target population} (TP): The group of units referred to in the problem step.
+              \item \textbf{Response}: The answer provided by the TP to the problem.
+              \item \textbf{Attribute}: Statistic of the response.
+                    \begin{Example}{}{}
+                        What is the average grade of the students in STAT 101?
+                        \begin{itemize}
+                            \item Target population: All STAT 101 students
+                            \item Response: Grade of a STAT 101 student.
+                            \item Attribute: Average grade.
+                        \end{itemize}
+                    \end{Example}
+          \end{itemize}
+    \item \underline{P}lan: How exactly are you going to answer the problem you posed yourself?
+          \begin{itemize}
+              \item \textbf{Study population} (SP): The set of units you \emph{can} study.
+                    The study population is not necessarily a subset of the target population.
+                    \begin{Example}{}{}
+                        Does a drug reduce hair loss?
+                        \begin{itemize}
+                            \item Target population: People.
+                            \item Study population: Mice.
+                        \end{itemize}
+                        Note that mice is not a subset of people,
+                        so the study population and target population are not subsets of one
+                        another.
+                    \end{Example}
+              \item \textbf{Sample}: A subset of the study population.
+                    In the prior example, it would be the set of mice you
+                    select from your study population that are of interest
+                    in the sample.
+              \item \textbf{Data}: Collect the data, according to the plan.
+          \end{itemize}
+    \item \underline{A}nalysis: We analyze the data.
+    \item \underline{C}onclusion: Refers back to the problem. We also
+          note some common \emph{errors}.
+          \begin{enumerate}
+              \item \textbf{Study error}: The attribute of the population the
+                    target population differs from the parameter of the study population.
+                    \begin{Example}{}{}
+                        Mathematically we can write it down as $ a(\text{TP})-\mu $,
+                        however this error is qualitative. Therefore, we cannot
+                        actually calculate it.
+                    \end{Example}
+              \item \textbf{Sample error}: The parameter differs from the
+                    sample statistic, sometimes called an estimate.
+                    \begin{Example}{}{}
+                        Mathematically we can write it down as $ \mu-\bar{x} $,
+                        however this error is qualitative. Therefore, we cannot
+                        actually calculate it.
+                    \end{Example}
+              \item \textbf{Measurement error}: The difference
+                    between what \emph{we want} to calculate and what \emph{we do}
+                    calculate.
+                    \begin{Example}{}{}
+                        IQ is an interesting thing. You want to measure somebody's intelligence,
+                        and yet if you go and actually calculate it, they're using various
+                        statistical tests or various psychological tests
+                        that could have a lot of measurement error.
+                    \end{Example}
+          \end{enumerate}
+\end{enumerate}
+
+\section{Lecture 2.00: Models, Model 1}
+\begin{Definition}{Model}{}
+    A \textbf{model} relates a study population parameter to a response.
+\end{Definition}
+\begin{Definition}{Model 1}{}
+    \textbf{Model 1} is defined as
+    \[ Y_j=\mu+R_j\quad\text{where $R_j\sim\N{0,\sigma^2}$} \]
+    where
+    \begin{itemize}
+        \item $ Y_j $: random parameter that is the response of unit $ j $.
+        \item $ \mu $: study population parameter. In this case, it's
+              the mean and is non-random. However, it is unknown.
+        \item $ R_j $: error term. It gives the distribution of
+              responses about $ \mu $.
+    \end{itemize}
+\end{Definition}
+\begin{figure}[!htbp]
+    \centering
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,100); %set diagram left start at 0, and has height of 100
+
+        %Straight Lines [id:da9261923254109076] 
+        \draw    (1,48) -- (151,48) ;
+        %Straight Lines [id:da2635399060635354] 
+        \draw    (12,5) -- (12,85) ;
+        %Shape: Circle [id:dp9095100382272178] 
+        \draw  [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ,fill opacity=1 ] (49.9,68.05) .. controls (49.9,66.37) and (51.27,65) .. (52.95,65) .. controls (54.63,65) and (56,66.37) .. (56,68.05) .. controls (56,69.73) and (54.63,71.1) .. (52.95,71.1) .. controls (51.27,71.1) and (49.9,69.73) .. (49.9,68.05) -- cycle ;
+        %Shape: Brace [id:dp37424480000501614] 
+        \draw   (49.8,49.1) .. controls (47.19,48.96) and (45.82,50.2) .. (45.68,52.81) -- (45.68,52.81) .. controls (45.49,56.53) and (44.09,58.32) .. (41.48,58.19) .. controls (44.09,58.32) and (45.29,60.25) .. (45.09,63.98)(45.18,62.31) -- (45.09,63.98) .. controls (44.96,66.59) and (46.19,67.96) .. (48.8,68.1) ;
+
+        % Text Node
+        \draw (153,48) node [anchor=west] [inner sep=0.75pt]    {$\mu $};
+        % Text Node
+        \draw (23,52.4) node [anchor=north west][inner sep=0.75pt]    {$R_{j}$};
+        % Text Node
+        \draw (54.95,71.45) node [anchor=north west][inner sep=0.75pt]    {$y_{j}$};
+    \end{tikzpicture}
+    \caption{$ R_j $ diagram}
+\end{figure}
+\begin{Remark}{}{}
+    \begin{itemize}
+        \item $ R_j $'s are always independent.
+        \item \textbf{Gauss}' Theorem: Any linear combination of
+              normal random variables is normal.
+        \item $ Y_j\sim\N{\mu,\sigma^2} $ since
+              \[ \E{Y_j}=\E{\mu+R_j}=\E{\mu}+\E{R_j}=\mu+0=\mu \]
+              \[ \Var{Y_j}=\Var{\mu+R_j}=\Var{R_j}=\sigma^2 \]
+    \end{itemize}
+\end{Remark}
+\begin{Example}{}{}
+    We are interested in the average grade of STAT 101 students.
+    \[ Y_j=\mu+R_j\quad\text{where $R_j\sim\N{0,\sigma^2}$} \]
+    That would be a good place for us to use it because in our
+    response the grade is related to the average grade of the class plus some error.
+\end{Example}
+
+\section{Lecture 3.00: Independent Groups}
+\begin{itemize}
+    \item Dependent: we randomly select one group and
+          find a match, having the same explanatory variates, for
+          each unit of the first group. For example, twins, reusing
+          members of a group, or matching.
+    \item Independent: are formed when we select units at random
+          from mutually exclusive groups. For example, broken parts
+          and non-broken parts.
+\end{itemize}
+
+\section{Lecture 4.00: Models 2A and 2B}
+\begin{Definition}{Model 2A}{}
+    \textbf{Model 2A} is used when we assume
+    the groups have the same standard deviation and is defined as
+    \[ Y_{ij}=\mu_i+R_{ij}\quad(R_{ij}\sim\N{0,\sigma^2}) \]
+    where
+    \begin{itemize}
+        \item $ Y_{ij} $: response of unit $ j $ in group $ i $.
+        \item $ \mu_i $: mean for group $ i $.
+        \item $ R_{ij} $: the distribution of responses about $ \mu_i $.
+    \end{itemize}
+\end{Definition}
+
+\begin{Definition}{Model 2B}{}
+    \textbf{Model 2B} is used when $ \sigma_1\ne \sigma_2 $
+    and is defined as
+    \[ Y_{ij}=\mu_i+R_{ij}\quad(R_{ij}\sim\N{0,\sigma_i^2}) \]
+\end{Definition}
+
+\section{Lecture 5.00: Model 3}
+We subtract Model 2A from Model 2B to model a difference between two groups,
+and we get \emph{Model 3}.
+\[ \begin{array}{cccccc}
+          & Y_{1j}        & = & \mu_1       & + & R_{1j}        \\
+        - & Y_{2j}        & = & \mu_2       & + & R_{2j}        \\
+        \midrule
+          & Y_{1j}-Y_{2j} & = & \mu_1-\mu_2 & + & R_{1j}-R_{2j}
+    \end{array} \]
+Let
+\begin{itemize}
+    \item $ Y_{1j}-Y_{2j}=Y_{dj} $
+    \item $ \mu_1-\mu_2=\mu_d $
+    \item $ R_{1j}-R_{2j}=R_{dj} $
+\end{itemize}
+\begin{Definition}{Model 3}{}
+    \textbf{Model 3} is defined as
+    \[ Y_{dj}=\mu_d+R_{dj}\quad(R_{dj}\sim\N{0,\sigma_d^2}) \]
+\end{Definition}
+\begin{Example}{Model 3}{}
+    \begin{center}
+        \begin{NiceTabular}{ccc}
+            Heart Rate Before Exercise & Heart Rate After Exercise & $ d $ \\
+            \midrule
+            70                         & 80                        & 10    \\
+            80                         & 100                       & 20    \\
+            90                         & 90                        & 0
+        \end{NiceTabular}
+    \end{center}
+    We could use Model 3.
+\end{Example}
+\section{Lecture 6.00: Model 4}
+Suppose $ Y\sim\bin{n,p} $; that is, we have $ n $
+outcomes where each outcome is binary.
+\[ \E{Y}=np \]
+\[ \Var{Y}=np(1-p) \]
+By the Central Limit Theorem, $ Y\stackrel{\cdot}{\sim}\N{np,np(1-p)} $.
+The proportion is
+\[ \frac{Y}{n} \stackrel{\cdot}{\sim}\N*{p,\frac{p(1-p)}{n} } \]
+Let's find the expected value and variance of $ Y/n $.
+\[ \E*{\frac{Y}{n}}=\frac{\E{Y}}{n}=\frac{np}{n}=p \]
+\[ \Var*{\frac{Y}{n}}=\frac{\Var{Y}}{n^2}=\frac{np(1-p)}{n^2}=\frac{p(1-p)}{n}  \]
+\begin{Definition}{Model 4}{}
+    \textbf{Model 4} is defined as
+    \[ \frac{Y}{n} \sim \N*{p,\frac{p(1-p)}{n} } \]
+\end{Definition}
+\section{Lecture 7.00: MLE}
+\begin{itemize}
+    \item What is MLE\@? It connects the population parameter $ \theta $
+          to your sample statistic $ \hat{\theta} $.
+    \item How? It chooses the most probable value of $ \theta $
+          given our data $ y_1,\ldots,y_n $.
+\end{itemize}
+\underline{Process}:
+\begin{enumerate}[(1)]
+    \item Define the \textbf{likelihood function}.
+          \[ L=f(Y_1=y_1,Y_2=y_2,\ldots,Y_n=y_n) \]
+          We assume $ Y_i\perp Y_j $ for all $ i\ne j $. Therefore,
+          \[ L=f(Y_1=y_1)f(Y_2=y_2)\cdots f(Y_n=y_n) \]
+    \item Define the \textbf{log-likelihood function} $ \ell=\ln(L) $ and use log rules to
+          clean it up!
+    \item Find $ \pd{\ell}{\theta} $.
+    \item Set $ \pd{\ell}{\theta}=0 $, put hat on all $ \theta $'s.
+    \item Solve for $ \hat{\theta} $.
+\end{enumerate}
+\begin{Example}{}{}
+    Let $ Y_{ij}=\mu_i+R_{ij} $ where $ R_{ij}\sim\N{0,\sigma^2} $.
+    \begin{align*}
+        L & =f(Y_{11}=y_{11},\ldots,Y_{2n_2}=y_{2n_2})                                                \\
+          & =\prod_{j=1}^{n_1}f(y_{1j})\prod_{j=1}^{n_2}f(y_{2j})                                     \\
+          & =\prod_{j=1}^{n_1}\frac{1}{\sqrt{2\pi}\sigma}\expon*{-\frac{(y_{1j}-\mu_1)^2}{2\sigma^2}}
+        \prod_{j=1}^{n_2}\frac{1}{\sqrt{2\pi}\sigma}\expon*{-\frac{(y_{2j}-\mu_2)^2}{2\sigma^2}}
+    \end{align*}
+    Let $ n_1+n_2=n $, then
+    \[ L=(2\pi)^{-n/2}\sigma^{-n}\expon*{-\frac{\sum_{j=1}^{n_1}(y_{1j}-\mu_1)^2}{2\sigma^2}}
+        \expon*{-\frac{\sum_{j=1}^{n_2}(y_{2j}-\mu_2)^2}{2\sigma^2}} \]
+    The log-likelihood is given by
+    \[ \ell=-\frac{n}{2}\ln(2\pi)-n\ln(\sigma)-\frac{\sum_{j=1}^{n_1} (y_{1j}-\mu_1)^2}{2\sigma^2}-
+        -\frac{\sum_{j=1}^{n_2}(y_{2j}-\mu_2)^2}{2\sigma^2} \]
+    Now,
+    \[ \pd{\ell}{\hat{\mu}_1}=0+0-\frac{\sum_{j=1}^{n_1}2(y_{1j}-\hat{\mu})(-1) }{2\hat{\sigma}^2}+0=0 \]
+    Hence,
+    \[ 0=\sum_{j=1}^{n_1}(y_{1j}-\hat{\mu})\implies \sum_{j=1}^{n_1}y_{1j}=\sum_{j=1}^{n_1}\hat{\mu} \]
+    Note that
+    \[ \sum_{j=1}^{n_1}y_{1j}=\frac{n_1}{n_1} \sum_{j=1}^{n_1} y_{1j}=n_1\bar{y}_{1+}  \]
+    Therefore,
+    \[ n_1\bar{y}_{1+}=n_1\hat{\mu}\implies \bar{y}_{1+}=\hat{\mu}_1 \]
+    By symmetry,
+    \[ \bar{y}_{2+}=\hat{\mu}_2 \]
+    The second partial is
+    \[ \pd{\ell}{\sigma}=0+\frac{(-n)}{\hat{\sigma}}-\frac{\sum_{j=1}^{n_1} (y_{1j}-\hat{\mu}_1)^2}{2}(-2\hat{\sigma}^{-3})-
+        -\frac{\sum_{j=1}^{n_2}(y_{2j}-\hat{\mu}_2)^2}{2}(-2\hat{\sigma}^{-3})
+    \]
+    Multiply both sizes by $ \hat{\sigma}^3 $, yields
+    \[ 0=-n\hat{\sigma}^2+\sum_{j=1}^{n_1} (y_{1j}-\hat{\mu}_1)^2
+        +\sum_{j=1}^{n_2}(y_{2j}-\hat{\mu}_2)^2 \]
+    Divide both sizes by $ n $ and rearrange to get
+    \[ \hat{\sigma}^2=\frac{\sum_{j=1}^{n_1} (y_{1j}-\hat{\mu}_1)^2+\sum_{j=1}^{n_{2}}(y_{2j}-\hat{\mu}_2) }{n} \]
+    Recall that
+    \[ s^2=\sum_{i=1}^{n} \frac{(y_i-\bar{y})^2}{n-1}  \]
+    \[ s_1^2=\sum_{j=1}^{n_1}\frac{(y_{1j}-\bar{y}_{1+})^2}{n_1-1} \]
+    \[ s_2^2=\sum_{j=1}^{n_2}\frac{(y_{2j}-\bar{y}_{2+})^2}{n_2-1} \]
+    Therefore,
+    \[ \hat{\sigma}^2=s_p^2=\frac{(n_1-1)s_1^2+(n_2-1)s_2^2}{n_1+n_2-2}  \]
+\end{Example}
+\section{Lecture 8.00: LS}
+\begin{itemize}
+    \item What is LS\@? Another technique to find $ \hat{\theta} $.
+    \item How? It minimizes the ``residuals.''
+    \item Models:
+          \[ \text{Response}=\text{Deterministic Part}+\text{Random Part} \]
+          \[ Y=f(\theta)+R \]
+          Let $ y_1,y_2,\ldots,y_n $ be realizations of $ Y $. Let
+          $ \hat{y}_i=f(\hat{\theta}) $, where $ f(\hat{\theta}) $
+          is simply $ f(\theta) $ with $ \theta $ replaced
+          by $ \hat{\theta} $. We call $ \hat{y}_i $ our ``prediction.''
+          \begin{Definition}{Residual}{}
+              A \textbf{residual} is
+              \[ r_i=y_i-f(\hat{\theta})=y_i-\hat{y}_i \]
+          \end{Definition}
+\end{itemize}
+\underline{Process}:
+\begin{enumerate}[(1)]
+    \item Define the $ W $ function, $ W=\sum r^2 $.
+    \item Calculate $ \pd{W}{\theta} $ for all non-$ \sigma $
+          parameters
+    \item Set $ \pd{W}{\theta}=0 $ and replace $ \theta $ by $ \hat{\theta} $.
+    \item Solve for $ \hat{\theta} $.
+\end{enumerate}
+
+\section{Lecture 9.00: LS Example}
+Let's determine the LS of Model 2A.
+\[ Y_{ij}=\mu_i+R_{ij} \]
+Also, let $ n=n_1+n_2 $.
+\begin{align*}
+    W=\sum_{ij}r_{ij}^2
+     & =\sum_{ij}(y_{ij}-\hat{\mu}_i)^2                                                  \\
+     & =\sum_{j=1}^{n} \sum_{i=1}^{2} (y_{ij}-\hat{\mu}_i)^2                             \\
+     & =\sum_{j=1}^{n_1}(y_{1j}-\hat{\mu}_1)^2 + \sum_{j=1}^{n_2} (y_{2j}-\hat{\mu}_2)^2
+\end{align*}
+\begin{align*}
+    0 & =\pd{W}{\hat{\mu}_1}                                                 \\
+      & =\sum_{j=1}^{n_1} (y_{1j}-\hat{\mu}_1)(-2)                           \\
+      & =\frac{n_1}{n_1} \sum_{j=1}^{n_1} y_{ij}-\sum_{j=1}^{n_1}\hat{\mu}_1 \\
+      & =n_1\bar{y}_{1+}-n\hat{\mu}_1                                        \\
+\end{align*}
+Therefore, $ \hat{\mu}_1=\bar{y}_{1+} $ and by symmetry $ \hat{\mu}_2=\bar{y}_{2+} $.
+\begin{Remark}{}{}
+    For LS, $ \hat{\sigma}^2 $ is always of the form
+    \[ \hat{\sigma}^2=\frac{W}{n-q+c} \]
+    where
+    \begin{itemize}
+        \item $ n= $ number of units
+        \item $ q= $ number of non-$ \sigma $ parameters
+        \item $ c= $ number of constraints
+    \end{itemize}
+    Note that $ \hat{\sigma}^2=s_p^2 $.
+\end{Remark}
+\begin{Remark}{MLE versus LS}{}
+    \begin{itemize}
+        \item LS is from 1860s. Unbiased provided $ R_j $ is normal.
+        \item MLE is a recent technique, and it is much more flexible
+              since it does not require $ R_j $ to be normal.
+        \item Minimum? You need to calculate the second derivative,
+              but we're too lazy and not rigorous in this course.
+    \end{itemize}
+\end{Remark}
+
+\section{Lecture 10.00: Estimators}
+Our sample data is $ y_1,\ldots,y_n $.
+It is non-random and is a realization of a random
+variable $ Y_1,\ldots,Y_n $. A statistic is a function
+of the sample data; $ \hat{\theta} $. It is non-random,
+but if $ y_1,\ldots,y_n $ changes, then so does $ \hat{\theta} $.
+For that reason, you can think of $ \hat{\theta} $
+as the realization of a random variable $ \tilde{\theta} $,
+called an estimator. To move from $ \hat{\theta} $
+to $ \tilde{\theta} $ we capitalize our $ Y $'s.
+
+\begin{Example}{}{}
+    Model 2A\@:
+    $ \displaystyle \Uunderbracket{\hat{\mu}_1=\bar{y}_{1+}}_{\text{STATISTIC}}\to
+        \Uunderbracket{\tilde{\mu}_1=\bar{Y}_{1+}}_{\text{ESTIMATOR}} $
+\end{Example}
+\begin{Theorem}{Gauss' Theorem}{}
+    Any linear combination of normal random variables is still normal.
+\end{Theorem}
+\begin{Example}{}{}
+    Let $ X\sim\N{\mu_X,\sigma_X^2} $, $ Y \sim \N{\mu_Y,\sigma^2_Y} $
+    be independent random variables and $ a,b,c\in\mathbf{R} $, then
+    \[ L=aX+bY+c\sim\N{\E{L},\Var{L}} \]
+\end{Example}
+\begin{Theorem}{Central Limit Theorem (CLT)}{}
+    Let $ Y_1,\ldots,Y_n $ be i.i.d.\ random variables with
+    $ \E{Y_i}=\mu $, $ \Var{Y_i}=\sigma^2<\infty $, then
+    \[ \bar{Y} \sim \N*{\mu,\frac{\sigma^2}{n}} \]
+\end{Theorem}
+\section{Lecture 11.00: Estimators Example}
+\begin{Example}{}{}
+    Model 2A\@: $ Y_{ij}=\mu_i+R_{ij} $ where $ R_{ij} \sim \N{0,\sigma^2} $.
+    What is the distribution of $ \tilde{\mu} $?
+
+    \textbf{Solution.} Using LS or MLE we obtain
+    \[ \hat{\mu}=\bar{y}_{1+} \]
+    Or corresponding estimator is
+    \[ \tilde{\mu}_1=\bar{Y}_{1+}=\frac{\sum_{j=1}^{n_1}Y_{1j}}{n_1}  \]
+    and by Gauss it is normal!
+    \[
+        \E{\tilde{\mu}_1}
+        =\E*{\frac{\sum_{j=1}^{n_1} Y_{1j}}{n_1}}
+        =\frac{\sum_{j=1}^{n_1}\E{Y_{1j}}}{n_1}
+        =\frac{\sum_{j=1}^{n_1} \E{\mu_1+R_{1j}}}{n_1}
+        =\frac{\sum_{j=1}^{n_1} \mu_1+\E{R_{1j}}}{n_1}
+        =\mu_1
+    \]
+    \begin{Definition}{Unbiased estimator}{}
+        If $ \E{\tilde{\theta}}=\theta $, we say $ \tilde{\theta} $
+        is an \textbf{unbiased estimator} of $ \theta $.
+    \end{Definition}
+    \begin{align*}
+        \Var{\tilde{\mu}_1}
+         & =\Var{\bar{Y}_{1+}}                                                                       \\
+         & =\Var*{\frac{\sum_{j=1}^{n_1} Y_{1j}}{n_1} }                                              \\
+         & =\frac{1}{n_1^2}\Var*{\sum_{j=1}^{n_1} Y_{1j}}                                            \\
+         & =\frac{1}{n_1^2} \sum_{j=1}^{n_1} \Var{Y_{ij}}       &  & \text{since }Y_{1j}\perp Y_{1i} \\
+         & =\frac{1}{n_1^2} \sum_{j=1}^{n_1} \Var{\mu_1+R_{1j}}                                      \\
+         & =\frac{1}{n_1^2} \sum_{j=1}^{n_1} \Var{Y_{1j}}                                            \\
+         & =\frac{1}{n_1^2} (n_1\sigma^2)                                                            \\
+         & =\frac{\sigma^2}{n_1}
+    \end{align*}
+    Therefore,
+    \[ \tilde{\mu}_1\sim \N*{\mu_1,\frac{\sigma^2}{n_1}} \]
+    and by symmetry
+    \[ \tilde{\mu}_2 \sim \N*{\mu_2,\frac{\sigma^2}{n_2}} \]
+\end{Example}
+\section{Lecture 12.00: Sigma}
+\begin{Theorem}{}{thm_1}
+    Let $ Z \sim \N{0,1} $, then $ Z^2 \sim \chi^2(1) $
+\end{Theorem}
+\begin{Theorem}{}{thm_2}
+    Let $ X \sim \chi^2(m) $, $ Y \sim \chi^2(n) $
+    be independent, then
+    \[ X+Y \sim \chi^2(n+m) \]
+\end{Theorem}
+\begin{Theorem}{}{thm_3}
+    Let $ Z \sim \N{0,1} $ and $ X \sim \chi^2(m) $, then
+    \[ \frac{Z}{\sqrt{X/m}} \sim t(m) \]
+\end{Theorem}
+\begin{Theorem}{}{thm_4}
+    Let $ \displaystyle Y=\frac{(n-q+c)\tilde{\sigma}^2}{\sigma^2} $,
+    then $ Y \sim \chi^2(n-q+c) $.
+\end{Theorem}
+\section{Lecture 13.00: Sigma Example}
+\begin{Example}{}{}
+    Model 1: $ Y_j=\mu+R_j $ where $ R_j \sim \N{0,\sigma^2} $.
+    What is the distribution of $ \displaystyle \frac{\tilde{\mu}-\mu}{\tilde{\sigma}/\sqrt{n}} $?
+
+    \textbf{Solution.} We know by LS or MLE that $ \hat{\mu}=\bar{y}_+ $, therefore
+    $ \tilde{\mu}=\bar{Y}_+ $. We know $ \tilde{\mu} \sim \N*{\mu,\frac{\sigma^2}{n}} $.
+    Standardizing:
+    \[ Z=\frac{\tilde{\mu}-\mu}{\sigma/\sqrt{n}}\sim \N{0,1}  \]
+    By~\Cref{thm:thm_4}, we know
+    \[ X=\frac{(n-1)\tilde{\sigma}^2}{\sigma^2}\sim \chi^2(n-1)  \]
+    By~\Cref{thm:thm_3},
+    \[ \frac{Z}{\sqrt{X/(n-1)}}
+        =\frac{\displaystyle \frac{\tilde{\mu}-\mu}{\sigma/\sqrt{n}}}{\displaystyle \sqrt{\frac{(n-1)\tilde{\sigma}^2}{\sigma^2}\bigg/(n-1)}}
+        =\frac{\tilde{\mu}-\mu}{\tilde{\sigma}/\sqrt{n}}\sim t(n-1)   \]
+\end{Example}
+\begin{Remark}{}{}
+    Recall that
+    \[ \frac{\tilde{\mu}-\mu}{\sigma/\sqrt{n}}\sim \N{0,1}  \]
+    By replacing $ \sigma $ by $ \tilde{\sigma} $, we end up using a $ t $-distribution
+    instead of a normal distribution.
+\end{Remark}
+\section{Lecture 14.00: CI}
+We assume our estimator is
+\[ \tilde{\theta}\sim \N{0,\Var{\tilde{\theta}}} \]
+The CI\@:
+\[ \theta:\text{EST}\pm c\,\text{SE}=\hat{\theta}\pm c\sqrt{\Var{\tilde{\theta}}} \]
+If we don't know $ \sigma $, we replace it by $ \hat{\sigma} $
+and obtain
+\[ \theta:\hat{\theta}\pm c\sqrt{\widehat{\Var{\tilde{\theta}}}} \]
+\begin{Example}{}{}
+    Model 1: $ Y_{j}=\mu+R_j $ where $ R_j \sim \N{0,\sigma^2} $.
+    By LS we know $ \hat{\mu}=\bar{y}_+ $. The estimator is $ \tilde{\mu}=\bar{Y}_+ $
+    with distribution
+    \[ \tilde{\mu} \sim \N*{\mu,\frac{\sigma^2}{n}} \]
+    Our CI\@:
+    \[ \mu:\text{EST}\pm c\,\text{SE}=\hat{\mu}\pm c\frac{\sigma}{\sqrt{n}}
+        =\bar{y}_+\pm c \frac{\sigma}{\sqrt{n}}\quad (c \sim \N{0,1})  \]
+    \[ \mu:\bar{y}_+ \pm c \frac{s}{\sqrt{n}}\sim t(n-1)  \]
+    Recall: $ \displaystyle s=\frac{\sum_{i=1}^{n} (y_i-\bar{y})^2}{n-1} $.
+\end{Example}
+\begin{Example}{}{}
+    Model 2A\@: $ Y_{ij} =\mu_i+R_{ij} $ where $ R_{ij}\sim \N{0,\sigma^2} $.
+    By LS, $ \hat{\mu}_1=\bar{y}_{1+} $ and $ \hat{\mu}_2=\bar{y}_{2+} $.
+    The estimators $ \tilde{\mu}_1=\bar{Y}_{1+} $ and $ \tilde{\mu}_2=\bar{Y}_{2+} $.
+    The distributions are
+    \[ \tilde{\mu}_1 \sim \N*{\mu_1,\frac{\sigma^2}{n_1} } \]
+    \[ \tilde{\mu}_2 \sim \N*{\mu_2,\frac{\sigma^2}{n_2} } \]
+    \[ \tilde{\mu}_1-\tilde{\mu}_2
+        \sim \N*{\mu_1-\mu_2,\sigma^2\biggl(\frac{1}{n_1}+\frac{1}{n_2}\biggr)} \]
+    Our CI\@:
+    \[ \mu_1-\mu_2:\text{EST}\pm c\,\text{SE}
+        =\hat{\mu}_1-\hat{\mu}_2\pm c\,\sigma\sqrt{\frac{1}{n_1}+\frac{1}{n_2} }
+        \quad(c \sim \N{0,1}) \]
+    \[ \mu_1-\mu_2:\text{EST}\pm c\,\text{SE}
+        =\hat{\mu}_1-\hat{\mu}_2\pm c\, s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2} }
+        \quad(c \sim t(n_1+n_2-2)) \]
+\end{Example}
+\begin{Example}{}{}
+    Model 2B\@: $ Y_{ij}=\mu_i=R_{ij} $ where $ R_{ij}\sim \N{0,\sigma_i^2} $.
+    \[ \tilde{\mu}_1-\tilde{\mu}_2
+        \sim \N*{\mu_1-\mu_2,\frac{\sigma_1^2}{n_1} +\frac{\sigma_2^2}{n_2} } \]
+    Our CI\@:
+    \[ \hat{\mu}_1-\hat{\mu}_2\pm c\sqrt{\frac{\sigma_1^2}{n_1} +\frac{\sigma_2^2}{n_2}}
+        \quad(c \sim \N{0,1}) \]
+    \[ \hat{\mu}_1-\hat{\mu}_2\pm c\sqrt{\frac{s_1^2}{n_1} +\frac{s_2^2}{n_2}}
+        \quad(c \sim t(n_1+n_2-2)) \]
+\end{Example}
+\begin{Example}{}{}
+    Model 3: $ Y_{dj}=\mu_d+R_{dj} $ where $ R_{dj} \sim \N{0,\sigma^2_d} $,
+    which is the same as Model 1.
+    \[ \mu_d:\bar{y}_{d+}\pm c \frac{\sigma_d}{\sqrt{n_d}}\quad (c \sim \N{0,1})  \]
+    \[ \mu_d:\bar{y}_{d+} \pm c \frac{s_d}{\sqrt{n_d}}\quad (c\sim t(n_d-1))  \]
+\end{Example}
+\begin{Example}{}{}
+    Model 4:
+    \[ \tilde{p} \sim \N*{p,\frac{p(1-p)}{n}} \]
+    Our CI\@:
+    \[ \hat{p}\pm c\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}\quad(c \sim \N{0,1}) \]
+\end{Example}
+\begin{table}[!htbp]
+    \centering
+    \caption{Confidence Intervals}
+    \begin{NiceTabular}{|c|c|c|c|}
+        \toprule
+        \# & Model                                                            & CI                                                                               & d.f.          \\
+        \midrule
+        1  & $ \underset{R_i \sim \N{0,\sigma^2}}{Y_i=\mu+R_i} $              & $ \bar{y}\pm t^* \dfrac{s}{\sqrt{n}} $                                           & $ n-1 $       \\
+        \midrule
+        2A & $ \underset{R_{ij} \sim \N{0,\sigma^2}}{Y_{ij}=\mu_i+R_{ij}} $   & $ \bar{y}_{1+} \pm t^*\dfrac{s_1}{\sqrt{n_1}} $                                  & $ n_1-1 $     \\
+        &                                                                  & $ \bar{y}_{1+}-\bar{y}_{2+}\pm t^* s_p\sqrt{\dfrac{1}{n_1}+\dfrac{1}{n_2}} $     & $ n_1+n_2-2 $ \\
+        \midrule
+        2B & $ \underset{R_{ij} \sim \N{0,\sigma_i^2}}{Y_{ij}=\mu_i+R_{ij}} $ & $ \bar{y}_{1+} \pm t^*\dfrac{s_1}{\sqrt{n_1}} $                                  & $ n_1-1 $     \\
+        &                                                                  & $ \bar{y}_{1+}-\bar{y}_{2+}\pm t^*\sqrt{\dfrac{s_1^2}{n_1}+\dfrac{s_2^2}{n_2}} $ & $ n_1+n_2-2 $ \\
+        \midrule
+        3  & $ \underset{R_{dj} \sim \N{0,\sigma_d^2}}{Y_{dj}=\mu_d+R_{dj}} $ & $ \bar{y}_d\pm t^*\, \dfrac{s_d}{\sqrt{n_d}}  $                                  & $ n_d-1 $     \\
+        \midrule
+        4  & $ \dfrac{Y}{n}\sim \N*{p,\dfrac{p(1-p)}{n}} $                    & $ \hat{p}\pm z^*\sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}} $                           & $ \N{0,1} $\\
+        \bottomrule
+    \end{NiceTabular}
+\end{table}
+\section{Lecture 15.00: CI Examples}
+\begin{Example}{Model 1}{}
+    \begin{itemize}
+        \item \textbf{Problem}: What is the mean calculus grade of students in STAT 332?
+        \item \textbf{Plan}: We randomly select 5 students from the class.
+        \item \textbf{Data}: 65, 70, 80, 85, 75
+        \item \textbf{Analysis}: Build a 95\% confidence interval for the mean grade.
+    \end{itemize}
+    \[ \mu:\bar{y}\pm t^* \frac{s}{\sqrt{n}} \]
+    \begin{minted}{R}
+    y <- c(65, 70, 80, 85, 75)
+    n <- length(y)
+    round(mean(y) + c(-1, 1) * qt(0.975, n - 1) * sd(y) / sqrt(n), 2)
+    \end{minted}
+    The 95\% confidence interval is: $(65.18, 84.82)$. We are 95\% confident
+    that the mean grade is in the interval. What we mean is that
+    if we drew 100 samples, and built 100 confidence intervals for these
+    samples, then we would expect to find $\mu$ in 95 of these intervals
+    that we created. This is not a probability because at the end of the day,
+    you estimated your data for $ y $.
+\end{Example}
+\begin{Example}{Model 2A}{}
+    \begin{itemize}
+        \item \textbf{Problem}: In grade 9, there is a standardized test in Ontario.
+              We wish to compare the mean performance of girls to boys.
+        \item \textbf{Plan}: They collect data from a class of 30 students;
+              15 boys and girls. Their response is their grade on the standardized test.
+              If necessary, assume the variances of the two groups are the same.
+        \item \textbf{Data}:
+              \begin{itemize}
+                  \item Boys: 39, 42, 47, 50, 52, 52, 54, 55, 55, 56, 56, 56, 58, 60, 62
+                  \item Girls: 44, 45, 48, 50, 51, 52, 53, 53, 57, 58, 59, 60, 62, 63, 64
+              \end{itemize}
+        \item \textbf{Analysis}: Build a 95\% confidence interval for the mean difference
+              in grades.
+    \end{itemize}
+    \begin{minted}{R}
+    boys <- c(39, 42, 47, 50, 52, 52, 54, 55, 55, 56, 56, 56, 58, 60, 62)
+    girls <- c(44, 45, 48, 50, 51, 52, 53, 53, 57, 58, 59, 60, 62, 63, 64)
+    y_b.bar <- mean(boys)
+    y_g.bar <- mean(girls)
+    s_b.sq <- var(boys)
+    s_g.sq <- var(girls)
+    n_b <- length(boys)
+    n_g <- length(girls)
+    s_p.sq <-
+    ((n_g - 1) * s_g.sq + (n_b - 1) * s_b.sq) / (n_g + n_b - 2)
+    df <- n_g + n_b - 2
+    t <- qt(0.975, df)
+    (y_b.bar - y_g.bar) + c(-1,1) * t * sqrt(s_p.sq * (1 / n_g + 1 / n_b))
+    \end{minted}
+    \begin{itemize}
+        \item $ \bar{y}_{b+}=52.9 $
+        \item $ \bar{y}_{g+}=54.6 $
+        \item $ s_b^2=39.6 $
+        \item $ s_g^2=41 $
+        \item $ s_p^2=40.3 $
+        \item $ t^*=2.048 $
+    \end{itemize}
+    The 95\% confidence interval for the mean difference grade is
+    $ (-6.4,3.1) $. Is there a difference between male and female grades?
+    Since $ 0\in(-6.4,3.1) $, we conclude there is no difference between male
+    and female grades.
+\end{Example}
+\begin{Example}{Model 3}{}
+    \begin{itemize}
+        \item \textbf{Problem}: In grade 9 there is a standardized test in Ontario.
+              We wish to compare the mean performance of girls to boys.
+        \item \textbf{Plan}: They collect data from a class of 30 students; 15 boys and 15 girls. We select each girl so that she was born in the
+              same month as a boy in the class. The response is their grade on the standardized test.
+              Assume the variances of the two groups are different.
+        \item \textbf{Data}:
+              \begin{itemize}
+                  \item Boys: 39, 42, 47, 50, 52, 52, 54, 55, 55, 56, 56, 56, 58, 60, 62
+                  \item Girls: 44, 45, 48, 50, 51, 52, 53, 53, 57, 58, 59, 60, 62, 63, 64
+              \end{itemize}
+        \item \textbf{Analysis}: Build a 95\% confidence interval for the mean difference
+              in grades.
+    \end{itemize}
+    By matching, they have created a dependent group. Paired data implies
+    we use Model 3.
+    \begin{minted}{R}
+    boys <- c(39, 42, 47, 50, 52, 52, 54, 55, 55, 56, 56, 56, 58, 60, 62)
+    girls <- c(44, 45, 48, 50, 51, 52, 53, 53, 57, 58, 59, 60, 62, 63, 64)
+    diff <- boys - girls
+    y_d.bar <- mean(diff)
+    s_d <- sd(diff)
+    n_d <- length(diff)
+    df <- length(diff) - 1 
+    t <- qt(0.975, df)
+    y_d.bar + c(-1,1) * t * s_d / sqrt(n_d)
+    \end{minted}
+    \begin{itemize}
+        \item $ \bar{y}_{d+}=1.7 $
+        \item $ s_d=2.1 $
+        \item $ n_d=15 $
+        \item $ t^*=2.145 $
+    \end{itemize}
+    The 95\% confidence interval for the mean difference grade is
+    $ (-2.9,-0.5) $. Is there a difference between male and female grades?
+    Since $ 0\notin (-2.9,-0.5) $, we conclude there is a difference between male
+    and female grades. In fact, we may argue that the boys are doing worse than the girls.
+\end{Example}
+\begin{Example}{Model 2B}{}
+    \begin{itemize}
+        \item \textbf{Problem}: In grade 9 there is a standardized test in Ontario. We wish to compare the mean performance of girls to boys.
+        \item \textbf{Plan}: They collect data from a class of 30 students; 15 boys and 15 girls. The response is their grade on the standardized
+              test. Assume the variances of the two groups are different.
+        \item \textbf{Data}:
+              \begin{itemize}
+                  \item Boys: 39, 42, 47, 50, 52, 52, 54, 55, 55, 56, 56, 56, 58, 60, 62
+                  \item Girls: 44, 45, 48, 50, 51, 52, 53, 53, 57, 58, 59, 60, 62, 63, 64
+              \end{itemize}
+        \item \textbf{Analysis}: Build a 95\% confidence interval for the mean difference
+              in grades.
+    \end{itemize}
+    \begin{minted}{R}
+    boys <- c(39, 42, 47, 50, 52, 52, 54, 55, 55, 56, 56, 56, 58, 60, 62)
+    girls <- c(44, 45, 48, 50, 51, 52, 53, 53, 57, 58, 59, 60, 62, 63, 64)
+    y_b.bar <- mean(boys)
+    y_g.bar <- mean(girls)
+    s_b.sq <- var(boys)
+    s_g.sq <- var(girls)
+    n_b <- length(boys)
+    n_g <- length(girls)
+    df <- n_g + n_b - 2
+    t <- qt(0.975, df)
+    (y_b.bar - y_g.bar) + c(-1, 1) * t * sqrt(s_b.sq / n_g + s_g.sq / n_b)
+    \end{minted}
+    The 95\% confidence interval for the mean difference grade is
+    $ (-6.41,3.08) $.
+\end{Example}
+\begin{Example}{Model 4}{}
+    \begin{itemize}
+        \item \textbf{Problem}: In October there will be a federal election. Prior to the election pollsters will gauge the popularity of the
+              candidates. One party of interest will be the Liberals.
+        \item \textbf{Plan}: They ask 430 randomly selected people whether they would vote liberal.
+        \item \textbf{Data}: 267 people would be willing to vote Liberal.
+        \item \textbf{Analysis}: Build a 95\% confidence interval for the proportion of people willing to vote Liberal.
+    \end{itemize}
+    \begin{minted}{R}
+    n <- 430
+    voters <- 267
+    p.hat <- 267 / 430
+    z <- qnorm(0.975)
+    p.hat + c(-1, 1) * z * sqrt((p.hat * (1 - p.hat)) / n)
+    \end{minted}
+    \begin{itemize}
+        \item $ n=430 $
+        \item $ \hat{p}=267/430 $
+        \item $ z^*=1.96 $
+    \end{itemize}
+    The 95\% confidence interval for the proportion of people willing to vote Liberal
+    is $ (0.575, 0.667) $.
+\end{Example}
+
+\section{Lecture 16.00: HT}
+\begin{enumerate}[(1)]
+    \item Define the hypothesis
+          \begin{table}[!htbp]
+              \centering
+              \caption{Hypotheses}
+              \begin{NiceTabular}{cc}
+                  $ H_0 $                & $ H_a $                \\
+                  \midrule
+                  $ \theta=\theta_0 $    & $ \theta\ne \theta_0 $ \\
+                  $ \theta\ge \theta_0 $ & $ \theta<\theta_0 $    \\
+                  $ \theta\le \theta_0 $ & $ \theta>\theta_0 $
+              \end{NiceTabular}
+          \end{table}
+    \item Discrepancy
+          \[ d=\frac{\text{EST}-\text{$H_0$ value}}{\text{SE}}=\frac{\hat{\theta}-\theta_0}{\sqrt{\Var{\tilde{\theta}}}}   \]
+    \item Given $ \tilde{\theta} \sim \N{\theta,\Var{\tilde{\theta}}} $
+          where $ D \sim \N{0,1} $ when $ \sigma $ is known or
+          $ D \sim t(n-q+c) $ when $ \sigma $ is known.
+    \item $ p $-value
+          \begin{table}[!htbp]
+              \centering
+              \caption{$ p $-value}
+              \begin{NiceTabular}{cc}
+                  $ H_a $                & $ p $-value           \\
+                  \midrule
+                  $ \theta\ne \theta_0 $ & $ 2\Prob{D>\abs{d}} $ \\
+                  $ \theta<\theta_0 $    & $ \Prob{D<d} $        \\
+                  $ \theta>\theta_0 $    & $ \Prob{D>d} $
+              \end{NiceTabular}
+          \end{table}
+    \item Conclusion
+          \begin{table}[!htbp]
+              \centering
+              \caption{Guidelines for interpreting $ p $-values}
+              \begin{NiceTabular}{cc}
+                  $ p $-value        & Interpretation                    \\
+                  \midrule
+                  $ p>0.1 $          & No evidence to reject $ H_0 $.    \\
+                  $ 0.05<p\le 0.10 $ & Weak evidence against $ H_0 $.    \\
+                  $ 0.01<p<0.05 $    & Evidence against $ H_0 $.         \\
+                  $ p<0.01 $         & Tons of evidence against $ H_0 $.
+              \end{NiceTabular}
+          \end{table}
+\end{enumerate}
+\section{Lecture 17.00: HT Examples}
+\begin{Example}{}{}
+    We grow willow trees from cuttings. We grow these cuttings from 6 willow trees in
+    two soils: high and low acidity. We assign two cuttings from each tree to the two levels of
+    acidity. After 1 year the height, we measure the cuttings in centimetres.
+
+    \begin{center}
+        \begin{NiceTabular}{c|cccccc}
+            \textbf{Cutting} & 1  & 2  & 3  & 4  & 5  & 6  \\
+            \midrule
+            \textbf{High}    & 11 & 19 & 32 & 12 & 7  & 14 \\
+            \textbf{Low}     & 17 & 21 & 14 & 11 & 18 & 9
+        \end{NiceTabular}
+    \end{center}
+
+    Is the growth in high and low acidity equal? Use an appropriate hypothesis test.
+    Assume group variances are the same.
+
+    \textbf{Solution.}
+    \begin{itemize}
+        \item $H_0$: $ \mu_d=0 $
+        \item $H_a$: $ \mu_d\ne 0 $
+    \end{itemize}
+    \begin{minted}{R}
+    high <- c(11, 19, 32, 12, 7, 14)
+    low <- c(17, 21 , 14 , 11 , 18 , 9)
+    diff <- high - low
+    y_d.bar <- mean(diff)
+    s_d <- sd(diff)
+    n_d <- length(diff)
+    df <- length(diff) - 1
+    d <- (y_d.bar - 0) / (s_d / sqrt(n_d))
+    pval <- 2 * (1 - pt(d, df))
+    \end{minted}
+    \begin{itemize}
+        \item $ \bar{y}_{d+}=0.83 $
+        \item $ s_d=10.07 $
+        \item $ d=0.2 $
+        \item $ p=2\Prob{D>\abs{d}}=2[1-\Prob{D\le 0.2}]=$ \code{2 * (1 - pt(d, df))} $\approx
+                  0.84$.
+    \end{itemize}
+    We obtain a $ p $-value of $ 0.84 $. There is no evidence to reject $ H_0 $.
+    In other words, we can argue in favour of saying that they have the same
+    growth in different acidic soils.
+\end{Example}
+\begin{Example}{}{}
+    We plant a random assortment of pumpkin seeds and fertilize them using two types of plant
+    feed: coke, and water. After 4 weeks the plant heights, in cm, were measured.
+    \begin{itemize}
+        \item Coke: 8, 7, 18, 42, 21
+        \item Water: 5, 11, 21, 9, 14
+    \end{itemize}
+    Is coke a better fertilizer for pumpkin’s than water? Use an appropriate hypothesis test.
+    Assume group variances are the same.
+    \begin{itemize}
+        \item $ H_0 $: $ \mu_c=\mu_w $
+        \item $ H_a $: $ \mu_c-\mu_w>0 $
+    \end{itemize}
+    \begin{minted}{R}
+    coke <- c(8, 7, 18, 42, 21)
+    water <- c(5, 11, 21, 9, 14)
+    y_c.bar <- mean(coke)
+    y_w.bar <- mean(water)
+    s_c.sq <- var(coke)
+    s_w.sq <- var(water)
+    n_c <- length(coke)
+    n_w <- length(water)
+    s_p.sq <-
+    ((n_w - 1) * s_w.sq + (n_c - 1) * s_c.sq) / (n_w + n_c - 2)
+    df <- n_c + n_w - 2
+    t <- qt(0.975, df)
+    d <- (y_c.bar - y_w.bar) / sqrt(s_p.sq * (1 / n_w + 1 / n_c))
+    pval <- 1 - pt(d, df)
+    \end{minted}
+    \begin{itemize}
+        \item $ \bar{y}_{c+}=19.2 $
+        \item $ \bar{y}_{w+}=12 $
+        \item $ n_w=n_c=5 $
+        \item $ s_c^2=199.7 $
+        \item $ s_w^2=36 $
+        \item $ s_p^2=117.85 $
+        \item $ \displaystyle d=\frac{\bar{y}_{c+}-\bar{y}_{d+}-0}{s_p\sqrt{\frac{1}{n_w} +\frac{1}{n_c} }}=1.049 $
+        \item $ p=\Prob{D>d}=1-\Prob{D\le 1.049}=$ \code{1 - pt(d, df)} $\approx 0.162$.
+    \end{itemize}
+    There is no evidence to reject $ H_0 $. Therefore, coke is not a
+    better fertilizer than water.
+\end{Example}

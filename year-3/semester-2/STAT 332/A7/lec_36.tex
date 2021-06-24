@@ -1,0 +1,77 @@
+\chapter{Assignment 7}
+\section{Lecture 36.00: Regression Sampling}
+We want our parameter to be
+\[ \mu_y = \frac{\sum_{i=1}^{N} y_i}{N}  \]
+which is our population average.
+
+We use
+\[ \hat{\mu}_y=\frac{\sum_{i\in\mathcal{S}}y_i}{n}=\bar{y}  \]
+which is our sample average.
+
+Suppose $ Y_i $ is linearly related to a \emph{continuous}
+explanatory variate called $ x_i $. If that's the case,
+$ x_i $ has its own population average
+\[ \mu_x= \frac{\sum_{i=1}^{N} x_i}{N} \]
+with sample mean
+\[ \hat{\mu}_x=\frac{\sum_{i\in\mathcal{S}} x_i }{n}=\bar{x}  \]
+Suppose we have a linear relationship of the form
+$ Y_i=\alpha+\beta(x_i-\bar{x})+R_i $ where $ R_i \sim \N{0,\sigma^2} $.
+
+We use least squares,
+\[ W=\sum_{i}r_i^2=\sum_{i}\bigl[y_i-\alpha-\beta(x_i-\bar{x})\bigr]^2  \]
+We find $\pd{W}{\alpha}$ and $\pd{W}{\beta}$, and you can show this for homework:
+\begin{align*}
+    \hat{\alpha} & =\bar{y}                                                                                                \\
+    \hat{\beta}  & =\frac{\sum_{i}y_i(x_i-\bar{x})}{\sum_{i}(x_i-\bar{x})^2 }=\frac{S_{xy}}{S_{xx}}=\frac{s_{xy}}{s_{x}^2}
+\end{align*}
+where
+\begin{align*}
+    S_{xy}  & =\sum_{i}y_i(x_i-\bar{x})=\sum_{i}(y_i-\bar{y})(x_i-\bar{x}) \\
+    s_{xy}  & =\frac{S_{xy}}{n-1}                                          \\
+    S_{xx}  & =\sum_{i}(x_i-\bar{x})^2                                     \\
+    s_{x}^2 & =\frac{S_{xx}}{n-1}
+\end{align*}
+We had $ y_i=\alpha+\beta(x_i-\bar{x})+R_i $. We used least squares
+to estimate $ \alpha $ and $ \beta $ to obtain (ignoring the $ R_i $ term)
+\[ \hat{y}_i=\hat{\alpha}+\hat{\beta}(x_i-\bar{x}) \]
+\begin{itemize}
+    \item If $ x_i=\bar{x} $, then $ \hat{y}_i=\hat{\alpha}=\bar{y} $.
+    \item If $ x_i=\mu_x $, then $ \hat{y}_i=\hat{\alpha}+\hat{\beta}(\mu_x-\bar{x})=\hat{\mu}_{\text{reg}} $.
+\end{itemize}
+\[ \boxed{\hat{\mu}_{\text{reg}}=\hat{\alpha}+\hat{\beta}(\mu_x-\bar{x})} \]
+\subsection*{Estimators}
+The $ \alpha,\beta,\mu_x,\mu_y $ estimators are all unbiased. However,
+\begin{align*}
+    \hat{\mu}_{\text{reg}}
+     & =\hat{\alpha}+\hat{\beta}(\mu_x-\bar{x})                                                                              \\
+     & =\hat{\alpha}-\hat{\beta}(\bar{x}-\mu_x)                                                                              \\
+     & =\bar{y}-\hat{\beta}(\bar{x}-\mu_x)                                                                                   \\
+     & =\frac{\sum_{i\in\mathcal{S}}y_i}{n}-\hat{\beta}\biggl(\frac{\sum_{i\in\mathcal{S}}x_i }{n}-\frac{n\mu_x}{n}  \biggr) \\
+     & =\frac{\sum_{i\in\mathcal{S}}\bigr[y_i-\hat{\beta}(x_i-\mu_x)\bigl]}{n}                                               \\
+     & =\frac{\sum_{i\in\mathcal{S}}r_i }{n}
+\end{align*}
+\[ \tilde{\mu}_{\text{reg}}=\frac{\sum_{i=1}^{N} I_i r_i}{n} \]
+We're interested in three things for $ \tilde{\mu}_{\text{reg}} $:
+\begin{itemize}
+    \item Distribution. We're not going into the details, but
+          we get that $ \tilde{\mu}_{\text{reg}} $ is normally distributed.
+    \item Expected Value.
+    \item Variance.
+\end{itemize}
+\subsection*{Expected Value and Variance of $ \tilde{\mu}_{\text{reg}} $}
+\begin{align*}
+    \E*{\tilde{\mu}_{\text{reg}}}
+     & =\E*{\tilde{\alpha}+\tilde{\beta}(\tilde{\mu}_x-\mu_x)}                       \\
+     & =\E*{\tilde{\mu}_y+\tilde{\beta}(\tilde{\mu}_x-\mu_x)}                        \\
+     & =\mu_y+\Uunderbracket{\E*{\tilde{\beta}(\tilde{\mu}_x-\mu_x)}}_{\text{small}}
+\end{align*}
+Therefore, $ \tilde{\mu}_{\text{reg}} $ is a \underline{biased} estimator for $ \mu_y $.
+\begin{align*}
+    \Var*{\tilde{\mu}_{\text{reg}}}
+     & =\Var*{\frac{\sum_{i=1}^{N} I_i r_i}{n} }        \\
+     & =\biggl(1-\frac{n}{N}\biggr)\frac{\sigma_r^2}{n}
+\end{align*}
+We estimate $ \sigma_r^2 $ by
+\[ \hat{\sigma}_r^2=\frac{\sum_{i\in\mathcal{S}}(r_i-\bar{r})^2}{n-1}=\cdots=\frac{W}{n-1}  \]
+The confidence interval is:
+\[ \hat{\mu}_{\text{reg}}\pm c\sqrt{1-\frac{n}{N}}\frac{\hat{\sigma}_r}{\sqrt{n}}  \]

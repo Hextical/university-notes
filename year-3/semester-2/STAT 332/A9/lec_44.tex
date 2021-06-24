@@ -1,0 +1,56 @@
+\section{Lecture 44.00: Stratified, Allocation}
+Today we're going to talk about something called \emph{Allocation}.
+For example, allocation is when you have a sample of $100$ units,
+and you have four strata. How should you spend those $100$ units?
+Should three quarters of them go to one stratum, and the remaining quarter be split
+among the last three strata? We define how you divide them up to be stratification.
+To make that decision there are two types that we're going to talk about today.
+\begin{enumerate}[(1)]
+    \item Proportional.
+    \item Neyman or optimal.
+\end{enumerate}
+\subsection*{Proportional}
+We sample based on the size of the strata. In other words, the bigger
+the strata size, the bigger the sample size.
+\[ n_h=w_h n \]
+\begin{Example}{}{}
+    \[ \begin{matrix}
+            \text{Provinces} & \text{Population (millions)} \\
+            \midrule
+            \text{ON}        & 10                           \\
+            \text{QUE}       & 5                            \\
+            \text{BC}        & 3                            \\
+            \text{ALB}       & 2                            \\
+            \midrule
+            \text{Total}     & 20
+        \end{matrix} \]
+    If we have $ n=100 $ units to sample, ON should get $ n_{\text{ON}}=w_{\text{ON}}(n)=1/2(100)=50 $
+    units.
+\end{Example}
+\subsection*{Neyman}
+In Neyman allocation, we select our sample size and values that minimize the stratified variance.
+\[ \Var{\tilde{\mu}}=\sum_{i=1}^{H} w_i^2 \frac{\sigma_i^2}{n_i} \biggl(1-\frac{n_i}{N_i} \biggr) \]
+subject to $ n=n_1+n_2+\cdots+n_H $. This ends up being a Lagrange multiplication problem.
+So minimize
+\[ W(\tilde{\mu})=\sum_{i=1}^{H} w_i^2 \frac{\sigma_i^2}{n_i} \biggl(1-\frac{n_i}{N_i} \biggr)+
+    \lambda(n-n_1-\cdots-n_H) \]
+Find $ \pd{W}{\lambda},\pd{W}{n_i} $ and set to zero to get:
+\[ n_i=\frac{n\sigma_i w_i}{\sum_{j=1}^{H} \sigma_j w_j}  \]
+\begin{Remark}{}{}
+    \begin{itemize}
+        \item $ n_i \propto \sigma_i $. So, if you have more variability in your stratum,
+              then you're going to want a larger sample size. That should make a lot of
+              sense because if you have a lot of variability, you can reduce the variability
+              by having a larger sample size, remember, the variability
+              is the average of the variance divided by $ n $.
+              So, the larger your sample size the smaller the variance ends up being.
+        \item $ n_i\propto w_i $. The larger the strata, the more
+              units you will want allocated to it.
+        \item If $ \sigma_1=\sigma_2=\cdots=\sigma_H $, then
+              \[ n_i=\frac{n w_i}{\sum_{i=1}^{H} w_i}=n w_i  \]
+              which is proportional allocation since $ \sum_{i=1}^{H} w_i=1 $.
+    \end{itemize}
+\end{Remark}
+Just like when we did with the small sample size, we take a small sample, and you use the small sample
+to estimate these unknown $ \sigma $'s. Once you've estimated these unknown $ \sigma $'s,
+you'd use them to determine how you should allocate your larger sample size to the actual strata of interest.

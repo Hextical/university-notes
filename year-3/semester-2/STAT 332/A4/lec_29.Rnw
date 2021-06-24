@@ -1,0 +1,64 @@
+\section{Lecture 29.00: Model 7, Example}
+We grow willow trees from cuttings. We grow these cuttings from 6 willow trees in
+two soils: high and low acidity. We assign two cuttings from each tree to the two levels of
+acidity. After 1 year the height, we measure the cuttings in centimetres.
+\subsection*{Is the growth in high and low acidity equal? Use an appropriate hypothesis test.}
+<<>>=
+# Step 1 – Change the directory
+#   In R, select FILE, CHANGE DIR
+#   select the folder your data
+#   is located in.
+
+# Step 2 – use read.table
+Data = read.table("blocked.csv", sep = ",", header = T)
+
+# Step 3 – Have a look at the data:
+Data
+
+# To build a model we type:
+options(contrasts = c('contr.sum', 'contr.poly'))
+attach(Data)
+Treatment = as.factor(Treatment)
+Block = as.factor(Block)
+Model = lm(Value ~ Treatment + Block)
+
+# To look at the output, we type:
+summary(Model)
+anova(Model)
+@
+
+\begin{itemize}
+    \item $ \hat{\sigma}=1.065 $ on $ n-q+c $ degrees of freedom.
+          In this case, we have 6 blocks, 2 treatments, so 12 total values.
+          One $ \mu $ and two constraints. So $ 12-6-2-1+2=5 $ degrees of freedom.
+    \item $ \tilde{\theta}=\tilde{\tau}_1-\tilde{\tau}_2 $.
+    \item $ \E{\tilde{\theta}}=\tau_1-\tau_2 $.
+    \item $ \displaystyle \Var{\tilde{\theta}}=\Var{\bar{Y}_{1+}}-\Var{\bar{Y}_{2+}}
+              =\frac{\sigma^2}{6} +\frac{\sigma^2}{6}
+              =\frac{\sigma^2}{3} $.
+\end{itemize}
+The confidence interval for the difference in treatments is:
+\[ \hat{\tau}_1-\hat{\tau}_2\pm c \sqrt{\frac{\hat{\sigma}^2}{3}}
+    =(-0.1667-0.1667)\pm 2.57 \frac{1.065}{\sqrt{3}} =(-1.91, 1.25) \]
+\subsection*{Suppose we ran a CRD instead.}
+<<>>=
+Model = lm(Value~Treatment)
+summary(Model)
+anova(Model)
+@
+
+$ \hat{\sigma} $ has gone up since we are no longer accounting for the variability
+in the blocks.
+\[ \hat{\tau}_1-\hat{\tau}_2\pm c \frac{\hat{\sigma}}{\sqrt{3}}=(-11.7,11.02) \]
+which is much wider than the RBD\@. The ANOVA table for the CRD
+are just the sum of the Block and Residuals in the RBD\@.
+There was a benefit to using blocking. ANOVA gives us a simple test that we can use.
+In the RBD ANOVA table, on the Block line we are testing
+\[ H_0\text{: }\beta_1=\beta_2=\cdots=\beta_6=0 \]
+\[ H_a\text{: At least one $\beta_j$ is not zero} \]
+\[ d=\frac{\MS{Block}}{\MS{Res}}=\frac{154.333}{1.133}=136.1765   \]
+With $ p $-value:
+\[ p=\Prob{D>136.1765}=2.44\times 10^{-5} \]
+We have tons of evidence to reject $ H_0 $ in favour of $ H_a $.
+Since at least one $ \beta_j $ is not zero, RBD is a better model to use
+instead of CRD\@.

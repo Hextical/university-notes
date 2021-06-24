@@ -1,0 +1,77 @@
+\section{Lecture 23.00: Model 5, Example 2}\label{section23}
+Suppose professors are coordinating 4 sections
+of the same course in a term. We want to look
+at the average mark for each section on the midterm. The
+treatment is the ``instructor.''
+<<>>=
+options(contrasts = c('contr.sum', 'contr.poly'))
+Marks1 = c(55, 92, 48, 57, 66, 72)
+Marks2 = c(62, 95, 84, 83, 66, 75)
+Marks3 = c(89, 92, 94, 99, 87, 67)
+Marks4 = c(25, 35, 71, 42, 44, 30)
+Y = c(Marks1, Marks2, Marks3, Marks4)
+x = as.factor(c(rep(1, 6), rep(2, 6), rep(3, 6), rep(4, 6)))
+model = lm(Y ~ x)
+summary(model)
+@
+Note that
+\begin{itemize}
+    \item $ \hat{\tau}_4=-(\hat{\tau}_1+\hat{\tau}_2+\hat{\tau}_3)=-26.749 $.
+    \item $ \text{Degrees of freedom}=n-q+c=(24)-(4+1)+1=20 $.
+\end{itemize}
+\subsection*{Is there a difference between the treatment effect of group 1 and 2? Use a 95\% CI.}
+$ \tilde{\theta}=\tilde{\tau}_1+\tilde{\tau}_2 $ and by Gauss this is normal.
+\[ \E{\tilde{\theta}}=\E{\tilde{\tau}_1-\tilde{\tau}_2}=\tau_1+\tau_2 \]
+\[ \Var{\tilde{\theta}}=\Var{\tilde{\tau}_1-\tilde{\tau}_2}
+    =\Var{\bar{Y}_{1+}-\bar{Y}_{2+}}
+    =\Var{\bar{Y}_{1+}}+\Var{\bar{Y}_{2+}}
+    =\frac{\sigma^2}{6} +\frac{\sigma^2}{6}
+    =\frac{\sigma^2}{3} \]
+The 95\% confidence interval for $ \theta $ is
+\[ \hat{\tau}_1-\hat{\tau}_2 \pm c\, \frac{\hat{\sigma}}{\sqrt{3}}=
+    -2.917-9.583\pm \frac{2.09(14.01)}{\sqrt{3}}=(-29.37,4.37) \quad(c \sim t(20))  \]
+In R, we could do
+<<>>=
+tau.1 <- summary(model)$coefficients[2]
+    tau.2 <- summary(model)$coefficients[3]
+tau.3 <- summary(model)$coefficients[4]
+    tau.4 <- -1 * (tau.1 + tau.2 + tau.3)
+    tau.1 - tau.2 + c(-1,1) * qt(0.975, 20) * summary(model)$sigma/sqrt(3)
+@
+To get at 95\% confidence interval $ \theta $: $ (-29.38,4.38) $.
+Since $ 0\in (-29.38,4.38) $,
+there is not a difference between the treatment effect of group 1 and 2.
+
+\subsection*{Groups 2 and 3 were taught by the same instructor. Groups 1 and 4 are taught by another
+    instructor. Is there a difference between the average treatment effect of instructor 1 to instructor 2? Use an
+    HT.}
+\[ \tilde{\theta}=\frac{\tilde{\tau}_1+\tilde{\tau}_4}{2}-\biggl(\frac{\tilde{\tau}_2+\tilde{\tau}_3}{2} \biggr)  \]
+\[ \E{\tilde{\theta}}=\frac{\tau_1+\tau_4}{2}-\biggl(\frac{\tau_2+\tau_3}{2} \biggr) \]
+\begin{align*}
+    \Var{\tilde{\theta}}
+     & =\Var*{\frac{\tilde{\tau}_1+\tilde{\tau}_4}{2}-\biggl(\frac{\tilde{\tau}_2+\tilde{\tau}_3}{2} \biggr) } \\
+     & =\Var*{\frac{\bar{Y}_{1+}+\bar{Y}_{4+}}{2}-\biggl(\frac{\bar{Y}_{2+}+\bar{Y}_{3+}}{2} \biggr)}          \\
+     & =\frac{1}{4} \Var{Y_{1+}}+\cdots+\frac{1}{4} \Var{Y_{4+}}                                               \\
+     & =\frac{\sigma^2}{4(6)}+\cdots+\frac{\sigma^2}{4(6)}                                                     \\
+     & =\frac{\sigma^2}{6}
+\end{align*}
+$ H_0 $: $ \theta=0 $ versus $ H_a $: $ \theta\ne 0 $.
+\[ d=\frac{\hat{\theta}-0}{\hat{\sigma}/\sqrt{6}}=-5.19\quad(D \sim t(20))  \]
+\[ p=2\Prob{D>\abs{-5.19}}=(0,0.001) \]
+We have tons of evidence to reject $ H_0 $ in favour
+of the instructors having a different effect. In R, we could do
+<<>>=
+theta <- ((tau.1 + tau.4) / 2) - ((tau.2 + tau.3) / 2)
+d <- (theta - 0) / (summary(model)$sigma / sqrt(6)) ; d
+    2 * (1 - pt(abs(d), 20))
+    @
+    To obtain a $ p $-value of $ 4.498007\times 10^{-5} $.
+\begin{Example}{}{}
+    An example of a \emph{contrast} is
+    \[ \theta=\frac{\tau_1+\tau_4}{2} -\frac{(\tau_2+\tau_3)}{2}  \]
+\end{Example}
+\begin{Definition}{Contrast}{}
+    A \textbf{contrast} has the form
+    \[ a_1\tau_1+a_2\tau_2+\cdots+a_n\tau_n \]
+    where $ \sum_{i=1}^{n} a_i=0 $.
+\end{Definition}
