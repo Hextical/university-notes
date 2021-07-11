@@ -1,494 +1,498 @@
 \makeheading{Week 3}
 \section{Permutation and Randomization Tests}
 \begin{itemize}
-    \item All the previous tests have made some kind of distributional assumption
-          for the response measurements, such as $ Y_{ij} \sim \N{\mu_j,\sigma^2} $ or
-          $ Y_{ij}\sim \Binomial{1,\pi_j} $.
-    \item It would be preferable to have a test that does not rely on \emph{any}
-          assumptions.
-    \item This is precisely the purpose of permutation and randomization tests.
-          \begin{itemize}
-              \item These tests are \emph{non-parametric} and rely on resampling.
-              \item The motivation is that if $ \mathbf{H}_0 $: $ \theta_1=\theta_2 $
-                    is true, any random rearrangement of the data is \emph{equally likely
-                        to have been observed}. If $ \mathbf{H}_0 $ is true, then we have a single population/distribution
-                    from which our data has been drawn.
-              \item With $ n_1 $ and $ n_2 $ units in each condition, there are
-                    \[ \Binomial{n_1+n_2}{n_1}=\Binomial{n_1+n_2}{n_2} \]
-                    arrangements of the $ n_1+n_2 $ observations into two groups of size $ n_1 $
-                    and $ n_2 $ respectively.
-                    \[ n_1=n_2=50\implies\Binomial{n_1+n_2}{n_1}=\Binomial{100}{50}=1.0089\times 10^{29} \]
-          \end{itemize}
-    \item A true \textbf{permutation test} considers \emph{all possible rearrangements}
-          of the original data.
-          \begin{itemize}
-              \item The test statistic $ t $ is calculated on the original data and on every one of
-                    its rearrangements.
-              \item This collection of test statistic values generate the empirical null distribution.
-          \end{itemize}
-    \item In a \textbf{randomization test}, we do not
-          consider all possible rearrangements.
-          \begin{itemize}
-              \item We just consider a large number $ N $ of them.
-              \item We use this in practice instead of a permutation test because
-                    the exact permutation tests have too many permutations to consider.
-          \end{itemize}
+      \item All the previous tests have made some kind of distributional assumption
+            for the response measurements, such as $ Y_{ij} \sim \N{\mu_j,\sigma^2} $ or
+            $ Y_{ij}\sim \Binomial{1,\pi_j} $.
+      \item It would be preferable to have a test that does not rely on \emph{any}
+            assumptions.
+      \item This is precisely the purpose of permutation and randomization tests.
+            \begin{itemize}
+                  \item These tests are \emph{non-parametric} and rely on resampling.
+                  \item The motivation is that if $ \mathbf{H}_0 $: $ \theta_1=\theta_2 $
+                        is true, any random rearrangement of the data is \emph{equally likely
+                              to have been observed}. If $ \mathbf{H}_0 $ is true, then we have a single population/distribution
+                        from which our data has been drawn.
+                  \item With $ n_1 $ and $ n_2 $ units in each condition, there are
+                        \[ \Binomial{n_1+n_2}{n_1}=\Binomial{n_1+n_2}{n_2} \]
+                        arrangements of the $ n_1+n_2 $ observations into two groups of size $ n_1 $
+                        and $ n_2 $ respectively.
+                        \[ n_1=n_2=50\implies\Binomial{n_1+n_2}{n_1}=\Binomial{100}{50}=1.0089\times 10^{29} \]
+            \end{itemize}
+      \item A true \textbf{permutation test} considers \emph{all possible rearrangements}
+            of the original data.
+            \begin{itemize}
+                  \item The test statistic $ t $ is calculated on the original data and on every one of
+                        its rearrangements.
+                  \item This collection of test statistic values generate the empirical null distribution.
+            \end{itemize}
+      \item In a \textbf{randomization test}, we do not
+            consider all possible rearrangements.
+            \begin{itemize}
+                  \item We just consider a large number $ N $ of them.
+                  \item We use this in practice instead of a permutation test because
+                        the exact permutation tests have too many permutations to consider.
+            \end{itemize}
 \end{itemize}
 \begin{framed}
-    \textbf{Randomization Test Algorithm}
-    \begin{enumerate}
-        \item Collect response observations in each condition.
-              \[ \Set{y_{11},y_{21},\ldots,y_{n_1 1}}\to \hat{\theta}_1 \]
-              \[ \Set{y_{12},y_{22},\ldots,y_{n_2 2}}\to \hat{\theta}_2 \]
-        \item Calculate the test statistic $ t $ on the original data.
-              \[ t=\hat{\theta}_1-\hat{\theta}_2\quad\text{or}\quad t=\frac{\hat{\theta}_1}{\hat{\theta}_2} \]
-        \item Pool all the observations together and randomly sample (without replacement)
-              $ n_1 $ observations which will be assigned to ``Condition 1'' and the remaining $ n_2 $
-              observations that are assigned to ``Condition 2.'' Repeat this $ N $ times.
-              \[ \Set{y_{11}^\star,y_{21}^\star,\ldots,y_{n_1 1}^\star}\to \hat{\theta}_1^\star \]
-              \[ \Set{y_{12}^\star,y_{22}^\star,\ldots,y_{n_2 2}^\star}\to \hat{\theta}_2^\star \]
-        \item Calculate the test statistic $ t_k^\star $ on each of the ``shuffled'' datasets, $ k=1,2,\ldots,N $.
-              \[ t_k^\star=\hat{\theta}_{1,k}^\star-\hat{\theta}_{2,k}^\star\quad\text{or}\quad t_k^\star=\frac{\hat{\theta}_{1,k}^\star}{\hat{\theta}_{2,k}^\star}  \]
-        \item Compare to $ t $ to $ \Set*{t_1^\star,t_2^\star,\ldots,t_N^\star} $, the empirical
-              null distribution, and calculate the $ p $-value:
-              \[ p\text{-value}=\frac{\text{\# of $t^\star$'s that are at least as extreme as $t$}}{N}=\frac{1}{N} \sum_{k=1}^{N} \Ind*{t_k^\star\text{ at least as extreme as $t$}}  \]
-              \begin{itemize}
-                  \item $ \mathbf{H}_0 $: $ \theta_1=\theta_2 $ versus $ \mathbf{H}_\text{A} $: $ \theta_1\ne \theta_2 $. If $ t=\hat{\theta}_1-\hat{\theta}_2 $, then
-                        the $ p $-value is:
-                        \[ p\text{-value}=\frac{1}{N} \sum_{k=1}^{N} \Ind*{t_k^\star\ge \abs{t}\cup t_k^\star\le -\abs{t}} \]
-                  \item $ \mathbf{H}_0 $: $ \theta_1\ge \theta_2 $ versus $ \mathbf{H}_\text{A} $: $ \theta_1<\theta_2 $. If $ t=\hat{\theta}_1-\hat{\theta}_2 $, then
-                        the $ p $-value is:
-                        \[ p\text{-value}=\frac{1}{N} \sum_{k=1}^{N} \Ind*{t_k^\star\le t} \]
-                  \item $ \mathbf{H}_0 $: $ \theta_1\le \theta_2 $ versus $ \mathbf{H}_\text{A} $: $ \theta_1>\theta_2 $. If $ t=\hat{\theta}_1-\hat{\theta}_2 $, then
-                        the $ p $-value is:
-                        \[ p\text{-value}=\frac{1}{N} \sum_{k=1}^{N} \Ind*{t_k^\star\ge t} \]
-              \end{itemize}
-    \end{enumerate}
+      \textbf{Randomization Test Algorithm}
+      \begin{enumerate}
+            \item Collect response observations in each condition.
+                  \[ \Set{y_{11},y_{21},\ldots,y_{n_1 1}}\to \hat{\theta}_1 \]
+                  \[ \Set{y_{12},y_{22},\ldots,y_{n_2 2}}\to \hat{\theta}_2 \]
+            \item Calculate the test statistic $ t $ on the original data.
+                  \[ t=\hat{\theta}_1-\hat{\theta}_2\quad\text{or}\quad t=\frac{\hat{\theta}_1}{\hat{\theta}_2} \]
+            \item Pool all the observations together and randomly sample (without replacement)
+                  $ n_1 $ observations which will be assigned to ``Condition 1'' and the remaining $ n_2 $
+                  observations that are assigned to ``Condition 2.'' Repeat this $ N $ times.
+                  \[ \Set{y_{11}^\star,y_{21}^\star,\ldots,y_{n_1 1}^\star}\to \hat{\theta}_1^\star \]
+                  \[ \Set{y_{12}^\star,y_{22}^\star,\ldots,y_{n_2 2}^\star}\to \hat{\theta}_2^\star \]
+            \item Calculate the test statistic $ t_k^\star $ on each of the ``shuffled'' datasets, $ k=1,2,\ldots,N $.
+                  \[ t_k^\star=\hat{\theta}_{1,k}^\star-\hat{\theta}_{2,k}^\star\quad\text{or}\quad t_k^\star=\frac{\hat{\theta}_{1,k}^\star}{\hat{\theta}_{2,k}^\star}  \]
+            \item Compare to $ t $ to $ \Set*{t_1^\star,t_2^\star,\ldots,t_N^\star} $, the empirical
+                  null distribution, and calculate the $ p $-value:
+                  \[ p\text{-value}=\frac{\text{\# of $t^\star$'s that are at least as extreme as $t$}}{N}=\frac{1}{N} \sum_{k=1}^{N} \Ind*{t_k^\star\text{ at least as extreme as $t$}}  \]
+                  \begin{itemize}
+                        \item $ \mathbf{H}_0 $: $ \theta_1=\theta_2 $ versus $ \mathbf{H}_\text{A} $: $ \theta_1\ne \theta_2 $. If $ t=\hat{\theta}_1-\hat{\theta}_2 $, then
+                              the $ p $-value is:
+                              \[ p\text{-value}=\frac{1}{N} \sum_{k=1}^{N} \Ind*{t_k^\star\ge \abs{t}\cup t_k^\star\le -\abs{t}} \]
+                        \item $ \mathbf{H}_0 $: $ \theta_1\ge \theta_2 $ versus $ \mathbf{H}_\text{A} $: $ \theta_1<\theta_2 $. If $ t=\hat{\theta}_1-\hat{\theta}_2 $, then
+                              the $ p $-value is:
+                              \[ p\text{-value}=\frac{1}{N} \sum_{k=1}^{N} \Ind*{t_k^\star\le t} \]
+                        \item $ \mathbf{H}_0 $: $ \theta_1\le \theta_2 $ versus $ \mathbf{H}_\text{A} $: $ \theta_1>\theta_2 $. If $ t=\hat{\theta}_1-\hat{\theta}_2 $, then
+                              the $ p $-value is:
+                              \[ p\text{-value}=\frac{1}{N} \sum_{k=1}^{N} \Ind*{t_k^\star\ge t} \]
+                  \end{itemize}
+      \end{enumerate}
 \end{framed}
 \begin{Example}{Pokémon Go}{}
-    \begin{itemize}
-        \item Suppose that Niantic Inc, is experimenting with two different promotions within Pokémon
-              Go:
-              \begin{itemize}
-                  \item Condition 1: Give users nothing.
-                  \item Condition 2: Give users 200 free Pokécoins.
-                  \item Condition 3: Give users a 50\% discount on Shop purchases.
-              \end{itemize}
-        \item In a small pilot experiment, we randomize $ n_1=n_2=n_3=100 $ users to each condition.
-        \item For each user, we record the amount of real money (in USD) they spend in the 30 days
-              following the experiment.
-        \item The data summaries are:
-              \begin{itemize}
-                  \item $ \bar{y}_1=\$10.74 $, $ Q_{y_1}(0.5)=\$9 $.
-                  \item $ \bar{y}_2=\$9.53 $, $ Q_{y_2}(0.5)=\$8 $.
-                  \item $ \bar{y}_3=\$13.41 $, $ Q_{y_3}(0.5)=\$10 $.
-              \end{itemize}
-              Using R, we performed a randomization test with $ N=10\,000 $ with respect to the mean
-              we found that the control and free coin conditions did not significantly differ.
-              But there was a significant increase in the amount of money spent in the discount condition
-              relative to the other two.
+      \begin{itemize}
+            \item Suppose that Niantic Inc, is experimenting with two different promotions within Pokémon
+                  Go:
+                  \begin{itemize}
+                        \item Condition 1: Give users nothing.
+                        \item Condition 2: Give users 200 free Pokécoins.
+                        \item Condition 3: Give users a 50\% discount on Shop purchases.
+                  \end{itemize}
+            \item In a small pilot experiment, we randomize $ n_1=n_2=n_3=100 $ users to each condition.
+            \item For each user, we record the amount of real money (in USD) they spend in the 30 days
+                  following the experiment.
+            \item The data summaries are:
+                  \begin{itemize}
+                        \item $ \bar{y}_1=\$10.74 $, $ Q_{y_1}(0.5)=\$9 $.
+                        \item $ \bar{y}_2=\$9.53 $, $ Q_{y_2}(0.5)=\$8 $.
+                        \item $ \bar{y}_3=\$13.41 $, $ Q_{y_3}(0.5)=\$10 $.
+                  \end{itemize}
+                  Using R, we performed a randomization test with $ N=10\,000 $ with respect to the mean
+                  we found that the control and free coin conditions did not significantly differ.
+                  But there was a significant increase in the amount of money spent in the discount condition
+                  relative to the other two.
 
-              \vspace{2mm}
+                  \vspace{2mm}
 
-              The hypotheses that we tested to determine these conclusions were:
-              \begin{tightcenter}
-                  $ \mathbf{H}_0 $: $ \mu_1=\mu_2 $ versus $ \mathbf{H}_\text{A} $: $ \mu_1\ne \mu_2 $\\
-                  $ \mathbf{H}_0 $: $ \mu_1\ge \mu_2 $ versus $ \mathbf{H}_\text{A} $: $ \mu_1<\mu_2 $
-              \end{tightcenter}
-              Interestingly, when you run these same tests, but on the basis of the median, we find
-              no significant difference between any of the conditions.
-        \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/W3/Randomization_test.R}{[R Code] \texttt{Randomization\_test}}
-    \end{itemize}
+                  The hypotheses that we tested to determine these conclusions were:
+                  \begin{tightcenter}
+                        $ \mathbf{H}_0 $: $ \mu_1=\mu_2 $ versus $ \mathbf{H}_\text{A} $: $ \mu_1\ne \mu_2 $\\
+                        $ \mathbf{H}_0 $: $ \mu_1\ge \mu_2 $ versus $ \mathbf{H}_\text{A} $: $ \mu_1<\mu_2 $
+                  \end{tightcenter}
+                  Interestingly, when you run these same tests, but on the basis of the median, we find
+                  no significant difference between any of the conditions.
+            \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/W3/Randomization_test.R}{[R Code] \texttt{Randomization\_test}}
+      \end{itemize}
 \end{Example}
 \chapter{Experiments with More than Two Conditions}
 \section*{Anatomy of an ``A/B/$ m $'' Test}
 \begin{itemize}
-    \item One design factor at $ m $ levels.
-    \item We will now consider a design and analysis of an experiment consisting
-          of more than two experimental conditions --- or what many data scientists
-          broadly refer to as ``A/B/$m$ Testing.''
-          \begin{itemize}
-              \item Canonical A/B/$ m $ test:
-                    \begin{figure}[!htbp]
-                        \centering
-                        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1.5,xscale=1.5]
-                            %Rounded Rect [id:dp8976617722511913] 
-                            \draw  [draw opacity=0][fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (10,19.53) .. controls (10,15.12) and (13.58,11.53) .. (18,11.53) -- (81.3,11.53) .. controls (85.72,11.53) and (89.3,15.12) .. (89.3,19.53) -- (89.3,43.53) .. controls (89.3,47.95) and (85.72,51.53) .. (81.3,51.53) -- (18,51.53) .. controls (13.58,51.53) and (10,47.95) .. (10,43.53) -- cycle ;
-                            %Rounded Rect [id:dp05576705853009267] 
-                            \draw  [draw opacity=0][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (102,19.07) .. controls (102,14.65) and (105.58,11.07) .. (110,11.07) -- (173.3,11.07) .. controls (177.72,11.07) and (181.3,14.65) .. (181.3,19.07) -- (181.3,43.07) .. controls (181.3,47.48) and (177.72,51.07) .. (173.3,51.07) -- (110,51.07) .. controls (105.58,51.07) and (102,47.48) .. (102,43.07) -- cycle ;
-                            %Rounded Rect [id:dp1316893319581255] 
-                            \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (191,18.33) .. controls (191,13.92) and (194.58,10.33) .. (199,10.33) -- (262.3,10.33) .. controls (266.72,10.33) and (270.3,13.92) .. (270.3,18.33) -- (270.3,42.33) .. controls (270.3,46.75) and (266.72,50.33) .. (262.3,50.33) -- (199,50.33) .. controls (194.58,50.33) and (191,46.75) .. (191,42.33) -- cycle ;
-                            %Rounded Rect [id:dp1823408740718886] 
-                            \draw  [draw opacity=0][fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ] (281,18.33) .. controls (281,13.92) and (284.58,10.33) .. (289,10.33) -- (352.3,10.33) .. controls (356.72,10.33) and (360.3,13.92) .. (360.3,18.33) -- (360.3,42.33) .. controls (360.3,46.75) and (356.72,50.33) .. (352.3,50.33) -- (289,50.33) .. controls (284.58,50.33) and (281,46.75) .. (281,42.33) -- cycle ;
+      \item One design factor at $ m $ levels.
+      \item We will now consider a design and analysis of an experiment consisting
+            of more than two experimental conditions --- or what many data scientists
+            broadly refer to as ``A/B/$m$ Testing.''
+            \begin{itemize}
+                  \item Canonical A/B/$ m $ test:
+                        \begin{figure}[!htbp]
+                              \centering
+                              \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1.5,xscale=1.5]
+                                    %Rounded Rect [id:dp8976617722511913] 
+                                    \draw  [draw opacity=0][fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ] (10,19.53) .. controls (10,15.12) and (13.58,11.53) .. (18,11.53) -- (81.3,11.53) .. controls (85.72,11.53) and (89.3,15.12) .. (89.3,19.53) -- (89.3,43.53) .. controls (89.3,47.95) and (85.72,51.53) .. (81.3,51.53) -- (18,51.53) .. controls (13.58,51.53) and (10,47.95) .. (10,43.53) -- cycle ;
+                                    %Rounded Rect [id:dp05576705853009267] 
+                                    \draw  [draw opacity=0][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ] (102,19.07) .. controls (102,14.65) and (105.58,11.07) .. (110,11.07) -- (173.3,11.07) .. controls (177.72,11.07) and (181.3,14.65) .. (181.3,19.07) -- (181.3,43.07) .. controls (181.3,47.48) and (177.72,51.07) .. (173.3,51.07) -- (110,51.07) .. controls (105.58,51.07) and (102,47.48) .. (102,43.07) -- cycle ;
+                                    %Rounded Rect [id:dp1316893319581255] 
+                                    \draw  [draw opacity=0][fill={rgb, 255:red, 65; green, 117; blue, 5 }  ,fill opacity=1 ] (191,18.33) .. controls (191,13.92) and (194.58,10.33) .. (199,10.33) -- (262.3,10.33) .. controls (266.72,10.33) and (270.3,13.92) .. (270.3,18.33) -- (270.3,42.33) .. controls (270.3,46.75) and (266.72,50.33) .. (262.3,50.33) -- (199,50.33) .. controls (194.58,50.33) and (191,46.75) .. (191,42.33) -- cycle ;
+                                    %Rounded Rect [id:dp1823408740718886] 
+                                    \draw  [draw opacity=0][fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ] (281,18.33) .. controls (281,13.92) and (284.58,10.33) .. (289,10.33) -- (352.3,10.33) .. controls (356.72,10.33) and (360.3,13.92) .. (360.3,18.33) -- (360.3,42.33) .. controls (360.3,46.75) and (356.72,50.33) .. (352.3,50.33) -- (289,50.33) .. controls (284.58,50.33) and (281,46.75) .. (281,42.33) -- cycle ;
 
-                            % Text Node
-                            \draw (49.65,31.53) node  [color={rgb, 255:red, 255; green, 255; blue, 255 }  ,opacity=1 ] [align=left] {CLICK ME};
-                            % Text Node
-                            \draw (141.65,31.07) node  [color={rgb, 255:red, 255; green, 255; blue, 255 }  ,opacity=1 ] [align=left] {CLICK ME};
-                            % Text Node
-                            \draw (230.65,30.33) node  [color={rgb, 255:red, 255; green, 255; blue, 255 }  ,opacity=1 ] [align=left] {CLICK ME};
-                            % Text Node
-                            \draw (320.65,30.33) node  [color={rgb, 255:red, 255; green, 255; blue, 255 }  ,opacity=1 ] [align=left] {CLICK ME};
-                        \end{tikzpicture}
-                        \caption{Canonical Button Colour Test.}
-                    \end{figure}
+                                    % Text Node
+                                    \draw (49.65,31.53) node  [color={rgb, 255:red, 255; green, 255; blue, 255 }  ,opacity=1 ] [align=left] {CLICK ME};
+                                    % Text Node
+                                    \draw (141.65,31.07) node  [color={rgb, 255:red, 255; green, 255; blue, 255 }  ,opacity=1 ] [align=left] {CLICK ME};
+                                    % Text Node
+                                    \draw (230.65,30.33) node  [color={rgb, 255:red, 255; green, 255; blue, 255 }  ,opacity=1 ] [align=left] {CLICK ME};
+                                    % Text Node
+                                    \draw (320.65,30.33) node  [color={rgb, 255:red, 255; green, 255; blue, 255 }  ,opacity=1 ] [align=left] {CLICK ME};
+                              \end{tikzpicture}
+                              \caption{Canonical Button Colour Test.}
+                        \end{figure}
 
-                    What colour maximizes click-through rate?
-          \end{itemize}
-    \item Other, more tangible, examples:
-          \begin{itemize}
-              \item Netflix.
-              \item Etsy.
-          \end{itemize}
-    \item Typically, the goal of such an experiment is to decide which condition is
-          optimal with respect to some metric of interest $ \theta $. This could be a:
-          \begin{itemize}
-              \item mean
-              \item proportion
-              \item variance
-              \item quantile
-              \item technically any statistic that can be calculated from sample data
-          \end{itemize}
-    \item From a design standpoint, such an experiment is \emph{very} similar to
-          a two-condition experiment.
-          \begin{enumerate}
-              \item Choose a metric of interest $ \theta $ which addresses the question
-                    you are trying to answer.
-              \item Determine the response variable $ y $ that must be measured on each
-                    unit to estimate $ \hat{\theta} $.
-              \item Choose the design factor $ x $ and the $ m $ levels you will experiment with.
-              \item Choose $ n_1,n_2,\ldots,n_m $ and assign units to conditions at random.
-              \item Collect the data and estimate the metric of interest in each condition:
-                    \[ \hat{\theta}_1,\hat{\theta}_2,\ldots,\hat{\theta}_m \]
-          \end{enumerate}
-    \item Determining which condition is optimal typically involves a series of pairwise
-          comparisons: $ t $-tests, $ z $-tests, or randomization tests.
-    \item But it is useful to begin such an investigation with a \emph{gatekeeper}
-          test (test of overall equality) which serves to determine whether
-          there is \emph{any} difference between the $ m $ experimental conditions.
-          Formally, we phrase such a question as the following statistical hypothesis:
-          \begin{tightcenter}
-              $ \mathbf{H}_0 $: $ \theta_1=\theta_2=\cdots=\theta_m $ versus $ \mathbf{H}_\text{A} $: $ \theta_j\ne \theta_k $ for some $ j\ne k $
-          \end{tightcenter}
-          In the case of means:
-          \begin{tightcenter}
-              $ \mathbf{H}_0 $: $ \mu_1=\mu_2=\cdots=\mu_m $ versus $ \mathbf{H}_\text{A} $: $ \mu_j\ne \mu_k $ for some $ j\ne k $
-          \end{tightcenter}
-          In the case of proportions:
-          \begin{tightcenter}
-              $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_m $ versus $ \mathbf{H}_\text{A} $: $ \pi_j\ne \pi_k $ for some $ j\ne k $
-          \end{tightcenter}
+                        What colour maximizes click-through rate?
+            \end{itemize}
+      \item Other, more tangible, examples:
+            \begin{itemize}
+                  \item Netflix.
+                  \item Etsy.
+            \end{itemize}
+      \item Typically, the goal of such an experiment is to decide which condition is
+            optimal with respect to some metric of interest $ \theta $. This could be a:
+            \begin{itemize}
+                  \item mean
+                  \item proportion
+                  \item variance
+                  \item quantile
+                  \item technically any statistic that can be calculated from sample data
+            \end{itemize}
+      \item From a design standpoint, such an experiment is \emph{very} similar to
+            a two-condition experiment.
+            \begin{enumerate}
+                  \item Choose a metric of interest $ \theta $ which addresses the question
+                        you are trying to answer.
+                  \item Determine the response variable $ y $ that must be measured on each
+                        unit to estimate $ \hat{\theta} $.
+                  \item Choose the design factor $ x $ and the $ m $ levels you will experiment with.
+                  \item Choose $ n_1,n_2,\ldots,n_m $ and assign units to conditions at random.
+                  \item Collect the data and estimate the metric of interest in each condition:
+                        \[ \hat{\theta}_1,\hat{\theta}_2,\ldots,\hat{\theta}_m \]
+            \end{enumerate}
+      \item Determining which condition is optimal typically involves a series of pairwise
+            comparisons: $ t $-tests, $ z $-tests, or randomization tests.
+      \item But it is useful to begin such an investigation with a \emph{gatekeeper}
+            test (test of overall equality) which serves to determine whether
+            there is \emph{any} difference between the $ m $ experimental conditions.
+            Formally, we phrase such a question as the following statistical hypothesis:
+            \begin{tightcenter}
+                  $ \mathbf{H}_0 $: $ \theta_1=\theta_2=\cdots=\theta_m $ versus $ \mathbf{H}_\text{A} $: $ \theta_j\ne \theta_k $ for some $ j\ne k $
+            \end{tightcenter}
+            In the case of means:
+            \begin{tightcenter}
+                  $ \mathbf{H}_0 $: $ \mu_1=\mu_2=\cdots=\mu_m $ versus $ \mathbf{H}_\text{A} $: $ \mu_j\ne \mu_k $ for some $ j\ne k $
+            \end{tightcenter}
+            In the case of proportions:
+            \begin{tightcenter}
+                  $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_m $ versus $ \mathbf{H}_\text{A} $: $ \pi_j\ne \pi_k $ for some $ j\ne k $
+            \end{tightcenter}
 \end{itemize}
 \section{Comparing Means in Multiple Conditions}
 \begin{itemize}
-    \item We assume that our response variable follows a normal distribution,
-          and we assume that the mean of the distribution depends on the condition
-          in which we take the measurements, and that the variance
-          is the same across all conditions.
-          \[ Y_{ij}\sim \N{\mu_j,\sigma^2}\quad\text{for }i=1,2,\ldots,n_j\text{ and }j=1,2,\ldots,m \]
-    \item We use an $ F $-test to test for means:
-          \begin{tightcenter}
-              $ \mathbf{H}_0 $: $ \mu_1=\mu_2=\cdots=\mu_m $ versus $\mathbf{H}_\text{A}$: $ \mu_j\ne \mu_k $ for some $ j\ne k $
-          \end{tightcenter}
+      \item We assume that our response variable follows a normal distribution,
+            and we assume that the mean of the distribution depends on the condition
+            in which we take the measurements, and that the variance
+            is the same across all conditions.
+            \[ Y_{ij}\sim \N{\mu_j,\sigma^2}\quad\text{for }i=1,2,\ldots,n_j\text{ and }j=1,2,\ldots,m \]
+      \item We use an $ F $-test to test for means:
+            \begin{tightcenter}
+                  $ \mathbf{H}_0 $: $ \mu_1=\mu_2=\cdots=\mu_m $ versus $\mathbf{H}_\text{A}$: $ \mu_j\ne \mu_k $ for some $ j\ne k $
+            \end{tightcenter}
 \end{itemize}
 \subsection{The \texorpdfstring{$ F $}{F}-test for Overall Significance in a Linear Regression}
 \begin{itemize}
-    \item In particular, we use the $ F $-test for overall significance in an
-          \emph{appropriately defined linear regression model}:
-          \begin{itemize}
-              \item The \emph{appropriately defined linear regression model}
-                    in this situation is one in which the response
-                    variable depends on $ m-1 $ indicator variables:
-                    \[ x_{ij}=\begin{cases*}
-                            1 & if unit $ i $ is in condition $ j $ \\
-                            0 & otherwise
-                        \end{cases*}\quad\text{for }j=1,2,\ldots,m-1. \]
-              \item For a particular unit $ i $, we adopt the model:
-                    \[ Y_{i}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\cdots+\beta_{m-1}x_{i,m-1}+\varepsilon_i \]
-                    \begin{itemize}
-                        \item $ Y_i = $ response observation for unit $ i=1,2,\ldots,N=\sum_{j=1}^{m} n_j $.
-                        \item $ \varepsilon_i = $ random error term which we assume follows a $ \N{0,\sigma^2} $ distribution
-                              independently for all $ i=1,2,\ldots,N $.
-                        \item Because we're about to do a regression analysis, the usual \emph{residual diagnostics} are relevant.
-                    \end{itemize}
-              \item In this model the $ \beta $'s are unknown parameters,
-                    and we interpret them in the context of the
-                    following expectations:
-                    \begin{itemize}
-                        \item Expected response in condition $ m $:
-                              \[ \E{Y_i\given x_{i1}=x_{i2}=\cdots=x_{i,m-1}=0}=\beta_0=\mu_m \]
-                        \item Expected response in condition $ j $:
-                              \[ \E{Y_i\given x_{ij}=1}=\beta_0+\beta_j=\mu_j\quad\text{for }j=1,2,\ldots,m-1 \]
-                    \end{itemize}
-                    \begin{itemize}
-                        \item $ \beta_0 $ is the expected response in condition $ m $.
-                        \item $ \beta_j $ is the expected difference in response value in condition $ j $
-                              versus condition $ m $ for $ j=1,2,\ldots,m-1 $.
-                              \begin{align*}
-                                  \mu_1     & =\beta_0+\beta_1      \\
-                                  \mu_2     & =\beta_0+\beta_2      \\
-                                            & \vdotswithin{=}       \\
-                                  \mu_{m-1} & = \beta_0+\beta_{m-1} \\
-                                  \mu_m     & =\beta_0
-                              \end{align*}
-                    \end{itemize}
-              \item Based on these assumptions $ \mathbf{H}_0 $: $ \theta_1=\theta_2=\cdots=\theta_m $
-                    is true if and only if $ \beta_1=\beta_2=\cdots=\beta_{m-1}=0 $, and hence is equivalent
-                    to testing:
-                    \begin{tightcenter}
-                        $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{m-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \beta_j\ne 0 $ for some $ j$
-                    \end{tightcenter}
-              \item This hypothesis corresponds, as noted, to the $ F $-test for overall significance in the model.
-          \end{itemize}
-    \item In regression parlance, the test statistic is the ratio of the
-          regression mean squares (MSR)
-          to the mean squared error (MSE) in a standard regression-based analysis of variance (ANOVA):
-          \[ t=\frac{\text{MSR}}{\text{MSE}} \]
-    \item In our setting we can more intuitively think of the test
-          statistic as comparing the response variability
-          between conditions to the response variability within conditions:
-          \begin{itemize}
-              \item Average response in condition $ j $: $ \displaystyle \bar{y}_{\bullet j}=\frac{1}{n_j} \sum_{i=1}^{n_j} y_{ij} $.
-              \item Overall average response: $ \displaystyle \bar{y}_{\bullet\bullet}=\frac{1}{N} \sum_{j=1}^{m} \sum_{i=1}^{n_j} y_{ij}=\frac{1}{N} \sum_{j=1}^{m} n_j\bar{y}_{\bullet j} $.
-              \item Quantifies variability \underline{\emph{between}} conditions:
-                    $ \displaystyle \SSC=\sum_{j=1}^{m} \sum_{i=1}^{n_j} \bigl(\bar{y}_{\bullet j}-\bar{y}_{\bullet\bullet}\bigr)^2 $.
-              \item Quantifies variability \underline{\emph{within}} conditions:
-                    $ \displaystyle \SSE=\sum_{j=1}^{m} \sum_{i=1}^{n_j} \bigl(y_{ij}-\bar{y}_{\bullet j}\bigr)^2 $.
-              \item Quantifies \underline{\emph{overall}} variability:
-                    $ \displaystyle \SST=\sum_{j=1}^{m} \sum_{i=1}^{n_j} \bigl(y_{ij}-\bar{y}_{\bullet\bullet}\bigr)^2=\SSC+\SSE $.
-          \end{itemize}
-    \item The null distribution for this test is $ F(m-1,N-m) $.
-    \item $ p\text{-value}=\Prob{T\ge t} $ where $ T \sim F(m-1,N-m) $.
-    \item If $ \mathbf{H}_0 $: $ \mu_1=\cdots=\mu_m $ is true, then $ \E*{\MSC}=\sigma^2 $ and $ \E*{\MSE}=\sigma^2 $.
+      \item In particular, we use the $ F $-test for overall significance in an
+            \emph{appropriately defined linear regression model}:
+            \begin{itemize}
+                  \item The \emph{appropriately defined linear regression model}
+                        in this situation is one in which the response
+                        variable depends on $ m-1 $ indicator variables:
+                        \[ x_{ij}=\begin{cases*}
+                                    1 & if unit $ i $ is in condition $ j $ \\
+                                    0 & otherwise
+                              \end{cases*}\quad\text{for }j=1,2,\ldots,m-1. \]
+                  \item For a particular unit $ i $, we adopt the model:
+                        \[ Y_{i}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\cdots+\beta_{m-1}x_{i,m-1}+\varepsilon_i \]
+                        \begin{itemize}
+                              \item $ Y_i = $ response observation for unit $ i=1,2,\ldots,N=\sum_{j=1}^{m} n_j $.
+                              \item $ \varepsilon_i = $ random error term which we assume follows a $ \N{0,\sigma^2} $ distribution
+                                    independently for all $ i=1,2,\ldots,N $.
+                              \item Because we're about to do a regression analysis, the usual \emph{residual diagnostics} are relevant.
+                        \end{itemize}
+                  \item In this model the $ \beta $'s are unknown parameters,
+                        and we interpret them in the context of the
+                        following expectations:
+                        \begin{itemize}
+                              \item Expected response in condition $ m $:
+                                    \[ \E{Y_i\given x_{i1}=x_{i2}=\cdots=x_{i,m-1}=0}=\beta_0=\mu_m \]
+                              \item Expected response in condition $ j $:
+                                    \[ \E{Y_i\given x_{ij}=1}=\beta_0+\beta_j=\mu_j\quad\text{for }j=1,2,\ldots,m-1 \]
+                        \end{itemize}
+                        \begin{itemize}
+                              \item $ \beta_0 $ is the expected response in condition $ m $.
+                              \item $ \beta_j $ is the expected difference in response value in condition $ j $
+                                    versus condition $ m $ for $ j=1,2,\ldots,m-1 $.
+                                    \begin{align*}
+                                          \mu_1     & =\beta_0+\beta_1      \\
+                                          \mu_2     & =\beta_0+\beta_2      \\
+                                                    & \vdotswithin{=}       \\
+                                          \mu_{m-1} & = \beta_0+\beta_{m-1} \\
+                                          \mu_m     & =\beta_0
+                                    \end{align*}
+                        \end{itemize}
+                  \item Based on these assumptions $ \mathbf{H}_0 $: $ \theta_1=\theta_2=\cdots=\theta_m $
+                        is true if and only if $ \beta_1=\beta_2=\cdots=\beta_{m-1}=0 $, and hence is equivalent
+                        to testing:
+                        \begin{tightcenter}
+                              $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{m-1}=0 $ versus $ \mathbf{H}_\text{A} $: $ \beta_j\ne 0 $ for some $ j$
+                        \end{tightcenter}
+                  \item This hypothesis corresponds, as noted, to the $ F $-test for overall significance in the model.
+            \end{itemize}
+      \item In regression parlance, the test statistic is the ratio of the
+            regression mean squares (MSR)
+            to the mean squared error (MSE) in a standard regression-based analysis of variance (ANOVA):
+            \[ t=\frac{\text{MSR}}{\text{MSE}} \]
+      \item In our setting we can more intuitively think of the test
+            statistic as comparing the response variability
+            between conditions to the response variability within conditions:
+            \begin{itemize}
+                  \item Average response in condition $ j $: $ \displaystyle \bar{y}_{\bullet j}=\frac{1}{n_j} \sum_{i=1}^{n_j} y_{ij} $.
+                  \item Overall average response: $ \displaystyle \bar{y}_{\bullet\bullet}=\frac{1}{N} \sum_{j=1}^{m} \sum_{i=1}^{n_j} y_{ij}=\frac{1}{N} \sum_{j=1}^{m} n_j\bar{y}_{\bullet j} $.
+                  \item Quantifies variability \underline{\emph{between}} conditions:
+                        $ \displaystyle \SSC=\sum_{j=1}^{m} \sum_{i=1}^{n_j} \bigl(\bar{y}_{\bullet j}-\bar{y}_{\bullet\bullet}\bigr)^2 $.
+                  \item Quantifies variability \underline{\emph{within}} conditions:
+                        $ \displaystyle \SSE=\sum_{j=1}^{m} \sum_{i=1}^{n_j} \bigl(y_{ij}-\bar{y}_{\bullet j}\bigr)^2 $.
+                  \item Quantifies \underline{\emph{overall}} variability:
+                        $ \displaystyle \SST=\sum_{j=1}^{m} \sum_{i=1}^{n_j} \bigl(y_{ij}-\bar{y}_{\bullet\bullet}\bigr)^2=\SSC+\SSE $.
+            \end{itemize}
+      \item The null distribution for this test is $ F(m-1,N-m) $.
+      \item $ p\text{-value}=\Prob{T\ge t} $ where $ T \sim F(m-1,N-m) $.
+      \item If $ \mathbf{H}_0 $: $ \mu_1=\cdots=\mu_m $ is true, then $ \E*{\MSC}=\sigma^2 $ and $ \E*{\MSE}=\sigma^2 $.
 \end{itemize}
 \begin{table}[!htbp]
-    \centering
-    \caption{ANOVA Table}
-    \begin{NiceTabular}{|l|c|c|c|c|}
-        \toprule
-        Source    & SS                     & d.f.    & MS                                                               & Test Statistic                                                   \\
-        \midrule
-        Condition & $ \SSC $ & $ m-1 $ & $ \MSC=\SSC/(m-1) $ & \multirow{2}{*}{$ t=\MSC/\MSE $} \\
-        Error     & $ \SSE $ & $ N-m $ & $ \MSE=\SSE/(N-m) $                                                               \\
-        \midrule
-        Total     & $ \SST $ & $ N-1 $\\
-        \bottomrule
-    \end{NiceTabular}
+      \centering
+      \caption{ANOVA Table}
+      \begin{NiceTabular}{|l|c|c|c|c|}
+            \toprule
+            Source    & SS                     & d.f.    & MS                                                               & Test Statistic                                                   \\
+            \midrule
+            Condition & $ \SSC $ & $ m-1 $ & $ \MSC=\SSC/(m-1) $ & \multirow{2}{*}{$ t=\MSC/\MSE $} \\
+            Error     & $ \SSE $ & $ N-m $ & $ \MSE=\SSE/(N-m) $                                                               \\
+            \midrule
+            Total     & $ \SST $ & $ N-1 $\\
+            \bottomrule
+      \end{NiceTabular}
 \end{table}
+\newpage
 \subsection{Example: Candy Crush Boosters}
 \begin{Example}{Candy Crush Boosters}{}
-    \begin{itemize}
-        \item Candy Crush is experimenting with three different versions of
-              in-game ``boosters'': the lollipop hammer, the jelly fish, and the colour bomb.
-        \item We randomize each user to one of these three conditions ($ n_1 = 121 $,
-              $ n_2 = 135 $, $ n_3 = 117$) and they
-              receive (for free) 5
-              boosters corresponding to their condition.
-              Interest lies in evaluating the effect
-              of these different boosters on the length of time a user plays the game.
-        \item Let $ \mu_j $ represent the average length of game play
-              (in minutes) associated with booster condition
-              $ j = 1, 2, 3 $. While interest lies in finding the condition
-              associated with the longest average length
-              of game play, here we first rule out the possibility
-              that booster type does not influence the length
-              of game play (i.e., $ \mu_1=\mu_2=\mu_3 $).
-        \item In order to do this we fit the linear regression model:
-              \[ Y=\beta_0+\beta_1 x_1+\beta_2 x_2+\varepsilon \]
-              where $ x_1 $ and $ x_2 $ are indicator variables indicating
-              whether we observe a particular value of the response in the
-              jelly fish or colour bomb conditions, respectively.
-              The lollipop hammer is therefore the reference condition.
-        \item In R, we found that the test statistic for testing:
-              \begin{tightcenter}
-                  $ \mathbf{H}_0 $: $ \mu_1=\mu_2=\mu_3 $ versus $ \mathbf{H}_\text{A} $: $ \mu_j\ne \mu_k $ for some $ j\ne k $
-              \end{tightcenter}
-              was $ t=851.8947 $ and the null distribution was $ T \sim F(2,370) $. The corresponding
-              $ p $-value was:
-              \[ p\text{-value}=\Prob{T\ge 851.8947}=3.28\times 10^{-139} \]
-        \item Therefore, we have very strong evidence against $ \mathbf{H}_0 $ and conclude that the average
-              length of game play is not the same in the three booster conditions.
-        \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/W3/Comparing_multiple_means.R}{[R Code] \texttt{Comparing\_multiple\_means}}
-    \end{itemize}
+      \begin{itemize}
+            \item Candy Crush is experimenting with three different versions of
+                  in-game ``boosters'': the lollipop hammer, the jelly fish, and the colour bomb.
+            \item We randomize each user to one of these three conditions ($ n_1 = 121 $,
+                  $ n_2 = 135 $, $ n_3 = 117$) and they
+                  receive (for free) 5
+                  boosters corresponding to their condition.
+                  Interest lies in evaluating the effect
+                  of these different boosters on the length of time a user plays the game.
+            \item Let $ \mu_j $ represent the average length of game play
+                  (in minutes) associated with booster condition
+                  $ j = 1, 2, 3 $. While interest lies in finding the condition
+                  associated with the longest average length
+                  of game play, here we first rule out the possibility
+                  that booster type does not influence the length
+                  of game play (i.e., $ \mu_1=\mu_2=\mu_3 $).
+            \item In order to do this we fit the linear regression model:
+                  \[ Y=\beta_0+\beta_1 x_1+\beta_2 x_2+\varepsilon \]
+                  where $ x_1 $ and $ x_2 $ are indicator variables indicating
+                  whether we observe a particular value of the response in the
+                  jelly fish or colour bomb conditions, respectively.
+                  The lollipop hammer is therefore the reference condition.
+            \item In R, we found that the test statistic for testing:
+                  \begin{tightcenter}
+                        $ \mathbf{H}_0 $: $ \mu_1=\mu_2=\mu_3 $ versus $ \mathbf{H}_\text{A} $: $ \mu_j\ne \mu_k $ for some $ j\ne k $
+                  \end{tightcenter}
+                  was $ t=851.8947 $ and the null distribution was $ T \sim F(2,370) $. The corresponding
+                  $ p $-value was:
+                  \[ p\text{-value}=\Prob{T\ge 851.8947}=3.28\times 10^{-139} \]
+            \item Therefore, we have very strong evidence against $ \mathbf{H}_0 $ and conclude that the average
+                  length of game play is not the same in the three booster conditions.
+            \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/W3/Comparing_multiple_means.R}{[R Code] \texttt{Comparing\_multiple\_means}}
+      \end{itemize}
 \end{Example}
 \section{Comparing Proportions in Multiple Conditions}
 \begin{itemize}
-    \item As is always the case when comparing proportions is of interest, we assume that our response variable
-          is binary:
-          \[ Y_{ij}=\begin{cases*}
-                  1 & if unit $ i $ in condition $ j $ performs an action of interest         \\
-                  0 & if unit $ i $ in condition $ j $ does not perform an action of interest
-              \end{cases*}i=1,2,\ldots,n_j;j=1,2,\ldots,m \]
-    \item $ Y_{ij}\sim \Binomial{1,\pi_j} $
-          where $ \pi_j $ is the probability of a unit in condition $ j $ performing the action.
-    \item We use a \textbf{chi-squared test of independence} (Pearson $ \chi^2 $ test) to test for proportions:
-          \begin{tightcenter}
-              $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_m $ versus $ \mathbf{H}_\text{A} $: $ \pi_j\ne \pi_k $ for some $ j\ne k $.
-          \end{tightcenter}
+      \item As is always the case when comparing proportions is of interest, we assume that our response variable
+            is binary:
+            \[ Y_{ij}=\begin{cases*}
+                        1 & if unit $ i $ in condition $ j $ performs an action of interest         \\
+                        0 & if unit $ i $ in condition $ j $ does not perform an action of interest
+                  \end{cases*}\begin{aligned}
+                        i & =1,2,\ldots,n_j \\
+                        j & =1,2,\ldots,m
+                  \end{aligned} \]
+      \item $ Y_{ij}\sim \Binomial{1,\pi_j} $
+            where $ \pi_j $ is the probability of a unit in condition $ j $ performing the action.
+      \item We use a \textbf{chi-squared test of independence} (Pearson $ \chi^2 $ test) to test for proportions:
+            \begin{tightcenter}
+                  $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_m $ versus $ \mathbf{H}_\text{A} $: $ \pi_j\ne \pi_k $ for some $ j\ne k $.
+            \end{tightcenter}
 \end{itemize}
 \subsection{The Chi-squared Test of Independence}
 \begin{itemize}
-    \item We use the chi-squared test of independence as a test for `no association'
-          between two categorical variables that are summarized in a \emph{contingency table}.
-    \item We apply this methodology here to test the independence of the binary outcome
-          (whether a unit performs the action of interest) and the particular condition they are in.
-    \item To start, let's assume that $ m=2 $, and let's use the \hyperref[ex:optimizely_ex1]{Optimizely experiment} as a reference.
-          \begin{itemize}
-              \item If $ \pi_1=\pi_2=\pi $, then we would expect the conversion rate in each condition to be the same.
-              \item An estimate of the pooled conversion rate in this case is $ \hat{\pi}=679/17514=0.0388 $.
-              \item Let $ X= $ number of conversions in a condition with $ n $ units, therefore $ X \sim \Binomial{n,\pi} $
-                    where $ \E{X}=n\pi $.
-              \item Therefore, we would expect $ n_1\hat{\pi}=8872(0.0388)=343.96 $ conversions in condition 1,
-                    and $ n_2\hat{\pi}=8642(0.0388)=335.04 $ conversions in condition 2.
-              \item The chi-squared test formally evaluates if the difference between what
-                    was observed and what is expected under the null hypothesis is large enough
-                    to be considered \emph{significantly} different.
-              \item The \emph{general} $ 2\times 2 $ contingency table for a scenario like this
-                    is shown in~\Cref{general_22_contingency}.
-                    \begin{table}[!htbp]
-                        \centering
-                        \caption{A General $ 2\times 2 $ Contingency Table}\label{general_22_contingency}
-                        \begin{NiceTabular}{cc|cc|c}
-                            \multicolumn{2}{c}{}        & \multicolumn{2}{c}{\emph{Condition}} &                                                                                       \\
-                            \multicolumn{2}{c}{}        & 1                             & 2                         & \multicolumn{1}{c}{}                                      \\
-                            \cmidrule{2-5}
-                            \multirow{2}{*}{\emph{Conversion}} & Yes                           & $O_{1,1}$                 & $O_{1,2}$                 & $O_1$                         \\
-                            & No                            & $O_{0,1}$                 & $O_{0,2}$                 & $O_0$                         \\
-                            \cmidrule{2-5}
-                            \multicolumn{1}{c}{}        & \multicolumn{1}{c}{}          & \multicolumn{1}{c}{$n_1$} & \multicolumn{1}{c}{$n_2$} & \multicolumn{1}{c}{$n_1+n_2$}
-                        \end{NiceTabular}
-                    \end{table}
-                    \begin{itemize}
-                        \item $ O_{\ell,j} $: observed number of conversions ($ \ell=1 $),
-                              and the observed number of non-conversions ($ \ell=0 $) in condition $ j=1,2 $.
-                        \item $ O_\ell $: overall number of conversions ($ \ell=1 $) or non-conversions
-                              ($ \ell=0 $)
-                    \end{itemize}
-              \item So,
-                    \[ \hat{\pi}=\frac{O_1}{n_1+n_2}\quad \text{ and }\quad 1-\hat{\pi}=\frac{O_0}{n_1+n_2} \]
-                    represent the overall proportions of units that did or did not convert, and they
-                    are estimates of overall conversion and non-conversion rates.
-              \item Let $ E_{1,j} $ and $ E_{0,j} $
-                    represent the expected number of conversions and non-conversions in condition
-                    $ j=1,2 $,
-                    \[ E_{1,j}=n_j\hat{\pi}\quad \text{ and }\quad E_{0,j}=n_j(1-\hat{\pi}) \]
-                    \begin{itemize}
-                        \item This is what we expect if $ \mathbf{H}_0 $: $ \pi_1=\pi_2 $ is true.
-                    \end{itemize}
-              \item The $ \chi^2 $ test statistic compares the observed count
-                    in each cell to the corresponding expected
-                    count, and is defined as
-                    \[ T=\sum_{\ell=0}^{1} \sum_{j=1}^{2} \frac{(O_{\ell_j}-E_{\ell,j})^2}{E_{\ell,j}}\sim \chi^2(1)  \]
-              \item $ p\text{-value} = \Prob{T\ge t} $ where $ T \sim \chi^2(1) $.
-              \item Returning to the Optimizely example, the \emph{expected} table is~\Cref{optimizely_contingency}.
-                    \begin{table}[!htbp]
-                        \centering
-                        \caption{$ 2\times 2 $ Contingency Table for Optimizely's Homepage Experiment}\label{optimizely_contingency}
-                        \begin{NiceTabular}{cc|cc|c}
-                            \multicolumn{2}{c}{}        & \multicolumn{2}{c}{\emph{Condition}} &                                                                                       \\
-                            \multicolumn{2}{c}{}        & 1                                      & 2                          & \multicolumn{1}{c}{}                                     \\
-                            \cmidrule{2-5}
-                            \multirow{2}{*}{\emph{Conversion}} & Yes                                    & $343.96$                   & $335.04$                   & $679$                       \\
-                            & No                                     & $8528.04$                  & $8306.96$                  & $16835$                     \\
-                            \cmidrule{2-5}
-                            \multicolumn{1}{c}{}        & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$8872$} & \multicolumn{1}{c}{$8642$} & \multicolumn{1}{c}{$17514$}
-                        \end{NiceTabular}
-                    \end{table}
-              \item And the resultant test statistic and $p$-value are:
-                    \[ t=\frac{(280-343.96)^2}{343.96} +\frac{(399-335.04)^2}{335.04}+\frac{(8592-8528.04)^2}{8528.04}+\frac{(8243-8306.96)^2}{8306.96}=25.075    \]
-                    \[ p\text{-value}=\Prob{T\ge 25.075}=5.52\times 10^{-7}\quad\text{where }T \sim \chi^2(1) \]
-          \end{itemize}
-    \item Let's now extend this for $ m>2 $.
-          \begin{itemize}
-              \item We've used the chi-squared test is a test of `no association' between the binary outcome (whether
-                    a unit performs the action of interest) and the particular condition they are in.
-                    \begin{itemize}
-                        \item But there is no requirement that there be only two conditions.
-                        \item Here we generalize the test to any number of experimental conditions.
-                    \end{itemize}
-              \item The information associated with this test can be summarized in a $ 2\times m $ contingency table as seen in~\Cref{general_2m_contingency}.
-                    \begin{table}[!htbp]
-                        \centering
-                        \caption{A General $ 2\times m $ Contingency Table}\label{general_2m_contingency}
-                        \begin{NiceTabular}{cc|cccc|c}
-                            \multicolumn{2}{c}{}        & \multicolumn{4}{c}{\emph{Condition}} &                                                                                                                                           \\
-                            \multicolumn{2}{c}{}        & 1                                      & 2                         & $\cdots$                  & $m$      & \multicolumn{1}{c}{}                                                   \\
-                            \cmidrule{2-7}
-                            \multirow{2}{*}{\emph{Conversion}} & Yes                                    & $O_{1,1}$                 & $O_{1,2}$                 & $\cdots$ & $O_{1,m}$                 & $O_1$                                      \\
-                            & No                                     & $O_{0,1}$                 & $O_{0,2}$                 & $\cdots$ & $O_{0,m}$                 & $O_0$                                      \\
-                            \cmidrule{2-7}
-                            \multicolumn{1}{c}{}        & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$n_1$} & \multicolumn{1}{c}{$n_2$} & $\cdots$ & \multicolumn{1}{c}{$n_m$} & \multicolumn{1}{c}{$N=\sum_{j=1}^{m} n_j$}
-                        \end{NiceTabular}
-                    \end{table}
-                    \begin{itemize}
-                        \item \# of conversions ($ \ell=1 $) or non-conversions ($ \ell=0 $) is condition
-                              $ j=1,2 $.
-                        \item $ \hat{\pi}=O_1/N $.
-                        \item $ 1-\hat{\pi}=O_0/N $.
-                    \end{itemize}
-              \item We compare each of the observed frequencies $ O_{1,j} $ with the corresponding expected
-                    frequency $ E_{\ell,j} $.
-                    \[ E_{1,j}=n_j\hat{\pi}\quad\text{and}\quad E_{0,j}=n_j(1-\hat{\pi}) \]
-                    \begin{itemize}
-                        \item Expected number of conversions/non-conversions in condition $ j $
-                              assuming $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_m $ is true.
-                    \end{itemize}
-              \item The $ \chi^2 $ test statistic
-                    compares the observed count in each cell to the corresponding expected
-                    count, and is defined as:
-                    \[ T=\sum_{\ell=0}^{1} \sum_{j=1}^{m} \frac{(O_{\ell,j}-E_{\ell,j})^2}{E_{\ell_j}}\sim \chi^2(m-1)  \]
-              \item $ p\text{-value} = \Prob{T\ge t} $ where $ T \sim \chi^2(m-1) $.
-          \end{itemize}
+      \item We use the chi-squared test of independence as a test for `no association'
+            between two categorical variables that are summarized in a \emph{contingency table}.
+      \item We apply this methodology here to test the independence of the binary outcome
+            (whether a unit performs the action of interest) and the particular condition they are in.
+      \item To start, let's assume that $ m=2 $, and let's use the \hyperref[ex:optimizely_ex1]{Optimizely experiment} as a reference.
+            \begin{itemize}
+                  \item If $ \pi_1=\pi_2=\pi $, then we would expect the conversion rate in each condition to be the same.
+                  \item An estimate of the pooled conversion rate in this case is $ \hat{\pi}=679/17514=0.0388 $.
+                  \item Let $ X= $ number of conversions in a condition with $ n $ units, therefore $ X \sim \Binomial{n,\pi} $
+                        where $ \E{X}=n\pi $.
+                  \item Therefore, we would expect $ n_1\hat{\pi}=8872(0.0388)=343.96 $ conversions in condition 1,
+                        and $ n_2\hat{\pi}=8642(0.0388)=335.04 $ conversions in condition 2.
+                  \item The chi-squared test formally evaluates if the difference between what
+                        was observed and what is expected under the null hypothesis is large enough
+                        to be considered \emph{significantly} different.
+                  \item The \emph{general} $ 2\times 2 $ contingency table for a scenario like this
+                        is shown in~\Cref{general_22_contingency}.
+                        \begin{table}[!htbp]
+                              \centering
+                              \caption{A General $ 2\times 2 $ Contingency Table}\label{general_22_contingency}
+                              \begin{NiceTabular}{cc|cc|c}
+                                    \multicolumn{2}{c}{}        & \multicolumn{2}{c}{\emph{Condition}} &                                                                                       \\
+                                    \multicolumn{2}{c}{}        & 1                             & 2                         & \multicolumn{1}{c}{}                                      \\
+                                    \cmidrule{2-5}
+                                    \multirow{2}{*}{\emph{Conversion}} & Yes                           & $O_{1,1}$                 & $O_{1,2}$                 & $O_1$                         \\
+                                    & No                            & $O_{0,1}$                 & $O_{0,2}$                 & $O_0$                         \\
+                                    \cmidrule{2-5}
+                                    \multicolumn{1}{c}{}        & \multicolumn{1}{c}{}          & \multicolumn{1}{c}{$n_1$} & \multicolumn{1}{c}{$n_2$} & \multicolumn{1}{c}{$n_1+n_2$}
+                              \end{NiceTabular}
+                        \end{table}
+                        \begin{itemize}
+                              \item $ O_{\ell,j} $: observed number of conversions ($ \ell=1 $),
+                                    and the observed number of non-conversions ($ \ell=0 $) in condition $ j=1,2 $.
+                              \item $ O_\ell $: overall number of conversions ($ \ell=1 $) or non-conversions
+                                    ($ \ell=0 $)
+                        \end{itemize}
+                  \item So,
+                        \[ \hat{\pi}=\frac{O_1}{n_1+n_2}\quad \text{ and }\quad 1-\hat{\pi}=\frac{O_0}{n_1+n_2} \]
+                        represent the overall proportions of units that did or did not convert, and they
+                        are estimates of overall conversion and non-conversion rates.
+                  \item Let $ E_{1,j} $ and $ E_{0,j} $
+                        represent the expected number of conversions and non-conversions in condition
+                        $ j=1,2 $,
+                        \[ E_{1,j}=n_j\hat{\pi}\quad \text{ and }\quad E_{0,j}=n_j(1-\hat{\pi}) \]
+                        \begin{itemize}
+                              \item This is what we expect if $ \mathbf{H}_0 $: $ \pi_1=\pi_2 $ is true.
+                        \end{itemize}
+                  \item The $ \chi^2 $ test statistic compares the observed count
+                        in each cell to the corresponding expected
+                        count, and is defined as
+                        \[ T=\sum_{\ell=0}^{1} \sum_{j=1}^{2} \frac{(O_{\ell_j}-E_{\ell,j})^2}{E_{\ell,j}}\sim \chi^2(1)  \]
+                  \item $ p\text{-value} = \Prob{T\ge t} $ where $ T \sim \chi^2(1) $.
+                  \item Returning to the Optimizely example, the \emph{expected} table is~\Cref{optimizely_contingency}.
+                        \begin{table}[!htbp]
+                              \centering
+                              \caption{$ 2\times 2 $ Contingency Table for Optimizely's Homepage Experiment}\label{optimizely_contingency}
+                              \begin{NiceTabular}{cc|cc|c}
+                                    \multicolumn{2}{c}{}        & \multicolumn{2}{c}{\emph{Condition}} &                                                                                       \\
+                                    \multicolumn{2}{c}{}        & 1                                      & 2                          & \multicolumn{1}{c}{}                                     \\
+                                    \cmidrule{2-5}
+                                    \multirow{2}{*}{\emph{Conversion}} & Yes                                    & $343.96$                   & $335.04$                   & $679$                       \\
+                                    & No                                     & $8528.04$                  & $8306.96$                  & $16835$                     \\
+                                    \cmidrule{2-5}
+                                    \multicolumn{1}{c}{}        & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$8872$} & \multicolumn{1}{c}{$8642$} & \multicolumn{1}{c}{$17514$}
+                              \end{NiceTabular}
+                        \end{table}
+                  \item And the resultant test statistic and $p$-value are:
+                        \[ t=\frac{(280-343.96)^2}{343.96} +\frac{(399-335.04)^2}{335.04}+\frac{(8592-8528.04)^2}{8528.04}+\frac{(8243-8306.96)^2}{8306.96}=25.075    \]
+                        \[ p\text{-value}=\Prob{T\ge 25.075}=5.52\times 10^{-7}\quad\text{where }T \sim \chi^2(1) \]
+            \end{itemize}
+      \item Let's now extend this for $ m>2 $.
+            \begin{itemize}
+                  \item We've used the chi-squared test is a test of `no association' between the binary outcome (whether
+                        a unit performs the action of interest) and the particular condition they are in.
+                        \begin{itemize}
+                              \item But there is no requirement that there be only two conditions.
+                              \item Here we generalize the test to any number of experimental conditions.
+                        \end{itemize}
+                  \item The information associated with this test can be summarized in a $ 2\times m $ contingency table as seen in~\Cref{general_2m_contingency}.
+                        \begin{table}[!htbp]
+                              \centering
+                              \caption{A General $ 2\times m $ Contingency Table}\label{general_2m_contingency}
+                              \begin{NiceTabular}{cc|cccc|c}
+                                    \multicolumn{2}{c}{}        & \multicolumn{4}{c}{\emph{Condition}} &                                                                                                                                           \\
+                                    \multicolumn{2}{c}{}        & 1                                      & 2                         & $\cdots$                  & $m$      & \multicolumn{1}{c}{}                                                   \\
+                                    \cmidrule{2-7}
+                                    \multirow{2}{*}{\emph{Conversion}} & Yes                                    & $O_{1,1}$                 & $O_{1,2}$                 & $\cdots$ & $O_{1,m}$                 & $O_1$                                      \\
+                                    & No                                     & $O_{0,1}$                 & $O_{0,2}$                 & $\cdots$ & $O_{0,m}$                 & $O_0$                                      \\
+                                    \cmidrule{2-7}
+                                    \multicolumn{1}{c}{}        & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$n_1$} & \multicolumn{1}{c}{$n_2$} & $\cdots$ & \multicolumn{1}{c}{$n_m$} & \multicolumn{1}{c}{$N=\sum_{j=1}^{m} n_j$}
+                              \end{NiceTabular}
+                        \end{table}
+                        \begin{itemize}
+                              \item \# of conversions ($ \ell=1 $) or non-conversions ($ \ell=0 $) is condition
+                                    $ j=1,2 $.
+                              \item $ \hat{\pi}=O_1/N $.
+                              \item $ 1-\hat{\pi}=O_0/N $.
+                        \end{itemize}
+                  \item We compare each of the observed frequencies $ O_{1,j} $ with the corresponding expected
+                        frequency $ E_{\ell,j} $.
+                        \[ E_{1,j}=n_j\hat{\pi}\quad\text{and}\quad E_{0,j}=n_j(1-\hat{\pi}) \]
+                        \begin{itemize}
+                              \item Expected number of conversions/non-conversions in condition $ j $
+                                    assuming $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_m $ is true.
+                        \end{itemize}
+                  \item The $ \chi^2 $ test statistic
+                        compares the observed count in each cell to the corresponding expected
+                        count, and is defined as:
+                        \[ T=\sum_{\ell=0}^{1} \sum_{j=1}^{m} \frac{(O_{\ell,j}-E_{\ell,j})^2}{E_{\ell_j}}\sim \chi^2(m-1)  \]
+                  \item $ p\text{-value} = \Prob{T\ge t} $ where $ T \sim \chi^2(m-1) $.
+            \end{itemize}
 \end{itemize}
 \subsection{Example: Nike SB Ads}
 \begin{Example}{Nike SB Ads}{}
-    \begin{itemize}
-        \item Suppose that Nike is running an ad campaign for Nike SB, their
-              skateboarding division, and the
-              campaign involves $ m = 5 $ different
-              video ads that are being shown in Facebook newsfeeds.
-        \item A video ad is `viewed' if it is watched for longer than 3 seconds,
-              and interest lies in determining
-              which ad is most popular and hence most profitable
-              by comparing the viewing rates of the five
-              different videos.
-        \item We show each of these 5 videos to $ n_1=5014 $, $ n_2=4971 $, $ n_3=5030 $,
-              $ n_4=5007 $, and $ n_5=4980 $ users, and summarize the results in~\Cref{nike_contingency}.
-              \begin{center}
-                  \captionsetup{type=table}
-                  \captionof{table}{A $ 2\times 5 $ Observed Contingency Table for the Nike Example}\label{nike_contingency}
-                  \begin{NiceTabular}{cc|ccccc|c}
-                      \multicolumn{2}{c}{}  & \multicolumn{5}{c}{\emph{Condition}} &                                                                                                                                                                              \\
-                      \multicolumn{2}{c}{}  & 1                                      & 2                          & 3                          & 4                          & 5                          & \multicolumn{1}{c}{}                                     \\
-                      \cmidrule{2-8}
-                      \multirow{2}{*}{\emph{View}} & Yes                                    & $160$                      & $95$                       & $141$                      & $293$                      & $197$                      & $886$                       \\
-                      & No                                     & $4854$                     & $4876$                     & $4889$                     & $4714$                     & $4783$                     & $24116$                     \\
-                      \cmidrule{2-8}
-                      \multicolumn{1}{c}{}  & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$5014$} & \multicolumn{1}{c}{$4971$} & \multicolumn{1}{c}{$5030$} & \multicolumn{1}{c}{$5007$} & \multicolumn{1}{c}{$4980$} & \multicolumn{1}{c}{$25002$}
-                  \end{NiceTabular}
-              \end{center}
-        \item The overall watch rate (and its complement) are:
-              \[ \hat{\pi}=\frac{O_1}{N} =\frac{886}{25002}=0.0354\quad\text{and}\quad 1-\hat{\pi}=\frac{24116}{25002} =0.9649 \]
-        \item We multiply $ n_j $ by $ \hat{\pi} $ and $ (1-\hat{\pi}) $ for $ j=1,2,3,4,5 $
-              to get the expected cell frequencies in~\Cref{nike_expected}.
-              \begin{center}
-                  \captionsetup{type=table}
-                  \captionof{table}{A $ 2\times 5 $ Expected Contingency Table for the Nike Example}\label{nike_expected}
-                  \begin{NiceTabular}{cc|ccccc|c}
-                      \multicolumn{2}{c}{}  & \multicolumn{5}{c}{\emph{Condition}} &                                                                                                                                                                              \\
-                      \multicolumn{2}{c}{}  & 1                                      & 2                          & 3                          & 4                          & 5                          & \multicolumn{1}{c}{}                                     \\
-                      \cmidrule{2-8}
-                      \multirow{2}{*}{\emph{View}} & Yes                                    & $177.68$                   & $176.16$                   & $178.25$                   & $177.43$                   & $176.48$                   & $886$                       \\
-                      & No                                     & $4836.32$                  & $4794.84$                  & $4851.75$                  & $4829.57$                  & $4803.52$                  & $24116$                     \\
-                      \cmidrule{2-8}
-                      \multicolumn{1}{c}{}  & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$5014$} & \multicolumn{1}{c}{$4971$} & \multicolumn{1}{c}{$5030$} & \multicolumn{1}{c}{$5007$} & \multicolumn{1}{c}{$4980$} & \multicolumn{1}{c}{$25002$}
-                  \end{NiceTabular}
-              \end{center}
-        \item The resultant test statistic and $ p $-value (where $ T \sim \chi^2(4) $) are:
-              \[ t=\sum_{\ell=0}^{1} \sum_{j=1}^{m} \frac{(O_{\ell,j}-E_{\ell,j})^2}{E_{\ell,j}} =129.1686 \]
-              \[ p\text{-value}=\Prob{T\ge 129.1686}=5.86\times 10^{-27} \]
-        \item Therefore, we reject $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_5 $ and conclude that
-              the ``watch-rate'' is not the same for each of the video ads.
-        \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/W3/Comparing_multiple_proportions.R}{[R Code] \texttt{Comparing\_multiple\_proportions}}
-    \end{itemize}
+      \begin{itemize}
+            \item Suppose that Nike is running an ad campaign for Nike SB, their
+                  skateboarding division, and the
+                  campaign involves $ m = 5 $ different
+                  video ads that are being shown in Facebook newsfeeds.
+            \item A video ad is `viewed' if it is watched for longer than 3 seconds,
+                  and interest lies in determining
+                  which ad is most popular and hence most profitable
+                  by comparing the viewing rates of the five
+                  different videos.
+            \item We show each of these 5 videos to $ n_1=5014 $, $ n_2=4971 $, $ n_3=5030 $,
+                  $ n_4=5007 $, and $ n_5=4980 $ users, and summarize the results in~\Cref{nike_contingency}.
+                  \begin{center}
+                        \captionsetup{type=table}
+                        \captionof{table}{A $ 2\times 5 $ Observed Contingency Table for the Nike Example}\label{nike_contingency}
+                        \begin{NiceTabular}{cc|ccccc|c}
+                              \multicolumn{2}{c}{}  & \multicolumn{5}{c}{\emph{Condition}} &                                                                                                                                                                              \\
+                              \multicolumn{2}{c}{}  & 1                                      & 2                          & 3                          & 4                          & 5                          & \multicolumn{1}{c}{}                                     \\
+                              \cmidrule{2-8}
+                              \multirow{2}{*}{\emph{View}} & Yes                                    & $160$                      & $95$                       & $141$                      & $293$                      & $197$                      & $886$                       \\
+                              & No                                     & $4854$                     & $4876$                     & $4889$                     & $4714$                     & $4783$                     & $24116$                     \\
+                              \cmidrule{2-8}
+                              \multicolumn{1}{c}{}  & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$5014$} & \multicolumn{1}{c}{$4971$} & \multicolumn{1}{c}{$5030$} & \multicolumn{1}{c}{$5007$} & \multicolumn{1}{c}{$4980$} & \multicolumn{1}{c}{$25002$}
+                        \end{NiceTabular}
+                  \end{center}
+            \item The overall watch rate (and its complement) are:
+                  \[ \hat{\pi}=\frac{O_1}{N} =\frac{886}{25002}=0.0354\quad\text{and}\quad 1-\hat{\pi}=\frac{24116}{25002} =0.9649 \]
+            \item We multiply $ n_j $ by $ \hat{\pi} $ and $ (1-\hat{\pi}) $ for $ j=1,2,3,4,5 $
+                  to get the expected cell frequencies in~\Cref{nike_expected}.
+                  \begin{center}
+                        \captionsetup{type=table}
+                        \captionof{table}{A $ 2\times 5 $ Expected Contingency Table for the Nike Example}\label{nike_expected}
+                        \begin{NiceTabular}{cc|ccccc|c}
+                              \multicolumn{2}{c}{}  & \multicolumn{5}{c}{\emph{Condition}} &                                                                                                                                                                              \\
+                              \multicolumn{2}{c}{}  & 1                                      & 2                          & 3                          & 4                          & 5                          & \multicolumn{1}{c}{}                                     \\
+                              \cmidrule{2-8}
+                              \multirow{2}{*}{\emph{View}} & Yes                                    & $177.68$                   & $176.16$                   & $178.25$                   & $177.43$                   & $176.48$                   & $886$                       \\
+                              & No                                     & $4836.32$                  & $4794.84$                  & $4851.75$                  & $4829.57$                  & $4803.52$                  & $24116$                     \\
+                              \cmidrule{2-8}
+                              \multicolumn{1}{c}{}  & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$5014$} & \multicolumn{1}{c}{$4971$} & \multicolumn{1}{c}{$5030$} & \multicolumn{1}{c}{$5007$} & \multicolumn{1}{c}{$4980$} & \multicolumn{1}{c}{$25002$}
+                        \end{NiceTabular}
+                  \end{center}
+            \item The resultant test statistic and $ p $-value (where $ T \sim \chi^2(4) $) are:
+                  \[ t=\sum_{\ell=0}^{1} \sum_{j=1}^{m} \frac{(O_{\ell,j}-E_{\ell,j})^2}{E_{\ell,j}} =129.1686 \]
+                  \[ p\text{-value}=\Prob{T\ge 129.1686}=5.86\times 10^{-27} \]
+            \item Therefore, we reject $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_5 $ and conclude that
+                  the ``watch-rate'' is not the same for each of the video ads.
+            \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/W3/Comparing_multiple_proportions.R}{[R Code] \texttt{Comparing\_multiple\_proportions}}
+      \end{itemize}
 \end{Example}

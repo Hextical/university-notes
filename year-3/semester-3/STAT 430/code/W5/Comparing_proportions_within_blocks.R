@@ -1,7 +1,6 @@
 ## Comparing Multiple Proportions Within Blocks
 
 ## Read-in the data
-setwd("/Users/nstevens/Dropbox/Teaching/STAT_430/Spring_2021/R Stuff/")
 enterprise <- read.csv("enterprise.csv", header = TRUE)
 
 ## Response by condition

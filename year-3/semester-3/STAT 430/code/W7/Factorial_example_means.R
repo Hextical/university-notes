@@ -1,6 +1,7 @@
 ## Instagram Factorial Analysis
 
 ## Get the data
+setwd("/Users/nstevens/Dropbox/Teaching/STAT_430/Spring_2021/R Stuff/")
 data <- read.csv(file = "instagram-factorial.csv", header = T)
 
 Time <- data$Time
@@ -27,16 +28,16 @@ cond32 <- mean(Time[Frequency=="1:1" & Type == "Video"])
 library(gplots)
 par(mfrow = c(1,2))
 boxplot(Time ~ Frequency, main = "Boxplot of Session Duration by Ad Frequency", xlab = "Ad Frequency", ylab = "Session Duration (min)", ylim = c(0,11))
-plotmeans(Time ~ Frequency, main = "", xlab = "Ad Frequency", ylab = "Mean Session Duration (min)", pch = 16, ylim = c(0,11))
+plotmeans(Time ~ Frequency, main = "Main Effect Plot for Ad Frequency", xlab = "Ad Frequency", ylab = "Mean Session Duration (min)", pch = 16, ylim = c(0,11))
 
 boxplot(Time ~ Type, main = "Boxplot of Session Duration by Ad Type", xlab = "Ad Type", ylab = "Session Duration (min)", ylim = c(0,11))
-plotmeans(Time ~ Type, main = "", xlab = "Ad Type", ylab = "Mean Session Duration (min)", ylim = c(0,11), pch = 16)
+plotmeans(Time ~ Type, main = "Main Effect Plot for Ad Type", xlab = "Ad Type", ylab = "Mean Session Duration (min)", ylim = c(0,11), pch = 16)
 
-interaction.plot(Frequency, Type, Time, main = "", ylab = "Mean Session Duration (min)", xlab = "Ad Frequency")
+interaction.plot(Frequency, Type, Time, main = "Interaction Plot for Ad Frequency and Ad Type", ylab = "Mean Session Duration (min)", xlab = "Ad Frequency")
 points(x=c(1,1,2,2,3,3,4,4), 
        y = c(cond01, cond02, cond11, cond12, cond21, cond22, cond31, cond32), 
        pch = 16)
-interaction.plot(Type, Frequency, Time, main = "", ylab = "Mean Session Duration (min)", xlab = "Ad Frequency")
+interaction.plot(Type, Frequency, Time, main = "Interaction Plot for Ad Frequency and Ad Type", ylab = "Mean Session Duration (min)", xlab = "Ad Frequency")
 points(x=c(1,1,1,1,2,2,2,2), 
        y = c(cond01, cond11, cond21, cond31, cond02, cond12, cond22, cond32), 
        pch = 16)

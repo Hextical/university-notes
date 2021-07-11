@@ -1,7 +1,6 @@
 ## Analyzing a Latin Square Design to Compare Means
 
 ## Read-in the data
-setwd("/Users/nstevens/Dropbox/Teaching/STAT_430/Spring_2021/R Stuff/")
 netflix <- read.csv("netflix-lsd.csv", header = TRUE)
 
 ## Response by condition

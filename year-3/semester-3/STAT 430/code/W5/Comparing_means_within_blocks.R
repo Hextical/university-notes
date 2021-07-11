@@ -1,7 +1,6 @@
 ## Comparing Multiple Means Within Blocks
 
 ## Read-in the data
-setwd("/Users/nstevens/Dropbox/Teaching/STAT_430/Spring_2021/R Stuff/")
 gap <- read.csv("thegap.csv", header = TRUE)
 
 ## Response by condition
