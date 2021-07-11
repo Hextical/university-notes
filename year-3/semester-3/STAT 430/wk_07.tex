@@ -51,7 +51,7 @@
             \begin{enumerate}[1.]
                   \item Determine which condition is optimal with respect to some metric of interest.
                         \begin{itemize}
-                              \item However, we now define a condition by a specific combination of the levels of \emph{multiple} design factors
+                              \item But now a condition is defined by a specific combination of the levels of \emph{multiple} design factors.
                         \end{itemize}
                   \item Determine \emph{which} factors are influential and understand \emph{how} the factors influence the response.
             \end{enumerate}
@@ -62,9 +62,9 @@
             levels.
       \item \textbf{One-factor-at-a-time approach} (OFAT):
             \begin{itemize}
-                  \item Sequence of experiments, each where we vary only one factor.
-                  \item We retain the winning level of this factor.
-                  \item Follow-up experiments manipulate some other factor, while we fix the previous ones at
+                  \item Sequence of experiments, each with just one factor being varied.
+                  \item The winning level of this factor is retained.
+                  \item Follow-up experiments manipulate some other factor, while the previous ones are held fixed at
                         their optimal levels.
                         \begin{Example}{Button}{}
                               \begin{enumerate}[1.]
@@ -75,22 +75,22 @@
                         \end{Example}
             \end{itemize}
 \end{itemize}
-\begin{Example}{Twitter $ \heartsuit $ versus $ \star $}{}
+\begin{Example}{Twitter $ \heartsuit $ versus $ \star $}{twit_ex}
       \begin{itemize}
             \item In 2015 Twitter changed ``favouriting'' a tweet (expressed as stars) to ``liking'' a tweet (expressed
                   as hearts) and \href{https://entertainment.ie/trending/twitter-changed-their-star-favourites-to-heart-likes-and-the-internet-is-pissed-335920/}{the internet was pissed}.
             \item In line with Twitter's ``test everything'' motto, this decision came about as a result of experimentation.
             \item A hypothetical experiment that could have lead to this decision might involve two factors at two levels.
                   \begin{itemize}
-                        \item $ \text{DF 1}=\text{Shape}\to\set{\text{Star},\text{Heart}} $.
-                        \item $ \text{DF 2}=\text{Colour}\to\set{\text{Yellow},\text{Red}} $.
+                        \item $ \text{DF1}=\text{Shape}\to\Set{\text{Star},\text{Heart}} $.
+                        \item $ \text{DF2}=\text{Colour}\to\Set{\text{Yellow},\text{Red}} $.
                   \end{itemize}
             \item A one-factor-at-a-time approach might look like this:
                   \begin{itemize}
-                        \item Experiment 1: $ \color{yellow}\star $ versus $ \color{yellow}\heartsuit $.
-                        \item Experiment 2: $ \color{yellow}\star $ versus $ \color{red}\heartsuit $.
+                        \item Experiment 1: $ \color{Gold}\star $ versus $ \color{Gold}\heartsuit $.
+                        \item Experiment 2: $ \color{Gold}\star $ versus $ \color{Red}\heartsuit $.
                   \end{itemize}
-            \item Suppose they conclude that $ \color{red}\heartsuit $ is the best, but what about $ \color{red}\star $?
+            \item Suppose they conclude that $ \color{Red}\heartsuit $ is the best, but what about $ \color{Red}\star $?
                   The problem with OFAT experiments is that we may never observe the truly optimal combination of factor levels.
       \end{itemize}
 \end{Example}
@@ -102,9 +102,9 @@
 \begin{itemize}
       \item \textbf{The Factorial approach}:
             \begin{itemize}
-                  \item We define experimental conditions as every unique combination of the design factors' levels.
+                  \item Experimental conditions are defined as every unique combination of the design factors' levels.
                   \item In the \textbf{Twitter} example, the factorial experiment would have looked like this:
-                        $ \color{yellow}\star\color{red}\star\color{yellow}\heartsuit\color{red}\heartsuit $.
+                        $ \color{Gold}\star\color{Red}\star\color{Gold}\heartsuit\color{Red}\heartsuit $.
                   \item In the \textbf{Etsy} example, the factorial experiment would have looked like this:
                         \begin{tightcenter}
                               \emph{Small Square Box}, \emph{Small Rounded Box}, \emph{Long Square Box}, \emph{Long Rounded Box}.
@@ -122,13 +122,13 @@
                         disadvantages.
             \end{itemize}
       \item \textbf{Main effects}: The main effect of factor A, represents the change in the response variable produced
-            by a change in that factor. In our \textbf{Twitter} example:
+            by a change in that factor. In our \hyperref[ex:twit_ex]{\textbf{Twitter}} example:
             \begin{itemize}
                   \item Main effect of shape: what happens to the response when we change the shape from $ \star $ to $ \heartsuit $.
                   \item Main effect of colour: what happens to the response when we change the colour from yellow to red?
             \end{itemize}
       \item \textbf{Interaction effects}: If the main effect of factor A depends on the level of some other factor B, we
-            say that factors A and B interact. In our \textbf{Twitter} example:
+            say that factors A and B interact. In our \hyperref[ex:twit_ex]{\textbf{Twitter}} example:
             \begin{itemize}
                   \item Is there an interaction between shape and colour?
                         \begin{itemize}[$\iff$]
@@ -240,7 +240,7 @@
                   \item An intercept.
                   \item Main effect terms. We represent a factor with $ m_k $ levels using $ m_k-1 $ variables.
                   \item $ \text{Two-factor interaction terms}, \text{three-factor interaction terms},\ldots , \text{$ K $-factor interaction terms} $.
-                  \item In general, we represent an $ h $-factor interaction by $ h $-way products of the main effect indicators for the factors involved.
+                  \item In general, an $ h $-factor interaction is represented by $ h $-way products of the main effect indicators for the factors involved.
             \end{itemize}
 \end{itemize}
 \begin{Example}{Button}{}
@@ -254,8 +254,12 @@
                   \end{itemize}
             \item Two-factor interaction terms, and pairwise products of indicators for each pair of factors.
             \item Three-factor interaction terms. Three-way products of the indicators for all three factors.
-            \item The linear predictor is:
-                  \[ \beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4x_4+\beta_5x_1x_2+\beta_6x_1x_3+\beta_7x_1x_4+\beta_8x_2x_3+\beta_9x_2x_4+\beta_{10}x_1x_2x_3+\beta_{11}x_1x_2x_4 \]
+            \item The linear predictor is given by:
+                  \begin{multline*}
+                        \beta_0+\underbracket{\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4x_4}_{\text{main effects}}\\
+                        +\underbracket{\beta_5x_1x_2+\beta_6x_1x_3+\beta_7x_1x_4+\beta_8x_2x_3+\beta_9x_2x_4}_{\text{two-factor interactions}}\\
+                        +\underbracket{\beta_{10}x_1x_2x_3+\beta_{11}x_1x_2x_4}_{\text{three-factor interactions}}
+                  \end{multline*}
             \item Hypotheses concerning the main effects will therefore involve $ \beta_1,\beta_2,\beta_3,\beta_4 $.
             \item Hypotheses concerning the two-factor interactions will involve $ \beta_5,\beta_6,\beta_7,\beta_8,\beta_9 $.
             \item Hypotheses concerning the three-factor interactions will involve $ \beta_{10},\beta_{11} $.
@@ -271,12 +275,12 @@
       \item We illustrate the topics discussed in this section in the context of an \textbf{Instagram Ad} example.
       \item Suppose that you are a data scientist at Instagram, and you are interested in running an experiment
             to learn about how ad frequency and ad type influences user engagement.
-      \item Suppose that ad frequency has levels $ \set{\text{9:1},\text{7:1},\text{4:1},\text{1:1}} $ corresponding to ad frequencies of
+      \item Suppose that ad frequency has levels $ \Set{\text{9:1},\text{7:1},\text{4:1},\text{1:1}} $ corresponding to ad frequencies of
             1 in 10, 1 in 8, 1 in 5, and every other.
-      \item Suppose also that ad type is a second design factor with levels $ \set{\text{photo},\text{video}} $.
+      \item Suppose also that ad type is a second design factor with levels $ \Set{\text{photo},\text{video}} $.
       \item We will consider here the factorial experiment that considers every combination of these two factors'
             levels. Therefore, $ m=m_1m_2=(4)(2)=8 $ conditions.
-      \item Assume we assign $ n=1000 $ users to each of these $ m=8 $ conditions, and on each user we measure
+      \item Assume $ n=1000 $ users are randomly assigned to each of these $ m=8 $ conditions, and on each user we measure
             the length of time they engage with the app (in minutes).
       \item We use the resulting data to create the following \textbf{main effect plots} (i.e., the plots of MOI versus
             the levels of each factor) in~\Cref{wk7eff}.
@@ -314,7 +318,8 @@
             \end{itemize}
       \item To formally evaluate whether these main effects and interaction effects are significant we fit the following
             linear regression model:
-            \[ Y_i=\beta_0+\underbracket{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}}_{\text{ME of Freq.}}+\underbracket{\beta_4x_{i4}}_{\text{ME of Type}}+\underbracket{\beta_5x_{i1}x_{i4}+\beta_6x_{i2}x_{i4}+\beta_7x_{i3}x_{i4}}_{2\text{FI}}+\varepsilon_i \]
+            \[ Y_i=\beta_0+\underbracket{\textcolor{Indigo}{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}}}_{\text{main effects of frequency}}+\underbracket{\textcolor{Fuchsia}{\beta_4x_{i4}}}_{\text{main effects of type}}+
+                  \underbracket{\textcolor{Orange}{\beta_5x_{i1}x_{i4}+\beta_6x_{i2}x_{i4}+\beta_7x_{i3}x_{i4}}}_{\text{two-factor interaction}}+\varepsilon_i \]
             where the $ x $'s are indicator variables.
             \begin{itemize}
                   \item $ x_{i1}=1 $ if unit $ i $ is in a condition with the 7:1 ad frequency.
@@ -328,17 +333,17 @@
                   \begin{NiceTabular}{|cc|c|c|}
                         \toprule            &   & \multicolumn{2}{c} {\emph{Ad Type}}             \\
                         &   & Photo                                          & Video  \\
-                        \midrule            & 9:1 & $ \E{Y_i\given x_{i1}=x_{i2}=x_{i3}=0,x_{i4}=0}=\beta_0 $                                          & $ \E{Y_i\given x_{i1}=x_{i2}=x_{i3}=0,x_{i4}=1}=\beta_0+\beta_4 $  \\
-                        \multirow{2}{*}{\emph{Freq.}} & 7:1 & $ \E{Y_i\given x_{i1}=1,x_{i4}=0}=\beta_0+\beta_1 $                                          & $ \E{Y_i\given x_{i1}=1,x_{i4}=1}=\beta_0+\beta_1+\beta_4+\beta_5 $  \\
-                        & 4:1 & $ \E{Y_i\given x_{i2}=1,x_{i4}=0}=\beta_0+\beta_2 $                                          & $ \E{Y_i\given x_{i2}=1,x_{i4}=1}=\beta_0+\beta_2+\beta_4+\beta_6 $ \\
-                        & 1:1 & $ \E{Y_i\given x_{i3}=1,x_{i4}=0}=\beta_0+\beta_3 $                                          & $ \E{Y_i\given x_{i3}=1,x_{i4}=1}=\beta_0+\beta_3+\beta_4+\beta_7 $  \\
+                        \midrule            & 9:1 & $ \E{Y_i\given x_{i1}=x_{i2}=x_{i3}=0,x_{i4}=0}=\beta_0 $                                          & $ \E{Y_i\given x_{i1}=x_{i2}=x_{i3}=0,x_{i4}=1}=\beta_0+\textcolor{Fuchsia}{\beta_4} $  \\
+                        \multirow{2}{*}{\emph{Freq.}} & 7:1 & $ \E{Y_i\given x_{i1}=1,x_{i4}=0}=\beta_0+\beta_1 $                                          & $ \E{Y_i\given x_{i1}=1,x_{i4}=1}=\beta_0+\beta_1+\textcolor{Fuchsia}{\beta_4}+\textcolor{Orange}{\beta_5} $  \\
+                        & 4:1 & $ \E{Y_i\given x_{i2}=1,x_{i4}=0}=\beta_0+\beta_2 $                                          & $ \E{Y_i\given x_{i2}=1,x_{i4}=1}=\beta_0+\beta_2+\textcolor{Fuchsia}{\beta_4}+\textcolor{Orange}{\beta_6} $ \\
+                        & 1:1 & $ \E{Y_i\given x_{i3}=1,x_{i4}=0}=\beta_0+\beta_3 $                                          & $ \E{Y_i\given x_{i3}=1,x_{i4}=1}=\beta_0+\beta_3+\textcolor{Fuchsia}{\beta_4}+\textcolor{Orange}{\beta_7} $  \\
                         \bottomrule
                   \end{NiceTabular}
                   \caption{Expected Response in Each Ad Frequency-Type Condition}\label{wk7tab1}
             \end{table}
       \item Clearly, a formal test of:
             \begin{tightcenter}
-                  $ \mathbf{H}_0 $: $ \beta_5=\beta_6=\beta_7=0 $ versus $ \mathbf{H}_\text{A} $: $ \beta_j\ne 0 $
+                  \textcolor{Orange}{$ \mathbf{H}_0 $: $ \beta_5=\beta_6=\beta_7=0 $ versus $ \mathbf{H}_\text{A} $: $ \beta_j\ne 0 $}
             \end{tightcenter}
             for $ j=5,6,7 $ would evaluate the significance of the interaction effect.
             \begin{itemize}
@@ -354,30 +359,30 @@
                               \begin{NiceTabular}{|cc|c|c|}
                                     \toprule            &   & \multicolumn{2}{c} {\emph{Ad Type}}             \\
                                     &   & Photo                                          & Video  \\
-                                    \midrule            & 9:1 & $ \E{Y_i\given x_{i1}=x_{i2}=x_{i3}=0,x_{i4}=0}=\beta_0 $                                          & $ \E{Y_i\given x_{i1}=x_{i2}=x_{i3}=0,x_{i4}=1}=\beta_0+\beta_4 $  \\
-                                    \multirow{2}{*}{\emph{Freq.}} & 7:1 & $ \E{Y_i\given x_{i1}=1,x_{i4}=0}=\beta_0+\beta_1 $                                          & $ \E{Y_i\given x_{i1}=1,x_{i4}=1}=\beta_0+\beta_1+\beta_4 $  \\
-                                    & 4:1 & $ \E{Y_i\given x_{i2}=1,x_{i4}=0}=\beta_0+\beta_2 $                                          & $ \E{Y_i\given x_{i2}=1,x_{i4}=1}=\beta_0+\beta_2+\beta_4 $ \\
-                                    & 1:1 & $ \E{Y_i\given x_{i3}=1,x_{i4}=0}=\beta_0+\beta_3 $                                          & $ \E{Y_i\given x_{i3}=1,x_{i4}=1}=\beta_0+\beta_3+\beta_4 $  \\
+                                    \midrule            & 9:1 & $ \E{Y_i\given x_{i1}=x_{i2}=x_{i3}=0,x_{i4}=0}=\beta_0 $                                          & $ \E{Y_i\given x_{i1}=x_{i2}=x_{i3}=0,x_{i4}=1}=\beta_0+\textcolor{Fuchsia}{\beta_4} $  \\
+                                    \multirow{2}{*}{\emph{Freq.}} & 7:1 & $ \E{Y_i\given x_{i1}=1,x_{i4}=0}=\beta_0+\textcolor{Indigo}{\beta_1} $                                          & $ \E{Y_i\given x_{i1}=1,x_{i4}=1}=\beta_0+\textcolor{Indigo}{\beta_1}+\textcolor{Fuchsia}{\beta_4} $  \\
+                                    & 4:1 & $ \E{Y_i\given x_{i2}=1,x_{i4}=0}=\beta_0+\textcolor{Indigo}{\beta_2} $                                          & $ \E{Y_i\given x_{i2}=1,x_{i4}=1}=\beta_0+\textcolor{Indigo}{\beta_2}+\textcolor{Fuchsia}{\beta_4} $ \\
+                                    & 1:1 & $ \E{Y_i\given x_{i3}=1,x_{i4}=0}=\beta_0+\textcolor{Indigo}{\beta_3} $                                          & $ \E{Y_i\given x_{i3}=1,x_{i4}=1}=\beta_0+\textcolor{Indigo}{\beta_3}+\textcolor{Fuchsia}{\beta_4} $  \\
                                     \bottomrule
                               \end{NiceTabular}
                               \caption{Expected Response in Each Ad Frequency-Type Condition, Based on the Main Effects Model}\label{wk7tab2}
                         \end{table}
                   \item The hypothesis:
                         \begin{tightcenter}
-                              $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\beta_3=0 $ versus $ \mathbf{H}_\text{A} $: $ \beta_j\ne 0 $
+                              \textcolor{Indigo}{$ \mathbf{H}_0 $: $ \beta_1=\beta_2=\beta_3=0 $ versus $ \mathbf{H}_\text{A} $: $ \beta_j\ne 0 $}
                         \end{tightcenter}
                         for $ j=1,2,3 $ tests whether ad frequency is a significant factor.
                   \item The hypothesis:
                         \begin{tightcenter}
-                              $ \mathbf{H}_0 $: $ \beta_4=0 $ versus $ \mathbf{H}_\text{A} $: $ \beta_4\ne 0 $
+                              \textcolor{Fuchsia}{$ \mathbf{H}_0 $: $ \beta_4=0 $ versus $ \mathbf{H}_\text{A} $: $ \beta_4\ne 0 $}
                         \end{tightcenter}
                         tests whether ad type is a significant factor.
                   \item \textbf{But remember}: these tests and the interpretation of main effects are only appropriate in the
                         absence of interaction.
             \end{itemize}
       \item Each of these null hypotheses generates a \textbf{reduced model} with fewer terms relative to a \textbf{full model}
-            with all terms --- we compare them using partial F -tests associated with an analysis of variance.
-      \item The ANOVA output from the \code{anova} function in R is shown in~\Cref{wk7anova}.
+            with all terms --- we compare them using partial $F$-tests associated with an analysis of variance.
+      \item Output from the relevant partial F-tests is shown in~\Cref{wk7anova}.
             \begin{figure}[!htbp]
                   \centering
                   \includegraphics[width=0.8\textwidth]{wk7anova.pdf}
@@ -385,10 +390,10 @@
             \end{figure}
       \item Conclusions:
             \begin{itemize}
-                  \item The $ p $-value associated with $ \mathbf{H}_0 $: $ \beta_5=\beta_6=\beta_7=0 $ is \emph{very} small, suggesting that the interaction
-                        between ad frequency and ad type is significant.
-                  \item The $ p $-value associated with $ \mathbf{H}_0 $: $ \beta_4=0 $ is \emph{very} small, suggesting that the main effect of ad frequency is significant.
-                  \item The $ p $-value associated with $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\beta_3=0 $ is \emph{very} small, suggesting that the main effect of ad frequency is significant.
+                  \item \textcolor{Orange}{The $ p $-value associated with $ \mathbf{H}_0 $: $ \beta_5=\beta_6=\beta_7=0 $ is \underline{very} small, suggesting that the interaction
+                              between ad frequency and ad type is significant.}
+                  \item \textcolor{Fuchsia}{The $ p $-value associated with $ \mathbf{H}_0 $: $ \beta_4=0 $ is \underline{very} small, suggesting that the main effect of ad type is significant.}
+                  \item \textcolor{Indigo}{The $ p $-value associated with $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\beta_3=0 $ is \underline{very} small, suggesting that the main effect of ad frequency is significant.}
                         \begin{itemize}
                               \item Strictly speaking, the last two conclusions are irrelevant because we know the interaction is significant. Although, I include this for \underline{instructional purposes}.
                         \end{itemize}
@@ -399,8 +404,8 @@
       \item The informal and formal evaluation of main and interaction effects can be performed in the context of
             a binary response variable as well.
             \begin{itemize}
-                  \item Main effect and interaction effect plots are from observed proportions.
-                  \item We use logistic regression instead of ordinary linear regression.
+                  \item Main effect and interaction effect plots are based on observed proportions.
+                  \item Logistic regression is used instead of ordinary linear regression.
             \end{itemize}
       \item The structure of the linear predictor is identical to what we have discussed in general.
       \item For instance, if the Instagram experiment from the previous section had a binary response instead, the
@@ -410,7 +415,7 @@
       \item Interest lies in determining whether subsets of the $ \beta $'s are equal to zero to evaluate the significance of
             various main and interaction effects.
             \begin{itemize}
-                  \item We use the \textbf{likelihood ratio tests} for the comparison of full and reduced logistic regression models.
+                  \item We use \textbf{likelihood ratio tests} for the comparison of full and reduced logistic regression models.
                   \item The test statistic for the LRT is:
                         \begin{align*}
                               t & =2\log*{\frac{\text{Likelihood}_{\text{Full Model}}}{\text{Likelihood}_{\text{Reduced Model}}}}      \\

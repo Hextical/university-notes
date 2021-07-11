@@ -159,7 +159,7 @@
     \item In a BIBD, due to incompleteness, we compare $ \bar{y}_{\bullet j\bullet} $ with the average response from the blocks that
           condition $j$ appeared in:
           \[ \frac{\sum_{k\in\mathcal{B}_j}\sum_{i=1}^{n_{jk}} y_{ijk}}{\sum_{k\in\mathcal{B}_j}n_{jk} }  \]
-          where $ \mathcal{B}_j\subset\set{1,2,\ldots,B} $ is the subset of indices indicating which blocks condition $ j $ appeared in.
+          where $ \mathcal{B}_j\subset\Set{1,2,\ldots,B} $ is the subset of indices indicating which blocks condition $ j $ appeared in.
     \item In general, the analysis of BIBDs involves an \emph{adjustment} of this form when evaluating the effect of the
           design factor.
 \end{itemize}
@@ -272,7 +272,7 @@
                         \end{NiceTabular}
                     \end{table}
                     \begin{itemize}
-                        \item $ S_{j=1}=\set{(1,1,1),(1,2,2),(1,3,3),(1,4,4)} $.
+                        \item $ S_{j=1}=\Set{(1,1,1),(1,2,2),(1,3,3),(1,4,4)} $.
                         \item We also define:
                               \begin{itemize}
                                   \item $ \mathcal{S}_j\subset \mathcal{S} $: all tuples for which the design factor is level $ j $.
@@ -349,7 +349,7 @@
     \item The relevant sums of squares are:
           \begin{itemize}
               \item The total sum of squares, which quantifies overall variation in response values:
-                    \[ \text{SS}_\text{T}=\sum_{(j,k,\ell)\in \mathcal{S}}\sum_{i=1}^{n} (y_{ijk\ell}-\bar{y}_{\bullet\bullet\bullet\bullet})^2=\text{SS}_{\text{C}}+\text{SS}_{\text{B}_1}+\text{SS}_{\text{B}_2}+\text{SS}_{\text{E}}  \]
+                    \[ \SST=\sum_{(j,k,\ell)\in \mathcal{S}}\sum_{i=1}^{n} (y_{ijk\ell}-\bar{y}_{\bullet\bullet\bullet\bullet})^2=\text{SS}_{\text{C}}+\text{SS}_{\text{B}_1}+\text{SS}_{\text{B}_2}+\text{SS}_{\text{E}}  \]
               \item The condition sum of squares, which quantifies variability in the response from one condition to another:
                     \[ \text{SS}_{\text{C}}=\sum_{(j,k,\ell)\in \mathcal{S}}\sum_{i=1}^{n} (\bar{y}_{\bullet j\bullet\bullet}-\bar{y}_{\bullet\bullet\bullet\bullet})^2=np \sum_{j=1}^{p} (\bar{y}_{\bullet j\bullet\bullet}-\bar{y}_{\bullet\bullet\bullet\bullet})^2  \]
               \item The first block sum of squares, which quantifies variability in the response from one level of nuisance factor 1 to another:
@@ -357,7 +357,7 @@
               \item The second block sum of squares, which quantifies variability in the response from one level of nuisance factor 2 to another:
                     \[ \text{SS}_{\text{B}_2}=\sum_{(j,k,\ell)\in \mathcal{S}}\sum_{i=1}^{n} (\bar{y}_{\bullet\bullet\bullet\ell}-\bar{y}_{\bullet\bullet\bullet\bullet})^2=np \sum_{\ell=1}^{p} (\bar{y}_{\bullet\bullet\bullet\ell}-\bar{y}_{\bullet\bullet\bullet\bullet})^2  \]
               \item The error sum of squares, which quantifies variability in the response that was not explained by conditions or blocks (i.e., the design and nuisance factors):
-                    \[ \text{SS}_\text{E}=\sum_{(j,k,\ell)\in \mathcal{S}}\sum_{i=1}^{n} (y_{ijk\ell}-\bar{y}_{\bullet j\bullet\bullet}-\bar{y}_{\bullet\bullet k\bullet}-\bar{y}_{\bullet\bullet\bullet\ell}-2\bar{y}_{\bullet\bullet\bullet\bullet})^2 \]
+                    \[ \SSE=\sum_{(j,k,\ell)\in \mathcal{S}}\sum_{i=1}^{n} (y_{ijk\ell}-\bar{y}_{\bullet j\bullet\bullet}-\bar{y}_{\bullet\bullet k\bullet}-\bar{y}_{\bullet\bullet\bullet\ell}-2\bar{y}_{\bullet\bullet\bullet\bullet})^2 \]
           \end{itemize}
     \item We show the corresponding ANOVA table in~\Cref{three_way_anova_LS}.
           \begin{table}[!htbp]
@@ -367,26 +367,26 @@
                   \toprule
                   Source    & SS                     & d.f.        & MS                                                                   & Test Statistic                                           \\
                   \midrule
-                  Design Factor & $ \text{SS}_\text{C} $ & $ p-1 $     & $ \text{MS}_\text{C}=\text{SS}_\text{C}/(p-1) $     & $ t_\text{C}=\text{MS}_\text{C}/\text{MS}_\text{E} $ \\
-                  Nuisance Factor 1     & $ \text{SS}_{\text{B}_1} $ & $ p-1 $     & $ \text{MS}_{\text{B}_1}=\text{SS}_{\text{B}_1}/(p-1) $     & $ t_{\text{B}_1}=\text{MS}_{\text{B}_1}/\text{MS}_\text{E} $ \\
-                  Nuisance Factor 2     & $ \text{SS}_{\text{B}_2} $ & $ p-1 $     & $ \text{MS}_{\text{B}_2}=\text{SS}_{\text{B}_2}/(p-1) $     & $ t_{\text{B}_2}=\text{MS}_{\text{B}_2}/\text{MS}_\text{E} $ \\
-                  Error     & $ \text{SS}_\text{E} $ & $ N-3p+2 $ & $ \text{MS}_\text{E}=\text{SS}_\text{E}/(N-3p+2) $ &                                                      \\
+                  Design Factor & $ \SSC $ & $ p-1 $     & $ \MSC=\SSC/(p-1) $     & $ t_\text{C}=\MSC/\MSE $ \\
+                  Nuisance Factor 1     & $ \text{SS}_{\text{B}_1} $ & $ p-1 $     & $ \text{MS}_{\text{B}_1}=\text{SS}_{\text{B}_1}/(p-1) $     & $ t_{\text{B}_1}=\text{MS}_{\text{B}_1}/\MSE $ \\
+                  Nuisance Factor 2     & $ \text{SS}_{\text{B}_2} $ & $ p-1 $     & $ \text{MS}_{\text{B}_2}=\text{SS}_{\text{B}_2}/(p-1) $     & $ t_{\text{B}_2}=\text{MS}_{\text{B}_2}/\MSE $ \\
+                  Error     & $ \SSE $ & $ N-3p+2 $ & $ \MSE=\SSE/(N-3p+2) $ &                                                      \\
                   \midrule
-                  Total     & $ \text{SS}_\text{T} $ & $ N-1 $\\
+                  Total     & $ \SST $ & $ N-1 $\\
                   \bottomrule
               \end{NiceTabular}
           \end{table}
     \item So, how do we use this table?
           \begin{itemize}
-              \item We test $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{p-1}=0 $ using $ t_\text{C}=\text{MS}_\text{C}/\text{MS}_\text{E} $.
+              \item We test $ \mathbf{H}_0 $: $ \beta_1=\beta_2=\cdots=\beta_{p-1}=0 $ using $ t_\text{C}=\MSC/\MSE $.
                     \begin{itemize}
                         \item $ p $-value: $ \Prob[\big]{T\ge t_\text{C}} $ where $ T \sim F(p-1,N-3p+2) $.
                     \end{itemize}
-              \item We test: $ \mathbf{H}_0 $: $ \gamma_1=\gamma_2=\cdots=\gamma_{p-1}=0 $ using $ t_{\text{B}_1}=\text{MS}_{\text{B}_1}/\text{MS}_{\text{E}} $.
+              \item We test: $ \mathbf{H}_0 $: $ \gamma_1=\gamma_2=\cdots=\gamma_{p-1}=0 $ using $ t_{\text{B}_1}=\text{MS}_{\text{B}_1}/\MSE $.
                     \begin{itemize}
                         \item $ p $-value: $ \Prob*{T\ge t_{\text{B}_1}} $ where $ T \sim F(p-1,N-3p+2) $.
                     \end{itemize}
-              \item We test: $ \mathbf{H}_0 $: $ \delta_1=\delta_2=\cdots=\delta_{p-1}=0 $ using $ t_{\text{B}_2}=\text{MS}_{\text{B}_2}/\text{MS}_{\text{E}} $.
+              \item We test: $ \mathbf{H}_0 $: $ \delta_1=\delta_2=\cdots=\delta_{p-1}=0 $ using $ t_{\text{B}_2}=\text{MS}_{\text{B}_2}/\MSE $.
                     \begin{itemize}
                         \item $ p $-value: $ \Prob*{T\ge t_{\text{B}_2}} $ where $ T \sim F(p-1,N-3p+2) $.
                     \end{itemize}

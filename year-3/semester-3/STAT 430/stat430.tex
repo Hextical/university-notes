@@ -1,6 +1,212 @@
-\input{../../../preambles/book.tex}
-\input{../../../preambles/font-unicode.tex}
-\input{../../../preambles/common.tex}
+\documentclass[final]{book}
+\usepackage[svgnames]{xcolor}
+\usepackage{cfr-lm}
+\usepackage{microtype}
+\usepackage[math-style=ISO,bold-style=ISO,warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
+
+% Core Packages
+\usepackage[margin=1in]{geometry}
+\usepackage[unicode,pdfversion=1.7]{hyperref}
+\usepackage[shortlabels]{enumitem}
+\usepackage[parfill]{parskip}
+\usepackage[theorems,breakable]{tcolorbox}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{cleveref}
+\usepackage{booktabs}
+\usepackage{nicematrix}
+\usepackage{derivative}
+\usepackage{etoolbox}
+\usepackage{framed}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{multirow}
+\usepackage[skip=1ex]{caption}
+\usepackage{interval}
+
+% Functions
+\providecommand\given{}% just to make sure it exists
+\DeclarePairedDelimiterXPP{\E}[1]{\operatorname{\mathbb{E}}}[]{}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\Var}[1]{\operatorname{\mathbb{V}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP\Prob[1]{\operatorname{\mathbb{P}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP\Ind[1]{\operatorname{\mathbb{I}}}\{\}{}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\Se}[1]{\operatorname{\text{se}}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\Cov}[1]{\operatorname{\text{Cov}}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\let\exp\relax%
+\let\log\relax%
+\let\ln\relax%
+\DeclarePairedDelimiterXPP{\exp}[1]{\operatorname{\text{exp}}}[]{}{#1}%
+\DeclarePairedDelimiterXPP{\log}[1]{\operatorname{\text{log}}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\ln}[1]{\operatorname{\text{ln}}}(){}{#1}%
+
+% Distributions
+\DeclarePairedDelimiterXPP{\N}[1]{\mathcal{N}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\MVN}[1]{\text{MVN}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\Binomial}[1]{\text{Binomial}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Uniform}[1]{\text{Uniform}}(){}{#1}
+
+\newcommand{\iid}{\overset{\text{iid}}{\sim}}%
+
+\newcommand{\SSC}{\text{SS}_{\text{C}}}%
+\newcommand{\SSB}{\text{SS}_{\text{B}}}%
+\newcommand{\SSE}{\text{SS}_{\text{E}}}%
+\newcommand{\SST}{\text{SS}_{\text{T}}}%
+\newcommand{\MSC}{\text{MS}_{\text{C}}}%
+\newcommand{\MSB}{\text{MS}_{\text{B}}}%
+\newcommand{\MSE}{\text{MS}_{\text{E}}}%
+\newcommand{\HN}{\symbfup{H}_0}%
+\newcommand{\HA}{\symbfup{H}_{\text{A}}}%
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\DeclarePairedDelimiterX\Set[1]\{\}{%
+    \renewcommand\given{:}%
+    #1%
+}%
+
+\AtBeginDocument{%
+    \let\mathbb\relax%
+    \let\mathcal\relax%
+    \DeclareMathAlphabet{\mathbb}{U}{msb}{m}{n}%
+    \DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}%
+}%
+
+\newenvironment{tightcenter}{%
+    \setlength\topsep{0pt}%
+    \setlength\parskip{0pt}%
+    \par\centering%
+}{\par\noindent\ignorespacesafterend}%
+
+\providecommand{\RandomVector}[1]{\symbf{#1}}% general vectors in bold italic
+\providecommand{\Vector}[1]{\symbfup{#1}}% general vectors in bold italic
+\providecommand{\Matrix}[1]{\symbfup{#1}}% matrix in bold roman % also symbfsfup
+\providecommand{\Field}[1]{\symbfsfup{#1}}% matrix in bold roman % also symbfsfup
+
+\tcbset{
+    regular/.style={
+        boxrule=0pt,
+        breakable,
+        sharp corners
+    },
+    common/.style={
+            coltitle=black,
+            boxrule=0pt,
+            breakable,
+            sharp corners
+        },
+    theorem/.style={
+            common,
+            colback=mypurple,
+            colframe=mypurple!95!black,
+            fontupper=\itshape{}
+        },
+}
+
+\newcommand{\makeheading}[1]
+{
+    \begin{figure}[H]
+        \centering
+        \rule{\columnwidth}{1pt}\\
+        {\large \scshape{#1}}\\[-0.6\baselineskip]
+        \rule{\columnwidth}{1pt}
+        \vspace*{-20pt}
+    \end{figure}
+}
+\DeclareMathOperator{\FWER}{FWER}
+\DeclareMathOperator{\FDR}{FDR}
+\graphicspath{ {./figures/} }
+
+% Definitions
+\definecolor{myyellow}{RGB}{255,255,168}
+% Theorems
+\definecolor{mypurple}{RGB}{216,216,255}
+% Algorithms
+\definecolor{mygray}{RGB}{232,232,232}
+% Examples
+\definecolor{mygreen}{RGB}{216,255,216}
+% Exercises
+\definecolor{myred}{RGB}{255,216,216}
+% Remarks
+\definecolor{mycyan}{RGB}{204,229,229}
+
+\newtcbtheorem[number within=section, crefname={definition}{definitions}]
+{Definition}{DEFINITION}{
+    common,
+    colback=myyellow,
+    colframe=myyellow!95!black
+}{def}
+
+\newtcbtheorem[use counter from=Definition, crefname={example}{examples}]
+{Example}{EXAMPLE}{
+    common,
+    colback=mygreen,
+    colframe=mygreen!95!black,
+}{ex}
+
+\newtcbtheorem[use counter from=Definition, crefname={exercise}{exercises}]
+{Exercise}{EXERCISE}{
+    common,
+    colback=myred,
+    colframe=myred!95!black,
+}{exercise}
+
+\newtcbtheorem[use counter from=Definition, crefname={remark}{remarks}]
+{Remark}{REMARK}{
+    common,
+    colback=mycyan,
+    colframe=mycyan!95!black,
+}{remark}
+
+\newtcbtheorem[use counter from=Definition, crefname={statistical Test}{statistical Tests}]
+{Statistical_Test}{STATISTICAL TEST}{
+    common,
+    colback=Magenta!25!white,
+    colframe=Magenta!50!white,
+}{stest}
+
+\newtcbtheorem[use counter from=Definition, crefname={theorem}{theorems}]
+{Theorem}{THEOREM}{
+    theorem
+}{thm}
+
+\newtcbtheorem[use counter from=Definition, crefname={proposition}{propositions}]
+{Proposition}{PROPOSITION}{
+    theorem
+}{prop}
+
+\newtcbtheorem[use counter from=Definition, crefname={corollary}{corollaries}]
+{Corollary}{COROLLARY}{
+    theorem
+}{cor}
+
+\newtcbtheorem[use counter from=Definition, crefname={lemma}{lemmas}]
+{Lemma}{LEMMA}{
+    theorem
+}{lem}
+
+\newtcbtheorem[no counter]
+{Proof}{Proof of}{
+    common,
+    colframe=black!10,
+    separator sign={}
+}{pf}
+
+\hypersetup{colorlinks,linkcolor=[rgb]{0,0.5,1}}%
 
 \hypersetup{pdftitle={Experimental Design (STAT 430/STAT 830)},
 pdfauthor={Cameron Roopnarine, Nathaniel Stevens},
@@ -14,8 +220,8 @@ pdfkeywords={University of Waterloo, Spring 2021 (1215)}}
 \author{\LaTeX{}er: \emph{Cameron Roopnarine}\\Instructor: \emph{Nathaniel Stevens}}
 \date{\today}
 
-\usepackage[authordate,bibencoding=auto,strict,backend=biber,natbib]{biblatex-chicago}
-\addbibresource{references.bib}
+%\usepackage[authordate,bibencoding=auto,strict,backend=biber,natbib]{biblatex-chicago}
+%\addbibresource{references.bib}
 
 \begin{document}
 
@@ -30,7 +236,8 @@ pdfkeywords={University of Waterloo, Spring 2021 (1215)}}
 \input{wk_05.tex}
 \input{wk_06.tex}
 \input{wk_07.tex}
-\nocite{*}
-\printbibliography[heading=bibintoc,title={References}]
+\input{wk_08.tex}
+%\nocite{*}
+%\printbibliography[heading=bibintoc,title={References}]
 
 \end{document}
