@@ -14,7 +14,7 @@ data.frame(Condition = 1:16,
 model <- glm(y ~ x1 * x2 * x3 * x4, 
              family = binomial(link = "logit"), data = credit)
 summary(model)
-logLik(model)
+logLik(model)--bbox "<left> <bottom> <right> <top>"
 
 ## Fit a reduced model with just the main effects and interactions that 
 ## appear to be significant
