@@ -2,7 +2,7 @@
 \section{Designing \texorpdfstring{$ 2^K $}{2K} Factorial Experiments}
 \makeheading{Week 9}
 \begin{itemize}[*]
-    \item $ 2^K $ factorial experiments involved $ K $ design factors, each at two levels.
+    \item $ 2^K $ factorial experiments involve $ K $ design factors, each at two levels.
 \end{itemize}
 \begin{itemize}
     \item These experiments are typically used for factor screening.
@@ -10,7 +10,7 @@
               \item \textbf{Primary Goal}: Determine which among the $ K $ factors significantly influence the response variable.
               \item \textbf{Secondary Goal}: Determine which combination of levels is optimal.
                     \begin{itemize}[$\hookrightarrow$]
-                        \item This is only relevant if the levels experimented with are the only ones of interest.
+                        \item This is really only relevant if the levels experimented with are the only ones of interest.
                     \end{itemize}
           \end{itemize}
 \end{itemize}
@@ -19,7 +19,7 @@
           \begin{enumerate}[1.]
               \item Choose the MOI and response variables.
                     \begin{itemize}[$\hookrightarrow$]
-                        \item Dictated by the question.
+                        \item Dictated by the ``question.''
                     \end{itemize}
               \item Choose the design factors.
                     \begin{itemize}[$\hookrightarrow$]
@@ -27,7 +27,7 @@
                     \end{itemize}
               \item Choose the levels of the design factors.
                     \begin{itemize}[$\hookrightarrow$]
-                        \item With the goal of factor screening we want to give influential factors as
+                        \item With the goal of factor screening we want to give influential factors as fair
                               an opportunity as possible to show themselves as being influential.
                         \item Pick levels that are quite different. For example, colour and discount amount.
                     \end{itemize}
@@ -44,7 +44,7 @@
 \end{itemize}
 \begin{itemize}
     \item In two-level experiments we regard the two levels of a factor as \emph{low} and \emph{high} values of that factor.
-          \begin{itemize}
+          \begin{itemize}[*]
               \item If a factor is categorical, then ``low'' vs. ``high'' labelling is arbitrary.
           \end{itemize}
     \item We represent each factor by a binary variable:
@@ -64,7 +64,7 @@
 \begin{itemize}
     \item The experimental design can be completely summarized by the \textbf{design matrix}.
           \begin{itemize}
-              \item $ 2^K $ rows (for each condition) and $ K $ columns (for each factor) of plus and minus ones.
+              \item $ 2^K $ rows (conditions) and $ K $ columns (factors) of plus and minus ones.
           \end{itemize}
           \begin{itemize}[$\rightarrow$]
               \item The $ \pm 1 $ entries are organized such that each row corresponds to a unique condition and the
@@ -116,7 +116,7 @@
             -1 & -1 & +1 \\
             +1 & -1 & +1 \\
             -1 & +1 & +1 \\
-            +1 & -1 & +1
+            +1 & +1 & +1
         \end{bmatrix}=\begin{bmatrix}
             \Vector{x}_1 & \Vector{x}_2 & \Vector{x}_3
         \end{bmatrix} \]
@@ -252,7 +252,7 @@
                    & =\frac{\bar{y}_{\text{A}^+\cap \text{B}^-}+\bar{y}_{\text{A}^+\cap \text{B}^+}}{2}
                   -\frac{\bar{y}_{\text{A}^-\cap \text{B}^-}+\bar{y}_{\text{A}^-\cap \text{B}^+}}{2}    \\
                    & =\frac{(12/3)+(8/3)}{2}-\frac{(4/3)+(6/3)}{2}                                      \\
-                   & =-1/3
+                   & =10/6
               \end{align*}
               Therefore, we expect the average response to go up by $ 10/6 $ when A is moved from its low to high level.
         \item Intuitive estimate of the main effect of B\@:
@@ -271,8 +271,8 @@
                         \[ \widehat{\text{ME}}_{\text{A}\mid \text{B}^+}=\bar{y}_{\text{A}^+\cap \text{B}^+}-\bar{y}_{\text{A}^-\cap \text{B}^+}=\frac{8}{3}-\frac{6}{3}=\frac{2}{3} \]
                   \item Conditional ME of A when B is low:
                         \[ \widehat{\text{ME}}_{\text{A}\mid \text{B}^-}=\bar{y}_{\text{A}^+\cap \text{B}^-}-\bar{y}_{\text{A}^-\cap \text{B}^-}=\frac{12}{3}-\frac{4}{3} =\frac{8}{3} \]
-                        Therefore, because $  \widehat{\text{ME}}_{\text{A}\mid \text{B}^+}\ne\widehat{\text{ME}}_{\text{A}\mid \text{B}^-} $ we know there exists an A:B interaction.
               \end{itemize}
+              Therefore, because $ \widehat{\text{ME}}_{\text{A}\mid \text{B}^+}\ne\widehat{\text{ME}}_{\text{A}\mid \text{B}^-} $ we know there exists an A:B interaction.
         \item The interaction effect is defined as the average difference between the conditional main effects:
               \begin{align*}
                   \widehat{\text{IE}}_{\text{AB}}
@@ -282,16 +282,16 @@
                    & =\frac{2}{6}-\frac{8}{6}                                                                                                                                             \\
                    & =-1
               \end{align*}
-        \item If a third factor C were involved, we may define the three-way ABC interaction as:
-              \begin{align*}
-                  \widehat{\text{IE}}_{\text{ABC}}
-                   & =\frac{\widehat{\text{IE}}_{\text{AB}\mid\text{C}^+}}{2}-\frac{\widehat{IE}_{\text{AB}\mid\text{C}^-}}{2} \\
-                   & =\frac{\widehat{\text{IE}}_{\text{AC}\mid\text{B}^+}}{2}-\frac{\widehat{IE}_{\text{AC}\mid\text{B}^-}}{2} \\
-                   & =\frac{\widehat{\text{IE}}_{\text{BC}\mid\text{A}^+}}{2}-\frac{\widehat{IE}_{\text{BC}\mid\text{A}^-}}{2}
-              \end{align*}
     \end{itemize}
 \end{Example}
 \begin{itemize}
+    \item If a third factor C were involved, we may define the three-way ABC interaction as:
+          \begin{align*}
+              \widehat{\text{IE}}_{\text{ABC}}
+               & =\frac{\widehat{\text{IE}}_{\text{AB}\mid\text{C}^+}}{2}-\frac{\widehat{IE}_{\text{AB}\mid\text{C}^-}}{2} \\
+               & =\frac{\widehat{\text{IE}}_{\text{AC}\mid\text{B}^+}}{2}-\frac{\widehat{IE}_{\text{AC}\mid\text{B}^-}}{2} \\
+               & =\frac{\widehat{\text{IE}}_{\text{BC}\mid\text{A}^+}}{2}-\frac{\widehat{IE}_{\text{BC}\mid\text{A}^-}}{2}
+          \end{align*}
     \item So what actually happened here? See~\Cref{fig:maininteffects22}.
           \begin{figure}[!htbp]
               \centering
@@ -400,7 +400,7 @@
           \begin{itemize}[$\hookrightarrow$]
               \item \textbf{Response surface}: functional relationship between the response and design factors.
           \end{itemize}
-    \item Each of the $K$ factors is represented by the binary variables.
+    \item Each of the $K$ factors is represented by the binary variables:
           \[ x_j=\begin{cases*}
                   -1 & if the factor is at its ``low'' level  \\
                   1  & if the factor is at its ``high'' level
@@ -420,22 +420,22 @@
     \[ \beta_0+\beta_1x_1 \]
 \end{Example}
 \begin{Example}{$ 2^2 $ Example}{}
-    \[ \beta_0+\beta_1x_1+\beta_2x_2+\beta_{12}x_2 \]
+    \[ \beta_0+\beta_1x_1+\beta_2x_2+\beta_{12}x_1x_2 \]
 \end{Example}
 \begin{Example}{$ 2^3 $ Example}{}
     \[ \beta_0+\underbracket{\beta_1x_1+\beta_2x_2+\beta_3x_3}_{\text{main effects}}+
         \underbracket{\beta_{12}x_1x_2+\beta_{13}x_1x_3+\beta_{23}x_2x_3}_{\text{two-factor interactions}}+
         \underbracket{\beta_{123}x_1x_2x_3}_{\text{three-factor interaction}} \]
 \end{Example}
-\subsection*{Estimation}
+\subsubsection*{Estimation}
 \begin{itemize}
     \item Estimation of the $ \beta $'s is carried out by:
           \begin{itemize}[$\hookrightarrow$]
               \item Ordinary least squares (in the case of linear regression).
               \item Maximum likelihood (in the case of logistic regression).
           \end{itemize}
-    \item In both cases there is a one-to-one connection between the
-          main and interaction effects. Note that $ \widehat{\text{Effect}} $
+    \item In both cases there is a one-to-one connection between the $ \beta $ estimates and the expressions for the
+          main and interaction effects. Note that both $ \widehat{\text{Effect}} $'s below
           are calculated using the ``intuitive'' formulas described above.
           \begin{itemize}
               \item Continuous response:
@@ -450,7 +450,7 @@
                     \[ \beta_0+\beta_1x_1+\beta_2x_2+\beta_{12}x_1x_2 \]
                     where $ x_1 $ and $ x_2 $ correspond to factors A and B respectively.
               \item The linear regression model is:
-                    \[ Y_i=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_{12}x_{i1}x_{i2}+\varepsilon_i\quad i=1,2,\ldots,N=n2^K \]
+                    \[ Y_i=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_{12}x_{i1}x_{i2}+\varepsilon_i\quad \text{for }i=1,2,\ldots,N=n2^K \]
                     which can be written in matrix-vector notation as:
                     \[ \RandomVector{Y}=\Matrix{X}\Vector{\beta}+\RandomVector{\varepsilon} \]
                     where
@@ -493,7 +493,7 @@
                             \vdots        \\
                             \varepsilon_{12}
                         \end{bmatrix} \]
-                    \begin{itemize}[$\star$]
+                    \begin{itemize}[*]
                         \item The columns of $ X $ are orthogonal!
                               \begin{itemize}
                                   \item This is why we code $ x $'s using $ \pm 1 $'s.
@@ -507,7 +507,7 @@
                             0  & 12 & 0  & 0  \\
                             0  & 0  & 12 & 0  \\
                             0  & 0  & 0  & 12
-                        \end{bmatrix}_{4\times 4}\rightarrow
+                        \end{bmatrix}\rightarrow
                         (\Matrix{X}^\top\Matrix{X})^{-1}=\frac{1}{12}\Matrix{I}_{4} \]
                     \[ \Matrix{X}^\top\RandomVector{Y}=\begin{bmatrix}
                             \Vector{1}^\top \RandomVector{Y}   \\
@@ -518,7 +518,7 @@
                             \displaystyle \sum_{i=1}^{N} Y_i                            \\
                             \displaystyle \sum_{i:\text{A}^+}Y_i-\sum_{i:\text{A}^-}Y_i \\
                             \displaystyle \sum_{i:\text{B}^+}Y_i-\sum_{i:\text{B}^-}Y_i \\
-                            \displaystyle \sum_{i:\text{A}^+\cap \text{B}^+}Y_i+\sum_{i:\text{A}^-\text{B}^-}Y_i-\sum_{i:\text{A}^-\text{B}^+}Y_i-\sum_{i:\text{A}^+\text{B}^-}Y_i
+                            \displaystyle \sum_{i:\text{A}^+\cap\text{B}^+}Y_i+\sum_{i:\text{A}^-\cap\text{B}^-}Y_i-\sum_{i:\text{A}^-\cap\text{B}^+}Y_i-\sum_{i:\text{A}^+\cap\text{B}^-}Y_i
                         \end{bmatrix} \]
                     \[ \hat{\RandomVector{\beta}}=(\Matrix{X}^\top\Matrix{X})^{-1}\Matrix{X}^\top \RandomVector{Y}=\begin{bmatrix}
                             5/2   \\
@@ -558,18 +558,22 @@
                     \[ \widehat{\text{Effect}}=2\hat{\beta}=\frac{\Vector{x}^\top \RandomVector{Y}}{n 2^{K-1}}  \]
                     where $ \Vector{x} $ is the column of $ \Matrix{X} $ corresponding to the effect of interest, and $ \beta $ is the corresponding
                     regression coefficient.
-                    \begin{itemize}[$\star$]
+                    \begin{itemize}[*]
                         \item This should make sense: $ \beta $'s in ordinary regression are interpreted as the expected change in response
                               resulting from a unit increase in $ x $. Here, we care about two-unit increases (i.e., low $\rightarrow $ high, $-1\rightarrow +1$).
                     \end{itemize}
           \end{itemize}
 \end{itemize}
-\subsection*{Hypothesis Testing}
+\subsubsection*{Hypothesis Testing}
 \begin{itemize}
     \item The significance of main and interaction effects is determined by testing hypotheses that set the relevant
           $ \beta $'s equal to $ 0 $.
+\end{itemize}
+\begin{itemize}[*]
     \item But now, because each effect is represented by just a single term, the hypotheses of interest involve
           just a single $ \beta $.
+\end{itemize}
+\begin{itemize}
     \item In the \hyperref[ex:toy_ex]{\textbf{Toy Example}}, if we wanted to determine the significance of factor A, we simply test
           \begin{tightcenter}
               $ \HN $: $ \beta_1=0 $
@@ -583,9 +587,11 @@
               \item $ t $-tests in the case of linear regression.
               \item $ Z $-tests in the case of logistic regression.
           \end{itemize}
-          \begin{itemize}[$\star$]
+          \begin{itemize}[*]
               \item \underline{All} tests can be done in the \underline{full model} (linear predictor with $ 2^K $ terms).
           \end{itemize}
+\end{itemize}
+\begin{itemize}[$\rightarrow$]
     \item But if for some reason we still want to test hypotheses about several $ \beta $'s simultaneously, we can compare
           full and reduced models with the usual:
           \begin{itemize}
@@ -657,7 +663,7 @@
           \begin{figure}[!htbp]
               \centering
               \includegraphics[width=\textwidth]{wk91.pdf}
-              \caption{\texttt{glm()} for Credit Card Example}\label{fig:creditcardglm}
+              \caption{\texttt{glm()} for the credit card example.}\label{fig:creditcardglm}
           \end{figure}
           \begin{itemize}
               \item The $ p $-value for $ \HN $: $ \beta_1=0 $ is $ 2.92\times 10^{-5} $.
@@ -667,7 +673,7 @@
               \item The $ p $-value for $ \HN $: $ \beta_{12}=0 $ is $ 0.00434 $.
               \item The $ p $-value for $ \HN $: $ \beta_{34}=0 $ is $ 0.04899 $.
           \end{itemize}
-    \item We now know which main and interaction effects are significant (i.e., all main effects $ x_1 $:$ x_2 $ and $ x_3 $:$ x_4 $).
+    \item We now know which main and interaction effects are significant (i.e., all main effects, $ x_1 $:$ x_2 $, and $ x_3 $:$ x_4 $).
           \begin{itemize}
               \item Let's use main and interaction effect plots to help us interpret these effects.
                     \begin{itemize}
@@ -681,13 +687,13 @@
                     \end{itemize}
                     \begin{figure}[!htbp]
                         \centering
-                        \caption{Main effect plots for the credit card example.}\label{fig:wk92}
                         \includegraphics[width=\textwidth]{wk92.pdf}
+                        \caption{Main effect plots for the credit card example.}\label{fig:wk92}
                     \end{figure}
                     \begin{figure}[!htbp]
                         \centering
-                        \caption{Interaction effect plots for the credit card example.}\label{fig:wk93}
                         \includegraphics[width=\textwidth]{wk93.pdf}
+                        \caption{Interaction effect plots for the credit card example.}\label{fig:wk93}
                     \end{figure}
           \end{itemize}
     \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/W9/2^4_Factorial_Example.R}{[R Code] \texttt{2\^{}4\_Factorial\_Example}}

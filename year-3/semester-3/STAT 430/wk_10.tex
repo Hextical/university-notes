@@ -1,4 +1,5 @@
 \chapter{\texorpdfstring{$ 2^{K-p} $}{2K-p} Fractional Factorial Experiments}
+\makeheading{Week 10}
 Let $ p\in\Field{Z}^+ $, $ 1\le p<K $, and $ 2^{K-p}>K $.
 \begin{itemize}[*]
     \item A $ 2^K $ factorial experiment is an economical special case of a general factorial experiment.
@@ -52,12 +53,12 @@ Let $ p\in\Field{Z}^+ $, $ 1\le p<K $, and $ 2^{K-p}>K $.
               \item[$\vdots$]
               \item $ \binom{K}{K}=1 $ $ K $-factor interaction term.
           \end{itemize}
-          This is a total of $ \sum_{k=1}^{K} 2^K-1 $ estimated effects and just $ K+\binom{K}{2} $ of these are main effects
+          This is a total of $ \sum_{k=1}^{K}\binom{K}{k}=2^K-1 $ estimated effects and just $ K+\binom{K}{2} $ of these are main effects
           and two-factor interactions.
           \begin{Example}{}{}
               If $ K=8 $, then $ \binom{K}{2}=28 $, $ 2^K-1=255 $, and so $ 255-28-8=219 $ is the number of 3+FI's.
           \end{Example}
-    \item In light of effect sparsity, it is as a waste of resources to estimate higher order interaction terms.
+    \item In light of effect sparsity, it is a waste of resources to estimate higher order interaction terms.
           \begin{itemize}[*]
               \item It would be a better use of resources to estimate the main effects and low-order interactions of a
                     larger number of factors.
@@ -170,12 +171,12 @@ $ 2^{K-p} $ conditions to experiment with?
               The model matrix (when $ n=1 $) for a full $ 2^2 $ design with factors A and B is shown below:
               \[ \begin{NiceArray}{ccccc}
                       \toprule
-                      \text{Condition} & \text{I} & \text{A} & \text{B} & \text{AB} \\
+                      \text{Condition} & \text{I} & \text{A} & \text{B} & \text{AB}=\text{C} \\
                       \midrule
-                      1                & +1       & -1       & -1       & +1        \\
-                      2                & +1       & +1       & -1       & -1        \\
-                      3                & +1       & -1       & +1       & -1        \\
-                      4                & +1       & +1       & +1       & +1        \\
+                      1                & +1       & -1       & -1       & +1                 \\
+                      2                & +1       & +1       & -1       & -1                 \\
+                      3                & +1       & -1       & +1       & -1                 \\
+                      4                & +1       & +1       & +1       & +1                 \\
                       \bottomrule
                   \end{NiceArray} \]
           \end{Example}
@@ -202,7 +203,7 @@ $ 2^{K-p} $ conditions to experiment with?
           factor with an existing condition. We aliased the main effect of C with the AB interaction.
           Notation: $ \text{C}=\text{AB} $.
     \item We call $ \text{C}=\text{AB} $ the \textbf{design generator}.
-    \item When we do this, we \textbf{confound}, the interaction effect with the main effect of the new factor.
+    \item When we do this, we \textbf{confound} the interaction effect with the main effect of the new factor.
           \begin{itemize}[$\hookrightarrow$]
               \item These effects cannot be separately estimated.
           \end{itemize}
@@ -213,17 +214,17 @@ $ 2^{K-p} $ conditions to experiment with?
                     the AB interaction effect.
                     \[ \widehat{\text{IE}}_{\text{AB}}
                         =\frac{\bar{y}_{\text{A}^+\cap \text{B}^+}+\bar{y}_{\text{A}^-\cap \text{B}^-}}{2}-\frac{\bar{y}_{\text{A}^-\cap \text{B}^+}+\bar{y}_{\text{A}^+\cap \text{B}^-}}{2} \]
-                    \begin{align}
+                    \begin{align*}
                         \widehat{\text{ME}}_{\text{C}}
                          & =\bar{y}_{\text{C}^+}-\bar{y}_{\text{C}^-}                                                                                                                           \\
                          & =\frac{\bar{y}_{\text{A}^+\cap \text{B}^+}+\bar{y}_{\text{A}^-\cap \text{B}^-}}{2}-\frac{\bar{y}_{\text{A}^-\cap \text{B}^+}+\bar{y}_{\text{A}^+\cap \text{B}^-}}{2} \\
                          & =\widehat{\text{IE}}_{\text{AB}}
-                    \end{align}
-                    This calculator now estimates \underline{both} the main effect of C \underline{and} the AB interaction effect simultaneously. \underline{We can't separate them}!
+                    \end{align*}
+                    This calculation now estimates \underline{both} the main effect of C \underline{and} the AB interaction effect simultaneously. \underline{We can't separate them}!
           \end{itemize}
     \item This is the price we pay for using fewer conditions than what is prescribed by the full $2^K$ design.
           \begin{itemize}[$\hookrightarrow$]
-              \item We cannot separately estimate confounded/aliased effects. IT turns out this problem doesn't only impact C and AB\@.
+              \item We cannot separately estimate confounded/aliased effects. It turns out this problem doesn't only impact C and AB\@.
           \end{itemize}
 \end{itemize}
 \subsection{The Defining Relation}
@@ -240,8 +241,10 @@ $ 2^{K-p} $ conditions to experiment with?
 \end{itemize}
 \begin{itemize}
     \item This becomes evident when we consider the \textbf{defining relation}:
-          \[ \text{Design Generator}\rightarrow\text{C}=\text{AB}\rightarrow \text{C}\times\text{C}=\text{AB}\times\text{C} \]
-          \[ \text{I}=\text{ABC} \]
+          \begin{align*}
+              \text{Design Generator}\rightarrow\text{C}=\text{AB}\rightarrow \text{C}\times\text{C} & =\text{AB}\times\text{C} \\
+              \text{I}                                                                               & =\text{ABC}
+          \end{align*}
     \item This may be used to uncover all aliases by multiplying it by any effect:
           \[ \begin{array}{ccc}
                   \text{A}\times\text{I}=\text{A}^2\text{BC} & \text{B}\times\text{I}=\text{A}\text{B}^2\text{C} & \text{C}=\text{AB} \\
@@ -277,12 +280,13 @@ $ 2^{K-p} $ conditions to experiment with?
               \begin{itemize}[$\hookrightarrow$]
                   \item This tell us when to run factor D at low vs.\ high.
                         \begin{itemize}
-                            \item We could choose AB, AC, BC, or ABC\@. Which one is the right choice?
+                            \item We could choose AB, AC, BC, or ABC\@. Which one is the \emph{right} choice?
                                   \begin{itemize}
                                       \item We choose $ \text{D}=\text{ABC} $ because the effect sparsity principle tells us
                                             that high order interactions are less likely to be significant.
                                   \end{itemize}
                             \item The complete aliasing structure is:
+                                  \[ \text{Defining relation}\rightarrow\text{I}=\text{ABCD} \]
                                   \[ \text{A}=\text{BCD} \]
                                   \[ \text{B}=\text{ACD} \]
                                   \[ \text{C}=\text{ABD} \]
@@ -332,7 +336,7 @@ $ 2^{K-p} $ conditions to experiment with?
               \end{itemize}
     \end{itemize}
     \begin{itemize}[*]
-        \item In general, the number of effect aliased with a given effect is $ 2^{p}-1 $.
+        \item In general, the number of effects aliased with a given effect is $ 2^{p}-1 $.
         \item Thus, in a $ 2^{K-p} $ fractional factorial design, every effect estimate actually jointly quantifies $2^p$ effects.
     \end{itemize}
 \end{Example}
@@ -347,7 +351,7 @@ $ 2^{K-p} $ conditions to experiment with?
 \end{itemize}
 \begin{framed}
     \begin{tightcenter}
-        \textbf{But how do we know \emph{which} interactions to choose??}
+        \textbf{But how do we know \emph{which} interactions to choose?}
     \end{tightcenter}
 \end{framed}
 \subsection{Resolution}
@@ -361,6 +365,8 @@ $ 2^{K-p} $ conditions to experiment with?
           \begin{itemize}
               \item High order interaction terms (that are unlikely to be significant) are good choices for aliases.
           \end{itemize}
+\end{itemize}
+\begin{itemize}
     \item This notion is quantified by the \textbf{resolution} of the fractional factorial design.
           \begin{itemize}[$\rightarrow$]
               \item A design is resolution $R$ if main effects are aliased with interaction effects involving at least $R - 1$ factors.
@@ -375,15 +381,17 @@ $ 2^{K-p} $ conditions to experiment with?
           \begin{itemize}[$\rightarrow$]
               \item The length of the shortest word is the resolution of the design.
           \end{itemize}
-    \item The defining relations for $ 2^{3-1} $, $ 2^{4-1} $, and $ 2^{5-2} $ designs are:
-          \[ \text{I}=\text{ABC} \]
-          \[ \text{I}=\text{ABCD} \]
-          \[ \text{I}=\text{ABCD}=\text{BCE}=\text{ADE} \]
-          \begin{itemize}[label={}]
-              \item Shortest word has length 3. Therefore, it's a Resolution III design.
-              \item Shortest word has length 4. Therefore, it's a Resolution IV design.
-              \item These designs are described succinctly as:
-                    \[ 2^{3-1}_{\text{III}},2^{4-1}_{\text{IV}},2^{5-2}_{\text{III}} \]
+          \begin{itemize}[*]
+              \item The defining relations for $ 2^{3-1} $, $ 2^{4-1} $, and $ 2^{5-2} $ designs are:
+                    \[ \text{I}=\text{ABC} \]
+                    \[ \text{I}=\text{ABCD} \]
+                    \[ \text{I}=\text{ABCD}=\text{BCE}=\text{ADE} \]
+                    \begin{itemize}[label={}]
+                        \item For $ 2^{3-1} $ and $ 2^{5-2} $ designs: shortest word has length 3. Therefore, it's a Resolution III design.
+                        \item For $ 2^{4-1} $ design: shortest word has length 4. Therefore, it's a Resolution IV design.
+                        \item These designs are described succinctly as:
+                              \[ 2^{3-1}_{\text{III}},2^{4-1}_{\text{IV}},2^{5-2}_{\text{III}} \]
+                    \end{itemize}
           \end{itemize}
     \item General notation: $ 2_R^{K-p} $ where
           \begin{itemize}
@@ -472,10 +480,10 @@ $ 2^{K-p} $ conditions to experiment with?
                         \item Design 3 minimizes this number, and hence minimizes the number of main effects aliased with
                               the lowest-order interactions.
                     \end{itemize}
-              \item In general, for a given resolution $R$ the \textbf{minimum aberration design} is one which minimizes
-                    the number of minimum-length words in the defining relation.
-              \item These designs are preferred since they minimize the number times main effects are aliased with
-                    the lowest order ($ (R-1) $-factor) interactions.
+              \item[*] In general, for a given resolution $R$ the \textbf{minimum aberration design} is one which minimizes
+                  the number of minimum-length words in the defining relation.
+              \item[$\rightarrow$] These designs are preferred since they minimize the number times main effects are aliased with
+                  the lowest order ($ (R-1) $-factor) interactions.
           \end{itemize}
 \end{itemize}
 \section{Analyzing \texorpdfstring{$ 2^{K-p} $}{2K-p} Fractional Factorial Experiments}
@@ -488,7 +496,7 @@ $ 2^{K-p} $ conditions to experiment with?
                         \item $ (1/2)^p $ as many.
                     \end{itemize}
               \item This is made possible by \emph{aliasing} and reliance on the \emph{principle of effect sparsity}.
-              \item However, this aliasing causes confounding which can complicate conclusions.
+              \item However, this aliasing causes \emph{confounding} which can complicate conclusions.
                     \begin{itemize}[$\hookrightarrow$]
                         \item Can't separately estimate confounded effects.
                     \end{itemize}
@@ -521,7 +529,7 @@ $ 2^{K-p} $ conditions to experiment with?
                     aware of \emph{which} effects are confounded.
           \end{itemize}
     \item Accounting for this confounding is particularly important when interpreting effect estimates and evaluating their significance.
-          \begin{Example}{The $ 2^{5-2} $ Example}{}
+          \begin{Example}{The $ 2^{5-2}_{\text{III}} $ Example}{}
               Suppose we find that the main effect of factor A is significant. What can we conclude?
               \[ \text{A}=\text{BCD}=\text{ABCE}=\text{DE} \]
               We can't be 100\% certain the significance of the effect is solely due to the main effect of A.
