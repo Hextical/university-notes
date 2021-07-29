@@ -1,554 +1,554 @@
-\chapter{\texorpdfstring{$ 2^{K-p} $}{2K-p} Fractional Factorial Experiments}
+\chapter{\texorpdfstring{$ 2^{K-p} $}{2K-p} FRACTIONAL FACTORIAL EXPERIMENTS}
 \makeheading{Week 10}
 Let $ p\in\Field{Z}^+ $, $ 1\le p<K $, and $ 2^{K-p}>K $.
 \begin{itemize}[*]
-    \item A $ 2^K $ factorial experiment is an economical special case of a general factorial experiment.
-          \begin{itemize}[$\rightarrow$]
-              \item It minimizes the number of levels being investigated.
-              \item Thus, it reduces the overall number of experimental conditions.
-          \end{itemize}
+      \item A $ 2^K $ factorial experiment is an economical special case of a general factorial experiment.
+            \begin{itemize}[$\rightarrow$]
+                  \item It minimizes the number of levels being investigated.
+                  \item Thus, it reduces the overall number of experimental conditions.
+            \end{itemize}
 \end{itemize}
 \begin{itemize}
-    \item However, $ 2^K $ can still be a very large number of conditions even for moderate $ K $.
-          \begin{Example}{}{}
-              If $ K=8 $, then $ 2^K=256=m $.
-          \end{Example}
+      \item However, $ 2^K $ can still be a very large number of conditions even for moderate $ K $.
+            \begin{Example}{}{}
+                  If $ K=8 $, then $ 2^K=256=m $.
+            \end{Example}
 \end{itemize}
 \begin{itemize}[*]
-    \item In a $ 2^{K-p} $ fractional factorial experiment we also investigate $ K $ factors but in just a fraction of the
-          conditions.
-          \begin{itemize}[label={}]
-              \item Specifically, $ (1/2)^p $ as many since $ m=2^{K-p} $.
-          \end{itemize}
+      \item In a $ 2^{K-p} $ fractional factorial experiment we also investigate $ K $ factors but in just a fraction of the
+            conditions.
+            \begin{itemize}[label={}]
+                  \item Specifically, $ (1/2)^p $ as many since $ m=2^{K-p} $.
+            \end{itemize}
 \end{itemize}
 \begin{itemize}[$\rightarrow$]
-    \item Rather than experimenting with all $ 2^K $ conditions, we specially select $ 2^{K-p} $ of them.
-          \begin{itemize}
-              \item When $ p=1 $, we investigate $ K $ factors in half as many conditions (i.e., ``one-half fraction'').
-              \item When $ p=2 $, we investigate $ K $ factors in a quarter of the conditions (i.e., ``one-quarter fraction'').
-          \end{itemize}
+      \item Rather than experimenting with all $ 2^K $ conditions, we specially select $ 2^{K-p} $ of them.
+            \begin{itemize}
+                  \item When $ p=1 $, we investigate $ K $ factors in half as many conditions (i.e., ``one-half fraction'').
+                  \item When $ p=2 $, we investigate $ K $ factors in a quarter of the conditions (i.e., ``one-quarter fraction'').
+            \end{itemize}
 \end{itemize}
 \begin{itemize}
-    \item The value $ p $ dictates the degree of \emph{fractioning} and is typically chosen to:
-          \begin{itemize}[$\rightarrow$]
-              \item Minimize the number of experimental conditions $ m $, given a fixed number of design factors $ K $, or
-              \item Maximize the number of design factors $ K $, given a fixed number of conditions $ m $.
-          \end{itemize}
-          \begin{itemize}[*]
-              \item \underline{Goal}: explore as many factors as possible in as few conditions as possible.
-          \end{itemize}
-    \item \textbf{Principle of effect sparsity}: in the presence of several factors, variation in the response is likely to
-          be driven by a small amount of main effects and low-order interactions.
-          \begin{itemize}[$\rightarrow$]
-              \item $ \sim 40\% $ of ME's were significant.
-              \item $ \sim 10\% $ of 2FI's were significant.
-              \item $ \sim 5\% $ of 3+FI's were significant.
-          \end{itemize}
-    \item But consider the linear predictor from the full $ 2^K $ factorial experiment. There are:
-          \begin{itemize}
-              \item An intercept: $ \beta_0 $.
-              \item $ K $ main effect terms.
-              \item $ \binom{K}{2} $ two-factor interaction terms.
-              \item $ \binom{K}{3} $ three-factor interaction terms.
-              \item[$\vdots$]
-              \item $ \binom{K}{K}=1 $ $ K $-factor interaction term.
-          \end{itemize}
-          This is a total of $ \sum_{k=1}^{K}\binom{K}{k}=2^K-1 $ estimated effects and just $ K+\binom{K}{2} $ of these are main effects
-          and two-factor interactions.
-          \begin{Example}{}{}
-              If $ K=8 $, then $ \binom{K}{2}=28 $, $ 2^K-1=255 $, and so $ 255-28-8=219 $ is the number of 3+FI's.
-          \end{Example}
-    \item In light of effect sparsity, it is a waste of resources to estimate higher order interaction terms.
-          \begin{itemize}[*]
-              \item It would be a better use of resources to estimate the main effects and low-order interactions of a
-                    larger number of factors.
-          \end{itemize}
-    \item So how do we choose \emph{which} $ 2^{K-p} $ conditions to run?
-    \item Consider the following three examples as motivation:
-          \begin{Example}{The $ 2^{3-1} $ Example}{}
-              In this example we consider a one-half fraction of the $2^3$ design which
-              explores $K = 3$ factors (A, B, C) in $m = 4$ conditions rather than $8$. The design matrix associated
-              with a full $2^3$ design and a visualization of the full $2^3$ design are shown below. The question of
-              primary interest is: \emph{which} $m = 4$ conditions do we choose for the $ 2^{3-1} $ experiment?
-              \[ \begin{NiceArray}{cccc}
-                      \toprule
-                      \text{Condition} & \text{Factor A} & \text{Factor B} & \text{Factor C} \\
-                      \midrule
-                      1                & -1              & -1              & -1              \\
-                      2                & +1              & -1              & -1              \\
-                      3                & -1              & +1              & -1              \\
-                      4                & +1              & +1              & -1              \\
-                      5                & -1              & -1              & +1              \\
-                      6                & +1              & -1              & +1              \\
-                      7                & -1              & +1              & +1              \\
-                      8                & +1              & +1              & +1              \\
-                      \bottomrule
-                  \end{NiceArray} \]
-          \end{Example}
-          \begin{Example}{The $ 2^{4-1} $ Example}{}
-              In this example we consider a one-half fraction of the $2^4$ design which
-              explores $K = 4$ factors (A, B, C, D) in $m = 8$ conditions rather than $16$. The design matrix
-              associated with a full $2^4$ design and a visualization of the full $2^4$ design are shown below. Similar
-              to the $2^{3-1}$ example, the question of primary interest is: \emph{which} $m = 8$ conditions do we choose
-              for the $2^{4-1}$ experiment?
-              \[ \begin{NiceArray}{ccccc}
-                      \toprule
-                      \text{Condition} & \text{Factor A} & \text{Factor B} & \text{Factor C} & \text{Factor D} \\
-                      \midrule
-                      1                & -1              & -1              & -1              & -1              \\
-                      2                & +1              & -1              & -1              & -1              \\
-                      3                & -1              & +1              & -1              & -1              \\
-                      4                & +1              & +1              & -1              & -1              \\
-                      5                & -1              & -1              & +1              & -1              \\
-                      6                & +1              & -1              & +1              & -1              \\
-                      7                & -1              & +1              & +1              & -1              \\
-                      8                & +1              & +1              & +1              & -1              \\
-                      9                & -1              & -1              & -1              & +1              \\
-                      10               & +1              & -1              & -1              & +1              \\
-                      11               & -1              & +1              & -1              & +1              \\
-                      12               & +1              & +1              & -1              & +1              \\
-                      13               & -1              & -1              & +1              & +1              \\
-                      14               & +1              & -1              & +1              & +1              \\
-                      15               & -1              & +1              & +1              & +1              \\
-                      16               & +1              & +1              & +1              & +1              \\
-                      \bottomrule
-                  \end{NiceArray} \]
-          \end{Example}
-          \begin{Example}{The $ 2^{5-2} $ Example}{}
-              In this example we consider a one-quarter fraction of the $2^5$ design which
-              explores $K = 5$ factors (A, B, C, D, E) in $m = 8$ conditions rather than $32$. The design matrix
-              associated with a full $2^5$ design and a visualization of the full $2^5$ design are shown below. Similar
-              to the previous two examples, the question of primary interest is: \emph{which} $m = 8$ conditions do we
-              choose for the $2^{5-2}$ experiment?
-              \[ \begin{NiceArray}{cccccc}
-                      \toprule
-                      \text{Condition} & \text{Factor A} & \text{Factor B} & \text{Factor C} & \text{Factor D} & \text{Factor E} \\
-                      \midrule
-                      1                & -1              & -1              & -1              & -1              & -1              \\
-                      2                & +1              & -1              & -1              & -1              & -1              \\
-                      3                & -1              & +1              & -1              & -1              & -1              \\
-                      4                & +1              & +1              & -1              & -1              & -1              \\
-                      5                & -1              & -1              & +1              & -1              & -1              \\
-                      6                & +1              & -1              & +1              & -1              & -1              \\
-                      7                & -1              & +1              & +1              & -1              & -1              \\
-                      8                & +1              & +1              & +1              & -1              & -1              \\
-                      9                & -1              & -1              & -1              & +1              & -1              \\
-                      10               & +1              & -1              & -1              & +1              & -1              \\
-                      11               & -1              & +1              & -1              & +1              & -1              \\
-                      12               & +1              & +1              & -1              & +1              & -1              \\
-                      13               & -1              & -1              & +1              & +1              & -1              \\
-                      14               & +1              & -1              & +1              & +1              & -1              \\
-                      15               & -1              & +1              & +1              & +1              & -1              \\
-                      16               & +1              & +1              & +1              & +1              & -1              \\
-                      17               & -1              & -1              & -1              & -1              & +1              \\
-                      18               & +1              & -1              & -1              & -1              & +1              \\
-                      19               & -1              & +1              & -1              & -1              & +1              \\
-                      20               & +1              & +1              & -1              & -1              & +1              \\
-                      21               & -1              & -1              & +1              & -1              & +1              \\
-                      22               & +1              & -1              & +1              & -1              & +1              \\
-                      23               & -1              & +1              & +1              & -1              & +1              \\
-                      24               & +1              & +1              & +1              & -1              & +1              \\
-                      25               & -1              & -1              & -1              & +1              & +1              \\
-                      26               & +1              & -1              & -1              & +1              & +1              \\
-                      27               & -1              & +1              & -1              & +1              & +1              \\
-                      28               & +1              & +1              & -1              & +1              & +1              \\
-                      29               & -1              & -1              & +1              & +1              & +1              \\
-                      30               & +1              & -1              & +1              & +1              & +1              \\
-                      31               & -1              & +1              & +1              & +1              & +1              \\
-                      32               & +1              & +1              & +1              & +1              & +1              \\
-                      \bottomrule
-                  \end{NiceArray} \]
-          \end{Example}
+      \item The value $ p $ dictates the degree of \emph{fractioning} and is typically chosen to:
+            \begin{itemize}[$\rightarrow$]
+                  \item Minimize the number of experimental conditions $ m $, given a fixed number of design factors $ K $, or
+                  \item Maximize the number of design factors $ K $, given a fixed number of conditions $ m $.
+            \end{itemize}
+            \begin{itemize}[*]
+                  \item \underline{Goal}: explore as many factors as possible in as few conditions as possible.
+            \end{itemize}
+      \item \textbf{Principle of effect sparsity}: in the presence of several factors, variation in the response is likely to
+            be driven by a small amount of main effects and low-order interactions.
+            \begin{itemize}[$\rightarrow$]
+                  \item $ \sim 40\% $ of ME's were significant.
+                  \item $ \sim 10\% $ of 2FI's were significant.
+                  \item $ \sim 5\% $ of 3+FI's were significant.
+            \end{itemize}
+      \item But consider the linear predictor from the full $ 2^K $ factorial experiment. There are:
+            \begin{itemize}
+                  \item An intercept: $ \beta_0 $.
+                  \item $ K $ main effect terms.
+                  \item $ \binom{K}{2} $ two-factor interaction terms.
+                  \item $ \binom{K}{3} $ three-factor interaction terms.
+                  \item[$\vdots$]
+                  \item $ \binom{K}{K}=1 $ $ K $-factor interaction term.
+            \end{itemize}
+            This is a total of $ \sum_{k=1}^{K}\binom{K}{k}=2^K-1 $ estimated effects and just $ K+\binom{K}{2} $ of these are main effects
+            and two-factor interactions.
+            \begin{Example}{}{}
+                  If $ K=8 $, then $ \binom{K}{2}=28 $, $ 2^K-1=255 $, and so $ 255-28-8=219 $ is the number of 3+FI's.
+            \end{Example}
+      \item In light of effect sparsity, it is a waste of resources to estimate higher order interaction terms.
+            \begin{itemize}[*]
+                  \item It would be a better use of resources to estimate the main effects and low-order interactions of a
+                        larger number of factors.
+            \end{itemize}
+      \item So how do we choose \emph{which} $ 2^{K-p} $ conditions to run?
+      \item Consider the following three examples as motivation:
+            \begin{Example}{The $ 2^{3-1} $ Example}{}
+                  In this example we consider a one-half fraction of the $2^3$ design which
+                  explores $K = 3$ factors (A, B, C) in $m = 4$ conditions rather than $8$. The design matrix associated
+                  with a full $2^3$ design and a visualization of the full $2^3$ design are shown below. The question of
+                  primary interest is: \emph{which} $m = 4$ conditions do we choose for the $ 2^{3-1} $ experiment?
+                  \[ \begin{array}{cccc}
+                              \toprule
+                              \text{Condition} & \text{Factor A} & \text{Factor B} & \text{Factor C} \\
+                              \midrule
+                              1                & -1              & -1              & -1              \\
+                              2                & +1              & -1              & -1              \\
+                              3                & -1              & +1              & -1              \\
+                              4                & +1              & +1              & -1              \\
+                              5                & -1              & -1              & +1              \\
+                              6                & +1              & -1              & +1              \\
+                              7                & -1              & +1              & +1              \\
+                              8                & +1              & +1              & +1              \\
+                              \bottomrule
+                        \end{array} \]
+            \end{Example}
+            \begin{Example}{The $ 2^{4-1} $ Example}{}
+                  In this example we consider a one-half fraction of the $2^4$ design which
+                  explores $K = 4$ factors (A, B, C, D) in $m = 8$ conditions rather than $16$. The design matrix
+                  associated with a full $2^4$ design and a visualization of the full $2^4$ design are shown below. Similar
+                  to the $2^{3-1}$ example, the question of primary interest is: \emph{which} $m = 8$ conditions do we choose
+                  for the $2^{4-1}$ experiment?
+                  \[ \begin{array}{ccccc}
+                              \toprule
+                              \text{Condition} & \text{Factor A} & \text{Factor B} & \text{Factor C} & \text{Factor D} \\
+                              \midrule
+                              1                & -1              & -1              & -1              & -1              \\
+                              2                & +1              & -1              & -1              & -1              \\
+                              3                & -1              & +1              & -1              & -1              \\
+                              4                & +1              & +1              & -1              & -1              \\
+                              5                & -1              & -1              & +1              & -1              \\
+                              6                & +1              & -1              & +1              & -1              \\
+                              7                & -1              & +1              & +1              & -1              \\
+                              8                & +1              & +1              & +1              & -1              \\
+                              9                & -1              & -1              & -1              & +1              \\
+                              10               & +1              & -1              & -1              & +1              \\
+                              11               & -1              & +1              & -1              & +1              \\
+                              12               & +1              & +1              & -1              & +1              \\
+                              13               & -1              & -1              & +1              & +1              \\
+                              14               & +1              & -1              & +1              & +1              \\
+                              15               & -1              & +1              & +1              & +1              \\
+                              16               & +1              & +1              & +1              & +1              \\
+                              \bottomrule
+                        \end{array} \]
+            \end{Example}
+            \begin{Example}{The $ 2^{5-2} $ Example}{}
+                  In this example we consider a one-quarter fraction of the $2^5$ design which
+                  explores $K = 5$ factors (A, B, C, D, E) in $m = 8$ conditions rather than $32$. The design matrix
+                  associated with a full $2^5$ design and a visualization of the full $2^5$ design are shown below. Similar
+                  to the previous two examples, the question of primary interest is: \emph{which} $m = 8$ conditions do we
+                  choose for the $2^{5-2}$ experiment?
+                  \[ \begin{array}{cccccc}
+                              \toprule
+                              \text{Condition} & \text{Factor A} & \text{Factor B} & \text{Factor C} & \text{Factor D} & \text{Factor E} \\
+                              \midrule
+                              1                & -1              & -1              & -1              & -1              & -1              \\
+                              2                & +1              & -1              & -1              & -1              & -1              \\
+                              3                & -1              & +1              & -1              & -1              & -1              \\
+                              4                & +1              & +1              & -1              & -1              & -1              \\
+                              5                & -1              & -1              & +1              & -1              & -1              \\
+                              6                & +1              & -1              & +1              & -1              & -1              \\
+                              7                & -1              & +1              & +1              & -1              & -1              \\
+                              8                & +1              & +1              & +1              & -1              & -1              \\
+                              9                & -1              & -1              & -1              & +1              & -1              \\
+                              10               & +1              & -1              & -1              & +1              & -1              \\
+                              11               & -1              & +1              & -1              & +1              & -1              \\
+                              12               & +1              & +1              & -1              & +1              & -1              \\
+                              13               & -1              & -1              & +1              & +1              & -1              \\
+                              14               & +1              & -1              & +1              & +1              & -1              \\
+                              15               & -1              & +1              & +1              & +1              & -1              \\
+                              16               & +1              & +1              & +1              & +1              & -1              \\
+                              17               & -1              & -1              & -1              & -1              & +1              \\
+                              18               & +1              & -1              & -1              & -1              & +1              \\
+                              19               & -1              & +1              & -1              & -1              & +1              \\
+                              20               & +1              & +1              & -1              & -1              & +1              \\
+                              21               & -1              & -1              & +1              & -1              & +1              \\
+                              22               & +1              & -1              & +1              & -1              & +1              \\
+                              23               & -1              & +1              & +1              & -1              & +1              \\
+                              24               & +1              & +1              & +1              & -1              & +1              \\
+                              25               & -1              & -1              & -1              & +1              & +1              \\
+                              26               & +1              & -1              & -1              & +1              & +1              \\
+                              27               & -1              & +1              & -1              & +1              & +1              \\
+                              28               & +1              & +1              & -1              & +1              & +1              \\
+                              29               & -1              & -1              & +1              & +1              & +1              \\
+                              30               & +1              & -1              & +1              & +1              & +1              \\
+                              31               & -1              & +1              & +1              & +1              & +1              \\
+                              32               & +1              & +1              & +1              & +1              & +1              \\
+                              \bottomrule
+                        \end{array} \]
+            \end{Example}
 \end{itemize}
 \section{Designing \texorpdfstring{$ 2^{K-p} $}{2K-p} Fractional Factorial Experiments}
 Given $ 2^K $ conditions to choose from, \underline{how} do we choose \underline{which}
 $ 2^{K-p} $ conditions to experiment with?
 \subsection{Aliasing}
 \begin{itemize}
-    \item The first step in constructing a $ 2^{K-p} $ fractional factorial experiment is to
-          write out the model matrix (when $ n=1 $) for a \emph{full} $ 2^{K-p} $ design.
-          \begin{Example}{$ 2^{3-1} $ Example}{}
-              The model matrix (when $ n=1 $) for a full $ 2^2 $ design with factors A and B is shown below:
-              \[ \begin{NiceArray}{ccccc}
-                      \toprule
-                      \text{Condition} & \text{I} & \text{A} & \text{B} & \text{AB}=\text{C} \\
-                      \midrule
-                      1                & +1       & -1       & -1       & +1                 \\
-                      2                & +1       & +1       & -1       & -1                 \\
-                      3                & +1       & -1       & +1       & -1                 \\
-                      4                & +1       & +1       & +1       & +1                 \\
-                      \bottomrule
-                  \end{NiceArray} \]
-          \end{Example}
-          \begin{itemize}
-              \item Rather than asking ``which $4$ conditions from a full $2^3$ design do I run?'' we now ask ``in which
-                    of the four conditions in a full $^2$ design should I run factor C at its low versus high levels?''
-          \end{itemize}
-    \item We use the $ \pm 1 $'s in the AB interaction column to dictate, for a given condition, whether to run factor
-          C at its low or high levels.
-    \item Conditions 1 and 4 have AB $ =+1 $, so C will run at its high level.
-    \item Conditions 2 and 3 have AB $ =-1 $, so C will be run at its low level.
-    \item What results is a prescription for experimenting with $K = 3$ factors in $ 2^{3-1}=4 $ conditions?
-    \item This is a $ 2^{3-1} $ fractional factorial design. We visualize it as follows:
-    \item \textbf{Principal fraction}: The conditions selected by associating the levels of C with the $±1$'s in the AB
-          column.
-          \begin{itemize}[label={}]
-              \item Red points.
-          \end{itemize}
-    \item \textbf{Complementary fraction}: The conditions selected by associating the levels of C with $ - $AB\@.
-          \begin{itemize}[label={}]
-              \item Green points --- this is \underline{also} a $ 2^{3-1} $ fractional factorial design.
-          \end{itemize}
-    \item What we did there is called \textbf{aliasing}: associate the main effect of a new
-          factor with an existing condition. We aliased the main effect of C with the AB interaction.
-          Notation: $ \text{C}=\text{AB} $.
-    \item We call $ \text{C}=\text{AB} $ the \textbf{design generator}.
-    \item When we do this, we \textbf{confound} the interaction effect with the main effect of the new factor.
-          \begin{itemize}[$\hookrightarrow$]
-              \item These effects cannot be separately estimated.
-          \end{itemize}
-    \item In an ordinary $2^2$ experiment with factors A and B, the AB column of the model matrix is used to
-          estimate $ \text{IE}_{\text{AB}} $.
-          \begin{itemize}
-              \item But do to the $ \text{C}=\text{AB} $, the AB column now jointly quantifies the main effect of C \emph{and}
-                    the AB interaction effect.
-                    \[ \widehat{\text{IE}}_{\text{AB}}
-                        =\frac{\bar{y}_{\text{A}^+\cap \text{B}^+}+\bar{y}_{\text{A}^-\cap \text{B}^-}}{2}-\frac{\bar{y}_{\text{A}^-\cap \text{B}^+}+\bar{y}_{\text{A}^+\cap \text{B}^-}}{2} \]
-                    \begin{align*}
-                        \widehat{\text{ME}}_{\text{C}}
-                         & =\bar{y}_{\text{C}^+}-\bar{y}_{\text{C}^-}                                                                                                                           \\
-                         & =\frac{\bar{y}_{\text{A}^+\cap \text{B}^+}+\bar{y}_{\text{A}^-\cap \text{B}^-}}{2}-\frac{\bar{y}_{\text{A}^-\cap \text{B}^+}+\bar{y}_{\text{A}^+\cap \text{B}^-}}{2} \\
-                         & =\widehat{\text{IE}}_{\text{AB}}
-                    \end{align*}
-                    This calculation now estimates \underline{both} the main effect of C \underline{and} the AB interaction effect simultaneously. \underline{We can't separate them}!
-          \end{itemize}
-    \item This is the price we pay for using fewer conditions than what is prescribed by the full $2^K$ design.
-          \begin{itemize}[$\hookrightarrow$]
-              \item We cannot separately estimate confounded/aliased effects. It turns out this problem doesn't only impact C and AB\@.
-          \end{itemize}
+      \item The first step in constructing a $ 2^{K-p} $ fractional factorial experiment is to
+            write out the model matrix (when $ n=1 $) for a \emph{full} $ 2^{K-p} $ design.
+            \begin{Example}{$ 2^{3-1} $ Example}{}
+                  The model matrix (when $ n=1 $) for a full $ 2^2 $ design with factors A and B is shown below:
+                  \[ \begin{array}{ccccc}
+                              \toprule
+                              \text{Condition} & \text{I} & \text{A} & \text{B} & \text{AB}=\text{C} \\
+                              \midrule
+                              1                & +1       & -1       & -1       & +1                 \\
+                              2                & +1       & +1       & -1       & -1                 \\
+                              3                & +1       & -1       & +1       & -1                 \\
+                              4                & +1       & +1       & +1       & +1                 \\
+                              \bottomrule
+                        \end{array} \]
+            \end{Example}
+            \begin{itemize}
+                  \item Rather than asking ``which $4$ conditions from a full $2^3$ design do I run?'' we now ask ``in which
+                        of the four conditions in a full $^2$ design should I run factor C at its low versus high levels?''
+            \end{itemize}
+      \item We use the $ \pm 1 $'s in the AB interaction column to dictate, for a given condition, whether to run factor
+            C at its low or high levels.
+      \item Conditions 1 and 4 have AB $ =+1 $, so C will run at its high level.
+      \item Conditions 2 and 3 have AB $ =-1 $, so C will be run at its low level.
+      \item What results is a prescription for experimenting with $K = 3$ factors in $ 2^{3-1}=4 $ conditions?
+      \item This is a $ 2^{3-1} $ fractional factorial design. We visualize it as follows:
+      \item \textbf{Principal fraction}: The conditions selected by associating the levels of C with the $±1$'s in the AB
+            column.
+            \begin{itemize}[label={}]
+                  \item Red points.
+            \end{itemize}
+      \item \textbf{Complementary fraction}: The conditions selected by associating the levels of C with $ - $AB\@.
+            \begin{itemize}[label={}]
+                  \item Green points --- this is \underline{also} a $ 2^{3-1} $ fractional factorial design.
+            \end{itemize}
+      \item What we did there is called \textbf{aliasing}: associate the main effect of a new
+            factor with an existing condition. We aliased the main effect of C with the AB interaction.
+            Notation: $ \text{C}=\text{AB} $.
+      \item We call $ \text{C}=\text{AB} $ the \textbf{design generator}.
+      \item When we do this, we \textbf{confound} the interaction effect with the main effect of the new factor.
+            \begin{itemize}[$\hookrightarrow$]
+                  \item These effects cannot be separately estimated.
+            \end{itemize}
+      \item In an ordinary $2^2$ experiment with factors A and B, the AB column of the model matrix is used to
+            estimate $ \text{IE}_{\text{AB}} $.
+            \begin{itemize}
+                  \item But do to the $ \text{C}=\text{AB} $, the AB column now jointly quantifies the main effect of C \emph{and}
+                        the AB interaction effect.
+                        \[ \widehat{\text{IE}}_{\text{AB}}
+                              =\frac{\bar{y}_{\text{A}^+\cap \text{B}^+}+\bar{y}_{\text{A}^-\cap \text{B}^-}}{2}-\frac{\bar{y}_{\text{A}^-\cap \text{B}^+}+\bar{y}_{\text{A}^+\cap \text{B}^-}}{2} \]
+                        \begin{align*}
+                              \widehat{\text{ME}}_{\text{C}}
+                               & =\bar{y}_{\text{C}^+}-\bar{y}_{\text{C}^-}                                                                                                                           \\
+                               & =\frac{\bar{y}_{\text{A}^+\cap \text{B}^+}+\bar{y}_{\text{A}^-\cap \text{B}^-}}{2}-\frac{\bar{y}_{\text{A}^-\cap \text{B}^+}+\bar{y}_{\text{A}^+\cap \text{B}^-}}{2} \\
+                               & =\widehat{\text{IE}}_{\text{AB}}
+                        \end{align*}
+                        This calculation now estimates \underline{both} the main effect of C \underline{and} the AB interaction effect simultaneously. \underline{We can't separate them}!
+            \end{itemize}
+      \item This is the price we pay for using fewer conditions than what is prescribed by the full $2^K$ design.
+            \begin{itemize}[$\hookrightarrow$]
+                  \item We cannot separately estimate confounded/aliased effects. It turns out this problem doesn't only impact C and AB\@.
+            \end{itemize}
 \end{itemize}
 \subsection{The Defining Relation}
 \begin{itemize}
-    \item In the $ 2^{3-1} $ example, we aliased C with the AB interaction.
-          \begin{itemize}
-              \item We saw that this means the main effect of C and the AB interaction effect are confounded.
-              \item However, the aliasing (and hence confounding) doesn't stop there.
-          \end{itemize}
+      \item In the $ 2^{3-1} $ example, we aliased C with the AB interaction.
+            \begin{itemize}
+                  \item We saw that this means the main effect of C and the AB interaction effect are confounded.
+                  \item However, the aliasing (and hence confounding) doesn't stop there.
+            \end{itemize}
 \end{itemize}
 \begin{itemize}[*]
-    \item Upon closer inspection we find that the main effect of A and B are now also aliased with interaction
-          effects.
+      \item Upon closer inspection we find that the main effect of A and B are now also aliased with interaction
+            effects.
 \end{itemize}
 \begin{itemize}
-    \item This becomes evident when we consider the \textbf{defining relation}:
-          \begin{align*}
-              \text{Design Generator}\rightarrow\text{C}=\text{AB}\rightarrow \text{C}\times\text{C} & =\text{AB}\times\text{C} \\
-              \text{I}                                                                               & =\text{ABC}
-          \end{align*}
-    \item This may be used to uncover all aliases by multiplying it by any effect:
-          \[ \begin{array}{ccc}
-                  \text{A}\times\text{I}=\text{A}^2\text{BC} & \text{B}\times\text{I}=\text{A}\text{B}^2\text{C} & \text{C}=\text{AB} \\
-                  \text{A}=\text{IBC}                        & \text{B}=\text{AC}                                                     \\
-                  \text{A}=\text{BC}
-              \end{array} \]
-    \item Every main effect is aliased with a two factor interaction.
+      \item This becomes evident when we consider the \textbf{defining relation}:
+            \begin{align*}
+                  \text{Design Generator}\rightarrow\text{C}=\text{AB}\rightarrow \text{C}\times\text{C} & =\text{AB}\times\text{C} \\
+                  \text{I}                                                                               & =\text{ABC}
+            \end{align*}
+      \item This may be used to uncover all aliases by multiplying it by any effect:
+            \[ \begin{array}{ccc}
+                        \text{A}\times\text{I}=\text{A}^2\text{BC} & \text{B}\times\text{I}=\text{A}\text{B}^2\text{C} & \text{C}=\text{AB} \\
+                        \text{A}=\text{IBC}                        & \text{B}=\text{AC}                                                     \\
+                        \text{A}=\text{BC}
+                  \end{array} \]
+      \item Every main effect is aliased with a two factor interaction.
 \end{itemize}
 \begin{framed}
-    \begin{tightcenter}
-        \textbf{Introducing aliasing anywhere causes confounding everywhere}.
-    \end{tightcenter}
+      \begin{tightcenter}
+            \textbf{Introducing aliasing anywhere causes confounding everywhere}.
+      \end{tightcenter}
 \end{framed}
 \begin{Example}{$ 2^{4-1} $ Example}{}
-    \begin{itemize}
-        \item To construct this factorial design we consider the model matrix (when $n = 1$) associated with a
-              full $2^3$ design:
-              \[ \begin{NiceArray}{ccccccccc}
-                      \toprule
-                      \text{Condition} & \text{I} & \text{A} & \text{B} & \text{C} & \text{AB} & \text{AC} & \text{BC} & \text{ABC} \\
-                      \midrule
-                      1                & +1       & -1       & -1       & -1       & +1        & +1        & +1        & -1         \\
-                      2                & +1       & +1       & -1       & -1       & -1        & -1        & +1        & +1         \\
-                      3                & +1       & -1       & +1       & -1       & -1        & +1        & -1        & +1         \\
-                      4                & +1       & +1       & +1       & -1       & +1        & -1        & -1        & -1         \\
-                      5                & +1       & -1       & -1       & +1       & +1        & -1        & -1        & +1         \\
-                      6                & +1       & +1       & -1       & +1       & -1        & +1        & -1        & -1         \\
-                      7                & +1       & -1       & +1       & +1       & -1        & -1        & +1        & -1         \\
-                      8                & +1       & +1       & +1       & +1       & +1        & +1        & +1        & +1         \\
-                      \bottomrule
-                  \end{NiceArray} \]
-        \item We need to choose one interaction column to alias a new factor D with.
-              \begin{itemize}[$\hookrightarrow$]
-                  \item This tell us when to run factor D at low vs.\ high.
-                        \begin{itemize}
-                            \item We could choose AB, AC, BC, or ABC\@. Which one is the \emph{right} choice?
-                                  \begin{itemize}
-                                      \item We choose $ \text{D}=\text{ABC} $ because the effect sparsity principle tells us
-                                            that high order interactions are less likely to be significant.
-                                  \end{itemize}
-                            \item The complete aliasing structure is:
-                                  \[ \text{Defining relation}\rightarrow\text{I}=\text{ABCD} \]
-                                  \[ \text{A}=\text{BCD} \]
-                                  \[ \text{B}=\text{ACD} \]
-                                  \[ \text{C}=\text{ABD} \]
-                                  \[ \text{D}=\text{ABC} \]
-                                  \[ \text{AB}=\text{CD} \]
-                                  \[ \text{AC}=\text{BD} \]
-                                  \[ \text{BC}=\text{AD} \]
-                        \end{itemize}
-              \end{itemize}
-        \item What would have happened if we had chosen $\text{D} = \text{AB}$ or $\text{D} = \text{AC}$ or $\text{D} = \text{BC}$ as design generators
-              instead of $\text{D} = \text{ABC}$?
-        \item Which one of these designs is the best?
-              \begin{itemize}[$\hookrightarrow$]
-                  \item We'll come back to this.
-              \end{itemize}
-    \end{itemize}
+      \begin{itemize}
+            \item To construct this factorial design we consider the model matrix (when $n = 1$) associated with a
+                  full $2^3$ design:
+                  \[ \begin{array}{ccccccccc}
+                              \toprule
+                              \text{Condition} & \text{I} & \text{A} & \text{B} & \text{C} & \text{AB} & \text{AC} & \text{BC} & \text{ABC} \\
+                              \midrule
+                              1                & +1       & -1       & -1       & -1       & +1        & +1        & +1        & -1         \\
+                              2                & +1       & +1       & -1       & -1       & -1        & -1        & +1        & +1         \\
+                              3                & +1       & -1       & +1       & -1       & -1        & +1        & -1        & +1         \\
+                              4                & +1       & +1       & +1       & -1       & +1        & -1        & -1        & -1         \\
+                              5                & +1       & -1       & -1       & +1       & +1        & -1        & -1        & +1         \\
+                              6                & +1       & +1       & -1       & +1       & -1        & +1        & -1        & -1         \\
+                              7                & +1       & -1       & +1       & +1       & -1        & -1        & +1        & -1         \\
+                              8                & +1       & +1       & +1       & +1       & +1        & +1        & +1        & +1         \\
+                              \bottomrule
+                        \end{array} \]
+            \item We need to choose one interaction column to alias a new factor D with.
+                  \begin{itemize}[$\hookrightarrow$]
+                        \item This tell us when to run factor D at low vs.\ high.
+                              \begin{itemize}
+                                    \item We could choose AB, AC, BC, or ABC\@. Which one is the \emph{right} choice?
+                                          \begin{itemize}
+                                                \item We choose $ \text{D}=\text{ABC} $ because the effect sparsity principle tells us
+                                                      that high order interactions are less likely to be significant.
+                                          \end{itemize}
+                                    \item The complete aliasing structure is:
+                                          \[ \text{Defining relation}\rightarrow\text{I}=\text{ABCD} \]
+                                          \[ \text{A}=\text{BCD} \]
+                                          \[ \text{B}=\text{ACD} \]
+                                          \[ \text{C}=\text{ABD} \]
+                                          \[ \text{D}=\text{ABC} \]
+                                          \[ \text{AB}=\text{CD} \]
+                                          \[ \text{AC}=\text{BD} \]
+                                          \[ \text{BC}=\text{AD} \]
+                              \end{itemize}
+                  \end{itemize}
+            \item What would have happened if we had chosen $\text{D} = \text{AB}$ or $\text{D} = \text{AC}$ or $\text{D} = \text{BC}$ as design generators
+                  instead of $\text{D} = \text{ABC}$?
+            \item Which one of these designs is the best?
+                  \begin{itemize}[$\hookrightarrow$]
+                        \item We'll come back to this.
+                  \end{itemize}
+      \end{itemize}
 \end{Example}
 \begin{Example}{$ 2^{5-2} $ Example}{}
-    \begin{itemize}
-        \item In addition to choosing an alias for factor D like we just did with the $ 2^{4-1} $ design, we also need to choose an alias for factor E.
-              \begin{itemize}[label={}]
-                  \item We now have $ p=2 $ design generators $ \text{D}=\text{ABC} $, $ \text{E}=\text{BC} $.
-              \end{itemize}
-    \end{itemize}
-    \begin{itemize}[*]
-        \item The $ 2^{5-2} $ fractional factorial design that results from these choices is visualized below:
-        \item In general, the number of design generators will always equal $ p $.
-    \end{itemize}
-    \begin{itemize}
-        \item These design generators give rise to the following defining relation:
-              \[ \begin{Bmatrix}
-                      \text{D}=\text{ABC}\rightarrow \text{I}=\text{ABCD} \\
-                      \text{E}=\text{BC}\rightarrow \text{I}=\text{BCE}
-                  \end{Bmatrix}\rightarrow
-                  \text{I}=\text{ABCD}=\text{BCE}=\text{ABCD}\times\text{BCE}=\text{A}\text{B}^2\text{C}^2\text{DE}=\text{ADE} \]
-              Therefore, $ \text{I}=\text{ABCD}=\text{BCE}=\text{ADE} $.
-        \item As usual, this may be used to determine the complete aliasing structure:
-              \[ \text{A}=\text{BCD}=\text{ABCE}=\text{DE} \]
-              \[ \text{B}=\text{ACD}=\text{CE}=\text{ABDE} \]
-              \[ \text{C}=\text{ABD}=\text{BE}=\text{ACDE} \]
-              \[ \text{D}=\text{ABC}=\text{BCDE}=\text{AE} \]
-              \[ \text{E}=\text{ABCDE}=\text{BC}=\text{AD} \]
-              \[ \text{AB}=\text{CD}=\text{ACE}=\text{BDE} \]
-              \[ \text{AC}=\text{BD}=\text{ABE}=\text{CDE} \]
-              \begin{itemize}[*]
-                  \item Every effect is aliased (i.e., confounded) with 3 \underline{other} effects.
-              \end{itemize}
-    \end{itemize}
-    \begin{itemize}[*]
-        \item In general, the number of effects aliased with a given effect is $ 2^{p}-1 $.
-        \item Thus, in a $ 2^{K-p} $ fractional factorial design, every effect estimate actually jointly quantifies $2^p$ effects.
-    \end{itemize}
+      \begin{itemize}
+            \item In addition to choosing an alias for factor D like we just did with the $ 2^{4-1} $ design, we also need to choose an alias for factor E.
+                  \begin{itemize}[label={}]
+                        \item We now have $ p=2 $ design generators $ \text{D}=\text{ABC} $, $ \text{E}=\text{BC} $.
+                  \end{itemize}
+      \end{itemize}
+      \begin{itemize}[*]
+            \item The $ 2^{5-2} $ fractional factorial design that results from these choices is visualized below:
+            \item In general, the number of design generators will always equal $ p $.
+      \end{itemize}
+      \begin{itemize}
+            \item These design generators give rise to the following defining relation:
+                  \[ \begin{Bmatrix}
+                              \text{D}=\text{ABC}\rightarrow \text{I}=\text{ABCD} \\
+                              \text{E}=\text{BC}\rightarrow \text{I}=\text{BCE}
+                        \end{Bmatrix}\rightarrow
+                        \text{I}=\text{ABCD}=\text{BCE}=\text{ABCD}\times\text{BCE}=\text{A}\text{B}^2\text{C}^2\text{DE}=\text{ADE} \]
+                  Therefore, $ \text{I}=\text{ABCD}=\text{BCE}=\text{ADE} $.
+            \item As usual, this may be used to determine the complete aliasing structure:
+                  \[ \text{A}=\text{BCD}=\text{ABCE}=\text{DE} \]
+                  \[ \text{B}=\text{ACD}=\text{CE}=\text{ABDE} \]
+                  \[ \text{C}=\text{ABD}=\text{BE}=\text{ACDE} \]
+                  \[ \text{D}=\text{ABC}=\text{BCDE}=\text{AE} \]
+                  \[ \text{E}=\text{ABCDE}=\text{BC}=\text{AD} \]
+                  \[ \text{AB}=\text{CD}=\text{ACE}=\text{BDE} \]
+                  \[ \text{AC}=\text{BD}=\text{ABE}=\text{CDE} \]
+                  \begin{itemize}[*]
+                        \item Every effect is aliased (i.e., confounded) with 3 \underline{other} effects.
+                  \end{itemize}
+      \end{itemize}
+      \begin{itemize}[*]
+            \item In general, the number of effects aliased with a given effect is $ 2^{p}-1 $.
+            \item Thus, in a $ 2^{K-p} $ fractional factorial design, every effect estimate actually jointly quantifies $2^p$ effects.
+      \end{itemize}
 \end{Example}
 \begin{itemize}
-    \item \textbf{SUMMARY}: To design a $ 2^{K-p} $ fractional factorial experiment, you must:
-          \begin{itemize}[*]
-              \item Look at the model matrix (with $ n=1 $) for a full $ 2^{K-p} $ design with $ K-p $ factors.
-              \item Choose $ p $ interaction columns to alias an additional $ p $ factors with.
-              \item Use the $ \pm 1 $'s in these columns to dictate, for each condition, whether the $p$ additional factors are
-                    run at their low or high level.
-          \end{itemize}
+      \item \textbf{SUMMARY}: To design a $ 2^{K-p} $ fractional factorial experiment, you must:
+            \begin{itemize}[*]
+                  \item Look at the model matrix (with $ n=1 $) for a full $ 2^{K-p} $ design with $ K-p $ factors.
+                  \item Choose $ p $ interaction columns to alias an additional $ p $ factors with.
+                  \item Use the $ \pm 1 $'s in these columns to dictate, for each condition, whether the $p$ additional factors are
+                        run at their low or high level.
+            \end{itemize}
 \end{itemize}
 \begin{framed}
-    \begin{tightcenter}
-        \textbf{But how do we know \emph{which} interactions to choose?}
-    \end{tightcenter}
+      \begin{tightcenter}
+            \textbf{But how do we know \emph{which} interactions to choose?}
+      \end{tightcenter}
 \end{framed}
 \subsection{Resolution}
 \begin{itemize}[*]
-    \item Due to the confounding that results from aliasing a new main effect with an existing interaction, it is
-          important to think carefully about \emph{which} interaction to choose as an alias.
-          \begin{itemize}[*]
-              \item It is best to avoid aliasing a new factor with an interaction that is likely to be significant because
-                    separately estimating significant effects is desirable.
-          \end{itemize}
-          \begin{itemize}
-              \item High order interaction terms (that are unlikely to be significant) are good choices for aliases.
-          \end{itemize}
+      \item Due to the confounding that results from aliasing a new main effect with an existing interaction, it is
+            important to think carefully about \emph{which} interaction to choose as an alias.
+            \begin{itemize}[*]
+                  \item It is best to avoid aliasing a new factor with an interaction that is likely to be significant because
+                        separately estimating significant effects is desirable.
+            \end{itemize}
+            \begin{itemize}
+                  \item High order interaction terms (that are unlikely to be significant) are good choices for aliases.
+            \end{itemize}
 \end{itemize}
 \begin{itemize}
-    \item This notion is quantified by the \textbf{resolution} of the fractional factorial design.
-          \begin{itemize}[$\rightarrow$]
-              \item A design is resolution $R$ if main effects are aliased with interaction effects involving at least $R - 1$ factors.
-                    \begin{itemize}[label={}]
-                        \item What is the smallest order interaction your main effects are aliased with? Resolution is that number $ +1 $.
-                    \end{itemize}
-          \end{itemize}
-    \item The easiest way to determine $R$ is by looking at the defining relation.
-          \begin{itemize}
-              \item Each of the terms in the equivalence is referred to as a \emph{word}.
-          \end{itemize}
-          \begin{itemize}[$\rightarrow$]
-              \item The length of the shortest word is the resolution of the design.
-          \end{itemize}
-          \begin{itemize}[*]
-              \item The defining relations for $ 2^{3-1} $, $ 2^{4-1} $, and $ 2^{5-2} $ designs are:
-                    \[ \text{I}=\text{ABC} \]
-                    \[ \text{I}=\text{ABCD} \]
-                    \[ \text{I}=\text{ABCD}=\text{BCE}=\text{ADE} \]
-                    \begin{itemize}[label={}]
-                        \item For $ 2^{3-1} $ and $ 2^{5-2} $ designs: shortest word has length 3. Therefore, it's a Resolution III design.
-                        \item For $ 2^{4-1} $ design: shortest word has length 4. Therefore, it's a Resolution IV design.
-                        \item These designs are described succinctly as:
-                              \[ 2^{3-1}_{\text{III}},2^{4-1}_{\text{IV}},2^{5-2}_{\text{III}} \]
-                    \end{itemize}
-          \end{itemize}
-    \item General notation: $ 2_R^{K-p} $ where
-          \begin{itemize}
-              \item $ 2 $: number of levels.
-              \item $ K $: number of factors.
-              \item $ p $: degree of fractioning.
-              \item $ R $: resolution.
-          \end{itemize}
+      \item This notion is quantified by the \textbf{resolution} of the fractional factorial design.
+            \begin{itemize}[$\rightarrow$]
+                  \item A design is resolution $R$ if main effects are aliased with interaction effects involving at least $R - 1$ factors.
+                        \begin{itemize}[label={}]
+                              \item What is the smallest order interaction your main effects are aliased with? Resolution is that number $ +1 $.
+                        \end{itemize}
+            \end{itemize}
+      \item The easiest way to determine $R$ is by looking at the defining relation.
+            \begin{itemize}
+                  \item Each of the terms in the equivalence is referred to as a \emph{word}.
+            \end{itemize}
+            \begin{itemize}[$\rightarrow$]
+                  \item The length of the shortest word is the resolution of the design.
+            \end{itemize}
+            \begin{itemize}[*]
+                  \item The defining relations for $ 2^{3-1} $, $ 2^{4-1} $, and $ 2^{5-2} $ designs are:
+                        \[ \text{I}=\text{ABC} \]
+                        \[ \text{I}=\text{ABCD} \]
+                        \[ \text{I}=\text{ABCD}=\text{BCE}=\text{ADE} \]
+                        \begin{itemize}[label={}]
+                              \item For $ 2^{3-1} $ and $ 2^{5-2} $ designs: shortest word has length 3. Therefore, it's a Resolution III design.
+                              \item For $ 2^{4-1} $ design: shortest word has length 4. Therefore, it's a Resolution IV design.
+                              \item These designs are described succinctly as:
+                                    \[ 2^{3-1}_{\text{III}},2^{4-1}_{\text{IV}},2^{5-2}_{\text{III}} \]
+                        \end{itemize}
+            \end{itemize}
+      \item General notation: $ 2_R^{K-p} $ where
+            \begin{itemize}
+                  \item $ 2 $: number of levels.
+                  \item $ K $: number of factors.
+                  \item $ p $: degree of fractioning.
+                  \item $ R $: resolution.
+            \end{itemize}
 \end{itemize}
 \begin{itemize}[*]
-    \item In general, higher resolution designs are to be preferred over lower resolution designs.
-          \begin{itemize}
-              \item Resolution IV and V designs are to be preferred over a resolution III design.
-                    \begin{itemize}[$\hookrightarrow$]
-                        \item Because the resolution IV and V designs do not alias main effects with two-factor interactions.
-                    \end{itemize}
-          \end{itemize}
+      \item In general, higher resolution designs are to be preferred over lower resolution designs.
+            \begin{itemize}
+                  \item Resolution IV and V designs are to be preferred over a resolution III design.
+                        \begin{itemize}[$\hookrightarrow$]
+                              \item Because the resolution IV and V designs do not alias main effects with two-factor interactions.
+                        \end{itemize}
+            \end{itemize}
 \end{itemize}
 \begin{itemize}
-    \item The resolution of a fractional factorial experiment is determined by two things:
-          \begin{enumerate}[1.]
-              \item The degree of fractioning desired (i.e., the size of $p$ relative to $K$).
-              \item The design generators chosen for aliasing.
-          \end{enumerate}
+      \item The resolution of a fractional factorial experiment is determined by two things:
+            \begin{enumerate}[1.]
+                  \item The degree of fractioning desired (i.e., the size of $p$ relative to $K$).
+                  \item The design generators chosen for aliasing.
+            \end{enumerate}
 \end{itemize}
 \begin{itemize}[*]
-    \item Given $K$ and $p$, we should choose design generators that \emph{maximize resolution}.
+      \item Given $K$ and $p$, we should choose design generators that \emph{maximize resolution}.
 \end{itemize}
 \begin{itemize}
-    \item Let us return to the $ 2^{4-1} $ example.
-          \[ \begin{NiceMatrix}
-                  \toprule
-                  \text{Design Generator} & \text{Defining Relation} \\
-                  \midrule
-                  \text{D}=\text{ABC}     & \text{I}=\text{ABCD}     \\
-                  \text{D}=\text{AB}      & \text{I}=\text{ABD}      \\
-                  \text{D}=\text{AC}      & \text{I}=\text{ACD}      \\
-                  \text{D}=\text{BC}      & \text{I}=\text{BCD}      \\
-                  \bottomrule
-              \end{NiceMatrix} \]
-          \begin{itemize}[*]
-              \item The generator $ \text{D}=\text{ABC} $ is the best because it gives rise to a resolution IV design.
-          \end{itemize}
-    \item Another way to justify the maximum resolution criterion is by the \textbf{projective property} of fractional
-          factorial designs.
-          \begin{itemize}[*]
-              \item A resolution $R$ fractional factorial design can be projected into a full factorial design on \emph{any subset}
-                    of $R-1$ factors.
-          \end{itemize}
-          \begin{itemize}
-              \item Let's visualize this with the $ 2^{3-1} $ design:
-              \item This property can be exploited when analyzing the experimental data.
-                    \begin{itemize}[$\hookrightarrow$]
-                        \item If $ R-1 $ (or fewer) factors have significant main effects, they can be analyzed as full factorial
-                              designs without confounding.
-                    \end{itemize}
-          \end{itemize}
+      \item Let us return to the $ 2^{4-1} $ example.
+            \[ \begin{matrix}
+                        \toprule
+                        \text{Design Generator} & \text{Defining Relation} \\
+                        \midrule
+                        \text{D}=\text{ABC}     & \text{I}=\text{ABCD}     \\
+                        \text{D}=\text{AB}      & \text{I}=\text{ABD}      \\
+                        \text{D}=\text{AC}      & \text{I}=\text{ACD}      \\
+                        \text{D}=\text{BC}      & \text{I}=\text{BCD}      \\
+                        \bottomrule
+                  \end{matrix} \]
+            \begin{itemize}[*]
+                  \item The generator $ \text{D}=\text{ABC} $ is the best because it gives rise to a resolution IV design.
+            \end{itemize}
+      \item Another way to justify the maximum resolution criterion is by the \textbf{projective property} of fractional
+            factorial designs.
+            \begin{itemize}[*]
+                  \item A resolution $R$ fractional factorial design can be projected into a full factorial design on \emph{any subset}
+                        of $R-1$ factors.
+            \end{itemize}
+            \begin{itemize}
+                  \item Let's visualize this with the $ 2^{3-1} $ design:
+                  \item This property can be exploited when analyzing the experimental data.
+                        \begin{itemize}[$\hookrightarrow$]
+                              \item If $ R-1 $ (or fewer) factors have significant main effects, they can be analyzed as full factorial
+                                    designs without confounding.
+                        \end{itemize}
+            \end{itemize}
 \end{itemize}
 \begin{itemize}[*]
-    \item Maximizing $R$ maximizes the size of the projected full factorial design.
+      \item Maximizing $R$ maximizes the size of the projected full factorial design.
 \end{itemize}
 \subsection{Minimum Aberration}
 \begin{itemize}
-    \item The maximum resolution criterion is one way to choose design generators.
-    \item But what if several choices lead to the same resolution? Then how do we choose?
-          \begin{tightcenter}
-              Minimum Aberration Criterion.
-          \end{tightcenter}
-    \item Consider a $ 2^{7-2}_{\text{IV}} $ design which is resolution IV and explores $K = 7$ factors in $m = 32$ conditions.
-          \begin{itemize}
-              \item Three design generator configurations that all give rise to a $ 2^{7-2}_{\text{IV}} $ design are shown below:
-                    \[ \begin{NiceMatrix}
-                            \toprule
-                            \text{Design} & \text{Design Generators}                  & \text{Defining Relation}                       \\
-                            \midrule
-                            1             & \text{F}=\text{ABC},\text{G}=\text{ABD}   & \text{I}=\text{ABCF}=\text{ABDG}=\text{CDFG}   \\
-                            2             & \text{F}=\text{ABC},\text{G}=\text{CDE}   & \text{I}=\text{ABCF}=\text{CDEG}=\text{ABDEFG} \\
-                            3             & \text{F}=\text{ABCD},\text{G}=\text{ABCE} & \text{I}=\text{ABCDF}=\text{ABCEG}=\text{DEFG} \\
-                            \bottomrule
-                        \end{NiceMatrix} \]
-                    The shortest word length is 4, therefore $ R=4 $.
-              \item How should we choose among these? Is one better than the others?
-                    \begin{itemize}[*]
-                        \item We can compare these designs on the basis of how many words of length 4 appear in the
-                              defining relation. Word lengths: $ (4,4,4) $, $ (4,4,6) $, $ (5,5,4) $.
-                        \item Design 3 minimizes this number, and hence minimizes the number of main effects aliased with
-                              the lowest-order interactions.
-                    \end{itemize}
-              \item[*] In general, for a given resolution $R$ the \textbf{minimum aberration design} is one which minimizes
-                  the number of minimum-length words in the defining relation.
-              \item[$\rightarrow$] These designs are preferred since they minimize the number times main effects are aliased with
-                  the lowest order ($ (R-1) $-factor) interactions.
-          \end{itemize}
+      \item The maximum resolution criterion is one way to choose design generators.
+      \item But what if several choices lead to the same resolution? Then how do we choose?
+            \begin{tightcenter}
+                  Minimum Aberration Criterion.
+            \end{tightcenter}
+      \item Consider a $ 2^{7-2}_{\text{IV}} $ design which is resolution IV and explores $K = 7$ factors in $m = 32$ conditions.
+            \begin{itemize}
+                  \item Three design generator configurations that all give rise to a $ 2^{7-2}_{\text{IV}} $ design are shown below:
+                        \[ \begin{matrix}
+                                    \toprule
+                                    \text{Design} & \text{Design Generators}                  & \text{Defining Relation}                       \\
+                                    \midrule
+                                    1             & \text{F}=\text{ABC},\text{G}=\text{ABD}   & \text{I}=\text{ABCF}=\text{ABDG}=\text{CDFG}   \\
+                                    2             & \text{F}=\text{ABC},\text{G}=\text{CDE}   & \text{I}=\text{ABCF}=\text{CDEG}=\text{ABDEFG} \\
+                                    3             & \text{F}=\text{ABCD},\text{G}=\text{ABCE} & \text{I}=\text{ABCDF}=\text{ABCEG}=\text{DEFG} \\
+                                    \bottomrule
+                              \end{matrix} \]
+                        The shortest word length is 4, therefore $ R=4 $.
+                  \item How should we choose among these? Is one better than the others?
+                        \begin{itemize}[*]
+                              \item We can compare these designs on the basis of how many words of length 4 appear in the
+                                    defining relation. Word lengths: $ (4,4,4) $, $ (4,4,6) $, $ (5,5,4) $.
+                              \item Design 3 minimizes this number, and hence minimizes the number of main effects aliased with
+                                    the lowest-order interactions.
+                        \end{itemize}
+                  \item[*] In general, for a given resolution $R$ the \textbf{minimum aberration design} is one which minimizes
+                        the number of minimum-length words in the defining relation.
+                  \item[$\rightarrow$] These designs are preferred since they minimize the number times main effects are aliased with
+                        the lowest order ($ (R-1) $-factor) interactions.
+            \end{itemize}
 \end{itemize}
 \section{Analyzing \texorpdfstring{$ 2^{K-p} $}{2K-p} Fractional Factorial Experiments}
 \begin{itemize}[*]
-    \item We have seen that $2^{K-p}$ fractional factorial designs are a clever alternative to full $2^K$ designs for
-          purposes of factor screening.
-          \begin{itemize}
-              \item They still explore $K$ factors, but in just a \emph{fraction} of the conditions required by a full $2^K$ design.
-                    \begin{itemize}[$\hookrightarrow$]
-                        \item $ (1/2)^p $ as many.
-                    \end{itemize}
-              \item This is made possible by \emph{aliasing} and reliance on the \emph{principle of effect sparsity}.
-              \item However, this aliasing causes \emph{confounding} which can complicate conclusions.
-                    \begin{itemize}[$\hookrightarrow$]
-                        \item Can't separately estimate confounded effects.
-                    \end{itemize}
-              \item We try to mitigate the negative side effects of confounding by choosing designs with \emph{maximum resolution} and \emph{minimum aberration}.
-          \end{itemize}
+      \item We have seen that $2^{K-p}$ fractional factorial designs are a clever alternative to full $2^K$ designs for
+            purposes of factor screening.
+            \begin{itemize}
+                  \item They still explore $K$ factors, but in just a \emph{fraction} of the conditions required by a full $2^K$ design.
+                        \begin{itemize}[$\hookrightarrow$]
+                              \item $ (1/2)^p $ as many.
+                        \end{itemize}
+                  \item This is made possible by \emph{aliasing} and reliance on the \emph{principle of effect sparsity}.
+                  \item However, this aliasing causes \emph{confounding} which can complicate conclusions.
+                        \begin{itemize}[$\hookrightarrow$]
+                              \item Can't separately estimate confounded effects.
+                        \end{itemize}
+                  \item We try to mitigate the negative side effects of confounding by choosing designs with \emph{maximum resolution} and \emph{minimum aberration}.
+            \end{itemize}
 \end{itemize}
 \begin{itemize}
-    \item It turns out that the analysis of a $ 2^{K-p} $ fractional factorial design is not very different from the analysis
-          of a full $2^K$ factorial design.
-          \begin{itemize}
-              \item We visually summarize effects of interest via main and interaction effect plots.
-              \item Regression models are used to test hypotheses of the form (to determine whether a given effect is significantly different from zero):
-                    \begin{tightcenter}
-                        $ \HN $: $ \beta=0 $.
-                    \end{tightcenter}
-                    \begin{itemize}[$\rightarrow$]
-                        \item $ t $-tests in linear regression.
-                        \item $ Z $-tests in logistic regression.
-                    \end{itemize}
-          \end{itemize}
-    \item Now we have to deal with confounding. Recall: two effects that are \textbf{confounded} cannot be separately
-          estimated.
-          \begin{itemize}[$\rightarrow$]
-              \item Just $ 2^{K-p} $ effects (and hence $ B $'s) can be estimated. The number of $ \beta $'s estimable is the number of conditions.
-                    However, there are $ 2^K $ effects, so we're not estimating all of them.
-              \item Each of these $ \beta $'s jointly quantifies $ 2^p $ different effects.
-          \end{itemize}
-          \begin{itemize}
-              \item It is therefore important to know the complete aliasing structure of the design to be fully
-                    aware of \emph{which} effects are confounded.
-          \end{itemize}
-    \item Accounting for this confounding is particularly important when interpreting effect estimates and evaluating their significance.
-          \begin{Example}{The $ 2^{5-2}_{\text{III}} $ Example}{}
-              Suppose we find that the main effect of factor A is significant. What can we conclude?
-              \[ \text{A}=\text{BCD}=\text{ABCE}=\text{DE} \]
-              We can't be 100\% certain the significance of the effect is solely due to the main effect of A.
-              \begin{itemize}[\bullet]
-                  \item It could be that $ \text{ME}_\text{A} $ is significant.
-                  \item It could be that $ \text{IE}_\text{BCD} $ is significant.
-                  \item It could be that $ \text{IE}_\text{ABCE} $ is significant.
-                  \item It could be that $ \text{IE}_\text{DE} $ is significant.
-                  \item Or they could all be significant.
-                  \item Or individually none of these are significant, but in aggregate they are.
-              \end{itemize}
-          \end{Example}
+      \item It turns out that the analysis of a $ 2^{K-p} $ fractional factorial design is not very different from the analysis
+            of a full $2^K$ factorial design.
+            \begin{itemize}
+                  \item We visually summarize effects of interest via main and interaction effect plots.
+                  \item Regression models are used to test hypotheses of the form (to determine whether a given effect is significantly different from zero):
+                        \begin{tightcenter}
+                              $ \HN $: $ \beta=0 $.
+                        \end{tightcenter}
+                        \begin{itemize}[$\rightarrow$]
+                              \item $ t $-tests in linear regression.
+                              \item $ Z $-tests in logistic regression.
+                        \end{itemize}
+            \end{itemize}
+      \item Now we have to deal with confounding. Recall: two effects that are \textbf{confounded} cannot be separately
+            estimated.
+            \begin{itemize}[$\rightarrow$]
+                  \item Just $ 2^{K-p} $ effects (and hence $ \beta $'s) can be estimated. The number of $ \beta $'s estimable is the number of conditions.
+                        However, there are $ 2^K $ effects, so we're not estimating all of them.
+                  \item Each of these $ \beta $'s jointly quantifies $ 2^p $ different effects.
+            \end{itemize}
+            \begin{itemize}
+                  \item It is therefore important to know the complete aliasing structure of the design to be fully
+                        aware of \emph{which} effects are confounded.
+            \end{itemize}
+      \item Accounting for this confounding is particularly important when interpreting effect estimates and evaluating their significance.
+            \begin{Example}{The $ 2^{5-2}_{\text{III}} $ Example}{}
+                  Suppose we find that the main effect of factor A is significant. What can we conclude?
+                  \[ \text{A}=\text{BCD}=\text{ABCE}=\text{DE} \]
+                  We can't be 100\% certain the significance of the effect is solely due to the main effect of A.
+                  \begin{itemize}[\bullet]
+                        \item It could be that $ \text{ME}_\text{A} $ is significant.
+                        \item It could be that $ \text{IE}_\text{BCD} $ is significant.
+                        \item It could be that $ \text{IE}_\text{ABCE} $ is significant.
+                        \item It could be that $ \text{IE}_\text{DE} $ is significant.
+                        \item Or they could all be significant.
+                        \item Or individually none of these are significant, but in aggregate they are.
+                  \end{itemize}
+            \end{Example}
 \end{itemize}
 \begin{itemize}[*]
-    \item The uncertainty surrounding this interpretation motivates why we avoid confounding effects that are
-          likely to be significant with other ones that are also likely to be significant.
-          \begin{itemize}[$\hookrightarrow$]
-              \item Maximizing resolution and minimizing aberration should help here.
-          \end{itemize}
-    \item Next week, in an illustrative example of a $ 2^{8-4} $ fractional factorial experiment, we will demonstrate
-          how to estimate and carefully interpret the effects of the factors involved.
+      \item The uncertainty surrounding this interpretation motivates why we avoid confounding effects that are
+            likely to be significant with other ones that are also likely to be significant.
+            \begin{itemize}[$\hookrightarrow$]
+                  \item Maximizing resolution and minimizing aberration should help here.
+            \end{itemize}
+      \item Next week, in an illustrative example of a $ 2^{8-4} $ fractional factorial experiment, we will demonstrate
+            how to estimate and carefully interpret the effects of the factors involved.
 \end{itemize}
