@@ -61,12 +61,8 @@
             from this experiment.
       \item Because only $2^4=16$ conditions were used, we can only fit a model with 16 regression coefficients. In
             the context of a full $2^4$ factorial experiment, this would be the model with 4 main effects, 6 two-factor
-            interactions, 4 three-factor interactions and 1 four-factor interaction as seen in~\Cref{fig:winefig1}.
-            \begin{figure}[!htbp]
-                  \centering
-                  \caption{$ 2^4 $ factorial experiment in the wine example.}\label{fig:winefig1}
-                  \includegraphics[width=0.5\textwidth]{winefig1.pdf}
-            \end{figure}
+            interactions, 4 three-factor interactions and 1 four-factor interaction:
+            \verbatiminput{verbatim/wineOUT1.txt}
       \item But this output does not involve the factors E, F, G or H –-- it only directly references factors A, B, C
             and D.
       \item This is because of confounding.
@@ -78,13 +74,9 @@
             \end{itemize}
       \item[*] While we cannot technically separate these effects, we assume that the three-factor interactions are
             negligible, and hence any significant effect observed is due to the aliased main effect.
-      \item The same model summary from~\Cref{fig:winefig1} is shown in~\Cref{fig:winefig2}, but this time with factors E, F, G and H
-            referenced instead of the three-factor interactions.
-            \begin{figure}[!htbp]
-                  \centering
-                  \caption{$ 2^{8-4}_{\text{IV}} $ factorial experiment in the wine example.}\label{fig:winefig2}
-                  \includegraphics[width=0.5\textwidth]{winefig2.pdf}
-            \end{figure}
+      \item The same model summary from above is shown in below, but this time with factors E, F, G and H
+            referenced instead of the three-factor interactions:
+            \verbatiminput{verbatim/wineOUT2.txt}
             \begin{itemize}[*]
                   \item All main effects are significant except for factor H (fermentation temperature).
                   \item Also, the AC, AD, and AH interactions are significant. However, factors D, E, F, G, are \underline{most}
@@ -424,7 +416,7 @@
             natural units are shown in~\Cref{tab:netflixtab1}.
             \begin{table}[!htbp]
                   \centering
-                  \caption{Average browsing time by condition in the $2^2 + CP$ Netflix experiment.}\label{tab:netflixtab1}
+                  \caption{Average browsing time by condition in the $2^2 + \symbfsfup{CP}$ Netflix experiment.}\label{tab:netflixtab1}
                   \begin{tabular}{cccccc}
                         \toprule Condition & Preview Length & $x_{1}$ & Preview Size & $x_{2}$ & Average Browsing Time \\
                         \midrule 1         & 90 seconds     & $-1$    & $0.2$        & $-1$    & $22.16$ minutes       \\
@@ -439,21 +431,13 @@
             whether this experimental region was already in the vicinity of the optimum.
       \item The linear regression model with linear predictor:
             \[ \eta=\beta_0+\beta_1x_1+\beta_2x_2+\beta_{12}x_1x_2+\beta_{\symbfsfup{PQ}}x_{\symbfsfup{PQ}} \]
-            was fit. The resulting output is shown in~\Cref{fig:netflixout1}.
-            \begin{figure}[!htbp]
-                  \centering
-                  \includegraphics[width=0.5\textwidth]{out1.pdf}
-                  \caption{}\label{fig:netflixout1}
-            \end{figure}
+            was fit. The resulting output is shown below:
+            \verbatiminput{verbatim/netflixOUT1.txt}
       \item To begin the method of steepest descent procedure, we use the aforementioned data to fit the first
             order regression model with linear predictor:
             \[ \hat{\eta}=\hat{\beta}_0+\hat{\beta}_1x_1+\hat{\beta}_2x_2 \]
-            The model summary is shown in~\Cref{fig:netflixout2}.
-            \begin{figure}[!htbp]
-                  \centering
-                  \includegraphics[width=0.5\textwidth]{out2.pdf}
-                  \caption{}\label{fig:netflixout2}
-            \end{figure}
+            The model summary is shown below:
+            \verbatiminput{verbatim/netflixOUT2.txt}
       \item \Cref{fig:nf1} depicts the contours of the estimated first-order response surface.
             \begin{figure}[!htbp]
                   \centering
@@ -504,7 +488,7 @@
             levels in coded and natural units for this next experiment are shown in~\Cref{tab:netflixtab3}.
             \begin{table}[!htbp]
                   \centering
-                  \caption{Average browsing time by condition in the second $2^2 + CP$ Netflix experiment.}\label{tab:netflixtab3}
+                  \caption{Average browsing time by condition in the second $2^2 + \symbfsfup{CP}$ Netflix experiment.}\label{tab:netflixtab3}
                   \begin{tabular}{cccccc}
                         \toprule Condition & Preview Length & $x_{1}$ & Preview Size & $x_{2}$ & Average Browsing Time \\
                         \midrule 1         & 60 seconds     & $-1$    & $0.6$        & $-1$    & $14.57$ minutes       \\
@@ -517,12 +501,8 @@
             \end{table}
       \item Once again we fit a linear regression model with linear predictor:
             \[ \eta=\beta_0+\beta_1x_1+\beta_2x_2+\beta_{12}x_1x_2+\beta_{\symbfsfup{PQ}}x_{\symbfsfup{PQ}} \]
-      \item The resulting output is shown in~\Cref{fig:netflixout3}.
-            \begin{figure}[!htbp]
-                  \centering
-                  \includegraphics[width=0.5\textwidth]{out3.pdf}
-                  \caption{}\label{fig:netflixout3}
-            \end{figure}
+      \item The resulting output is shown below:
+            \verbatiminput{verbatim/netflixOUT3.txt}
             \begin{itemize}
                   \item Reject $ \HN $: $ \beta_{\symbfsfup{PQ}}=0 $, therefore we conclude there is a quadratic curve.
             \end{itemize}
