@@ -2,17 +2,17 @@ f1 <- function (x, y) {
   return (0.5 * x + 0.5 * y)
 }
 f2 <- function (x, y) {
-  return (0.5 * x + 0.5 * y + x * y)
+  return (1 + 0.2*x + 0.2*y + 0.5*x*y)
 }
 f3 <- function (x, y) {
-  return (0.5 * x + 0.5 * y + x * y + x ^ 2 + y ^ 2)
+  return (1 + 0.02*x + 0.02*y + 0.05*x*y - 0.07*x^2 - 0.07*y^2)
 }
 
 ## persp example code
 par(bg = "white")
 x <- seq(-10, 10, length = 30)
 y <- x
-z <- outer(x, y, f3)
+z <- outer(x, y, f2)
 nrz <- nrow(z)
 ncz <- ncol(z)
 # Create a function interpolating colors in the range of specified colors
@@ -31,6 +31,7 @@ persp(
   col = color[facetcol],
   phi = 30,
   theta = -45,
-  border = NA
+  border = NA,
+  axes = F
 )
 contour(x, y, z)
