@@ -49,16 +49,16 @@
                     (i.e., the second-order interactions and quadratic effects).
           \end{itemize}
     \item In order to find the value of $ \Vector{x}=(x_1,x_2,\ldots,x_{K^\prime})^\top $ that maximizes/minimizes the expected response,
-          we must find the stationary point of the estimated response surface.
+          we must find the \textbf{stationary point} of the estimated response surface.
     \item The stationary point is:
-          \[ \Vector{x}_{\symbfsfup{s}}=\frac{1}{2} \Matrix{B}^{-1}\Vector{b} \]
+          \[ \Vector{x}_{\symbfsfup{s}}=-\frac{1}{2} \Matrix{B}^{-1}\Vector{b} \]
           which is found by solving:
           \[ \pdv{\hat{\eta}}{\Vector{x}}=\Vector{b}+2\Matrix{B}\Vector{x}=\Vector{0} \]
     \item The optimal expected response is:
           \[ \widehat{\E{Y}}=\hat{\eta}_{\symbfsfup{s}}=\hat{\beta}_0+\frac{1}{2} \Vector{x}^\top_{\symbfsfup{s}} \Vector{b} \]
           in the case of linear regression and
-          \[ \widehat{\E{Y}}=\frac{e^{\hat{\eta}_{\symbfsfup{s}}}}{1+e^{\hat{\eta}_{\symbfsfup{s}}}}
-              =\frac{e^{\hat{\beta}_0+\frac{1}{2} \Vector{x}^\top_{\symbfsfup{s}} \Vector{b}}}{1+e^{\hat{\beta}_0+\frac{1}{2} \Vector{x}^\top_{\symbfsfup{s}} \Vector{b}}} \]
+          \[ \widehat{\E{Y}}=\frac{\exp{\hat{\eta}_{\symbfsfup{s}}}}{1+\exp{\hat{\eta}_{\symbfsfup{s}}}}
+              =\frac{\exp{\hat{\beta}_0+\frac{1}{2} \Vector{x}^\top_{\symbfsfup{s}} \Vector{b}}}{1+\exp{\hat{\beta}_0+\frac{1}{2} \Vector{x}^\top_{\symbfsfup{s}} \Vector{b}}} \]
           in the case of logistic regression.
     \item For practical implementation of this solution, the stationary point $ \Vector{x}_{\symbfsfup{s}} $ must be translated into optimal
           operating conditions in natural units $ \Vector{U}_{\symbfsfup{s}} $ using the following conversion formula:
@@ -79,7 +79,7 @@
 \end{itemize}
 \subsection{The Central Composite Design}
 \begin{itemize}
-    \item[*] The goal of a response surface experiment is to be able to fit a full second order response surface model.
+    \item[*] The goal of a response surface experiment is to be able to fit a full second-order response surface model.
         \begin{itemize}
             \item This requires estimating $ (K^\prime+1)(K^\prime+2)/2 $ coefficients.
         \end{itemize}
@@ -172,8 +172,8 @@
                         \item Designs with this property are called \underline{rotatable}.
                     \end{itemize}
           \end{itemize}
-    \item No matter the choice of $ a>0 $, the CCD facilitates estimation of the full second order response surface
-          model, and hence identification of the optimum.
+    \item[*] No matter the choice of $ a>0 $, the CCD facilitates estimation of the full second-order response surface
+        model, and hence identification of the optimum.
 \end{itemize}
 \subsection{The Lyft Example}
 \begin{itemize}
@@ -181,9 +181,9 @@
           ride-sharing problem.
     \item Suppose that Lyft is interested in designing a promotional offer that maximizes ride-bookings during
           an experimental period.
-    \item Previous screening experiments evaluated the influence of discount amount, discount duration, ride
-          type, time-of-day, and the method of dissemination. It was found that the most important factors
-          were discount amount ($ x_1 $) and discount duration ($ x_2 $).
+    \item[$\rightarrow$] Previous screening experiments evaluated the influence of discount amount, discount duration, ride
+        type, time-of-day, and the method of dissemination. It was found that the most important factors
+        were discount amount ($ x_1 $) and discount duration ($ x_2 $).
     \item A previous steepest ascent exercise also suggested that the optimal discount duration is somewhere in
           the vicinity of 4.5 days and the optimal discount amount is somewhere in the vicinity of 50\%.
     \item To find optimal values of these factors a follow-up two-factor central composite design was run in order
@@ -214,7 +214,7 @@
           \begin{itemize}
               \item The booking rates in each condition are also shown in~\Cref{tab:Lyft}.
           \end{itemize}
-    \item The output from the fitted second order logistic regression model is shown below:
+    \item The output from the fitted second-order logistic regression model is shown below:
           \verbatiminput{verbatim/lyftOUT.txt}
     \item Contour plots of the fitted response surface are shown in~\Cref{fig:Lyft}.
           \begin{figure}[!htbp]
@@ -231,8 +231,8 @@
                   \Cref{subfig:Lyft1}: Coded-Unit Factor Space.
                   \Cref{subfig:Lyft2}: Natural-Unit Factor Space.}\label{fig:Lyft}
           \end{figure}
-    \item The stationary point for this second order model is located (in coded units) at $ x_1 = 0.006565206$,
-          $ x_2 = 0.973047233 $ using $ \Vector{x}_{\symbfsfup{s}}=\frac{1}{2} \Matrix{B}^{-1}\Vector{b} $.
+    \item The stationary point for this second-order model is located (in coded units) at $ x_1 = 0.006565206$,
+          $ x_2 = -0.973047233 $ using $ \Vector{x}_{\symbfsfup{s}}=-\frac{1}{2} \Matrix{B}^{-1}\Vector{b} $.
           \begin{itemize}
               \item In the natural units this corresponds to a discount rate of $50.16\%$ that lasts for $2.07$ days.
               \item The predicted booking rate at this point is $0.7918$, with a 95\% prediction interval given by $(0.7691, 0.8144)$.
@@ -241,6 +241,7 @@
           \begin{itemize}
               \item This achieves a booking rate of $0.7917$ with a 95\% prediction interval of $(0.7693, 0.8141)$.
           \end{itemize}
+    \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/W12/CCD_example.R}{[R Code] \texttt{CCD\_example}}
 \end{itemize}
 \section{RSM with Qualitative Factors}
 \begin{itemize}
@@ -257,14 +258,14 @@
           \begin{itemize}
               \item Perform the method of steepest ascent/descent independently on each surface
               \item Perform CCDs independently on each surface
-              \item Independently fit second order models for each surface
+              \item Independently fit second-order models for each surface
               \item Independently identify the stationary point on each surface
           \end{itemize}
-    \item Among all the candidate surfaces, the one with the most optimal optimum is the `winner.'
-          \begin{itemize}
-              \item The factor levels (numeric and categorical) that gave rise to it should be defined as the optimal
-                    operating conditions.
-          \end{itemize}
+    \item[*] Among all the candidate surfaces, the one with the most optimal optimum is the `winner.'
+        \begin{itemize}
+            \item The factor levels (numeric and categorical) that gave rise to it should be defined as the optimal
+                  operating conditions.
+        \end{itemize}
     \item[*] This investigation should now be followed up by a response surface experiment so that a full second-order model may be fit and the optimum identified.
         \begin{Example}{}
             Suppose we have two numeric factors $ x_1 $ and $ x_2 $, and two categorical factors $ x_3 $ [3 levels $(\symbfsfup{L}, \symbfsfup{M}, \symbfsfup{H})$] and
@@ -280,3 +281,4 @@
             \end{enumerate}
         \end{Example}
 \end{itemize}
+\underline{Optional}: \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/W12/Visualizing_response_surfaces.R}{[R Code] \texttt{Visualizing\_response\_surfaces}}
