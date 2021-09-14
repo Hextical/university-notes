@@ -1,0 +1,1038 @@
+\documentclass[final]{article}\usepackage[]{graphicx}\usepackage[svgnames]{xcolor}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[svgnames]{xcolor}
+\usepackage[activate={true,nocompatibility},final,tracking=true,factor=1100,stretch=10,shrink=10]{microtype}
+\usepackage[math-style=ISO,bold-style=ISO,warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
+\usepackage[margin=1in]{geometry}
+\usepackage[unicode,pdfversion=1.7]{hyperref}
+\usepackage[shortlabels]{enumitem}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{cleveref}
+\usepackage{booktabs}
+\usepackage{nicematrix}
+\usepackage{derivative}
+\usepackage{etoolbox}
+\usepackage{siunitx}
+\usepackage{listings}
+
+\lstset{frame=none,
+  language=R,
+  showstringspaces=false,
+  columns=flexible,
+  numbers=none,
+  basicstyle={\small\ttfamily},
+  keywordstyle=\color{Blue},
+  stringstyle=\color{Red},
+  commentstyle=\color{DarkGreen},
+  breaklines=true,
+  breakatwhitespace=true,
+  moredelim=**[is][\color{blue}]{@}{@},
+  tabsize=3}
+
+
+% Functions
+\providecommand\given{} % just to make sure it exists
+\DeclarePairedDelimiterXPP{\E}[1]{\operatorname{\mathbb{E}}}[]{}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\V}[1]{\operatorname{\mathbb{V}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\Var}[1]{\operatorname{\text{Var}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\Cov}[1]{\operatorname{\text{Cov}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP\Prob[1]{\operatorname{\mathbb{P}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP\Ind[1]{\operatorname{\mathbb{I}}}\{\}{}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\se}[1]{\operatorname{\text{se}}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\estse}[1]{\widehat{\operatorname{\text{se}}}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\estV}[1]{\widehat{\operatorname{\mathbb{V}}}}(){}{
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\estVar}[1]{\widehat{\operatorname{\text{Var}}}}(){}{
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\let\exp\relax%
+\let\log\relax%
+\let\ln\relax%
+\DeclarePairedDelimiterXPP{\exp}[1]{\operatorname{\text{exp}}}\{\}{}{#1}%
+\DeclarePairedDelimiterXPP{\log}[1]{\operatorname{\text{log}}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\ln}[1]{\operatorname{\text{ln}}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\diag}[1]{\operatorname{\text{diag}}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\sign}[1]{\operatorname{\text{sign}}}(){}{#1}%
+
+\DeclarePairedDelimiterXPP{\expit}[1]{\operatorname{\text{expit}}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\logit}[1]{\operatorname{\text{logit}}}(){}{#1}%
+\newcommand{\HN}{\text{H}_0}%
+\newcommand{\HA}{\text{H}_{\text{A}}}%
+
+% Distributions
+\DeclarePairedDelimiterXPP{\N}[1]{\mathcal{N}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\Poisson}[1]{\text{Poisson}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\Binomial}[1]{\text{Binomial}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\Bernoulli}[1]{\text{Bernoulli}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\MVN}[1]{\text{MVN}}(){}{#1}%
+
+\newcommand{\iid}{\overset{\text{iid}}{\sim}}%
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+% can be useful to refer to this outside \Set
+\newcommand\SetSymbol[1][]{%
+    \nonscript\:#1\vert{}
+    \allowbreak\nonscript\:
+    \mathopen{}}
+\DeclarePairedDelimiterX\Set[1]\{\}{%
+    \renewcommand\given{:}
+    #1
+}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\arginf}{arg\,inf}
+\DeclareMathOperator*{\argsup}{arg\,sup}
+
+% Table of Contents
+\hypersetup{colorlinks,linkcolor=[rgb]{0,0.5,1}}%
+
+\title{%
+    {\LARGE Generalized Linear Models}\\%
+    {\large STAT 431/STAT 831}\\%
+    {\normalsize Spring 2022 (idk)}%
+}%
+\author{%
+    \LaTeX{}er: \emph{Cameron Roopnarine}\\%
+    Instructor: \emph{Leilei Zeng}%
+}%
+\date{\today}%
+
+\providecommand{\RandomVector}[1]{\symbfit{#1}}% general vectors in bold italic
+\providecommand{\Vector}[1]{\symbfup{#1}}% general vectors in bold italic
+\providecommand{\Matrix}[1]{\symbfup{#1}}
+\providecommand{\Field}[1]{\symbfsfup{#1}}
+
+\usepackage{stackengine}
+\usepackage[english]{isodate}
+\newcommand{\makeheading}[2]%
+{%
+\begin{center}%
+    \makebox[\linewidth]{\raisebox{-.5ex}[0cm][0cm]{\stackanchor{\textcolor{Gray}{\textsc{#1}}}{\scriptsize\itshape\printyearoff #2}\;}\color{Crimson!50}\hrulefill}%
+\end{center}%
+}%
+
+\usepackage[breakable]{tcolorbox}
+\tcbset{
+    regular/.style={
+        boxrule=0pt,
+        breakable,
+        sharp corners
+    }
+}
+
+\newtcolorbox{Example}[1]{regular,colframe=Green!20!white,colback=Green!10!white,coltitle=Green,title={#1}}%
+\newtcolorbox{Regular}[1]{regular,colframe=Navy!15!white,colback=Navy!5!white,coltitle=Navy,title={#1}}%
+\newtcolorbox{Result}[1]{regular,colframe=Red!15!white,colback=Red!5!white,coltitle=Red,title={#1}}%
+
+\hypersetup{colorlinks=true,%
+linkcolor=[rgb]{0,0.5,1},%
+pdftitle={Generalized Linear Models and their Applications (STAT 431/STAT 831)},%
+pdfauthor={Cameron Roopnarine, Leilei Zeng},%
+pdfsubject={Statistics},%
+pdfkeywords={University of Waterloo, Fall 2021 (1219)}}%
+
+\title{%
+\LARGE Generalized Linear Models and their Applications\\%
+\large STAT 431/STAT 831\\%
+\normalsize Fall 2021 (1219)}%
+\author{\LaTeX{}er: \emph{Cameron Roopnarine}\\Instructor: \emph{Leilei Zeng}}%
+\date{\today}%
+
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\makeheading{Week 1}{\daterange{2021-09-08}{2021-09-10}}
+\section*{Topic 1a: Review of Linear Regression}
+\addcontentsline{toc}{section}{Topic 1a: Review of Linear Regression}
+
+\subsection*{Example: low birthweight infants study\footnote{Principles of Biostatistics by Pagano and Gauvreau}}
+A study was conducted at two teaching
+hospitals in Boston, Massachusetts,
+where the head circumference, gestational age and some other variables
+are recorded for 100 low birth weight
+infants.
+
+Question: what is the relationship between \textcolor{Blue}{\emph{gestational age}} \& \textcolor{Blue}{head circumference}?
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-5-1} 
+
+}
+
+
+\end{knitrout}
+We wish to model the relationship between \emph{gestational age} and \emph{head
+    circumference} using a straight line!
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-6-1} 
+
+}
+
+
+\end{knitrout}
+
+\subsection*{The Model Fitting Process}
+\begin{enumerate}[1.]
+    \item \textcolor{Red}{Model Specification}: select a probability distribution for the response
+          variable and a linear equation linking the response to the explanatory
+          variables.
+    \item \textcolor{Red}{Estimation}: finding the equation (the parameters of the model).
+    \item \textcolor{Red}{Model checking}: how well does the model fit the data?
+    \item \textcolor{Red}{Inference}: interpret the fitted model, calculate confidence intervals,
+          conduct hypothesis tests.
+\end{enumerate}
+
+\subsection*{1. Model Specification}
+\begin{Regular}{Notation}
+    For each subject $ i=1,\ldots,n $ we have:
+    \begin{itemize}
+        \item $ Y_i = $ random variable representing the response, and
+        \item $ \Vector{x}_i =(1,x_{i1},\ldots,x_{ip})^\top $ a vector of explanatory variables.
+    \end{itemize}
+\end{Regular}
+\begin{Regular}{Specification for Multiple Linear Regression}
+    \begin{itemize}
+        \item Linear regression equation:
+              \[ Y_i=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}+\varepsilon_i\text{ where }\varepsilon_i \iid\N{0,\sigma^2}. \]
+        \item Equivalently, $Y_i$'s are independent $ \N{\mu_i,\sigma^2} $ random variables or
+              \[ \mu_i=\E{Y_i}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}. \]
+        \item For convenience, we often write linear regression models in matrix form as
+              \[ \RandomVector{Y}=\Matrix{X}\Vector{\beta}+\RandomVector{\varepsilon}, \]
+              where
+              \[ \RandomVector{Y}=\begin{bmatrix}
+                      Y_1    \\
+                      Y_2    \\
+                      \vdots \\
+                      Y_n
+                  \end{bmatrix},\quad
+                  \Matrix{X}=\begin{bmatrix}
+                      1      & x_{11} & \cdots & x_{1p} \\
+                      2      & x_{21} & \cdots & x_{2p} \\
+                      \vdots & \vdots & \ddots & \vdots \\
+                      1      & x_{n1} & \cdots & x_{np}
+                  \end{bmatrix},\quad
+                  \Vector{\beta}=\begin{bmatrix}
+                      \beta_0 \\
+                      \beta_1 \\
+                      \vdots  \\
+                      \beta_p
+                  \end{bmatrix},\quad
+                  \RandomVector{\varepsilon}=\begin{bmatrix}
+                      \varepsilon_1 \\
+                      \varepsilon_2 \\
+                      \vdots        \\
+                      \varepsilon_n
+                  \end{bmatrix} \]
+              and
+              \[ \RandomVector{\varepsilon}\sim \MVN{\Vector{0},\sigma^2\Matrix{I}}. \]
+    \end{itemize}
+\end{Regular}
+\subsection*{2. Estimation}
+\begin{Regular}{Least Squares}
+    We wish to minimize a loss function:
+    \begin{align*}
+        S(\Vector{\beta})
+         & =\sum_{i=1}^{n} (y_i-\hat{y}_i)^2                                                             \\
+         & =\sum_{i=1}^{n} \bigl(y_i-(\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip})\bigr)^2               \\
+         & =(\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta}).
+    \end{align*}
+    The least squares estimators (LSE) are the solutions to the equations:
+    \[ \pdv{S}{\Vector{\beta}}=\pdv*{(\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta})}{\Vector{\beta}}=0. \]
+\end{Regular}
+\begin{Regular}{Maximum Likelihood Estimation}
+    The probability density function for $ Y_i $ is:
+    \[ f(y_i)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp*{-\frac{1}{2\sigma^2}\bigl(y_i-(\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip})\bigr)^2 }.  \]
+    The log-likelihood function is therefore:
+    \begin{align*}
+        \ell(\Vector{\beta},\sigma^2)
+         & =\log[\bigg]{\prod_{i=1}^n f(y_i)}                                                                                                              \\
+         & =\sum_{i=1}^{n} \biggl(-\frac{1}{2} \log{2\pi\sigma^2}-\frac{1}{2\sigma^2}\bigl(y_i-(\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip})\bigr) \biggr) \\
+         & =-\frac{n}{2} \log{2\sigma^2}-\frac{1}{2\sigma^2} (\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta}).
+    \end{align*}
+    The maximum likelihood estimators (MLE) of $ \Vector{\beta} $ are obtained by solving:
+    \[ \pdv{\ell}{\Vector{\beta}}=\pdv*{\biggl[-\frac{1}{2\sigma^2}(\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta})\biggr]}{\Vector{\beta}}=0. \]
+\end{Regular}
+\begin{itemize}
+    \item \textcolor{Red}{Parameter Estimates}: For linear regression LSE and MLE of $ \Vector{\beta} $ are the same
+          \[ \hat{\Vector{\beta}}=(\Matrix{X}^\top\Matrix{X})^{-1}\Matrix{X}^\top\RandomVector{Y}. \]
+    \item \textcolor{Red}{Fitted values}: $ \hat{\RandomVector{Y}}=\Matrix{X}\hat{\Vector{\beta}} $.
+    \item \textcolor{Red}{Residuals}: $ \hat{r}_i=(y_i-\hat{y}_i) $.
+    \item \textcolor{Red}{Variance estimates}:
+          \begin{itemize}
+              \item An unbiased estimate of $ \sigma^2 $ is:
+                    \[ \hat{\sigma}^2=\frac{1}{n-(p+1)} \sum_{i=1}^{n} \hat{r}_i^2. \]
+              \item An estimate of the variance of $ \hat{\Vector{\beta}} $ is:
+                    \[ \estV{\hat{\Vector{\beta}}}=\hat{\sigma}^2(\Matrix{X}^\top\Matrix{X})^{-1}. \]
+          \end{itemize}
+\end{itemize}
+\subsubsection*{Low Birthweight Infant Data Example}
+\begin{itemize}
+    \item For $ n=100 $ infants, we have observed $ Y_i= $ head circumference and $ x_i= $ gestational age for baby $ i $, $ i=1,\ldots,100 $.
+    \item Consider a simple linear regression model:
+          \[ Y_i=\beta_0+\beta_1x_{i}+\varepsilon_i. \]
+    \item We can fit the model and obtain LSE/MSE using the \lstinline{lm()} function in R.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{lowbwt} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlstr{"lowbwt.txt"}\hlstd{,} \hlkwc{header} \hlstd{= T)}
+\hlstd{fit} \hlkwb{<-} \hlkwd{lm}\hlstd{(headcirc} \hlopt{~} \hlstd{gestage,} \hlkwc{data} \hlstd{= lowbwt)}
+\hlkwd{summary}\hlstd{(fit)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+lm(formula = headcirc ~ gestage, data = lowbwt)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.5358 -0.8760 -0.1458  0.9041  6.9041 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  3.91426    1.82915    2.14   0.0348 *  
+gestage      0.78005    0.06307   12.37   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.59 on 98 degrees of freedom
+Multiple R-squared:  0.6095,	Adjusted R-squared:  0.6055 
+F-statistic: 152.9 on 1 and 98 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+    \item What is the interpretation of regression parameters $ \beta_0 $ and $ \beta_1 $?
+          \begin{itemize}
+              \item $ \beta_0 $ (intercept): expected \lstinline{headcirc} for a baby of a gestational age zero ($ x=0 $).
+              \item $ \beta_1 $ (slope): expected change in \lstinline{headcirc} associated with a one unit increase in gestational age.
+          \end{itemize}
+\end{itemize}
+
+\subsection*{3. Model Checking}
+\textcolor{Red}{Standardized Residuals}:
+\[ d_i=\frac{r_i}{\sqrt{\hat{\sigma}^2(1-h_{ii})}},  \]
+where $ h_{ii} $ is the $ (i,i) $ element of $ \Matrix{H}=(\Matrix{X}^\top\Matrix{X})^{-1}\Matrix{X}^\top $.
+By asymptotic theory, if the model provides a good fit to the data then we
+should expect that:
+\[ d_i\iid \N{0,1}. \]
+We visually check this by examining residual plots such as:
+\begin{itemize}
+    \item Standardized residuals versus the fitted values.
+    \item Standardized residuals versus the explanatory variable(s).
+    \item Normal probability plot (QQ plot) of the standardized residuals.
+\end{itemize}
+% \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-8-1} 
+
+}
+
+
+
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-8-2} 
+
+}
+
+
+\end{knitrout}
+% \end{noindent}
+
+\subsection*{4. Inference}
+\begin{itemize}
+    \item Under suitable assumptions, the fitted regression parameters are asymptotically
+          normally distributed:
+          \begin{align*}
+              \hat{\Vector{\beta}} & \sim \MVN{\Vector{\beta},\sigma^2(\Matrix{X}^\top \Matrix{X})^{-1}},                                              \\
+              \hat{\beta}_j        & \sim \N{\beta_j,\sigma^2v_{jj}},\qquad\text{where $v_{jj}=\bigl[(\Matrix{X}^\top\Matrix{X})^{-1}\bigr]_{(j,j)}$}.
+          \end{align*}
+    \item Since $ \sigma^2 $ is generally unknown, we replace it with the unbiased estimate $ \hat{\sigma}^2 $, and obtain $ \se{\hat{\beta}_j}=\sqrt{\hat{\sigma}^2v_{jj}} $.
+    \item The inference is then based on the $t$-distribution result:
+          \[ \frac{\hat{\beta}_j-\beta_j}{\se{\hat{\beta}_j}}\sim t_{n-p-1}.  \]
+\end{itemize}
+\subsubsection*{Low Birthweight Infant Data Example}
+\begin{itemize}
+    \item Is there a significant (linear) relationship between head circumference and
+          gestational age?
+
+          We wish to test $ \HN $: $ \beta_1=0 $ vs $ \HA $: $ \beta_1\ne 0 $.
+          \[ t=\frac{\hat{\beta}_1-(0)}{\se{\hat{\beta}_1}}\sim t_{98}, \]
+          if $ \HN $ is true, and we reject $ \HN $ if $ \abs{t}>t_{98,0.975}=1.985 $.
+          Here we have $ t=0.78/0.063=12.37\gg 1.985 $, so we reject $ \HN $.
+    \item What is the \qty{95}{\percent} confidence interval for the expected increase in head
+          circumference when the gestational age of a baby increases by 1 week?
+
+          A \qty{95}{\percent} CI for $ \beta_1 $:
+          \[ \hat{\beta}_1\pm t_{98,0.975}\se{\hat{\beta}_1}=0.78\pm 1.985(0.063)=(0.665,0.905). \]
+\end{itemize}
+
+\subsection*{Linear models with multiple predictors}
+\subsubsection*{Low Birthweight Infant Data Example}
+\begin{itemize}
+    \item \emph{Toxemia}, a pregnancy complication characterized by high blood pressure
+          and signs of damage to liver and kidneys, may also have an impact on the
+          development of babies.
+    \item Does \emph{toxemia}, after adjustment for gestational age, also affect the head
+          circumference?
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{fit} \hlkwb{<-} \hlkwd{lm}\hlstd{(headcirc} \hlopt{~} \hlstd{gestage} \hlopt{+} \hlkwd{factor}\hlstd{(toxemia),} \hlkwc{data} \hlstd{= lowbwt)}
+\hlkwd{summary}\hlstd{(fit)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+lm(formula = headcirc ~ gestage + factor(toxemia), data = lowbwt)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.8427 -0.8427 -0.0525  0.8109  6.4092 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       1.49558    1.86799   0.801  0.42530    
+gestage           0.87404    0.06561  13.322  < 2e-16 ***
+factor(toxemia)1 -1.41233    0.40615  -3.477  0.00076 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.507 on 97 degrees of freedom
+Multiple R-squared:  0.6528,	Adjusted R-squared:  0.6456 
+F-statistic: 91.18 on 2 and 97 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+          What is the interpretation of $ \beta_2 $?
+
+          $ \hat{\beta}_3=-1.41233 $. After adjustment of gestational age, the babies whose mothers had toxemia have smaller (by \qty{1.41}{\cm}) than
+          those whose mothers did not. This difference is significant (test $ \HN $: $ \beta_2=0 $, $ p\text{-value}=0.0076<0.05$).
+    \item Is the rate of increase of head circumference with gestational age the same
+          for infants whose mothers with toxemia as those whose mother without it?
+          \[ Y_i=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i1}x_{i2}+\varepsilon_i. \]
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{fit} \hlkwb{<-} \hlkwd{lm}\hlstd{(headcirc} \hlopt{~} \hlstd{gestage} \hlopt{*} \hlkwd{factor}\hlstd{(toxemia),} \hlkwc{data} \hlstd{= lowbwt)}
+\hlkwd{summary}\hlstd{(fit)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+lm(formula = headcirc ~ gestage * factor(toxemia), data = lowbwt)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.8366 -0.8366 -0.0928  0.7910  6.4341 
+
+Coefficients:
+                         Estimate Std. Error t value Pr(>|t|)    
+(Intercept)               1.76291    2.10225   0.839    0.404    
+gestage                   0.86461    0.07390  11.700   <2e-16 ***
+factor(toxemia)1         -2.81503    4.98515  -0.565    0.574    
+gestage:factor(toxemia)1  0.04617    0.16352   0.282    0.778    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.515 on 96 degrees of freedom
+Multiple R-squared:  0.6531,	Adjusted R-squared:  0.6422 
+F-statistic: 60.23 on 3 and 96 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+          What is the interpretation of $ \beta_3 $?
+
+          $ \beta_3 $ is the differences in slopes between the two groups (\lstinline{toxemia=1} vs \lstinline{toxemia=0}).
+          We want to test $ \HN $: $ \beta_3=0 $, $ t=0.282 $, $ p\text{-value}=0.778>0.05 $. No evidence to reject $ \HN $.
+\end{itemize}
+
+\subsection*{Limitations of Linear Regression}
+Linear regression models can be very useful but may not be appropriate to use
+when response $ Y $ is not continuous and can not be assumed to be normally
+distributed, e.g.,
+\begin{itemize}
+    \item Binary data ($ Y=0 $ or $ Y=1 $),
+    \item Count data ($ Y=0,1,2,3,\ldots $).
+\end{itemize}
+\textcolor{Red}{Generalized Linear Models (GLM)} extend the linear regression framework to
+address the above issue.
+\begin{itemize}
+    \item Suitable for continuous and discrete data.
+    \item Normal/Gaussian linear regression is a special case of GLM.
+    \item Inference based on maximum likelihood methods (review next class --- 431
+          Appendix, Stat 330 notes).
+\end{itemize}
+
+\makeheading{Week 2}{\daterange{2021-09-13}{2021-09-17}}
+\section*{Topic 1b: Review of Likelihood Methods}
+\addcontentsline{toc}{section}{Topic 1b: Review of Likelihood Methods}
+\subsection*{Distributions with a Single Parameter}
+\begin{Regular}{Setup}
+      \begin{itemize}
+            \item Suppose $ Y $ is a random variable with probability density (or mass) function
+                  $ f(y;\theta) $, where $ \theta\in\Omega $ is a continuous parameter.
+            \item The true value of $ \theta $ is unknown.
+            \item We wish to make inferences about $ \theta $ (i.e., we may want to estimate $ \theta $, calculate
+                  a \qty{95}{\percent} CI or carry out tests of hypotheses regarding $ \theta $).
+      \end{itemize}
+\end{Regular}
+\subsection*{Likelihood Function}
+\begin{itemize}
+      \item The \textcolor{Red}{Likelihood function} is any function which is proportional to the probability
+            of observing the data one actually obtained, i.e.,
+            \[ L(\theta;y)=cf(y;\theta)=c\Prob{Y=y;\theta}, \]
+            where $ c $ is a \emph{proportionality constant} that does not depend on $ \theta $.
+      \item $ L(\theta;y) $ contains all the information regarding $ \theta $ from the data.
+      \item $ L(\theta;y) $ ranks the various parameter values in terms of their consistency
+            with the data.
+      \item Since $ L(\theta;y) $ is defined in terms of the random variable $ y $, it is itself a
+            random variable.
+\end{itemize}
+\subsection*{Maximum Likelihood Estimator}
+\begin{itemize}
+      \item For the purposes of estimation we typically want to find $ \theta $ value that makes the
+            observed data the most likely (hence the term \textcolor{Red}{maximum likelihood}).
+      \item The \textcolor{Red}{maximum likelihood estimator (MLE)} of $ \theta $ is
+            \[ \hat{\theta}=\argmax_\theta L(\theta;y). \]
+      \item Estimation becomes a simple optimization problem!
+      \item It is often easier to work with the logarithm of the likelihood function, i.e., the
+            \textcolor{Red}{log-likelihood function}
+            \[ \ell(\theta;y)=\log[\big]{L(\theta;y)}. \]
+      \item Equivalently, since the $ \log{\:\cdot\:} $ function is monotonic, the value of $ \theta $ that maximizes $ L(\theta;y) $ also
+            maximizes the log-likelihood $ \ell(\theta;y) $.
+      \item For simplicity, we drop the $ y $ and use $ L(\theta)=L(\theta;y) $ and $ \ell(\theta)=\ell(\theta;y) $.
+\end{itemize}
+
+\subsection*{A List of Important Functions}
+\begin{itemize}
+      \item \textcolor{Red}{Log-likelihood function}: $ \ell(\theta)=\log[\big]{L(\theta)} $.
+      \item \textcolor{Red}{Score function}: $ S(\theta)=\pdv{\ell(\theta)}{\theta}=\ell^\prime(\theta)$.
+      \item \textcolor{Red}{Information function}: $ I(\theta)=-\pdv[order=2]{\ell(\theta)}{\theta}=-\ell^{\prime\prime}(\theta) $.
+      \item \textcolor{Red}{Fisher information function}: $ \mathcal{I}(\theta)=\E[\big]{I(\theta)} $.
+      \item \textcolor{Red}{Relative likelihood function}: $ R(\theta)=L(\theta)/L(\hat{\theta}) $.
+      \item \textcolor{Red}{Log relative likelihood function}: $ r(\theta)=\log[\big]{L(\theta)/L(\hat{\theta})}=\ell(\theta)-\ell(\hat{\theta}) $.
+\end{itemize}
+\subsection*{Maximum Likelihood Estimation}
+\begin{itemize}
+      \item Want $ \theta $ that maximizes $ \ell(\theta) $, or equivalently solves $ S(\theta)=0 $.
+      \item Sometimes $ S(\theta)=0 $ can be solved explicitly (easy in this case), but often we must solve iteratively.
+      \item Check that the solution corresponds to a maxima of $ \ell(\theta) $ by verifying the value of the second derivative at $ \hat{\theta} $ is negative, or
+            \[ I(\hat{\theta})=-\ell^{\prime\prime}(\hat{\theta})>0. \]
+      \item \textcolor{Red}{Invariance property of MLEs}: if $ g(\theta) $ is any function of the parameter $ \theta $, then the MLE of $ g(\theta) $ is $ g(\hat{\theta}) $.
+            \begin{Example}{}
+                  If $ \hat{\theta} $ is the MLE of $ \theta $, then $ e^{\hat{\theta}} $ is the MLE of $ e^{\theta} $.
+            \end{Example}
+\end{itemize}
+\subsection*{Example: Binomial Distribution}
+\begin{Example}{Example: Binomial Distribution}
+      \begin{itemize}
+            \item A study was conducted to examine the risk for hormone use in healthy
+                  postmenopausal women.
+            \item Suppose a group of $ n $ women received a combined hormone therapy, and were
+                  monitored for the development of breast cancer during 8.5 years followup.
+            \item Let
+                  \[ Y_i=\begin{cases*}
+                              1 & , if woman $ i $ developed breast cancer, \\
+                              0 & , otherwise,
+                        \end{cases*} \]
+                  for $ i=1,\ldots,n $.
+            \item Suppose $ Y_i \iid\Bernoulli{\pi} $ where $ \pi=\Prob{Y_i=1} $, then the total number of woman developed breast cancer is:
+                  \[ Y=\sum_{i=1}^{n} Y_i \sim \Binomial{n,\pi}. \]
+            \item We wish to find the MLE of unknown parameter $ \pi $ (probability of cancer).
+      \end{itemize}
+\end{Example}
+\begin{itemize}
+      \item \textcolor{Red}{Likelihood function}:
+            \[ L(\pi;y)=c\Prob{Y=y;\pi}=\pi^y(1-\pi)^{n-y}, \]
+            where we take $ c=1/\binom{n}{y} $ to simplify the likelihood.
+      \item \textcolor{Red}{Log-likelihood function}:
+            \[ \ell(\pi)=y\log{\pi}+(n-y)\log{1-\pi}. \]
+      \item \textcolor{Red}{Score function}:
+            \[ S(\pi)=\frac{y}{\pi}-\frac{n-y}{1-\pi}.  \]
+      \item \textcolor{Red}{Maximum Likelihood Estimator}:
+            \[ S(\pi)=0\implies \hat{\pi}=\frac{\sum_{i=1}^{n} y_i}{n}=\bar{y}. \]
+      \item Second derivative test using \textcolor{Red}{information function}:
+            \[ I(\pi)=-\ell^{\prime\prime}=\frac{y}{\pi^2}+\frac{n-y}{(1-\pi)^2}>0\ \forall \pi\in(0,1).   \]
+            Confirms that $ \hat{\pi}=\bar{y} $ is the MLE.
+\end{itemize}
+\begin{Example}{Example: Hormone Therapy Data}
+      \begin{itemize}
+            \item A group of $ n=8506 $ postmenopausal women aged 50-79 received EPT and $ Y=166 $
+                  developed invasive breast cancer during the followup.
+            \item Assume $ Y \sim \Binomial{n,\pi} $ with unknown parameter $ \pi $.
+            \item The \textcolor{Red}{maximum likelihood estimate} of $ \pi $ is:
+                  \[ \hat{\pi}=\bar{y}=\frac{y}{n} =\frac{166}{8506}=0.0195. \]
+      \end{itemize}
+\end{Example}
+\subsection*{Example: Poisson Distribution}
+Suppose $ y_1,\ldots,y_n $ is an iid sample from a Poisson distribution with probability mass function:
+\[ f(y;\lambda)=\Prob{Y=y;\lambda}=\frac{\lambda^y e^{-\lambda}}{y!},\; \lambda>0,\,y=0,1,2,\ldots.  \]
+\begin{itemize}
+      \item \textcolor{Red}{Likelihood function}:
+            \[ L(\lambda;y_1,\ldots,y_n)=\prod_{i=1}^n f(y_i;\lambda)=\frac{\lambda^{\sum y_i}e^{-n\lambda}}{\prod_i y_i!}.  \]
+      \item \textcolor{Red}{Log-likelihood function}:
+            \[ \ell(\lambda)=\biggl(\sum_i y_i\biggr)\log{\lambda}-n\lambda-\sum_{i=1}^{n} \log{y_i!}. \]
+      \item \textcolor{Red}{Score function}:
+            \[ S(\lambda)=\frac{\sum_i y_i}{\lambda}-n=0\implies \hat{\lambda}=\frac{\sum_{i=1}^{n} y_i}{n} =\bar{y}.  \]
+\end{itemize}
+\subsection*{Newton Raphson Algorithm For Finding MLE}
+\begin{itemize}
+      \item Sometimes, solving $ S(\theta)=0 $ can be challenging and closed form solutions may
+            not be obtained, iterative method need to be used to find the MLE.
+      \item Recall \textcolor{Red}{Taylor Series} expansion of a differentiable function $ f(x) $ about a point $ a $:
+            \[ f(x)=f(a)+\frac{f^\prime(a)}{1!}(x-a)+\frac{f^{\prime\prime}(a)}{2!}(x-a)^2+\cdots.  \]
+      \item Now suppose we wish to find $ \hat{\theta} $, the root of $ S(\theta)=0 $ and $ \theta^{(0)} $ is a guess that
+            is ``close'' to $ \hat{\theta} $.
+      \item Consider the Taylor series expansion of $ S(\theta) $ about $ \theta^{(0)} $:
+            \[ S(\theta)=S(\theta^{(0)})+\frac{S^{\prime}(\theta^{(0)})}{1!}(\theta-\theta^{(0)})+\frac{S^{\prime\prime}(\theta^{(0)})}{2!}(\theta-\theta^{(0)})^2+\cdots.   \]
+      \item For $ \abs{\theta-\theta^{(0)}} $ very small, the second and higher order terms can be dropped to a good approximation:
+            \begin{align*}
+                  S(\theta) & \simeq S(\theta^{(0)})+S^\prime(\theta^{(0)})(\theta-\theta^{(0)}). \\
+                  S(\theta) & \simeq S(\theta^{(0)})-I(\theta^{(0)})(\theta-\theta^{(0)}).
+            \end{align*}
+      \item Then at $ \theta=\hat{\theta} $,
+            \begin{align*}
+                  S(\hat{\theta})                            & \simeq S(\theta^{(0)})-I(\theta^{(0)})(\hat{\theta}-\theta^{(0)}) \\
+                  I(\theta^{(0)})(\hat{\theta}-\theta^{(0)}) & \simeq S(\theta^{(0)})                                            \\
+                  (\hat{\theta}-\theta^{(0)})                & \simeq I^{-1}(\theta^{(0)})S(\theta^{(0)})                        \\
+                  \hat{\theta}                               & \simeq \theta^{(0)}+I^{-1}(\theta^{(0)})S(\theta^{(0)}).
+            \end{align*}
+      \item This suggests a revised guess for $ \hat{\theta} $ is:
+            \[ \theta^{(1)}=\theta^{(0)}+I^{-1}(\theta^{(0)})S(\theta^{(0)}) \]
+\end{itemize}
+\begin{Regular}{Newton Raphson Algorithm for finding the MLE}
+      \begin{itemize}
+            \item Begin with an initial estimate $ \theta^{(0)} $.
+            \item Iteratively obtain updated estimate by using:
+                  \[ \theta^{(i+1)}=\theta^{(i)}+I^{-1}(\theta^{(i)})S(\theta^{(i)}). \]
+            \item Iteration continues until $ \theta^{(i+1)}\simeq \theta^{(i)} $ within a specified tolerance.
+            \item Then set $ \hat{\theta}=\theta^{(i+1)} $, check that $ I(\hat{\theta})>0 $.
+      \end{itemize}
+\end{Regular}
+\subsection*{Inference for Scalar Parameters $ \theta $}
+\begin{itemize}
+      \item So far we have discussed estimation of $ \hat{\theta} $, next we want to conduct inference
+            about $ \theta $, i.e., carry out hypothesis tests and construct confidence intervals of $ \theta $.
+      \item Likelihood inference relies on the following \textcolor{Red}{asymptotic distribution results}:
+            \begin{Regular}{Useful asymptotic distributional results}
+                  \begin{itemize}
+                        \item \textcolor{Red}{(log) Likelihood ratio statistic}: $ -2\log[\big]{R(\theta)}=-2r(\theta)\sim \chi^2_{(1)} $.
+                        \item \textcolor{Red}{Score statistic}: $ \bigl(S(\theta)\bigr)^2/I(\theta)\sim \chi^2_{(1)} $.
+                        \item \textcolor{Red}{Wald statistic}: $ (\hat{\theta}-\theta)^2 I(\hat{\theta}) \sim \chi^2_{(1)} $ or $ (\hat{\theta}-\theta)\sqrt{I(\hat{\theta})}\sim \N{0,1} $
+                              since $ Z \sim \N{0,1} \implies Z^2 \sim \chi^2_{1} $.
+                  \end{itemize}
+            \end{Regular}
+\end{itemize}
+\subsection*{Confidence Interval (CI)}
+Suppose we want a $ 100(1-\alpha)\, \% $ confidence interval for $ \theta $.
+\begin{itemize}
+      \item The \textcolor{Red}{Likelihood ratio (LR)} based pivotal gives a confidence interval:
+            \[ \Set*{\theta:-2r(\theta)<\chi^2_{1}(1-\alpha)}, \]
+            where $ \chi^2_1(1-\alpha) $ is the upper $ \alpha $ percentage point of the $ \chi^2_1 $ distribution.
+      \item The \textcolor{Red}{Wald}-based pivotal gives an interval:
+            \[ \Set*{\theta:(\hat{\theta}-\theta)^2 I(\hat{\theta})<\chi^2_1(1-\alpha)}, \]
+            or equivalently
+            \[ \hat{\theta}\pm Z_{1-\alpha/2}\bigl(I(\hat{\theta})\bigr)^{-1/2}, \]
+            where $ Z_{1-\alpha/2} $ is the upper $ \alpha/2 $ percentage point of the standard normal.
+\end{itemize}
+\subsection*{Example: Hormone Therapy Data}
+\textcolor{Red}{Likelihood Ratio} based $ \qty{95}{\percent} $ CI: $ \Set*{\theta:-2r(\theta)<\chi^2_{1}(0.95)} $
+where $ r(\theta)=\ell(\theta)-\ell(\hat{\theta}) $.
+\begin{itemize}
+      \item For the Binomial distribution: $ \hat{\theta}=y/n $, and
+            \[ r(\theta)=\bigl(y\log{\theta}+(n-y)\log{1-\theta}\bigr)-\biggl(y\log*{\frac{y}{n}}+(n-y)\log*{1-\frac{y}{n}}\biggr). \]
+      \item To find the root of $ -2r(\theta)=\chi^2_1(0.95) $:
+            %\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{y} \hlkwb{=} \hlnum{166}
+\hlstd{n} \hlkwb{=} \hlnum{8506}
+\hlstd{LRCI} \hlkwb{=} \hlkwa{function}\hlstd{(}\hlkwc{theta}\hlstd{,} \hlkwc{y}\hlstd{,} \hlkwc{n}\hlstd{) \{}
+  \hlopt{-}\hlnum{2} \hlopt{*} \hlstd{(y} \hlopt{*} \hlkwd{log}\hlstd{(theta)} \hlopt{+} \hlstd{(n} \hlopt{-} \hlstd{y)} \hlopt{*} \hlkwd{log}\hlstd{(}\hlnum{1} \hlopt{-} \hlstd{theta)} \hlopt{-} \hlstd{y} \hlopt{*} \hlkwd{log}\hlstd{(y}\hlopt{/}\hlstd{n)} \hlopt{-}
+    \hlstd{(n} \hlopt{-} \hlstd{y)} \hlopt{*} \hlkwd{log}\hlstd{(}\hlnum{1} \hlopt{-} \hlstd{y}\hlopt{/}\hlstd{n))} \hlopt{-} \hlkwd{qchisq}\hlstd{(}\hlnum{0.95}\hlstd{,} \hlnum{1}\hlstd{)}
+\hlstd{\}}
+\hlstd{mle} \hlkwb{=} \hlstd{y}\hlopt{/}\hlstd{n}
+\hlkwd{uniroot}\hlstd{(LRCI,} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{, mle),} \hlkwc{y} \hlstd{= y,} \hlkwc{n} \hlstd{= n)}\hlopt{$}\hlstd{root}
+\end{alltt}
+\begin{verbatim}
+[1] 0.01673867
+\end{verbatim}
+\begin{alltt}
+\hlkwd{uniroot}\hlstd{(LRCI,} \hlkwd{c}\hlstd{(mle,} \hlnum{1}\hlstd{),} \hlkwc{y} \hlstd{= y,} \hlkwc{n} \hlstd{= n)}\hlopt{$}\hlstd{root}
+\end{alltt}
+\begin{verbatim}
+[1] 0.02260709
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+            %\end{noindent}
+      \item The likelihood ratio based $ \qty{95}{\percent} $ CI is $(0.017, 0.023)$.
+            % \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-12-1} 
+
+}
+
+
+\end{knitrout}
+            % \end{noindent}
+\end{itemize}
+\textcolor{Red}{Wald} based $ \qty{95}{\percent} $ CI: $ \hat{\theta}\pm Z_{0.975}\bigl(I(\hat{\theta})\bigr)^{-1/2} $.
+\begin{itemize}
+      \item For Binomial distribution $ \hat{\theta}=y/n $ and
+            \[ I(\hat{\theta})=\frac{y}{\hat{\theta}^2}+\frac{n-y}{(1-\hat{\theta})^2}=n^2\biggl(\frac{1}{y} -\frac{1}{n-y}\biggr).   \]
+      \item So we solve:
+            \begin{align*}
+                  \hat{\theta}\pm 1.96\bigl(I(\hat{\theta})\bigr)^{-1/2}
+                   & =0.0195 \pm 1.96(0.0015) \\
+                   & =(0.017, 0.022).
+            \end{align*}
+      \item The Wald based $ \qty{95}{\percent} $ CI is: $ (0.017, 0.022) $.
+\end{itemize}
+\subsection*{Hypotheses Test}
+Suppose we are interested in testing hypotheses:
+\[ \text{$\HN$: $\theta=\theta_0$ vs $\HA$: $\theta\ne \theta_0$.} \]
+\begin{itemize}
+      \item \textcolor{Red}{Likelihood ratio (LR) test}: $ p\text{-value}=\Prob*{\chi^2_1>-2r(\theta_0)} $.
+      \item \textcolor{Red}{Score test}: $ p\text{-value}=\Prob*{\chi^2_1>\bigl(S(\theta)\bigr)^2/I(\theta_0)} $.
+      \item \textcolor{Red}{Wald test}:
+            \[ p\text{-value}=\Prob*{\chi^2_1>(\hat{\theta}-\theta_0)^2 I(\hat{\theta})}\text{, or }
+                  p\text{-value}=\Prob*{\abs{Z}>\abs{\hat{\theta}-\theta_0}\sqrt{I(\hat{\theta})}}. \]
+\end{itemize}
+\subsection*{Example: Hormone Therapy Data}
+Suppose we wish to test if women received EPT would have a risk of breast
+cancer same as that of the general population, say about \qty{1.5}{\percent}.
+\[ \text{$\HN$: $\theta=0.015$ vs $\HA$: $\theta\ne 0.015$.} \]
+\begin{itemize}
+      \item \textcolor{Red}{Likelihood Ratio} based test:
+            \begin{align*}
+                  r(\theta_0=0.015)
+                   & =\biggl(y\log{0.015}+(n-y)\log{1-0.15}\biggr)-\biggl(y\log*{\frac{y}{n}}+(n-y)\log*{1-\frac{y}{n} }\biggr) \\
+                   & =-3.443.
+            \end{align*}
+            Thus, the $ p $-value for the test is given by:
+            \[ p=\Prob*{\chi^2_{(1)}>-2r(0.015)}=\Prob*{\chi^2_{(1)}>6.886}=0.0087. \]
+            Therefore, we \emph{reject} $ \HN $ and conclude that the risk of breast cancer for women received EPT is
+            significantly different from \qty{1.5}{\percent}.
+\end{itemize}
+\subsection*{Notes on Asymptotic Inference}
+\begin{itemize}
+      \item Asymptotic results: approximation improves as sample size increases.
+      \item Results are exact for a Normal linear model if $ \theta $ is the mean parameter and $ \sigma^2 $ is
+            known.
+      \item \textcolor{Red}{LR approach}:
+            \begin{itemize}
+                  \item Need to evaluate (log) likelihood at two locations.
+                  \item Not always a closed from solution for a CI.
+                  \item Usually the best approach.
+            \end{itemize}
+      \item \textcolor{Red}{Score approach}:
+            \begin{itemize}
+                  \item Usually the least powerful test.
+                  \item Don't actually need to find MLE to use.
+            \end{itemize}
+      \item \textcolor{Red}{Wald's approach}:
+            \begin{itemize}
+                  \item Always get a closed form solution for a CI.
+                  \item May not behave well for skewed likelihoods (transform?).
+            \end{itemize}
+      \item All three are asymptotically equivalent!
+\end{itemize}
+\subsection*{Likelihood Methods for Parameter Vectors}
+Suppose $ \Vector{\theta}\in \Omega $ is a continuous $ p\times 1 $ parameter vector
+indexing a probability density (or mass) function $ f(\Vector{y};\Vector{\theta}) $. The likelihood and
+log-likelihood functions are defined as before, but
+\begin{itemize}
+      \item $ \Vector{S}(\Vector{\theta})=\pdv{\ell( \Vector{\theta})}{ \Vector{\theta}} $ is the $ p\times 1 $ \textcolor{Red}{Score vector}, i.e.,
+            \[ \Vector{S}(\Vector{\theta})=\begin{bmatrix}
+                        \pdv{\ell(\theta)}{\theta_1} \\
+                        \vdots                       \\
+                        \pdv{\ell(\theta)}{\theta_p}
+                  \end{bmatrix}. \]
+      \item $ \Matrix{I}(\Vector{\theta})=-\pdv{\ell(\Vector{\theta})}{ \Vector{\theta}^\top,\Vector{\theta}} $ is the $ p\times p $ \textcolor{Red}{Information matrix}, i.e.,
+            \[ \Matrix{I}(\Vector{\theta})=\begin{bmatrix}
+                        -\pdv[order=2]{\ell(\theta)}{\theta_1} & -\pdv{\ell(\theta)}{\theta_1,\theta_2} & \cdots & \pdv{\ell(\theta)}{\theta_1,\theta_p} \\
+                                                               & -\pdv[order=2]{\ell(\theta)}{\theta_2} & \cdots & \pdv{\ell(\theta)}{\theta_1,\theta_p} \\
+                                                               &                                        & \ddots & \pdv[order=2]{\ell(\theta)}{\theta_p}
+                  \end{bmatrix}. \]
+
+\end{itemize}
+\begin{itemize}
+      \item The Newton Raphson algorithm applies as before, but with vectors and matrices
+            as follows:
+            \[ \Vector{\theta}^{(i+1)}=\Vector{\theta}^{(i)}+\Matrix{I}^{-1}(\Vector{\theta}^{(i)})\Vector{S}(\Vector{\theta}^{(i)}). \]
+      \item Again, we apply iteratively until we obtain convergence, but now check to
+            see if $ \Matrix{I}(\hat{\Vector{\theta}}) $ is a positive definite matrix.
+      \item Analogs to the LR, Score and Wald results apply based on partitioning the
+            Information matrix by $ \Vector{\theta}=(\Vector{\alpha},\Vector{\beta})^\top $,
+            where $ \Vector{\alpha} $ is a $ p\times 1 $ vector of nuisance parameters and $ \Vector{\beta} $ is a $ q\times 1 $ vector of parameters of interest:
+            \[ \Matrix{I}=\Matrix{I}(\Vector{\alpha},\Vector{\beta})=\begin{pmatrix}
+                        \Matrix{I}_{\Vector{\alpha}\Vector{\alpha}}(\Vector{\alpha},\Vector{\beta}) & \Matrix{I}_{\Vector{\alpha}\Vector{\beta}}(\Vector{\alpha},\Vector{\beta}) \\
+                        \Matrix{I}_{\Vector{\beta}\Vector{\alpha}}(\Vector{\alpha},\Vector{\beta})  & \Matrix{I}_{\Vector{\beta}\Vector{\beta}}(\Vector{\alpha},\Vector{\beta})
+                  \end{pmatrix}, \]
+            where
+            $ \Matrix{I}_{\Vector{\alpha}\Vector{\alpha}}(\Vector{\alpha},\Vector{\beta})=-\pdv{\ell}{\Vector{\alpha},\Vector{\alpha}^\top} $ is $ p\times p $,
+            $ \Matrix{I}_{\Vector{\alpha}\Vector{\beta}}(\Vector{\alpha},\Vector{\beta})=-\pdv{\ell}{\Vector{\alpha},\Vector{\beta}^\top} $ is $ p\times q $,
+            $ \Matrix{I}_{\Vector{\beta}\Vector{\alpha}}(\Vector{\alpha},\Vector{\beta})=-\pdv{\ell}{\Vector{\beta},\Vector{\alpha}^\top} $ is $ q\times p $, and
+            $ \Matrix{I}_{\Vector{\beta}\Vector{\beta}}(\Vector{\alpha},\Vector{\beta})=-\pdv{\ell}{\Vector{\beta},\Vector{\beta}^\top} $ is $ q\times q $.
+\end{itemize}
+
+\section*{Topic 2a: Formulation of Generalized Linear Models}
+\addcontentsline{toc}{section}{Topic 2a: Formulation of Generalized Linear Models}
+\subsection*{The Exponential Family}
+\begin{Regular}{Definition (Exponential Family)}
+    Consider a random variable $ Y $ with probability density (or mass) function $ f(y;\theta,\phi) $,
+    we say that the distribution is a member of the \textcolor{Red}{exponential family} if we can write
+    \[ f(y;\theta,\phi)=\exp*{\frac{y\theta-b(\theta)}{a(\phi)}+c(y;\phi)}, \]
+    for some functions $ a(\:\cdot\:) $, $ b(\:\cdot\:) $, and $ c(\:\cdot\:) $.
+    \begin{itemize}
+        \item The parameter $ \theta $ is called the \textcolor{Red}{canonical} parameter, and it is unknown.
+        \item The parameter $ \phi $ is called the \textcolor{Red}{scale/dispersion} parameter, is constant, and assumed to be known.
+    \end{itemize}
+\end{Regular}
+Many well known distributions (continuous/discrete) can be shown to be a
+member of the exponential family.
+\subsection*{Examples}
+\begin{itemize}
+    \item Poisson Distribution: $ Y \sim \Poisson{\lambda} $,
+          \[ f(y;\lambda)=\frac{\lambda^y e^{-\lambda}}{y!},\; \lambda>0,\, y=0,1,\ldots.  \]
+          Show that Poisson is a member of exponential family and identify the canonical
+          parameter and the functions $ a(\:\cdot\:) $, $ b(\:\cdot\:) $, and $ c(\:\cdot\:) $.
+
+          \textbf{Solution.} $ f(y;\lambda)=\exp[\big]{\log{f(y;\lambda)}}=\exp*{\frac{y\log{\lambda}-\lambda}{1} -\log{y!}} $. Therefore,
+          \begin{align*}
+              \theta    & =\log{\lambda}\qquad\text{(canonical/natural parameter)}, \\
+              b(\theta) & =\lambda=e^{\theta},                                      \\
+              \phi      & =1,                                                       \\
+              a(\phi)   & =1,                                                       \\
+              c(y;\phi) & =-\log{y!}.
+          \end{align*}
+    \item Normal Distribution: $ Y \sim \N{\mu,\sigma^2} $ and $ \sigma^2 $ known,
+          \[ f(y;\theta,\phi)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp*{-\frac{(y-\mu)^2}{2\sigma^2}}. \]
+          Show that this Normal distribution is a member of the exponential family.
+
+          \textbf{Solution.}
+          \begin{align*}
+              f(y;\mu,\sigma^2)
+               & =\exp*{-\frac{y^2-2\mu y+\mu^2}{\sigma^2}-\frac{1}{2} \log{2\pi\sigma^2}}                   \\
+               & =\exp*{\frac{y\mu-\mu^2/2}{\sigma^2}-\frac{y^2}{2\sigma^2}-\frac{1}{2} \log{2\pi\sigma^2}}.
+          \end{align*}
+          Therefore,
+          \begin{align*}
+              \theta    & =\mu,                                                   \\
+              \phi      & =\sigma^2,                                              \\
+              a(\phi)   & =\phi=\sigma^2,                                         \\
+              b(\theta) & =\frac{\mu^2}{2}=\frac{\theta^2}{2},                    \\
+              c(y;\phi) & =-\frac{y^2}{2\sigma^2}-\frac{1}{2} \log{2\pi\sigma^2}.
+          \end{align*}
+\end{itemize}
+\subsection*{Properties of Exponential Family}
+Consider a single observation $y$ from the exponential family.
+\begin{align*}
+    L(\theta,\phi;y)    & =f(y;\theta,\phi)=\exp*{\frac{y\theta-b(\theta)}{a(\phi)}+c(y;\phi)}.      \\
+    \ell(\theta,\phi;y) & =\log[\big]{f(y;\theta,\phi)}=\frac{y\theta-b(\theta)}{a(\phi)}+c(y;\phi). \\
+    S(\theta)           & =\pdv{\ell}{\theta}=\frac{y-b^\prime(\theta)}{a(\phi)}.                    \\
+    I(\theta)           & =-\pdv[order=2]{\ell}{\theta}=\frac{b^{\prime\prime}(\theta)}{a(\phi)}.    \\
+    \mathcal{I}(\theta) & =\E*{-\pdv[order=2]{\ell}{\theta}}=I(\theta).
+\end{align*}
+\subsection*{Some General Results for Score and Information}
+\begin{Result}{Result \# 1}
+    The expectation of the score function is zero.
+    \[ \E[\big]{S(\theta)}=0. \]
+    \tcblower{}
+    \textbf{Proof}:
+    \begin{align*}
+        \int f(y;\theta,\phi)\odif{y}                                                         & =1                               \\
+        \pdv*{\int f(y;\theta,\phi)\odif{y}}{\theta}                                          & =0                               \\
+        \int\pdv*{f(y;\theta,\phi)}{\theta} \odif{y}                                          & =0                               \\
+        \int\biggl(\pdv*{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)f(y;\theta,\phi)\odif{y} & =0 &  & \label{2a:eq1}\tag*{(1)} \\
+        \int S(\theta)f(y;\theta,\phi)\odif{y}                                                & =0                               \\
+        \E[\big]{S(\theta)}                                                                   & =0
+    \end{align*}
+\end{Result}
+\begin{Result}{Result \# 2}
+    The expectation of the score function squared is the expected information.
+    \[  \E[\big]{S(\theta;y)^2}=\E[\big]{I(\theta;y)} \]
+    \tcblower{}
+    \textbf{Proof}: Differentiate~\ref{2a:eq1} again,
+    \begin{align*}
+        \int\biggl(\pdv*{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)f(y;\theta,\phi)\odif{y}                                                                                                                & =0 \\
+        \int \biggl(\pdv*[order=2]{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)f(y;\theta,\phi)\odif{y}+\int\biggl(\pdv*{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)\pdv*{f(y;\theta,\phi)}{\theta}\odif{y} & =0 \\
+        \int \pdv*[order=2]{\log[\big]{f(y;\theta,\phi)}}{\theta}f(y;\theta,\phi)\odif{y}+\int\biggl(\pdv*{f(y;\theta,\phi)}{\theta}\biggr)^2 f(y;\theta,\phi)\odif{y}                                       & =0 \\
+        \int -I(\theta)f(y;\theta,\phi)\odif{y}+\int S(\theta)^2 f(y;\theta,\phi)\odif{y}                                                                                                                    & =0 \\
+        \E[\big]{-I(\theta;y)}+\E[\big]{S(\theta;y)^2}                                                                                                                                                       & =0
+    \end{align*}
+\end{Result}
+Now for the exponential family, we apply above results and obtain:
+\begin{align*}
+    \E[\big]{S(\theta)}                                          & =0,                                             \\
+    \E*{\frac{Y-b^{\prime}(\theta)}{a(\phi)}}                    & =0,                                             \\
+    \E{Y}                                                        & =b^\prime(\theta),                              \\\\
+    \E[\big]{S(\theta)^2}                                        & =\E[\big]{I(\theta)},                           \\
+    \E*{\biggl(\frac{Y-b^\prime(\theta)}{a(\phi)} \biggr)^{\!2}} & =\E*{\frac{b^{\prime\prime}(\theta)}{a(\phi)}}, \\
+    \frac{1}{a(\phi)^2}\E*{\bigl(Y-\E{Y}\bigr)^2}                & =\frac{b^{\prime\prime}(\theta)}{a(\phi)},      \\
+    \Var{Y}                                                      & =b^{\prime\prime}(\theta)a(\phi).
+\end{align*}
+\begin{Regular}{Mean and Variance for the Exponential Family}
+    \begin{itemize}
+        \item Mean: $ \E{Y}=b^\prime(\theta)=\mu $.
+        \item Variance: $ \Var{Y}=b^{\prime\prime}(\theta)a(\phi) $.
+    \end{itemize}
+\end{Regular}
+Note that:
+\begin{itemize}
+    \item $ b^\prime(\theta)=\mu $ tells the relationship between \emph{canonical} parameter $ \theta $ and $ \mu $.
+    \item $ b^{\prime\prime}(\theta) $ is a function of $ \theta $ and hence can be also expressed as a function of $ \mu $.
+    \item Thus, we write $ b^{\prime\prime}(\theta)=\V{\mu} $ and call $ \V{\mu} $ the \textcolor{Red}{variance function}.
+    \item Subsequently, we have:
+          \[ \Var{Y}=b^{\prime\prime}(\theta)a(\phi)=\V{\mu}a(\phi), \]
+          which is the \textcolor{Red}{mean-variance relationship} for the exponential family.
+\end{itemize}
+\subsection*{Link Functions}
+\begin{Regular}{Definition (Link Function)}
+    The \textcolor{Red}{link function} relates the linear predictor $ \eta=\Vector{x}^\top\Vector{\beta} $ to the expected value $ \mu $ of the random variable $ Y $, i.e.,
+    \[ g(\mu)=\eta=\Vector{x}^\top\Vector{\beta}, \]
+    where $ g(\:\cdot\:) $ is the link function.
+\end{Regular}
+\begin{Regular}{Definition (Canonical Link Function)}
+    When $Y$ is a member of the exponential family we define the \textcolor{Red}{canonical link function} to be:
+    \[ g(\mu)=\theta=\eta=\Vector{x}^\top\Vector{\beta} \]
+    (i.e., the choice of $ g(\:\cdot\:) $ that sets canonical parameter = linear predictor).
+\end{Regular}
+\subsection*{Examples}
+Recall that $ \Poisson{\lambda} $ is a member of exponential family,
+\[ f(y;\lambda)=\frac{\lambda^y e^{-\lambda}}{y!}=\exp*{\frac{y\log{\lambda}-\lambda}{1}-\log{y!}}  \]
+where $ \theta=\log{\lambda} $, $ \phi=1 $, $ b(\theta)=\lambda=e^{\theta} $, and $ a(\phi)=1 $. Now to find the mean, variance function, and canonical link function:
+\begin{itemize}
+    \item \textcolor{Blue}{Mean}: $ \E{Y}=b^\prime(\theta)=e^{\theta}=\mu\implies \theta=\log{\mu} $.
+    \item \textcolor{Blue}{Variance Function}: $ \V{\mu}=b^{\prime\prime}(\theta)=e^{\theta}\implies \V{\mu}=\mu $.
+    \item \textcolor{Blue}{Variance}: $ \Var{Y}=\V{\mu}a(\phi)=\mu $ (mean-variance relationship).
+    \item \textcolor{Blue}{Canonical link}: set $ \theta=\eta $ using $ \theta=\log{\mu}=\eta=\Vector{x}^\top \Vector{\beta} $, i.e., $ g(\mu)=\log{\mu} $ where $ \log{\:\cdot\:} $
+          is the canonical link.
+\end{itemize}
+Moving forward, we consider a log-linear model: $ \log{\mu_i}=\Vector{x}_i^\top \Vector{\beta} $.
+
+\subsection*{Remarks on Link Function}
+\begin{itemize}
+    \item We can choose any function $ g(\:\cdot\:) $ as the link function in theory.
+    \item The canonical link is a special link function, we often choose to use
+          canonical link for its good statistical properties.
+    \item Context and goodness of fit should motivate the choice of link function in
+          practice.
+\end{itemize}
+\subsection*{Generalized Linear Models}
+\begin{Regular}{Definition (Generalized Linear Model (GLM))}
+    A \textcolor{Red}{Generalized Linear Model (GLM)} is composed of three components:
+    \begin{itemize}
+        \item \textcolor{Red}{Random Component}: The responses $ Y_1,\ldots,Y_n $ are
+              independent random variables and each $ Y_i $ is assumed to come from a parametric distribution that is a member of the
+              exponential family.
+        \item \textcolor{Red}{Systematic Component} (or linear predictor):
+              \[ \eta_i=\Vector{x}_i^\top\Vector{\beta}, \]
+              a linear combination of explanatory variables $ \Vector{x}_i $ and regression parameters $ \Vector{\beta} $.
+        \item \textcolor{Red}{Link function}:
+              \[ g(\mu_i)=\eta_i=\Vector{x}_i^\top\Vector{\beta}, \]
+              a function that relates the mean of response to the linear predictor.
+    \end{itemize}
+\end{Regular}
+\subsection*{Topic Summary}
+\begin{enumerate}
+    \item Definition of the \textcolor{Blue}{Exponential Family}.
+          \begin{itemize}
+              \item Exponential form of the probability density (or mass) function.
+              \item Derivation of Score and Information.
+              \item Properties of exponential family, mean-variance relationship.
+              \item Definition of canonical link.
+          \end{itemize}
+    \item Definition of a \textcolor{Blue}{Generalized Linear Model}.
+\end{enumerate}
+Next Topic: 2b Estimation for Generalized Linear Models.
+\end{document}

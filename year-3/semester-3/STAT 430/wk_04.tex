@@ -99,10 +99,10 @@
               \includegraphics[width=0.5\textwidth]{FWER.pdf}
               \caption{Family-Wise Error Rate Versus the Number of Hypothesis Tests, $M$.}\label{fig:FWER}
           \end{figure}
-    \item A common value of $ M $ is $ \Binomial{m}{2} $: the number of pairwise comparisons necessary to compare each condition
+    \item A common value of $ M $ is $ \binom{m}{2} $: the number of pairwise comparisons necessary to compare each condition
           to every other condition.
           \begin{Example}{}{}
-              If $ m=5 $ and $ \alpha=0.05 $, then $ M=\Binomial{5}{2}=10 $. Therefore, $ \FWER=1-(1-0.05)^{10}=0.4013 $.
+              If $ m=5 $ and $ \alpha=0.05 $, then $ M=\binom{5}{2}=10 $. Therefore, $ \FWER=1-(1-0.05)^{10}=0.4013 $.
           \end{Example}
     \item Available to us are a variety of different statistical techniques that may be used to ensure the FWER
           does not exceed some threshold.
@@ -219,43 +219,42 @@
 \begin{Theorem}{}{holm_FWER}
     Holm's procedure controls the family-wise error rate.
 \end{Theorem}
-\begin{Proof}{\Cref{thm:holm_FWER} \dagger}{}
-    \begin{itemize}
-        \item We need to show that $ \FWER=\Prob{V\ge 1}\le \alpha^\star\in[0,1] $ when using the Holm's procedure.
-        \item Let $ p_{(1)},p_{(2)},\ldots,p_{(M)} $ be the ordered $ p $-values and let
-              $ \mathbf{H}_{0,(1)},\mathbf{H}_{0,(2)},\ldots,\mathbf{H}_{0,(M)} $ be the corresponding null hypotheses.
-        \item Define $ K_0\subset \Set{1,2,\ldots,M} $ to be the subset of indices which correspond
-              to true null hypotheses; that is, $ \mathbf{H}_{0,k} $ is true for $ k\in K_0 $.
-        \item We can visualize the sequential decisions made in Holm's Procedure as follows:
-              \[ \overbracket{\underbracket{\mathbf{H}_{0,(1)}\cdots\mathbf{H}_{0,(h-1)}}_{\text{these are false $\mathbf{H}_0$'s}}\mathbf{H}_{0,(h)}\cdots \mathbf{H}_{0,(R)}}^{\text{these are rejected}}\mid \underbracket{\mathbf{H}_{0,(R+1)}\cdots\mathbf{H}_{0,(M)}}_{\text{these are not rejected}} \]
-    \end{itemize}
-    Let $ \mathbf{H}_{0,(h)} $ be the first \emph{true} $ \mathbf{H}_0 $ that was rejected. Since it was rejected by Holm's procedure, we know that
-    \[ p_{(h)}\le \frac{\alpha^\star}{M-h+1} \]
-    Also, clearly we must have $ h-1\le M-M_0 $ since $ M-M_0 $ is the total number of false $ \mathbf{H}_0 $'s and $ h-1 $ is the number of false
-    $ \mathbf{H}_0 $'s encountered by test $ h $. And so,
-    \[
-        M_0\le M-h+1
-        \iff \frac{1}{M_0} \ge \frac{1}{M-h+1}
-        \iff \frac{\alpha^\star}{M_0} \ge \frac{\alpha^\star}{M-h+1}
-    \]
-    Thus, we must have $ p_{(h)}\le \alpha^\star/(M-h+1)\le \alpha^\star/M_0 $. Therefore,
-    \begin{align*}
-        \FWER
-         & =\Prob*{V\ge 1}                                                                                                                                           \\
-         & =\Prob*{\text{At least one Type I Error in $M$ tests}}                                                                                                    \\
-         & =\Prob*{\text{Reject at least one true $\mathbf{H}_0$}}                                                                                                   \\
-         & =\Prob*{\exists\, k\in K_0\text{ such that }p_k\le \frac{\alpha^\star}{M_0}}                                                                              \\
-         & =\Prob*{\bigcup_{k\in K_0}p_k\le \frac{\alpha^\star}{M_0}}                                                                                                \\
-         & \le \sum_{k\in K_0}\Prob*{p_k\le \frac{\alpha^\star}{M_0}}                   &  & \text{by Boole's Inequality}                                            \\
-         & =\sum_{k\in K_0}\frac{\alpha^\star}{M_0}                                     &  & \!\!\!\!\begin{tabular}{l}
-                                                                                                         \text{since $p$-values for true null} \\
-                                                                                                         \text{hypotheses follow a $\Uniform{0,1}$ distribution}
-                                                                                                     \end{tabular} \\
-         & =M_0\biggl(\frac{\alpha^\star}{M_0}\biggr)                                   &  & \text{since the set $K_0$ has cardinality $M_0$}                        \\
-         & =\alpha^\star
-    \end{align*}
-    Therefore, $ \FWER\le \alpha^\star $ as required.
-\end{Proof}
+
+We need to show that $ \FWER=\Prob{V\ge 1}\le \alpha^\star\in[0,1] $ when using the Holm's procedure.
+
+Let $ p_{(1)},p_{(2)},\ldots,p_{(M)} $ be the ordered $ p $-values and let
+$ \mathbf{H}_{0,(1)},\mathbf{H}_{0,(2)},\ldots,\mathbf{H}_{0,(M)} $ be the corresponding null hypotheses.
+
+Define $ K_0\subset \Set{1,2,\ldots,M} $ to be the subset of indices which correspond
+to true null hypotheses; that is, $ \mathbf{H}_{0,k} $ is true for $ k\in K_0 $.
+We can visualize the sequential decisions made in Holm's Procedure as follows:
+\[ \overbracket{\underbracket{\mathbf{H}_{0,(1)}\cdots\mathbf{H}_{0,(h-1)}}_{\text{these are false $\mathbf{H}_0$'s}}\mathbf{H}_{0,(h)}\cdots \mathbf{H}_{0,(R)}}^{\text{these are rejected}}\mid \underbracket{\mathbf{H}_{0,(R+1)}\cdots\mathbf{H}_{0,(M)}}_{\text{these are not rejected}} \]
+
+Let $ \mathbf{H}_{0,(h)} $ be the first \emph{true} $ \mathbf{H}_0 $ that was rejected. Since it was rejected by Holm's procedure, we know that
+\[ p_{(h)}\le \frac{\alpha^\star}{M-h+1} \]
+
+Clearly we must have $ h-1\le M-M_0 $ since $ M-M_0 $ is the total number of false $ \mathbf{H}_0 $'s and $ h-1 $ is the number of false
+$ \mathbf{H}_0 $'s encountered by test $ h $. And so,
+\[
+    M_0\le M-h+1
+    \iff \frac{1}{M_0} \ge \frac{1}{M-h+1}
+    \iff \frac{\alpha^\star}{M_0} \ge \frac{\alpha^\star}{M-h+1}
+\]
+Thus, we must have $ p_{(h)}\le \alpha^\star/(M-h+1)\le \alpha^\star/M_0 $. Therefore,
+\begin{align*}
+    \FWER
+     & =\Prob*{V\ge 1}                                                              \\
+     & =\Prob*{\text{At least one Type I Error in $M$ tests}}                       \\
+     & =\Prob*{\text{Reject at least one true $\mathbf{H}_0$}}                      \\
+     & =\Prob*{\exists\, k\in K_0\text{ such that }p_k\le \frac{\alpha^\star}{M_0}} \\
+     & =\Prob*{\bigcup_{k\in K_0}p_k\le \frac{\alpha^\star}{M_0}}                   \\
+     & \le \sum_{k\in K_0}\Prob*{p_k\le \frac{\alpha^\star}{M_0}}                   \\
+     & =\sum_{k\in K_0}\frac{\alpha^\star}{M_0}                                     \\
+     & =M_0\biggl(\frac{\alpha^\star}{M_0}\biggr)                                   \\
+     & =\alpha^\star
+\end{align*}
+where we used the fact that $ p $-values for true null hypotheses follow a $ \Uniform{0,1} $ distribution.
+
 \begin{Example}{Four-test Example ($ M=4 $) --- Holm's Procedure}{}
     Let $ p_1=0.015 $, $ p_2=0.029 $, $ p_3=0.008 $, and $ p_4=0.026 $. Suppose that we wish to ensure
     $ \FWER\le \alpha^\star=0.05 $.
@@ -422,13 +421,6 @@
               \item All else equal, reducing a test's significance level will increase the Type II Error rate and hence
                     decrease power.
               \item Play around with \href{https://nathaniel-t-stevens.shinyapps.io/ErrorIllustrator/}{this interactive app} to gain comfort with this notion.
-                    \begin{itemize}
-                        \item Assume $ \mathcal{R}=\Set*{t\mid t\ge z_\alpha} $.
-                        \item Recall that: \begin{itemize}
-                                  \item $ \alpha=\Prob*{\text{Type I Error}}=\Prob*{T\in\mathcal{R}\given \text{$ \mathbf{H}_0 $ is true}}=\Prob*{T\ge z_\alpha\given \text{$ \mathbf{H}_0 $ is true}}$.
-                                  \item $ \beta=\Prob*{\text{Type II Error}}=\Prob*{T\notin\mathcal{R}\given \text{$ \mathbf{H}_\text{A} $ is true}}=\Prob*{T< z_\alpha\given \text{$ \mathbf{H}_\text{A} $ is true}} $.
-                              \end{itemize}
-                    \end{itemize}
           \end{itemize}
     \item Thus, all the correction procedures discussed (which decrease the effective significance level)
           negatively impact power.

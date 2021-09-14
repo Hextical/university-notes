@@ -1,0 +1,558 @@
+\chapter{Review of Elementary Probability}
+\makeheading{Week 1}{\daterange{2021-09-08}{2021-09-15}}%chktex 8
+\section{Fundamental Definition of a Probability Function}
+\begin{Regular}{}
+    \textbf{Probability Model}: A probability model consists of 3 essential components: a
+    \emph{sample space}, a collection of \emph{events}, and a \emph{probability function (measure)}.
+    \begin{itemize}
+        \item \textbf{Sample Space}: For a random experiment in which all possible outcomes are known, the
+              set of all possible outcomes is called the sample space (denoted by $ \Omega $).
+        \item \textbf{Event}: Every subset $ A $ of a sample space $ \Omega $ is an event.
+        \item \textbf{Probability Function}: For each event $ A $ of $ \Omega $, $ \Prob{A} $ is defined as the
+              \emph{probability of an event} $ A $, satisfying 3 conditions:
+              \begin{enumerate}[(i)]
+                  \item $ 0\le \Prob{A}\le 1 $,
+                  \item $ \Prob{\Omega}=1 $, or equivalently, $ \Prob{\emptyset}=0 $, where $ \emptyset $ is the \emph{null event},
+                  \item For $ n\in\mathbb{Z}^+ $ (in fact, $ n=\infty $ as well), $ \Prob{\bigcup_{i=1}^n A_i}=\sum_{i=1}^{n} \Prob{A_i} $ if
+                        the sequence of events $ \Set{A_i}_{i=1}^n $ is \emph{mutually exclusive} (i.e., $ A_i\cap A_j=\emptyset $ $ \forall i\ne j $).
+              \end{enumerate}
+    \end{itemize}
+    As a result of conditions (ii) and (iii), and noting that $ A^c $ is the complement of $ A $, it follows
+    that
+    \[ 1=\Prob{\Omega}=\Prob{A\cup A^c}=\Prob{A}+\Prob{A^c}\implies \Prob{A^c}=1-\Prob{A}. \]
+\end{Regular}
+\section{Conditional Probability}
+\begin{Regular}{}
+    \textbf{Conditional Probability}: The \emph{conditional probability of event $ A $ given event $ B $ occurs} is defined as
+    \[ \Prob{A\given B}=\frac{\Prob{A\cap B}}{\Prob{B}},  \]
+    provided that $ \Prob{B}>0 $.
+    \tcblower{}
+    \underline{Remarks}:
+    \begin{enumerate}[(1)]
+        \item When $ B=\Omega $, $ \Prob{A\given \Omega}=\Prob{A\cap \Omega}/\Prob{\Omega}=\Prob{A}/1=\Prob{A} $, as one would expect.
+        \item Rewriting the above formula, $ \Prob{A\cap B}=\Prob{A\given B}\Prob{B} $, which is often referred to as the basic ``multiplication rule.''
+              For a sequence of events $ \Set{A_i}_{i=1}^n $, the generalized multiplication rule is given by
+              \[ \Prob{A_1\cap A_2\cap\cdots\cap A_n}=\Prob{A_1}\Prob{A_2\given A_1}\cdots\Prob{A_n\given A_1\cap A_2\cap\cdots\cap A_{n-1}}. \]
+    \end{enumerate}
+\end{Regular}
+\begin{Example}{}
+    \textbf{Example 1.1}. Suppose that we roll a fair six-sided die once (i.e., $ \Omega=\Set{1,2,3,4,5,6} $). Let $ A $
+    denote the event of rolling a number less than $ 4 $ (i.e., $ A=\Set{1,2,3} $), and let $ B $ denote the
+    event of rolling an odd number (i.e., $ B=\Set{1,3,5} $). Given that the roll is odd, what is the
+    probability that number rolled is less than $ 4 $?
+    \tcblower{}
+    \textbf{Solution}: Since the die is fair, it immediately follows that
+    $ \Prob{A}=3/6=1/2 $ and $ \Prob{B}=3/6=1/2 $. Moreover,
+    \begin{align}
+        \Prob{A\cap B}
+         & =\Prob[\big]{\Set{1,2,3}\cap\Set{1,3,5}} \\
+         & =\Prob[\big]{\Set{1,3}}                  \\
+         & =\frac{2}{6}                             \\
+         & =\frac{1}{3}.
+    \end{align}
+    Therefore,
+    \[ \Prob{A\given B}=\frac{\Prob{A\cap B}}{\Prob{B}}=\frac{1/3}{1/2}=\frac{2}{3}. \]
+\end{Example}
+\section{Independence of Events}
+\begin{Regular}{}
+    \textbf{Independence of Events}: Two events $ A $ and $ B $ are \emph{independent} if and only if (iff)
+    \[ \Prob{A\cap B}=\Prob{A}\Prob{B} \]
+    In general, if an experiment consists of a sequence of independent trials, and $ A_1,A_2,\ldots,A_n $ are
+    events such that $ A_i $ depends only on the $ i\textsuperscript{th} $ trial, then $ A_1,A_2,\ldots,A_n $ are independent
+    events and
+    \[ \Prob{\cap_{i=1}^n A_i}=\prod_{i=1}^n\Prob{A_i}. \]
+\end{Regular}
+\section{Law of Total Probability}
+\begin{Regular}{}
+    \textbf{Law of Total Probability}: For $ n\in\mathbb{Z}^+ $ (and even $ n=\infty $), suppose that $ \Omega=\cup_{i=1}^n B_i $,
+    where the sequence of events $ \Set{B_i}_{i=1}^n $ is mutually exclusive. Then,
+    \begin{align*}
+        \Prob{A}
+         & =\Prob{A\cap \Omega}                          \\
+         & =\Prob[\big]{A\cap\Set{\cup_{i=1}^n B_i}}     \\
+         & =\Prob[\big]{\cup_{i=1}^n\Set{A\cap B_i}}     \\
+         & =\sum_{i=1}^{n} \Prob{A\cap B_i}              \\
+         & =\sum_{i=1}^{n} \Prob{A\given B_i}\Prob{B_i},
+    \end{align*}
+    where the second last equality follows from the fact that the sequence of events $ \Set{A\cap B_i}_{i=1}^n $ is also
+    mutually exclusive.
+\end{Regular}
+\section{Bayes' Formula}
+\begin{Regular}{}
+    \textbf{Bayes' Formula}: Under the same assumptions as in the previous slide,
+    \[ \Prob{B_j\given A}=\frac{\Prob{A\cap B_j}}{\Prob{A}}=\frac{\Prob{A\given B_j}\Prob{B_j}}{\sum_{i=1}^{n} \Prob{A\given B_i}\Prob{B_i}}.  \]
+\end{Regular}
+\section{Definition of a Random Variable}
+\begin{Regular}{}
+    \textbf{Definition}: A \emph{random variable} (rv) $ X $ is a real-valued function which maps a sample space $ \Omega $ onto
+    a state space $ \mathcal{S}\subseteq\mathbb{R} $ (i.e., $ X\colon \Omega \to \mathcal{S} $).
+\end{Regular}
+\begin{Regular}{}
+    \textbf{Discrete type}: $ \mathcal{S} $ consists of a finite or countable number of possible values. Important
+    functions include:
+    \begin{align*}
+        p(a)       & =\Prob{X=a}                      & \text{(pmf)}, \\
+        F(a)       & =\Prob{X\le a}=\sum_{x\le a}p(x) & \text{(cdf)}, \\
+        \bar{F}(a) & =\Prob{X>a}=1-F(a)               & \text{(tpf)},
+    \end{align*}
+    where pmf stands for \emph{probability mass function}, cdf stands for \emph{cumulative distribution
+        function}, and tpf stands for \emph{tail probability function}.
+    \tcblower{}
+    \underline{Remark}: If $ X $ takes on values in the set $ \mathcal{S}=\Set{a_1,a_2,a_3,\ldots} $ where $ a_1<a_2<a_3<\cdots $
+    such that $ p(a_i)>0 $ $ \forall i $, then we can recover the pmf from knowledge of the cdf via
+    \begin{align*}
+        p(a_1) & =F(a_1),                            \\
+        p(a_i) & =F(a_i)-F(a_{i-1}),\;i=2,3,4,\ldots
+    \end{align*}
+\end{Regular}
+\section{Discrete Distributions}
+\textbf{Special Discrete Distributions}:
+\begin{Regular}{}
+    \begin{enumerate}[1.]
+        \item \textbf{Bernoulli}: If we consider a \emph{Bernoulli trial}, which is a random trial with probability $ p $ of
+              being a ``success'' (denoted by $ 1 $) and a probability $ 1-p $ of being a ``failure'' (denoted by $ 0 $), then $ X $
+              is \emph{Bernoulli} (i.e., $ X \sim \BERN{p} $) with pmf
+              \[ p(x)=p^x(1-p)^{1-x},\; x=0,1. \]
+    \end{enumerate}
+\end{Regular}
+\begin{Regular}{}
+    \begin{enumerate}[2.]
+        \item \textbf{Binomial}:  If $ X $ denotes the number of successes in $ n\in\mathbb{Z}^+ $ independent Bernoulli trials,
+              each with probability $ p $ of being a success, then $ X $ is Binomial (i.e., $ X \sim \BIN{n,p} $)
+              with pmf
+              \[ p(x)=\binom{n}{x}p^x(1-p)^{n-x},\; x=0,1,\ldots,n, \]
+              where
+              \[ \binom{n}{x}=\frac{n!}{(n-x)!x!}=\frac{(n)_x}{x!}=\frac{n(n-1)\cdots(n-x+1)}{x!}   \]
+              is the number of distinct groups of $ x $ objects chosen from a set of $ n $ objects.
+    \end{enumerate}
+    \tcblower{}
+    \underline{Remarks}:
+    \begin{enumerate}[(1)]
+        \item A $ \BIN{1,p} $ distribution simplifies to become the $ \BERN{p} $ distribution.
+        \item The binomial pmf is even defined for $ n=0 $, in which case $ p(x)=1 $ for $ x=0 $. Such a
+              distribution is said to be degenerate at $ 0 $.
+        \item Note that $ \binom{n}{x}=0 $ if $ n,x\in\mathbb{N} $ with $ n<x $.
+    \end{enumerate}
+\end{Regular}
+\begin{Regular}{}
+    \begin{enumerate}[3.]
+        \item \textbf{Negative Binomial}: If $ X $ denotes the number of Bernoulli \underline{trials} (each with success probability $ p $)
+              required to observe $ k\in\mathbb{Z}^+ $ successes, then $ X $ is \emph{Negative Binomial} (i.e., $ X \sim \NBt{k,p} $) with pmf
+              \[ p(x)=\binom{x-1}{k-1}p^k(1-p)^{x-k},\; x=k,k+1,k+2,\ldots. \]
+    \end{enumerate}
+    \tcblower{}
+    \underline{Remarks}:
+    \begin{enumerate}[(1)]
+        \item In the above pmf, $ \binom{x-1}{k-1} $ appears rather than $ \binom{x}{k} $ since the final trial must always be a success.
+        \item Sometimes, a negative binomial distribution is alternatively defined as the number of \underline{failures} observed to achieve
+              $ k $ successes. If $ Y $ denotes such a rv and $ X \sim \NBt{k,p} $, then we clearly have the relationship $ X=Y+k $, which immediately
+              leads to the following pmf for $ Y $:
+              \[ p_Y(y)=\Prob{Y=y}=\Prob{X=y+k}=\binom{y+k-1}{k-1}p^k (1-p)^y,\; y=0,1,2,\ldots. \]
+              To refer to this negative binomial distribution, we will write $ Y \sim \NBf{k,p} $.
+    \end{enumerate}
+\end{Regular}
+\begin{Regular}{}
+    \begin{enumerate}[4.]
+        \item \textbf{Geometric}: If $ X \sim \NBt{1,p} $, then $ X $ is \emph{Geometric} (i.e., $ X \sim \GEOt{p} $) with pmf
+              \[ p(x)=p(1-p)^{x-1},\;x=1,2,3\ldots. \]
+              In other words, the geometric distribution models the number of Bernoulli trials required to observe the first success.
+    \end{enumerate}
+    \tcblower{}
+    \underline{Remark}: Similarly, if $ X \sim \NBf{1,p} $ then we obtain an alternative geometric
+    distribution (denoted by $ X \sim \GEOf{p} $) which models the number of failures observed prior to the first success.
+\end{Regular}
+\begin{Regular}{}
+    \begin{enumerate}[5.]
+        \item \textbf{Discrete Uniform}: If $ X $ is equally likely to take on values in the (finite) set
+              $ \Set{a,a+1,\ldots,b} $ where $ a,b\in\mathbb{Z} $ with $ a\le b $, then $ X $ is \emph{Discrete Uniform} (i.e., $ X \sim \DU{a,b} $)
+              with pmf
+              \[ p(x)=\frac{1}{b-a+1},\; x=a,a+1,\ldots,b.  \]
+    \end{enumerate}
+\end{Regular}
+\begin{Regular}{}
+    \begin{enumerate}[6.]
+        \item \textbf{Hypergeometric}: If $ X $ denotes the number of success objects in $ n $ draws without
+              replacement from a finite population of size $ N $ containing exactly $ r $ success objects, then $ X $ is
+              \emph{Hypergeometric} (i.e., $ X \sim \HG{N,r,n}$) with pmf
+              \[ p(x)=\frac{\binom{r}{x}\binom{N-r}{n-x}}{\binom{N}{n}},\;x=\max{0,n-N+r},\ldots,\min{n,r}.  \]
+    \end{enumerate}
+\end{Regular}
+\begin{Regular}{}
+    \begin{enumerate}[7.]
+        \item \textbf{Poisson}: A rv $ X $ is \emph{Poisson} (i.e., $ X \sim \POI{\lambda} $) with parameter $ \lambda>0 $ if its pmf is one of the form
+              \[ p(x)=\frac{e^{-\lambda}\lambda^x}{x!},\;x=0,1,2,\ldots.  \]
+    \end{enumerate}
+    \tcblower{}
+    \underline{Remark}: The pmf is even defined for $ \lambda=0 $ (if we use the standard convention that $ 0^0=1 $), in which case $ p(x)=1 $ for $ x=0 $
+    (i.e., $ X $ is degenerate at $ 0 $).
+\end{Regular}
+\begin{Example}{}
+    \textbf{Example 1.2}. Show that when $ n $ is large and $ p $ is small, the $ \BIN{n,p} $ distribution may be approximated by a
+    $ \POI{\lambda} $ distribution where $ \lambda=np $.
+    \tcblower{}
+    \textbf{Solution}:
+    Recall $ e^z=\lim\limits_{{n} \to {\infty}} (1+z/n)^n $, $ z\in\mathbb{R} $. Letting $ X \sim \BIN{n,p} $, we have
+    \begin{align*}
+        \Prob{X=x}
+         & =\binom{n}{x}p^x(1-p)^{n-x}                                                                                                                      \\
+         & =\frac{n(n-1)\cdots(n-x+1)}{x!}\biggl(\frac{\lambda}{n} \biggr)^{\!x} \biggl(1-\frac{\lambda}{n} \biggr)^{\!n-x}                                 \\
+         & =\frac{n}{n}\frac{n-1}{n}\cdots \frac{n-x+1}{n} \frac{\lambda^x}{x!} \frac{(1-\lambda/n)^n}{(1-\lambda/n)^x}                                     \\
+         & \simeq (1)(1)\cdots(1)\frac{\lambda^x}{x!}\frac{e^{-\lambda}}{1}                                                 &  & \text{when $ n $ is large} \\
+         & =\frac{e^{-\lambda}\lambda^x}{x!}
+    \end{align*}
+\end{Example}
+\section{Continuous Random Variables}
+\begin{Regular}{}
+    \textbf{Continuous type}: A rv $ X $ takes on a continuum of possible values (which is uncountable) with cdf
+    \[ F(x)=\Prob{X\le x}=\int_{-\infty}^{x}f(y)\odif{y}, \]
+    where $ f(x) $ denotes the \emph{probability density function} (pdf) of $ X $, which is a non-negative real-valued function that satisfies
+    \[ \Prob{X\in B}=\int_{x\in B}f(x)\odif{x},  \]
+    where $ B $ is the set of real numbers (e.g., an interval).
+    \tcblower{}
+    \underline{Remarks}:
+    \begin{enumerate}[(1)]
+        \item If $ F(x) $ (or the tpf $ \bar{F}(x)=1-F(x) $) is known, we can recover the pdf using the relation
+              \[ f(x)=\odv*{F(x)}{x}=F^\prime(x)=-\bar{F}^\prime(x), \]
+              which holds by the \emph{Fundamental Theorem of Calculus}.
+        \item When working with pdfs in general, it is usually not necessary to be precise about
+              specifying whether a range of numbers includes the endpoints. This is quite
+              different from the situation we encounter with discrete rvs. Throughout this course,
+              however, we will adopt the convention of \textbf{not including} the endpoints when specifying
+              the range of values for pdfs.
+    \end{enumerate}
+\end{Regular}
+\section{Continuous Distributions}
+\textbf{Special Continuous Distributions}:
+\begin{Regular}{}
+    \begin{enumerate}[1.]
+        \item \textbf{Uniform}: A rv $ X $ is \emph{Uniform} on the real interval $ (a,b) $ (i.e., $ X \sim \U{a,b} $) if it has pdf
+              \[ f(x)=\frac{1}{b-a},\; a<x<b, \]
+              where $ a,b\in\mathbb{R} $ with $ a<b $.
+    \end{enumerate}
+    \tcblower{}
+    \underline{Remark}: The choice of name is because $ X $ takes on values in $ (a,b) $ with all subintervals of a fixed length being equally likely.
+\end{Regular}
+\begin{Regular}{}
+    \begin{enumerate}[2.]
+        \item \textbf{Beta}: A rv $ X $ is \emph{Beta} with parameters $ m\in\mathbb{Z}^+ $ and $ n\in\mathbb{Z}^+ $ (i.e., $ X \sim \BetaDist{m,n} $)
+              if it has pdf
+              \[ f(x)=\frac{(m+n-1)!}{(m-1)!(n-1)!}x^{m-1}(1-x)^{n-1},\; 0<x<1.  \]
+    \end{enumerate}
+    \tcblower{}
+    \underline{Remark}: A $ \BetaDist{1,1} $ distribution simplifies to become the $ \U{0,1} $ distribution.
+\end{Regular}
+\begin{Regular}{}
+    \begin{enumerate}[3.]
+        \item \textbf{Erlang}: A rv $ X $ is \emph{Erlang} with parameters $ n\in\mathbb{Z}^+ $ and $ \lambda>0 $ (i.e., $ X \sim \Erlang{n,\lambda} $)
+              if it has pdf
+              \[ f(x)=\frac{\lambda^n x^{n-1}e^{-\lambda x}}{(n-1)!} ,\; x>0. \]
+    \end{enumerate}
+    \tcblower{}
+    \underline{Remark}: The $ \Erlang{n,\lambda} $ distribution is actually a special case of the more general
+    Gamma distribution in which $ n $ is extended to be any positive real number.
+\end{Regular}
+\begin{Regular}{}
+    \begin{enumerate}[4.]
+        \item \textbf{Exponential}: A rv $ X $ is \emph{Exponential} with parameter $ \lambda>0 $ (i.e., $ X \sim \EXP{\lambda} $)
+              if it has pdf
+              \[ f(x)=\lambda e^{-\lambda x},\; x>0. \]
+    \end{enumerate}
+    \tcblower{}
+    \underline{Remark}: An $ \Erlang{1,\lambda} $ distribution actually simplifies to become the $ \EXP{\lambda} $ distribution.
+\end{Regular}
+\section{Expectation}
+\begin{Regular}{}
+    \textbf{Expectation}: If $ g(\:\cdot\:) $ is an arbitrary real-valued function, then
+    \[ \E[\big]{g(X)}=\begin{cases*}
+            \sum_{x}g(x)p(x)                        & , if $ X $ is a discrete rv,   \\
+            \int_{-\infty}^{\infty}g(x)f(x)\odif{x} & , if $ X $ is a continuous rv.
+        \end{cases*} \]
+\end{Regular}
+\begin{Regular}{}
+    \textbf{Special choices of} $ g(\:\cdot\:) $:
+    \begin{enumerate}[1.]
+        \item $ g(X)=X^n $, $ n\in\mathbb{N}\implies \E[\big]{g(X)}=\E{X^n} $ is the $ n\textsuperscript{th} $ moment of $ X $. In general,
+              moments serve to describe the shape of a distribution. If $ n=0 $, then $ \E{X^0}=1 $. If $ n=1 $, then $ \E{X}=\mu_X $ is the \emph{mean} of $ X $.
+        \item $ g(X)=\bigl(X-\E{X}\bigr)^2\implies \E[\big]{g(X)}=\E*{\bigl(X-\E{X}\bigr)^2} $ is the \emph{variance} of $ X $. Note that
+              \[ \Var{X}=\sigma_X^2=\E*{\bigl(X-\E{X}\bigr)^2}=\E{X^2}-\E{X}^2, \]
+              or equivalently
+              \[ \sigma_X^2=\E[\big]{X-(X-1)}+\E{X}-\E{X}^2. \]
+              Related to this quantity, the \emph{standard deviation} of $ X $ is $ \sqrt{\Var{X}}=\sigma_X $.
+        \item $ g(X)=aX+b $, $ a,b\in\mathbb{R} $ (i.e., $ g(X) $ is a linear function of $ X $). Note that
+              \begin{align*}
+                  \mu_{aX+b}      & =\E{aX+b}=a \mu_X+b,                \\
+                  \sigma^2_{aX+b} & =\Var{aX+b}=a^2 \sigma_X^2,         \\
+                  \sigma_{aX+b}   & =\sqrt{\Var{aX+b}}=\abs{a}\sigma_X.
+              \end{align*}
+    \end{enumerate}
+\end{Regular}
+\section{Moment Generating Function}
+\begin{Regular}{}
+    \begin{enumerate}[4.]
+        \item $ g(X)=e^{tX} $, $ t\in\mathbb{R}\implies \E[\big]{g(X)}=\E{e^{tX}} $ is the \emph{moment generating function} (mgf) of $ X $.
+              This quantity is a function of $ t $ and is denoted by
+              \[ \phi_X(t)=\E{e^{tX}}. \]
+              First, $ \phi_X(0)=\E{e^{0X}}=\E{1}=1 $. Moreover, making use of the linearity property of the expected value operator, note that
+              \begin{align*}
+                  \phi_X(t)
+                   & =\E{e^{tX}}                                                                                               \\
+                   & =\E*{\sum_{n=0}^{\infty} \frac{(tX)^n}{n!} }                                                              \\
+                   & =\E*{\frac{t^0X^0}{0!}+\frac{t^1X^1}{1!} +\frac{t^2X^2}{2!} +\cdots+\frac{t^n X^n}{n!} +\cdots }          \\
+                   & =\E{X^0}\frac{t^0}{0!} +\E{X}\frac{t^1}{1!} +\E{X^2}\frac{t^2}{2!} +\cdots+\E{X^n}\frac{t^n}{n!} +\cdots,
+              \end{align*}
+              implying that the $ n\textsuperscript{th} $ moment of $ X $ is simply the coefficient of $ t^n/n! $ in the above series expansion.
+    \end{enumerate}
+    \textbf{We have}: $ \phi_X(t)=\E{t^X}=\E{X^0}\frac{t^0}{0!} +\E{X}\frac{t^1}{1!} +\E{X^2}\frac{t^2}{2!} +\cdots+\E{X^n}\frac{t^n}{n!}+\cdots $.
+    \tcblower{}
+    \underline{Remarks}:
+    \begin{enumerate}[(1)]
+        \item Given the mgf of $ X $, we can extract its $ n\textsuperscript{th} $ moment via
+              \[ \E{X^n}=\phi_X^{(n)}(0)=\odv*[order=n]{\phi_X(t)}{t}_{t=0}=\lim\limits_{{t} \to {0}}\odv*[order=n]{\phi_X(t)}{t},\; n\in\mathbb{N}.  \]
+              Note that the $ 0\textsuperscript{th} $ derivative of a function is simply the function itself.
+        \item A mgf \underline{uniquely} characterizes the probability distribution of a rv (i.e., there exists a
+              one-to-one correspondence between the mgf and the pmf/pdf of a rv). In other words, if
+              two rvs $ X $ and $ Y $ have the same mgf, then they must have the same probability
+              distribution (which we denote by $ X \sim Y $). Thus, by finding the mgf of a rv, one has
+              indeed determined its probability distribution.
+    \end{enumerate}
+\end{Regular}
+\begin{Example}{}
+    \textbf{Example 1.3}. Suppose that $ X \sim \BIN{n,p} $. Find the mgf of $ X $ and use it to find $ \E{X} $ and $ \Var{X} $.
+    \tcblower{}
+    \textbf{Solution}: Recall the binomial series formula
+    \[ (a+b)^m=\sum_{x=0}^{m} \binom{m}{x}a^x b^{m-x},\;a,b\in\mathbb{R},\; m\in\mathbb{N}. \]
+    Using this formula, we obtain
+    \begin{align*}
+        \phi_X(t)
+         & =\E{e^{tX}}                                       \\
+         & =\sum_{x=0}^{n}e^{tx}\binom{n}{x}p^x(1-p)^{n-x}   \\
+         & =\sum_{x=0}^{n} \binom{n}{x}(p e^t)^x (1-p)^{n-x} \\
+         & =(p e^t+1-p)^n,\; t\in\mathbb{R}.
+    \end{align*}
+    Then,
+    \[ \phi_X^\prime(t)=n(p e^t+1-p)^{n-1}pe^t\quad \text{and}\quad Q_X^{\prime\prime}(t)=n(pe^t+1-p)^{n-1}pe^t+npe^t(n-1)(pe^t+1-p)^{n-2}pe^t. \]
+    Thus,
+    \[ \E{X}=\phi_X^\prime(0)=n(pe^0+1-p)^{n-1}pe^0=np, \]
+    \[ \Var{X}=\E{X^2}-\E{X}^2=\phi_X^{\prime\prime}(0)-n^2p^2=np+np(n-1)p-n^2p^2=np. \]
+\end{Example}
+\section{Joint Distributions}
+\textbf{Joint Distributions}: The following results are presented for the bivariate case mostly, but
+these ideas extend naturally to an arbitrary number of rvs.
+\begin{Regular}{}
+    \textbf{Definition}: The \emph{joint cdf} of $ X $ and $ Y $ is
+    \begin{align*}
+        F(a,b)
+         & =\Prob{X\le a,Y\le b}                                            \\
+         & =\Prob[\big]{\Set{X\le a}\cap \Set{Y\le b}},\; a,b\in\mathbb{R}.
+    \end{align*}
+    \tcblower{}
+    \underline{Remark}: If the joint cdf is known, then we can recover their marginal counterparts as
+    follows:
+    \begin{align*}
+        F_X(a) & =\Prob{X\le a}=F(a,\infty)=\lim\limits_{{b} \to {\infty}} F(a,b), \\
+        F_Y(a) & =\Prob{Y\le b}=F(\infty,b)=\lim\limits_{{a} \to {\infty}} F(a,b).
+    \end{align*}
+\end{Regular}
+\begin{Regular}{}
+    \textbf{Jointly Discrete Case}:
+
+    \underline{Joint pmf}:
+    \[ p(x,y)=\Prob{X=x,Y=y} \]
+    \underline{Marginals}:
+    \begin{align*}
+        p_X(x) & =\Prob{X=x}=\sum_y p(x,y) \\
+        p_Y(y) & =\Prob{Y=y}=\sum_x p(x,y)
+    \end{align*}
+\end{Regular}
+\begin{Regular}{}
+    \textbf{Multinomial Distribution}: Consider an experiment which is repeated $ n\in\mathbb{Z}^+ $ times,
+    with one of $ k\ge 2 $ distinct outcomes possible each time. Let $ p_1,p_2,\ldots,p_k $ denote the probabilities
+    of the $ k $ types of outcomes (with $ \sum_{i=1}^{k} p_i=1 $). If $ X_i $, $ i=1,2,\ldots,k $, counts the number of
+    type-$i$ outcomes to occur, then $ (X_1,X_2,\ldots,X_k) $ is \emph{Multinomial} (i.e., $ (X_1,X_2,\ldots,X_k) \sim \MN{n,p_1,p_2,\ldots,p_k} $)
+    with joint pmf
+    \[ p(x_1,x_2,\ldots,x_k)=\frac{n!}{x_1!x_2!\cdots x_k!}p_1^{x_1}p_2^{x_2}\cdots p_k^{x_k},\; x_i=0,1,\ldots,n\;\forall i\text{ and }\sum_{i=1}^{k} x_i=n  \]
+    \tcblower{}
+    \underline{Remark}: A $ \MN{n,p_1,1-p_1} $ distribution simplifies to become the $ \BIN{n,p_1} $ distribution.
+\end{Regular}
+\begin{Regular}{}
+    \textbf{Jointly Continuous Case}:
+
+    \underline{Joint pdf}: The joint pdf $ f(x,y) $ is a non-negative real-valued function which enables one to calculate probabilities of the form
+    \[ \Prob{X\in A,Y\in B}=\int_{B}\int_{A}f(x,y)\odif{x,y}=\int_A\int_B f(x,y)\odif{x,y}  \]
+    where $ A $ and $ B $ are sets of real numbers (e.g., intervals). As a result,
+    \[ F(a,b)=\int_{-\infty}^{b}\int_{-\infty}^{a}f(x,y)\odif{x,y}=\int_{-\infty}^{a}\int_{-\infty}^{b}f(x,y)\odif{y,x}   \]
+    \underline{Marginals}:
+    \begin{align*}
+        f_X(x) & =\int_{-\infty}^{\infty}f(x,y)\odif{y} \\
+        f_Y(y) & =\int_{-\infty}^{\infty}f(x,y)\odif{x}
+    \end{align*}
+\end{Regular}
+\begin{Regular}{}
+    \textbf{Jointly Continuous Case}:
+
+    \underline{Important Relationship}:
+    \[ f(x,y)=\pdv*{F(x,y)}{x,y} \]
+    \underline{Transformations}: Let $ (X,Y) $ be jointly continuous with joint pdf $ f(x,y0) $ and region
+    of support $ \mathcal{S}(X,Y) $. Suppose that the rvs $ V $ and $ W $ are given by $ V=b_1(X,Y) $ and $ W=b_2(X,Y) $,
+    where the functions $ v=b_1(x,y) $ and $ w=b_2(x,y) $ defined a one-to-one transformation that maps the set $ \mathcal{S}(X,Y) $
+    onto the set $ \mathcal{S}(V,W) $. If $ x $ and $ y $ are expressed in terms of $ v $ and $  w $ (i.e., $ x=h_1(v,w) $ and $ y=h_2(v,w) $),
+    then the joint pdf of $ V $ and $ W $ is given by
+    \[ g(v,w)=\begin{cases*}
+            f\bigl(h_1(v,w),h_2(v,w)\bigr)\abs{J} & , if $ (v,w)\in\mathcal{S}(V,W) $, \\
+            0                                     & , elsewhere,
+        \end{cases*} \]
+    where $ J $ is the \emph{Jacobian} of the transformation given by
+    \[ J=\pdv{x}{v}\pdv{y}{w}-\pdv{x}{w}\pdv{y}{v}. \]
+\end{Regular}
+\section{Expectation}
+\begin{Regular}{}
+    \textbf{Expectation}: If $ g(\:\cdot\:,\:\cdot\:) $ denotes an arbitrary real-valued function, then
+    \[ \E[\big]{g(X,Y)}=\begin{cases*}
+            \sum_x\sum_y g(x,y)p(x,y)                                            & , if $ X $ and $ Y $ are jointly discrete,   \\
+            \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}g(x,y)f(x,y)\odif{y,x} & , if $ X $ and $ Y $ are jointly continuous.
+        \end{cases*} \]
+    \tcblower{}
+    \underline{Remark}: The order of summation/integration is irrelevant and can be interchanged.
+\end{Regular}
+\begin{Regular}{}
+    \textbf{Special choices of} $ g(\:\cdot\:) $:
+    \begin{enumerate}[1.]
+        \item $ g(X,Y)=\bigl(X-\E{X}\bigr)\bigl(Y-\E{Y}\bigr)\implies\E[\big]{g(X,Y)}=\E*{\bigl(X-\E{X}\bigr)\bigl(Y-\E{Y}\bigr)} $
+              is the \emph{covariance} of $ X $ and $ Y $. Note that
+              \[ \Cov{X,Y}=\E*{\bigl(X-\E{X}\bigr)\bigl(Y-\E{Y}\bigr)}=\E{XY}-\E{X}\E{Y} \]
+              and $ \Cov{X,X}=\Var{X} $.
+        \item $ g(X,Y)=aX+bY $, $ a,b\in\mathbb{R} $ (i.e., $ g(X,Y) $ is a linear combination of $ X $ and $ Y $). Note that:
+              \begin{align*}
+                  \E{aX+bY}   & =a\E{X}+b\E{Y},                      \\
+                  \Var{aX+bY} & =a^2\Var{X}+b^2\Var{Y}+2ab\Cov{X,Y}.
+              \end{align*}
+        \item $ g(X,Y)=e^{sX+tY} $, $ s,t\in\mathbb{R}\implies \E[\big]{g(X,Y)}=\E{e^{sX+tY}} $ is the joint mgf of $ X $ and $ Y $.
+              A joint mgf (denoted by $ \phi(s,t) $) also uniquely characterizes a joint probability distribution
+              and can be used to calculate joint moments of $ X $ and $ Y $ via the formula
+              \[ \E{X^m Y^n}=\phi^{(m,n)}(0,0)=\pdv*[order={m,n}]{\phi(s,t)}{s,t}_{s=0,t=0}=
+                  \lim\limits_{s\to 0,t\to 0}\pdv*[order={m,n}]{\phi(s,t)}{s,t},\; m,n\in\mathbb{N}  \]
+    \end{enumerate}
+\end{Regular}
+\section{Independence of Random Variables}
+\begin{Regular}{}
+    \textbf{Formal Definition}: If $ X $ and $ Y $ are \emph{independent} rvs if
+    \begin{align*}
+        F(a,b)
+         & =\Prob{X\le a,Y\le b}                     \\
+         & =\Prob{X\le a}\Prob{Y\le b}               \\
+         & =F_X(a)F_Y(b)\; \forall a,b\in\mathbb{R}.
+    \end{align*}
+    Equivalently, independence exists iff $ p(x,y)=p_X(x)p_Y(y) $ (in the jointly discrete case)
+    or $ f(x,y)=f_X(x)f_Y(y) $ (in the jointly continuous case) $ \forall x,y\in\mathbb{R} $.
+\end{Regular}
+\begin{Regular}{}
+    \textbf{Important Property}: For arbitrary real-valued functions $ g(\:\cdot\:) $ and $ h(\:\cdot\:) $, if $ X $ and $ Y $ are independent,
+    then
+    \[ \E[\big]{g(X)h(Y)}=\E[\big]{g(X)}\E[\big]{h(Y)}. \]
+    \tcblower{}
+    \underline{Remark}: As a consequence of this property, $ \Cov{X,Y}=0 $ if $ X $ and $ Y $ are independent,
+    implying that $ \Var{aX+bY}=a^2\Var{X}+b^2\Var{Y} $. However, if $ \Cov{X,Y}=0 $, we cannot conclude that $ X $
+    and $ Y $ are independent (we can only say that $ X $ and $ Y $ are \emph{uncorrelated}).
+\end{Regular}
+\begin{Example}{}
+    \textbf{Example 1.4}. Suppose that $ X $ and $ Y $ have joint pmf (and corresponding marginals) of the form
+    \begin{center}
+        \begin{NiceTabular}{cc|cc|c}
+            \multicolumn{2}{c}{}   & \multicolumn{2}{c}{$ y $} &                                                                               \\
+            \multicolumn{1}{c}{} & \multicolumn{1}{c}{$ p(x,y) $}   & $ 0 $               & $ 1 $ & \multicolumn{1}{c}{$ p_X(x) $}                                \\
+            \cmidrule{2-5}
+            \multirow{3}{*}{$ x $} & $ 0 $              & $ 0.2 $                     & $ 0 $                       & $ 0.2 $                   \\
+            & $ 1 $            & $ 0 $                     & $ 0.6 $                       & $ 0.6 $                   \\
+            & $ 2 $            & $ 0.2 $                     & $ 0 $                       & $ 0.2 $                   \\
+            \cmidrule{2-5}
+            \multicolumn{1}{c}{}   & \multicolumn{1}{c}{$ p_Y(y) $}                  & \multicolumn{1}{c}{$ 0.4 $} & \multicolumn{1}{c}{$ 0.6 $} & \multicolumn{1}{c}{$ 1 $}
+        \end{NiceTabular}
+    \end{center}
+    Show that $ \Cov{X,Y}=0 $ holds, but $ X $ and $ Y $ are not independent.
+    \tcblower{}
+    \textbf{Solution}: Recall that $ \Cov{X,X}=\E{XY}-\E{X}\E{Y} $. Note that
+    \begin{align*}
+        \E{XY}
+         & =\sum_x\sum_y xyp(x,y)                                             \\
+         & =(0)(0)(0.2)+(0)(1)(0)+(1)(0)(0)+(1)(1)(0.6)+(2)(0)(0.2)+(2)(1)(0) \\
+         & =0.6,
+    \end{align*}
+    \begin{align*}
+        \E{X} & =\sum_x x p_X(x)=(0)(0.2)+(1)(0.6)+(2)(0.2)=1, \\
+        \E{Y} & =\sum_y y p_Y(y)=(0)(0.4)+(1)(0.6)=0.6.
+    \end{align*}
+    Thus,
+    \[ \Cov{X,Y}=\E{XY}-\E{X}\E{Y}=0.6-(1)(0.6)=0. \]
+    However, from the given table, it is clear that $ p(2,0)=0.2\ne 0.08=(0.2)(0.4)=p_X(2)p_Y(0) $. Thus, we
+    conclude that while $ \Cov{X,Y}=0 $, $ X $ and $ Y $ are not independent.
+\end{Example}
+\begin{Result}{}
+    \textbf{Theorem 1.1}. If $ X_1,X_2,\ldots,X_n $ are independent rvs where $ \phi_{X_i}(t) $ is the mgf of $ X_i $,
+    $ i=1,2,\ldots,n $, then $ T=\sum_{i=1}^{n} X_i $ has mgf $ \phi_T(t)=\prod_{i=1}^n \phi_{X_i}(t) $.
+    \tcblower{}
+    \textbf{Proof}: Note that the mgf of $ T $ given by
+    \begin{align*}
+        \phi_T(t)
+         & =\E{e^{tT}}                                                                                         \\
+         & =\E{e^{t(X_1+X_2+\cdots+X_n)}}                                                                      \\
+         & =\E{e^{tX_1}e^{tX_2}\cdots e^{tX_n}}                                                                \\
+         & =\E{e^{tX_1}}\E{e^{tX_2}}\cdots\E{e^{tX_n}}    &  & \text{by independence of $ \Set{X_i}_{i=1}^n $} \\
+         & =\phi_{X_1}(t)\phi_{X_2}(t)\cdots\phi_{X_n}(t)                                                      \\
+         & =\prod_{i=1}^n \phi_{X_i}(t).
+    \end{align*}
+    \underline{Remarks}:
+    \begin{enumerate}[(1)]
+        \item Simply put, Theorem 1.1 states that the mgf of a sum of independent rvs is just the
+              product of their individual mgfs.
+        \item As a special case of the above result, note that $ \phi_T(t)=\phi_{X_1}(t)^n $ if $ X_1,X_2,\ldots,X_n $
+              is an independent and identically distributed (iid) sequence of rvs.
+    \end{enumerate}
+\end{Result}
+\begin{Example}{}
+    \textbf{Example 1.5}. Let $ X_1,X_2,\ldots,X_m $ be an independent sequence of rvs where $ X_i \sim \BIN{n_i,p} $,
+    $ i=1,2,\ldots,m $. Find the distribution of $ T=\sum_{i=1}^{m} X_i $.
+    \tcblower{}
+    \textbf{Solution}: Looking at the mgf of $ T $, note that
+    \begin{align*}
+        \phi_T(t)
+         & =\prod_{i=1}^m \phi_{X_i}(t)                       &  & \text{by Theorem 1.1}                     \\
+         & =\prod_{i=1}^m (pe^t+1-p)^{n_i}                    &  & \text{using the result of Example of 1.3} \\
+         & =(pe^t+1-p)^{\sum_{i=1}^{m} n_i},\;t\in\mathbb{R}.
+    \end{align*}
+    By the mgf uniqueness property we recognize that $ T=\sum_{i=1}^{m} X_i \sim \BIN[\big]{\sum_{i=1}^{m} n_i,p} $.
+
+    \underline{Remark}: As a special case of the above example, if $ X_1,X_2,\ldots,X_m $ are iid $ \BERN{p} $ rvs, then
+    $ T=\sum_{i=1}^{m} X_i\sim \BIN{m,p} $.
+\end{Example}
+\section{Convergence of Random Variables}
+\begin{Regular}{}
+    \textbf{Modes of Convergence}: If $ X_n $, $ n\in\mathbb{Z}^+ $, and $ X $ are rvs, then
+    \begin{enumerate}[1.]
+        \item $ X_n\to X $ \emph{in distribution} iff
+              \[ \lim\limits_{{n} \to {\infty}} \Prob{X_n\le x}=\Prob{X\le x},\; \forall x\in\mathbb{R}\text{ at which $ \Prob{X\le x} $ is continuous,} \]
+        \item $ X_n\to X $ \emph{in probability}, iff $ \forall \varepsilon>0 $,
+              \[ \lim\limits_{{n} \to {\infty}} \Prob[\big]{\abs{X_n-X}>\varepsilon}=0, \]
+        \item $ X_n\to X $ \emph{almost surely (a.s.)} iff
+              \[ \Prob[\big]{\lim\limits_{{n} \to {\infty}} X_n=X}=1. \]
+    \end{enumerate}
+    \tcblower{}
+    \underline{Remarks}:
+    \begin{enumerate}[(1)]
+        \item In probability theory, an event is said to happen a.s.\ if it happens with probability $ 1 $.
+        \item The following implications hold true in general:
+              \[ X_n\to X\text{ a.s. }\implies X_n\to X\text{ in probability }\implies X_n\to X\text{ in distribution.} \]
+    \end{enumerate}
+\end{Regular}
+\section{Strong Law of Large Numbers}
+\begin{Regular}{}
+    \textbf{Strong Law of Large Numbers (SLLN)}: If $ X_1,X_2,\ldots,X_n $ is an iid sequence of rvs with common mean $ \mu $
+    and $ \E[\big]{\abs{X_1}}<\infty $, then
+    \[ \bar{X}_n=\frac{X_1+X_2+\cdots+X_n}{n} \to \mu\text{ a.s.\ as $ n\to\infty $.} \]
+    \tcblower{}
+    \underline{Remark}: The SLLN is one of the most important results in probability and statistics,
+    indicating that the sample mean will, with probability $ 1 $, converge to the true mean of the
+    underlying distribution as the sample size approaches infinity. In other words, if the same
+    experiment or study is repeated independently many times, the average of the
+    results of the trials must be close to the mean. The result gets closer to the mean as the
+    number of trials is increased.
+\end{Regular}

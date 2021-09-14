@@ -393,71 +393,74 @@
           \end{itemize}
 \end{itemize}
 \subsection{Example: Netflix Latency}
-\begin{Example}{Netflix Latency}{}
-    Consider the latency experiment described at the beginning of the chapter in which Netflix is experimenting
-    with server-side modifications to improve (reduce) the latency of \href{netflix.com}{netflix.com}. In particular, they have four
-    different experimental conditions (A, B, C, D) that are intended to reduce average latency (in milliseconds).
-    Two nuisance factors that may also influence latency are browser (Chrome, Microsoft Edge, Firefox,
-    Safari), and time of day ([00:01,06:00], [06:01,12:00], [12:01,18:00], [18:01,00:00]). The design of the experiment
-    is the $ 4\times 4 $ Latin square shown in~\Cref{netflixex1}. In order to determine whether the expected latency in each condition
-    differs significantly, we randomize $n = 500$ users to each of the $p^2 = 16$ blocks.
-    \begin{center}
-        \captionsetup{type=table}\captionof{table}{$ 4\times 4 $ Latin Square Design for the Netflix Experiment}\label{netflixex1}
-        \begin{NiceTabular}{|cc|cccc|}
-            \toprule            &   & \multicolumn{4}{c} {\emph{Browser}}             \\
-            &   & Chrome                                          & Edge & Firefox & Safari \\
-            \midrule            & [00:01,06:00] & A                                          & B & C & D \\
-            \multirow{2}{*}{\emph{Time}} & [06:01,12:00] & D                                          & A & B & C \\
-            & [12:01,18:00] & C                                          & D & A & B \\
-            & [18:01,00:00] & B                                          & C & D & A \\
-            \bottomrule
-        \end{NiceTabular}
-    \end{center}
-    We analyze the data with the following linear regression model:
-    \[ Y_i=\alpha+\beta_2 x_{i2}+\beta_3 x_{i3}+\beta_4 x_{i4}+\gamma_1 z_{i1}+\gamma_2 z_{i2}+\gamma_3 z_{i3}+\delta_2 w_{i2}+\delta_3 w_{i3}+\delta_4 w_{i4}+\varepsilon_i \]
-    \begin{itemize}
-        \item $ x_{i2} $, $ x_{i3} $, $ x_{i4} $ are indicators for conditions B, C, D, where A is the baseline.
-        \item $ z_{i1} $, $ z_{i2} $, $ z_{i3} $ are browser indicators for Microsoft Edge, Firefox, Safari, where Chrome is the baseline.
-        \item $ w_{i2} $, $ w_{i3} $, $ w_{i4} $ are time indicators for time periods [06:01,12:00], [12:01,18:00], [18:01,00:00], where [00:01,06:00] is the baseline.
-    \end{itemize}
-    The ANOVA table associated with this model is~\Cref{netflixex2}.
-    \begin{center}
-        \captionsetup{type=table}\captionof{table}{Netflix Latin Square ANOVA Table}\label{netflixex2}
-        \begin{NiceTabular}{|l|c|c|c|c|}
-            \toprule
-            Source    & SS                     & d.f.        & MS                                                                   & Test Statistic                                           \\
-            \midrule
-            Condition & $ 203903.38 $ & $ 3 $     & $ 67967.79 $     & $ 679.14 $ \\
-            Browser     & $ 32.95 $ & $ 3 $     & $ 10.98 $     & $ 0.1097 $ \\
-            Time     & $ 333242.01 $ & $ 3 $     & $ 111080.67 $     & $ 1109.92 $ \\
-            Error     & $ 799636.18 $ & $ 7990 $ & $ 100.08 $ &                                                      \\
-            \midrule
-            Total     & $ 1336815 $ & $ 7999 $\\
-            \bottomrule
-        \end{NiceTabular}
-    \end{center}
-    \begin{itemize}
-        \item $ \mathbf{H}_0 $: $ \beta_2=\beta_3=\beta_4=0 $.
-              \begin{itemize}
-                  \item $ p\text{-value}=\Prob*{T\ge t_\text{C}}=\Prob*{T\ge 679.14}\approx 0 $ where $ T \sim F(3,7990) $.
-                  \item Therefore, we reject $ \mathbf{H}_0 $ and conclude that the design factor significantly influences the response
-                        and hence the expected response is \underline{not} the same in each condition.
-              \end{itemize}
-        \item $ \mathbf{H}_0 $: $ \gamma_1=\gamma_2=\gamma_3=0 $.
-              \begin{itemize}
-                  \item $ p\text{-value}=\Prob*{T\ge t_{\text{B}_1}}=\Prob*{T\ge 0.1097}=0.9545 $ where $ T \sim F(3,7990) $.
-                  \item Therefore, we do not reject $ \mathbf{H}_0 $ and conclude that ``browser'' does not
-                        significantly influence average latency, and so blocking by browser was probably not necessary.
-              \end{itemize}
-        \item $ \mathbf{H}_0 $: $ \delta_2=\delta_3=\delta_4=0 $.
-              \begin{itemize}
-                  \item $ p\text{-value}=\Prob*{T\ge t_{\text{B}_2}}=\Prob*{T\ge 1109.92}\approx 0 $ where $ T \sim F(3,7990) $.
-                  \item Therefore, we reject $ \mathbf{H}_0 $ and conclude that the time of day significantly influences average latency
-                        and so blocking by it was sensible.
-              \end{itemize}
-    \end{itemize}
-    \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/W6/Latin_square_means.R}{[R Code] \texttt{Latin\_square\_means}}
-\end{Example}
+
+Consider the latency experiment described at the beginning of the chapter in which Netflix is experimenting
+with server-side modifications to improve (reduce) the latency of \href{netflix.com}{netflix.com}. In particular, they have four
+different experimental conditions (A, B, C, D) that are intended to reduce average latency (in milliseconds).
+Two nuisance factors that may also influence latency are browser (Chrome, Microsoft Edge, Firefox,
+Safari), and time of day ([00:01,06:00], [06:01,12:00], [12:01,18:00], [18:01,00:00]). The design of the experiment
+is the $ 4\times 4 $ Latin square shown in~\Cref{netflixex1}. In order to determine whether the expected latency in each condition
+differs significantly, we randomize $n = 500$ users to each of the $p^2 = 16$ blocks.
+\begin{center}
+    \captionsetup{type=table}\captionof{table}{$ 4\times 4 $ Latin Square Design for the Netflix Experiment}\label{netflixex1}
+    \begin{NiceTabular}{|cc|cccc|}
+        \toprule            &   & \multicolumn{4}{c} {\emph{Browser}}             \\
+        &   & Chrome                                          & Edge & Firefox & Safari \\
+        \midrule            & [00:01,06:00] & A                                          & B & C & D \\
+        \multirow{2}{*}{\emph{Time}} & [06:01,12:00] & D                                          & A & B & C \\
+        & [12:01,18:00] & C                                          & D & A & B \\
+        & [18:01,00:00] & B                                          & C & D & A \\
+        \bottomrule
+    \end{NiceTabular}
+\end{center}
+We analyze the data with the following linear regression model:
+\[ Y_i=\alpha+\beta_2 x_{i2}+\beta_3 x_{i3}+\beta_4 x_{i4}+\gamma_1 z_{i1}+\gamma_2 z_{i2}+\gamma_3 z_{i3}+\delta_2 w_{i2}+\delta_3 w_{i3}+\delta_4 w_{i4}+\varepsilon_i \]
+\begin{itemize}
+    \item $ x_{i2} $, $ x_{i3} $, $ x_{i4} $ are indicators for conditions B, C, D, where A is the baseline.
+    \item $ z_{i1} $, $ z_{i2} $, $ z_{i3} $ are browser indicators for Microsoft Edge, Firefox, Safari, where Chrome is the baseline.
+    \item $ w_{i2} $, $ w_{i3} $, $ w_{i4} $ are time indicators for time periods:
+          \begin{tightcenter}
+              [06:01,12:00], [12:01,18:00], [18:01,00:00], where [00:01,06:00] is the baseline
+          \end{tightcenter}
+\end{itemize}
+The ANOVA table associated with this model is~\Cref{netflixex2}.
+\begin{center}
+    \captionsetup{type=table}\captionof{table}{Netflix Latin Square ANOVA Table}\label{netflixex2}
+    \begin{NiceTabular}{|l|c|c|c|c|}
+        \toprule
+        Source    & SS                     & d.f.        & MS                                                                   & Test Statistic                                           \\
+        \midrule
+        Condition & $ 203903.38 $ & $ 3 $     & $ 67967.79 $     & $ 679.14 $ \\
+        Browser     & $ 32.95 $ & $ 3 $     & $ 10.98 $     & $ 0.1097 $ \\
+        Time     & $ 333242.01 $ & $ 3 $     & $ 111080.67 $     & $ 1109.92 $ \\
+        Error     & $ 799636.18 $ & $ 7990 $ & $ 100.08 $ &                                                      \\
+        \midrule
+        Total     & $ 1336815 $ & $ 7999 $\\
+        \bottomrule
+    \end{NiceTabular}
+\end{center}
+In all cases, $ T \sim F(3,7990) $.
+\begin{itemize}
+    \item $ \mathbf{H}_0 $: $ \beta_2=\beta_3=\beta_4=0 $.
+          \begin{itemize}
+              \item $ p\text{-value}=\Prob*{T\ge t_\text{C}}=\Prob*{T\ge 679.14}\approx 0 $.
+              \item Therefore, we reject $ \mathbf{H}_0 $ and conclude that the design factor significantly influences the response
+                    and hence the expected response is \underline{not} the same in each condition.
+          \end{itemize}
+    \item $ \mathbf{H}_0 $: $ \gamma_1=\gamma_2=\gamma_3=0 $.
+          \begin{itemize}
+              \item $ p\text{-value}=\Prob*{T\ge t_{\text{B}_1}}=\Prob*{T\ge 0.1097}=0.9545 $.
+              \item Therefore, we do not reject $ \mathbf{H}_0 $ and conclude that ``browser'' does not
+                    significantly influence average latency, and so blocking by browser was probably not necessary.
+          \end{itemize}
+    \item $ \mathbf{H}_0 $: $ \delta_2=\delta_3=\delta_4=0 $.
+          \begin{itemize}
+              \item $ p\text{-value}=\Prob*{T\ge t_{\text{B}_2}}=\Prob*{T\ge 1109.92}\approx 0 $.
+              \item Therefore, we reject $ \mathbf{H}_0 $ and conclude that the time of day significantly influences average latency
+                    and so blocking by it was sensible.
+          \end{itemize}
+\end{itemize}
+\href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/W6/Latin_square_means.R}{[R Code] \texttt{Latin\_square\_means}}
 \subsection{Latin Squares to Compare Proportions}
 \begin{itemize}
     \item Here we're interested in testing the following hypothesis (while accounting for the influence of the

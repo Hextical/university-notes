@@ -1,13 +1,14 @@
 \documentclass[oneside,final]{book}
 \usepackage[svgnames]{xcolor}
 \usepackage[canadian]{babel}
-\usepackage[final,babel]{microtype}
+\usepackage[protrusion=true,expansion=true,tracking=true,final,babel=true,DVIoutput=false]{microtype}
+\usepackage{fontspec}
 \usepackage[math-style=ISO,bold-style=ISO,warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
-
 \usepackage[margin=1in]{geometry}
 \usepackage[unicode,pdfversion=1.7]{hyperref}
+\usepackage{siunitx}
+\sisetup{round-mode = places, round-precision = 3, round-pad = false, retain-explicit-plus}
 \usepackage[shortlabels]{enumitem}
-\usepackage[parfill]{parskip}
 \usepackage[theorems,breakable]{tcolorbox}
 \usepackage{graphicx}
 \usepackage{mathtools}
@@ -22,14 +23,7 @@
 \usepackage{interval}
 \usepackage{derivative}
 \usepackage{subcaption}
-%
-\AtBeginDocument{%
-    \let\mathbb\relax%
-    \let\mathcal\relax%
-    \DeclareMathAlphabet{\mathbb}{U}{msb}{m}{n}%
-    \DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}%
-}%
-\graphicspath{{./figures/}}%
+\graphicspath{{figures/}}%
 
 % Functions
 \providecommand\given{}% just to make sure it exists
@@ -66,7 +60,7 @@
 \DeclarePairedDelimiterXPP{\N}[1]{\mathcal{N}}(){}{#1}%
 \DeclarePairedDelimiterXPP{\MVN}[1]{\text{MVN}}(){}{#1}%
 \DeclarePairedDelimiterXPP{\Binomial}[1]{\text{Binomial}}(){}{#1}
-\DeclarePairedDelimiterXPP{\Uniform}[1]{\text{Uniform}}(){}{#1}
+\DeclarePairedDelimiterXPP{\Uniform}[1]{\mathcal{U}}[]{}{#1}
 
 % DeclarePairedDelimiter (excl. XPP)
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}%
@@ -90,6 +84,8 @@
 \newcommand{\MSE}{\text{MS}_{\text{E}}}%
 \newcommand{\HN}{\symbfup{H}_0}%
 \newcommand{\HA}{\symbfup{H}_{\text{A}}}%
+\newcommand{\ALPHABET}{ABCDEFGHIJKLMNOPQRSTUVWXYZ}
+\newcommand{\alphabet}{abcdefghijklmnopqrstuvwxyz}
 
 \newenvironment{tightcenter}{%
     \setlength\topsep{0pt}%

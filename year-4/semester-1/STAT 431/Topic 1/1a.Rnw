@@ -1,0 +1,230 @@
+\makeheading{Week 1}{\daterange{2021-09-08}{2021-09-10}}
+\section*{Topic 1a: Review of Linear Regression}
+\addcontentsline{toc}{section}{Topic 1a: Review of Linear Regression}
+
+\subsection*{Example: low birthweight infants study\footnote{Principles of Biostatistics by Pagano and Gauvreau}}
+A study was conducted at two teaching
+hospitals in Boston, Massachusetts,
+where the head circumference, gestational age and some other variables
+are recorded for 100 low birth weight
+infants.
+
+Question: what is the relationship between \textcolor{Blue}{\emph{gestational age}} \& \textcolor{Blue}{head circumference}?
+<<echo=FALSE>>=
+lowbwt <- read.table("lowbwt.txt", header=T)
+plot(lowbwt$gestage,lowbwt$headcirc,xlab="gestage",ylab="headcirc",main="A Scatterplot of the Data")
+@
+We wish to model the relationship between \emph{gestational age} and \emph{head
+    circumference} using a straight line!
+<<echo=FALSE>>=
+lowbwt <- read.table("lowbwt.txt", header=T)
+fit <- lm(headcirc~gestage, data=lowbwt)
+plot(lowbwt$gestage,lowbwt$headcirc,xlab="gestational age (x)",ylab="head circumferences (y)")
+abline(fit)
+@
+
+\subsection*{The Model Fitting Process}
+\begin{enumerate}[1.]
+    \item \textcolor{Red}{Model Specification}: select a probability distribution for the response
+          variable and a linear equation linking the response to the explanatory
+          variables.
+    \item \textcolor{Red}{Estimation}: finding the equation (the parameters of the model).
+    \item \textcolor{Red}{Model checking}: how well does the model fit the data?
+    \item \textcolor{Red}{Inference}: interpret the fitted model, calculate confidence intervals,
+          conduct hypothesis tests.
+\end{enumerate}
+
+\subsection*{1. Model Specification}
+\begin{Regular}{Notation}
+    For each subject $ i=1,\ldots,n $ we have:
+    \begin{itemize}
+        \item $ Y_i = $ random variable representing the response, and
+        \item $ \Vector{x}_i =(1,x_{i1},\ldots,x_{ip})^\top $ a vector of explanatory variables.
+    \end{itemize}
+\end{Regular}
+\begin{Regular}{Specification for Multiple Linear Regression}
+    \begin{itemize}
+        \item Linear regression equation:
+              \[ Y_i=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}+\varepsilon_i\text{ where }\varepsilon_i \iid\N{0,\sigma^2}. \]
+        \item Equivalently, $Y_i$'s are independent $ \N{\mu_i,\sigma^2} $ random variables or
+              \[ \mu_i=\E{Y_i}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}. \]
+        \item For convenience, we often write linear regression models in matrix form as
+              \[ \RandomVector{Y}=\Matrix{X}\Vector{\beta}+\RandomVector{\varepsilon}, \]
+              where
+              \[ \RandomVector{Y}=\begin{bmatrix}
+                      Y_1    \\
+                      Y_2    \\
+                      \vdots \\
+                      Y_n
+                  \end{bmatrix},\quad
+                  \Matrix{X}=\begin{bmatrix}
+                      1      & x_{11} & \cdots & x_{1p} \\
+                      2      & x_{21} & \cdots & x_{2p} \\
+                      \vdots & \vdots & \ddots & \vdots \\
+                      1      & x_{n1} & \cdots & x_{np}
+                  \end{bmatrix},\quad
+                  \Vector{\beta}=\begin{bmatrix}
+                      \beta_0 \\
+                      \beta_1 \\
+                      \vdots  \\
+                      \beta_p
+                  \end{bmatrix},\quad
+                  \RandomVector{\varepsilon}=\begin{bmatrix}
+                      \varepsilon_1 \\
+                      \varepsilon_2 \\
+                      \vdots        \\
+                      \varepsilon_n
+                  \end{bmatrix} \]
+              and
+              \[ \RandomVector{\varepsilon}\sim \MVN{\Vector{0},\sigma^2\Matrix{I}}. \]
+    \end{itemize}
+\end{Regular}
+\subsection*{2. Estimation}
+\begin{Regular}{Least Squares}
+    We wish to minimize a loss function:
+    \begin{align*}
+        S(\Vector{\beta})
+         & =\sum_{i=1}^{n} (y_i-\hat{y}_i)^2                                                             \\
+         & =\sum_{i=1}^{n} \bigl(y_i-(\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip})\bigr)^2               \\
+         & =(\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta}).
+    \end{align*}
+    The least squares estimators (LSE) are the solutions to the equations:
+    \[ \pdv{S}{\Vector{\beta}}=\pdv*{(\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta})}{\Vector{\beta}}=0. \]
+\end{Regular}
+\begin{Regular}{Maximum Likelihood Estimation}
+    The probability density function for $ Y_i $ is:
+    \[ f(y_i)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp*{-\frac{1}{2\sigma^2}\bigl(y_i-(\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip})\bigr)^2 }.  \]
+    The log-likelihood function is therefore:
+    \begin{align*}
+        \ell(\Vector{\beta},\sigma^2)
+         & =\log[\bigg]{\prod_{i=1}^n f(y_i)}                                                                                                              \\
+         & =\sum_{i=1}^{n} \biggl(-\frac{1}{2} \log{2\pi\sigma^2}-\frac{1}{2\sigma^2}\bigl(y_i-(\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip})\bigr) \biggr) \\
+         & =-\frac{n}{2} \log{2\sigma^2}-\frac{1}{2\sigma^2} (\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta}).
+    \end{align*}
+    The maximum likelihood estimators (MLE) of $ \Vector{\beta} $ are obtained by solving:
+    \[ \pdv{\ell}{\Vector{\beta}}=\pdv*{\biggl[-\frac{1}{2\sigma^2}(\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta})\biggr]}{\Vector{\beta}}=0. \]
+\end{Regular}
+\begin{itemize}
+    \item \textcolor{Red}{Parameter Estimates}: For linear regression LSE and MLE of $ \Vector{\beta} $ are the same
+          \[ \hat{\Vector{\beta}}=(\Matrix{X}^\top\Matrix{X})^{-1}\Matrix{X}^\top\RandomVector{Y}. \]
+    \item \textcolor{Red}{Fitted values}: $ \hat{\RandomVector{Y}}=\Matrix{X}\hat{\Vector{\beta}} $.
+    \item \textcolor{Red}{Residuals}: $ \hat{r}_i=(y_i-\hat{y}_i) $.
+    \item \textcolor{Red}{Variance estimates}:
+          \begin{itemize}
+              \item An unbiased estimate of $ \sigma^2 $ is:
+                    \[ \hat{\sigma}^2=\frac{1}{n-(p+1)} \sum_{i=1}^{n} \hat{r}_i^2. \]
+              \item An estimate of the variance of $ \hat{\Vector{\beta}} $ is:
+                    \[ \estV{\hat{\Vector{\beta}}}=\hat{\sigma}^2(\Matrix{X}^\top\Matrix{X})^{-1}. \]
+          \end{itemize}
+\end{itemize}
+\subsubsection*{Low Birthweight Infant Data Example}
+\begin{itemize}
+    \item For $ n=100 $ infants, we have observed $ Y_i= $ head circumference and $ x_i= $ gestational age for baby $ i $, $ i=1,\ldots,100 $.
+    \item Consider a simple linear regression model:
+          \[ Y_i=\beta_0+\beta_1x_{i}+\varepsilon_i. \]
+    \item We can fit the model and obtain LSE/MSE using the \lstinline{lm()} function in R.
+          <<>>=
+          lowbwt <- read.table("lowbwt.txt", header=T)
+          fit <- lm(headcirc~gestage, data=lowbwt)
+          summary(fit)
+          @
+    \item What is the interpretation of regression parameters $ \beta_0 $ and $ \beta_1 $?
+          \begin{itemize}
+              \item $ \beta_0 $ (intercept): expected \lstinline{headcirc} for a baby of a gestational age zero ($ x=0 $).
+              \item $ \beta_1 $ (slope): expected change in \lstinline{headcirc} associated with a one unit increase in gestational age.
+          \end{itemize}
+\end{itemize}
+
+\subsection*{3. Model Checking}
+\textcolor{Red}{Standardized Residuals}:
+\[ d_i=\frac{r_i}{\sqrt{\hat{\sigma}^2(1-h_{ii})}},  \]
+where $ h_{ii} $ is the $ (i,i) $ element of $ \Matrix{H}=(\Matrix{X}^\top\Matrix{X})^{-1}\Matrix{X}^\top $.
+By asymptotic theory, if the model provides a good fit to the data then we
+should expect that:
+\[ d_i\iid \N{0,1}. \]
+We visually check this by examining residual plots such as:
+\begin{itemize}
+    \item Standardized residuals versus the fitted values.
+    \item Standardized residuals versus the explanatory variable(s).
+    \item Normal probability plot (QQ plot) of the standardized residuals.
+\end{itemize}
+% \begin{noindent}
+    <<echo=FALSE>>=
+    plot(fit$fitted.values,rstandard(fit), ylab = "Standardized Residuals", xlab = "Fitted Values")
+    qqnorm(rstandard(fit));abline(0,1,lty=2)
+    @
+% \end{noindent}
+
+\subsection*{4. Inference}
+\begin{itemize}
+    \item Under suitable assumptions, the fitted regression parameters are asymptotically
+          normally distributed:
+          \begin{align*}
+              \hat{\Vector{\beta}} & \sim \MVN{\Vector{\beta},\sigma^2(\Matrix{X}^\top \Matrix{X})^{-1}},                                              \\
+              \hat{\beta}_j        & \sim \N{\beta_j,\sigma^2v_{jj}},\qquad\text{where $v_{jj}=\bigl[(\Matrix{X}^\top\Matrix{X})^{-1}\bigr]_{(j,j)}$}.
+          \end{align*}
+    \item Since $ \sigma^2 $ is generally unknown, we replace it with the unbiased estimate $ \hat{\sigma}^2 $, and obtain $ \se{\hat{\beta}_j}=\sqrt{\hat{\sigma}^2v_{jj}} $.
+    \item The inference is then based on the $t$-distribution result:
+          \[ \frac{\hat{\beta}_j-\beta_j}{\se{\hat{\beta}_j}}\sim t_{n-p-1}.  \]
+\end{itemize}
+\subsubsection*{Low Birthweight Infant Data Example}
+\begin{itemize}
+    \item Is there a significant (linear) relationship between head circumference and
+          gestational age?
+
+          We wish to test $ \HN $: $ \beta_1=0 $ vs $ \HA $: $ \beta_1\ne 0 $.
+          \[ t=\frac{\hat{\beta}_1-(0)}{\se{\hat{\beta}_1}}\sim t_{98}, \]
+          if $ \HN $ is true, and we reject $ \HN $ if $ \abs{t}>t_{98,0.975}=1.985 $.
+          Here we have $ t=0.78/0.063=12.37\gg 1.985 $, so we reject $ \HN $.
+    \item What is the \qty{95}{\percent} confidence interval for the expected increase in head
+          circumference when the gestational age of a baby increases by 1 week?
+
+          A \qty{95}{\percent} CI for $ \beta_1 $:
+          \[ \hat{\beta}_1\pm t_{98,0.975}\se{\hat{\beta}_1}=0.78\pm 1.985(0.063)=(0.665,0.905). \]
+\end{itemize}
+
+\subsection*{Linear models with multiple predictors}
+\subsubsection*{Low Birthweight Infant Data Example}
+\begin{itemize}
+    \item \emph{Toxemia}, a pregnancy complication characterized by high blood pressure
+          and signs of damage to liver and kidneys, may also have an impact on the
+          development of babies.
+    \item Does \emph{toxemia}, after adjustment for gestational age, also affect the head
+          circumference?
+          <<>>=
+          fit <- lm(headcirc ~ gestage + factor(toxemia), data=lowbwt)
+          summary(fit)
+          @
+          What is the interpretation of $ \beta_2 $?
+
+          $ \hat{\beta}_3=-1.41233 $. After adjustment of gestational age, the babies whose mothers had toxemia have smaller (by \qty{1.41}{\cm}) than
+          those whose mothers did not. This difference is significant (test $ \HN $: $ \beta_2=0 $, $ p\text{-value}=0.0076<0.05$).
+    \item Is the rate of increase of head circumference with gestational age the same
+          for infants whose mothers with toxemia as those whose mother without it?
+          \[ Y_i=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i1}x_{i2}+\varepsilon_i. \]
+          <<>>=
+          fit <- lm(headcirc ~ gestage * factor(toxemia), data=lowbwt)
+          summary(fit)
+          @
+          What is the interpretation of $ \beta_3 $?
+
+          $ \beta_3 $ is the differences in slopes between the two groups (\lstinline{toxemia=1} vs \lstinline{toxemia=0}).
+          We want to test $ \HN $: $ \beta_3=0 $, $ t=0.282 $, $ p\text{-value}=0.778>0.05 $. No evidence to reject $ \HN $.
+\end{itemize}
+
+\subsection*{Limitations of Linear Regression}
+Linear regression models can be very useful but may not be appropriate to use
+when response $ Y $ is not continuous and can not be assumed to be normally
+distributed, e.g.,
+\begin{itemize}
+    \item Binary data ($ Y=0 $ or $ Y=1 $),
+    \item Count data ($ Y=0,1,2,3,\ldots $).
+\end{itemize}
+\textcolor{Red}{Generalized Linear Models (GLM)} extend the linear regression framework to
+address the above issue.
+\begin{itemize}
+    \item Suitable for continuous and discrete data.
+    \item Normal/Gaussian linear regression is a special case of GLM.
+    \item Inference based on maximum likelihood methods (review next class --- 431
+          Appendix, Stat 330 notes).
+\end{itemize}

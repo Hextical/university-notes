@@ -14,10 +14,10 @@
                               to have been observed}. If $ \mathbf{H}_0 $ is true, then we have a single population/distribution
                         from which our data has been drawn.
                   \item With $ n_1 $ and $ n_2 $ units in each condition, there are
-                        \[ \Binomial{n_1+n_2}{n_1}=\Binomial{n_1+n_2}{n_2} \]
+                        \[ \binom{n_1+n_2}{n_1}=\binom{n_1+n_2}{n_2} \]
                         arrangements of the $ n_1+n_2 $ observations into two groups of size $ n_1 $
                         and $ n_2 $ respectively.
-                        \[ n_1=n_2=50\implies\Binomial{n_1+n_2}{n_1}=\Binomial{100}{50}=1.0089\times 10^{29} \]
+                        \[ n_1=n_2=50\implies\binom{n_1+n_2}{n_1}=\binom{100}{50}=\num{1.008913445455630761718e29} \]
             \end{itemize}
       \item A true \textbf{permutation test} considers \emph{all possible rearrangements}
             of the original data.
@@ -72,18 +72,18 @@
                   \begin{itemize}
                         \item Condition 1: Give users nothing.
                         \item Condition 2: Give users 200 free Pokécoins.
-                        \item Condition 3: Give users a 50\% discount on Shop purchases.
+                        \item Condition 3: Give users a \qty{50}{\percent} discount on Shop purchases.
                   \end{itemize}
             \item In a small pilot experiment, we randomize $ n_1=n_2=n_3=100 $ users to each condition.
             \item For each user, we record the amount of real money (in USD) they spend in the 30 days
                   following the experiment.
             \item The data summaries are:
                   \begin{itemize}
-                        \item $ \bar{y}_1=\$10.74 $, $ Q_{y_1}(0.5)=\$9 $.
-                        \item $ \bar{y}_2=\$9.53 $, $ Q_{y_2}(0.5)=\$8 $.
-                        \item $ \bar{y}_3=\$13.41 $, $ Q_{y_3}(0.5)=\$10 $.
+                        \item $ \bar{y}_1=\$\,\num{10.74000000000000021316} $, $ Q_{y_1}(0.5)=\$\,\num{9.00000000000000000} $.
+                        \item $ \bar{y}_2=\$\,\num{9.529999999999999360512} $, $ Q_{y_2}(0.5)=\$\,\num{8.000000000000000000} $.
+                        \item $ \bar{y}_3=\$\,\num{13.41000000000000014211} $, $ Q_{y_3}(0.5)=\$\,\num{10.00000000000000000} $.
                   \end{itemize}
-                  Using R, we performed a randomization test with $ N=10\,000 $ with respect to the mean
+                  Using R, we performed a randomization test with $ N=\num{10000} $ with respect to the mean
                   we found that the control and free coin conditions did not significantly differ.
                   But there was a significant increase in the amount of money spent in the discount condition
                   relative to the other two.
@@ -277,41 +277,39 @@
 \end{table}
 \newpage
 \subsection{Example: Candy Crush Boosters}
-\begin{Example}{Candy Crush Boosters}{}
-      \begin{itemize}
-            \item Candy Crush is experimenting with three different versions of
-                  in-game ``boosters'': the lollipop hammer, the jelly fish, and the colour bomb.
-            \item We randomize each user to one of these three conditions ($ n_1 = 121 $,
-                  $ n_2 = 135 $, $ n_3 = 117$) and they
-                  receive (for free) 5
-                  boosters corresponding to their condition.
-                  Interest lies in evaluating the effect
-                  of these different boosters on the length of time a user plays the game.
-            \item Let $ \mu_j $ represent the average length of game play
-                  (in minutes) associated with booster condition
-                  $ j = 1, 2, 3 $. While interest lies in finding the condition
-                  associated with the longest average length
-                  of game play, here we first rule out the possibility
-                  that booster type does not influence the length
-                  of game play (i.e., $ \mu_1=\mu_2=\mu_3 $).
-            \item In order to do this we fit the linear regression model:
-                  \[ Y=\beta_0+\beta_1 x_1+\beta_2 x_2+\varepsilon \]
-                  where $ x_1 $ and $ x_2 $ are indicator variables indicating
-                  whether we observe a particular value of the response in the
-                  jelly fish or colour bomb conditions, respectively.
-                  The lollipop hammer is therefore the reference condition.
-            \item In R, we found that the test statistic for testing:
-                  \begin{tightcenter}
-                        $ \mathbf{H}_0 $: $ \mu_1=\mu_2=\mu_3 $ versus $ \mathbf{H}_\text{A} $: $ \mu_j\ne \mu_k $ for some $ j\ne k $
-                  \end{tightcenter}
-                  was $ t=851.8947 $ and the null distribution was $ T \sim F(2,370) $. The corresponding
-                  $ p $-value was:
-                  \[ p\text{-value}=\Prob{T\ge 851.8947}=3.28\times 10^{-139} \]
-            \item Therefore, we have very strong evidence against $ \mathbf{H}_0 $ and conclude that the average
-                  length of game play is not the same in the three booster conditions.
-            \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/W3/Comparing_multiple_means.R}{[R Code] \texttt{Comparing\_multiple\_means}}
-      \end{itemize}
-\end{Example}
+\begin{itemize}
+      \item Candy Crush is experimenting with three different versions of
+            in-game ``boosters'': the lollipop hammer, the jelly fish, and the colour bomb.
+      \item We randomize each user to one of these three conditions ($ n_1 = 121 $,
+            $ n_2 = 135 $, $ n_3 = 117$) and they
+            receive (for free) 5
+            boosters corresponding to their condition.
+            Interest lies in evaluating the effect
+            of these different boosters on the length of time a user plays the game.
+      \item Let $ \mu_j $ represent the average length of game play
+            (in minutes) associated with booster condition
+            $ j = 1, 2, 3 $. While interest lies in finding the condition
+            associated with the longest average length
+            of game play, here we first rule out the possibility
+            that booster type does not influence the length
+            of game play (i.e., $ \mu_1=\mu_2=\mu_3 $).
+      \item In order to do this we fit the linear regression model:
+            \[ Y=\beta_0+\beta_1 x_1+\beta_2 x_2+\varepsilon \]
+            where $ x_1 $ and $ x_2 $ are indicator variables indicating
+            whether we observe a particular value of the response in the
+            jelly fish or colour bomb conditions, respectively.
+            The lollipop hammer is therefore the reference condition.
+      \item In R, we found that the test statistic for testing:
+            \begin{tightcenter}
+                  $ \mathbf{H}_0 $: $ \mu_1=\mu_2=\mu_3 $ versus $ \mathbf{H}_\text{A} $: $ \mu_j\ne \mu_k $ for some $ j\ne k $
+            \end{tightcenter}
+            was $ t=\num{851.8947210813009860431} $ and the null distribution was $ T \sim F(2,370) $. The corresponding
+            $ p $-value was:
+            \[ p\text{-value}=\Prob{T\ge \num{851.8947210813009860431}}=\num{3.279872909443509548994e-139} \]
+      \item Therefore, we have very strong evidence against $ \mathbf{H}_0 $ and conclude that the average
+            length of game play is not the same in the three booster conditions.
+      \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/W3/Comparing_multiple_means.R}{[R Code] \texttt{Comparing\_multiple\_means}}
+\end{itemize}
 \section{Comparing Proportions in Multiple Conditions}
 \begin{itemize}
       \item As is always the case when comparing proportions is of interest, we assume that our response variable
@@ -339,11 +337,11 @@
       \item To start, let's assume that $ m=2 $, and let's use the \hyperref[ex:optimizely_ex1]{Optimizely experiment} as a reference.
             \begin{itemize}
                   \item If $ \pi_1=\pi_2=\pi $, then we would expect the conversion rate in each condition to be the same.
-                  \item An estimate of the pooled conversion rate in this case is $ \hat{\pi}=679/17514=0.0388 $.
+                  \item An estimate of the pooled conversion rate in this case is $ \hat{\pi}=679/17514=\num{0.03876898481215027697511} $.
                   \item Let $ X= $ number of conversions in a condition with $ n $ units, therefore $ X \sim \Binomial{n,\pi} $
                         where $ \E{X}=n\pi $.
-                  \item Therefore, we would expect $ n_1\hat{\pi}=8872(0.0388)=343.96 $ conversions in condition 1,
-                        and $ n_2\hat{\pi}=8642(0.0388)=335.04 $ conversions in condition 2.
+                  \item Therefore, we would expect $ n_1\hat{\pi}=8872(\num{0.03876898481215027697511})=\num{343.9584332533972315105} $ conversions in condition 1,
+                        and $ n_2\hat{\pi}=8642(\num{0.03876898481215027697511})=\num{335.0415667466027116461} $ conversions in condition 2.
                   \item The chi-squared test formally evaluates if the difference between what
                         was observed and what is expected under the null hypothesis is large enough
                         to be considered \emph{significantly} different.
@@ -392,15 +390,18 @@
                                     \multicolumn{2}{c}{}        & \multicolumn{2}{c}{\emph{Condition}} &                                                                                       \\
                                     \multicolumn{2}{c}{}        & 1                                      & 2                          & \multicolumn{1}{c}{}                                     \\
                                     \cmidrule{2-5}
-                                    \multirow{2}{*}{\emph{Conversion}} & Yes                                    & $343.96$                   & $335.04$                   & $679$                       \\
-                                    & No                                     & $8528.04$                  & $8306.96$                  & $16835$                     \\
+                                    \multirow{2}{*}{\emph{Conversion}} & Yes                                    & \num{343.9584332533972315105}                   & \num{335.0415667466027116461}                   & 679                       \\
+                                    & No                                     & \num{8528.041566746602256899}                  & \num{8306.958433253397743101}                  & 16835                     \\
                                     \cmidrule{2-5}
-                                    \multicolumn{1}{c}{}        & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$8872$} & \multicolumn{1}{c}{$8642$} & \multicolumn{1}{c}{$17514$}
+                                    \multicolumn{1}{c}{}        & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{8872} & \multicolumn{1}{c}{8642} & \multicolumn{1}{c}{17514}
                               \end{NiceTabular}
                         \end{table}
                   \item And the resultant test statistic and $p$-value are:
-                        \[ t=\frac{(280-343.96)^2}{343.96} +\frac{(399-335.04)^2}{335.04}+\frac{(8592-8528.04)^2}{8528.04}+\frac{(8243-8306.96)^2}{8306.96}=25.075    \]
-                        \[ p\text{-value}=\Prob{T\ge 25.075}=5.52\times 10^{-7}\quad\text{where }T \sim \chi^2(1) \]
+                        \[ t=\frac{(280-\num{343.9584332533972315105})^2}{\num{343.9584332533972315105}}
+                        +\frac{(399-\num{335.0415667466027116461})^2}{\num{335.0415667466027116461}}
+                        +\frac{(8592-\num{8528.041566746602256899})^2}{\num{8528.041566746602256899}}
+                        +\frac{(8243-\num{8306.958433253397743101})^2}{\num{8306.958433253397743101}}=\num{25.07454026921025658226}    \]
+                        \[ p\text{-value}=\Prob{T\ge \num{25.07454026921025658226}}=\num{5.515630872662529204161e-07}\quad\text{where }T \sim \chi^2(1) \]
             \end{itemize}
       \item Let's now extend this for $ m>2 $.
             \begin{itemize}
@@ -445,54 +446,52 @@
             \end{itemize}
 \end{itemize}
 \subsection{Example: Nike SB Video Ads}
-\begin{Example}{Nike SB Ads}{}
-      \begin{itemize}
-            \item Suppose that Nike is running an ad campaign for Nike SB, their
-                  skateboarding division, and the
-                  campaign involves $ m = 5 $ different
-                  video ads that are being shown in Facebook newsfeeds.
-            \item A video ad is `viewed' if it is watched for longer than 3 seconds,
-                  and interest lies in determining
-                  which ad is most popular and hence most profitable
-                  by comparing the viewing rates of the five
-                  different videos.
-            \item We show each of these 5 videos to $ n_1=5014 $, $ n_2=4971 $, $ n_3=5030 $,
-                  $ n_4=5007 $, and $ n_5=4980 $ users, and summarize the results in~\Cref{nike_contingency}.
-                  \begin{center}
-                        \captionsetup{type=table}
-                        \captionof{table}{A $ 2\times 5 $ Observed Contingency Table for the Nike Example}\label{nike_contingency}
-                        \begin{NiceTabular}{cc|ccccc|c}
-                              \multicolumn{2}{c}{}  & \multicolumn{5}{c}{\emph{Condition}} &                                                                                                                                                                              \\
-                              \multicolumn{2}{c}{}  & 1                                      & 2                          & 3                          & 4                          & 5                          & \multicolumn{1}{c}{}                                     \\
-                              \cmidrule{2-8}
-                              \multirow{2}{*}{\emph{View}} & Yes                                    & $160$                      & $95$                       & $141$                      & $293$                      & $197$                      & $886$                       \\
-                              & No                                     & $4854$                     & $4876$                     & $4889$                     & $4714$                     & $4783$                     & $24116$                     \\
-                              \cmidrule{2-8}
-                              \multicolumn{1}{c}{}  & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$5014$} & \multicolumn{1}{c}{$4971$} & \multicolumn{1}{c}{$5030$} & \multicolumn{1}{c}{$5007$} & \multicolumn{1}{c}{$4980$} & \multicolumn{1}{c}{$25002$}
-                        \end{NiceTabular}
-                  \end{center}
-            \item The overall watch rate (and its complement) are:
-                  \[ \hat{\pi}=\frac{O_1}{N} =\frac{886}{25002}=0.0354\quad\text{and}\quad 1-\hat{\pi}=\frac{24116}{25002} =0.9649 \]
-            \item We multiply $ n_j $ by $ \hat{\pi} $ and $ (1-\hat{\pi}) $ for $ j=1,2,3,4,5 $
-                  to get the expected cell frequencies in~\Cref{nike_expected}.
-                  \begin{center}
-                        \captionsetup{type=table}
-                        \captionof{table}{A $ 2\times 5 $ Expected Contingency Table for the Nike Example}\label{nike_expected}
-                        \begin{NiceTabular}{cc|ccccc|c}
-                              \multicolumn{2}{c}{}  & \multicolumn{5}{c}{\emph{Condition}} &                                                                                                                                                                              \\
-                              \multicolumn{2}{c}{}  & 1                                      & 2                          & 3                          & 4                          & 5                          & \multicolumn{1}{c}{}                                     \\
-                              \cmidrule{2-8}
-                              \multirow{2}{*}{\emph{View}} & Yes                                    & $177.68$                   & $176.16$                   & $178.25$                   & $177.43$                   & $176.48$                   & $886$                       \\
-                              & No                                     & $4836.32$                  & $4794.84$                  & $4851.75$                  & $4829.57$                  & $4803.52$                  & $24116$                     \\
-                              \cmidrule{2-8}
-                              \multicolumn{1}{c}{}  & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$5014$} & \multicolumn{1}{c}{$4971$} & \multicolumn{1}{c}{$5030$} & \multicolumn{1}{c}{$5007$} & \multicolumn{1}{c}{$4980$} & \multicolumn{1}{c}{$25002$}
-                        \end{NiceTabular}
-                  \end{center}
-            \item The resultant test statistic and $ p $-value (where $ T \sim \chi^2(4) $) are:
-                  \[ t=\sum_{\ell=0}^{1} \sum_{j=1}^{m} \frac{(O_{\ell,j}-E_{\ell,j})^2}{E_{\ell,j}} =129.1686 \]
-                  \[ p\text{-value}=\Prob{T\ge 129.1686}=5.86\times 10^{-27} \]
-            \item Therefore, we reject $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_5 $ and conclude that
-                  the ``watch-rate'' is not the same for each of the video ads.
-            \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/W3/Comparing_multiple_proportions.R}{[R Code] \texttt{Comparing\_multiple\_proportions}}
-      \end{itemize}
-\end{Example}
+\begin{itemize}
+      \item Suppose that Nike is running an ad campaign for Nike SB, their
+            skateboarding division, and the
+            campaign involves $ m = 5 $ different
+            video ads that are being shown in Facebook newsfeeds.
+      \item A video ad is `viewed' if it is watched for longer than 3 seconds,
+            and interest lies in determining
+            which ad is most popular and hence most profitable
+            by comparing the viewing rates of the five
+            different videos.
+      \item We show each of these 5 videos to $ n_1=5014 $, $ n_2=4971 $, $ n_3=5030 $,
+            $ n_4=5007 $, and $ n_5=4980 $ users, and summarize the results in~\Cref{nike_contingency}.
+            \begin{center}
+                  \captionsetup{type=table}
+                  \captionof{table}{A $ 2\times 5 $ Observed Contingency Table for the Nike Example}\label{nike_contingency}
+                  \begin{NiceTabular}{cc|ccccc|c}
+                        \multicolumn{2}{c}{}  & \multicolumn{5}{c}{\emph{Condition}} &                                                                                                                                                                              \\
+                        \multicolumn{2}{c}{}  & 1                                      & 2                          & 3                          & 4                          & 5                          & \multicolumn{1}{c}{}                                     \\
+                        \cmidrule{2-8}
+                        \multirow{2}{*}{\emph{View}} & Yes                                    & $160$                      & $95$                       & $141$                      & $293$                      & $197$                      & $886$                       \\
+                        & No                                     & $4854$                     & $4876$                     & $4889$                     & $4714$                     & $4783$                     & $24116$                     \\
+                        \cmidrule{2-8}
+                        \multicolumn{1}{c}{}  & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$5014$} & \multicolumn{1}{c}{$4971$} & \multicolumn{1}{c}{$5030$} & \multicolumn{1}{c}{$5007$} & \multicolumn{1}{c}{$4980$} & \multicolumn{1}{c}{$25002$}
+                  \end{NiceTabular}
+            \end{center}
+      \item The overall watch rate (and its complement) are:
+            \[ \hat{\pi}=\frac{O_1}{N} =\frac{886}{25002}=0.0354\quad\text{and}\quad 1-\hat{\pi}=\frac{24116}{25002} =0.9649 \]
+      \item We multiply $ n_j $ by $ \hat{\pi} $ and $ (1-\hat{\pi}) $ for $ j=1,2,3,4,5 $
+            to get the expected cell frequencies in~\Cref{nike_expected}.
+            \begin{center}
+                  \captionsetup{type=table}
+                  \captionof{table}{A $ 2\times 5 $ Expected Contingency Table for the Nike Example}\label{nike_expected}
+                  \begin{NiceTabular}{cc|ccccc|c}
+                        \multicolumn{2}{c}{}  & \multicolumn{5}{c}{\emph{Condition}} &                                                                                                                                                                              \\
+                        \multicolumn{2}{c}{}  & 1                                      & 2                          & 3                          & 4                          & 5                          & \multicolumn{1}{c}{}                                     \\
+                        \cmidrule{2-8}
+                        \multirow{2}{*}{\emph{View}} & Yes                                    & $177.68$                   & $176.16$                   & $178.25$                   & $177.43$                   & $176.48$                   & $886$                       \\
+                        & No                                     & $4836.32$                  & $4794.84$                  & $4851.75$                  & $4829.57$                  & $4803.52$                  & $24116$                     \\
+                        \cmidrule{2-8}
+                        \multicolumn{1}{c}{}  & \multicolumn{1}{c}{}                   & \multicolumn{1}{c}{$5014$} & \multicolumn{1}{c}{$4971$} & \multicolumn{1}{c}{$5030$} & \multicolumn{1}{c}{$5007$} & \multicolumn{1}{c}{$4980$} & \multicolumn{1}{c}{$25002$}
+                  \end{NiceTabular}
+            \end{center}
+      \item The resultant test statistic and $ p $-value (where $ T \sim \chi^2(4) $) are:
+            \[ t=\sum_{\ell=0}^{1} \sum_{j=1}^{m} \frac{(O_{\ell,j}-E_{\ell,j})^2}{E_{\ell,j}} =129.1686 \]
+            \[ p\text{-value}=\Prob{T\ge 129.1686}=5.86\times 10^{-27} \]
+      \item Therefore, we reject $ \mathbf{H}_0 $: $ \pi_1=\pi_2=\cdots=\pi_5 $ and conclude that
+            the ``watch-rate'' is not the same for each of the video ads.
+      \item \href{https://github.com/Hextical/university-notes/blob/master/year-3/semester-3/STAT 430/code/W3/Comparing_multiple_proportions.R}{[R Code] \texttt{Comparing\_multiple\_proportions}}
+\end{itemize}
