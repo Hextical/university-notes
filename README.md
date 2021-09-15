@@ -10,9 +10,9 @@ All my university notes done in LaTeX.
 
 |                                               Course                                               | Completion |       Online       |
 | :------------------------------------------------------------------------------------------------: | :--------: | :----------------: |
-|  [STAT 333](https://hextical.github.io/university-notes/year-3/semester-3/STAT%20333/stat333.pdf)  |   Week 1   | :heavy_check_mark: |
+|  [STAT 333](https://hextical.github.io/university-notes/year-4/semester-1/STAT%20333/stat333.pdf)  |   Week 1   | :heavy_check_mark: |
 |                                              STAT 337                                              |    TBA     | :heavy_check_mark: |
-| [STAT 431](https://hextical.github.io/university-notes/year-3/semester-3/STAT%20431/stat431.pdf)\* |   Week 2   | :heavy_check_mark: |
+| [STAT 431](https://hextical.github.io/university-notes/year-4/semester-1/STAT%20431/stat431.pdf)\* |   Week 2   | :heavy_check_mark: |
 
 \* STAT 431 and STAT 831 have exactly the same lectures.
 
@@ -22,7 +22,7 @@ All my university notes done in LaTeX.
 
 |                                               Course                                               | Completion |       Online       |
 | :------------------------------------------------------------------------------------------------: | :--------: | :----------------: |
-| [STAT 430](https://hextical.github.io/university-notes/year-3/semester-3/STAT%20430/stat430.pdf)\* |   100%\*   | :heavy_check_mark: |
+| [STAT 430](https://hextical.github.io/university-notes/year-3/semester-3/STAT%20430/stat430.pdf)\* |    100%    | :heavy_check_mark: |
 
 \* STAT 430 and STAT 830 have exactly the same lectures.
 
