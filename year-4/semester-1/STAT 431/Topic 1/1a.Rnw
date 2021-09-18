@@ -10,18 +10,25 @@ are recorded for 100 low birth weight
 infants.
 
 Question: what is the relationship between \textcolor{Blue}{\emph{gestational age}} \& \textcolor{Blue}{head circumference}?
+% \begin{noindent}
 <<echo=FALSE>>=
 lowbwt <- read.table("lowbwt.txt", header=T)
-plot(lowbwt$gestage,lowbwt$headcirc,xlab="gestage",ylab="headcirc",main="A Scatterplot of the Data")
+gestage <- lowbwt$gestage
+headcirc <- lowbwt$headcirc
+plot(gestage,headcirc,xlab="gestage",ylab="headcirc",main="A Scatterplot of the Data")
+lines(lowess(gestage,headcirc, f=.Machine$double.xmin,iter=0))
 @
+% \end{noindent}
 We wish to model the relationship between \emph{gestational age} and \emph{head
     circumference} using a straight line!
+% \begin{noidnent}
 <<echo=FALSE>>=
 lowbwt <- read.table("lowbwt.txt", header=T)
 fit <- lm(headcirc~gestage, data=lowbwt)
 plot(lowbwt$gestage,lowbwt$headcirc,xlab="gestational age (x)",ylab="head circumferences (y)")
 abline(fit)
 @
+% \end{noidnent}
 
 \subsection*{The Model Fitting Process}
 \begin{enumerate}[1.]
@@ -189,6 +196,19 @@ We visually check this by examining residual plots such as:
     \item \emph{Toxemia}, a pregnancy complication characterized by high blood pressure
           and signs of damage to liver and kidneys, may also have an impact on the
           development of babies.
+          %\begin{noindent}
+            <<echo=FALSE>>=
+            lowbwt <- read.table("lowbwt.txt", header=T)
+            gestage <- lowbwt$gestage
+            headcirc <- lowbwt$headcirc
+            toxemia <- lowbwt$toxemia
+            plot(gestage[toxemia==0],headcirc[toxemia==0],xlab="gestational age",ylab="head circumference")
+            points(gestage[toxemia==1],headcirc[toxemia==1],pch=8,col="red")
+            lines(lowess(gestage[toxemia==0],headcirc[toxemia==0], f=.Machine$double.xmin,iter=0))
+            lines(lowess(gestage[toxemia==1],headcirc[toxemia==1], f=.Machine$double.xmin,iter=0),col="red")
+            legend("topleft",legend=c("toxemia=0","toxemia=1"),pch=c(1,8),col=c("black","red"))
+            @
+          %\end{noindent}
     \item Does \emph{toxemia}, after adjustment for gestational age, also affect the head
           circumference?
           <<>>=
