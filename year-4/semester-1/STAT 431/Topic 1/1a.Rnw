@@ -66,7 +66,7 @@ abline(fit)
                   \end{bmatrix},\quad
                   \Matrix{X}=\begin{bmatrix}
                       1      & x_{11} & \cdots & x_{1p} \\
-                      2      & x_{21} & \cdots & x_{2p} \\
+                      1      & x_{21} & \cdots & x_{2p} \\
                       \vdots & \vdots & \ddots & \vdots \\
                       1      & x_{n1} & \cdots & x_{np}
                   \end{bmatrix},\quad
@@ -87,7 +87,7 @@ abline(fit)
     \end{itemize}
 \end{Regular}
 \subsection*{\circled{2} Estimation}
-\begin{Regular}{Least Squares}
+\begin{Regular}{Least Squares Method}
     We wish to minimize a loss function:
     \begin{align*}
         S(\Vector{\beta})
@@ -98,14 +98,14 @@ abline(fit)
     The least squares estimators (LSE) are the solutions to the equations:
     \[ \pdv{S}{\Vector{\beta}}=\pdv*{(\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta})}{\Vector{\beta}}=0. \]
 \end{Regular}
-\begin{Regular}{Maximum Likelihood Estimation}
+\begin{Regular}{Maximum Likelihood Method}
     The probability density function for $ Y_i $ is:
     \[ f(y_i)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp*{-\frac{1}{2\sigma^2}\bigl(y_i-(\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip})\bigr)^2 }.  \]
     The log-likelihood function is therefore:
     \begin{align*}
         \ell(\Vector{\beta},\sigma^2)
-         & =\log[\bigg]{\prod_{i=1}^n f(y_i)}                                                                                                              \\
-         & =\sum_{i=1}^{n} \biggl(-\frac{1}{2} \log{2\pi\sigma^2}-\frac{1}{2\sigma^2}\bigl(y_i-(\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip})\bigr) \biggr) \\
+         & =\log[\bigg]{\prod_{i=1}^n f(y_i)}                                                                                                                \\
+         & =\sum_{i=1}^{n} \biggl(-\frac{1}{2} \log{2\pi\sigma^2}-\frac{1}{2\sigma^2}\bigl(y_i-(\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip})\bigr)^2 \biggr) \\
          & =-\frac{n}{2} \log{2\sigma^2}-\frac{1}{2\sigma^2} (\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta}).
     \end{align*}
     The maximum likelihood estimators (MLE) of $ \Vector{\beta} $ are obtained by solving:

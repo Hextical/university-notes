@@ -51,7 +51,7 @@
 \usepackage{alltt}
 \usepackage[svgnames]{xcolor}
 \usepackage[british]{babel}
-\usepackage[activate={true,nocompatibility},final,tracking=true,factor=1100,stretch=10,shrink=10,babel]{microtype}
+\usepackage[protrusion,expansion,tracking,kerning,spacing,babel,final]{microtype}
 \usepackage[margin=1in]{geometry}
 \usepackage[pdfversion=1.7]{hyperref}
 \usepackage[shortlabels]{enumitem}
@@ -310,7 +310,7 @@ We wish to model the relationship between \emph{gestational age} and \emph{head
                   \end{bmatrix},\quad
                   \Matrix{X}=\begin{bmatrix}
                       1      & x_{11} & \cdots & x_{1p} \\
-                      2      & x_{21} & \cdots & x_{2p} \\
+                      1      & x_{21} & \cdots & x_{2p} \\
                       \vdots & \vdots & \ddots & \vdots \\
                       1      & x_{n1} & \cdots & x_{np}
                   \end{bmatrix},\quad
@@ -331,7 +331,7 @@ We wish to model the relationship between \emph{gestational age} and \emph{head
     \end{itemize}
 \end{Regular}
 \subsection*{\circled{2} Estimation}
-\begin{Regular}{Least Squares}
+\begin{Regular}{Least Squares Method}
     We wish to minimize a loss function:
     \begin{align*}
         S(\Vector{\beta})
@@ -342,14 +342,14 @@ We wish to model the relationship between \emph{gestational age} and \emph{head
     The least squares estimators (LSE) are the solutions to the equations:
     \[ \pdv{S}{\Vector{\beta}}=\pdv*{(\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta})}{\Vector{\beta}}=0. \]
 \end{Regular}
-\begin{Regular}{Maximum Likelihood Estimation}
+\begin{Regular}{Maximum Likelihood Method}
     The probability density function for $ Y_i $ is:
     \[ f(y_i)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp*{-\frac{1}{2\sigma^2}\bigl(y_i-(\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip})\bigr)^2 }.  \]
     The log-likelihood function is therefore:
     \begin{align*}
         \ell(\Vector{\beta},\sigma^2)
-         & =\log[\bigg]{\prod_{i=1}^n f(y_i)}                                                                                                              \\
-         & =\sum_{i=1}^{n} \biggl(-\frac{1}{2} \log{2\pi\sigma^2}-\frac{1}{2\sigma^2}\bigl(y_i-(\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip})\bigr) \biggr) \\
+         & =\log[\bigg]{\prod_{i=1}^n f(y_i)}                                                                                                                \\
+         & =\sum_{i=1}^{n} \biggl(-\frac{1}{2} \log{2\pi\sigma^2}-\frac{1}{2\sigma^2}\bigl(y_i-(\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip})\bigr)^2 \biggr) \\
          & =-\frac{n}{2} \log{2\sigma^2}-\frac{1}{2\sigma^2} (\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta}).
     \end{align*}
     The maximum likelihood estimators (MLE) of $ \Vector{\beta} $ are obtained by solving:
@@ -1058,6 +1058,7 @@ Moving forward, we consider a log-linear model: $ \log{\mu_i}=\Vector{x}_i^\top 
 \end{enumerate}
 Next Topic: 2b Estimation for Generalized Linear Models.
 
+\makeheading{Week 3}{\daterange{2021-09-20}{2021-09-24}}
 \section*{Topic 2b: Maximum Likelihood Estimation for Generalized Linear Models}
 \addcontentsline{toc}{section}{Topic 2a: Maximum Likelihood Estimation for Generalized Linear Models}
 \subsection*{Generalized Linear Models}
@@ -1069,16 +1070,16 @@ Suppose for each subject $ i=1,\ldots,n $ in a random sample:
 We consider a \textcolor{Red}{Generalized Linear Model} (GLM) for the data, by definition the GLM
 is composed following three components:
 \begin{Regular}{}
-    \begin{enumerate}[(1)]
+    \begin{enumerate}[label=\color{Blue}\protect\circled{\arabic*}]
         \item \textcolor{Red}{Random Component}:
               \[ Y_i \sim \text{exponential family,}\qquad Y_1,\ldots,Y_n\text{ are independent.} \]
         \item \textcolor{Red}{Systematic Component} (or linear predictor):
-              \[ \eta_i=\Vector{x}_i^\top \Vector{\beta}. \]
+              \[ \eta_i=\Vector{x}_i^\top \Vector{\beta}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}. \]
               \begin{itemize}
                   \item $ \Vector{x}_i=(1,x_{i1},\ldots,x_{ip})^\top $ is a covariate vector.
                   \item $ \Vector{\beta}=(\beta_0,\beta_1,\ldots,\beta_p)^\top $ is a vector of regression coefficients.
               \end{itemize}
-        \item \textcolor{Red}{Link function}: a function $ g(\:\cdot\:) $ links $ \E{Y_i}=\mu_i $ to a linear prediction $ \eta_i $
+        \item \textcolor{Red}{Link function}: a function $ g(\:\cdot\:) $ links $ \E{Y_i}=\mu_i $ to a linear prediction $ \eta_i $:
               \[ g(\mu_i)=\eta_i=\Vector{x}_i^\top\Vector{\beta}. \]
     \end{enumerate}
 \end{Regular}
@@ -1096,8 +1097,8 @@ A Poisson regression model with the canonical link takes the form:
 Assume $ Y_i \ind \N{\mu_i,\sigma^2} $ and $ \sigma^2 $ is known, $ i=1,\ldots,n $:
 \begin{align*}
     f(y_i)
-     & =(2\pi\sigma^2)^{-1/2}\exp*{-\frac{(y_i-\mu_i)^2}{2\sigma^2}}                                                  \\
-     & =\exp*{\frac{y_i\mu_i-\mu_i^2/2}{\sigma^2}-\frac{1}{2}\biggl(\frac{y_i^2}{\sigma^2}+\log{2\pi\sigma^2}\biggr)}
+     & =(2\pi\sigma^2)^{-1/2}\exp*{-\frac{(y_i-\mu_i)^2}{2\sigma^2}}                                                   \\
+     & =\exp*{\frac{y_i\mu_i-\mu_i^2/2}{\sigma^2}-\frac{1}{2}\biggl(\frac{y_i^2}{\sigma^2}+\log{2\pi\sigma^2}\biggr)}.
 \end{align*}
 A Normal distribution ($ \sigma^2 $ known) is a member of exponential family with:
 \begin{itemize}
@@ -1106,6 +1107,7 @@ A Normal distribution ($ \sigma^2 $ known) is a member of exponential family wit
 \end{itemize}
 A Normal regression model with the canonical link takes the form:
 \[ \mu_i=\Vector{x}_i^\top \Vector{\beta}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}\qquad \text{\textcolor{Red}{(linear model)}}. \]
+Linear regression model (STAT 331) is a Normal GLM using the canonical link!
 \subsection*{Likelihood for Generalized Linear Models}
 We wish to use likelihood methods for the estimation of the regression parameter $ \Vector{\beta} $ from the GLM: $ g(\mu_i)=\Vector{x}_i^\top \Vector{\beta} $.
 Consider the log-likelihood for a \emph{single} observation from the exponential family:
@@ -1125,21 +1127,21 @@ Consider taking derivative with respect to $ \beta_j $ using the chain rule:
 \[ \pdv{\ell}{\beta_j}=\pdv{\ell}{\theta}\pdv{\theta}{\mu}\pdv{\mu}{\eta}\pdv{\eta}{\beta_j}, \]
 where
 \begin{align*}
-    \pdv{\ell}{\theta}  & =\frac{y-b^{\prime}(\theta)}{a(\phi)},                                      \\
-    \pdv{\theta}{\mu}   & =\biggl(\pdv{\mu}{\theta}\biggr)^{\!-1}=\frac{1}{b^{\prime\prime}(\theta)}, \\
-    \pdv{\mu}{\eta}     & =\pdv{\mu}{\eta},                                                           \\
-    \pdv{\eta}{\beta_j} & =x_j.
+    \pdv{\ell}{\theta}  & =\frac{y-b^{\prime}(\theta)}{a(\phi)},                                                                                                          \\
+    \pdv{\theta}{\mu}   & =\pdv{\mu}{\theta}^{\!-1}=\frac{1}{b^{\prime\prime}(\theta)} &  & \text{since $ \mu=b^\prime(\theta) $},                                        \\
+    \pdv{\mu}{\eta}     & =\pdv{\mu}{\eta},                                                                                                                               \\
+    \pdv{\eta}{\beta_j} & =x_j                                                         &  & \text{since $ \eta=\beta_0+\beta_1x_1+\cdots+\beta_jx_j+\cdots+\beta_px_p $}.
 \end{align*}
 Hence, we have:
 \begin{align*}
     \pdv{\ell}{\beta_j}
-     & =\frac{y-b^{\prime}(\theta)}{a(\phi)}\frac{1}{b^{\prime\prime}(\theta)}\pdv{\mu}{\eta}x_j \\
-     & =\frac{y-\mu}{\Var{Y}}\pdv{\mu}{\eta}x_j                                                  \\
-     & =\frac{y-\mu}{\Var{Y}}\biggl(\pdv{\mu}{\eta}\biggr)^{\!2}\pdv{\eta}{\mu}x_j               \\
-     & =(y-\mu)\Biggl(\Var{Y}\biggl(\pdv{\mu}{\eta}\biggr)^{\!2}\Biggr)^{-1}\pdv{\eta}{\mu}x_j   \\
+     & =\frac{y-b^{\prime}(\theta)}{a(\phi)}\frac{1}{b^{\prime\prime}(\theta)}\pdv{\mu}{\eta}x_j                                                                                           \\
+     & =\frac{y-\mu}{\Var{Y}}\pdv{\mu}{\eta}x_j                                                  &  & \text{since $ \mu=b^{\prime}(\theta) $, $ \Var{Y}=a(\phi)b^{\prime\prime}(\theta) $} \\
+     & =\frac{y-\mu}{\Var{Y}}\pdv{\mu}{\eta}^{\!2}\pdv{\eta}{\mu}x_j                             &  & \text{since $ \pdv{\mu}{\eta}\pdv{\eta}{\mu}=1 $}                                    \\
+     & =(y-\mu)\Biggl(\Var{Y}\pdv{\mu}{\eta}^{\!2}\Biggr)^{-1}\pdv{\eta}{\mu}x_j                                                                                                           \\
      & =(y-\mu)W\pdv{\eta}{\mu}x_j,
 \end{align*}
-where $ W^{-1}=\Var{Y}(\pdv{\eta}{\mu})^2 $. Note that generally $ \pdv{\eta}{\mu} $ is easier to calculate
+where $ W^{-1}=\Var{Y}\pdv{\eta}{\mu}^2 $. Note that generally $ \pdv{\eta}{\mu} $ is easier to calculate
 than $ \pdv{\mu}{\eta} $ since we define the link as $ \eta=g(\mu) $.
 
 For a random sample $ Y_1,\ldots,Y_n $ from exponential family and each $ Y_i $ has a probability density function
@@ -1156,8 +1158,12 @@ where $  W^{-1}=\Var{Y_i}(\pdv{\eta_i}{\mu_i})^2 $, $ g(\mu_i)=\eta_i=\Vector{x}
 where
 \begin{itemize}
     \item $ \Vector{y}=(y_1,\ldots,y_n)^\top $ and $ \Vector{\mu}=(\mu_1,\ldots,\mu_n)^\top $ are $ n\times 1 $ vectors,
-    \item $ \Matrix{X}=(x_1,\ldots,x_n) $ is a $ (p+1)\times n $ matrix,
-    \item $ \MatrixCal{W}=\diag{W_1,\ldots,W_n} $, and
+    \item $ \Matrix{X}=(\Vector{x}_1,\ldots,\Vector{x}_n) $ is a $ (p+1)\times n $ matrix,
+    \item $ \MatrixCal{W}=\diag{W_1,\ldots,W_n}=\begin{bmatrix}
+                  W_1    & 0      & \cdots & 0      \\
+                  \vdots & \ddots & \ddots & \vdots \\
+                  0      & \cdots & 0      & W_n
+              \end{bmatrix} $, and
     \item $ \MatrixCal{A}=\diag*{\pdv{\eta_1}{\mu_1},\ldots,\pdv{\eta_n}{\mu_n}} $.
 \end{itemize}
 \subsection*{Example: Poisson Regression Model (Problem 1.4)}
@@ -1171,11 +1177,11 @@ calculate the derivative using standard methods, i.e.,
     \bigl[\Vector{S}(\Vector{\beta})\bigr]_j
      & =\sum_i \pdv{\ell_i}{\beta_j}                                                                                  \\
      & =\sum_i \pdv*{\bigl(y_i \textcolor{Red}{\log{\lambda_i}}-\textcolor{Red}{\lambda_i}-\log{y_i!}\bigr)}{\beta_j} \\
-     & =\sum_i\bigl(y_i x_{ij}-e^{-\Vector{x}_i^\top \Vector{\beta}}x_{ij}\bigr)
+     & =\sum_i\bigl(y_i x_{ij}-e^{\Vector{x}_i^\top \Vector{\beta}}x_{ij}\bigr).
 \end{align*}
 Or we can use the general results derived for the GLMs on the previous slides.
 \subsection*{Solving $ \Vector{S}(\Vector{\beta})=\Vector{0} $ for MLE}
-\begin{enumerate}[(1)]
+\begin{enumerate}[label=\color{Blue}\protect\circled{\arabic*}]
     \item Newton Raphson update equation is:
           \[ \hat{\Vector{\beta}}^{(r+1)}=\hat{\Vector{\beta}}^{(r)}+\Matrix{I}^{-1}(\hat{\Vector{\beta}}^{(r)})\Vector{S}(\hat{\Vector{\beta}}^{(r)}), \]
           where $ \Matrix{I} $ is the observed information matrix.
@@ -1207,7 +1213,7 @@ To get an element of the Expected/Fisher Information matrix:
 \end{align*}
 Therefore, we can write the $(j, k)$ element of the Fisher information as:
 \[ \MatrixCal{I}_{jk}=\sum_{i=1}^{n} x_{ij}W_i x_{ik}=[\Matrix{X}\Matrix{\MatrixCal{W}}\Matrix{X}^\top]_{jk} \]
-where again, $ \MatrixCal{W}=\diag{W_1,\ldots,W_n} $ and $ W_i^{-1}=\Var{Y_i}(\pdv{\eta_i}{\mu_i})^2 $.
+where again, $ \MatrixCal{W}=\diag{W_1,\ldots,W_n} $ and $ W_i^{-1}=\Var{Y_i}\pdv{\eta_i}{\mu_i}^2 $.
 \subsection*{When is Fisher Scoring Equivalent to Newton Raphson?}
 Recall information matrix:
 \[  \Matrix{I}_{jk}=\sum_i -(y_i-\mu_i)\pdv*{\biggl[\textcolor{Red}{W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}}\biggr]}{\beta_k}+x_{ij}W_i x_{ik}. \]
@@ -1246,8 +1252,8 @@ where $ \RandomVector{Z} $ is a transformation of the response vector $ \RandomV
     \item The \textcolor{Red}{link function} $ g(\:\cdot\:) $ may be the canonical link, but its choice should
           come from model interpretation and fit.
     \item Can use Fisher Scoring (also known as IRWLS) to estimate the regression parameters $ \Vector{\beta} $ from any GLM based on general forms for $ \Matrix{I}(\Vector{\beta}) $
-          and $ S(\Vector{\beta}) $.
-    \item Practice: Chapter 1 review problems.
+          and $ \Vector{S}(\Vector{\beta}) $.
+    \item \textcolor{Blue}{\textsc{Practice}}: Chapter 1 review problems.
 \end{itemize}
 
 \section*{Topic 3a: Binary Data and Odds Ratios}
@@ -1259,9 +1265,21 @@ Consider the simplest case with two \emph{binary} variables:
     \item Vaccination: yes or no (explanatory variable).
 \end{itemize}
 Use a $ 2\times 2 $ table to summarize the data:
-TODOtab1
+\begin{table}[!htbp]
+    \centering
+    \begin{NiceTabular}{c|cc|c}
+        & \multicolumn{2}{c}{\emph{COVID}}                                                 \\
+        Vaccination & infected                            & not infected                                        \\
+        \midrule
+        yes & $ y_1 $                            & $ m_1-y_1 $                 & $ m_1 $         \\
+        no   & $ y_2 $                            & $ m_2-y_2 $                 & $ m_2 $         \\
+        \midrule
+        Total& $ y_{\bullet} $                    & $ m_{\bullet}-y_{\bullet} $ & $ m_{\bullet} $
+    \end{NiceTabular}
+\end{table}
+
 Treat $ m_1 $ and $ m_2 $ as fixed, assume $ Y_1 $ and $ Y_2 $ are independent binomial r.v.'s
-\[ Y_k \sim \Bin{m_k,\pi_k},\qquad k=1,2, \]
+\[ \textcolor{Red}{Y_k \sim \Bin{m_k,\pi_k},\qquad k=1,2,} \]
 where $ \pi_k=\Prob{\text{infection}\given \text{group $ k $}} $.
 
 How do we measure the associate between COVID-19 infection and vaccination?
@@ -1269,12 +1287,12 @@ How do we measure the associate between COVID-19 infection and vaccination?
 \begin{Regular}{Definition (Odds Ratio)}
     The \textcolor{Red}{Odds Ratio} (OR) is the ratio of the odds of an event occurring in one
     group to the odds of the event in another group (e.g., not vaccinated):
-    \[ \text{Odds Ratio}=\frac{\pi_1/(1-\pi_1)}{\pi_2(1-\pi_2)}. \]
+    \[ \text{Odds Ratio}=\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)}. \]
 \end{Regular}
 Interpretation of OR:
 \[ \begin{array}{ccccc}
-        \pi_1=\pi_2 & \implies & \OR=1   & \implies & \text{equal risk}             \\
-        \pi_1>\pi_2 & \implies & \OR>1   & \implies & \text{higher risk in group 1} \\
+        \pi_1=\pi_2 & \implies & \OR=1   & \implies & \text{equal risk (no association)} \\
+        \pi_1>\pi_2 & \implies & \OR>1   & \implies & \text{higher risk in group 1}      \\
         \pi_1<\pi_2 & \implies & 0<\OR<1 & \implies & \text{higher risk in group 2}
     \end{array} \]
 \begin{Regular}{Relative Risk (RR)}
@@ -1312,6 +1330,10 @@ The score vector is:
         y_1-m_1\biggl(\frac{e^{\theta_1+\theta_2}}{1+e^{\theta_1+\theta_2}} \biggr) \\
         y_1+y_2-m_1\biggl(\frac{e^{\theta_1+\theta_2}}{1+e^{\theta_1+\theta_2}} \biggr)-m_2\biggl(\frac{e^{\theta_2}}{1+e^{\theta_2}} \biggr)
     \end{pmatrix}. \]
+Solving $ \Vector{S}(\theta_1,\theta_2)=\Vector{0} $ gives us the MLEs:
+\[ \hat{\theta}_1=\log*{\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}},\qquad \hat{\theta}_2=\log*{\frac{y_2}{m_2-y_2}}. \]
+So by the invariance property of MLEs, we have:
+\[ \hat{\pi}_1=\frac{y_1}{m_1},\qquad \hat{\pi}_2=\frac{y_2}{m_2},\qquad\hat{\psi}=\frac{\hat{\pi}_1/(1-\hat{\pi}_1)}{\hat{\pi}_2/(1-\hat{\pi}_2)}=\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}.  \]
 \subsection*{Inference for Odds Ratio}
 In order to do inference we will need the Information Matrix:
 \[ \Matrix{I}(\theta_1,\theta_2)=\begin{bmatrix}
@@ -1319,44 +1341,55 @@ In order to do inference we will need the Information Matrix:
         I_{21} & I_{22}
     \end{bmatrix}\qquad\text{where }I_{jk}=-\pdv*{\ell(\theta_1,\theta_2)}{\theta_j,\theta_k}. \]
 Here, we have:
-\begin{align}
-    I_{11} & =m_1\biggl(\frac{e^{\theta_1+\theta_2}}{(1+e^{\theta_1+\theta_2})^2} \biggr),                                                                                                                                          \\
-    I_{12} & =I_{21}                                                                                                                                 & m_1\biggl(\frac{e^{\theta_1+\theta_2}}{(1+e^{\theta_1+\theta_2})^2} \biggr), \\
-    I_{22} & =m_1\biggl(\frac{e^{\theta_1+\theta_2}}{(1+e^{\theta_1+\theta_2})^2} \biggr)+m_2\biggl(\frac{e^{\theta_2}}{(1+e^{\theta_2})^2} \biggr).
-\end{align}
+\begin{align*}
+    I_{11}          & =m_1\biggl(\frac{e^{\theta_1+\theta_2}}{(1+e^{\theta_1+\theta_2})^2} \biggr),                                                           \\
+    I_{12}  =I_{21} & =m_1\biggl(\frac{e^{\theta_1+\theta_2}}{(1+e^{\theta_1+\theta_2})^2} \biggr),                                                           \\
+    I_{22}          & =m_1\biggl(\frac{e^{\theta_1+\theta_2}}{(1+e^{\theta_1+\theta_2})^2} \biggr)+m_2\biggl(\frac{e^{\theta_2}}{(1+e^{\theta_2})^2} \biggr).
+\end{align*}
 We are interested in doing inference on $ \theta_1=\log{\psi} $ (while $ \theta_2 $ is nuisance).
 
 Recall the asymptotic distribution result of a \textcolor{Red}{Wald statistic}:
 \begin{Regular}{Wald Statistic}
-    For a vector $ \Vector{\theta}=(\theta_1,\theta_2) $ where $ \theta_1=\log{\psi} $ is a scalar parameter of interest:
+    For a vector $ \Vector{\theta}=(\theta_1,\theta_2)^\top $ where $ \theta_1=\log{\psi} $ is a scalar parameter of interest:
     \[ (\hat{\theta}_1-\theta_1)^2\bigl(I^{11}(\hat{\theta}_1,\hat{\theta}_2)\bigr)^{-1}\sim \chi^2_{(1)}, \]
-    where $ I^{11} $ is the $ (1,1) $ element of $ I^{-1} $ evaluated at MLE $ \hat{\theta}_1 $ and $ \hat{\theta}_2 $.
+    where $ I^{11} $ is the $ (1,1) $ element of $ \Matrix{I}^{-1} $ evaluated at MLE $ \hat{\theta}_1 $ and $ \hat{\theta}_2 $.
 \end{Regular}
 \begin{itemize}
     \item Calculation of $ I^{11} $ by using a general result:
-          \[ I=\begin{pmatrix}
+          \[ \Matrix{I}=\begin{pmatrix}
                   I_{11} & I_{12} \\
                   I_{21} & I_{22}
-              \end{pmatrix},\qquad I^{-1}=\begin{pmatrix}
+              \end{pmatrix},\qquad \Matrix{I}^{-1}=\begin{pmatrix}
                   \textcolor{Red}{I^{11}} & I^{12} \\
                   I^{21}                  & I^{22}
-              \end{pmatrix},\qquad \textcolor{Red}{I^{11}}=\bigl(I_{11}-I_{12}I_{22}^{-1}I_{21}\bigr)^{-1} \]
+              \end{pmatrix},\qquad \textcolor{Red}{I^{11}}=\bigl(I_{11}-I_{12}I_{22}^{-1}I_{21}\bigr)^{-1}. \]
     \item We can use the Wald result to find a confidence interval for $ \theta_1=\log{\psi} $.
 \end{itemize}
-\subsection*{Confident Interval for Odds Ratio}
+\subsection*{Confidence Interval for Odds Ratio}
 Here, we obtain:
 \[ I^{11}(\hat{\theta}_1,\hat{\theta}_2)=\frac{1}{y_1} +\frac{1}{m_1-y_1}+\frac{1}{y_2}+\frac{1}{m_2-y_2}. \]
 Thus, a Wald-based \qty{95}{\percent} confidence interval for $ \theta_1=\log{\psi} $ is:
 \[ \hat{\theta}_1\pm 1.96\sqrt{\frac{1}{y_1} +\frac{1}{m_1-y_1} +\frac{1}{y_2} +\frac{1}{m_2-y_2}}=(\hat{\theta}_{1\text{L}},\hat{\theta}_{1\text{U}}). \]
 A \qty{95}{\percent} confidence interval for the Odds Ratio $ \psi $ is:
-\[ \bigl(\exp{\hat{\theta}_{1\text{L}}},\exp{\hat{\theta}_{1\text{U}}}\bigr) \]
+\[ \bigl(\exp{\hat{\theta}_{1\text{L}}},\exp{\hat{\theta}_{1\text{U}}}\bigr). \]
 \subsection*{Example: Prenatal Care from Two Clinics}
 Consider the data below for the relationship between:
 \begin{itemize}
     \item \textcolor{Blue}{Response}: Fetal Mortality.
     \item \textcolor{Blue}{Explanatory variable}: Level of Care.
 \end{itemize}
-TODOtab2
+\begin{table}[!htbp]
+    \centering
+    \begin{NiceTabular}{l|cc|c}
+        & \multicolumn{2}{c}{\emph{Fetal Mortality}}                                                 \\
+        Level of Care & Died                            & Survived     & Total                                   \\
+        \midrule
+        Intensive & $ 20 $                            & $ 316 $                 & $ 336 $         \\
+        Regular   & $ 46 $                            & $ 373 $                 & $ 419 $         \\
+        \midrule
+        & $ 66 $                    & $ 689 $ & $ 755 $
+    \end{NiceTabular}
+\end{table}
 \begin{itemize}
     \item Using the above data, we obtain MLE of odds ratio $ \psi $:
           \[ \hat{\psi}=\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}=\frac{20/316}{46/373}=0.51. \]
@@ -1366,31 +1399,87 @@ TODOtab2
     \item A \qty{95}{\percent} CI for odds ratio $ \psi $:
           \[ \bigl(\exp{-1.219},\exp{-0.127}\bigr)=(0.30,0.89). \]
           Note that the CI does not cover the value $ \psi=1 $ (no association), so we reject the null
-          hypothesis of no association between fetal mortality and level of care.
+          hypothesis of no association between fetal mortality and level of care. In other words,
+          there is evidence of association.
 \end{itemize}
 \subsection*{Example: Prenatal Care from Two Clinics}
-There is an \textcolor{Blue}{additional explanatory variable}: Clinic (A vs B). The association between
-Mortality and Level of Care (by Clinic).
-TODOtab2
+There is an \textcolor{Blue}{additional explanatory variable}: Clinic (A vs B).
+\begin{Example}{Prenatal Care Data Stratified by Clinic}
+    \begin{center}
+        \begin{NiceTabular}{l|cc|c|cc|c}
+            & \multicolumn{3}{c}{\emph{Clinic A}} & \multicolumn{3}{c}{\emph{Clinic B}} \\
+            Level of Care & Died                            & Survived & Total    & Died & Survived & Total                                    \\
+            \midrule
+            Intensive & $ 16 $                            & $ 293 $                 & $ 309 $ & $ 4 $ & $ 23 $ & $ 27 $        \\
+            Regular   & $ 12 $                            & $ 176 $                 & $ 188 $ & $ 34 $ & $ 197 $ & $ 231 $        \\
+            \midrule
+            & $ 28 $                    & $ 469 $ & $ 497 $ & $ 38 $ & $ 220 $ & $ 258 $
+        \end{NiceTabular}
+    \end{center}
+\end{Example}
 \begin{itemize}
-    \item $ \hat{\psi}_\text{A}=0.80\qquad(0.37,1.73) $ and $ \hat{\psi}_\text{B}=1.01\qquad(0.33,3.10) $.
+    \item $ \hat{\psi}_\text{A}=0.80\; (0.37,1.73) $ and $ \hat{\psi}_\text{B}=1.01\;(0.33,3.10) $.
+          These cover value $ 1 $, different from the results from the pooled analysis on the previous slide.
     \item These results do NOT agree with the results from the pooled analysis on
           the previous slide.
 \end{itemize}
-The association between Level of Care and Clinic:
-TODOtab3
+\begin{Example}{Association Between Clinic and Level of Care}
+    \begin{center}
+        \begin{NiceTabular}{l|cc|c}
+            & A                            & B &                                         \\
+            \midrule
+            Intensive & $ 309 $                            & $ 27 $                 & $ 336 $         \\
+            Regular   & $ 118 $                            & $ 231 $                 & $ 419 $         \\
+            \midrule
+            & $ 497 $                    & $ 258 $ & $ 755 $
+        \end{NiceTabular}
+    \end{center}
+\end{Example}
 \begin{itemize}
-    \item $ \hat{\psi}=14.06\qquad(9.12,21.76) $.
+    \item $ \hat{\psi}=14.06\;(9.12,21.76) $.
 \end{itemize}
-The association between Mortality and Clinic
-TODOtab4
+\begin{Example}{Association Between Clinic and Mortality}
+    \begin{center}
+        \begin{NiceTabular}{l|cc|c}
+            & A                            & B &                                         \\
+            \midrule
+            Died & $ 28 $                            & $ 38 $                 & $ 66 $         \\
+            Survived   & $ 469 $                            & $ 220 $                 & $ 689 $         \\
+            \midrule
+            & $ 497 $                    & $ 258 $ & $ 755 $
+        \end{NiceTabular}
+    \end{center}
+\end{Example}
 \begin{itemize}
-    \item $ \hat{\psi}=0.35\qquad(0.21,0.58) $.
+    \item $ \hat{\psi}=0.35\;(0.21,0.58) $.
 \end{itemize}
 \begin{itemize}
     \item The initial strong association between Level of Care and Infant Morality
           disappeared when we stratified by clinic.
-          TODOfig2
+          \begin{figure}[!htbp]
+              \centering
+              \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+                  % Text Node
+                  \draw (99,4) node [anchor=north west][inner sep=0.75pt]   [align=left] {Clinic};
+                  % Text Node
+                  \draw (2,55) node [anchor=north west][inner sep=0.75pt]   [align=left] {Level of Care};
+                  % Text Node
+                  \draw (147,55) node [anchor=north west][inner sep=0.75pt]   [align=left] {Mortality};
+                  % Text Node
+                  \draw (109,44) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 189; green, 16; blue, 224 }  ,opacity=1 ] [align=left] {?};
+                  % Connection
+                  \draw    (133.15,25.32) -- (160.85,49.68) ;
+                  \draw [shift={(162.35,51)}, rotate = 221.32999999999998] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+                  \draw [shift={(131.65,24)}, rotate = 41.33] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+                  % Connection
+                  \draw    (99.79,25.17) -- (65.71,49.83) ;
+                  \draw [shift={(64.09,51)}, rotate = 324.12] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+                  \draw [shift={(101.41,24)}, rotate = 144.12] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+                  % Connection
+                  \draw [color={rgb, 255:red, 189; green, 16; blue, 224 }  ,draw opacity=1 ]   (85,63) -- (142,63) ;
+                  \draw [shift={(144,63)}, rotate = 180] [color={rgb, 255:red, 189; green, 16; blue, 224 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+              \end{tikzpicture}
+          \end{figure}
     \item Instead of having to examine multiple $ 2\times 2 $ tables we'd like to estimate the $ \OR $
           and compute associations using a multiple regression model.
     \item One way to do this is by fitting a Binomial GLM to the data.

@@ -1,3 +1,4 @@
+\makeheading{Week 3}{\daterange{2021-09-20}{2021-09-24}}
 \section*{Topic 2b: Maximum Likelihood Estimation for Generalized Linear Models}
 \addcontentsline{toc}{section}{Topic 2a: Maximum Likelihood Estimation for Generalized Linear Models}
 \subsection*{Generalized Linear Models}
@@ -9,16 +10,16 @@ Suppose for each subject $ i=1,\ldots,n $ in a random sample:
 We consider a \textcolor{Red}{Generalized Linear Model} (GLM) for the data, by definition the GLM
 is composed following three components:
 \begin{Regular}{}
-    \begin{enumerate}[(1)]
+    \begin{enumerate}[label=\color{Blue}\protect\circled{\arabic*}]
         \item \textcolor{Red}{Random Component}:
               \[ Y_i \sim \text{exponential family,}\qquad Y_1,\ldots,Y_n\text{ are independent.} \]
         \item \textcolor{Red}{Systematic Component} (or linear predictor):
-              \[ \eta_i=\Vector{x}_i^\top \Vector{\beta}. \]
+              \[ \eta_i=\Vector{x}_i^\top \Vector{\beta}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}. \]
               \begin{itemize}
                   \item $ \Vector{x}_i=(1,x_{i1},\ldots,x_{ip})^\top $ is a covariate vector.
                   \item $ \Vector{\beta}=(\beta_0,\beta_1,\ldots,\beta_p)^\top $ is a vector of regression coefficients.
               \end{itemize}
-        \item \textcolor{Red}{Link function}: a function $ g(\:\cdot\:) $ links $ \E{Y_i}=\mu_i $ to a linear prediction $ \eta_i $
+        \item \textcolor{Red}{Link function}: a function $ g(\:\cdot\:) $ links $ \E{Y_i}=\mu_i $ to a linear prediction $ \eta_i $:
               \[ g(\mu_i)=\eta_i=\Vector{x}_i^\top\Vector{\beta}. \]
     \end{enumerate}
 \end{Regular}
@@ -36,8 +37,8 @@ A Poisson regression model with the canonical link takes the form:
 Assume $ Y_i \ind \N{\mu_i,\sigma^2} $ and $ \sigma^2 $ is known, $ i=1,\ldots,n $:
 \begin{align*}
     f(y_i)
-     & =(2\pi\sigma^2)^{-1/2}\exp*{-\frac{(y_i-\mu_i)^2}{2\sigma^2}}                                                  \\
-     & =\exp*{\frac{y_i\mu_i-\mu_i^2/2}{\sigma^2}-\frac{1}{2}\biggl(\frac{y_i^2}{\sigma^2}+\log{2\pi\sigma^2}\biggr)}
+     & =(2\pi\sigma^2)^{-1/2}\exp*{-\frac{(y_i-\mu_i)^2}{2\sigma^2}}                                                   \\
+     & =\exp*{\frac{y_i\mu_i-\mu_i^2/2}{\sigma^2}-\frac{1}{2}\biggl(\frac{y_i^2}{\sigma^2}+\log{2\pi\sigma^2}\biggr)}.
 \end{align*}
 A Normal distribution ($ \sigma^2 $ known) is a member of exponential family with:
 \begin{itemize}
@@ -46,6 +47,7 @@ A Normal distribution ($ \sigma^2 $ known) is a member of exponential family wit
 \end{itemize}
 A Normal regression model with the canonical link takes the form:
 \[ \mu_i=\Vector{x}_i^\top \Vector{\beta}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}\qquad \text{\textcolor{Red}{(linear model)}}. \]
+Linear regression model (STAT 331) is a Normal GLM using the canonical link!
 \subsection*{Likelihood for Generalized Linear Models}
 We wish to use likelihood methods for the estimation of the regression parameter $ \Vector{\beta} $ from the GLM: $ g(\mu_i)=\Vector{x}_i^\top \Vector{\beta} $.
 Consider the log-likelihood for a \emph{single} observation from the exponential family:
@@ -65,21 +67,21 @@ Consider taking derivative with respect to $ \beta_j $ using the chain rule:
 \[ \pdv{\ell}{\beta_j}=\pdv{\ell}{\theta}\pdv{\theta}{\mu}\pdv{\mu}{\eta}\pdv{\eta}{\beta_j}, \]
 where
 \begin{align*}
-    \pdv{\ell}{\theta}  & =\frac{y-b^{\prime}(\theta)}{a(\phi)},                                      \\
-    \pdv{\theta}{\mu}   & =\biggl(\pdv{\mu}{\theta}\biggr)^{\!-1}=\frac{1}{b^{\prime\prime}(\theta)}, \\
-    \pdv{\mu}{\eta}     & =\pdv{\mu}{\eta},                                                           \\
-    \pdv{\eta}{\beta_j} & =x_j.
+    \pdv{\ell}{\theta}  & =\frac{y-b^{\prime}(\theta)}{a(\phi)},                                                                                                          \\
+    \pdv{\theta}{\mu}   & =\pdv{\mu}{\theta}^{\!-1}=\frac{1}{b^{\prime\prime}(\theta)} &  & \text{since $ \mu=b^\prime(\theta) $},                                        \\
+    \pdv{\mu}{\eta}     & =\pdv{\mu}{\eta},                                                                                                                               \\
+    \pdv{\eta}{\beta_j} & =x_j                                                         &  & \text{since $ \eta=\beta_0+\beta_1x_1+\cdots+\beta_jx_j+\cdots+\beta_px_p $}.
 \end{align*}
 Hence, we have:
 \begin{align*}
     \pdv{\ell}{\beta_j}
-     & =\frac{y-b^{\prime}(\theta)}{a(\phi)}\frac{1}{b^{\prime\prime}(\theta)}\pdv{\mu}{\eta}x_j \\
-     & =\frac{y-\mu}{\Var{Y}}\pdv{\mu}{\eta}x_j                                                  \\
-     & =\frac{y-\mu}{\Var{Y}}\biggl(\pdv{\mu}{\eta}\biggr)^{\!2}\pdv{\eta}{\mu}x_j               \\
-     & =(y-\mu)\Biggl(\Var{Y}\biggl(\pdv{\mu}{\eta}\biggr)^{\!2}\Biggr)^{-1}\pdv{\eta}{\mu}x_j   \\
+     & =\frac{y-b^{\prime}(\theta)}{a(\phi)}\frac{1}{b^{\prime\prime}(\theta)}\pdv{\mu}{\eta}x_j                                                                                           \\
+     & =\frac{y-\mu}{\Var{Y}}\pdv{\mu}{\eta}x_j                                                  &  & \text{since $ \mu=b^{\prime}(\theta) $, $ \Var{Y}=a(\phi)b^{\prime\prime}(\theta) $} \\
+     & =\frac{y-\mu}{\Var{Y}}\pdv{\mu}{\eta}^{\!2}\pdv{\eta}{\mu}x_j                             &  & \text{since $ \pdv{\mu}{\eta}\pdv{\eta}{\mu}=1 $}                                    \\
+     & =(y-\mu)\Biggl(\Var{Y}\pdv{\mu}{\eta}^{\!2}\Biggr)^{-1}\pdv{\eta}{\mu}x_j                                                                                                           \\
      & =(y-\mu)W\pdv{\eta}{\mu}x_j,
 \end{align*}
-where $ W^{-1}=\Var{Y}(\pdv{\eta}{\mu})^2 $. Note that generally $ \pdv{\eta}{\mu} $ is easier to calculate
+where $ W^{-1}=\Var{Y}\pdv{\eta}{\mu}^2 $. Note that generally $ \pdv{\eta}{\mu} $ is easier to calculate
 than $ \pdv{\mu}{\eta} $ since we define the link as $ \eta=g(\mu) $.
 
 For a random sample $ Y_1,\ldots,Y_n $ from exponential family and each $ Y_i $ has a probability density function
@@ -96,8 +98,12 @@ where $  W^{-1}=\Var{Y_i}(\pdv{\eta_i}{\mu_i})^2 $, $ g(\mu_i)=\eta_i=\Vector{x}
 where
 \begin{itemize}
     \item $ \Vector{y}=(y_1,\ldots,y_n)^\top $ and $ \Vector{\mu}=(\mu_1,\ldots,\mu_n)^\top $ are $ n\times 1 $ vectors,
-    \item $ \Matrix{X}=(x_1,\ldots,x_n) $ is a $ (p+1)\times n $ matrix,
-    \item $ \MatrixCal{W}=\diag{W_1,\ldots,W_n} $, and
+    \item $ \Matrix{X}=(\Vector{x}_1,\ldots,\Vector{x}_n) $ is a $ (p+1)\times n $ matrix,
+    \item $ \MatrixCal{W}=\diag{W_1,\ldots,W_n}=\begin{bmatrix}
+                  W_1    & 0      & \cdots & 0      \\
+                  \vdots & \ddots & \ddots & \vdots \\
+                  0      & \cdots & 0      & W_n
+              \end{bmatrix} $, and
     \item $ \MatrixCal{A}=\diag*{\pdv{\eta_1}{\mu_1},\ldots,\pdv{\eta_n}{\mu_n}} $.
 \end{itemize}
 \subsection*{Example: Poisson Regression Model (Problem 1.4)}
@@ -111,11 +117,11 @@ calculate the derivative using standard methods, i.e.,
     \bigl[\Vector{S}(\Vector{\beta})\bigr]_j
      & =\sum_i \pdv{\ell_i}{\beta_j}                                                                                  \\
      & =\sum_i \pdv*{\bigl(y_i \textcolor{Red}{\log{\lambda_i}}-\textcolor{Red}{\lambda_i}-\log{y_i!}\bigr)}{\beta_j} \\
-     & =\sum_i\bigl(y_i x_{ij}-e^{-\Vector{x}_i^\top \Vector{\beta}}x_{ij}\bigr)
+     & =\sum_i\bigl(y_i x_{ij}-e^{\Vector{x}_i^\top \Vector{\beta}}x_{ij}\bigr).
 \end{align*}
 Or we can use the general results derived for the GLMs on the previous slides.
 \subsection*{Solving $ \Vector{S}(\Vector{\beta})=\Vector{0} $ for MLE}
-\begin{enumerate}[(1)]
+\begin{enumerate}[label=\color{Blue}\protect\circled{\arabic*}]
     \item Newton Raphson update equation is:
           \[ \hat{\Vector{\beta}}^{(r+1)}=\hat{\Vector{\beta}}^{(r)}+\Matrix{I}^{-1}(\hat{\Vector{\beta}}^{(r)})\Vector{S}(\hat{\Vector{\beta}}^{(r)}), \]
           where $ \Matrix{I} $ is the observed information matrix.
@@ -147,7 +153,7 @@ To get an element of the Expected/Fisher Information matrix:
 \end{align*}
 Therefore, we can write the $(j, k)$ element of the Fisher information as:
 \[ \MatrixCal{I}_{jk}=\sum_{i=1}^{n} x_{ij}W_i x_{ik}=[\Matrix{X}\Matrix{\MatrixCal{W}}\Matrix{X}^\top]_{jk} \]
-where again, $ \MatrixCal{W}=\diag{W_1,\ldots,W_n} $ and $ W_i^{-1}=\Var{Y_i}(\pdv{\eta_i}{\mu_i})^2 $.
+where again, $ \MatrixCal{W}=\diag{W_1,\ldots,W_n} $ and $ W_i^{-1}=\Var{Y_i}\pdv{\eta_i}{\mu_i}^2 $.
 \subsection*{When is Fisher Scoring Equivalent to Newton Raphson?}
 Recall information matrix:
 \[  \Matrix{I}_{jk}=\sum_i -(y_i-\mu_i)\pdv*{\biggl[\textcolor{Red}{W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}}\biggr]}{\beta_k}+x_{ij}W_i x_{ik}. \]
@@ -186,6 +192,6 @@ where $ \RandomVector{Z} $ is a transformation of the response vector $ \RandomV
     \item The \textcolor{Red}{link function} $ g(\:\cdot\:) $ may be the canonical link, but its choice should
           come from model interpretation and fit.
     \item Can use Fisher Scoring (also known as IRWLS) to estimate the regression parameters $ \Vector{\beta} $ from any GLM based on general forms for $ \Matrix{I}(\Vector{\beta}) $
-          and $ S(\Vector{\beta}) $.
-    \item Practice: Chapter 1 review problems.
+          and $ \Vector{S}(\Vector{\beta}) $.
+    \item \textcolor{Blue}{\textsc{Practice}}: Chapter 1 review problems.
 \end{itemize}
