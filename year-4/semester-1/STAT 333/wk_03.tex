@@ -1,0 +1,270 @@
+\makeheading{Week 3}{\daterange{2021-09-22}{2021-09-29}}%chktex 8
+\section{Computing Probabilities by Conditioning}
+\begin{Regular}{}
+    For any two rvs, recall that
+    \begin{equation}
+        \E{X}=\E[\big]{\E{X\given Y}}=\begin{cases*}
+            \sum_y\E{X\given Y=y}p_Y(y)                          & , if $ Y $ is discrete,   \\
+            \int_{-\infty}^{\infty}\E{X\given Y=y}f_Y(y)\odif{y} & , if $ Y $ is continuous.
+        \end{cases*}\label{eq2.1}
+    \end{equation}
+    Now suppose that $ A $ represents some event of interest, and we wish to determine $ \Prob{A} $.
+    Define an indicator rv $ X $ such that
+    \[ X=\begin{cases*}
+            0 & , if event $ A^c $ occurs, \\
+            1 & , if event $ A $ occurs.
+        \end{cases*} \]
+    Clearly, $ \Prob{X=1}=\Prob{A} $ and $ \Prob{X=0}=1-\Prob{A} $, so that $ X \sim \BERN[\big]{\Prob{A}} $. Thus,
+    \begin{align*}
+        \E{X\given Y=y}
+         & =\sum_x x\Prob{X=x\given Y=y}                \\
+         & =0\Prob{X=0\given Y=y}+1\Prob{X=1\given Y=y} \\
+         & =\Prob{X=1\given Y=y}                        \\
+         & =\Prob{A\given Y=y}.
+    \end{align*}
+    Therefore, (\ref{eq2.1}) becomes
+    \begin{equation}
+        \Prob{A}=\begin{cases*}
+            \sum_y\Prob{A\given Y=y}p_Y(y)                          & , if $ Y $ is discrete,   \\
+            \int_{-\infty}^{\infty}\Prob{A\given Y=y}f_Y(y)\odif{y} & , if $ Y $ is continuous,
+        \end{cases*}\label{eq2.2}
+    \end{equation}
+    which are analogues of the law of total probability. In other words, the expectation formula (\ref{eq2.1})
+    can also be used to calculate probabilities of interest as indicated by (\ref{eq2.2}).
+\end{Regular}
+\begin{Example}
+    \textbf{Example 2.10}. Suppose that $ X $ and $ Y $ are independent continuous rvs. Find an expression for
+    $ \Prob{X<Y} $.
+    \tcblower{}
+    \textbf{Solution}: With the event defined as $ A=\Set{X<Y} $, we apply (\ref{eq2.2}) to get
+    \begin{align*}
+        \Prob{X<Y}
+         & =\Prob{A}                                                                                                                 \\
+         & =\int_{-\infty}^{\infty}\Prob{A\given Y=y}f_Y(y)\odif{y}                                                                  \\
+         & =\int_{-\infty}^{\infty}\Prob{X<Y\given Y=y}f_Y(y)\odif{y}                                                                \\
+         & =\int_{-\infty}^{\infty}\Prob{X<y\given Y=y}f_Y(y)\odif{y}                                                                \\
+         & =\int_{-\infty}^{\infty}\Prob{X<y}f_Y(y)\odif{y}                    &  & \text{since $ X $ and $ Y $ are independent rvs} \\
+         & =\int_{-\infty}^{\infty}\Prob{X\le y}f_Y(y)\odif{y}                 &  & \text{since $ X $ is a continuous rv}            \\
+         & =\int_{-\infty}^{\infty}F_X(y) f_Y(y)\odif{y}\label{eq2.3}\tag{2.3}
+    \end{align*}
+\end{Example}
+\underline{Remark}: If, in addition, $ X $ and $ Y $ are identically distributed, then the pdf $ f_Y(y) $ is equal
+to $ f_X(y) $ and the result of Example 2.10 simplifies to become
+\begin{align*}
+    \Prob{X<Y}
+     & =\int_{-\infty}^{\infty}F_X(y)f_X(y)\odif{y}                                                                                       \\
+     & =\int_{0}^{1}u\odif{u}                       &  & \text{where } u=F_X(y)\implies \odv{u}{y}=f_X(y)\implies \odif{u}=f_X(y)\odif{y} \\
+     & =\biggl[\frac{u^2}{2} \biggr]_{u=0}^{u=1}                                                                                          \\
+     & =\frac{1}{2},
+\end{align*}
+as one would expect.
+\begin{Example}
+    \textbf{Example 2.11}. Suppose that $ X \sim \EXP{\lambda_1} $ and $ Y \sim \EXP{\lambda_2} $ are independent exponential rvs. Show that
+    \[ \Prob{X<Y}=\frac{\lambda_1}{\lambda_1+\lambda_2}.  \]
+    \tcblower{}
+    \textbf{Solution}: Since $ X $ and $ Y $ are both exponential rvs, it immediately follows that
+    \begin{align*}
+        f_Y(y) & =\lambda_2 e^{-\lambda_2 y},\; y>0,                                     \\
+        F_X(y) & =\int_{0}^{y}\lambda_1 e^{-\lambda_1 x}\odif{x}                         \\
+               & =\lambda_1\biggl[-\frac{1}{\lambda_1}e^{-\lambda_1x}\biggr]_{x=0}^{x=y} \\
+               & =1-e^{-\lambda_1 y},\; y\ge 0.
+    \end{align*}
+    Therefore, (\ref{eq2.3}) becomes
+    \begin{align*}
+        \Prob{X<Y}
+         & =\int_{0}^{\infty}(1-e^{-\lambda_1y})\lambda_2 e^{-\lambda_2 y}\odif{y}                                              \\
+         & =\int_{0}^{\infty}\lambda_2 e^{-\lambda_2 y}\odif{y} -\lambda_2 \int_{0}^{\infty}e^{-(\lambda_1+\lambda_2)y}\odif{y} \\
+         & =1-\frac{\lambda_2}{(\lambda_1+\lambda_2)} \int_{0}^{\infty}(\lambda_1+\lambda_2)e^{-(\lambda_1+\lambda_2)y}\odif{y} \\
+         & =1-\frac{\lambda_2}{\lambda_1+\lambda_2}                                                                             \\
+         & =\frac{\lambda_1}{\lambda_1+\lambda_2}.
+    \end{align*}
+    \underline{Remark}: As a matter of interest, this particular result will be featured quite prominently in
+    Chapter 4.
+\end{Example}
+\begin{Example}
+    \textbf{Example 2.12}. Suppose $ W $, $ X $, and $ Y $ are independent continuous rvs on $ (0,\infty) $. If
+    $ Z=X\mid(X<Y) $, then show that $ (W,X)\mid(W<X<Y) $ and $ (W,Z)\mid(W<Z) $ are identically distributed.
+    \tcblower{}
+    \textbf{Solution}: Let us first consider the joint conditional cdf of $ (W,X)\mid(W<X<Y) $:
+    \begin{align*}
+        G(w,x) & =\Prob{W\le w,X\le x\given W<X<Y}                                   \\
+               & =\frac{\Prob{W\le w,X\le x, W<X<Y}}{\Prob{W<X<Y}}                   \\
+               & =\frac{\Prob{W\le w,X\le x, W<X, X<Y}}{\Prob{W<X,X<Y}},\; w,x\ge 0.
+    \end{align*}
+    Conditioning on the rv $ X $ and noting that $ W $, $ X $, and $ Y $ are independent rvs, it follows that
+    \begin{align*}
+        \Prob{W<X,X<Y}
+         & =\int_{0}^{\infty}\Prob{W<X,X<Y\given X=s}f_X(s)\odif{s}                        \\
+         & =\int_{0}^{\infty}\Prob{W<s,Y>s\given X=s}f_X(s)\odif{s}                        \\
+         & =\int_{0}^{\infty}\Prob{W<s,Y>s}f_X(s)\odif{s}                                  \\
+         & =\int_{0}^{\infty}\Prob{W<s}\Prob{Y>s}f_X(s)\odif{s}     \label{eq2.4}\tag{2.4}
+    \end{align*}
+    and
+    \begin{align*}
+        \Prob{W\le w,X\le x, W<X, X<Y}
+         & =\int_{0}^{\infty}\Prob{W\le w,X\le x,W<X,X<Y\given X=s}f_X(s)\odif{s}                 \\
+         & =\int_{0}^{\infty}\Prob{W\le w,s\le x,W<s,Y>s\given X=s}f_X(s)\odif{s}                 \\
+         & =\int_{0}^{\infty}\Prob{W\le w,s\le x,W<s,Y>s}f_X(s)\odif{s}                           \\
+         & =\int_{0}^{x}\Prob{W\le w,W<s,Y>s}f_X(s)\odif{s}                                       \\
+         & =\int_{0}^{x}\Prob[\big]{W\le \min{w,s},Y>s}f_X(s)\odif{s}                             \\
+         & =\int_{0}^{x}\Prob[\big]{W\le \min{w,s}}\Prob{Y>s}f_X(s)\odif{s}\label{eq2.5}\tag{2.5}
+    \end{align*}
+    Next, consider the conditional rv $ Z=X\mid(X<Y) $.
+    \begin{align*}
+        \Prob{Z\le z}
+         & =\Prob{X\le z\given X<Y}                                                       \\
+         & =\frac{\Prob{X\le z,X<Y}}{\Prob{X<Y}}                                          \\
+         & =\frac{\int_{0}^{\infty}\Prob{X\le z,X<Y\given X=s}f_X(s)\odif{s}}{\Prob{X<Y}} \\
+         & =\frac{\int_{0}^{\infty}\Prob{s\le z,s<Y\given X=s}f_X(s)\odif{s}}{\Prob{X<Y}} \\
+         & =\frac{\int_{0}^{\infty}\Prob{s\le z,s<Y}f_X(s)\odif{s}}{\Prob{X<Y}}           \\
+         & =\frac{\int_{0}^{z}\Prob{Y>s}f_X(s)\odif{s}}{\Prob{X<Y}}
+    \end{align*}
+    and so the pdf of $ Z $ is given by
+    \begin{align*}
+        h_Z(z)
+         & =\odv*{\Prob{Z\le z}}{z}                                           \\
+         & =\frac{\odv*{\int_{0}^{z}\Prob{Y>s}f_X(s)\odif{s}}{z}}{\Prob{X<Y}} \\
+         & =\frac{\Prob{Y>z}f_X(z)}{\Prob{X<Y}},\; z>0.
+    \end{align*}
+    Now, the joint conditional cdf of $ (W,Z)\mid(W<Z) $ is given by
+    \begin{align*}
+        \Prob{W\le w,Z\le z\given W<Z}
+         & =\frac{\Prob{W\le w,Z\le z,W<Z}}{\Prob{W<Z}},\; w,z\ge 0
+    \end{align*}
+    Due to the independence of $ W $ with $ X $ and $ Y $,
+    \begin{align*}
+        \Prob{W<Z}
+         & =\int_{0}^{\infty}\Prob{W<Z\given Z=s}h_Z(s)\odif{s}                                                   \\
+         & =\int_{0}^{\infty}\Prob{W<z\given Z=s}h_Z(s)\odif{s}                                                   \\
+         & =\int_{0}^{\infty}\Prob{W<s}h_Z(s)\odif{s}                                                             \\
+         & =\int_{0}^{\infty}\Prob{W<s}\frac{\Prob{Y>s}f_X(s)}{\Prob{X<Y}}\odif{s}                                \\
+         & =\frac{\Prob{W<X,X<Y}}{\Prob{X<Y}}                                      &  & \text{from (\ref{eq2.4})}
+    \end{align*}
+    Next,
+    \begin{align*}
+        \Prob{W\le w,Z\le z,W<Z}
+         & =\int_{0}^{\infty}\Prob{W\le w,Z\le z,W<Z\given Z=s}h_Z(s)\odif{s}                                           \\
+         & =\int_{0}^{\infty}\Prob{W\le w, s\le z,W<s}h_Z(s)\odif{s}                                                    \\
+         & =\int_{0}^{z}\Prob{W\le w,W<s}h_Z(s)\odif{s}                                                                 \\
+         & =\int_{0}^{z}\Prob{W\le \min{w,s}}\frac{\Prob{Y>s}f_X(s)}{\Prob{X<Y}}\odif{s}                                \\
+         & =\Prob{W\le w,X\le z,W<X,X<Y}                                                 &  & \text{from (\ref{eq2.5})}
+    \end{align*}
+    Therefore, we ultimately obtain:
+    \[ \Prob{W\le w,Z\le z,W<Z}=\frac{\Prob{W\le w,X\le z,W<X,X<Y}}{\Prob{W<X,X<Y}}=G(w,z),\; w,z\ge 0. \]
+    This implies that
+    \[ (W,X)\mid (W<X<Y) \sim (W,Z)\mid (W<Z). \]
+    \underline{Remark}: It can likewise be shown that if $ V=X\mid(W<X) $, then $ (X,Y)\mid(W<X<Y) $ and
+    $ (V,Y)\mid(V<Y) $ are identically distributed (left as an upcoming exercise).
+\end{Example}
+\section{Some Further Extensions}
+If you consider our treatment of the conditional expectation $ \E{X\given Y=y} $, then
+one detail you should notice is that this kind of expectation behaves \emph{exactly}
+the same as the regular (i.e., unconditional) expectation \emph{except}
+that all pmfs/pdfs used now are conditional on the event $ Y=y $. In this sense,
+conditional expectations essentially satisfy all the properties of regular expectation.
+Thus, for an arbitrary real-valued function $ g(\:\cdot\:) $, a corresponding analogue
+of
+\[ \E[\big]{g(X)}=\begin{cases*}
+        \sum_w \E[\big]{g(X)\given W=w}p_W(w)                         & , if $ W $ is discrete,   \\
+        \int_{-\infty}^{\infty}\E[\big]{g(X)\given W=w}f_W(w)\odif{w} & , if $ W $ is continuous,
+    \end{cases*} \]
+would be
+\[ \E[\big]{g(X)\given Y=y}=\begin{cases*}
+        \sum_w \E[\big]{g(X)\given W=w, Y=y}p_{W\mid Y}(w\mid y)                         & , if $ W $ is discrete,   \\
+        \int_{-\infty}^{\infty}\E[\big]{g(X)\given W=w, Y=y}f_{W\mid Y}(w\mid y)\odif{w} & , if $ W $ is continuous.
+    \end{cases*} \]
+We remark that the above relation makes sense, since if we assume (without loss of generality)
+that $ X $ and $ Y $ are discrete rvs, then we obtain (in the case when $ W $ is discrete too):
+\begin{align*}
+    \sum_{w} \E[\big]{g(X) \given W=w, Y=y} p_{W \mid Y}(w \mid y)
+     & =\sum_{w} \sum_{x} g(x) p_{X \mid W Y}(x \mid w, y) p_{W \mid Y}(w \mid y)                      \\
+     & =\sum_{w} \sum_{x} g(x) \frac{p_{X W Y}(x, w, y)}{p_{W Y}(w, y)} \frac{p_{W Y}(w, y)}{p_{Y}(y)} \\
+     & =\sum_{x} \frac{g(x)}{p_{Y}(y)} \sum_{w} p_{X W Y}(x, w, y)                                     \\
+     & =\sum_{x} g(x) \frac{p_{X Y}(x, y)}{p_{Y}(y)}                                                   \\
+     & =\sum_{x} g(x) p_{X \mid Y}(x, y)                                                               \\
+     & =\E[\big]{g(X)\given Y=y}.
+\end{align*}
+Similarly, if one introduces an event of interest $ A $ and defines
+\[ g(X)=\begin{cases*}
+        0 & , if event $ A^c $ occurs, \\
+        1 & , if event $ A $ occurs,
+    \end{cases*} \]
+then we obtain
+\[ \E[\big]{A\given Y=y}=\begin{cases*}
+        \sum_w \E[\big]{A\given W=w, Y=y}p_{W\mid Y}(w\mid y)                         & , if $ W $ is discrete,   \\
+        \int_{-\infty}^{\infty}\E[\big]{A\given W=w, Y=y}f_{W\mid Y}(w\mid y)\odif{w} & , if $ W $ is continuous.
+    \end{cases*} \]
+Furthermore, if we now define
+\[ \E[\big]{g(X)\given W,Y}=\E[\big]{g(X)\given W=w,Y=y}\big\rvert_{w=W,y=Y}, \]
+then the law of total expectation extends to become
+\[ \E[\big]{g(X)}=\E[\big]{\E{g(X)\given Y}}=\E[\Big]{\E[\big]{\E{g(X)\given W,Y}\given Y}}. \]
+\begin{Example}
+    \textbf{Example 2.13}. Consider an experiment in which independent trials, each having success
+    probability $ p\in(0,1) $, are performed until $ k $ consecutive successes are achieved where $ k\in\mathbb{Z}^+ $.
+    Determine the expected number of trials needed to achieve $ k $ consecutive successes.
+    \tcblower{}
+    \textbf{Solution}: Let $ N_k $ represent the number of trials needed to get $ k $ consecutive successes.
+    We wish to determine $ \E{N_k} $. For $ k=1 $, note that $ N_1 \sim \GEOt{p} $, therefore $ \E{N_k}=\frac{1}{p} $.
+    For arbitrary $ k\ge 2 $, let us consider conditioning on the outcome of the first trial, represented by $ W $,
+    such that
+    \[ W=\begin{cases*}
+            0 & , if first trial is a failure, \\
+            1 & , if first trial is a success.
+        \end{cases*} \]
+    Thus,
+    \begin{align*}
+        \E{N_k}
+         & =\E[\big]{\E{N_k\given W}}                                 \\
+         & =\Prob{W=0}\E{N_k\given W=0} + \Prob{W=1}\E{N_k\given W=1} \\
+         & =(1-p)\E{N_k\given W=0}+p\E{N_k\given W=1}
+    \end{align*}
+    Now, it is clear $ N_k\mid(W=0) \sim 1+N_k $, but unfortunately
+    we \underline{do not} have a nice corresponding result for $ N_k\mid(W=1) $.
+    It \underline{does not} hold true that $ N_k\mid (W=0)\sim 1+N_{k-1} $. What else can we try?
+
+    \underline{Idea}: Let's try $ \E{N_k}=\E[\big]{\E{N_k\given N_{k-1}}} $, i.e., to get $ k $ in a row,
+    we must first get $ k-1 $ in a row. Define
+    \[ Y\mid(N_{k-1}=n)=\begin{cases*}
+            0 & , if $ (n+1)\textsuperscript{th} $ trial is a failure, \\
+            1 & , if $ (n+1)\textsuperscript{th} $ trial is a success.
+        \end{cases*} \]
+    By independence of the trials,
+    \begin{align*}
+        \Prob{Y=0\given N_{k-1}=n} & =1-p, \\
+        \Prob{Y=1\given N_{k-1}=n} & =p.
+    \end{align*}
+    As a result, we get:
+    \begin{align*}
+        \E{N_k\given N_{k-1}=n}
+         & =\sum_{y=0}^1 \E{N_k\given N_{k-1}=n,Y=y}\Prob{Y=y\given N_{k-1}=n} \\
+         & =(1-p)\E{N_k\given N_{k-1}=n,Y=0} + p\E{N_k\given N_{k-1}=n,Y=1}.
+    \end{align*}
+    Note that $ N_k\mid (N_{k-1}=n,Y=0) \sim n+1+N_k $ (i.e., given that we know it took $ n $ trials to get
+    $ k-1 $ consecutive successes, and then on the next trial we got a failure, what happens?). Also,
+    $ N_k\mid(N_{k-1}=n,Y=1) $ is equal to $ n+1 $ with probability $ 1 $. Therefore,
+    \begin{align*}
+        \E{N_k\given N_{k-1}=n}
+         & =(1-p)(n+1+\E{N_k})+p(n+1) \\
+         & =n+1+(1-p)\E{N_k}.
+    \end{align*}
+    Therefore, \[ \E{N_k\given N_{k-1}}=\E{N_k\given N_{k-1}=n}\big\rvert_{n=N_{k-1}}=N_{k-1}+1+(1-p)\E{N_k}. \]
+    Now, we have
+    \begin{align*}
+        \E{N_k}
+         & =\E[\big]{N_{k-1}+1+(1-p)\E{N_k}} \\
+         & =\E{N_{k-1}}+1+(1-p)\E{N_k}
+    \end{align*}
+    Therefore,
+    \[ \bigl(1-(1-p)\bigr)\E{N_k}=1+\E{N_k}\implies\E{N_k}=\frac{1}{p} +\frac{\E{N_{k-1}}}{p},\;k\ge 2, \]
+    which is a recursive equation for $ \E{N_k} $. Take $ k=2 $:
+    \[ \E{N_2}=\frac{1}{p} +\frac{\E{N_1}}{p}=\frac{1}{p} +\frac{(1/p)}{p}=\frac{1}{p} +\frac{1}{p^2}.  \]
+    Take $ k=3 $:
+    \[ \E{N_3}=\frac{1}{p} +\frac{\E{N_2}}{p}=\frac{1}{p}+\frac{1}{p^2} +\frac{1}{p^3}. \]
+    Take $ k=4 $:
+    \[ \E{N_4}=\frac{1}{p}+\frac{\E{N_3}}{p}=\frac{1}{p}+\frac{1}{p^2} +\frac{1}{p^3}+\frac{1}{p^4}. \]
+    Continuing inductively, we actually have
+    \[ \E{N_k}=\frac{1}{p} +\frac{1}{p^2}+\cdots+\frac{1}{p^k}, \]
+    which is a finite geometric series, therefore,
+    \[ \E{N_k}=\frac{(1/p)-(1/p^{k+1})}{1-(1/p)}=\frac{p^{-k}-1}{1-p},\;k\ge 2. \]
+    Actually, this holds true for $ k\in\mathbb{Z}^+ $ (try it).
+\end{Example}

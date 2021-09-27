@@ -1,9 +1,9 @@
 \documentclass[final]{article}
 \usepackage[svgnames]{xcolor}
-\usepackage[activate={true,nocompatibility},final,tracking=true,factor=1100,stretch=10,shrink=10]{microtype}
-\usepackage[math-style=ISO,bold-style=ISO,warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
+\usepackage[british]{babel}
+\usepackage[activate={true,nocompatibility},final,tracking=true,factor=1100,stretch=10,shrink=10,babel]{microtype}
 \usepackage[margin=1in]{geometry}
-\usepackage[unicode,pdfversion=1.7]{hyperref}
+\usepackage[pdfversion=1.7]{hyperref}
 \usepackage[shortlabels]{enumitem}
 \usepackage{graphicx}
 \usepackage{mathtools}
@@ -14,6 +14,16 @@
 \usepackage{etoolbox}
 \usepackage{siunitx}
 \usepackage{listings}
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+\usepackage{bm}
+\usepackage[T1]{fontenc}
+\makeatletter
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\normalfont\large\bfseries\scshape\color{Blue}}}
+\makeatother
 
 \lstset{frame=none,
   language=R,
@@ -32,11 +42,11 @@
 
 % Functions
 \providecommand\given{} % just to make sure it exists
-\DeclarePairedDelimiterXPP{\E}[1]{\operatorname{\mathbb{E}}}[]{}{%
+\DeclarePairedDelimiterXPP{\E}[1]{\operatorname{\text{E}}}[]{}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\V}[1]{\operatorname{\mathbb{V}}}(){}{%
+\DeclarePairedDelimiterXPP{\V}[1]{\operatorname{\Field{V}}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
@@ -48,11 +58,11 @@
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP\Prob[1]{\operatorname{\mathbb{P}}}(){}{%
+\DeclarePairedDelimiterXPP\Prob[1]{\operatorname{\Field{P}}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP\Ind[1]{\operatorname{\mathbb{I}}}\{\}{}{%
+\DeclarePairedDelimiterXPP\Ind[1]{\operatorname{\Field{I}}}\{\}{}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
@@ -62,7 +72,7 @@
 \DeclarePairedDelimiterXPP{\estse}[1]{\widehat{\operatorname{\text{se}}}}(){}{%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\estV}[1]{\widehat{\operatorname{\mathbb{V}}}}(){}{
+\DeclarePairedDelimiterXPP{\estV}[1]{\widehat{\operatorname{\Field{V}}}}(){}{
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
@@ -87,11 +97,15 @@
 % Distributions
 \DeclarePairedDelimiterXPP{\N}[1]{\mathcal{N}}(){}{#1}%
 \DeclarePairedDelimiterXPP{\Poisson}[1]{\text{Poisson}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\Bin}[1]{\text{Bin}}(){}{#1}%
 \DeclarePairedDelimiterXPP{\Binomial}[1]{\text{Binomial}}(){}{#1}%
 \DeclarePairedDelimiterXPP{\Bernoulli}[1]{\text{Bernoulli}}(){}{#1}%
 \DeclarePairedDelimiterXPP{\MVN}[1]{\text{MVN}}(){}{#1}%
 
 \newcommand{\iid}{\overset{\text{iid}}{\sim}}%
+\newcommand{\ind}{\overset{\text{ind}}{\sim}}%
+\newcommand{\OR}{\text{OR}}%
+\newcommand{\RR}{\text{RR}}%
 
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}
 % can be useful to refer to this outside \Set
@@ -122,13 +136,14 @@
 }%
 \date{\today}%
 
-\providecommand{\RandomVector}[1]{\symbfit{#1}}% general vectors in bold italic
-\providecommand{\Vector}[1]{\symbfup{#1}}% general vectors in bold italic
-\providecommand{\Matrix}[1]{\symbfup{#1}}
-\providecommand{\Field}[1]{\symbfsfup{#1}}
+\providecommand{\RandomVector}[1]{\bm{#1}}% general vectors in bold italic
+\providecommand{\Vector}[1]{\bm{#1}}% general vectors in bold italic
+\providecommand{\Matrix}[1]{\bm{#1}}
+\providecommand{\MatrixCal}[1]{\bm{\mathcal{#1}}}
+\providecommand{\Field}[1]{\bm{#1}}
 
 \usepackage{stackengine}
-\usepackage[english]{isodate}
+\usepackage[british]{isodate}
 \newcommand{\makeheading}[2]%
 {%
 \begin{center}%
@@ -175,5 +190,9 @@ pdfkeywords={University of Waterloo, Fall 2021 (1219)}}%
 <<child='Topic 1/1b.Rnw'>>=
 @
 <<child='Topic 2/2a.Rnw'>>=
+@
+<<child='Topic 2/2b.Rnw'>>=
+@
+<<child='Topic 3/3a.Rnw'>>=
 @
 \end{document}

@@ -1,0 +1,191 @@
+\section*{Topic 2b: Maximum Likelihood Estimation for Generalized Linear Models}
+\addcontentsline{toc}{section}{Topic 2a: Maximum Likelihood Estimation for Generalized Linear Models}
+\subsection*{Generalized Linear Models}
+Suppose for each subject $ i=1,\ldots,n $ in a random sample:
+\begin{itemize}
+    \item $ Y_i $ is the response variable.
+    \item $ x_{i1},\ldots,x_{ip} $ are explanatory variables associated with $ Y_i $.
+\end{itemize}
+We consider a \textcolor{Red}{Generalized Linear Model} (GLM) for the data, by definition the GLM
+is composed following three components:
+\begin{Regular}{}
+    \begin{enumerate}[(1)]
+        \item \textcolor{Red}{Random Component}:
+              \[ Y_i \sim \text{exponential family,}\qquad Y_1,\ldots,Y_n\text{ are independent.} \]
+        \item \textcolor{Red}{Systematic Component} (or linear predictor):
+              \[ \eta_i=\Vector{x}_i^\top \Vector{\beta}. \]
+              \begin{itemize}
+                  \item $ \Vector{x}_i=(1,x_{i1},\ldots,x_{ip})^\top $ is a covariate vector.
+                  \item $ \Vector{\beta}=(\beta_0,\beta_1,\ldots,\beta_p)^\top $ is a vector of regression coefficients.
+              \end{itemize}
+        \item \textcolor{Red}{Link function}: a function $ g(\:\cdot\:) $ links $ \E{Y_i}=\mu_i $ to a linear prediction $ \eta_i $
+              \[ g(\mu_i)=\eta_i=\Vector{x}_i^\top\Vector{\beta}. \]
+    \end{enumerate}
+\end{Regular}
+\subsection*{Example: A Poisson Regression Model}
+Suppose $ Y_i \ind\Poisson{\lambda_i} $ with mean $ \E{Y_i}=\lambda_i $, $ i=1,\ldots,n $:
+\[ f(y_i)=\frac{e^{-\lambda_i}\lambda_i^{y_i}}{y_i!}=\exp[\big]{y_i\log{\lambda_i}-\lambda_i-\log{y_i!}}.  \]
+Poisson distribution is a member of exponential family with:
+\begin{itemize}
+    \item Canonical parameter: $ \theta_i=\log{\lambda_i} $.
+    \item Canonical link: $ \theta_i=\eta_i\textcolor{Red}{\implies}\log{\lambda_i}=\Vector{x}_i^\top \Vector{\beta} $ (log link).
+\end{itemize}
+A Poisson regression model with the canonical link takes the form:
+\[ \log{\lambda_i}=\Vector{x}_i^\top \Vector{\beta}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}\qquad \text{\textcolor{Red}{(log-linear model)}}. \]
+\subsection*{Example: A Normal Regression Model}
+Assume $ Y_i \ind \N{\mu_i,\sigma^2} $ and $ \sigma^2 $ is known, $ i=1,\ldots,n $:
+\begin{align*}
+    f(y_i)
+     & =(2\pi\sigma^2)^{-1/2}\exp*{-\frac{(y_i-\mu_i)^2}{2\sigma^2}}                                                  \\
+     & =\exp*{\frac{y_i\mu_i-\mu_i^2/2}{\sigma^2}-\frac{1}{2}\biggl(\frac{y_i^2}{\sigma^2}+\log{2\pi\sigma^2}\biggr)}
+\end{align*}
+A Normal distribution ($ \sigma^2 $ known) is a member of exponential family with:
+\begin{itemize}
+    \item Canonical parameter: $ \theta_i=\mu_i $.
+    \item Canonical link: $ \theta_i=\eta_i \textcolor{Red}{\implies}\mu_i=\Vector{x}_i^\top \Vector{\beta} $ (identity link).
+\end{itemize}
+A Normal regression model with the canonical link takes the form:
+\[ \mu_i=\Vector{x}_i^\top \Vector{\beta}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}\qquad \text{\textcolor{Red}{(linear model)}}. \]
+\subsection*{Likelihood for Generalized Linear Models}
+We wish to use likelihood methods for the estimation of the regression parameter $ \Vector{\beta} $ from the GLM: $ g(\mu_i)=\Vector{x}_i^\top \Vector{\beta} $.
+Consider the log-likelihood for a \emph{single} observation from the exponential family:
+\[ \ell(\theta,\phi;y)=\frac{y\theta-b(\theta)}{a(\phi)}+c(y;\phi). \]
+\begin{itemize}
+    \item $ \ell $ is a function of $ \textcolor{Red}{\theta} $ (assume that $ \phi $ is known).
+    \item $ \theta $ is related to $ \mu $ through the result:
+          \[ \textcolor{Red}{\mu=b^{\prime}(\theta)}. \]
+    \item $ \eta $ can be expressed in terms of $ \mu $ through the link function:
+          \[ \textcolor{Red}{g(\mu)=\eta}. \]
+    \item $ \Vector{\beta} $ can be expressed in terms of $ \eta $ through the linear predictor:
+          \[ \textcolor{Red}{\eta=\Vector{x}^\top \Vector{\beta}}. \]
+\end{itemize}
+\subsection*{Score Vector}
+To find the maximum likelihood estimator for $ \Vector{\beta} $, we must solve $ \Vector{S}(\Vector{\beta})=\pdv{\ell}{\Vector{\beta}}=\Vector{0} $.
+Consider taking derivative with respect to $ \beta_j $ using the chain rule:
+\[ \pdv{\ell}{\beta_j}=\pdv{\ell}{\theta}\pdv{\theta}{\mu}\pdv{\mu}{\eta}\pdv{\eta}{\beta_j}, \]
+where
+\begin{align*}
+    \pdv{\ell}{\theta}  & =\frac{y-b^{\prime}(\theta)}{a(\phi)},                                      \\
+    \pdv{\theta}{\mu}   & =\biggl(\pdv{\mu}{\theta}\biggr)^{\!-1}=\frac{1}{b^{\prime\prime}(\theta)}, \\
+    \pdv{\mu}{\eta}     & =\pdv{\mu}{\eta},                                                           \\
+    \pdv{\eta}{\beta_j} & =x_j.
+\end{align*}
+Hence, we have:
+\begin{align*}
+    \pdv{\ell}{\beta_j}
+     & =\frac{y-b^{\prime}(\theta)}{a(\phi)}\frac{1}{b^{\prime\prime}(\theta)}\pdv{\mu}{\eta}x_j \\
+     & =\frac{y-\mu}{\Var{Y}}\pdv{\mu}{\eta}x_j                                                  \\
+     & =\frac{y-\mu}{\Var{Y}}\biggl(\pdv{\mu}{\eta}\biggr)^{\!2}\pdv{\eta}{\mu}x_j               \\
+     & =(y-\mu)\Biggl(\Var{Y}\biggl(\pdv{\mu}{\eta}\biggr)^{\!2}\Biggr)^{-1}\pdv{\eta}{\mu}x_j   \\
+     & =(y-\mu)W\pdv{\eta}{\mu}x_j,
+\end{align*}
+where $ W^{-1}=\Var{Y}(\pdv{\eta}{\mu})^2 $. Note that generally $ \pdv{\eta}{\mu} $ is easier to calculate
+than $ \pdv{\mu}{\eta} $ since we define the link as $ \eta=g(\mu) $.
+
+For a random sample $ Y_1,\ldots,Y_n $ from exponential family and each $ Y_i $ has a probability density function
+\[ f(y_i;\theta,\phi)=\exp*{\frac{y_i\theta_i-b(\theta_i)}{a(\phi)}+c(y_i,\phi)}. \]
+We write likelihood and log-likelihood functions as:
+\begin{align*}
+    L    & =\prod_{i=1}^n f(y_i;\theta_i,\phi)=\prod_{i=1}^n\exp*{\frac{y_i\theta_i-b(\theta_i)}{a(\phi)}+c(y_i,\phi)}, \\
+    \ell & =\sum_{i=1}^{n} \ell_i=\sum_{i=1}^{n}\frac{y_i\theta_i-b(\theta_i)}{a(\phi)}+c(y_i,\phi).
+\end{align*}
+The \textcolor{Red}{element of the score vector} is:
+\[ \bigl[\Vector{S}(\Vector{\beta})\bigr]_j=\pdv{\ell}{\beta_j}=\sum_{i=1}^{n} \pdv{\ell_i}{\beta_j}=\sum_{i=1}^{n} (y_i-\mu_i)W_i\pdv{\eta_i}{\mu_i}x_{ij} \]
+where $  W^{-1}=\Var{Y_i}(\pdv{\eta_i}{\mu_i})^2 $, $ g(\mu_i)=\eta_i=\Vector{x}_i^\top \Vector{\beta} $. In vector and matrix form we can write:
+\[ \Vector{S}(\Vector{\beta})=\Matrix{X}\MatrixCal{W}\MatrixCal{A}(\Vector{y}-\Vector{\mu}), \]
+where
+\begin{itemize}
+    \item $ \Vector{y}=(y_1,\ldots,y_n)^\top $ and $ \Vector{\mu}=(\mu_1,\ldots,\mu_n)^\top $ are $ n\times 1 $ vectors,
+    \item $ \Matrix{X}=(x_1,\ldots,x_n) $ is a $ (p+1)\times n $ matrix,
+    \item $ \MatrixCal{W}=\diag{W_1,\ldots,W_n} $, and
+    \item $ \MatrixCal{A}=\diag*{\pdv{\eta_1}{\mu_1},\ldots,\pdv{\eta_n}{\mu_n}} $.
+\end{itemize}
+\subsection*{Example: Poisson Regression Model (Problem 1.4)}
+For a random sample from Poisson distribution, $ Y_i \sim \Poisson{\lambda_i} $, $ i=1,\ldots,n $,
+\[ \ell_i=\log[\big]{f(y_i;\lambda_i)}=\bigl(y_i\log{\lambda_i}-\lambda_i-\log{y_i!}\bigr). \]
+Poisson regression with a log-link:
+\[ \log{\lambda_i}=\eta_i=\Vector{x}_i^\top \Vector{\beta}. \]
+To write down the score vector for the regression coefficients $ \Vector{\beta} $, we may
+calculate the derivative using standard methods, i.e.,
+\begin{align*}
+    \bigl[\Vector{S}(\Vector{\beta})\bigr]_j
+     & =\sum_i \pdv{\ell_i}{\beta_j}                                                                                  \\
+     & =\sum_i \pdv*{\bigl(y_i \textcolor{Red}{\log{\lambda_i}}-\textcolor{Red}{\lambda_i}-\log{y_i!}\bigr)}{\beta_j} \\
+     & =\sum_i\bigl(y_i x_{ij}-e^{-\Vector{x}_i^\top \Vector{\beta}}x_{ij}\bigr)
+\end{align*}
+Or we can use the general results derived for the GLMs on the previous slides.
+\subsection*{Solving $ \Vector{S}(\Vector{\beta})=\Vector{0} $ for MLE}
+\begin{enumerate}[(1)]
+    \item Newton Raphson update equation is:
+          \[ \hat{\Vector{\beta}}^{(r+1)}=\hat{\Vector{\beta}}^{(r)}+\Matrix{I}^{-1}(\hat{\Vector{\beta}}^{(r)})\Vector{S}(\hat{\Vector{\beta}}^{(r)}), \]
+          where $ \Matrix{I} $ is the observed information matrix.
+          \begin{itemize}
+              \item This requires us to find and repeatedly evaluate the information $ \Matrix{I} $ (possibly computationally intensive).
+              \item Fisher suggested using the expected information matrix $ \MatrixCal{I} $ rather than the observed information matrix.
+          \end{itemize}
+    \item Fisher Scoring update equation is:
+          \[ \hat{\Vector{\beta}}^{(r+1)}=\hat{\Vector{\beta}}^{(r)}+\MatrixCal{I}^{-1}(\hat{\Vector{\beta}}^{(r)})\Vector{S}(\hat{\Vector{\beta}}^{(r)}). \]
+\end{enumerate}
+\subsection*{Information Matrix}
+Consider the $(j, k)$ element of the Information matrix:
+\begin{align*}
+    \Matrix{I}_{jk} & =-\pdv{\ell}{\beta_j,\beta_k}                                                                                                                                                                                     \\
+                    & =-\pdv*{\pdv{\ell}{\beta_j}}{\beta_k}                                                                                                                                                                             \\
+                    & =\sum_i -\pdv*{\biggl[(y_i-\mu_i)W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}                                                                                                                      \\
+                    & =\sum_i -(y_i-\mu_i)\Biggl\{\pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}\Biggr\}-W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggl(\textcolor{Red}{\pdv*{(y_i-\mu_i)}{\beta_k}}\biggr) \\
+                    & =\sum_i -(y_i-\mu_i)\Biggl\{\pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}\Biggr\}+W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\textcolor{Red}{\pdv{\mu_i}{\eta_i}\pdv{\eta_i}{\beta_k}}  \\
+                    & =\sum_i -(y_i-\mu_i)\pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}+x_{ij}W_i x_{ik}.
+\end{align*}
+\subsection*{Fisher Information}
+To get an element of the Expected/Fisher Information matrix:
+\begin{align*}
+    \MatrixCal{I}_{jk}
+     & =\sum_i\E*{-\pdv{\ell}{\beta_j,\beta_k}}                                                                                                \\
+     & =\sum_i\E*{-(y_i-\mu_i)\pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}+x_{ij}W_i x_{ik}}                       \\
+     & =\sum_i-\textcolor{Red}{\E[\big]{(y_i-\mu_i)}}\pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}+x_{ij}W_i x_{ik} \\
+     & =\sum_i x_{ij}W_i x_{ik}.
+\end{align*}
+Therefore, we can write the $(j, k)$ element of the Fisher information as:
+\[ \MatrixCal{I}_{jk}=\sum_{i=1}^{n} x_{ij}W_i x_{ik}=[\Matrix{X}\Matrix{\MatrixCal{W}}\Matrix{X}^\top]_{jk} \]
+where again, $ \MatrixCal{W}=\diag{W_1,\ldots,W_n} $ and $ W_i^{-1}=\Var{Y_i}(\pdv{\eta_i}{\mu_i})^2 $.
+\subsection*{When is Fisher Scoring Equivalent to Newton Raphson?}
+Recall information matrix:
+\[  \Matrix{I}_{jk}=\sum_i -(y_i-\mu_i)\pdv*{\biggl[\textcolor{Red}{W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}}\biggr]}{\beta_k}+x_{ij}W_i x_{ik}. \]
+Now examine:
+\begin{align*}
+    W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}
+     & =\Biggl(\Var{Y_i}\biggl(\pdv{\eta_i}{\mu_i}\biggr)^{\!2}\Biggr)^{\!-1}\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}                                                                                                        \\
+     & =\Biggl(a(\phi)b^{\prime\prime}(\theta_i)\pdv{\eta_i}{\mu_i}\Biggr)^{\!-1}x_{ij}                              &  & \text{since $\Var{Y_i}=a_i(\phi)b^{\prime\prime}(\theta_i)$}                                      \\
+     & =\Biggl(a(\phi)\pdv{\mu_i}{\theta_i}\pdv{\eta_i}{\mu_i} \Biggr)^{\!-1}x_{ij}                                  &  & \text{since $ b^{\prime}(\theta_i)=\mu_i $, $ b^{\prime\prime}(\theta_i)=\pdv{\mu_i}{\theta_i} $} \\
+     & =\bigl(a(\phi)\bigr)^{-1}x_{ij}                                                                               &  & \text{\textcolor{Red}{under the canonical link $\theta_i=\eta_i$.}}
+\end{align*}
+So under the \textcolor{Red}{canonical link},
+\[ \pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}=\pdv*{\Bigl[\textcolor{Red}{\bigl(a(\phi)\bigr)^{-1}x_{ij}}\Bigr]}{\beta_k}=0, \]
+therefore information matrix is same as the Fisher information:
+\[ \Matrix{I}_{jk}=\sum_{i}x_{ij}W_i x_{ij}=\MatrixCal{I}_{jk}  \]
+and Fisher Scoring is equivalent to Newton Raphson.
+\subsection*{Iteratively Reweighted Least Squares}
+The Fisher Scoring is also called \textcolor{Red}{iteratively reweighted least squares} (IRWLS).
+The reason is that the update equation can be rewritten as:
+\[ \hat{\Vector{\beta}}^{(r+1)}=\Bigl(\Matrix{X}\MatrixCal{W}\bigl(\hat{\Vector{\beta}}^{(r)}\bigr)\Matrix{X}^\top\Bigr)^{\!-1}\Matrix{X}\MatrixCal{W}\bigl(\hat{\Vector{\beta}}^{(r)}\bigr)\RandomVector{Z}\bigl(\hat{\Vector{\beta}}^{(r)}\bigr) \]
+where $ \RandomVector{Z} $ is a transformation of the response vector $ \RandomVector{Y} $ such that:
+\[ \RandomVector{Z}=\Vector{\eta}+(\RandomVector{Y}-\Vector{\mu})\ast\pdv{\Vector{\eta}}{\Vector{\mu}} \]
+\begin{itemize}
+    \item See manipulation in Section 1.2.3 of course notes.
+    \item Same form as the weighted LS estimate of $ \Vector{\beta} $ with dependent variable $ \RandomVector{Z} $
+          and weight matrix $ \MatrixCal{W} $.
+    \item $ \RandomVector{Z} $ and $ \MatrixCal{W} $ are updated at each iteration.
+\end{itemize}
+\subsection*{Topic Summary}
+2b Maximum Likelihood Estimation of Generalized Linear Models:
+\begin{itemize}
+    \item When $ Y_i $ come from a distribution in the \textcolor{Red}{exponential family}, we can use
+          the theory of \textcolor{Red}{Generalized Linear Models} to fit the regression equations of
+          the form:
+          \[ g(\mu_i)=\Vector{x}_i^\top \Vector{\beta}. \]
+    \item The \textcolor{Red}{link function} $ g(\:\cdot\:) $ may be the canonical link, but its choice should
+          come from model interpretation and fit.
+    \item Can use Fisher Scoring (also known as IRWLS) to estimate the regression parameters $ \Vector{\beta} $ from any GLM based on general forms for $ \Matrix{I}(\Vector{\beta}) $
+          and $ S(\Vector{\beta}) $.
+    \item Practice: Chapter 1 review problems.
+\end{itemize}

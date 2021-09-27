@@ -1,0 +1,145 @@
+\section*{Topic 3a: Binary Data and Odds Ratios}
+\addcontentsline{toc}{section}{Topic 3a: Binary Data and Odds Ratios}
+\subsection*{Binary Data Set-up}
+Consider the simplest case with two \emph{binary} variables:
+\begin{itemize}
+    \item COVID-19: infected or not infected (response).
+    \item Vaccination: yes or no (explanatory variable).
+\end{itemize}
+Use a $ 2\times 2 $ table to summarize the data:
+TODOtab1
+Treat $ m_1 $ and $ m_2 $ as fixed, assume $ Y_1 $ and $ Y_2 $ are independent binomial r.v.'s
+\[ Y_k \sim \Bin{m_k,\pi_k},\qquad k=1,2, \]
+where $ \pi_k=\Prob{\text{infection}\given \text{group $ k $}} $.
+
+How do we measure the associate between COVID-19 infection and vaccination?
+\subsection*{Measures of Association}
+\begin{Regular}{Definition (Odds Ratio)}
+    The \textcolor{Red}{Odds Ratio} (OR) is the ratio of the odds of an event occurring in one
+    group to the odds of the event in another group (e.g., not vaccinated):
+    \[ \text{Odds Ratio}=\frac{\pi_1/(1-\pi_1)}{\pi_2(1-\pi_2)}. \]
+\end{Regular}
+Interpretation of OR:
+\[ \begin{array}{ccccc}
+        \pi_1=\pi_2 & \implies & \OR=1   & \implies & \text{equal risk}             \\
+        \pi_1>\pi_2 & \implies & \OR>1   & \implies & \text{higher risk in group 1} \\
+        \pi_1<\pi_2 & \implies & 0<\OR<1 & \implies & \text{higher risk in group 2}
+    \end{array} \]
+\begin{Regular}{Relative Risk (RR)}
+    The \textcolor{Red}{Relative Risk} (RR) is the ratio of the probability of an event occurring in one group versus another group:
+    \[ \text{Relative Risk}=\frac{\pi_1}{\pi_2} \]
+\end{Regular}
+In the case of a \textcolor{Red}{rare disease} (i.e., when $ \pi_1 $ and $ \pi_2 $ are very small),
+\[ \OR=\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)}=\frac{\pi_1}{\pi_2}\underbrace{\biggl(\frac{1-\pi_2}{1-\pi_1}\biggr)}_{\approx 1}\approx \frac{\pi_1}{\pi_2} =\RR,  \]
+then
+\[ \OR\approx\RR. \]
+\subsection*{Maximum Likelihood Estimation of Odds Ratio}
+Goal: Estimate odds ratio $ \psi=\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)} $ using likelihood method. Based
+on ``grouped'' binomial data, $ \textcolor{Red}{Y_k \sim \Bin{m_k,\pi_k},\; k=1,2} $,
+\begin{align*}
+    L(\pi_1,\pi_2)
+     & =\binom{m_1}{y_1}\pi_1^{y_1}(1-\pi_1)^{m_1-y_1}\binom{m_2}{y_2}\pi_2^{y_2}(1-\pi_2)^{m_2-y_2}                                                        \\
+     & \propto\biggl(\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)} \biggr)^{\!y_1}\biggl(\frac{\pi_2}{1-\pi_2}\biggr)^{\! y_2+y_1}(1-\pi_1)^{m_1}(1-\pi_2)^{m_2}.
+\end{align*}
+Note that $ \pi_1,\pi_2\in[0,1] $ and odds ratio $ \psi\in(0,\infty) $ are restricted, we consider re-parameterize:
+\[ \theta_1=\log*{\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)}}=\log{\psi},\qquad \theta_2=\log*{\frac{\pi_2}{1-\pi_2}}, \]
+and now $ \theta_1,\theta_2\in(-\infty,\infty) $.
+
+Our re-parameterization implies:
+\[ \pi_1=\frac{e^{\theta_1+\theta_2}}{1+e^{\theta_1+\theta_2}},\qquad \pi_2=\frac{e^{\theta_2}}{1+e^{\theta_2}}. \]
+Now the likelihood becomes:
+\begin{align*}
+    L(\theta_1,\theta_2)    & =(e^{\theta_1})^{y_1}(e^{\theta_2})^{y_1+y_2}(1+e^{\theta_1+\theta_2})^{m_1}(1+e^{\theta_2})^{-m_2}, \\
+    \ell(\theta_1,\theta_2) & =y_1\theta_1+(y_1+y_2)\theta_2-m_1\log{1+e^{\theta_1+\theta_2}}-m_2\log{1+e^{\theta_2}}.
+\end{align*}
+The score vector is:
+\[ S(\theta_1,\theta_2)=\begin{pmatrix}
+        \pdv{\ell}{\theta_1} \\
+        \pdv{\ell}{\theta_2}
+    \end{pmatrix}=\begin{pmatrix}
+        y_1-m_1\biggl(\frac{e^{\theta_1+\theta_2}}{1+e^{\theta_1+\theta_2}} \biggr) \\
+        y_1+y_2-m_1\biggl(\frac{e^{\theta_1+\theta_2}}{1+e^{\theta_1+\theta_2}} \biggr)-m_2\biggl(\frac{e^{\theta_2}}{1+e^{\theta_2}} \biggr)
+    \end{pmatrix}. \]
+\subsection*{Inference for Odds Ratio}
+In order to do inference we will need the Information Matrix:
+\[ \Matrix{I}(\theta_1,\theta_2)=\begin{bmatrix}
+        I_{11} & I_{12} \\
+        I_{21} & I_{22}
+    \end{bmatrix}\qquad\text{where }I_{jk}=-\pdv*{\ell(\theta_1,\theta_2)}{\theta_j,\theta_k}. \]
+Here, we have:
+\begin{align}
+    I_{11} & =m_1\biggl(\frac{e^{\theta_1+\theta_2}}{(1+e^{\theta_1+\theta_2})^2} \biggr),                                                                                                                                          \\
+    I_{12} & =I_{21}                                                                                                                                 & m_1\biggl(\frac{e^{\theta_1+\theta_2}}{(1+e^{\theta_1+\theta_2})^2} \biggr), \\
+    I_{22} & =m_1\biggl(\frac{e^{\theta_1+\theta_2}}{(1+e^{\theta_1+\theta_2})^2} \biggr)+m_2\biggl(\frac{e^{\theta_2}}{(1+e^{\theta_2})^2} \biggr).
+\end{align}
+We are interested in doing inference on $ \theta_1=\log{\psi} $ (while $ \theta_2 $ is nuisance).
+
+Recall the asymptotic distribution result of a \textcolor{Red}{Wald statistic}:
+\begin{Regular}{Wald Statistic}
+    For a vector $ \Vector{\theta}=(\theta_1,\theta_2) $ where $ \theta_1=\log{\psi} $ is a scalar parameter of interest:
+    \[ (\hat{\theta}_1-\theta_1)^2\bigl(I^{11}(\hat{\theta}_1,\hat{\theta}_2)\bigr)^{-1}\sim \chi^2_{(1)}, \]
+    where $ I^{11} $ is the $ (1,1) $ element of $ I^{-1} $ evaluated at MLE $ \hat{\theta}_1 $ and $ \hat{\theta}_2 $.
+\end{Regular}
+\begin{itemize}
+    \item Calculation of $ I^{11} $ by using a general result:
+          \[ I=\begin{pmatrix}
+                  I_{11} & I_{12} \\
+                  I_{21} & I_{22}
+              \end{pmatrix},\qquad I^{-1}=\begin{pmatrix}
+                  \textcolor{Red}{I^{11}} & I^{12} \\
+                  I^{21}                  & I^{22}
+              \end{pmatrix},\qquad \textcolor{Red}{I^{11}}=\bigl(I_{11}-I_{12}I_{22}^{-1}I_{21}\bigr)^{-1} \]
+    \item We can use the Wald result to find a confidence interval for $ \theta_1=\log{\psi} $.
+\end{itemize}
+\subsection*{Confident Interval for Odds Ratio}
+Here, we obtain:
+\[ I^{11}(\hat{\theta}_1,\hat{\theta}_2)=\frac{1}{y_1} +\frac{1}{m_1-y_1}+\frac{1}{y_2}+\frac{1}{m_2-y_2}. \]
+Thus, a Wald-based \qty{95}{\percent} confidence interval for $ \theta_1=\log{\psi} $ is:
+\[ \hat{\theta}_1\pm 1.96\sqrt{\frac{1}{y_1} +\frac{1}{m_1-y_1} +\frac{1}{y_2} +\frac{1}{m_2-y_2}}=(\hat{\theta}_{1\text{L}},\hat{\theta}_{1\text{U}}). \]
+A \qty{95}{\percent} confidence interval for the Odds Ratio $ \psi $ is:
+\[ \bigl(\exp{\hat{\theta}_{1\text{L}}},\exp{\hat{\theta}_{1\text{U}}}\bigr) \]
+\subsection*{Example: Prenatal Care from Two Clinics}
+Consider the data below for the relationship between:
+\begin{itemize}
+    \item \textcolor{Blue}{Response}: Fetal Mortality.
+    \item \textcolor{Blue}{Explanatory variable}: Level of Care.
+\end{itemize}
+TODOtab2
+\begin{itemize}
+    \item Using the above data, we obtain MLE of odds ratio $ \psi $:
+          \[ \hat{\psi}=\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}=\frac{20/316}{46/373}=0.51. \]
+          $ \hat{\psi}=0.51<1 $, the risk of mortality is lower with intensive care.
+    \item A \qty{95}{\percent} CI for $ \theta_1=\log{\psi} $:
+          \[ \log{0.51}\pm 1.96\sqrt{\frac{1}{20}+\frac{1}{316}+\frac{1}{46}+\frac{1}{373}}=(-1.219,-0.127). \]
+    \item A \qty{95}{\percent} CI for odds ratio $ \psi $:
+          \[ \bigl(\exp{-1.219},\exp{-0.127}\bigr)=(0.30,0.89). \]
+          Note that the CI does not cover the value $ \psi=1 $ (no association), so we reject the null
+          hypothesis of no association between fetal mortality and level of care.
+\end{itemize}
+\subsection*{Example: Prenatal Care from Two Clinics}
+There is an \textcolor{Blue}{additional explanatory variable}: Clinic (A vs B). The association between
+Mortality and Level of Care (by Clinic).
+TODOtab2
+\begin{itemize}
+    \item $ \hat{\psi}_\text{A}=0.80\qquad(0.37,1.73) $ and $ \hat{\psi}_\text{B}=1.01\qquad(0.33,3.10) $.
+    \item These results do NOT agree with the results from the pooled analysis on
+          the previous slide.
+\end{itemize}
+The association between Level of Care and Clinic:
+TODOtab3
+\begin{itemize}
+    \item $ \hat{\psi}=14.06\qquad(9.12,21.76) $.
+\end{itemize}
+The association between Mortality and Clinic
+TODOtab4
+\begin{itemize}
+    \item $ \hat{\psi}=0.35\qquad(0.21,0.58) $.
+\end{itemize}
+\begin{itemize}
+    \item The initial strong association between Level of Care and Infant Morality
+          disappeared when we stratified by clinic.
+          TODOfig2
+    \item Instead of having to examine multiple $ 2\times 2 $ tables we'd like to estimate the $ \OR $
+          and compute associations using a multiple regression model.
+    \item One way to do this is by fitting a Binomial GLM to the data.
+\end{itemize}

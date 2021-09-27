@@ -3,181 +3,180 @@
 \addcontentsline{toc}{section}{Topic 1b: Review of Likelihood Methods}
 \subsection*{Distributions with a Single Parameter}
 \begin{Regular}{Setup}
-    \begin{itemize}
-        \item Suppose $ Y $ is a random variable with probability density (or mass) function
-              $ f(y;\theta) $, where $ \theta\in\Omega $ is a continuous parameter.
-        \item The true value of $ \theta $ is unknown.
-        \item We wish to make inferences about $ \theta $ (i.e., we may want to estimate $ \theta $, calculate
-              a \qty{95}{\percent} CI or carry out tests of hypotheses regarding $ \theta $).
-    \end{itemize}
+      \begin{itemize}
+            \item Suppose $ Y $ is a random variable with probability density (or mass) function
+                  $ f(y;\theta) $, where $ \theta\in\Omega $ is a continuous parameter.
+            \item The true value of $ \theta $ is unknown.
+            \item We wish to make inferences about $ \theta $ (i.e., we may want to estimate $ \theta $, calculate
+                  a \qty{95}{\percent} CI or carry out tests of hypotheses regarding $ \theta $).
+      \end{itemize}
 \end{Regular}
 \subsection*{Likelihood Function}
 \begin{itemize}
-    \item The \textcolor{Red}{Likelihood function} is any function which is proportional to the probability
-          of observing the data one actually obtained, i.e.,
-          \[ L(\theta;y)=cf(y;\theta)=c\Prob{Y=y;\theta}, \]
-          where $ c $ is a \emph{proportionality constant} that does not depend on $ \theta $.
-    \item $ L(\theta;y) $ contains all the information regarding $ \theta $ from the data.
-    \item $ L(\theta;y) $ ranks the various parameter values in terms of their consistency
-          with the data.
-    \item Since $ L(\theta;y) $ is defined in terms of the random variable $ y $, it is itself a
-          random variable.
+      \item The \textcolor{Red}{Likelihood function} is any function which is proportional to the probability
+            of observing the data one actually obtained, i.e.,
+            \[ L(\theta;y)=cf(y;\theta)=c\Prob{Y=y;\theta}, \]
+            where $ c $ is a \emph{proportionality constant} that does not depend on $ \theta $.
+      \item $ L(\theta;y) $ contains all the information regarding $ \theta $ from the data.
+      \item $ L(\theta;y) $ ranks the various parameter values in terms of their consistency
+            with the data.
+      \item Since $ L(\theta;y) $ is defined in terms of the random variable $ y $, it is itself a
+            random variable.
 \end{itemize}
 \subsection*{Maximum Likelihood Estimator}
 \begin{itemize}
-    \item For the purposes of estimation we typically want to find $ \theta $ value that makes the
-          observed data the most likely (hence the term \textcolor{Red}{maximum likelihood}).
-    \item The \textcolor{Red}{maximum likelihood estimator (MLE)} of $ \theta $ is
-          \[ \hat{\theta}=\argmax_\theta L(\theta;y). \]
-    \item Estimation becomes a simple optimization problem!
-    \item It is often easier to work with the logarithm of the likelihood function, i.e., the
-          \textcolor{Red}{log-likelihood function}
-          \[ \ell(\theta;y)=\log[\big]{L(\theta;y)}. \]
-    \item Equivalently, since the $ \log{\:\cdot\:} $ function is monotonic, the value of $ \theta $ that maximizes $ L(\theta;y) $ also
-          maximizes the log-likelihood $ \ell(\theta;y) $.
-    \item For simplicity, we drop the $ y $ and use $ L(\theta)=L(\theta;y) $ and $ \ell(\theta)=\ell(\theta;y) $.
+      \item For the purposes of estimation we typically want to find $ \theta $ value that makes the
+            observed data the most likely (hence the term \textcolor{Red}{maximum likelihood}).
+      \item The \textcolor{Red}{maximum likelihood estimator (MLE)} of $ \theta $ is
+            \[ \hat{\theta}=\argmax_\theta L(\theta;y). \]
+      \item Estimation becomes a simple optimization problem!
+      \item It is often easier to work with the logarithm of the likelihood function, i.e., the
+            \textcolor{Red}{log-likelihood function}
+            \[ \ell(\theta;y)=\log[\big]{L(\theta;y)}. \]
+      \item Equivalently, since the $ \log{\:\cdot\:} $ function is monotonic, the value of $ \theta $ that maximizes $ L(\theta;y) $ also
+            maximizes the log-likelihood $ \ell(\theta;y) $.
+      \item For simplicity, we drop the $ y $ and use $ L(\theta)=L(\theta;y) $ and $ \ell(\theta)=\ell(\theta;y) $.
 \end{itemize}
 
 \subsection*{A List of Important Functions}
 \begin{itemize}
-    \item \textcolor{Red}{Log-likelihood function}: $ \ell(\theta)=\log[\big]{L(\theta)} $.
-    \item \textcolor{Red}{Score function}: $ S(\theta)=\pdv{\ell(\theta)}{\theta}=\ell^\prime(\theta)$.
-    \item \textcolor{Red}{Information function}: $ I(\theta)=-\pdv[order=2]{\ell(\theta)}{\theta}=-\ell^{\prime\prime}(\theta) $.
-    \item \textcolor{Red}{Fisher information function}: $ \mathcal{I}(\theta)=\E[\big]{I(\theta)} $.
-    \item \textcolor{Red}{Relative likelihood function}: $ R(\theta)=L(\theta)/L(\hat{\theta}) $.
-    \item \textcolor{Red}{Log relative likelihood function}: $ r(\theta)=\log[\big]{L(\theta)/L(\hat{\theta})}=\ell(\theta)-\ell(\hat{\theta}) $.
+      \item \textcolor{Red}{Log-likelihood function}: $ \ell(\theta)=\log[\big]{L(\theta)} $.
+      \item \textcolor{Red}{Score function}: $ S(\theta)=\pdv{\ell(\theta)}{\theta}=\ell^\prime(\theta)$.
+      \item \textcolor{Red}{Information function}: $ I(\theta)=-\pdv[order=2]{\ell(\theta)}{\theta}=-\ell^{\prime\prime}(\theta) $.
+      \item \textcolor{Red}{Fisher information function}: $ \mathcal{I}(\theta)=\E[\big]{I(\theta)} $.
+      \item \textcolor{Red}{Relative likelihood function}: $ R(\theta)=L(\theta)/L(\hat{\theta}) $.
+      \item \textcolor{Red}{Log relative likelihood function}: $ r(\theta)=\log[\big]{L(\theta)/L(\hat{\theta})}=\ell(\theta)-\ell(\hat{\theta}) $.
 \end{itemize}
 \subsection*{Maximum Likelihood Estimation}
 \begin{itemize}
-    \item Want $ \theta $ that maximizes $ \ell(\theta) $, or equivalently solves $ S(\theta)=0 $.
-    \item Sometimes $ S(\theta)=0 $ can be solved explicitly (easy in this case), but often we must solve iteratively.
-    \item Check that the solution corresponds to a maxima of $ \ell(\theta) $ by verifying the value of the second derivative at $ \hat{\theta} $ is negative, or
-          \[ I(\hat{\theta})=-\ell^{\prime\prime}(\hat{\theta})>0. \]
-    \item \textcolor{Red}{Invariance property of MLEs}: if $ g(\theta) $ is any function of the parameter $ \theta $, then the MLE of $ g(\theta) $ is $ g(\hat{\theta}) $.
-          \begin{Example}{}
-              If $ \hat{\theta} $ is the MLE of $ \theta $, then $ e^{\hat{\theta}} $ is the MLE of $ e^{\theta} $.
-          \end{Example}
+      \item Want $ \theta $ that maximizes $ \ell(\theta) $, or equivalently solves $ S(\theta)=0 $.
+      \item Sometimes $ S(\theta)=0 $ can be solved explicitly (easy in this case), but often we must solve iteratively.
+      \item Check that the solution corresponds to a maxima of $ \ell(\theta) $ by verifying the value of the second derivative at $ \hat{\theta} $ is negative, or
+            \[ I(\hat{\theta})=-\ell^{\prime\prime}(\hat{\theta})>0. \]
+      \item \textcolor{Red}{Invariance property of MLEs}: if $ g(\theta) $ is any function of the parameter $ \theta $, then the MLE of $ g(\theta) $ is $ g(\hat{\theta}) $.
+            \begin{Example}{}
+                  If $ \hat{\theta} $ is the MLE of $ \theta $, then $ e^{\hat{\theta}} $ is the MLE of $ e^{\theta} $.
+            \end{Example}
 \end{itemize}
 \subsection*{Example: Binomial Distribution}
 \begin{Example}{Example: Binomial Distribution}
-    \begin{itemize}
-        \item A study was conducted to examine the risk for hormone use in healthy
-              postmenopausal women.
-        \item Suppose a group of $ n $ women received a combined hormone therapy, and were
-              monitored for the development of breast cancer during 8.5 years followup.
-        \item Let
-              \[ Y_i=\begin{cases*}
-                      1 & , if woman $ i $ developed breast cancer, \\
-                      0 & , otherwise,
-                  \end{cases*} \]
-              for $ i=1,\ldots,n $.
-        \item Suppose $ Y_i \iid\Bernoulli{\pi} $ where $ \pi=\Prob{Y_i=1} $, then the total number of woman developed breast cancer is:
-              \[ Y=\sum_{i=1}^{n} Y_i \sim \Binomial{n,\pi}. \]
-        \item We wish to find the MLE of unknown parameter $ \pi $ (probability of cancer).
-    \end{itemize}
+      \begin{itemize}
+            \item A study was conducted to examine the risk for hormone use in healthy
+                  postmenopausal women.
+            \item Suppose a group of $ n $ women received a combined hormone therapy, and were
+                  monitored for the development of breast cancer during 8.5 years followup.
+            \item Let
+                  \[ Y_i=\begin{cases*}
+                              1 & , if woman $ i $ developed breast cancer, \\
+                              0 & , otherwise,
+                        \end{cases*} \]
+                  for $ i=1,\ldots,n $.
+            \item Suppose $ Y_i \iid\Bernoulli{\pi} $ where $ \pi=\Prob{Y_i=1} $, then the total number of woman developed breast cancer is:
+                  \[ Y=\sum_{i=1}^{n} Y_i \sim \Binomial{n,\pi}. \]
+            \item We wish to find the MLE of unknown parameter $ \pi $ (probability of cancer).
+      \end{itemize}
 \end{Example}
 \begin{itemize}
-    \item \textcolor{Red}{Likelihood function}:
-          \[ L(\pi;y)=c\Prob{Y=y;\pi}=\pi^y(1-\pi)^{n-y}, \]
-          where we take $ c=1/\binom{n}{y} $ to simplify the likelihood.
-    \item \textcolor{Red}{Log-likelihood function}:
-          \[ \ell(\pi)=y\log{\pi}+(n-y)\log{1-\pi}. \]
-    \item \textcolor{Red}{Score function}:
-          \[ S(\pi)=\frac{y}{\pi}-\frac{n-y}{1-\pi}.  \]
-    \item \textcolor{Red}{Maximum Likelihood Estimator}:
-          \[ S(\pi)=0\implies \hat{\pi}=\frac{\sum_{i=1}^{n} y_i}{n}=\bar{y}. \]
-    \item Second derivative test using \textcolor{Red}{information function}:
-          \[ I(\pi)=-\ell^{\prime\prime}=\frac{y}{\pi^2}+\frac{n-y}{(1-\pi)^2}>0\ \forall \pi\in(0,1).   \]
-          Confirms that $ \hat{\pi}=\bar{y} $ is the MLE.
+      \item \textcolor{Red}{Likelihood function}:
+            \[ L(\pi;y)=c\Prob{Y=y;\pi}=\pi^y(1-\pi)^{n-y}, \]
+            where we take $ c=1/\binom{n}{y} $ to simplify the likelihood.
+      \item \textcolor{Red}{Log-likelihood function}:
+            \[ \ell(\pi)=y\log{\pi}+(n-y)\log{1-\pi}. \]
+      \item \textcolor{Red}{Score function}:
+            \[ S(\pi)=\frac{y}{\pi}-\frac{n-y}{1-\pi}.  \]
+      \item \textcolor{Red}{Maximum Likelihood Estimator}:
+            \[ S(\pi)=0\implies \hat{\pi}=\frac{\sum_{i=1}^{n} y_i}{n}=\bar{y}. \]
+      \item Second derivative test using \textcolor{Red}{information function}:
+            \[ I(\pi)=-\ell^{\prime\prime}(\pi)=\frac{y}{\pi^2}+\frac{n-y}{(1-\pi)^2}>0\ \forall \pi\in(0,1). \]
 \end{itemize}
 \begin{Example}{Example: Hormone Therapy Data}
-    \begin{itemize}
-        \item A group of $ n=8506 $ postmenopausal women aged 50-79 received EPT and $ Y=166 $
-              developed invasive breast cancer during the followup.
-        \item Assume $ Y \sim \Binomial{n,\pi} $ with unknown parameter $ \pi $.
-        \item The \textcolor{Red}{maximum likelihood estimate} of $ \pi $ is:
-              \[ \hat{\pi}=\bar{y}=\frac{y}{n} =\frac{166}{8506}=0.0195. \]
-    \end{itemize}
+      \begin{itemize}
+            \item A group of $ n=8506 $ postmenopausal women aged 50-79 received EPT and $ Y=166 $
+                  developed invasive breast cancer during the followup.
+            \item Assume $ Y \sim \Binomial{n,\pi} $ with unknown parameter $ \pi $.
+            \item The \textcolor{Red}{maximum likelihood estimate} of $ \pi $ is:
+                  \[ \hat{\pi}=\bar{y}=\frac{y}{n} =\frac{166}{8506}=0.0195. \]
+      \end{itemize}
 \end{Example}
 \subsection*{Example: Poisson Distribution}
 Suppose $ y_1,\ldots,y_n $ is an iid sample from a Poisson distribution with probability mass function:
 \[ f(y;\lambda)=\Prob{Y=y;\lambda}=\frac{\lambda^y e^{-\lambda}}{y!},\; \lambda>0,\,y=0,1,2,\ldots.  \]
 \begin{itemize}
-    \item \textcolor{Red}{Likelihood function}:
-          \[ L(\lambda;y_1,\ldots,y_n)=\prod_{i=1}^n f(y_i;\lambda)=\frac{\lambda^{\sum y_i}e^{-n\lambda}}{\prod_i y_i!}.  \]
-    \item \textcolor{Red}{Log-likelihood function}:
-          \[ \ell(\lambda)=\biggl(\sum_i y_i\biggr)\log{\lambda}-n\lambda-\sum_{i=1}^{n} \log{y_i!}. \]
-    \item \textcolor{Red}{Score function}:
-          \[ S(\lambda)=\frac{\sum_i y_i}{\lambda}-n=0\implies \hat{\lambda}=\frac{\sum_{i=1}^{n} y_i}{n} =\bar{y}.  \]
+      \item \textcolor{Red}{Likelihood function}:
+            \[ L(\lambda;y_1,\ldots,y_n)=\prod_{i=1}^n f(y_i;\lambda)=\frac{\lambda^{\sum y_i}e^{-n\lambda}}{\prod_i y_i!}.  \]
+      \item \textcolor{Red}{Log-likelihood function}:
+            \[ \ell(\lambda)=\biggl(\sum_i y_i\biggr)\log{\lambda}-n\lambda-\sum_{i=1}^{n} \log{y_i!}. \]
+      \item \textcolor{Red}{Score function}:
+            \[ S(\lambda)=\frac{\sum_i y_i}{\lambda}-n=0\implies \hat{\lambda}=\frac{\sum_{i=1}^{n} y_i}{n} =\bar{y}.  \]
 \end{itemize}
 \subsection*{Newton Raphson Algorithm For Finding MLE}
 \begin{itemize}
-    \item Sometimes, solving $ S(\theta)=0 $ can be challenging and closed form solutions may
-          not be obtained, iterative method need to be used to find the MLE.
-    \item Recall \textcolor{Red}{Taylor Series} expansion of a differentiable function $ f(x) $ about a point $ a $:
-          \[ f(x)=f(a)+\frac{f^\prime(a)}{1!}(x-a)+\frac{f^{\prime\prime}(a)}{2!}(x-a)^2+\cdots.  \]
-    \item Now suppose we wish to find $ \hat{\theta} $, the root of $ S(\theta)=0 $ and $ \theta^{(0)} $ is a guess that
-          is ``close'' to $ \hat{\theta} $.
-    \item Consider the Taylor series expansion of $ S(\theta) $ about $ \theta^{(0)} $:
-          \[ S(\theta)=S(\theta^{(0)})+\frac{S^{\prime}(\theta^{(0)})}{1!}(\theta-\theta^{(0)})+\frac{S^{\prime\prime}(\theta^{(0)})}{2!}(\theta-\theta^{(0)})^2+\cdots.   \]
-    \item For $ \abs{\theta-\theta^{(0)}} $ very small, the second and higher order terms can be dropped to a good approximation:
-          \begin{align*}
-              S(\theta) & \simeq S(\theta^{(0)})+S^\prime(\theta^{(0)})(\theta-\theta^{(0)}). \\
-              S(\theta) & \simeq S(\theta^{(0)})-I(\theta^{(0)})(\theta-\theta^{(0)}).
-          \end{align*}
-    \item Then at $ \theta=\hat{\theta} $,
-          \begin{align*}
-              S(\hat{\theta})                            & \simeq S(\theta^{(0)})-I(\theta^{(0)})(\hat{\theta}-\theta^{(0)}) \\
-              I(\theta^{(0)})(\hat{\theta}-\theta^{(0)}) & \simeq S(\theta^{(0)})                                            \\
-              (\hat{\theta}-\theta^{(0)})                & \simeq I^{-1}(\theta^{(0)})S(\theta^{(0)})                        \\
-              \hat{\theta}                               & \simeq \theta^{(0)}+I^{-1}(\theta^{(0)})S(\theta^{(0)}).
-          \end{align*}
-    \item This suggests a revised guess for $ \hat{\theta} $ is:
-          \[ \theta^{(1)}=\theta^{(0)}+I^{-1}(\theta^{(0)})S(\theta^{(0)}) \]
+      \item Sometimes, solving $ S(\theta)=0 $ can be challenging and closed form solutions may
+            not be obtained, iterative method need to be used to find the MLE.
+      \item Recall \textcolor{Red}{Taylor Series} expansion of a differentiable function $ f(x) $ about a point $ a $:
+            \[ f(x)=f(a)+\frac{f^\prime(a)}{1!}(x-a)+\frac{f^{\prime\prime}(a)}{2!}(x-a)^2+\cdots.  \]
+      \item Now suppose we wish to find $ \hat{\theta} $, the root of $ S(\theta)=0 $ and $ \theta^{(0)} $ is a guess that
+            is ``close'' to $ \hat{\theta} $.
+      \item Consider the Taylor series expansion of $ S(\theta) $ about $ \theta^{(0)} $:
+            \[ S(\theta)=S(\theta^{(0)})+\frac{S^{\prime}(\theta^{(0)})}{1!}(\theta-\theta^{(0)})+\frac{S^{\prime\prime}(\theta^{(0)})}{2!}(\theta-\theta^{(0)})^2+\cdots.   \]
+      \item For $ \abs{\theta-\theta^{(0)}} $ very small, the second and higher order terms can be dropped to a good approximation:
+            \begin{align*}
+                  S(\theta) & \simeq S(\theta^{(0)})+S^\prime(\theta^{(0)})(\theta-\theta^{(0)}). \\
+                  S(\theta) & \simeq S(\theta^{(0)})-I(\theta^{(0)})(\theta-\theta^{(0)}).
+            \end{align*}
+      \item Then at $ \theta=\hat{\theta} $,
+            \begin{align*}
+                  S(\hat{\theta})                            & \simeq S(\theta^{(0)})-I(\theta^{(0)})(\hat{\theta}-\theta^{(0)}) \\
+                  I(\theta^{(0)})(\hat{\theta}-\theta^{(0)}) & \simeq S(\theta^{(0)})                                            \\
+                  (\hat{\theta}-\theta^{(0)})                & \simeq I^{-1}(\theta^{(0)})S(\theta^{(0)})                        \\
+                  \hat{\theta}                               & \simeq \theta^{(0)}+I^{-1}(\theta^{(0)})S(\theta^{(0)}).
+            \end{align*}
+      \item This suggests a revised guess for $ \hat{\theta} $ is:
+            \[ \theta^{(1)}=\theta^{(0)}+I^{-1}(\theta^{(0)})S(\theta^{(0)}) \]
 \end{itemize}
 \begin{Regular}{Newton Raphson Algorithm for finding the MLE}
-    \begin{itemize}
-        \item Begin with an initial estimate $ \theta^{(0)} $.
-        \item Iteratively obtain updated estimate by using:
-              \[ \theta^{(i+1)}=\theta^{(i)}+I^{-1}(\theta^{(i)})S(\theta^{(i)}). \]
-        \item Iteration continues until $ \theta^{(i+1)}\simeq \theta^{(i)} $ within a specified tolerance.
-        \item Then set $ \hat{\theta}=\theta^{(i+1)} $, check that $ I(\hat{\theta})>0 $.
-    \end{itemize}
+      \begin{itemize}
+            \item Begin with an initial estimate $ \theta^{(0)} $.
+            \item Iteratively obtain updated estimate by using:
+                  \[ \theta^{(i+1)}=\theta^{(i)}+I^{-1}(\theta^{(i)})S(\theta^{(i)}). \]
+            \item Iteration continues until $ \theta^{(i+1)}\simeq \theta^{(i)} $ within a specified tolerance.
+            \item Then set $ \hat{\theta}=\theta^{(i+1)} $, check that $ I(\hat{\theta})>0 $.
+      \end{itemize}
 \end{Regular}
 \subsection*{Inference for Scalar Parameters $ \theta $}
 \begin{itemize}
-    \item So far we have discussed estimation of $ \hat{\theta} $, next we want to conduct inference
-          about $ \theta $, i.e., carry out hypothesis tests and construct confidence intervals of $ \theta $.
-    \item Likelihood inference relies on the following \textcolor{Red}{asymptotic distribution results}:
-          \begin{Regular}{Useful asymptotic distributional results}
-              \begin{itemize}
-                  \item \textcolor{Red}{(log) Likelihood ratio statistic}: $ -2\log[\big]{R(\theta)}=-2r(\theta)\sim \chi^2_{(1)} $.
-                  \item \textcolor{Red}{Score statistic}: $ \bigl(S(\theta)\bigr)^2/I(\theta)\sim \chi^2_{(1)} $.
-                  \item \textcolor{Red}{Wald statistic}: $ (\hat{\theta}-\theta)^2 I(\hat{\theta}) \sim \chi^2_{(1)} $ or $ (\hat{\theta}-\theta)\sqrt{I(\hat{\theta})}\sim \N{0,1} $
-                        since $ Z \sim \N{0,1} \implies Z^2 \sim \chi^2_{1} $.
-              \end{itemize}
-          \end{Regular}
+      \item So far we have discussed estimation of $ \hat{\theta} $, next we want to conduct inference
+            about $ \theta $, i.e., carry out hypothesis tests and construct confidence intervals of $ \theta $.
+      \item Likelihood inference relies on the following \textcolor{Red}{asymptotic distribution results}:
+            \begin{Regular}{Useful asymptotic distributional results}
+                  \begin{itemize}
+                        \item \textcolor{Red}{(log) Likelihood ratio statistic}: $ -2\log[\big]{R(\theta)}=-2r(\theta)\sim \chi^2_{(1)} $.
+                        \item \textcolor{Red}{Score statistic}: $ \bigl(S(\theta)\bigr)^2/I(\theta)\sim \chi^2_{(1)} $.
+                        \item \textcolor{Red}{Wald statistic}: $ (\hat{\theta}-\theta)^2 I(\hat{\theta}) \sim \chi^2_{(1)} $ or $ (\hat{\theta}-\theta)\sqrt{I(\hat{\theta})}\sim \N{0,1} $
+                              since $ Z \sim \N{0,1} \implies Z^2 \sim \chi^2_{1} $.
+                  \end{itemize}
+            \end{Regular}
 \end{itemize}
 \subsection*{Confidence Interval (CI)}
 Suppose we want a $ 100(1-\alpha)\, \% $ confidence interval for $ \theta $.
 \begin{itemize}
-    \item The \textcolor{Red}{Likelihood ratio (LR)} based pivotal gives a confidence interval:
-          \[ \Set*{\theta:-2r(\theta)<\chi^2_{1}(1-\alpha)}, \]
-          where $ \chi^2_1(1-\alpha) $ is the upper $ \alpha $ percentage point of the $ \chi^2_1 $ distribution.
-    \item The \textcolor{Red}{Wald}-based pivotal gives an interval:
-          \[ \Set*{\theta:(\hat{\theta}-\theta)^2 I(\hat{\theta})<\chi^2_1(1-\alpha)}, \]
-          or equivalently
-          \[ \hat{\theta}\pm Z_{1-\alpha/2}\bigl(I(\hat{\theta})\bigr)^{-1/2}, \]
-          where $ Z_{1-\alpha/2} $ is the upper $ \alpha/2 $ percentage point of the standard normal.
+      \item The \textcolor{Red}{Likelihood ratio (LR)} based pivotal gives a confidence interval:
+            \[ \Set*{\theta:-2r(\theta)<\chi^2_{1}(1-\alpha)}, \]
+            where $ \chi^2_1(1-\alpha) $ is the upper $ \alpha $ percentage point of the $ \chi^2_1 $ distribution.
+      \item The \textcolor{Red}{Wald}-based pivotal gives an interval:
+            \[ \Set*{\theta:(\hat{\theta}-\theta)^2 I(\hat{\theta})<\chi^2_1(1-\alpha)}, \]
+            or equivalently
+            \[ \hat{\theta}\pm Z_{1-\alpha/2}\bigl(I(\hat{\theta})\bigr)^{-1/2}, \]
+            where $ Z_{1-\alpha/2} $ is the upper $ \alpha/2 $ percentage point of the standard normal.
 \end{itemize}
 \subsection*{Example: Hormone Therapy Data}
 \textcolor{Red}{Likelihood Ratio} based $ \qty{95}{\percent} $ CI: $ \Set*{\theta:-2r(\theta)<\chi^2_{1}(0.95)} $
 where $ r(\theta)=\ell(\theta)-\ell(\hat{\theta}) $.
 \begin{itemize}
-    \item For the Binomial distribution: $ \hat{\theta}=y/n $, and
-          \[ r(\theta)=\bigl(y\log{\theta}+(n-y)\log{1-\theta}\bigr)-\biggl(y\log*{\frac{y}{n}}+(n-y)\log*{1-\frac{y}{n}}\biggr). \]
-    \item To find the root of $ -2r(\theta)=\chi^2_1(0.95) $:
-          %\begin{noindent}
+      \item For the Binomial distribution: $ \hat{\theta}=y/n $, and
+            \[ r(\theta)=\bigl(y\log{\theta}+(n-y)\log{1-\theta}\bigr)-\biggl(y\log*{\frac{y}{n}}+(n-y)\log*{1-\frac{y}{n}}\biggr). \]
+      \item To find the root of $ -2r(\theta)=\chi^2_1(0.95) $:
+            %\begin{noindent}
             <<>>=
             y=166; n=8506
             LRCI=function(theta, y, n)
@@ -189,127 +188,108 @@ where $ r(\theta)=\ell(\theta)-\ell(\hat{\theta}) $.
             uniroot(LRCI, c(mle,1), y=y, n=n)$root
             @
             %\end{noindent}
-    \item The likelihood ratio based $ \qty{95}{\percent} $ CI is $(0.017, 0.023)$.
-          % \begin{noindent}
-            <<echo=FALSE>>=
-            y = 166
-            n = 8506
-            LRCI = function(theta, y, n)
-            {
-            -2 * (y * log(theta) + (n - y) * log(1 - theta) - y * log(y / n) -
-                  (n - y) * log(1 - y / n)) - qchisq(0.95, 1)
-            }
-            theta = seq(0.01, 0.040, by = 0.001)
-            theta.hat = y / n
-            plot(theta,y*log(theta)+(n-y)*log(1-theta)-( y*log(theta.hat)+(n-y)*log(1-theta.hat) ), type="l", ylab = "r(theta)", xlab="theta", main = "")
-            #abline(v=theta.hat, lty = 2)
-            left = uniroot(LRCI, c(0, theta.hat), y = y, n = n)$root
-            right = uniroot(LRCI, c(theta.hat, 1), y = y, n = n)$root
-            abline(v = left, col = "red", lty = 2)
-            abline(v = right, col = "red", lty = 2)
-            abline(h = qchisq(0.95,1)*(-1/2), col = "blue")
-            axis(1, at = left, labels = round(left, 3), col.axis = "red", las = 2)
-            axis(1, at = right, labels = round(right, 3), col.axis = "red", las = 2)
-            axis(2, at = qchisq(0.95,1)*(-1/2), labels = round(qchisq(0.95,1)*(-1/2), 2), col.axis = "red", las = 2)
-            @
-            % \end{noindent}
+      \item The likelihood ratio based $ \qty{95}{\percent} $ CI is $(0.017, 0.023)$.
 \end{itemize}
 \textcolor{Red}{Wald} based $ \qty{95}{\percent} $ CI: $ \hat{\theta}\pm Z_{0.975}\bigl(I(\hat{\theta})\bigr)^{-1/2} $.
 \begin{itemize}
-    \item For Binomial distribution $ \hat{\theta}=y/n $ and
-          \[ I(\hat{\theta})=\frac{y}{\hat{\theta}^2}+\frac{n-y}{(1-\hat{\theta})^2}=n^2\biggl(\frac{1}{y} +\frac{1}{n-y}\biggr).   \]
-    \item So we solve:
-          \begin{align*}
-              \hat{\theta}\pm 1.96\bigl(I(\hat{\theta})\bigr)^{-1/2}
-               & =0.0195 \pm 1.96(0.0015) \\
-               & =(0.017, 0.022).
-          \end{align*}
-    \item The Wald based $ \qty{95}{\percent} $ CI is: $ (0.017, 0.022) $.
+      \item For Binomial distribution $ \hat{\theta}=y/n $ and
+            \[ I(\hat{\theta})=\frac{y}{\hat{\theta}^2}+\frac{n-y}{(1-\hat{\theta})^2}=n^2\biggl(\frac{1}{y} +\frac{1}{n-y}\biggr).   \]
+      \item So we solve:
+            \begin{align*}
+                  \hat{\theta}\pm 1.96\bigl(I(\hat{\theta})\bigr)^{-1/2}
+                   & =0.0195 \pm 1.96(0.0015) \\
+                   & =(0.017, 0.022).
+            \end{align*}
+      \item The Wald based $ \qty{95}{\percent} $ CI is: $ (0.017, 0.022) $.
+            \begin{figure}[!htbp]
+                  \centering
+                  \includegraphics{figures/1bLR.pdf}
+            \end{figure}
 \end{itemize}
 \subsection*{Hypotheses Test}
 Suppose we are interested in testing hypotheses:
 \[ \text{$\HN$: $\theta=\theta_0$ vs $\HA$: $\theta\ne \theta_0$.} \]
 \begin{itemize}
-    \item \textcolor{Red}{Likelihood ratio (LR) test}: $ p\text{-value}=\Prob*{\chi^2_1>-2r(\theta_0)} $.
-    \item \textcolor{Red}{Score test}: $ p\text{-value}=\Prob*{\chi^2_1>\bigl(S(\theta)\bigr)^2/I(\theta_0)} $.
-    \item \textcolor{Red}{Wald test}:
-          \[ p\text{-value}=\Prob*{\chi^2_1>(\hat{\theta}-\theta_0)^2 I(\hat{\theta})}\text{, or }
-              p\text{-value}=\Prob*{\abs{Z}>\abs{\hat{\theta}-\theta_0}\sqrt{I(\hat{\theta})}}. \]
+      \item \textcolor{Red}{Likelihood ratio (LR) test}: $ p\text{-value}=\Prob*{\chi^2_1>-2r(\theta_0)} $.
+      \item \textcolor{Red}{Score test}: $ p\text{-value}=\Prob*{\chi^2_1>\bigl(S(\theta)\bigr)^2/I(\theta_0)} $.
+      \item \textcolor{Red}{Wald test}:
+            \[ p\text{-value}=\Prob*{\chi^2_1>(\hat{\theta}-\theta_0)^2 I(\hat{\theta})}\text{, or }
+                  p\text{-value}=\Prob*{\abs{Z}>\abs{\hat{\theta}-\theta_0}\sqrt{I(\hat{\theta})}}. \]
 \end{itemize}
 \subsection*{Example: Hormone Therapy Data}
 Suppose we wish to test if women received EPT would have a risk of breast
 cancer same as that of the general population, say about \qty{1.5}{\percent}.
 \[ \text{$\HN$: $\theta=0.015$ vs $\HA$: $\theta\ne 0.015$.} \]
 \begin{itemize}
-    \item \textcolor{Red}{Likelihood Ratio} based test:
-          \begin{align*}
-              r(\theta_0=0.015)
-               & =\biggl(y\log{0.015}+(n-y)\log{1-0.15}\biggr)-\biggl(y\log*{\frac{y}{n}}+(n-y)\log*{1-\frac{y}{n} }\biggr) \\
-               & =-3.443.
-          \end{align*}
-          Thus, the $ p $-value for the test is given by:
-          \[ p=\Prob*{\chi^2_{(1)}>-2r(0.015)}=\Prob*{\chi^2_{(1)}>6.886}=0.0087. \]
-          Therefore, we \emph{reject} $ \HN $ and conclude that the risk of breast cancer for women received EPT is
-          significantly different from \qty{1.5}{\percent}.
+      \item \textcolor{Red}{Likelihood Ratio} based test:
+            \begin{align*}
+                  r(\theta_0=0.015)
+                   & =\biggl(y\log{0.015}+(n-y)\log{1-0.15}\biggr)-\biggl(y\log*{\frac{y}{n}}+(n-y)\log*{1-\frac{y}{n} }\biggr) \\
+                   & =-5.3637.
+            \end{align*}
+            Thus, the $ p $-value for the test is given by:
+            \[ p=\Prob*{\chi^2_{(1)}>-2r(0.015)}=\Prob*{\chi^2_{(1)}>10.7274}=0.001. \]
+            Therefore, we \emph{reject} $ \HN $ and conclude that the risk of breast cancer for women received EPT is
+            significantly different from \qty{1.5}{\percent}.
 \end{itemize}
 \subsection*{Notes on Asymptotic Inference}
 \begin{itemize}
-    \item Asymptotic results: approximation improves as sample size increases.
-    \item Results are exact for a Normal linear model if $ \theta $ is the mean parameter and $ \sigma^2 $ is
-          known.
-    \item \textcolor{Red}{LR approach}:
-          \begin{itemize}
-              \item Need to evaluate (log) likelihood at two locations.
-              \item Not always a closed from solution for a CI.
-              \item Usually the best approach.
-          \end{itemize}
-    \item \textcolor{Red}{Score approach}:
-          \begin{itemize}
-              \item Usually the least powerful test.
-              \item Don't actually need to find MLE to use.
-          \end{itemize}
-    \item \textcolor{Red}{Wald's approach}:
-          \begin{itemize}
-              \item Always get a closed form solution for a CI.
-              \item May not behave well for skewed likelihoods (transform?).
-          \end{itemize}
-    \item All three are asymptotically equivalent!
+      \item Asymptotic results: approximation improves as sample size increases.
+      \item Results are exact for a Normal linear model if $ \theta $ is the mean parameter and $ \sigma^2 $ is
+            known.
+      \item \textcolor{Red}{LR approach}:
+            \begin{itemize}
+                  \item Need to evaluate (log) likelihood at two locations.
+                  \item Not always a closed from solution for a CI.
+                  \item Usually the best approach.
+            \end{itemize}
+      \item \textcolor{Red}{Score approach}:
+            \begin{itemize}
+                  \item Usually the least powerful test.
+                  \item Don't actually need to find MLE to use.
+            \end{itemize}
+      \item \textcolor{Red}{Wald's approach}:
+            \begin{itemize}
+                  \item Always get a closed form solution for a CI.
+                  \item May not behave well for skewed likelihoods (transform?).
+            \end{itemize}
+      \item All three are asymptotically equivalent!
 \end{itemize}
 \subsection*{Likelihood Methods for Parameter Vectors}
 Suppose $ \Vector{\theta}\in \Omega $ is a continuous $ p\times 1 $ parameter vector
 indexing a probability density (or mass) function $ f(\Vector{y};\Vector{\theta}) $. The likelihood and
 log-likelihood functions are defined as before, but
 \begin{itemize}
-    \item $ \Vector{S}(\Vector{\theta})=\pdv{\ell( \Vector{\theta})}{ \Vector{\theta}} $ is the $ p\times 1 $ \textcolor{Red}{Score vector}, i.e.,
-          \[ \Vector{S}(\Vector{\theta})=\begin{bmatrix}
-                  \pdv{\ell(\theta)}{\theta_1} \\
-                  \vdots                       \\
-                  \pdv{\ell(\theta)}{\theta_p}
-              \end{bmatrix}. \]
-    \item $ \Matrix{I}(\Vector{\theta})=-\pdv{\ell(\Vector{\theta})}{ \Vector{\theta}^\top,\Vector{\theta}} $ is the $ p\times p $ \textcolor{Red}{Information matrix}, i.e.,
-          \[ \Matrix{I}(\Vector{\theta})=\begin{bmatrix}
-                  -\pdv[order=2]{\ell(\theta)}{\theta_1} & -\pdv{\ell(\theta)}{\theta_1,\theta_2} & \cdots & \pdv{\ell(\theta)}{\theta_1,\theta_p} \\
-                                                         & -\pdv[order=2]{\ell(\theta)}{\theta_2} & \cdots & \pdv{\ell(\theta)}{\theta_1,\theta_p} \\
-                                                         &                                        & \ddots & \pdv[order=2]{\ell(\theta)}{\theta_p}
-              \end{bmatrix}. \]
+      \item $ \Vector{S}(\Vector{\theta})=\pdv{\ell( \Vector{\theta})}{ \Vector{\theta}} $ is the $ p\times 1 $ \textcolor{Red}{Score vector}, i.e.,
+            \[ \Vector{S}(\Vector{\theta})=\begin{bmatrix}
+                        \pdv{\ell(\theta)}{\theta_1} \\
+                        \vdots                       \\
+                        \pdv{\ell(\theta)}{\theta_p}
+                  \end{bmatrix}. \]
+      \item $ \Matrix{I}(\Vector{\theta})=-\pdv{\ell(\Vector{\theta})}{ \Vector{\theta}^\top,\Vector{\theta}} $ is the $ p\times p $ \textcolor{Red}{Information matrix}, i.e.,
+            \[ \Matrix{I}(\Vector{\theta})=\begin{bmatrix}
+                        -\pdv[order=2]{\ell(\theta)}{\theta_1} & -\pdv{\ell(\theta)}{\theta_1,\theta_2} & \cdots & \pdv{\ell(\theta)}{\theta_1,\theta_p} \\
+                                                               & -\pdv[order=2]{\ell(\theta)}{\theta_2} & \cdots & \pdv{\ell(\theta)}{\theta_1,\theta_p} \\
+                                                               &                                        & \ddots & \pdv[order=2]{\ell(\theta)}{\theta_p}
+                  \end{bmatrix}. \]
 
 \end{itemize}
 \begin{itemize}
-    \item The Newton Raphson algorithm applies as before, but with vectors and matrices
-          as follows:
-          \[ \Vector{\theta}^{(i+1)}=\Vector{\theta}^{(i)}+\Matrix{I}^{-1}(\Vector{\theta}^{(i)})\Vector{S}(\Vector{\theta}^{(i)}). \]
-    \item Again, we apply iteratively until we obtain convergence, but now check to
-          see if $ \Matrix{I}(\hat{\Vector{\theta}}) $ is a positive definite matrix.
-    \item Analogs to the LR, Score and Wald results apply based on partitioning the
-          Information matrix by $ \Vector{\theta}=(\Vector{\alpha},\Vector{\beta})^\top $,
-          where $ \Vector{\alpha} $ is a $ p\times 1 $ vector of nuisance parameters and $ \Vector{\beta} $ is a $ q\times 1 $ vector of parameters of interest:
-          \[ \Matrix{I}=\Matrix{I}(\Vector{\alpha},\Vector{\beta})=\begin{pmatrix}
-                  \Matrix{I}_{\Vector{\alpha}\Vector{\alpha}}(\Vector{\alpha},\Vector{\beta}) & \Matrix{I}_{\Vector{\alpha}\Vector{\beta}}(\Vector{\alpha},\Vector{\beta}) \\
-                  \Matrix{I}_{\Vector{\beta}\Vector{\alpha}}(\Vector{\alpha},\Vector{\beta})  & \Matrix{I}_{\Vector{\beta}\Vector{\beta}}(\Vector{\alpha},\Vector{\beta})
-              \end{pmatrix}, \]
-          where
-          $ \Matrix{I}_{\Vector{\alpha}\Vector{\alpha}}(\Vector{\alpha},\Vector{\beta})=-\pdv{\ell}{\Vector{\alpha},\Vector{\alpha}^\top} $ is $ p\times p $,
-          $ \Matrix{I}_{\Vector{\alpha}\Vector{\beta}}(\Vector{\alpha},\Vector{\beta})=-\pdv{\ell}{\Vector{\alpha},\Vector{\beta}^\top} $ is $ p\times q $,
-          $ \Matrix{I}_{\Vector{\beta}\Vector{\alpha}}(\Vector{\alpha},\Vector{\beta})=-\pdv{\ell}{\Vector{\beta},\Vector{\alpha}^\top} $ is $ q\times p $, and
-          $ \Matrix{I}_{\Vector{\beta}\Vector{\beta}}(\Vector{\alpha},\Vector{\beta})=-\pdv{\ell}{\Vector{\beta},\Vector{\beta}^\top} $ is $ q\times q $.
+      \item The Newton Raphson algorithm applies as before, but with vectors and matrices
+            as follows:
+            \[ \Vector{\theta}^{(i+1)}=\Vector{\theta}^{(i)}+\Matrix{I}^{-1}(\Vector{\theta}^{(i)})\Vector{S}(\Vector{\theta}^{(i)}). \]
+      \item Again, we apply iteratively until we obtain convergence, but now check to
+            see if $ \Matrix{I}(\hat{\Vector{\theta}}) $ is a positive definite matrix.
+      \item Analogs to the LR, Score and Wald results apply based on partitioning the
+            Information matrix by $ \Vector{\theta}=(\Vector{\alpha},\Vector{\beta})^\top $,
+            where $ \Vector{\alpha} $ is a $ p\times 1 $ vector of nuisance parameters and $ \Vector{\beta} $ is a $ q\times 1 $ vector of parameters of interest:
+            \[ \Matrix{I}=\Matrix{I}(\Vector{\alpha},\Vector{\beta})=\begin{pmatrix}
+                        \Matrix{I}_{\Vector{\alpha}\Vector{\alpha}}(\Vector{\alpha},\Vector{\beta}) & \Matrix{I}_{\Vector{\alpha}\Vector{\beta}}(\Vector{\alpha},\Vector{\beta}) \\
+                        \Matrix{I}_{\Vector{\beta}\Vector{\alpha}}(\Vector{\alpha},\Vector{\beta})  & \Matrix{I}_{\Vector{\beta}\Vector{\beta}}(\Vector{\alpha},\Vector{\beta})
+                  \end{pmatrix}, \]
+            where
+            $ \Matrix{I}_{\Vector{\alpha}\Vector{\alpha}}(\Vector{\alpha},\Vector{\beta})=-\pdv{\ell}{\Vector{\alpha},\Vector{\alpha}^\top} $ is $ p\times p $,
+            $ \Matrix{I}_{\Vector{\alpha}\Vector{\beta}}(\Vector{\alpha},\Vector{\beta})=-\pdv{\ell}{\Vector{\alpha},\Vector{\beta}^\top} $ is $ p\times q $,
+            $ \Matrix{I}_{\Vector{\beta}\Vector{\alpha}}(\Vector{\alpha},\Vector{\beta})=-\pdv{\ell}{\Vector{\beta},\Vector{\alpha}^\top} $ is $ q\times p $, and
+            $ \Matrix{I}_{\Vector{\beta}\Vector{\beta}}(\Vector{\alpha},\Vector{\beta})=-\pdv{\ell}{\Vector{\beta},\Vector{\beta}^\top} $ is $ q\times q $.
 \end{itemize}
