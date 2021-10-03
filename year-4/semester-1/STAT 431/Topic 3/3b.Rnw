@@ -1,0 +1,123 @@
+\makeheading{Week 4}{\daterange{2021-09-27}{2021-10-01}}
+\section*{Topic 3b: Binomial Regression Models for Binary Data}
+\addcontentsline{toc}{section}{Topic 3b: Binomial Regression Models for Binary Data}
+\subsection*{Recall Topic 3a: Binary Data and Odds Ratios}
+Last week, we introduce a simple method for association between two binary
+variables, \textcolor{Blue}{$ 2\times 2 $ contingency table analysis}:
+\begin{table}[!htbp]
+    \centering
+    \begin{NiceTabular}{l|ccc}
+        & \multicolumn{2}{c}{\emph{Mortality}}                                                 \\
+        Level of Care & Died                            & Survived                                 \\
+        \midrule
+        Intensive & $ y_1 $                            & $ m_1-y_1 $    & $ Y_1 \sim \Bin{m_1,\pi_1} $         \\
+        Regular   & $ y_2 $                            & $ m_2-y_2 $    & $ Y_2 \sim \Bin{m_2,\pi_2} $      \\
+        \bottomrule
+    \end{NiceTabular}
+\end{table}
+Measure of Association: $ \displaystyle \OR = \psi=\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)} $,
+\begin{itemize}
+    \item $ \OR=1 $ (equal risk).
+    \item $ 0<\OR<1 $ (lower risk in group 1).
+    \item $ \OR>1 $ (higher risk in group 1).
+\end{itemize}
+Maximum likelihood estimator for $ \OR $ is:
+\[ \hat{\psi}=\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}, \]
+and a Wald-based \qty{95}{\percent} CI is:
+\[ \exp[\bigg]{\log{\hat{\psi}_1}\pm 1.96\underbrace{\sqrt{\frac{1}{y_1} +\frac{1}{m_1-y_1} +\frac{1}{y_2} +\frac{1}{m_2-y_2}}}_{\se{\log{\hat{\psi}}}}}. \]
+Prenatal Care Data Example:
+\begin{table}[!htbp]
+    \centering
+    \begin{tabular}{ccc}
+        OR (\textcolor{Blue}{Mortality and Care}) & Est.                   & \qty{95}{\percent} CI             \\
+        \midrule
+        Intensive vs Regular                      & \textcolor{Blue}{0.51} & \textcolor{Blue}{$ (0.30,0.89) $}
+    \end{tabular}
+    \caption{$ 1\notin (0.30,0.89)\implies $ evidence of association between Mortality and Care.}
+\end{table}
+However, Mortality and Care are also related to another variable, Clinic:
+\begin{table}[!htbp]
+    \centering
+    \begin{tabular}{ccc}
+        OR (\textcolor{Blue}{Mortality and Clinic}) & Est.                   & \qty{95}{\percent} CI             \\
+        \midrule
+        Intensive vs Regular                        & \textcolor{Blue}{0.35} & \textcolor{Blue}{$ (0.12,0.58) $}
+    \end{tabular}
+    \caption{Association between Mortality and Clinic.}
+\end{table}
+\begin{table}[!htbp]
+    \centering
+    \begin{tabular}{ccc}
+        OR (\textcolor{Blue}{Care and Clinic}) & Est.                    & \qty{95}{\percent} CI              \\
+        \midrule
+        Intensive vs Regular                   & \textcolor{Blue}{14.06} & \textcolor{Blue}{$ (9.12,21.76) $}
+    \end{tabular}
+    \caption{Association between Care and Clinic.}
+\end{table}
+\begin{itemize}
+    \item Therefore, we wish to consider how a variable, e.g., Mortality ($ Y $), is related to
+          multiple explanatory variables together, e.g., Care ($ x_1 $) and Clinic ($ x_2 $).
+    \item This can be done using \textcolor{Blue}{multiple regression methodology} for binary data $ \implies $
+          Topic 3b: Binomial Regression Models for Binary Data.
+\end{itemize}
+\subsection*{Multiple Regression for Binary Data}
+\begin{itemize}
+    \item Often we need to consider the relationship between a binary outcome and
+          multiple explanatory variables, using multiple regression methodology.
+    \item This is because we may want to:
+          \begin{itemize}
+              \item control for cofounding variables and hence want to examine the effect of
+                    several variables simultaneously;
+              \item examine the effect of categorical variables ($ >2 $ levels) or continuous covariates;
+              \item develop sophisticated models that describe complex relationship.
+          \end{itemize}
+    \item Suppose \textcolor{Blue}{\emph{subject level data}} is binary with a value of 1 indicating that an event
+          of interest occurs and a value of 0 indicating that event doesn't occur.
+    \item Subjects can be classified according to the values of consideblue explanatory
+          variables into $n$ groups (i.e., common covariates values within each group), so
+          we have \textcolor{Blue}{\emph{grouped data}} such that:
+          \begin{itemize}
+              \item $ m_i $ denotes number of subjects in group $i$;
+              \item $Y_i$ denotes number of subjects experienced the event in group $i$;
+              \item $ x_{i1},\ldots,x_{ip} $ denote the covariates values associated with group $i$
+                    where $ i=1,\ldots,n $.
+          \end{itemize}
+\end{itemize}
+\subsection*{Set-up of a Binomial Regression Model}
+\begin{enumerate}[label=\color{Blue}\protect\circled{\arabic*}]
+    \item \textcolor{Blue}{Response Variable}: $ Y_i \sim \Bin{m_i,\pi_i} $, $ i=1,\ldots,n $, and Binomial
+          distribution is a member of Exponential family!
+          \begin{align*}
+              f(y_i)
+               & =\binom{m_i}{y_i}\pi_i^{y_i}(1-\pi_i)^{m_i-y_i}                                   \\
+               & =\exp*{y_i\log*{\frac{\pi_i}{1-\pi_i}}+m_i\log{1-\pi_i}+\log*{\binom{m_i}{y_i}}},
+          \end{align*}
+          where
+          \begin{align*}
+              \theta_i     & =\log*{\frac{\pi_i}{1-\pi_i}},              \\
+              a(\phi)=\phi & =1,                                         \\
+              b(\theta_i)  & =-m_i\log{1-\pi_i}=m_i\log{1+e^{\theta_i}}. \\
+              c(y_i;\phi)  & =\log*{\binom{m_i}{y_i}}.
+          \end{align*}
+    \item \textcolor{Blue}{Linear Predictor}:
+          \[ \eta_i=\Vector{x}_i^\top \Vector{\beta}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}. \]
+    \item \textcolor{Blue}{Link Function}: Recall that for Binomial distribution, we have $ \E{Y_i}=\mu_i=m_i\pi_i $,
+          therefore we typically re-write the link function in terms of $ \pi_i $,
+          \[ \textcolor{Blue}{g(\pi_i)}=\Vector{x}_i^\top \Vector{\beta}. \]
+          As $ \pi_i\in(0,1) $, any function $ g\colon (0,1)\to(-\infty,\infty) $ may work, and here are some link functions we
+          can consider:
+          \begin{table}[!htbp]
+              \centering
+              \begin{tabular}{cc}
+                  \toprule
+                  log-log                             & $ g(\pi)=\log[\big]{-\log{\pi}} $                                               \\
+                  complementary log-log               & $ g(\pi)=\log[\big]{-\log{1-\pi}} $                                             \\
+                  Probit$^a$                          & $ g(\pi)=\Phi^{-1}(\pi) $                                                       \\
+                  Logit (\textcolor{Blue}{canonical}) & $ g(\pi)=\log[\big]{\pi/(1-\pi)} $                                              \\
+                  \bottomrule
+                  \multicolumn{2}{l}{\footnotesize{$ {}^a $For the Probit link, $ \Phi(\:\cdot\:) $ is the \emph{CDF} of $ \N{0,1} $.}} \\
+              \end{tabular}
+          \end{table}
+\end{enumerate}
+\subsection*{Canonical Link and Logistic Regression}
+Recall for Binomial distribution
