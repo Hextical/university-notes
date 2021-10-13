@@ -14,10 +14,13 @@
 \usepackage{etoolbox}
 \usepackage{siunitx}
 \usepackage{listings}
+\usepackage{XCharter}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb}
+
+\usepackage{bm}
 \usepackage{tikz}
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
-\usepackage{bm}
-\usepackage[T1]{fontenc}
 \makeatletter
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
                                      {-3.25ex\@plus -1ex \@minus -.2ex}%
@@ -42,64 +45,63 @@
 
 % Functions
 \providecommand\given{} % just to make sure it exists
-\DeclarePairedDelimiterXPP{\E}[1]{\operatorname{\text{E}}}[]{}{%
+\DeclarePairedDelimiterXPP{\E}[1]{\operatorname{E}}[]{}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\V}[1]{\operatorname{\Field{V}}}(){}{%
+\DeclarePairedDelimiterXPP{\V}[1]{\operatorname{V}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\Var}[1]{\operatorname{\text{Var}}}(){}{%
+\DeclarePairedDelimiterXPP{\Var}[1]{\operatorname{Var}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\Cov}[1]{\operatorname{\text{Cov}}}(){}{%
+\DeclarePairedDelimiterXPP{\Cov}[1]{\operatorname{Cov}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP\Prob[1]{\operatorname{\Field{P}}}(){}{%
+\DeclarePairedDelimiterXPP\Prob[1]{\operatorname{P}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP\Ind[1]{\operatorname{\Field{I}}}\{\}{}{%
+\DeclarePairedDelimiterXPP\Ind[1]{\operatorname{I}}\{\}{}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\se}[1]{\operatorname{\text{se}}}(){}{%
+\DeclarePairedDelimiterXPP{\se}[1]{\operatorname{se}}(){}{%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\estse}[1]{\widehat{\operatorname{\text{se}}}}(){}{%
+\DeclarePairedDelimiterXPP{\estse}[1]{\widehat{\operatorname{se}}}(){}{%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\estV}[1]{\widehat{\operatorname{\Field{V}}}}(){}{
+\DeclarePairedDelimiterXPP{\estV}[1]{\widehat{\operatorname{V}}}(){}{
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\estVar}[1]{\widehat{\operatorname{\text{Var}}}}(){}{
+\DeclarePairedDelimiterXPP{\estVar}[1]{\widehat{\operatorname{Var}}}(){}{
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
 \let\exp\relax%
 \let\log\relax%
 \let\ln\relax%
-\DeclarePairedDelimiterXPP{\exp}[1]{\operatorname{\text{exp}}}\{\}{}{#1}%
-\DeclarePairedDelimiterXPP{\log}[1]{\operatorname{\text{log}}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\ln}[1]{\operatorname{\text{ln}}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\diag}[1]{\operatorname{\text{diag}}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\sign}[1]{\operatorname{\text{sign}}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\exp}[1]{\operatorname{exp}}\{\}{}{#1}%
+\DeclarePairedDelimiterXPP{\log}[1]{\operatorname{log}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\ln}[1]{\operatorname{ln}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\diag}[1]{\operatorname{diag}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\sign}[1]{\operatorname{sign}}(){}{#1}%
 
-\DeclarePairedDelimiterXPP{\expit}[1]{\operatorname{\text{expit}}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\logit}[1]{\operatorname{\text{logit}}}(){}{#1}%
-\newcommand{\HN}{\text{H}_0}%
-\newcommand{\HA}{\text{H}_{\text{A}}}%
+\DeclarePairedDelimiterXPP{\expit}[1]{\operatorname{expit}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\logit}[1]{\operatorname{logit}}(){}{#1}%
+\newcommand{\HN}{\textsl{H}_{\textsl{0}}}%
+\newcommand{\HA}{\textsl{H}_{\textsl{A}}}%
 
 % Distributions
 \DeclarePairedDelimiterXPP{\N}[1]{\mathcal{N}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\Poisson}[1]{\text{Poisson}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\Bin}[1]{\text{Bin}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\Binomial}[1]{\text{Binomial}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\Bernoulli}[1]{\text{Bernoulli}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\POI}[1]{\text{POI}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\BIN}[1]{\text{BIN}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\BERN}[1]{\text{BERN}}(){}{#1}%
 \DeclarePairedDelimiterXPP{\MVN}[1]{\text{MVN}}(){}{#1}%
 
 \newcommand{\iid}{\overset{\text{iid}}{\sim}}%
@@ -147,7 +149,7 @@
 \newcommand{\makeheading}[2]%
 {%
 \begin{center}%
-    \makebox[\linewidth]{\raisebox{-.5ex}[0cm][0cm]{\stackanchor{\textcolor{Gray}{\textsc{#1}}}{\scriptsize\itshape\printyearoff #2}\;}\color{Crimson!50}\hrulefill}%
+    \makebox[\linewidth]{\raisebox{-.5ex}[0cm][0cm]{\stackanchor{\textcolor{Gray}{\textsc{#1}}}{\scriptsize\itshape\printyearoff#2}\;}\color{Crimson!50}\hrulefill}%
 \end{center}%
 }%
 
@@ -185,16 +187,25 @@ pdfkeywords={University of Waterloo, Fall 2021 (1219)}}%
 \newpage
 \tableofcontents
 \newpage
+% Week 1
 <<child='Topic 1/1a.Rnw'>>=
 @
+% Week 2
 <<child='Topic 1/1b.Rnw'>>=
 @
 <<child='Topic 2/2a.Rnw'>>=
 @
+% Week 3
 <<child='Topic 2/2b.Rnw'>>=
 @
 <<child='Topic 3/3a.Rnw'>>=
 @
+% Week 4
 <<child='Topic 3/3b.Rnw'>>=
+@
+<<child='Topic 3/3c.Rnw'>>=
+@
+% Week 5
+<<child='Topic 3/3d.Rnw'>>=
 @
 \end{document}

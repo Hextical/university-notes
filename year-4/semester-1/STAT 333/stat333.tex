@@ -1,9 +1,9 @@
 \documentclass[oneside,final]{book}
 \usepackage[svgnames]{xcolor}
-\usepackage[activate={true,nocompatibility},final,tracking=true,factor=1100,stretch=10,shrink=10]{microtype}
-\usepackage[math-style=ISO,bold-style=ISO,warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
+\usepackage[british]{babel}
+\usepackage[protrusion,expansion,tracking,babel,final]{microtype}
 \usepackage[margin=1in]{geometry}
-\usepackage[unicode,pdfversion=1.7]{hyperref}
+\usepackage[pdfversion=1.7]{hyperref}
 \usepackage[shortlabels]{enumitem}
 \usepackage{graphicx}
 \usepackage{mathtools}
@@ -14,8 +14,12 @@
 \usepackage{etoolbox}
 \usepackage{siunitx}
 \usepackage{listings}
-\usepackage{titlesec}
+\usepackage{XCharter}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb}
+
 \usepackage{multirow}
+
 
 \lstset{frame=none,
   language=R,
@@ -89,6 +93,7 @@
 \DeclarePairedDelimiterXPP{\MN}[1]{\text{MN}}(){}{#1}%
 
 % Continuous Distributions
+\let\U\relax
 \DeclarePairedDelimiterXPP{\U}[1]{\text{U}}(){}{#1}%
 \DeclarePairedDelimiterXPP{\BetaDist}[1]{\text{Beta}}(){}{#1}%
 \DeclarePairedDelimiterXPP{\Erlang}[1]{\text{Erlang}}(){}{#1}%
@@ -112,21 +117,16 @@
 \DeclareMathOperator*{\arginf}{arg\,inf}
 \DeclareMathOperator*{\argsup}{arg\,sup}
 
-\providecommand{\RandomVector}[1]{\symbfit{#1}}% general vectors in bold italic
-\providecommand{\Vector}[1]{\symbfup{#1}}% general vectors in bold italic
-\providecommand{\Matrix}[1]{\symbfup{#1}}
-\providecommand{\Field}[1]{\symbfsfup{#1}}
-
 \usepackage{stackengine}
-\usepackage[english]{isodate}
+\usepackage[british]{isodate}
 \newcommand{\makeheading}[2]%
 {%
 \begin{center}%
-    \makebox[\linewidth]{\raisebox{-.5ex}[0cm][0cm]{\stackanchor{\textcolor{Gray}{\textsc{#1}}}{\scriptsize\scshape\printyearoff#2}\;}\color{Crimson!50}\hrulefill}%
+    \makebox[\linewidth]{\raisebox{-.5ex}[0cm][0cm]{\stackanchor{\textcolor{Gray}{\textsc{#1}}}{\scriptsize\itshape\printyearoff#2}\;}\color{Crimson!50}\hrulefill}%
 \end{center}%
 }%
 
-\usepackage[skins,breakable]{tcolorbox}
+\usepackage[breakable]{tcolorbox}
 \tcbset{
     regular/.style={
         boxrule=0mm,
@@ -149,9 +149,10 @@ pdfkeywords={University of Waterloo, Fall 2021 (1219)}}%
 \title{%
 \LARGE Stochastic Processes 1\\%
 \large STAT 333\\%
-\normalsize Fall 2021 (1219)}%
-\author{\LaTeX{}er: \emph{Cameron Roopnarine}\\Instructors: \emph{Steve Drekic, Mirabelle Huynh}}%
+\normalsize Fall 2021 (1219)\thanks{Online Course}}%
+\author{Cameron Roopnarine\thanks{\LaTeX{}er}\and Steve Drekic\thanks{Main Instructor}\and Mirabelle Huynh\thanks{Assisting Instructor}}%
 \date{\today}%
+
 
 \begin{document}
 \maketitle
@@ -159,4 +160,5 @@ pdfkeywords={University of Waterloo, Fall 2021 (1219)}}%
 \input{wk_01.tex}
 \input{wk_02.tex}
 \input{wk_03.tex}
+\input{wk_04.tex}
 \end{document}
