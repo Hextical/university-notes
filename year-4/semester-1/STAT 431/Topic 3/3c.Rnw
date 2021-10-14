@@ -5,7 +5,7 @@ Recall major developments of Binomial logistic regression from last topic 3b: $ 
 $ i=1,\ldots,n $ independently, with covariate vector $ \Vector{x}_i $ and
 \[ \textcolor{Blue}{\log*{\frac{\pi_i}{1-\pi_i}}}=\Vector{x}_i^\top \Vector{\beta}. \]
 \begin{itemize}
-      \item Estimation: $ \hat{\Vector{\beta}} $ come from Fisher scoring using R function \lstinline{glm()}.
+      \item Estimation: $ \hat{\Vector{\beta}} $ come from Fisher scoring using R function \texttt{glm()}.
       \item Interpretation: $ \exp{\beta_j} $ has $ \OR $ interpretation.
       \item Hypothesis tests of $ \HN $: $ \beta_j=0 $ using Wald statistic.
       \item Confidence Intervals: $ \hat{\beta}_j\pm z_{1-\alpha/2}\se{\hat{\beta}_j} $.
@@ -25,7 +25,7 @@ $ i=1,\ldots,n $ independently, with covariate vector $ \Vector{x}_i $ and
       \item Maximization of log-likelihood $ \ell(\Vector{\beta}) $ gives MLE $ \hat{\Vector{\beta}} $, and
             \begin{itemize}
                   \item estimated probability of response:
-                        \[ \hat{\pi}_i=e^{\Vector{x}_i^\top \hat{\Vector{\beta}}}/(1+e^{\Vector{x}_i^\top \hat{\Vector{\beta}}})=\expit{\Vector{x}_i^\top \hat{\Vector{\beta}}}, \]
+                        \[ \hat{\pi}_i=\mathrm{e}^{\Vector{x}_i^\top \hat{\Vector{\beta}}}/(1+\mathrm{e}^{\Vector{x}_i^\top \hat{\Vector{\beta}}})=\expit{\Vector{x}_i^\top \hat{\Vector{\beta}}}, \]
                   \item estimated number of responses: $ \hat{y}_i=m_i\hat{\pi}_i $.
             \end{itemize}
       \item Questions:
@@ -103,7 +103,7 @@ $ i=1,\ldots,n $ independently, with covariate vector $ \Vector{x}_i $ and
                   \item $ \HN $: Model 2 is adequate.
                   \item $ \HA $: Model 2 is not adequate compared to the saturated model.
             \end{itemize}
-      \item In R, the \lstinline{summary()} output $ D $ is reported as the \textcolor{Red}{Residual Deviance}.
+      \item In R, the \texttt{summary()} output $ D $ is reported as the \textcolor{Red}{Residual Deviance}.
             % \begin{noindent}
             <<>>=
             model2=glm(resp~loc + clinic, family=binomial(link=logit), data=prenatal.dat)
@@ -154,7 +154,7 @@ $ i=1,\ldots,n $ independently, with covariate vector $ \Vector{x}_i $ and
             \midrule
             \ref{2.6M1} Reduced model & $ p $                       & $ \hat{\pi}_i $           \\
             \ref{2.6M2} Full model    & $ q $                       & $ \tilde{\pi}_i $         \\
-            Saturated model           & $ n $                       & $ \tilde{\tilde{\pi}_i} $ \\
+            Saturated model           & $ n $                       & $ \tilde{\tilde{\pi}}_i $ \\
             \bottomrule
       \end{tabular}
 \end{table}
@@ -179,7 +179,7 @@ $ i=1,\ldots,n $ independently, with covariate vector $ \Vector{x}_i $ and
 \end{itemize}
 \subsection*{Example: Prenatal Care Data}
 \begin{itemize}
-      \item Summary of Deviance (``\lstinline{residual deviance}'') from R output:
+      \item Summary of Deviance (``\texttt{residual deviance}'') from R output:
             \begin{table}[!htbp]
                   \centering
                   \begin{tabular}{clccc}
@@ -235,7 +235,7 @@ $ i=1,\ldots,n $ independently, with covariate vector $ \Vector{x}_i $ and
 \begin{itemize}
       \item For Binomial GLM with logit link the LR/Deviance test statistic is:
             \[ D=\sum_{i=1}^{n} 2\biggl(y_i\log*{\frac{y_i}{m_i\hat{\pi}_i}}+(m_i-y_i)\log*{\frac{m_i-y_i}{m_i(1-\hat{\pi}_i)}}\biggr). \]
-      \item This is reported as the ``\lstinline{Residual Deviance}'' in R \lstinline{glm} summary output.
+      \item This is reported as the ``\texttt{Residual Deviance}'' in R \texttt{glm} summary output.
       \item Deviance statistic $ D $ can be used to:
             \begin{itemize}
                   \item Test adequacy/goodness of fit of a non-saturated logistic model:

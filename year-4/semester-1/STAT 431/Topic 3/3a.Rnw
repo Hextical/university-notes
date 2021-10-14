@@ -59,19 +59,19 @@ Note that $ \pi_1,\pi_2\in[0,1] $ and odds ratio $ \psi\in(0,\infty) $ are restr
 and now $ \theta_1,\theta_2\in(-\infty,\infty) $.
 
 Our re-parameterization implies:
-\[ \pi_1=\frac{e^{\theta_1+\theta_2}}{1+e^{\theta_1+\theta_2}},\qquad \pi_2=\frac{e^{\theta_2}}{1+e^{\theta_2}}. \]
+\[ \pi_1=\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}},\qquad \pi_2=\frac{\mathrm{e}^{\theta_2}}{1+\mathrm{e}^{\theta_2}}. \]
 Now the likelihood becomes:
 \begin{align*}
-    L(\theta_1,\theta_2)    & =(e^{\theta_1})^{y_1}(e^{\theta_2})^{y_1+y_2}(1+e^{\theta_1+\theta_2})^{m_1}(1+e^{\theta_2})^{-m_2}, \\
-    \ell(\theta_1,\theta_2) & =y_1\theta_1+(y_1+y_2)\theta_2-m_1\log{1+e^{\theta_1+\theta_2}}-m_2\log{1+e^{\theta_2}}.
+    L(\theta_1,\theta_2)    & =(\mathrm{e}^{\theta_1})^{y_1}(\mathrm{e}^{\theta_2})^{y_1+y_2}(1+\mathrm{e}^{\theta_1+\theta_2})^{m_1}(1+\mathrm{e}^{\theta_2})^{-m_2}, \\
+    \ell(\theta_1,\theta_2) & =y_1\theta_1+(y_1+y_2)\theta_2-m_1\log{1+\mathrm{e}^{\theta_1+\theta_2}}-m_2\log{1+\mathrm{e}^{\theta_2}}.
 \end{align*}
 The score vector is:
 \[ S(\theta_1,\theta_2)=\begin{pmatrix}
         \pdv{\ell}{\theta_1} \\
         \pdv{\ell}{\theta_2}
     \end{pmatrix}=\begin{pmatrix}
-        y_1-m_1\biggl(\frac{e^{\theta_1+\theta_2}}{1+e^{\theta_1+\theta_2}} \biggr) \\
-        y_1+y_2-m_1\biggl(\frac{e^{\theta_1+\theta_2}}{1+e^{\theta_1+\theta_2}} \biggr)-m_2\biggl(\frac{e^{\theta_2}}{1+e^{\theta_2}} \biggr)
+        y_1-m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}} \biggr) \\
+        y_1+y_2-m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}} \biggr)-m_2\biggl(\frac{\mathrm{e}^{\theta_2}}{1+\mathrm{e}^{\theta_2}} \biggr)
     \end{pmatrix}. \]
 Solving $ \Vector{S}(\theta_1,\theta_2)=\Vector{0} $ gives us the MLEs:
 \[ \hat{\theta}_1=\log*{\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}},\qquad \hat{\theta}_2=\log*{\frac{y_2}{m_2-y_2}}. \]
@@ -85,9 +85,9 @@ In order to do inference we will need the Information Matrix:
     \end{bmatrix}\qquad\text{where }I_{jk}=-\pdv*{\ell(\theta_1,\theta_2)}{\theta_j,\theta_k}. \]
 Here, we have:
 \begin{align*}
-    I_{11}          & =m_1\biggl(\frac{e^{\theta_1+\theta_2}}{(1+e^{\theta_1+\theta_2})^2} \biggr),                                                           \\
-    I_{12}  =I_{21} & =m_1\biggl(\frac{e^{\theta_1+\theta_2}}{(1+e^{\theta_1+\theta_2})^2} \biggr),                                                           \\
-    I_{22}          & =m_1\biggl(\frac{e^{\theta_1+\theta_2}}{(1+e^{\theta_1+\theta_2})^2} \biggr)+m_2\biggl(\frac{e^{\theta_2}}{(1+e^{\theta_2})^2} \biggr).
+    I_{11}          & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr),                                                                             \\
+    I_{12}  =I_{21} & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr),                                                                             \\
+    I_{22}          & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr)+m_2\biggl(\frac{\mathrm{e}^{\theta_2}}{(1+\mathrm{e}^{\theta_2})^2} \biggr).
 \end{align*}
 We are interested in doing inference on $ \theta_1=\log{\psi} $ (while $ \theta_2 $ is nuisance).
 

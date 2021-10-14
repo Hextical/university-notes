@@ -63,87 +63,70 @@
 \usepackage{derivative}
 \usepackage{etoolbox}
 \usepackage{siunitx}
-\usepackage{listings}
-\usepackage{XCharter}
-\usepackage[T1]{fontenc}
-\usepackage{amssymb}
+
+% Adds instructions to produce a pdf conforming to PDF/A-1b
+\pdfcompresslevel=0
+\pdfgentounicode=1
+\usepackage[scaled=0.986641]{XCharter}
+\usepackage[scaled=1.02564]{inconsolata}
+\usepackage[scaled=0.972644]{cabin}
+\usepackage[scaled=1.08475]{libertinust1math}
 
 \usepackage{bm}
 \usepackage{tikz}
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
-\makeatletter
-\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
-                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
-                                     {1.5ex \@plus .2ex}%
-                                     {\normalfont\large\bfseries\scshape\color{Blue}}}
-\makeatother
-
-\lstset{frame=none,
-  language=R,
-  showstringspaces=false,
-  columns=flexible,
-  numbers=none,
-  basicstyle={\small\ttfamily},
-  keywordstyle=\color{Blue},
-  stringstyle=\color{Red},
-  commentstyle=\color{DarkGreen},
-  breaklines=true,
-  breakatwhitespace=true,
-  moredelim=**[is][\color{blue}]{@}{@},
-  tabsize=3}
-
 
 % Functions
 \providecommand\given{} % just to make sure it exists
-\DeclarePairedDelimiterXPP{\E}[1]{\operatorname{E}}[]{}{%
+\DeclarePairedDelimiterXPP{\E}[1]{\operatorname{\mathbb{E}}}[]{}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\V}[1]{\operatorname{V}}(){}{%
+\DeclarePairedDelimiterXPP{\V}[1]{\operatorname{\textsf{V}}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\Var}[1]{\operatorname{Var}}(){}{%
+\DeclarePairedDelimiterXPP{\Var}[1]{\operatorname{\textsf{Var}}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\Cov}[1]{\operatorname{Cov}}(){}{%
+\DeclarePairedDelimiterXPP{\Cov}[1]{\operatorname{\textsf{Cov}}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP\Prob[1]{\operatorname{P}}(){}{%
+\DeclarePairedDelimiterXPP\Prob[1]{\operatorname{\mathbb{P}}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP\Ind[1]{\operatorname{I}}\{\}{}{%
+\DeclarePairedDelimiterXPP\Ind[1]{\operatorname{\mathbb{I}}}\{\}{}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\se}[1]{\operatorname{se}}(){}{%
+\DeclarePairedDelimiterXPP{\se}[1]{\operatorname{\textsf{se}}}(){}{%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\estse}[1]{\widehat{\operatorname{se}}}(){}{%
+\DeclarePairedDelimiterXPP{\estse}[1]{\widehat{\operatorname{\textsf{se}}}}(){}{%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\estV}[1]{\widehat{\operatorname{V}}}(){}{
+\DeclarePairedDelimiterXPP{\estV}[1]{\widehat{\operatorname{\textsf{V}}}}(){}{
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\estVar}[1]{\widehat{\operatorname{Var}}}(){}{
+\DeclarePairedDelimiterXPP{\estVar}[1]{\widehat{\operatorname{\textsf{Var}}}}(){}{
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
 \let\exp\relax%
 \let\log\relax%
 \let\ln\relax%
-\DeclarePairedDelimiterXPP{\exp}[1]{\operatorname{exp}}\{\}{}{#1}%
-\DeclarePairedDelimiterXPP{\log}[1]{\operatorname{log}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\ln}[1]{\operatorname{ln}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\diag}[1]{\operatorname{diag}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\sign}[1]{\operatorname{sign}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\exp}[1]{\operatorname{\textsf{exp}}}\{\}{}{#1}%
+\DeclarePairedDelimiterXPP{\log}[1]{\operatorname{\textsf{log}}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\ln}[1]{\operatorname{\textsf{ln}}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\diag}[1]{\operatorname{\textsf{diag}}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\sign}[1]{\operatorname{\textsf{sign}}}(){}{#1}%
 
-\DeclarePairedDelimiterXPP{\expit}[1]{\operatorname{expit}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\logit}[1]{\operatorname{logit}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\expit}[1]{\operatorname{\textsf{expit}}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\logit}[1]{\operatorname{\textsf{logit}}}(){}{#1}%
 \newcommand{\HN}{\textsl{H}_{\textsl{0}}}%
 \newcommand{\HA}{\textsl{H}_{\textsl{A}}}%
 
@@ -208,7 +191,7 @@
     regular/.style={
         boxrule=0pt,
         breakable,
-        sharp corners,
+        sharp corners
     }
 }
 
@@ -256,7 +239,7 @@ Question: what is the relationship between \textcolor{Blue}{\emph{gestational ag
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-10-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-11-1} 
 
 }
 
@@ -264,12 +247,12 @@ Question: what is the relationship between \textcolor{Blue}{\emph{gestational ag
 \end{knitrout}
 % \end{noindent}
 We wish to model the relationship between \emph{gestational age} and \emph{head
-    circumference} using a straight line!
+      circumference} using a straight line!
 % \begin{noidnent}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-11-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-12-1} 
 
 }
 
@@ -279,104 +262,104 @@ We wish to model the relationship between \emph{gestational age} and \emph{head
 
 \subsection*{The Model Fitting Process}
 \begin{enumerate}[label=\color{Blue}\protect\circled{\arabic*}]
-    \item \textcolor{Red}{Model Specification}: select a probability distribution for the response
-          variable and a linear equation linking the response to the explanatory
-          variables.
-    \item \textcolor{Red}{Estimation}: finding the equation (the parameters of the model).
-    \item \textcolor{Red}{Model checking}: how well does the model fit the data?
-    \item \textcolor{Red}{Inference}: interpret the fitted model, calculate confidence intervals,
-          conduct hypothesis tests.
+      \item \textcolor{Red}{Model Specification}: select a probability distribution for the response
+            variable and a linear equation linking the response to the explanatory
+            variables.
+      \item \textcolor{Red}{Estimation}: finding the equation (the parameters of the model).
+      \item \textcolor{Red}{Model checking}: how well does the model fit the data?
+      \item \textcolor{Red}{Inference}: interpret the fitted model, calculate confidence intervals,
+            conduct hypothesis tests.
 \end{enumerate}
 
 \subsection*{\circled{1} Model Specification}
 \begin{Regular}{Notation}
-    For each subject $ i=1,\ldots,n $ we have:
-    \begin{itemize}
-        \item $ Y_i = $ random variable representing the response, and
-        \item $ \Vector{x}_i =(1,x_{i1},\ldots,x_{ip})^\top $ a vector of explanatory variables.
-    \end{itemize}
+      For each subject $ i=1,\ldots,n $ we have:
+      \begin{itemize}
+            \item $ Y_i = $ random variable representing the response, and
+            \item $ \Vector{x}_i =(1,x_{i1},\ldots,x_{ip})^\top $ a vector of explanatory variables.
+      \end{itemize}
 \end{Regular}
 \begin{Regular}{Specification for Multiple Linear Regression}
-    \begin{itemize}
-        \item Linear regression equation:
-              \[ Y_i=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}+\varepsilon_i\text{ where }\varepsilon_i \iid\N{0,\sigma^2}. \]
-        \item Equivalently, $Y_i$'s are independent $ \N{\mu_i,\sigma^2} $ random variables or
-              \[ \mu_i=\E{Y_i}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}. \]
-        \item For convenience, we often write linear regression models in matrix form as
-              \[ \RandomVector{Y}=\Matrix{X}\Vector{\beta}+\RandomVector{\varepsilon}, \]
-              where
-              \[ \RandomVector{Y}=\begin{bmatrix}
-                      Y_1    \\
-                      Y_2    \\
-                      \vdots \\
-                      Y_n
-                  \end{bmatrix},\quad
-                  \Matrix{X}=\begin{bmatrix}
-                      1      & x_{11} & \cdots & x_{1p} \\
-                      1      & x_{21} & \cdots & x_{2p} \\
-                      \vdots & \vdots & \ddots & \vdots \\
-                      1      & x_{n1} & \cdots & x_{np}
-                  \end{bmatrix},\quad
-                  \Vector{\beta}=\begin{bmatrix}
-                      \beta_0 \\
-                      \beta_1 \\
-                      \vdots  \\
-                      \beta_p
-                  \end{bmatrix},\quad
-                  \RandomVector{\varepsilon}=\begin{bmatrix}
-                      \varepsilon_1 \\
-                      \varepsilon_2 \\
-                      \vdots        \\
-                      \varepsilon_n
-                  \end{bmatrix} \]
-              and
-              \[ \RandomVector{\varepsilon}\sim \MVN{\Vector{0},\sigma^2\Matrix{I}}. \]
-    \end{itemize}
+      \begin{itemize}
+            \item Linear regression equation:
+                  \[ Y_i=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}+\varepsilon_i\text{ where }\varepsilon_i \iid\N{0,\sigma^2}. \]
+            \item Equivalently, $Y_i$'s are independent $ \N{\mu_i,\sigma^2} $ random variables or
+                  \[ \mu_i=\E{Y_i}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}. \]
+            \item For convenience, we often write linear regression models in matrix form as
+                  \[ \RandomVector{Y}=\Matrix{X}\Vector{\beta}+\RandomVector{\varepsilon}, \]
+                  where
+                  \[ \RandomVector{Y}=\begin{bmatrix}
+                              Y_1    \\
+                              Y_2    \\
+                              \vdots \\
+                              Y_n
+                        \end{bmatrix},\quad
+                        \Matrix{X}=\begin{bmatrix}
+                              1      & x_{11} & \cdots & x_{1p} \\
+                              1      & x_{21} & \cdots & x_{2p} \\
+                              \vdots & \vdots & \ddots & \vdots \\
+                              1      & x_{n1} & \cdots & x_{np}
+                        \end{bmatrix},\quad
+                        \Vector{\beta}=\begin{bmatrix}
+                              \beta_0 \\
+                              \beta_1 \\
+                              \vdots  \\
+                              \beta_p
+                        \end{bmatrix},\quad
+                        \RandomVector{\varepsilon}=\begin{bmatrix}
+                              \varepsilon_1 \\
+                              \varepsilon_2 \\
+                              \vdots        \\
+                              \varepsilon_n
+                        \end{bmatrix} \]
+                  and
+                  \[ \RandomVector{\varepsilon}\sim \MVN{\Vector{0},\sigma^2\Matrix{I}}. \]
+      \end{itemize}
 \end{Regular}
 \subsection*{\circled{2} Estimation}
 \begin{Regular}{Least Squares Method}
-    We wish to minimize a loss function:
-    \begin{align*}
-        S(\Vector{\beta})
-         & =\sum_{i=1}^{n} (y_i-\hat{y}_i)^2                                                             \\
-         & =\sum_{i=1}^{n} \bigl(y_i-(\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip})\bigr)^2               \\
-         & =(\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta}).
-    \end{align*}
-    The least squares estimators (LSE) are the solutions to the equations:
-    \[ \pdv{S}{\Vector{\beta}}=\pdv*{(\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta})}{\Vector{\beta}}=0. \]
+      We wish to minimize a loss function:
+      \begin{align*}
+            S(\Vector{\beta})
+             & =\sum_{i=1}^{n} (y_i-\hat{y}_i)^2                                                             \\
+             & =\sum_{i=1}^{n} \bigl(y_i-(\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip})\bigr)^2               \\
+             & =(\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta}).
+      \end{align*}
+      The least squares estimators (LSE) are the solutions to the equations:
+      \[ \pdv{S}{\Vector{\beta}}=\pdv*{(\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta})}{\Vector{\beta}}=0. \]
 \end{Regular}
 \begin{Regular}{Maximum Likelihood Method}
-    The probability density function for $ Y_i $ is:
-    \[ f(y_i)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp*{-\frac{1}{2\sigma^2}\bigl(y_i-(\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip})\bigr)^2 }.  \]
-    The log-likelihood function is therefore:
-    \begin{align*}
-        \ell(\Vector{\beta},\sigma^2)
-         & =\log[\bigg]{\prod_{i=1}^n f(y_i)}                                                                                                                \\
-         & =\sum_{i=1}^{n} \biggl(-\frac{1}{2} \log{2\pi\sigma^2}-\frac{1}{2\sigma^2}\bigl(y_i-(\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip})\bigr)^2 \biggr) \\
-         & =-\frac{n}{2} \log{2\sigma^2}-\frac{1}{2\sigma^2} (\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta}).
-    \end{align*}
-    The maximum likelihood estimators (MLE) of $ \Vector{\beta} $ are obtained by solving:
-    \[ \pdv{\ell}{\Vector{\beta}}=\pdv*{\biggl[-\frac{1}{2\sigma^2}(\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta})\biggr]}{\Vector{\beta}}=0. \]
+      The probability density function for $ Y_i $ is:
+      \[ f(y_i)=\frac{1}{\sqrt{2\mathrm{\pi}\sigma^2}}\exp*{-\frac{1}{2\sigma^2}\bigl(y_i-(\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip})\bigr)^2 }.  \]
+      The log-likelihood function is therefore:
+      \begin{align*}
+            \ell(\Vector{\beta},\sigma^2)
+             & =\log[\bigg]{\prod_{i=1}^n f(y_i)}                                                                                                                         \\
+             & =\sum_{i=1}^{n} \biggl(-\frac{1}{2} \log{2\mathrm{\pi}\sigma^2}-\frac{1}{2\sigma^2}\bigl(y_i-(\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip})\bigr)^2 \biggr) \\
+             & =-\frac{n}{2} \log{2\sigma^2}-\frac{1}{2\sigma^2} (\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta}).
+      \end{align*}
+      The maximum likelihood estimators (MLE) of $ \Vector{\beta} $ are obtained by solving:
+      \[ \pdv{\ell}{\Vector{\beta}}=\pdv*{\biggl[-\frac{1}{2\sigma^2}(\RandomVector{Y}-\Matrix{X}\Vector{\beta})^\top(\RandomVector{Y}-\Matrix{X}\Vector{\beta})\biggr]}{\Vector{\beta}}=0. \]
 \end{Regular}
 \begin{itemize}
-    \item \textcolor{Red}{Parameter Estimates}: For linear regression LSE and MLE of $ \Vector{\beta} $ are the same
-          \[ \hat{\Vector{\beta}}=(\Matrix{X}^\top\Matrix{X})^{-1}\Matrix{X}^\top\RandomVector{Y}. \]
-    \item \textcolor{Red}{Fitted values}: $ \hat{\RandomVector{Y}}=\Matrix{X}\hat{\Vector{\beta}} $.
-    \item \textcolor{Red}{Residuals}: $ \hat{r}_i=(y_i-\hat{y}_i) $.
-    \item \textcolor{Red}{Variance estimates}:
-          \begin{itemize}
-              \item An unbiased estimate of $ \sigma^2 $ is:
-                    \[ \hat{\sigma}^2=\frac{1}{n-(p+1)} \sum_{i=1}^{n} \hat{r}_i^2. \]
-              \item An estimate of the variance of $ \hat{\Vector{\beta}} $ is:
-                    \[ \estV{\hat{\Vector{\beta}}}=\hat{\sigma}^2(\Matrix{X}^\top\Matrix{X})^{-1}. \]
-          \end{itemize}
+      \item \textcolor{Red}{Parameter Estimates}: For linear regression LSE and MLE of $ \Vector{\beta} $ are the same
+            \[ \hat{\Vector{\beta}}=(\Matrix{X}^\top\Matrix{X})^{-1}\Matrix{X}^\top\RandomVector{Y}. \]
+      \item \textcolor{Red}{Fitted values}: $ \hat{\RandomVector{Y}}=\Matrix{X}\hat{\Vector{\beta}} $.
+      \item \textcolor{Red}{Residuals}: $ \hat{r}_i=(y_i-\hat{y}_i) $.
+      \item \textcolor{Red}{Variance estimates}:
+            \begin{itemize}
+                  \item An unbiased estimate of $ \sigma^2 $ is:
+                        \[ \hat{\sigma}^2=\frac{1}{n-(p+1)} \sum_{i=1}^{n} \hat{r}_i^2. \]
+                  \item An estimate of the variance of $ \hat{\Vector{\beta}} $ is:
+                        \[ \estV{\hat{\Vector{\beta}}}=\hat{\sigma}^2(\Matrix{X}^\top\Matrix{X})^{-1}. \]
+            \end{itemize}
 \end{itemize}
 \subsubsection*{Low Birthweight Infant Data Example}
 \begin{itemize}
-    \item For $ n=100 $ infants, we have observed $ Y_i= $ head circumference and $ x_i= $ gestational age for baby $ i $, $ i=1,\ldots,100 $.
-    \item Consider a simple linear regression model:
-          \[ Y_i=\beta_0+\beta_1x_{i}+\varepsilon_i. \]
-    \item We can fit the model and obtain LSE/MSE using the \lstinline{lm()} function in R.
+      \item For $ n=100 $ infants, we have observed $ Y_i= $ head circumference and $ x_i= $ gestational age for baby $ i $, $ i=1,\ldots,100 $.
+      \item Consider a simple linear regression model:
+            \[ Y_i=\beta_0+\beta_1x_{i}+\varepsilon_i. \]
+      \item We can fit the model and obtain LSE/MSE using the \texttt{lm()} function in R.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -406,11 +389,11 @@ F-statistic: 152.9 on 1 and 98 DF,  p-value: < 2.2e-16
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
-    \item What is the interpretation of regression parameters $ \beta_0 $ and $ \beta_1 $?
-          \begin{itemize}
-              \item $ \beta_0 $ (intercept): expected \lstinline{headcirc} for a baby of a gestational age zero ($ x=0 $).
-              \item $ \beta_1 $ (slope): expected change in \lstinline{headcirc} associated with a one unit increase in gestational age.
-          \end{itemize}
+      \item What is the interpretation of regression parameters $ \beta_0 $ and $ \beta_1 $?
+            \begin{itemize}
+                  \item $ \beta_0 $ (intercept): expected \texttt{headcirc} for a baby of a gestational age zero ($ x=0 $).
+                  \item $ \beta_1 $ (slope): expected change in \texttt{headcirc} associated with a one unit increase in gestational age.
+            \end{itemize}
 \end{itemize}
 
 \subsection*{\circled{3} Model Checking}
@@ -422,22 +405,22 @@ should expect that:
 \[ d_i\iid \N{0,1}. \]
 We visually check this by examining residual plots such as:
 \begin{itemize}
-    \item Standardized residuals versus the fitted values.
-    \item Standardized residuals versus the explanatory variable(s).
-    \item Normal probability plot (QQ plot) of the standardized residuals.
+      \item Standardized residuals versus the fitted values.
+      \item Standardized residuals versus the explanatory variable(s).
+      \item Normal probability plot (QQ plot) of the standardized residuals.
 \end{itemize}
 % \begin{noindent}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-13-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-14-1} 
 
 }
 
 
 
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-13-2} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-14-2} 
 
 }
 
@@ -447,51 +430,51 @@ We visually check this by examining residual plots such as:
 
 \subsection*{\circled{4} Inference}
 \begin{itemize}
-    \item Under suitable assumptions, the fitted regression parameters are asymptotically
-          normally distributed:
-          \begin{align*}
-              \hat{\Vector{\beta}} & \sim \MVN{\Vector{\beta},\sigma^2(\Matrix{X}^\top \Matrix{X})^{-1}},                                              \\
-              \hat{\beta}_j        & \sim \N{\beta_j,\sigma^2v_{jj}},\qquad\text{where $v_{jj}=\bigl[(\Matrix{X}^\top\Matrix{X})^{-1}\bigr]_{(j,j)}$}.
-          \end{align*}
-    \item Since $ \sigma^2 $ is generally unknown, we replace it with the unbiased estimate $ \hat{\sigma}^2 $, and obtain $ \se{\hat{\beta}_j}=\sqrt{\hat{\sigma}^2v_{jj}} $.
-    \item The inference is then based on the $t$-distribution result:
-          \[ \frac{\hat{\beta}_j-\beta_j}{\se{\hat{\beta}_j}}\sim t_{n-p-1}.  \]
+      \item Under suitable assumptions, the fitted regression parameters are asymptotically
+            normally distributed:
+            \begin{align*}
+                  \hat{\Vector{\beta}} & \sim \MVN{\Vector{\beta},\sigma^2(\Matrix{X}^\top \Matrix{X})^{-1}},                                              \\
+                  \hat{\beta}_j        & \sim \N{\beta_j,\sigma^2v_{jj}},\qquad\text{where $v_{jj}=\bigl[(\Matrix{X}^\top\Matrix{X})^{-1}\bigr]_{(j,j)}$}.
+            \end{align*}
+      \item Since $ \sigma^2 $ is generally unknown, we replace it with the unbiased estimate $ \hat{\sigma}^2 $, and obtain $ \se{\hat{\beta}_j}=\sqrt{\hat{\sigma}^2v_{jj}} $.
+      \item The inference is then based on the $t$-distribution result:
+            \[ \frac{\hat{\beta}_j-\beta_j}{\se{\hat{\beta}_j}}\sim t_{n-p-1}.  \]
 \end{itemize}
 \subsubsection*{Low Birthweight Infant Data Example}
 \begin{itemize}
-    \item Is there a significant (linear) relationship between head circumference and
-          gestational age?
+      \item Is there a significant (linear) relationship between head circumference and
+            gestational age?
 
-          We wish to test $ \HN $: $ \beta_1=0 $ vs $ \HA $: $ \beta_1\ne 0 $.
-          \[ t=\frac{\hat{\beta}_1-(0)}{\se{\hat{\beta}_1}}\sim t_{98}, \]
-          if $ \HN $ is true, and we reject $ \HN $ if $ \abs{t}>t_{98,0.975}=1.985 $.
-          Here we have $ t=0.78/0.063=12.37\gg 1.985 $, so we reject $ \HN $.
-    \item What is the \qty{95}{\percent} confidence interval for the expected increase in head
-          circumference when the gestational age of a baby increases by 1 week?
+            We wish to test $ \HN $: $ \beta_1=0 $ vs $ \HA $: $ \beta_1\ne 0 $.
+            \[ t=\frac{\hat{\beta}_1-(0)}{\se{\hat{\beta}_1}}\sim t_{98}, \]
+            if $ \HN $ is true, and we reject $ \HN $ if $ \abs{t}>t_{98,0.975}=1.985 $.
+            Here we have $ t=0.78/0.063=12.37\gg 1.985 $, so we reject $ \HN $.
+      \item What is the \qty{95}{\percent} confidence interval for the expected increase in head
+            circumference when the gestational age of a baby increases by 1 week?
 
-          A \qty{95}{\percent} CI for $ \beta_1 $:
-          \[ \hat{\beta}_1\pm t_{98,0.975}\se{\hat{\beta}_1}=0.78\pm 1.985(0.063)=(0.665,0.905). \]
+            A \qty{95}{\percent} CI for $ \beta_1 $:
+            \[ \hat{\beta}_1\pm t_{98,0.975}\se{\hat{\beta}_1}=0.78\pm 1.985(0.063)=(0.665,0.905). \]
 \end{itemize}
 
 \subsection*{Linear models with multiple predictors}
 \subsubsection*{Low Birthweight Infant Data Example}
 \begin{itemize}
-    \item \emph{Toxemia}, a pregnancy complication characterized by high blood pressure
-          and signs of damage to liver and kidneys, may also have an impact on the
-          development of babies.
-          %\begin{noindent}
+      \item \emph{Toxemia}, a pregnancy complication characterized by high blood pressure
+            and signs of damage to liver and kidneys, may also have an impact on the
+            development of babies.
+            %\begin{noindent}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-14-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-15-1} 
 
 }
 
 
 \end{knitrout}
           %\end{noindent}
-    \item Does \emph{toxemia}, after adjustment for gestational age, also affect the head
-          circumference?
+      \item Does \emph{toxemia}, after adjustment for gestational age, also affect the head
+            circumference?
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -521,13 +504,13 @@ F-statistic: 91.18 on 2 and 97 DF,  p-value: < 2.2e-16
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
-          What is the interpretation of $ \beta_2 $?
+            What is the interpretation of $ \beta_2 $?
 
-          $ \hat{\beta}_3=-1.41233 $. After adjustment of gestational age, the babies whose mothers had toxemia have smaller (by \qty{1.41}{\cm}) than
-          those whose mothers did not. This difference is significant (test $ \HN $: $ \beta_2=0 $, $ p\text{-value}=0.0076<0.05$).
-    \item Is the rate of increase of head circumference with gestational age the same
-          for infants whose mothers with toxemia as those whose mother without it?
-          \[ Y_i=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i1}x_{i2}+\varepsilon_i. \]
+            $ \hat{\beta}_3=-1.41233 $. After adjustment of gestational age, the babies whose mothers had toxemia have smaller (by \qty{1.41}{\cm}) than
+            those whose mothers did not. This difference is significant (test $ \HN $: $ \beta_2=0 $, $ p\text{-value}=0.0076<0.05$).
+      \item Is the rate of increase of head circumference with gestational age the same
+            for infants whose mothers with toxemia as those whose mother without it?
+            \[ Y_i=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i1}x_{i2}+\varepsilon_i. \]
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -558,10 +541,10 @@ F-statistic: 60.23 on 3 and 96 DF,  p-value: < 2.2e-16
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
-          What is the interpretation of $ \beta_3 $?
+            What is the interpretation of $ \beta_3 $?
 
-          $ \beta_3 $ is the differences in slopes between the two groups (\lstinline{toxemia=1} vs \lstinline{toxemia=0}).
-          We want to test $ \HN $: $ \beta_3=0 $, $ t=0.282 $, $ p\text{-value}=0.778>0.05 $. No evidence to reject $ \HN $.
+            $ \beta_3 $ is the differences in slopes between the two groups (\texttt{toxemia=1} vs \texttt{toxemia=0}).
+            We want to test $ \HN $: $ \beta_3=0 $, $ t=0.282 $, $ p\text{-value}=0.778>0.05 $. No evidence to reject $ \HN $.
 \end{itemize}
 
 \subsection*{Limitations of Linear Regression}
@@ -569,16 +552,16 @@ Linear regression models can be very useful but may not be appropriate to use
 when response $ Y $ is not continuous and can not be assumed to be normally
 distributed, e.g.,
 \begin{itemize}
-    \item Binary data ($ Y=0 $ or $ Y=1 $),
-    \item Count data ($ Y=0,1,2,3,\ldots $).
+      \item Binary data ($ Y=0 $ or $ Y=1 $),
+      \item Count data ($ Y=0,1,2,3,\ldots $).
 \end{itemize}
 \textcolor{Red}{Generalized Linear Models (GLM)} extend the linear regression framework to
 address the above issue.
 \begin{itemize}
-    \item Suitable for continuous and discrete data.
-    \item Normal/Gaussian linear regression is a special case of GLM.
-    \item Inference based on maximum likelihood methods (review next class --- 431
-          Appendix, Stat 330 notes).
+      \item Suitable for continuous and discrete data.
+      \item Normal/Gaussian linear regression is a special case of GLM.
+      \item Inference based on maximum likelihood methods (review next class --- 431
+            Appendix, Stat 330 notes).
 \end{itemize}
 % Week 2
 
@@ -639,7 +622,7 @@ address the above issue.
             \[ I(\hat{\theta})=-\ell^{\prime\prime}(\hat{\theta})>0. \]
       \item \textcolor{Red}{Invariance property of MLEs}: if $ g(\theta) $ is any function of the parameter $ \theta $, then the MLE of $ g(\theta) $ is $ g(\hat{\theta}) $.
             \begin{Example}{}
-                  If $ \hat{\theta} $ is the MLE of $ \theta $, then $ e^{\hat{\theta}} $ is the MLE of $ e^{\theta} $.
+                  If $ \hat{\theta} $ is the MLE of $ \theta $, then $ \mathrm{e}^{\hat{\theta}} $ is the MLE of $ \mathrm{e}^{\theta} $.
             \end{Example}
 \end{itemize}
 \subsection*{Example: Binomial Distribution}
@@ -684,10 +667,10 @@ address the above issue.
 \end{Example}
 \subsection*{Example: Poisson Distribution}
 Suppose $ y_1,\ldots,y_n $ is an iid sample from a Poisson distribution with probability mass function:
-\[ f(y;\lambda)=\Prob{Y=y;\lambda}=\frac{\lambda^y e^{-\lambda}}{y!},\; \lambda>0,\,y=0,1,2,\ldots.  \]
+\[ f(y;\lambda)=\Prob{Y=y;\lambda}=\frac{\lambda^y \mathrm{e}^{-\lambda}}{y!},\; \lambda>0,\,y=0,1,2,\ldots.  \]
 \begin{itemize}
       \item \textcolor{Red}{Likelihood function}:
-            \[ L(\lambda;y_1,\ldots,y_n)=\prod_{i=1}^n f(y_i;\lambda)=\frac{\lambda^{\sum y_i}e^{-n\lambda}}{\prod_i y_i!}.  \]
+            \[ L(\lambda;y_1,\ldots,y_n)=\prod_{i=1}^n f(y_i;\lambda)=\frac{\lambda^{\sum y_i}\mathrm{e}^{-n\lambda}}{\prod_i y_i!}.  \]
       \item \textcolor{Red}{Log-likelihood function}:
             \[ \ell(\lambda)=\biggl(\sum_i y_i\biggr)\log{\lambda}-n\lambda-\sum_{i=1}^{n} \log{y_i!}. \]
       \item \textcolor{Red}{Score function}:
@@ -909,14 +892,14 @@ member of the exponential family.
 \subsection*{Examples}
 \begin{itemize}
     \item Poisson Distribution: $ Y \sim \POI{\lambda} $,
-          \[ f(y;\lambda)=\frac{\lambda^y e^{-\lambda}}{y!},\; \lambda>0,\, y=0,1,\ldots.  \]
+          \[ f(y;\lambda)=\frac{\lambda^y \mathrm{e}^{-\lambda}}{y!},\; \lambda>0,\, y=0,1,\ldots.  \]
           Show that Poisson is a member of exponential family and identify the canonical
           parameter and the functions $ a(\:\cdot\:) $, $ b(\:\cdot\:) $, and $ c(\:\cdot\:) $.
 
           \textbf{Solution.} $ f(y;\lambda)=\exp[\big]{\log{f(y;\lambda)}}=\exp*{\frac{y\log{\lambda}-\lambda}{1} -\log{y!}} $. Therefore,
           \begin{align*}
               \theta    & =\log{\lambda}\qquad\text{(canonical/natural parameter)}, \\
-              b(\theta) & =\lambda=e^{\theta},                                      \\
+              b(\theta) & =\lambda=\mathrm{e}^{\theta},                             \\
               \phi      & =1,                                                       \\
               a(\phi)   & =1,                                                       \\
               c(y;\phi) & =-\log{y!}.
@@ -1015,11 +998,11 @@ Note that:
 \end{Regular}
 \subsection*{Examples}
 Recall that $ \POI{\lambda} $ is a member of exponential family,
-\[ f(y;\lambda)=\frac{\lambda^y e^{-\lambda}}{y!}=\exp*{\frac{y\log{\lambda}-\lambda}{1}-\log{y!}}  \]
-where $ \theta=\log{\lambda} $, $ \phi=1 $, $ b(\theta)=\lambda=e^{\theta} $, and $ a(\phi)=1 $. Now to find the mean, variance function, and canonical link function:
+\[ f(y;\lambda)=\frac{\lambda^y \mathrm{e}^{-\lambda}}{y!}=\exp*{\frac{y\log{\lambda}-\lambda}{1}-\log{y!}}  \]
+where $ \theta=\log{\lambda} $, $ \phi=1 $, $ b(\theta)=\lambda=\mathrm{e}^{\theta} $, and $ a(\phi)=1 $. Now to find the mean, variance function, and canonical link function:
 \begin{itemize}
-    \item \textcolor{Blue}{Mean}: $ \E{Y}=b^\prime(\theta)=e^{\theta}=\mu\implies \theta=\log{\mu} $.
-    \item \textcolor{Blue}{Variance Function}: $ \V{\mu}=b^{\prime\prime}(\theta)=e^{\theta}\implies \V{\mu}=\mu $.
+    \item \textcolor{Blue}{Mean}: $ \E{Y}=b^\prime(\theta)=\mathrm{e}^{\theta}=\mu\implies \theta=\log{\mu} $.
+    \item \textcolor{Blue}{Variance Function}: $ \V{\mu}=b^{\prime\prime}(\theta)=\mathrm{e}^{\theta}\implies \V{\mu}=\mu $.
     \item \textcolor{Blue}{Variance}: $ \Var{Y}=\V{\mu}a(\phi)=\mu $ (mean-variance relationship).
     \item \textcolor{Blue}{Canonical link}: set $ \theta=\eta $ using $ \theta=\log{\mu}=\eta=\Vector{x}^\top \Vector{\beta} $, i.e., $ g(\mu)=\log{\mu} $ where $ \log{\:\cdot\:} $
           is the canonical link.
@@ -1090,7 +1073,7 @@ is composed following three components:
 \end{Regular}
 \subsection*{Example: A Poisson Regression Model}
 Suppose $ Y_i \ind\POI{\lambda_i} $ with mean $ \E{Y_i}=\lambda_i $, $ i=1,\ldots,n $:
-\[ f(y_i)=\frac{e^{-\lambda_i}\lambda_i^{y_i}}{y_i!}=\exp[\big]{y_i\log{\lambda_i}-\lambda_i-\log{y_i!}}.  \]
+\[ f(y_i)=\frac{\mathrm{e}^{-\lambda_i}\lambda_i^{y_i}}{y_i!}=\exp[\big]{y_i\log{\lambda_i}-\lambda_i-\log{y_i!}}.  \]
 Poisson distribution is a member of exponential family with:
 \begin{itemize}
     \item Canonical parameter: $ \theta_i=\log{\lambda_i} $.
@@ -1182,7 +1165,7 @@ calculate the derivative using standard methods, i.e.,
     \bigl[\Vector{S}(\Vector{\beta})\bigr]_j
      & =\sum_i \pdv{\ell_i}{\beta_j}                                                                                  \\
      & =\sum_i \pdv*{\bigl(y_i \textcolor{Red}{\log{\lambda_i}}-\textcolor{Red}{\lambda_i}-\log{y_i!}\bigr)}{\beta_j} \\
-     & =\sum_i\bigl(y_i x_{ij}-e^{\Vector{x}_i^\top \Vector{\beta}}x_{ij}\bigr).
+     & =\sum_i\bigl(y_i x_{ij}-\mathrm{e}^{\Vector{x}_i^\top \Vector{\beta}}x_{ij}\bigr).
 \end{align*}
 Or we can use the general results derived for the GLMs on the previous slides.
 \subsection*{Solving $ \Vector{S}(\Vector{\beta})=\Vector{0} $ for MLE}
@@ -1322,19 +1305,19 @@ Note that $ \pi_1,\pi_2\in[0,1] $ and odds ratio $ \psi\in(0,\infty) $ are restr
 and now $ \theta_1,\theta_2\in(-\infty,\infty) $.
 
 Our re-parameterization implies:
-\[ \pi_1=\frac{e^{\theta_1+\theta_2}}{1+e^{\theta_1+\theta_2}},\qquad \pi_2=\frac{e^{\theta_2}}{1+e^{\theta_2}}. \]
+\[ \pi_1=\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}},\qquad \pi_2=\frac{\mathrm{e}^{\theta_2}}{1+\mathrm{e}^{\theta_2}}. \]
 Now the likelihood becomes:
 \begin{align*}
-    L(\theta_1,\theta_2)    & =(e^{\theta_1})^{y_1}(e^{\theta_2})^{y_1+y_2}(1+e^{\theta_1+\theta_2})^{m_1}(1+e^{\theta_2})^{-m_2}, \\
-    \ell(\theta_1,\theta_2) & =y_1\theta_1+(y_1+y_2)\theta_2-m_1\log{1+e^{\theta_1+\theta_2}}-m_2\log{1+e^{\theta_2}}.
+    L(\theta_1,\theta_2)    & =(\mathrm{e}^{\theta_1})^{y_1}(\mathrm{e}^{\theta_2})^{y_1+y_2}(1+\mathrm{e}^{\theta_1+\theta_2})^{m_1}(1+\mathrm{e}^{\theta_2})^{-m_2}, \\
+    \ell(\theta_1,\theta_2) & =y_1\theta_1+(y_1+y_2)\theta_2-m_1\log{1+\mathrm{e}^{\theta_1+\theta_2}}-m_2\log{1+\mathrm{e}^{\theta_2}}.
 \end{align*}
 The score vector is:
 \[ S(\theta_1,\theta_2)=\begin{pmatrix}
         \pdv{\ell}{\theta_1} \\
         \pdv{\ell}{\theta_2}
     \end{pmatrix}=\begin{pmatrix}
-        y_1-m_1\biggl(\frac{e^{\theta_1+\theta_2}}{1+e^{\theta_1+\theta_2}} \biggr) \\
-        y_1+y_2-m_1\biggl(\frac{e^{\theta_1+\theta_2}}{1+e^{\theta_1+\theta_2}} \biggr)-m_2\biggl(\frac{e^{\theta_2}}{1+e^{\theta_2}} \biggr)
+        y_1-m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}} \biggr) \\
+        y_1+y_2-m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}} \biggr)-m_2\biggl(\frac{\mathrm{e}^{\theta_2}}{1+\mathrm{e}^{\theta_2}} \biggr)
     \end{pmatrix}. \]
 Solving $ \Vector{S}(\theta_1,\theta_2)=\Vector{0} $ gives us the MLEs:
 \[ \hat{\theta}_1=\log*{\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}},\qquad \hat{\theta}_2=\log*{\frac{y_2}{m_2-y_2}}. \]
@@ -1348,9 +1331,9 @@ In order to do inference we will need the Information Matrix:
     \end{bmatrix}\qquad\text{where }I_{jk}=-\pdv*{\ell(\theta_1,\theta_2)}{\theta_j,\theta_k}. \]
 Here, we have:
 \begin{align*}
-    I_{11}          & =m_1\biggl(\frac{e^{\theta_1+\theta_2}}{(1+e^{\theta_1+\theta_2})^2} \biggr),                                                           \\
-    I_{12}  =I_{21} & =m_1\biggl(\frac{e^{\theta_1+\theta_2}}{(1+e^{\theta_1+\theta_2})^2} \biggr),                                                           \\
-    I_{22}          & =m_1\biggl(\frac{e^{\theta_1+\theta_2}}{(1+e^{\theta_1+\theta_2})^2} \biggr)+m_2\biggl(\frac{e^{\theta_2}}{(1+e^{\theta_2})^2} \biggr).
+    I_{11}          & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr),                                                                             \\
+    I_{12}  =I_{21} & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr),                                                                             \\
+    I_{22}          & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr)+m_2\biggl(\frac{\mathrm{e}^{\theta_2}}{(1+\mathrm{e}^{\theta_2})^2} \biggr).
 \end{align*}
 We are interested in doing inference on $ \theta_1=\log{\psi} $ (while $ \theta_2 $ is nuisance).
 
@@ -1499,21 +1482,21 @@ There is an \textcolor{Blue}{additional explanatory variable}: Clinic (A vs B).
 Last week, we introduce a simple method for association between two binary
 variables, \textcolor{Blue}{$ 2\times 2 $ contingency table analysis}:
 \begin{table}[!htbp]
-    \centering
-    \begin{NiceTabular}{l|ccc}
-        & \multicolumn{2}{c}{\emph{Mortality}}                                                 \\
-        Level of Care & Died                            & Survived                                 \\
-        \midrule
-        Intensive & $ y_1 $                            & $ m_1-y_1 $    & $ Y_1 \sim \BIN{m_1,\pi_1} $         \\
-        Regular   & $ y_2 $                            & $ m_2-y_2 $    & $ Y_2 \sim \BIN{m_2,\pi_2} $      \\
-        \bottomrule
-    \end{NiceTabular}
+      \centering
+      \begin{NiceTabular}{l|ccc}
+            & \multicolumn{2}{c}{\emph{Mortality}}                                                 \\
+            Level of Care & Died                            & Survived                                 \\
+            \midrule
+            Intensive & $ y_1 $                            & $ m_1-y_1 $    & $ Y_1 \sim \BIN{m_1,\pi_1} $         \\
+            Regular   & $ y_2 $                            & $ m_2-y_2 $    & $ Y_2 \sim \BIN{m_2,\pi_2} $      \\
+            \bottomrule
+      \end{NiceTabular}
 \end{table}
 Measure of Association: $ \displaystyle \OR = \psi=\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)} $,
 \begin{itemize}
-    \item $ \OR=1 $ (equal risk).
-    \item $ 0<\OR<1 $ (lower risk in group 1).
-    \item $ \OR>1 $ (higher risk in group 1).
+      \item $ \OR=1 $ (equal risk).
+      \item $ 0<\OR<1 $ (lower risk in group 1).
+      \item $ \OR>1 $ (higher risk in group 1).
 \end{itemize}
 Maximum likelihood estimator for $ \OR $ is:
 \[ \hat{\psi}=\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}, \]
@@ -1521,97 +1504,97 @@ and a Wald-based \qty{95}{\percent} CI is:
 \[ \exp[\bigg]{\log{\hat{\psi}_1}\pm 1.96\underbrace{\sqrt{\frac{1}{y_1} +\frac{1}{m_1-y_1} +\frac{1}{y_2} +\frac{1}{m_2-y_2}}}_{\se{\log{\hat{\psi}}}}}. \]
 Prenatal Care Data Example:
 \begin{table}[!htbp]
-    \centering
-    \begin{tabular}{ccc}
-        OR (\textcolor{Blue}{Mortality and Care}) & Est.                   & \qty{95}{\percent} CI             \\
-        \midrule
-        Intensive vs Regular                      & \textcolor{Blue}{0.51} & \textcolor{Blue}{$ (0.30,0.89) $}
-    \end{tabular}
-    \caption{$ 1\notin (0.30,0.89)\implies $ evidence of association between Mortality and Care.}
+      \centering
+      \begin{tabular}{ccc}
+            OR (\textcolor{Blue}{Mortality and Care}) & Est.                   & \qty{95}{\percent} CI             \\
+            \midrule
+            Intensive vs Regular                      & \textcolor{Blue}{0.51} & \textcolor{Blue}{$ (0.30,0.89) $}
+      \end{tabular}
+      \caption{$ 1\notin (0.30,0.89)\implies $ evidence of association between Mortality and Care.}
 \end{table}
 However, Mortality and Care are also related to another variable, Clinic:
 \begin{table}[!htbp]
-    \centering
-    \begin{tabular}{ccc}
-        OR (\textcolor{Blue}{Mortality and Clinic}) & Est.                   & \qty{95}{\percent} CI             \\
-        \midrule
-        Intensive vs Regular                        & \textcolor{Blue}{0.35} & \textcolor{Blue}{$ (0.12,0.58) $}
-    \end{tabular}
-    \caption{Association between Mortality and Clinic.}
+      \centering
+      \begin{tabular}{ccc}
+            OR (\textcolor{Blue}{Mortality and Clinic}) & Est.                   & \qty{95}{\percent} CI             \\
+            \midrule
+            Intensive vs Regular                        & \textcolor{Blue}{0.35} & \textcolor{Blue}{$ (0.12,0.58) $}
+      \end{tabular}
+      \caption{Association between Mortality and Clinic.}
 \end{table}
 \begin{table}[!htbp]
-    \centering
-    \begin{tabular}{ccc}
-        OR (\textcolor{Blue}{Care and Clinic}) & Est.                    & \qty{95}{\percent} CI              \\
-        \midrule
-        Intensive vs Regular                   & \textcolor{Blue}{14.06} & \textcolor{Blue}{$ (9.12,21.76) $}
-    \end{tabular}
-    \caption{Association between Care and Clinic.}
+      \centering
+      \begin{tabular}{ccc}
+            OR (\textcolor{Blue}{Care and Clinic}) & Est.                    & \qty{95}{\percent} CI              \\
+            \midrule
+            Intensive vs Regular                   & \textcolor{Blue}{14.06} & \textcolor{Blue}{$ (9.12,21.76) $}
+      \end{tabular}
+      \caption{Association between Care and Clinic.}
 \end{table}
 \begin{itemize}
-    \item Therefore, we wish to consider how a variable, e.g., Mortality ($ Y $), is related to
-          multiple explanatory variables together, e.g., Care ($ x_1 $) and Clinic ($ x_2 $).
-    \item This can be done using \textcolor{Blue}{multiple regression methodology} for binary data $ \implies $
-          Topic 3b: Binomial Regression Models for Binary Data.
+      \item Therefore, we wish to consider how a variable, e.g., Mortality ($ Y $), is related to
+            multiple explanatory variables together, e.g., Care ($ x_1 $) and Clinic ($ x_2 $).
+      \item This can be done using \textcolor{Blue}{multiple regression methodology} for binary data $ \implies $
+            Topic 3b: Binomial Regression Models for Binary Data.
 \end{itemize}
 \subsection*{Multiple Regression for Binary Data}
 \begin{itemize}
-    \item Often we need to consider the relationship between a binary outcome and
-          multiple explanatory variables, using multiple regression methodology.
-    \item This is because we may want to:
-          \begin{itemize}
-              \item control for cofounding variables and hence want to examine the effect of
-                    several variables simultaneously;
-              \item examine the effect of categorical variables ($ >2 $ levels) or continuous covariates;
-              \item develop sophisticated models that describe complex relationship.
-          \end{itemize}
-    \item Suppose \textcolor{Blue}{\emph{subject level data}} is binary with a value of 1 indicating that an event
-          of interest occurs and a value of 0 indicating that event doesn't occur.
-    \item Subjects can be classified according to the values of explanatory
-          variables into $n$ groups (i.e., common covariates values within each group), so
-          we have \textcolor{Blue}{\emph{grouped data}} such that:
-          \begin{itemize}
-              \item $ m_i $ denotes number of subjects in group $i$;
-              \item $Y_i$ denotes number of subjects experienced the event in group $i$;
-              \item $ x_{i1},\ldots,x_{ip} $ denote the covariates values associated with group $i$
-                    where $ i=1,\ldots,n $.
-          \end{itemize}
+      \item Often we need to consider the relationship between a binary outcome and
+            multiple explanatory variables, using multiple regression methodology.
+      \item This is because we may want to:
+            \begin{itemize}
+                  \item control for cofounding variables and hence want to examine the effect of
+                        several variables simultaneously;
+                  \item examine the effect of categorical variables ($ >2 $ levels) or continuous covariates;
+                  \item develop sophisticated models that describe complex relationship.
+            \end{itemize}
+      \item Suppose \textcolor{Blue}{\emph{subject level data}} is binary with a value of 1 indicating that an event
+            of interest occurs and a value of 0 indicating that event doesn't occur.
+      \item Subjects can be classified according to the values of explanatory
+            variables into $n$ groups (i.e., common covariates values within each group), so
+            we have \textcolor{Blue}{\emph{grouped data}} such that:
+            \begin{itemize}
+                  \item $ m_i $ denotes number of subjects in group $i$;
+                  \item $Y_i$ denotes number of subjects experienced the event in group $i$;
+                  \item $ x_{i1},\ldots,x_{ip} $ denote the covariates values associated with group $i$
+                        where $ i=1,\ldots,n $.
+            \end{itemize}
 \end{itemize}
 \subsection*{Set-up of a Binomial Regression Model}
 \begin{enumerate}[label=\color{Blue}\protect\circled{\arabic*}]
-    \item \textcolor{Blue}{Response Variable}: $ Y_i \sim \BIN{m_i,\pi_i} $, $ i=1,\ldots,n $, and Binomial
-          distribution is a member of Exponential family!
-          \begin{align*}
-              f(y_i)
-               & =\binom{m_i}{y_i}\pi_i^{y_i}(1-\pi_i)^{m_i-y_i}                                   \\
-               & =\exp*{y_i\log*{\frac{\pi_i}{1-\pi_i}}+m_i\log{1-\pi_i}+\log*{\binom{m_i}{y_i}}},
-          \end{align*}
-          where
-          \begin{align*}
-              \theta_i     & =\log*{\frac{\pi_i}{1-\pi_i}},              \\
-              a(\phi)=\phi & =1,                                         \\
-              b(\theta_i)  & =-m_i\log{1-\pi_i}=m_i\log{1+e^{\theta_i}}. \\
-              c(y_i;\phi)  & =\log*{\binom{m_i}{y_i}}.
-          \end{align*}
-    \item \textcolor{Blue}{Linear Predictor}:
-          \[ \eta_i=\Vector{x}_i^\top \Vector{\beta}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}. \]
-    \item \textcolor{Blue}{Link Function}: Recall that for Binomial distribution, we have $ \E{Y_i}=\mu_i=m_i\pi_i $,
-          therefore we typically re-write the link function in terms of $ \pi_i $,
-          \[ \textcolor{Blue}{g(\pi_i)}=\Vector{x}_i^\top \Vector{\beta}. \]
-          As $ \pi_i\in(0,1) $, any function $ g\colon (0,1)\to(-\infty,\infty) $ may work, and here are some link functions we
-          can consider:
-          \begin{table}[!htbp]
-              \centering
-              \begin{tabular}{cc}
-                  \toprule
-                  log-log                             & $ g(\pi)=\log[\big]{-\log{\pi}} $                                               \\
-                  complementary log-log               & $ g(\pi)=\log[\big]{-\log{1-\pi}} $                                             \\
-                  Probit$^a$                          & $ g(\pi)=\Phi^{-1}(\pi) $                                                       \\
-                  Logit (\textcolor{Blue}{canonical}) & $ g(\pi)=\log[\big]{\pi/(1-\pi)} $                                              \\
-                  \bottomrule
-                  \multicolumn{2}{l}{\footnotesize{$ {}^a $For the Probit link, $ \Phi(\:\cdot\:) $ is the \emph{CDF} of $ \N{0,1} $.}} \\
-              \end{tabular}
-          \end{table}
+      \item \textcolor{Blue}{Response Variable}: $ Y_i \sim \BIN{m_i,\pi_i} $, $ i=1,\ldots,n $, and Binomial
+            distribution is a member of Exponential family!
+            \begin{align*}
+                  f(y_i)
+                   & =\binom{m_i}{y_i}\pi_i^{y_i}(1-\pi_i)^{m_i-y_i}                                   \\
+                   & =\exp*{y_i\log*{\frac{\pi_i}{1-\pi_i}}+m_i\log{1-\pi_i}+\log*{\binom{m_i}{y_i}}},
+            \end{align*}
+            where
+            \begin{align*}
+                  \theta_i     & =\log*{\frac{\pi_i}{1-\pi_i}},                       \\
+                  a(\phi)=\phi & =1,                                                  \\
+                  b(\theta_i)  & =-m_i\log{1-\pi_i}=m_i\log{1+\mathrm{e}^{\theta_i}}. \\
+                  c(y_i;\phi)  & =\log*{\binom{m_i}{y_i}}.
+            \end{align*}
+      \item \textcolor{Blue}{Linear Predictor}:
+            \[ \eta_i=\Vector{x}_i^\top \Vector{\beta}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}. \]
+      \item \textcolor{Blue}{Link Function}: Recall that for Binomial distribution, we have $ \E{Y_i}=\mu_i=m_i\pi_i $,
+            therefore we typically re-write the link function in terms of $ \pi_i $,
+            \[ \textcolor{Blue}{g(\pi_i)}=\Vector{x}_i^\top \Vector{\beta}. \]
+            As $ \pi_i\in(0,1) $, any function $ g\colon (0,1)\to(-\infty,\infty) $ may work, and here are some link functions we
+            can consider:
+            \begin{table}[!htbp]
+                  \centering
+                  \begin{tabular}{cc}
+                        \toprule
+                        log-log                             & $ g(\pi)=\log[\big]{-\log{\pi}} $                                               \\
+                        complementary log-log               & $ g(\pi)=\log[\big]{-\log{1-\pi}} $                                             \\
+                        Probit$^a$                          & $ g(\pi)=\Phi^{-1}(\pi) $                                                       \\
+                        Logit (\textcolor{Blue}{canonical}) & $ g(\pi)=\log[\big]{\pi/(1-\pi)} $                                              \\
+                        \bottomrule
+                        \multicolumn{2}{l}{\footnotesize{$ {}^a $For the Probit link, $ \Phi(\:\cdot\:) $ is the \emph{CDF} of $ \N{0,1} $.}} \\
+                  \end{tabular}
+            \end{table}
 \end{enumerate}
 \subsection*{Canonical Link and Logistic Regression}
 Recall for Binomial distribution $ \theta_i=\log*{\frac{\pi_i}{1-\pi_i} } $, and by setting $ \theta_i=\eta_i $, we have:
@@ -1621,7 +1604,7 @@ The \textcolor{Blue}{Logit link}, $ g(\pi_i)=\log[\big]{\pi_i/(1-\pi_i)} $, is t
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-18-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-19-1} 
 
 }
 
@@ -1640,116 +1623,116 @@ The predicted number of responses are: $ \hat{Y}_i=m_i\hat{\pi}_i $.
 
 \subsection*{Interpretation of $ \Vector{\beta} $ in Logistic Regression}
 \begin{itemize}
-    \item Consider a simple logistic model with a single binary explanatory variable:
-          \[ \log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}, \]
-          where $ x_{i1}=0 $ (group 0) and $ x_{i1}=1 $ (group 1).
-    \item Let's compare the model when $ x_{i1}=1 $ vs $ x_{i1}=0 $.
-          \begin{table}[!htbp]
-              \centering
-              \begin{tabular}{ccrl}
-                  Group & $ \Vector{x}_i^\top $ & $ \eta_i $          & $ =\log[\big]{\pi_i/(1-\pi_i)} $                              \\
-                  \midrule
-                  1     & $ (1,1)^\top $        & $ \beta_0+\beta_1 $ & $ =\log[\big]{\pi_1/(1-\pi_1)} $                              \\
-                  0     & $ (1,0)^\top $        & $ \beta_0 $         & $ =\log[\big]{\pi_0/(1-\pi_0)} $                              \\
-                  \midrule
-                        &                       & $ \beta_1 $         & $ =\log*{\frac{\pi_1/(1-\pi_1)}{\pi_0/(1-\pi_0)}}=\log{\OR} $
-              \end{tabular}
-          \end{table}
-    \item We subtract line 2 from line 1 to isolate $ \beta_1 $ and find its interpretation.
-    \item $ \beta_1= $ log odds ratio of response for subjects with $ x_{i1}=1 $ vs $ x_{i1}=0 $.
-    \item Please see Section 2.4.2 for general interpretations of $ \Vector{\beta} $'s in multiple logistic regression models.
+      \item Consider a simple logistic model with a single binary explanatory variable:
+            \[ \log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}, \]
+            where $ x_{i1}=0 $ (group 0) and $ x_{i1}=1 $ (group 1).
+      \item Let's compare the model when $ x_{i1}=1 $ vs $ x_{i1}=0 $.
+            \begin{table}[!htbp]
+                  \centering
+                  \begin{tabular}{ccrl}
+                        Group & $ \Vector{x}_i^\top $ & $ \eta_i $          & $ =\log[\big]{\pi_i/(1-\pi_i)} $                              \\
+                        \midrule
+                        1     & $ (1,1)^\top $        & $ \beta_0+\beta_1 $ & $ =\log[\big]{\pi_1/(1-\pi_1)} $                              \\
+                        0     & $ (1,0)^\top $        & $ \beta_0 $         & $ =\log[\big]{\pi_0/(1-\pi_0)} $                              \\
+                        \midrule
+                              &                       & $ \beta_1 $         & $ =\log*{\frac{\pi_1/(1-\pi_1)}{\pi_0/(1-\pi_0)}}=\log{\OR} $
+                  \end{tabular}
+            \end{table}
+      \item We subtract line 2 from line 1 to isolate $ \beta_1 $ and find its interpretation.
+      \item $ \beta_1= $ log odds ratio of response for subjects with $ x_{i1}=1 $ vs $ x_{i1}=0 $.
+      \item Please see Section 2.4.2 for general interpretations of $ \Vector{\beta} $'s in multiple logistic regression models.
 \end{itemize}
 \subsection*{Logistic Regression for Prenatal Care Example}
 \begin{itemize}
-    \item \textcolor{Blue}{Response}: Fetal Mortality, that is,
-          \[ Y_i \sim \BIN{m_i,\pi_i},\; i=1,2,\ldots. \]
-    \item Explanatory Variables:
-          \begin{align*}
-              x_{i1} & =\begin{cases*}
-                            1 & Intensive Care \\
-                            0 & Regular Care
-                        \end{cases*}                           \\
-              x_{i2} & =\begin{cases*}
-                            1 & Clinic A \\
-                            0 & Clinic B \\
-                        \end{cases*}                                \\
-              x_{i3} & =x_{i1}x_{i2}=\begin{cases*}
-                                         1 & Intensive care and Clinic A \\
-                                         0 & Otherwise
-                                     \end{cases*}
-          \end{align*}
-    \item We will use the context of this example to illustrate how to:
-          \begin{itemize}
-              \item fit (simple and multiple) logistic regression models using R, and
-              \item interpret regression parameters.
-          \end{itemize}
+      \item \textcolor{Blue}{Response}: Fetal Mortality, that is,
+            \[ Y_i \sim \BIN{m_i,\pi_i},\; i=1,2,\ldots. \]
+      \item Explanatory Variables:
+            \begin{align*}
+                  x_{i1} & =\begin{cases*}
+                                  1 & Intensive Care \\
+                                  0 & Regular Care
+                            \end{cases*}                           \\
+                  x_{i2} & =\begin{cases*}
+                                  1 & Clinic A \\
+                                  0 & Clinic B \\
+                            \end{cases*}                                \\
+                  x_{i3} & =x_{i1}x_{i2}=\begin{cases*}
+                                               1 & Intensive care and Clinic A \\
+                                               0 & Otherwise
+                                         \end{cases*}
+            \end{align*}
+      \item We will use the context of this example to illustrate how to:
+            \begin{itemize}
+                  \item fit (simple and multiple) logistic regression models using R, and
+                  \item interpret regression parameters.
+            \end{itemize}
 \end{itemize}
 \subsection*{Model 1: Level of Care only model}
 \[ \log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}. \]
 \begin{table}[!htbp]
-    \centering
-    \begin{tabular}{cccl}
-        Level of Care & Clinic & $ \Vector{x}_i^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $ \\
-        \midrule
-        Intensive     & ---    & $ (1,1)^\top $        & $ \beta_0+\beta_1 $             \\
-        Regular       & ---    & $ (1,0)^\top $        & $ \beta_0 $                     \\
-        \bottomrule
-    \end{tabular}
+      \centering
+      \begin{tabular}{cccl}
+            Level of Care & Clinic & $ \Vector{x}_i^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $ \\
+            \midrule
+            Intensive     & ---    & $ (1,1)^\top $        & $ \beta_0+\beta_1 $             \\
+            Regular       & ---    & $ (1,0)^\top $        & $ \beta_0 $                     \\
+            \bottomrule
+      \end{tabular}
 \end{table}
 \begin{itemize}
-    \item $ \beta_0= $ \textcolor{Blue}{log odds} of mortality for babies born to mothers treated with regular care.
-    \item $ \beta_1= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated
-          with intensive vs regular care.
+      \item $ \beta_0= $ \textcolor{Blue}{log odds} of mortality for babies born to mothers treated with regular care.
+      \item $ \beta_1= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated
+            with intensive vs regular care.
 \end{itemize}
 \subsection*{Model 2: Main effects model}
 \[ \log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}. \]
 \begin{table}[!htbp]
-    \centering
-    \begin{tabular}{cccl}
-        Level of Care & Clinic & $ \Vector{x}_i^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $ \\
-        \midrule
-        Intensive     & A      & $ (1,1,1)^\top $      & $ \beta_0+\beta_1+\beta_2 $     \\
-        Regular       & A      & $ (1,0,1)^\top $      & $ \beta_0+\beta_2 $             \\
-        Intensive     & B      & $ (1,1,0)^\top $      & $ \beta_0+\beta_1 $             \\
-        Regular       & B      & $ (1,0,0)^\top $      & $ \beta_0 $                     \\
-        \bottomrule
-    \end{tabular}
+      \centering
+      \begin{tabular}{cccl}
+            Level of Care & Clinic & $ \Vector{x}_i^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $ \\
+            \midrule
+            Intensive     & A      & $ (1,1,1)^\top $      & $ \beta_0+\beta_1+\beta_2 $     \\
+            Regular       & A      & $ (1,0,1)^\top $      & $ \beta_0+\beta_2 $             \\
+            Intensive     & B      & $ (1,1,0)^\top $      & $ \beta_0+\beta_1 $             \\
+            Regular       & B      & $ (1,0,0)^\top $      & $ \beta_0 $                     \\
+            \bottomrule
+      \end{tabular}
 \end{table}
 \begin{itemize}
-    \item $ \beta_0= $ \textcolor{Blue}{log odds} of mortality with regular care at Clinic B.
-    \item $ \beta_1= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated with
-          \textcolor{Blue}{intensity vs regular} care at the \emph{same clinic}.
-    \item $ \beta_2= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated at
-          \textcolor{Blue}{Clinic A vs Clinic B} at the \emph{same level of care}.
+      \item $ \beta_0= $ \textcolor{Blue}{log odds} of mortality with regular care at Clinic B.
+      \item $ \beta_1= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated with
+            \textcolor{Blue}{intensity vs regular} care at the \emph{same clinic}.
+      \item $ \beta_2= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated at
+            \textcolor{Blue}{Clinic A vs Clinic B} at the \emph{same level of care}.
 \end{itemize}
 \subsection*{Model 3: Interaction model}
 \[ \log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}. \]
 \begin{table}[!htbp]
-    \centering
-    \begin{tabular}{cccl}
-        Level of Care & Clinic & $ \Vector{x}_i^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $     \\
-        \midrule
-        Intensive     & A      & $ (1,1,1)^\top $      & $ \beta_0+\beta_1+\beta_2+\beta_3 $ \\
-        Regular       & A      & $ (1,0,1)^\top $      & $ \beta_0+\beta_2 $                 \\
-        Intensive     & B      & $ (1,1,0)^\top $      & $ \beta_0+\beta_1 $                 \\
-        Regular       & B      & $ (1,0,0)^\top $      & $ \beta_0 $                         \\
-        \bottomrule
-    \end{tabular}
+      \centering
+      \begin{tabular}{cccl}
+            Level of Care & Clinic & $ \Vector{x}_i^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $     \\
+            \midrule
+            Intensive     & A      & $ (1,1,1)^\top $      & $ \beta_0+\beta_1+\beta_2+\beta_3 $ \\
+            Regular       & A      & $ (1,0,1)^\top $      & $ \beta_0+\beta_2 $                 \\
+            Intensive     & B      & $ (1,1,0)^\top $      & $ \beta_0+\beta_1 $                 \\
+            Regular       & B      & $ (1,0,0)^\top $      & $ \beta_0 $                         \\
+            \bottomrule
+      \end{tabular}
 \end{table}
 \begin{itemize}
-    \item $ \beta_0= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated with
-          \textcolor{Blue}{intensity vs regular} care at \emph{Clinic B}.
-    \item $ \beta_1+\beta_3= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated
-          with \textcolor{Blue}{intensity vs regular} care at \emph{Clinic A}.
-    \item $ \beta_2= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated at
-          \textcolor{Blue}{Clinic A vs Clinic B} with \emph{regular} care.
-    \item $ \beta_2+\beta_3= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated at
-          \textcolor{Blue}{Clinic A vs Clinic B} with \emph{intensive} care.
-    \item $ \beta_3 $ represents the \textcolor{Blue}{difference in log odds ratios}.
-    \item If $ \beta_3=0 $ then association between mortality and level of care does not
-          dependent on clinic.
-    \item Equivalently, if $ \beta_3=0 $ then the association between mortality and clinic
-          does not depend on level of care.
+      \item $ \beta_0= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated with
+            \textcolor{Blue}{intensity vs regular} care at \emph{Clinic B}.
+      \item $ \beta_1+\beta_3= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated
+            with \textcolor{Blue}{intensity vs regular} care at \emph{Clinic A}.
+      \item $ \beta_2= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated at
+            \textcolor{Blue}{Clinic A vs Clinic B} with \emph{regular} care.
+      \item $ \beta_2+\beta_3= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated at
+            \textcolor{Blue}{Clinic A vs Clinic B} with \emph{intensive} care.
+      \item $ \beta_3 $ represents the \textcolor{Blue}{difference in log odds ratios}.
+      \item If $ \beta_3=0 $ then association between mortality and level of care does not
+            dependent on clinic.
+      \item Equivalently, if $ \beta_3=0 $ then the association between mortality and clinic
+            does not depend on level of care.
 \end{itemize}
 \begin{Example}{Data file \texttt{prenatal.dat}}
 \begin{knitrout}
@@ -1763,27 +1746,27 @@ The predicted number of responses are: $ \hat{Y}_i=m_i\hat{\pi}_i $.
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
-    \begin{itemize}
-        \item The first line contains the variable names/labels.
-        \item We are using indicator variables for the explanatory variables:
-              \begin{align*}
-                  x_{i1} & =\text{\lstinline{loc}} & & \text{(1 for Intensive, 0 for Regular)}    \\
-                  x_{i2} & =\text{\lstinline{clinic}} & & \text{(1 for Clinic A, 0 for Clinic B)}
-              \end{align*}
-        \item The variable \lstinline{y} records the number of deaths (events).
-    \end{itemize}
+      \begin{itemize}
+            \item The first line contains the variable names/labels.
+            \item We are using indicator variables for the explanatory variables:
+                  \begin{align*}
+                        x_{i1} & =\text{\texttt{loc}}    &  & \text{(1 for Intensive, 0 for Regular)} \\
+                        x_{i2} & =\text{\texttt{clinic}} &  & \text{(1 for Clinic A, 0 for Clinic B)}
+                  \end{align*}
+            \item The variable \texttt{y} records the number of deaths (events).
+      \end{itemize}
 \end{Example}
 \subsection*{Fit GLMs using R}
-The \lstinline{glm()} function in R is used to fit the generalized linear models:
-\[ \text{\lstinline{fit = glm(formula, family = (link = ), data = )}}. \]
+The \texttt{glm()} function in R is used to fit the generalized linear models:
+\[ \text{\texttt{fit = glm(formula, family = (link = ), data = )}}. \]
 \begin{itemize}
-    \item \lstinline{formula}: a linear formula describing the model, e.g.,
-          \[ \text{\lstinline{resp \~ loc + clinic}}. \]
-    \item \lstinline{family}: a description of the exponential family distribution and link
-          function to be used in the model, e.g.,
-          \[ \text{\lstinline{family = binomial, gaussian, poisson, Gamma, etc.}}. \]
-          \[ \text{\lstinline{link = logit, log, loglog, cloglog, identity, probit, etc.}}. \]
-    \item The default is the canonical link.
+      \item \texttt{formula}: a linear formula describing the model, e.g.,
+            \[ \texttt{resp \textasciitilde{} loc + clinic}. \]
+      \item \texttt{family}: a description of the exponential family distribution and link
+            function to be used in the model, e.g.,
+            \[ \text{\texttt{family = binomial, gaussian, poisson, Gamma, etc.}}. \]
+            \[ \text{\texttt{link = logit, log, loglog, cloglog, identity, probit, etc.}}. \]
+      \item The default is the canonical link. prenatal.dat
 \end{itemize}
 \subsection*{R Code and Output for Analysis of Prenatal Care data}
 % \begin{noindent}
@@ -1807,7 +1790,7 @@ The \lstinline{glm()} function in R is used to fit the generalized linear models
 \end{kframe}
 \end{knitrout}
 % \end{noindent}
-The logistic regression models are fit using the \lstinline{glm()} commands like:
+The logistic regression models are fit using the \texttt{glm()} commands like:
 % \begin{noindent}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -1837,41 +1820,41 @@ loc         -0.6670729  0.2785400  -2.394891 1.662530e-02
 \end{kframe}
 \end{knitrout}
 % \end{noindent}
-Components of the \lstinline{summary()} output for \lstinline{glm} objects:
+Components of the \texttt{summary()} output for \texttt{glm} objects:
 \begin{itemize}
-    \item \textcolor{Blue}{\lstinline{Estimate}}: the maximum likelihood estimates of the regression coefficients $ \hat{\beta}_0 $
-              and $ \hat{\beta}_1 $.
-    \item \textcolor{Blue}{\lstinline{Std. Error}}: estimated standard errors, the square root of the diagonal
-          of the inverse of the Information matrix:
-          \[ \se{\hat{\beta}_j}=\sqrt{\bigl[\Matrix{I}^{-1}(\hat{\Vector{\beta}})\bigr]_{jj}}=\sqrt{I^{jj}(\hat{\Vector{\beta}})}. \]
-    \item \textcolor{Blue}{\lstinline{z value}}: Wald-type test statistics for testing the hypotheses:
-          \begin{center}
-              $ \HN $: $ \beta_j=0 $ vs $ \HA $: $ \beta_j\ne 0 $.
-          \end{center}
-    \item \textcolor{Blue}{\lstinline{Pr(>|z|)}}: $ p $-value for above Wald test.
+      \item \textcolor{Blue}{\texttt{Estimate}}: the maximum likelihood estimates of the regression coefficients $ \hat{\beta}_0 $
+            and $ \hat{\beta}_1 $.
+      \item \textcolor{Blue}{\texttt{Std.\ Error}}: estimated standard errors, the square root of the diagonal
+            of the inverse of the Information matrix:
+            \[ \se{\hat{\beta}_j}=\sqrt{\bigl[\Matrix{I}^{-1}(\hat{\Vector{\beta}})\bigr]_{jj}}=\sqrt{I^{jj}(\hat{\Vector{\beta}})}. \]
+      \item \textcolor{Blue}{\texttt{z value}}: Wald-type test statistics for testing the hypotheses:
+            \begin{center}
+                  $ \HN $: $ \beta_j=0 $ vs $ \HA $: $ \beta_j\ne 0 $.
+            \end{center}
+      \item \textcolor{Blue}{\texttt{Pr(>|z|)}}: $ p $-value for above Wald test.
 \end{itemize}
 For this model:
 \begin{itemize}
-    \item $ \beta_1 $ is the log odds ratio of mortality for infants born to mothers treated
-          with intensive versus regular care.
+      \item $ \beta_1 $ is the log odds ratio of mortality for infants born to mothers treated
+            with intensive versus regular care.
 \end{itemize}
 \subsection*{Hypothesis test for $ \beta_j $}
 \begin{itemize}
-    \item We may wish to test:
-          \begin{center}
-              $ \HN $: $ \beta_j=\beta^\star $ versus $ \HA $: $ \beta_j\ne \beta^\star $.
-          \end{center}
-    \item The general \textcolor{Blue}{Wald} result for a single parameter $ \beta_j $ is:
-          \[ (\hat{\beta}_j-\beta^\star)^2\bigl(I^{jj}(\hat{\Vector{\beta}})\bigr)^{-1} \sim \chi^2_1, \]
-          equivalently
-          $ \displaystyle \frac{\hat{\beta}_j-\beta^\star}{\se{\hat{\beta}_j}}\sim \N{0,1} $
-          where $ \se{\hat{\beta}_j}=\sqrt{I^{jj}(\hat{\Vector{\beta}})} $.
-    \item We can find the $ p $-value of this test using:
-          \[ p=2\Prob*{Z>\frac{\abs{\hat{\beta}_j-\beta^\star}}{\se{\hat{\beta}_j}}}. \]
-    \item The \lstinline{summary()} output gives the test statistics and $p$-values for testing
-          \begin{center}
-              $ \HN $: $ \beta_j=0 $ vs $ \HA $: $ \beta_j\ne 0 $.
-          \end{center}
+      \item We may wish to test:
+            \begin{center}
+                  $ \HN $: $ \beta_j=\beta^\star $ versus $ \HA $: $ \beta_j\ne \beta^\star $.
+            \end{center}
+      \item The general \textcolor{Blue}{Wald} result for a single parameter $ \beta_j $ is:
+            \[ (\hat{\beta}_j-\beta^\star)^2\bigl(I^{jj}(\hat{\Vector{\beta}})\bigr)^{-1} \sim \chi^2_1, \]
+            equivalently
+            $ \displaystyle \frac{\hat{\beta}_j-\beta^\star}{\se{\hat{\beta}_j}}\sim \N{0,1} $
+            where $ \se{\hat{\beta}_j}=\sqrt{I^{jj}(\hat{\Vector{\beta}})} $.
+      \item We can find the $ p $-value of this test using:
+            \[ p=2\Prob*{Z>\frac{\abs{\hat{\beta}_j-\beta^\star}}{\se{\hat{\beta}_j}}}. \]
+      \item The \texttt{summary()} output gives the test statistics and $p$-values for testing
+            \begin{center}
+                  $ \HN $: $ \beta_j=0 $ vs $ \HA $: $ \beta_j\ne 0 $.
+            \end{center}
 \end{itemize}
 \subsection*{Hypothesis test for $ \beta_1 $ from Model 1: Level of Care Model}
 % \begin{noindent}
@@ -1889,29 +1872,29 @@ loc         -0.6670729  0.2785400  -2.394891 1.662530e-02
 \end{knitrout}
 % \end{noindent}
 \begin{itemize}
-    \item We wish to test:
-          \begin{center}
-              $ \HN $: $ \beta_1=0 $ vs $ \HA $: $ \beta_1\ne 0 $
-          \end{center}
-    \item Wald test:
-          \[ z=\frac{\hat{\beta}_1-0}{\se{\hat{\beta}_1}}=\frac{-0.6671}{0.2785}=-2.3949   \]
-    \item $ p $-value:
-          \[ p=2\Prob{Z>\abs{-2.3949}}=0.0166<0.05 \]
-    \item Therefore, we reject the null hypothesis that $ \beta_1=0 $.
+      \item We wish to test:
+            \begin{center}
+                  $ \HN $: $ \beta_1=0 $ vs $ \HA $: $ \beta_1\ne 0 $
+            \end{center}
+      \item Wald test:
+            \[ z=\frac{\hat{\beta}_1-0}{\se{\hat{\beta}_1}}=\frac{-0.6671}{0.2785}=-2.3949   \]
+      \item $ p $-value:
+            \[ p=2\Prob{Z>\abs{-2.3949}}=0.0166<0.05 \]
+      \item Therefore, we reject the null hypothesis that $ \beta_1=0 $.
 \end{itemize}
 \begin{itemize}
-    \item Estimate of $ \OR $ for Mortality for Intensive vs Regular Care:
-          \[ \hat{\psi}=\exp{\hat{\beta}_1}=\exp{-0.6670729}=0.51. \]
-    \item Confidence Interval for OR:
-          \begin{align*}
-              \exp[\big]{\hat{\beta}_1\pm 1.96\se{\hat{\beta}_1}}
-               & =\exp{-0.6671\pm 1.96(0.2785)} \\
-               & =(\exp{-1.2130},\exp{-0.1211}) \\
-               & =(0.30,0.89)
-          \end{align*}
-    \item The estimate and Wald \qty{95}{\percent} CI here match those found previously from
-          the $ 2\times 2 $ table analysis. That is, the $ 2\times 2 $ table analysis is equivalent to
-          a simple logistic regression with a single binary covariate.
+      \item Estimate of $ \OR $ for Mortality for Intensive vs Regular Care:
+            \[ \hat{\psi}=\exp{\hat{\beta}_1}=\exp{-0.6670729}=0.51. \]
+      \item Confidence Interval for OR:
+            \begin{align*}
+                  \exp[\big]{\hat{\beta}_1\pm 1.96\se{\hat{\beta}_1}}
+                   & =\exp{-0.6671\pm 1.96(0.2785)} \\
+                   & =(\exp{-1.2130},\exp{-0.1211}) \\
+                   & =(0.30,0.89)
+            \end{align*}
+      \item The estimate and Wald \qty{95}{\percent} CI here match those found previously from
+            the $ 2\times 2 $ table analysis. That is, the $ 2\times 2 $ table analysis is equivalent to
+            a simple logistic regression with a single binary covariate.
 \end{itemize}
 \subsection*{Fit of Model 2: Main Effects Model}
 \[ \log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}+\textcolor{Blue}{\beta_2x_{i2}}. \]
@@ -1933,11 +1916,11 @@ clinic      -0.9862793  0.3089322 -3.1925427 1.410261e-03
 \end{knitrout}
 % \end{noindent}
 \begin{itemize}
-    \item What is the OR for mortality for Intensive vs Regular Care, now controlling for
-          Clinic?
-          \[ \widehat{\OR}=\hat{\psi}=\exp{-0.1503}=0.86. \]
-    \item \qty{95}{\percent} CI:
-          \[ \exp{-0.1503\pm 1.96\times 0.3302}=(0.4505,1.6436). \]
+      \item What is the OR for mortality for Intensive vs Regular Care, now controlling for
+            Clinic?
+            \[ \widehat{\OR}=\hat{\psi}=\exp{-0.1503}=0.86. \]
+      \item \qty{95}{\percent} CI:
+            \[ \exp{-0.1503\pm 1.96\times 0.3302}=(0.4505,1.6436). \]
 \end{itemize}
 \subsection*{Fit of Model 3: Interaction Model}
 \[ \log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\textcolor{Blue}{\beta_3x_{i3}}. \]
@@ -1960,30 +1943,30 @@ loc:clinic  -0.229649891  0.6949054 -0.33047646 7.410400e-01
 \end{knitrout}
 % \end{noindent}
 \begin{table}[!htbp]
-    \centering
-    \begin{tabular}{cccl}
-        Level of Care & Clinic & $ \Vector{x}_i^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $     \\
-        \midrule
-        Intensive     & A      & $ (1,1,1)^\top $      & $ \beta_0+\beta_1+\beta_2+\beta_3 $ \\
-        Regular       & A      & $ (1,0,1)^\top $      & $ \beta_0+\beta_2 $                 \\
-        Intensive     & B      & $ (1,1,0)^\top $      & $ \beta_0+\beta_1 $                 \\
-        Regular       & B      & $ (1,0,0)^\top $      & $ \beta_0 $                         \\
-        \bottomrule
-    \end{tabular}
+      \centering
+      \begin{tabular}{cccl}
+            Level of Care & Clinic & $ \Vector{x}_i^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $     \\
+            \midrule
+            Intensive     & A      & $ (1,1,1)^\top $      & $ \beta_0+\beta_1+\beta_2+\beta_3 $ \\
+            Regular       & A      & $ (1,0,1)^\top $      & $ \beta_0+\beta_2 $                 \\
+            Intensive     & B      & $ (1,1,0)^\top $      & $ \beta_0+\beta_1 $                 \\
+            Regular       & B      & $ (1,0,0)^\top $      & $ \beta_0 $                         \\
+            \bottomrule
+      \end{tabular}
 \end{table}
 \begin{itemize}
-    \item What is the OR for Mortality for Intensive vs Regular Care at Clinic A?
-          \[ \OR=\psi=\exp{\beta_1+\beta_3}\implies \hat{\psi}=\exp{0.0076-0.2296}=0.8. \]
-    \item $ \se{\hat{\beta}_1+\hat{\beta}_3} $ is required for calculation of \qty{95}{\percent} CI.
-          \begin{itemize}
-              \item Recall $ \Var{\hat{\beta}}=\Matrix{I}^{-1}(\hat{\Vector{\beta}}) $, now for any linear function of $ \Vector{\beta} $'s,
-                    e.g., $ \Vector{c}\Vector{\beta} $ where $ \Vector{c} $ is a row vector of constants, then MLE of $ \Vector{c}\Vector{\beta} $
-                    is $ \Vector{c}\hat{\Vector{\beta}} $, and $ \se{\hat{\Vector{c}\hat{\Vector{\beta}}}}=\sqrt{\Vector{c}\Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{c}^\top} $.
-          \end{itemize}
-    \item Therefore, $ \log{\psi}=\beta_1+\beta_3=\Vector{c}\Vector{\beta} $, $ \Vector{c}=(0,1,0,1)^\top $. In R, \lstinline{vcov(model3)}
-          gives $ \Matrix{I}^{-1}(\hat{\Vector{\beta}}) $.
-    \item What is OR for Mortality for Intensive vs Regular Care at Clinic B?
-          \[ \OR=\psi=\exp{\beta_1}\implies \hat{\psi}=\exp{0.0076}=1.01. \]
+      \item What is the OR for Mortality for Intensive vs Regular Care at Clinic A?
+            \[ \OR=\psi=\exp{\beta_1+\beta_3}\implies \hat{\psi}=\exp{0.0076-0.2296}=0.8. \]
+      \item $ \se{\hat{\beta}_1+\hat{\beta}_3} $ is required for calculation of \qty{95}{\percent} CI.
+            \begin{itemize}
+                  \item Recall $ \Var{\hat{\beta}}=\Matrix{I}^{-1}(\hat{\Vector{\beta}}) $, now for any linear function of $ \Vector{\beta} $'s,
+                        e.g., $ \Vector{c}\Vector{\beta} $ where $ \Vector{c} $ is a row vector of constants, then MLE of $ \Vector{c}\Vector{\beta} $
+                        is $ \Vector{c}\hat{\Vector{\beta}} $, and $ \se{\hat{\Vector{c}\hat{\Vector{\beta}}}}=\sqrt{\Vector{c}\Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{c}^\top} $.
+            \end{itemize}
+      \item Therefore, $ \log{\psi}=\beta_1+\beta_3=\Vector{c}\Vector{\beta} $, $ \Vector{c}=(0,1,0,1)^\top $. In R, \texttt{vcov(model3)}
+            gives $ \Matrix{I}^{-1}(\hat{\Vector{\beta}}) $.
+      \item What is OR for Mortality for Intensive vs Regular Care at Clinic B?
+            \[ \OR=\psi=\exp{\beta_1}\implies \hat{\psi}=\exp{0.0076}=1.01. \]
 \end{itemize}
 
 \section*{Topic 3c: Likelihood Ratio Test for Logistic Regression Models}
@@ -1993,7 +1976,7 @@ Recall major developments of Binomial logistic regression from last topic 3b: $ 
 $ i=1,\ldots,n $ independently, with covariate vector $ \Vector{x}_i $ and
 \[ \textcolor{Blue}{\log*{\frac{\pi_i}{1-\pi_i}}}=\Vector{x}_i^\top \Vector{\beta}. \]
 \begin{itemize}
-      \item Estimation: $ \hat{\Vector{\beta}} $ come from Fisher scoring using R function \lstinline{glm()}.
+      \item Estimation: $ \hat{\Vector{\beta}} $ come from Fisher scoring using R function \texttt{glm()}.
       \item Interpretation: $ \exp{\beta_j} $ has $ \OR $ interpretation.
       \item Hypothesis tests of $ \HN $: $ \beta_j=0 $ using Wald statistic.
       \item Confidence Intervals: $ \hat{\beta}_j\pm z_{1-\alpha/2}\se{\hat{\beta}_j} $.
@@ -2013,7 +1996,7 @@ $ i=1,\ldots,n $ independently, with covariate vector $ \Vector{x}_i $ and
       \item Maximization of log-likelihood $ \ell(\Vector{\beta}) $ gives MLE $ \hat{\Vector{\beta}} $, and
             \begin{itemize}
                   \item estimated probability of response:
-                        \[ \hat{\pi}_i=e^{\Vector{x}_i^\top \hat{\Vector{\beta}}}/(1+e^{\Vector{x}_i^\top \hat{\Vector{\beta}}})=\expit{\Vector{x}_i^\top \hat{\Vector{\beta}}}, \]
+                        \[ \hat{\pi}_i=\mathrm{e}^{\Vector{x}_i^\top \hat{\Vector{\beta}}}/(1+\mathrm{e}^{\Vector{x}_i^\top \hat{\Vector{\beta}}})=\expit{\Vector{x}_i^\top \hat{\Vector{\beta}}}, \]
                   \item estimated number of responses: $ \hat{y}_i=m_i\hat{\pi}_i $.
             \end{itemize}
       \item Questions:
@@ -2091,7 +2074,7 @@ $ i=1,\ldots,n $ independently, with covariate vector $ \Vector{x}_i $ and
                   \item $ \HN $: Model 2 is adequate.
                   \item $ \HA $: Model 2 is not adequate compared to the saturated model.
             \end{itemize}
-      \item In R, the \lstinline{summary()} output $ D $ is reported as the \textcolor{Red}{Residual Deviance}.
+      \item In R, the \texttt{summary()} output $ D $ is reported as the \textcolor{Red}{Residual Deviance}.
             % \begin{noindent}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -2173,7 +2156,7 @@ Number of Fisher Scoring iterations: 3
             \midrule
             \ref{2.6M1} Reduced model & $ p $                       & $ \hat{\pi}_i $           \\
             \ref{2.6M2} Full model    & $ q $                       & $ \tilde{\pi}_i $         \\
-            Saturated model           & $ n $                       & $ \tilde{\tilde{\pi}_i} $ \\
+            Saturated model           & $ n $                       & $ \tilde{\tilde{\pi}}_i $ \\
             \bottomrule
       \end{tabular}
 \end{table}
@@ -2198,7 +2181,7 @@ Number of Fisher Scoring iterations: 3
 \end{itemize}
 \subsection*{Example: Prenatal Care Data}
 \begin{itemize}
-      \item Summary of Deviance (``\lstinline{residual deviance}'') from R output:
+      \item Summary of Deviance (``\texttt{residual deviance}'') from R output:
             \begin{table}[!htbp]
                   \centering
                   \begin{tabular}{clccc}
@@ -2290,7 +2273,7 @@ Number of Fisher Scoring iterations: 3
 \begin{itemize}
       \item For Binomial GLM with logit link the LR/Deviance test statistic is:
             \[ D=\sum_{i=1}^{n} 2\biggl(y_i\log*{\frac{y_i}{m_i\hat{\pi}_i}}+(m_i-y_i)\log*{\frac{m_i-y_i}{m_i(1-\hat{\pi}_i)}}\biggr). \]
-      \item This is reported as the ``\lstinline{Residual Deviance}'' in R \lstinline{glm} summary output.
+      \item This is reported as the ``\texttt{Residual Deviance}'' in R \texttt{glm} summary output.
       \item Deviance statistic $ D $ can be used to:
             \begin{itemize}
                   \item Test adequacy/goodness of fit of a non-saturated logistic model:
@@ -2305,4 +2288,678 @@ Number of Fisher Scoring iterations: 3
 \section*{Topic 3d: Residuals for Binomial Data and Neuroblastoma Example}
 \addcontentsline{toc}{section}{Topic 3d: Residuals for Binomial Data and Neuroblastoma Example}
 \subsection*{Recall: Residuals in Linear Regression Models}
+\begin{itemize}
+    \item Normal linear regression models (STAT 331),
+          \[ y_i=\Vector{x}_i^\top \Vector{\beta}+\varepsilon_i,\qquad \varepsilon_i\iid\N{0,\sigma^2}. \]
+    \item Fitted values:
+          \[ \hat{y}_i=\Vector{x}_i^\top \hat{\Vector{\beta}}. \]
+    \item Residuals:
+          \[ r_i=y_i-\hat{y}_i. \]
+    \item The overall fit of the model and validity of the model assumptions are assessed using various \textcolor{Blue}{\emph{residual plots}},
+          e.g.,
+          \begin{itemize}
+              \item Residuals $ r_i $ vs fitted value $ \hat{y}_i $ plot (check normality and constant variance).
+              \item QQ plot of residuals $ r_i $'s (check normality).
+          \end{itemize}
+\end{itemize}
+\subsection*{Residuals for Binomial Data}
+\begin{itemize}
+    \item When fit a logistic regression model to Binomial data, we evaluate the adequacy of the model by using the LR deviance test statistic:
+          \begin{align*}
+              D
+               & =\sum_{i=1}^{n} 2\biggl(y_i\log*{\frac{y_i}{m_i\hat{\pi}_i}}+(m_i-y_i)\log*{\frac{m_i-y_i}{m_i(1-\hat{\pi}_i)}}\biggr) \\
+               & =\sum_{i=1}^{n} d_i.
+          \end{align*}
+    \item \textcolor{Blue}{Deviance Residual}:
+          \[ r_i^D=\sign{y_i-m_i\hat{\pi}_i}\sqrt{\abs{d_i}}. \]
+    \item Under $ \HN $: the model is adequate:
+          \[ D=\sum_{i=1}^{n} d_i\stackrel{\text{approx}}{\sim}\chi^2_{n-p}\implies r_i^D\stackrel{\text{approx}}{\sim}\N{0,1}. \]
+    \item We can use the plots of deviance residuals to assess whether $ r_i^D $'s look independent observations from $ \N{0,1} $.
+\end{itemize}
+\subsection*{Example: Prenatal Care Data}
+\[ \logit{\pi_i}=\beta_0+\beta_1\texttt{clinic}_i \]
+% \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{model4} \hlkwb{<-} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{clinic,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
+  \hlkwc{data} \hlstd{= prenatal.dat)}
+\hlkwd{summary}\hlstd{(model4)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = resp ~ clinic, family = binomial(link = logit), 
+    data = prenatal.dat)
+
+Deviance Residuals: 
+       1         2         3         4  
+-0.00432   0.01262   0.43671  -0.35206  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  -1.7560     0.1757  -9.996  < 2e-16 ***
+clinic       -1.0624     0.2621  -4.053 5.06e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 16.91763  on 3  degrees of freedom
+Residual deviance:  0.31484  on 2  degrees of freedom
+AIC: 21.47
+
+Number of Fisher Scoring iterations: 4
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+% \end{noindent}
+\begin{itemize}
+    \item \textcolor{Blue}{Pearson Residual}:
+          \[ r_i^P=\frac{y_i-m_i\hat{\pi}_i}{\sqrt{m_i\hat{\pi}_i(1-\hat{\pi}_i)}}=\frac{O_i-E_i}{\sqrt{V_i}}.  \]
+    \item Under $ \HN $: the model is adequate,
+          \[ r_i^P \sim \N{0,1}. \]
+    \item Note: if $ m_i\hat{\pi}_i<5 $ (or $ m_i(1-\hat{\pi}_i)<5 $) for one or more cases, we should be concerned about
+          the validity of the approximation ($ \chi^2 $ or $ \N{0,1} $) and hence our conclusions.
+\end{itemize}
+\subsection*{Prognosis for Children with Neuroblastoma}
+\begin{itemize}
+    \item A study is conducted to investigate the probability of \textcolor{Blue}{\emph{disease-free survival}}
+          (surviving 2 years free of disease) following the treatment for neuroblastoma.
+    \item Associated risk factors include \textcolor{Blue}{\emph{age at diagnosis}} and \textcolor{Blue}{\emph{stage of disease at diagnosis}}.
+          \begin{table}
+              \centering
+              \begin{tabular}{cccccc}
+                  \toprule
+                               & \multicolumn{5}{c}{Stage}                                               \\
+                  \midrule
+                  Age (months) & I                         & II        & III      & IV       & V         \\
+                  \midrule
+                  0-11         & $ 11/12 $                 & $ 15/16 $ & $ 2/4 $  & $ 5/18 $ & $ 18/19 $ \\
+                  12-23        & $ 3/4 $                   & $ 3/7 $   & $ 5/8 $  & $ 0/25 $ & $ 1/3 $   \\
+                  24+          & $ 4/5 $                   & $ 4/12 $  & $ 3/15 $ & $ 3/93 $ & $ 2/5 $   \\
+                  \bottomrule
+              \end{tabular}
+          \end{table}
+          \begin{itemize}
+              \item Cell entries are of the form $y/m$ with $y$ representing the number of patients surviving 2
+                    years, and $m$ representing the number of patients in that age-stage combination at the
+                    start of the study.
+          \end{itemize}
+    \item As an initial look at the data, consider the marginal distributions.
+          \begin{table}[!htbp]
+              \centering
+              \begin{NiceTabular}{cccccc|c}
+                  \toprule
+                  &\multicolumn{5}{c}{Stage}\\
+                  \midrule
+                  Age (months) & I & II & III & IV & V & Total\\
+                  \midrule
+                  0-11 & $ 11/12 $ & $ 15/16 $ & $ 2/4 $ & $ 5/18 $ & $ 18/19 $ & $ 51/69 $\\
+                  12-23 & $ 3/4 $ & $ 3/7 $ & $ 5/8 $ & $ 0/25 $ & $ 1/3 $ & $ 12/47 $\\
+                  24+ & $ 4/5 $ & $ 4/12 $ & $ 3/15 $ & $ 3/93 $ & $ 2/5 $ & $ 16/130 $\\
+                  \midrule
+                  Total & $ 18/21 $ & $ 22/35 $ & $ 10/27 $ & $ 8/136 $ & $ 21/27 $ & $ 79/246 $\\
+                  \bottomrule
+              \end{NiceTabular}
+          \end{table}
+          \begin{itemize}
+              \item Higher chance of survival at younger age at diagnosis.
+              \item Higher chance of survival with lower stage of disease at diagnosis.
+          \end{itemize}
+\end{itemize}
+\subsection*{Setup Regression Models for Neuroblastoma Data}
+\begin{itemize}
+    \item Response Variable:
+          \begin{itemize}
+              \item \textcolor{Blue}{$ Y_i $} is the number of 2-yr disease-free survivors out of $ m_i $ total children in
+                    group $ i $, assume $ Y_i \sim \BIN{m_i,\pi_i} $, $ i=1,\ldots,15 $, and
+                    \[ \pi_i=\Prob{\text{2-yr disease-free survival in group $ i $}}. \]
+          \end{itemize}
+    \item Explanatory Variables:
+          \begin{itemize}
+              \item \textcolor{Blue}{Age} (0-11, 12-23, 24+ months); age 0-11 month is the baseline/reference,
+                    \[ x_{i1}  = \begin{cases*}
+                            1 & if age 12-23 months \\
+                            0 & o.w.
+                        \end{cases*} \qquad
+                        x_{i2}  = \begin{cases*}
+                            1 & if age 24+ months \\
+                            0 & o.w.
+                        \end{cases*} \]
+              \item \textcolor{Blue}{Stage} (I, II, III, IV, V); stage 1 is the baseline/reference,
+                    \[ \begin{array}{ll}
+                            x_{i3} = \begin{cases*}
+                                         1 & stage II \\
+                                         0 & o.w.
+                                     \end{cases*}  &
+                            x_{i4}  = \begin{cases*}
+                                          1 & if stage III \\
+                                          0 & o.w.
+                                      \end{cases*} \\
+                            x_{i5}  = \begin{cases*}
+                                          1 & if stage IV \\
+                                          0 & o.w.
+                                      \end{cases*} &
+                            x_{i6}  = \begin{cases*}
+                                          1 & if stage V \\
+                                          0 & o.w.
+                                      \end{cases*}
+                        \end{array} \]
+          \end{itemize}
+    \item Consider the following logistic regression models:
+          \begin{itemize}
+              \item Model 1: Age \& Stage
+                    \[ \logit{\pi_i}=\beta_0+\underbrace{\beta_1x_{i1}+\beta_2x_{i2}}_{\text{Age}}+\underbrace{\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6}}_{\text{Stage}}. \]
+              \item Model 2: Age only
+                    \[ \logit{\pi_i}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}. \]
+              \item Model 3: Stage only
+                    \[ \logit{\pi_i}=\beta_0+\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6}. \]
+          \end{itemize}
+\end{itemize}
+\subsection*{Fitting Logistic Regression Models Using R}
+% \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{neuro.dat} \hlkwb{=} \hlkwd{read.table}\hlstd{(}\hlstr{"neuro.dat"}\hlstd{,} \hlkwc{header} \hlstd{= T)}
+\hlstd{neuro.dat}
+\end{alltt}
+\begin{verbatim}
+   age stage  y  m
+1    1     1 11 12
+2    1     2 15 16
+3    1     3  2  4
+4    1     4  5 18
+5    1     5 18 19
+6    2     1  3  4
+7    2     2  3  7
+8    2     3  5  8
+9    2     4  0 25
+10   2     5  1  3
+11   3     1  4  5
+12   3     2  4 12
+13   3     3  3 15
+14   3     4  3 93
+15   3     5  2  5
+\end{verbatim}
+\begin{alltt}
+\hlcom{# here we construct the response variable for logistic}
+\hlcom{# regression}
+\hlstd{neuro.dat}\hlopt{$}\hlstd{resp} \hlkwb{=} \hlkwd{cbind}\hlstd{(neuro.dat}\hlopt{$}\hlstd{y, neuro.dat}\hlopt{$}\hlstd{m} \hlopt{-} \hlstd{neuro.dat}\hlopt{$}\hlstd{y)}
+\hlstd{neuro.dat}
+\end{alltt}
+\begin{verbatim}
+   age stage  y  m resp.1 resp.2
+1    1     1 11 12     11      1
+2    1     2 15 16     15      1
+3    1     3  2  4      2      2
+4    1     4  5 18      5     13
+5    1     5 18 19     18      1
+6    2     1  3  4      3      1
+7    2     2  3  7      3      4
+8    2     3  5  8      5      3
+9    2     4  0 25      0     25
+10   2     5  1  3      1      2
+11   3     1  4  5      4      1
+12   3     2  4 12      4      8
+13   3     3  3 15      3     12
+14   3     4  3 93      3     90
+15   3     5  2  5      2      3
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+% \end{noindent}
+\subsection*{Summary of Model 1: Age \& Stage}
+\[ \logit{\pi_i}=\beta_0+\underbrace{\beta_1x_{i1}+\beta_2x_{i2}}_{\text{Age}}+\underbrace{\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6}}_{\text{Stage}}. \]
+% \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+Call:
+glm(formula = resp ~ factor(age) + factor(stage), family = binomial(link = logit), 
+    data = neuro.dat)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-1.47408  -0.61913  -0.09643   0.53163   1.52114  
+
+Coefficients:
+               Estimate Std. Error z value Pr(>|z|)    
+(Intercept)      3.3175     0.7721   4.297 1.73e-05 ***
+factor(age)2    -2.1181     0.5736  -3.693 0.000222 ***
+factor(age)3    -2.6130     0.5017  -5.208 1.91e-07 ***
+factor(stage)2  -1.2529     0.7837  -1.599 0.109860    
+factor(stage)3  -1.7759     0.8003  -2.219 0.026478 *  
+factor(stage)4  -4.3678     0.7902  -5.528 3.25e-08 ***
+factor(stage)5  -1.0222     0.8644  -1.183 0.236980    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 162.832  on 14  degrees of freedom
+Residual deviance:   9.625  on  8  degrees of freedom
+AIC: 55.382
+
+Number of Fisher Scoring iterations: 4
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+% \end{noindent}
+\begin{itemize}
+    \item Before interpreting these results too much, we should look to see how good the
+          fit is to the data.
+          % \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{y} \hlkwb{=} \hlstd{neuro.dat}\hlopt{$}\hlstd{y}
+\hlstd{m} \hlkwb{=} \hlstd{neuro.dat}\hlopt{$}\hlstd{m}
+\hlstd{fv1} \hlkwb{=} \hlstd{model1}\hlopt{$}\hlstd{fitted.values}
+\hlstd{yhat} \hlkwb{=} \hlstd{m} \hlopt{*} \hlstd{fv1}
+\hlstd{rd1} \hlkwb{=} \hlkwd{residuals.glm}\hlstd{(model1,} \hlstr{"deviance"}\hlstd{)}
+\hlstd{rp1} \hlkwb{=} \hlstd{(y} \hlopt{-} \hlstd{m} \hlopt{*} \hlstd{fv1)}\hlopt{/}\hlkwd{sqrt}\hlstd{(m} \hlopt{*} \hlstd{fv1} \hlopt{*} \hlstd{(}\hlnum{1} \hlopt{-} \hlstd{fv1))}
+\hlkwd{cbind}\hlstd{(rd1, rp1, yhat, y)}
+\end{alltt}
+\begin{verbatim}
+           rd1         rp1      yhat  y
+1  -0.77808711 -0.91184050 11.580304 11
+2   0.68559153  0.63381666 14.198641 15
+3  -1.47407847 -1.69888561  3.294804  2
+4   0.17884403  0.18019371  4.665014  5
+5   0.63431439  0.58779486 17.261237 18
+6  -0.08658336 -0.08736144  3.073705  3
+7  -0.30801258 -0.30734393  3.406432  3
+8   1.52114028  1.56325351  2.877982  5
+9  -1.43545385 -1.02556686  1.009324  0
+10 -0.73520283 -0.73328264  1.632557  1
+11  0.64949774  0.62163765  3.345991  4
+12 -0.23825133 -0.23663531  4.394927  4
+13 -0.50305728 -0.48993834  3.827214  3
+14  0.42894854  0.44782015  2.325662  3
+15 -0.09643089 -0.09619454  2.106206  2
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+    % \end{noindent}
+          % \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-34-1} 
+
+}
+
+\caption[Plot of Residuals by Fitted Values for Neuroblastoma Data based on Logistic Regression Model with main effects of Age and Stage]{Plot of Residuals by Fitted Values for Neuroblastoma Data based on Logistic Regression Model with main effects of Age and Stage.}\label{fig:unnamed-chunk-34}
+\end{figure}
+
+\end{knitrout}
+    % \end{noindent}
+    \item Residuals are a random scatter around $ 0 $ and $ \in(-2,2) $ therefore $ r_i^D $ (or $ r_i^P $) $ \sim \N{0,1} $. Therefore,
+          model 1 is adequate.
+    \item We can test $ \HN $: model 1 is adequate using LR/D statistic $ p\text{-value}=\Prob{\chi^2_8>9.625}<0.05 $, do not reject $ \HN $.
+\end{itemize}
+\subsection*{Summary of Model 2: Age only}
+\begin{itemize}
+    \item Now we consider simplifying the model further by examining the decrease in
+          the quality of the fit that results from dropping the stage variable(s).
+          \[ \logit{\pi_i}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}. \]
+          % \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{model2} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlkwd{factor}\hlstd{(age),} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
+  \hlkwc{data} \hlstd{= neuro.dat)}
+\hlkwd{summary}\hlstd{(model2)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = resp ~ factor(age), family = binomial(link = logit), 
+    data = neuro.dat)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-4.0853  -0.3591   1.5613   2.0684   3.4667  
+
+Coefficients:
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept)    1.0415     0.2742   3.799 0.000145 ***
+factor(age)2  -2.1119     0.4325  -4.883 1.05e-06 ***
+factor(age)3  -3.0051     0.3827  -7.853 4.06e-15 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 162.832  on 14  degrees of freedom
+Residual deviance:  83.583  on 12  degrees of freedom
+AIC: 121.34
+
+Number of Fisher Scoring iterations: 5
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+    % \end{noindent}
+\end{itemize}
+\subsection*{Summary of Model 3: Stage only}
+\begin{itemize}
+    \item Now we fit the model excluding the age variable to examine the drop in the
+          quality of fit from model 1.
+          \[ \logit{\pi_i}=\beta_0+\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6}. \]
+          % \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{model2} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlkwd{factor}\hlstd{(stage),} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
+  \hlkwc{data} \hlstd{= neuro.dat)}
+\hlkwd{summary}\hlstd{(model3)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = resp ~ loc + clinic + loc * clinic, family = binomial(link = logit), 
+    data = prenatal.dat)
+
+Deviance Residuals: 
+[1]  0  0  0  0
+
+Coefficients:
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -1.756843   0.185709  -9.460  < 2e-16 ***
+loc          0.007643   0.572683   0.013  0.98935    
+clinic      -0.928734   0.351430  -2.643  0.00822 ** 
+loc:clinic  -0.229650   0.694905  -0.330  0.74104    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance:  1.6918e+01  on 3  degrees of freedom
+Residual deviance: -4.3521e-14  on 0  degrees of freedom
+AIC: 25.155
+
+Number of Fisher Scoring iterations: 3
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+    % \end{noindent}
+\end{itemize}
+\subsection*{Testing Nested Models}
+\begin{itemize}
+    \item Now we can compare nested models using \textcolor{Blue}{LR/Deviance} Tests:
+          \begin{table}[!htbp]
+              \centering
+              \begin{tabular}{cllcc}
+                  \toprule
+                  Model & Covariates   & Deviance ($ D $) & Parameters ($ p $) & DF ($ n-p $) \\
+                  \midrule
+                  M1    & Age \& Stage & $9.625$          & $ 7 $              & $ 8 $        \\
+                  M2    & Age          & $83.583$         & $ 3 $              & $ 12 $       \\
+                  M3    & Stage        & $42.446$         & $ 5 $              & $ 10 $       \\
+                  \bottomrule
+              \end{tabular}
+          \end{table}
+    \item Recall:
+          \[ \Delta D=D_0-D_\text{A}=-2\bigl(\ell(\hat{\Vector{\pi}})-\ell(\tilde{\Vector{\pi}})\bigr) \sim \chi^2_{q-p} \]
+          \begin{itemize}
+              \item $ D_0 $ and $ D_\text{A} $ are deviances from the \textcolor{Blue}{reduced} and \textcolor{Blue}{full} models respectively.
+              \item $ \hat{\Vector{\pi}} $ and $ \tilde{\Vector{\pi}} $ represents the MLEs from the \textcolor{Blue}{reduced} and \textcolor{Blue}{full} models respectively.
+          \end{itemize}
+\end{itemize}
+\begin{Example}{}
+    \textcolor{Blue}{Objective}: Pick the model that best represents the important associations between the
+    outcome and explanatory variables.
+\end{Example}
+\begin{enumerate}[1.]
+    \item \textcolor{Blue}{Is Stage important?}
+          \begin{align*}
+              \HN & \colon \beta_3=\cdots=0                     &  & \text{(Model 2 is as adequate as Model 1)} \\
+              \HA & \colon \text{at least one of them is not 0} &  & \text{(Model 2 is not adequate)}
+          \end{align*}
+          \[ \Delta D=D_2-D_1=83.583-9.625=73.958 \]
+          \[ p=\Prob{\chi^2_{7-3}>73.958}<0.001 \]
+          % \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model2}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{deviance, model2}\hlopt{$}\hlstd{df.residual} \hlopt{-}
+  \hlstd{model1}\hlopt{$}\hlstd{df.residual)}
+\end{alltt}
+\begin{verbatim}
+[1] 7.464321e-08
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+        % \end{noindent}
+          We reject $ \HN $ and conclude that there is evidence that Stage is important.
+    \item \textcolor{Blue}{Is Age important?}
+          \begin{align*}
+              \HN & \colon \beta_1=\beta_2=0                    &  & \text{(Model 3 is as adequate as Model 1)} \\
+              \HA & \colon \text{at least one of them is not 0} &  & \text{(Model 3 is not adequate)}
+          \end{align*}
+          \[ \Delta D=D_3-D_1=42.446 - 9.625 = 32.821 \]
+          \[ p=\Prob{\chi^2_{7-5}>32.821}<0.001 \]
+          % \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model3}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{deviance, model3}\hlopt{$}\hlstd{df.residual} \hlopt{-}
+  \hlstd{model1}\hlopt{$}\hlstd{df.residual)}
+\end{alltt}
+\begin{verbatim}
+[1] NaN
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+      % \end{noindent}
+          We reject $ \HN $ and conclude that there is evidence that Age is important.
+    \item \textcolor{Blue}{Do we need an Age$*$Stage interaction?}
+          % \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model1}\hlopt{$}\hlstd{deviance, model1}\hlopt{$}\hlstd{df.residual)}
+\end{alltt}
+\begin{verbatim}
+[1] 0.292341
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+        % \end{noindent}
+          \begin{itemize}
+              \item Model with age, stage, and age$*$stage is the saturated model!
+              \item Do not reject $ \HN $: model 1 is as adequate as the saturated model (interaction model).
+              \item Do not need to consider age$*$stage.
+          \end{itemize}
+\end{enumerate}
+\subsection*{Interpret the Selected Model}
+So we select \textcolor{Blue}{Model 1} for interpretation.
+% \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{model1} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlkwd{factor}\hlstd{(age)} \hlopt{+} \hlkwd{factor}\hlstd{(stage),} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
+  \hlkwc{data} \hlstd{= neuro.dat)}
+\hlkwd{summary}\hlstd{(model1)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = resp ~ factor(age) + factor(stage), family = binomial(link = logit), 
+    data = neuro.dat)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-1.47408  -0.61913  -0.09643   0.53163   1.52114  
+
+Coefficients:
+               Estimate Std. Error z value Pr(>|z|)    
+(Intercept)      3.3175     0.7721   4.297 1.73e-05 ***
+factor(age)2    -2.1181     0.5736  -3.693 0.000222 ***
+factor(age)3    -2.6130     0.5017  -5.208 1.91e-07 ***
+factor(stage)2  -1.2529     0.7837  -1.599 0.109860    
+factor(stage)3  -1.7759     0.8003  -2.219 0.026478 *  
+factor(stage)4  -4.3678     0.7902  -5.528 3.25e-08 ***
+factor(stage)5  -1.0222     0.8644  -1.183 0.236980    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 162.832  on 14  degrees of freedom
+Residual deviance:   9.625  on  8  degrees of freedom
+AIC: 55.382
+
+Number of Fisher Scoring iterations: 4
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+% \end{noindent}
+\begin{enumerate}[label={Q\arabic*:}]
+    \item What is the \textcolor{Blue}{odds ratio} of 2 yr disease-free survival for a child \textcolor{Blue}{aged 24+ months}
+          versus \textcolor{Blue}{aged $<12$ months}?
+          \begin{table}[!htbp]
+              \centering
+              \begin{tabular}{cccl}
+                  Age  & Stage & $ \Vector{x}_i^\top $                        & $ \log[\big]{\pi_i/(1-\pi_i)} $                                            \\
+                  \midrule
+                  0-11 & ---   & $ (1,0,0,x_{i3},x_{i4},x_{i5},x_{i6})^\top $ & $ \beta_0+\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6} $        \\
+                  24+  & ---   & $ (1,0,1,x_{i3},x_{i4},x_{i5},x_{i6})^\top $ & $ \beta_0+\beta_2+\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6}$ \\
+                  \bottomrule
+              \end{tabular}
+          \end{table}
+          \begin{itemize}
+              \item The odds ratio is therefore $ \psi=\exp{\beta_2} $, its MLE is:
+                    \[ \hat{\psi}=\exp{\hat{\beta}_2}=\exp{-2.614}=0.0733. \]
+              \item The \textcolor{Blue}{\qty{95}{\percent} CI} for this odds ratio is:
+                    \[ \exp{\hat{\beta}_2\pm 1.96\se{\hat{\beta}_2}}=\exp{-2.613\pm 1.96\times 0.5017}=(0.0274,0.1960). \]
+              \item \emph{When controlling for stage at the diagnosis, the odds of 2-yr DFS for children aged 24+ months
+                        is only about \qty{7}{\percent} [\qty{95}{\percent} CI\@: (0.0274,0.1960)] of that for those aged less than 12 months}.
+          \end{itemize}
+    \item What is the \textcolor{Blue}{odds ratio} of 2 yr disease-free survival for a child with
+          \textcolor{Blue}{stage V} versus \textcolor{Blue}{stage II} cancer?
+          \begin{table}[!htbp]
+              \centering
+              \begin{tabular}{cccl}
+                  Age & Stage & $ \Vector{x}_i^\top $              & $ \log[\big]{\pi_i/(1-\pi_i)} $                 \\
+                  \midrule
+                  --- & V     & $ (1,x_{i1},x_{i2},0,0,0,1)^\top $ & $ \beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_6 $ \\
+                  --- & II    & $ (1,x_{i1},x_{i2},1,0,0,0)^\top $ & $ \beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3 $ \\
+                  \bottomrule
+              \end{tabular}
+          \end{table}
+          \begin{itemize}
+              \item The odds ratio is therefore $ \psi=\exp{\beta_6-\beta_3} $, its MLE is:
+                    \[ \hat{\psi}=\exp{\hat{\beta}_6-\hat{\beta}_3}=\exp{-1.022+1.253}=1.26. \]
+              \item \emph{When controlling for age at the diagnosis, the odds of a 2-yr DFS for those
+                        diagnosed in stage V is 1.26 times of that for those diagnosed in stage II}.
+          \end{itemize}
+    \item What is the \textcolor{Blue}{\qty{95}{\percent} CI for OR $ \psi=\exp{\beta_6-\beta_3} $}?
+          \begin{enumerate}[1.]
+              \item Finding the \qty{95}{\percent} CI for $ \eta=\beta_6-\beta_3=\Vector{c}^\top \Vector{\beta} $, where
+                    \[ \Vector{c}^\top =\begin{bmatrix}
+                            0 & 0 & 0 & -1 & 0 & 0 & 1
+                        \end{bmatrix},\qquad \Vector{\beta}=\begin{bmatrix}
+                            \beta_0 \\
+                            \beta_1 \\
+                            \vdots  \\
+                            \beta_6
+                        \end{bmatrix}. \]
+                    Standard error for $ \hat{\eta}=\hat{\beta}_6-\hat{\beta}_3=\Vector{c}^\top\hat{\Vector{\beta}} $:
+                    \begin{align*}
+                        \estVar{\hat{\Vector{\beta}}}       & =\Matrix{I}^{-1}(\hat{\Vector{\beta}})                                  \\
+                        \se{\Vector{c}^\top \Vector{\beta}} & =\sqrt{\Vector{c}\Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{c}^\top}.
+                    \end{align*}
+                    % \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{C} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlopt{-}\hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{)}
+\hlstd{se} \hlkwb{=} \hlkwd{sqrt}\hlstd{(C} \hlopt{%*%} \hlkwd{vcov}\hlstd{(model1)} \hlopt{%*%} \hlstd{C)}
+\hlstd{se}
+\end{alltt}
+\begin{verbatim}
+          [,1]
+[1,] 0.6729361
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+        % \end{noindent}
+                    The \qty{95}{\percent} CI for $ \eta=\beta_6-\beta_3 $ is:
+                    \[ \hat{\eta}\pm 1.96\se{\hat{\eta}}=(-1.0222+1.2529)\pm 1.96\times 0.6729=(-1.0882,1.5496). \]
+              \item Exponentiate it to obtain the \qty{95}{\percent} CI for $ \psi=\exp{\eta}=\exp{\beta_6-\beta_3} $:
+                    \[ \exp{\hat{\eta}\pm 1.96\se{\hat{\eta}}}=(0.3368,4.7098). \]
+          \end{enumerate}
+\end{enumerate}
+
+\section*{Topic 3e: Dose-Response Models}
+\addcontentsline{toc}{section}{Topic 3e: Dose-Response Models}
+\subsection*{Bioassay Experiments}
+\begin{itemize}
+    \item \textcolor{Blue}{Bioassay experiment}: Several groups of subjects are exposed to varying levels
+          of a drug/toxin to determine how many responses within a fixed period of time.
+    \item \textcolor{Blue}{Stimulus}: Each group is subjected to a particular dose of the drug/toxin:
+          \[ \textcolor{Green}{\text{dose}=\log{\text{concentration}}} \]
+    \item \textcolor{Blue}{Response}: As a result of the stimulus, subjects will often manifest a binary
+          response indicating the occurrence of an adverse event (e.g., death).
+    \item \textcolor{Blue}{Tolerance}: We assume that for each subject there is a certain dose level above
+          which the response will always occur.
+          \begin{itemize}
+              \item This level is called the tolerance or threshold.
+              \item The tolerance varies from one individual to another in the population and therefore
+                    from subject to subject in the sample.
+              \item We can therefore ascribe a distribution to it.
+          \end{itemize}
+\end{itemize}
+\subsection*{The Tolerance Distribution}
+\begin{itemize}
+    \item $ z =$ concentration of the stimulus (toxin/drug).
+    \item $ x=\log{z} =$ dose/intensity of the stimulus.
+    \item $ f(x)= $ pdf for the distribution of the tolerance in the population (\emph{i.e., the
+              distribution for the stimulus/dose at which response occurs}).
+    \item Suppose a dose of $ x_0 $ were applied to the population. What proportion would
+          respond?
+          \[ \pi_0=\int_{-\infty}^{x_0}f(s)\odif{s}=F(x_0) \]
+    \item If $ x_0<x_1 $, then $ \pi_0<\pi_1 $.
+\end{itemize}
+\subsection*{Modelling the Dose-Response Relationship}
+For each group $ i=1,\ldots,n $ let:
+\begin{itemize}
+    \item $ x_i= $ dose applied to subjects in group $ i $,
+    \item $ m_i= $ number of subjects in group $ i $,
+    \item $ y_i= $ the number of subjects with response in group $ i $.
+          \begin{table}[!htbp]
+              \centering
+              \begin{tabular}{cccc}
+                  \toprule
+                  Dose       & Responders & Total                  \\
+                  $ x_i $    & $ y_i $    & $ m_i $  & $ y_i/m_i $ \\
+                  \midrule
+                  $ 1.6907 $ & $ 6 $      & $ 59 $   & $ 0.10 $    \\
+                  $ 1.7242 $ & $ 13 $     & $ 60 $   & $ 0.22 $    \\
+                  $ 1.7552 $ & $ 18 $     & $ 62 $   & $ 0.29 $    \\
+                  $\vdots$   & $\vdots$   & $\vdots$ & $\vdots$    \\
+                  \bottomrule
+              \end{tabular}
+          \end{table}
+    \item Assume
+          \[ \textcolor{Blue}{Y_i \sim \BIN{m_i,\pi_i},\; i=1,\ldots,n}, \]
+          \[ \textcolor{Blue}{\pi_i} = \text{probability of response in group $ i $ with dose $ x_i $}. \]
+    \item \textcolor{Red}{Objective}: TO model probability of response $ \pi_i $ as a function of dose $ x_i $.
+    \item Binomial Regression Models:
+          \[ g(\pi)=\beta_0+\beta_1x_i, \]
+          where $ g(\:\cdot\:) $ is a choice of link function.
+    \item Then we have:
+          \[ \pi_i=g^{-1}(\beta_0+\beta_1x_i), \]
+          that is, the probability of response as a function of dose $ x_i $ via $ g^{-1}(\:\cdot\:) $.
+    \item Question: What link function should we select?
+\end{itemize}
 \end{document}
+% For fonts.
+\begin{itemize}
+    \item \sbox0{c}\the\ht0\ versus \sbox0{\texttt{c}}\the\ht0\ versus \sbox0{$c$}\the\ht0\ versus \sbox0{\textsf{c}}\the\ht0\
+    \item c\texttt{c}$c$\textsf{c}
+\end{itemize}

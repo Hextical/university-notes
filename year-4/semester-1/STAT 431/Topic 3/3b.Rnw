@@ -5,21 +5,21 @@
 Last week, we introduce a simple method for association between two binary
 variables, \textcolor{Blue}{$ 2\times 2 $ contingency table analysis}:
 \begin{table}[!htbp]
-    \centering
-    \begin{NiceTabular}{l|ccc}
-        & \multicolumn{2}{c}{\emph{Mortality}}                                                 \\
-        Level of Care & Died                            & Survived                                 \\
-        \midrule
-        Intensive & $ y_1 $                            & $ m_1-y_1 $    & $ Y_1 \sim \BIN{m_1,\pi_1} $         \\
-        Regular   & $ y_2 $                            & $ m_2-y_2 $    & $ Y_2 \sim \BIN{m_2,\pi_2} $      \\
-        \bottomrule
-    \end{NiceTabular}
+      \centering
+      \begin{NiceTabular}{l|ccc}
+            & \multicolumn{2}{c}{\emph{Mortality}}                                                 \\
+            Level of Care & Died                            & Survived                                 \\
+            \midrule
+            Intensive & $ y_1 $                            & $ m_1-y_1 $    & $ Y_1 \sim \BIN{m_1,\pi_1} $         \\
+            Regular   & $ y_2 $                            & $ m_2-y_2 $    & $ Y_2 \sim \BIN{m_2,\pi_2} $      \\
+            \bottomrule
+      \end{NiceTabular}
 \end{table}
 Measure of Association: $ \displaystyle \OR = \psi=\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)} $,
 \begin{itemize}
-    \item $ \OR=1 $ (equal risk).
-    \item $ 0<\OR<1 $ (lower risk in group 1).
-    \item $ \OR>1 $ (higher risk in group 1).
+      \item $ \OR=1 $ (equal risk).
+      \item $ 0<\OR<1 $ (lower risk in group 1).
+      \item $ \OR>1 $ (higher risk in group 1).
 \end{itemize}
 Maximum likelihood estimator for $ \OR $ is:
 \[ \hat{\psi}=\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}, \]
@@ -27,97 +27,97 @@ and a Wald-based \qty{95}{\percent} CI is:
 \[ \exp[\bigg]{\log{\hat{\psi}_1}\pm 1.96\underbrace{\sqrt{\frac{1}{y_1} +\frac{1}{m_1-y_1} +\frac{1}{y_2} +\frac{1}{m_2-y_2}}}_{\se{\log{\hat{\psi}}}}}. \]
 Prenatal Care Data Example:
 \begin{table}[!htbp]
-    \centering
-    \begin{tabular}{ccc}
-        OR (\textcolor{Blue}{Mortality and Care}) & Est.                   & \qty{95}{\percent} CI             \\
-        \midrule
-        Intensive vs Regular                      & \textcolor{Blue}{0.51} & \textcolor{Blue}{$ (0.30,0.89) $}
-    \end{tabular}
-    \caption{$ 1\notin (0.30,0.89)\implies $ evidence of association between Mortality and Care.}
+      \centering
+      \begin{tabular}{ccc}
+            OR (\textcolor{Blue}{Mortality and Care}) & Est.                   & \qty{95}{\percent} CI             \\
+            \midrule
+            Intensive vs Regular                      & \textcolor{Blue}{0.51} & \textcolor{Blue}{$ (0.30,0.89) $}
+      \end{tabular}
+      \caption{$ 1\notin (0.30,0.89)\implies $ evidence of association between Mortality and Care.}
 \end{table}
 However, Mortality and Care are also related to another variable, Clinic:
 \begin{table}[!htbp]
-    \centering
-    \begin{tabular}{ccc}
-        OR (\textcolor{Blue}{Mortality and Clinic}) & Est.                   & \qty{95}{\percent} CI             \\
-        \midrule
-        Intensive vs Regular                        & \textcolor{Blue}{0.35} & \textcolor{Blue}{$ (0.12,0.58) $}
-    \end{tabular}
-    \caption{Association between Mortality and Clinic.}
+      \centering
+      \begin{tabular}{ccc}
+            OR (\textcolor{Blue}{Mortality and Clinic}) & Est.                   & \qty{95}{\percent} CI             \\
+            \midrule
+            Intensive vs Regular                        & \textcolor{Blue}{0.35} & \textcolor{Blue}{$ (0.12,0.58) $}
+      \end{tabular}
+      \caption{Association between Mortality and Clinic.}
 \end{table}
 \begin{table}[!htbp]
-    \centering
-    \begin{tabular}{ccc}
-        OR (\textcolor{Blue}{Care and Clinic}) & Est.                    & \qty{95}{\percent} CI              \\
-        \midrule
-        Intensive vs Regular                   & \textcolor{Blue}{14.06} & \textcolor{Blue}{$ (9.12,21.76) $}
-    \end{tabular}
-    \caption{Association between Care and Clinic.}
+      \centering
+      \begin{tabular}{ccc}
+            OR (\textcolor{Blue}{Care and Clinic}) & Est.                    & \qty{95}{\percent} CI              \\
+            \midrule
+            Intensive vs Regular                   & \textcolor{Blue}{14.06} & \textcolor{Blue}{$ (9.12,21.76) $}
+      \end{tabular}
+      \caption{Association between Care and Clinic.}
 \end{table}
 \begin{itemize}
-    \item Therefore, we wish to consider how a variable, e.g., Mortality ($ Y $), is related to
-          multiple explanatory variables together, e.g., Care ($ x_1 $) and Clinic ($ x_2 $).
-    \item This can be done using \textcolor{Blue}{multiple regression methodology} for binary data $ \implies $
-          Topic 3b: Binomial Regression Models for Binary Data.
+      \item Therefore, we wish to consider how a variable, e.g., Mortality ($ Y $), is related to
+            multiple explanatory variables together, e.g., Care ($ x_1 $) and Clinic ($ x_2 $).
+      \item This can be done using \textcolor{Blue}{multiple regression methodology} for binary data $ \implies $
+            Topic 3b: Binomial Regression Models for Binary Data.
 \end{itemize}
 \subsection*{Multiple Regression for Binary Data}
 \begin{itemize}
-    \item Often we need to consider the relationship between a binary outcome and
-          multiple explanatory variables, using multiple regression methodology.
-    \item This is because we may want to:
-          \begin{itemize}
-              \item control for cofounding variables and hence want to examine the effect of
-                    several variables simultaneously;
-              \item examine the effect of categorical variables ($ >2 $ levels) or continuous covariates;
-              \item develop sophisticated models that describe complex relationship.
-          \end{itemize}
-    \item Suppose \textcolor{Blue}{\emph{subject level data}} is binary with a value of 1 indicating that an event
-          of interest occurs and a value of 0 indicating that event doesn't occur.
-    \item Subjects can be classified according to the values of explanatory
-          variables into $n$ groups (i.e., common covariates values within each group), so
-          we have \textcolor{Blue}{\emph{grouped data}} such that:
-          \begin{itemize}
-              \item $ m_i $ denotes number of subjects in group $i$;
-              \item $Y_i$ denotes number of subjects experienced the event in group $i$;
-              \item $ x_{i1},\ldots,x_{ip} $ denote the covariates values associated with group $i$
-                    where $ i=1,\ldots,n $.
-          \end{itemize}
+      \item Often we need to consider the relationship between a binary outcome and
+            multiple explanatory variables, using multiple regression methodology.
+      \item This is because we may want to:
+            \begin{itemize}
+                  \item control for cofounding variables and hence want to examine the effect of
+                        several variables simultaneously;
+                  \item examine the effect of categorical variables ($ >2 $ levels) or continuous covariates;
+                  \item develop sophisticated models that describe complex relationship.
+            \end{itemize}
+      \item Suppose \textcolor{Blue}{\emph{subject level data}} is binary with a value of 1 indicating that an event
+            of interest occurs and a value of 0 indicating that event doesn't occur.
+      \item Subjects can be classified according to the values of explanatory
+            variables into $n$ groups (i.e., common covariates values within each group), so
+            we have \textcolor{Blue}{\emph{grouped data}} such that:
+            \begin{itemize}
+                  \item $ m_i $ denotes number of subjects in group $i$;
+                  \item $Y_i$ denotes number of subjects experienced the event in group $i$;
+                  \item $ x_{i1},\ldots,x_{ip} $ denote the covariates values associated with group $i$
+                        where $ i=1,\ldots,n $.
+            \end{itemize}
 \end{itemize}
 \subsection*{Set-up of a Binomial Regression Model}
 \begin{enumerate}[label=\color{Blue}\protect\circled{\arabic*}]
-    \item \textcolor{Blue}{Response Variable}: $ Y_i \sim \BIN{m_i,\pi_i} $, $ i=1,\ldots,n $, and Binomial
-          distribution is a member of Exponential family!
-          \begin{align*}
-              f(y_i)
-               & =\binom{m_i}{y_i}\pi_i^{y_i}(1-\pi_i)^{m_i-y_i}                                   \\
-               & =\exp*{y_i\log*{\frac{\pi_i}{1-\pi_i}}+m_i\log{1-\pi_i}+\log*{\binom{m_i}{y_i}}},
-          \end{align*}
-          where
-          \begin{align*}
-              \theta_i     & =\log*{\frac{\pi_i}{1-\pi_i}},              \\
-              a(\phi)=\phi & =1,                                         \\
-              b(\theta_i)  & =-m_i\log{1-\pi_i}=m_i\log{1+e^{\theta_i}}. \\
-              c(y_i;\phi)  & =\log*{\binom{m_i}{y_i}}.
-          \end{align*}
-    \item \textcolor{Blue}{Linear Predictor}:
-          \[ \eta_i=\Vector{x}_i^\top \Vector{\beta}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}. \]
-    \item \textcolor{Blue}{Link Function}: Recall that for Binomial distribution, we have $ \E{Y_i}=\mu_i=m_i\pi_i $,
-          therefore we typically re-write the link function in terms of $ \pi_i $,
-          \[ \textcolor{Blue}{g(\pi_i)}=\Vector{x}_i^\top \Vector{\beta}. \]
-          As $ \pi_i\in(0,1) $, any function $ g\colon (0,1)\to(-\infty,\infty) $ may work, and here are some link functions we
-          can consider:
-          \begin{table}[!htbp]
-              \centering
-              \begin{tabular}{cc}
-                  \toprule
-                  log-log                             & $ g(\pi)=\log[\big]{-\log{\pi}} $                                               \\
-                  complementary log-log               & $ g(\pi)=\log[\big]{-\log{1-\pi}} $                                             \\
-                  Probit$^a$                          & $ g(\pi)=\Phi^{-1}(\pi) $                                                       \\
-                  Logit (\textcolor{Blue}{canonical}) & $ g(\pi)=\log[\big]{\pi/(1-\pi)} $                                              \\
-                  \bottomrule
-                  \multicolumn{2}{l}{\footnotesize{$ {}^a $For the Probit link, $ \Phi(\:\cdot\:) $ is the \emph{CDF} of $ \N{0,1} $.}} \\
-              \end{tabular}
-          \end{table}
+      \item \textcolor{Blue}{Response Variable}: $ Y_i \sim \BIN{m_i,\pi_i} $, $ i=1,\ldots,n $, and Binomial
+            distribution is a member of Exponential family!
+            \begin{align*}
+                  f(y_i)
+                   & =\binom{m_i}{y_i}\pi_i^{y_i}(1-\pi_i)^{m_i-y_i}                                   \\
+                   & =\exp*{y_i\log*{\frac{\pi_i}{1-\pi_i}}+m_i\log{1-\pi_i}+\log*{\binom{m_i}{y_i}}},
+            \end{align*}
+            where
+            \begin{align*}
+                  \theta_i     & =\log*{\frac{\pi_i}{1-\pi_i}},                       \\
+                  a(\phi)=\phi & =1,                                                  \\
+                  b(\theta_i)  & =-m_i\log{1-\pi_i}=m_i\log{1+\mathrm{e}^{\theta_i}}. \\
+                  c(y_i;\phi)  & =\log*{\binom{m_i}{y_i}}.
+            \end{align*}
+      \item \textcolor{Blue}{Linear Predictor}:
+            \[ \eta_i=\Vector{x}_i^\top \Vector{\beta}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}. \]
+      \item \textcolor{Blue}{Link Function}: Recall that for Binomial distribution, we have $ \E{Y_i}=\mu_i=m_i\pi_i $,
+            therefore we typically re-write the link function in terms of $ \pi_i $,
+            \[ \textcolor{Blue}{g(\pi_i)}=\Vector{x}_i^\top \Vector{\beta}. \]
+            As $ \pi_i\in(0,1) $, any function $ g\colon (0,1)\to(-\infty,\infty) $ may work, and here are some link functions we
+            can consider:
+            \begin{table}[!htbp]
+                  \centering
+                  \begin{tabular}{cc}
+                        \toprule
+                        log-log                             & $ g(\pi)=\log[\big]{-\log{\pi}} $                                               \\
+                        complementary log-log               & $ g(\pi)=\log[\big]{-\log{1-\pi}} $                                             \\
+                        Probit$^a$                          & $ g(\pi)=\Phi^{-1}(\pi) $                                                       \\
+                        Logit (\textcolor{Blue}{canonical}) & $ g(\pi)=\log[\big]{\pi/(1-\pi)} $                                              \\
+                        \bottomrule
+                        \multicolumn{2}{l}{\footnotesize{$ {}^a $For the Probit link, $ \Phi(\:\cdot\:) $ is the \emph{CDF} of $ \N{0,1} $.}} \\
+                  \end{tabular}
+            \end{table}
 \end{enumerate}
 \subsection*{Canonical Link and Logistic Regression}
 Recall for Binomial distribution $ \theta_i=\log*{\frac{\pi_i}{1-\pi_i} } $, and by setting $ \theta_i=\eta_i $, we have:
@@ -141,143 +141,143 @@ The predicted number of responses are: $ \hat{Y}_i=m_i\hat{\pi}_i $.
 
 \subsection*{Interpretation of $ \Vector{\beta} $ in Logistic Regression}
 \begin{itemize}
-    \item Consider a simple logistic model with a single binary explanatory variable:
-          \[ \log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}, \]
-          where $ x_{i1}=0 $ (group 0) and $ x_{i1}=1 $ (group 1).
-    \item Let's compare the model when $ x_{i1}=1 $ vs $ x_{i1}=0 $.
-          \begin{table}[!htbp]
-              \centering
-              \begin{tabular}{ccrl}
-                  Group & $ \Vector{x}_i^\top $ & $ \eta_i $          & $ =\log[\big]{\pi_i/(1-\pi_i)} $                              \\
-                  \midrule
-                  1     & $ (1,1)^\top $        & $ \beta_0+\beta_1 $ & $ =\log[\big]{\pi_1/(1-\pi_1)} $                              \\
-                  0     & $ (1,0)^\top $        & $ \beta_0 $         & $ =\log[\big]{\pi_0/(1-\pi_0)} $                              \\
-                  \midrule
-                        &                       & $ \beta_1 $         & $ =\log*{\frac{\pi_1/(1-\pi_1)}{\pi_0/(1-\pi_0)}}=\log{\OR} $
-              \end{tabular}
-          \end{table}
-    \item We subtract line 2 from line 1 to isolate $ \beta_1 $ and find its interpretation.
-    \item $ \beta_1= $ log odds ratio of response for subjects with $ x_{i1}=1 $ vs $ x_{i1}=0 $.
-    \item Please see Section 2.4.2 for general interpretations of $ \Vector{\beta} $'s in multiple logistic regression models.
+      \item Consider a simple logistic model with a single binary explanatory variable:
+            \[ \log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}, \]
+            where $ x_{i1}=0 $ (group 0) and $ x_{i1}=1 $ (group 1).
+      \item Let's compare the model when $ x_{i1}=1 $ vs $ x_{i1}=0 $.
+            \begin{table}[!htbp]
+                  \centering
+                  \begin{tabular}{ccrl}
+                        Group & $ \Vector{x}_i^\top $ & $ \eta_i $          & $ =\log[\big]{\pi_i/(1-\pi_i)} $                              \\
+                        \midrule
+                        1     & $ (1,1)^\top $        & $ \beta_0+\beta_1 $ & $ =\log[\big]{\pi_1/(1-\pi_1)} $                              \\
+                        0     & $ (1,0)^\top $        & $ \beta_0 $         & $ =\log[\big]{\pi_0/(1-\pi_0)} $                              \\
+                        \midrule
+                              &                       & $ \beta_1 $         & $ =\log*{\frac{\pi_1/(1-\pi_1)}{\pi_0/(1-\pi_0)}}=\log{\OR} $
+                  \end{tabular}
+            \end{table}
+      \item We subtract line 2 from line 1 to isolate $ \beta_1 $ and find its interpretation.
+      \item $ \beta_1= $ log odds ratio of response for subjects with $ x_{i1}=1 $ vs $ x_{i1}=0 $.
+      \item Please see Section 2.4.2 for general interpretations of $ \Vector{\beta} $'s in multiple logistic regression models.
 \end{itemize}
 \subsection*{Logistic Regression for Prenatal Care Example}
 \begin{itemize}
-    \item \textcolor{Blue}{Response}: Fetal Mortality, that is,
-          \[ Y_i \sim \BIN{m_i,\pi_i},\; i=1,2,\ldots. \]
-    \item Explanatory Variables:
-          \begin{align*}
-              x_{i1} & =\begin{cases*}
-                            1 & Intensive Care \\
-                            0 & Regular Care
-                        \end{cases*}                           \\
-              x_{i2} & =\begin{cases*}
-                            1 & Clinic A \\
-                            0 & Clinic B \\
-                        \end{cases*}                                \\
-              x_{i3} & =x_{i1}x_{i2}=\begin{cases*}
-                                         1 & Intensive care and Clinic A \\
-                                         0 & Otherwise
-                                     \end{cases*}
-          \end{align*}
-    \item We will use the context of this example to illustrate how to:
-          \begin{itemize}
-              \item fit (simple and multiple) logistic regression models using R, and
-              \item interpret regression parameters.
-          \end{itemize}
+      \item \textcolor{Blue}{Response}: Fetal Mortality, that is,
+            \[ Y_i \sim \BIN{m_i,\pi_i},\; i=1,2,\ldots. \]
+      \item Explanatory Variables:
+            \begin{align*}
+                  x_{i1} & =\begin{cases*}
+                                  1 & Intensive Care \\
+                                  0 & Regular Care
+                            \end{cases*}                           \\
+                  x_{i2} & =\begin{cases*}
+                                  1 & Clinic A \\
+                                  0 & Clinic B \\
+                            \end{cases*}                                \\
+                  x_{i3} & =x_{i1}x_{i2}=\begin{cases*}
+                                               1 & Intensive care and Clinic A \\
+                                               0 & Otherwise
+                                         \end{cases*}
+            \end{align*}
+      \item We will use the context of this example to illustrate how to:
+            \begin{itemize}
+                  \item fit (simple and multiple) logistic regression models using R, and
+                  \item interpret regression parameters.
+            \end{itemize}
 \end{itemize}
 \subsection*{Model 1: Level of Care only model}
 \[ \log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}. \]
 \begin{table}[!htbp]
-    \centering
-    \begin{tabular}{cccl}
-        Level of Care & Clinic & $ \Vector{x}_i^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $ \\
-        \midrule
-        Intensive     & ---    & $ (1,1)^\top $        & $ \beta_0+\beta_1 $             \\
-        Regular       & ---    & $ (1,0)^\top $        & $ \beta_0 $                     \\
-        \bottomrule
-    \end{tabular}
+      \centering
+      \begin{tabular}{cccl}
+            Level of Care & Clinic & $ \Vector{x}_i^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $ \\
+            \midrule
+            Intensive     & ---    & $ (1,1)^\top $        & $ \beta_0+\beta_1 $             \\
+            Regular       & ---    & $ (1,0)^\top $        & $ \beta_0 $                     \\
+            \bottomrule
+      \end{tabular}
 \end{table}
 \begin{itemize}
-    \item $ \beta_0= $ \textcolor{Blue}{log odds} of mortality for babies born to mothers treated with regular care.
-    \item $ \beta_1= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated
-          with intensive vs regular care.
+      \item $ \beta_0= $ \textcolor{Blue}{log odds} of mortality for babies born to mothers treated with regular care.
+      \item $ \beta_1= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated
+            with intensive vs regular care.
 \end{itemize}
 \subsection*{Model 2: Main effects model}
 \[ \log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}. \]
 \begin{table}[!htbp]
-    \centering
-    \begin{tabular}{cccl}
-        Level of Care & Clinic & $ \Vector{x}_i^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $ \\
-        \midrule
-        Intensive     & A      & $ (1,1,1)^\top $      & $ \beta_0+\beta_1+\beta_2 $     \\
-        Regular       & A      & $ (1,0,1)^\top $      & $ \beta_0+\beta_2 $             \\
-        Intensive     & B      & $ (1,1,0)^\top $      & $ \beta_0+\beta_1 $             \\
-        Regular       & B      & $ (1,0,0)^\top $      & $ \beta_0 $                     \\
-        \bottomrule
-    \end{tabular}
+      \centering
+      \begin{tabular}{cccl}
+            Level of Care & Clinic & $ \Vector{x}_i^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $ \\
+            \midrule
+            Intensive     & A      & $ (1,1,1)^\top $      & $ \beta_0+\beta_1+\beta_2 $     \\
+            Regular       & A      & $ (1,0,1)^\top $      & $ \beta_0+\beta_2 $             \\
+            Intensive     & B      & $ (1,1,0)^\top $      & $ \beta_0+\beta_1 $             \\
+            Regular       & B      & $ (1,0,0)^\top $      & $ \beta_0 $                     \\
+            \bottomrule
+      \end{tabular}
 \end{table}
 \begin{itemize}
-    \item $ \beta_0= $ \textcolor{Blue}{log odds} of mortality with regular care at Clinic B.
-    \item $ \beta_1= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated with
-          \textcolor{Blue}{intensity vs regular} care at the \emph{same clinic}.
-    \item $ \beta_2= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated at
-          \textcolor{Blue}{Clinic A vs Clinic B} at the \emph{same level of care}.
+      \item $ \beta_0= $ \textcolor{Blue}{log odds} of mortality with regular care at Clinic B.
+      \item $ \beta_1= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated with
+            \textcolor{Blue}{intensity vs regular} care at the \emph{same clinic}.
+      \item $ \beta_2= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated at
+            \textcolor{Blue}{Clinic A vs Clinic B} at the \emph{same level of care}.
 \end{itemize}
 \subsection*{Model 3: Interaction model}
 \[ \log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}. \]
 \begin{table}[!htbp]
-    \centering
-    \begin{tabular}{cccl}
-        Level of Care & Clinic & $ \Vector{x}_i^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $     \\
-        \midrule
-        Intensive     & A      & $ (1,1,1)^\top $      & $ \beta_0+\beta_1+\beta_2+\beta_3 $ \\
-        Regular       & A      & $ (1,0,1)^\top $      & $ \beta_0+\beta_2 $                 \\
-        Intensive     & B      & $ (1,1,0)^\top $      & $ \beta_0+\beta_1 $                 \\
-        Regular       & B      & $ (1,0,0)^\top $      & $ \beta_0 $                         \\
-        \bottomrule
-    \end{tabular}
+      \centering
+      \begin{tabular}{cccl}
+            Level of Care & Clinic & $ \Vector{x}_i^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $     \\
+            \midrule
+            Intensive     & A      & $ (1,1,1)^\top $      & $ \beta_0+\beta_1+\beta_2+\beta_3 $ \\
+            Regular       & A      & $ (1,0,1)^\top $      & $ \beta_0+\beta_2 $                 \\
+            Intensive     & B      & $ (1,1,0)^\top $      & $ \beta_0+\beta_1 $                 \\
+            Regular       & B      & $ (1,0,0)^\top $      & $ \beta_0 $                         \\
+            \bottomrule
+      \end{tabular}
 \end{table}
 \begin{itemize}
-    \item $ \beta_0= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated with
-          \textcolor{Blue}{intensity vs regular} care at \emph{Clinic B}.
-    \item $ \beta_1+\beta_3= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated
-          with \textcolor{Blue}{intensity vs regular} care at \emph{Clinic A}.
-    \item $ \beta_2= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated at
-          \textcolor{Blue}{Clinic A vs Clinic B} with \emph{regular} care.
-    \item $ \beta_2+\beta_3= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated at
-          \textcolor{Blue}{Clinic A vs Clinic B} with \emph{intensive} care.
-    \item $ \beta_3 $ represents the \textcolor{Blue}{difference in log odds ratios}.
-    \item If $ \beta_3=0 $ then association between mortality and level of care does not
-          dependent on clinic.
-    \item Equivalently, if $ \beta_3=0 $ then the association between mortality and clinic
-          does not depend on level of care.
+      \item $ \beta_0= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated with
+            \textcolor{Blue}{intensity vs regular} care at \emph{Clinic B}.
+      \item $ \beta_1+\beta_3= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated
+            with \textcolor{Blue}{intensity vs regular} care at \emph{Clinic A}.
+      \item $ \beta_2= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated at
+            \textcolor{Blue}{Clinic A vs Clinic B} with \emph{regular} care.
+      \item $ \beta_2+\beta_3= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated at
+            \textcolor{Blue}{Clinic A vs Clinic B} with \emph{intensive} care.
+      \item $ \beta_3 $ represents the \textcolor{Blue}{difference in log odds ratios}.
+      \item If $ \beta_3=0 $ then association between mortality and level of care does not
+            dependent on clinic.
+      \item Equivalently, if $ \beta_3=0 $ then the association between mortality and clinic
+            does not depend on level of care.
 \end{itemize}
 \begin{Example}{Data file \texttt{prenatal.dat}}
-    <<echo=FALSE>>=
-    prenatal.dat = read.table("prenatal.dat", header = T)
-    prenatal.dat
-    @
-    \begin{itemize}
-        \item The first line contains the variable names/labels.
-        \item We are using indicator variables for the explanatory variables:
-              \begin{align*}
-                  x_{i1} & =\text{\lstinline{loc}} & & \text{(1 for Intensive, 0 for Regular)}    \\
-                  x_{i2} & =\text{\lstinline{clinic}} & & \text{(1 for Clinic A, 0 for Clinic B)}
-              \end{align*}
-        \item The variable \lstinline{y} records the number of deaths (events).
-    \end{itemize}
+      <<echo=FALSE>>=
+      prenatal.dat = read.table("prenatal.dat", header = T)
+      prenatal.dat
+      @
+      \begin{itemize}
+            \item The first line contains the variable names/labels.
+            \item We are using indicator variables for the explanatory variables:
+                  \begin{align*}
+                        x_{i1} & =\text{\texttt{loc}}    &  & \text{(1 for Intensive, 0 for Regular)} \\
+                        x_{i2} & =\text{\texttt{clinic}} &  & \text{(1 for Clinic A, 0 for Clinic B)}
+                  \end{align*}
+            \item The variable \texttt{y} records the number of deaths (events).
+      \end{itemize}
 \end{Example}
 \subsection*{Fit GLMs using R}
-The \lstinline{glm()} function in R is used to fit the generalized linear models:
-\[ \text{\lstinline{fit = glm(formula, family = (link = ), data = )}}. \]
+The \texttt{glm()} function in R is used to fit the generalized linear models:
+\[ \text{\texttt{fit = glm(formula, family = (link = ), data = )}}. \]
 \begin{itemize}
-    \item \lstinline{formula}: a linear formula describing the model, e.g.,
-          \[ \text{\lstinline{resp \~ loc + clinic}}. \]
-    \item \lstinline{family}: a description of the exponential family distribution and link
-          function to be used in the model, e.g.,
-          \[ \text{\lstinline{family = binomial, gaussian, poisson, Gamma, etc.}}. \]
-          \[ \text{\lstinline{link = logit, log, loglog, cloglog, identity, probit, etc.}}. \]
-    \item The default is the canonical link.
+      \item \texttt{formula}: a linear formula describing the model, e.g.,
+            \[ \texttt{resp \textasciitilde{} loc + clinic}. \]
+      \item \texttt{family}: a description of the exponential family distribution and link
+            function to be used in the model, e.g.,
+            \[ \text{\texttt{family = binomial, gaussian, poisson, Gamma, etc.}}. \]
+            \[ \text{\texttt{link = logit, log, loglog, cloglog, identity, probit, etc.}}. \]
+      \item The default is the canonical link. prenatal.dat
 \end{itemize}
 \subsection*{R Code and Output for Analysis of Prenatal Care data}
 % \begin{noindent}
@@ -289,7 +289,7 @@ The \lstinline{glm()} function in R is used to fit the generalized linear models
     prenatal.dat
     @
 % \end{noindent}
-The logistic regression models are fit using the \lstinline{glm()} commands like:
+The logistic regression models are fit using the \texttt{glm()} commands like:
 % \begin{noindent}
     <<results = 'hide'>>=
     # fit the logistic model using the glm function
@@ -306,41 +306,41 @@ The logistic regression models are fit using the \lstinline{glm()} commands like
     summary(model1)$coefficients
     @
 % \end{noindent}
-Components of the \lstinline{summary()} output for \lstinline{glm} objects:
+Components of the \texttt{summary()} output for \texttt{glm} objects:
 \begin{itemize}
-    \item \textcolor{Blue}{\lstinline{Estimate}}: the maximum likelihood estimates of the regression coefficients $ \hat{\beta}_0 $
-              and $ \hat{\beta}_1 $.
-    \item \textcolor{Blue}{\lstinline{Std. Error}}: estimated standard errors, the square root of the diagonal
-          of the inverse of the Information matrix:
-          \[ \se{\hat{\beta}_j}=\sqrt{\bigl[\Matrix{I}^{-1}(\hat{\Vector{\beta}})\bigr]_{jj}}=\sqrt{I^{jj}(\hat{\Vector{\beta}})}. \]
-    \item \textcolor{Blue}{\lstinline{z value}}: Wald-type test statistics for testing the hypotheses:
-          \begin{center}
-              $ \HN $: $ \beta_j=0 $ vs $ \HA $: $ \beta_j\ne 0 $.
-          \end{center}
-    \item \textcolor{Blue}{\lstinline{Pr(>|z|)}}: $ p $-value for above Wald test.
+      \item \textcolor{Blue}{\texttt{Estimate}}: the maximum likelihood estimates of the regression coefficients $ \hat{\beta}_0 $
+            and $ \hat{\beta}_1 $.
+      \item \textcolor{Blue}{\texttt{Std.\ Error}}: estimated standard errors, the square root of the diagonal
+            of the inverse of the Information matrix:
+            \[ \se{\hat{\beta}_j}=\sqrt{\bigl[\Matrix{I}^{-1}(\hat{\Vector{\beta}})\bigr]_{jj}}=\sqrt{I^{jj}(\hat{\Vector{\beta}})}. \]
+      \item \textcolor{Blue}{\texttt{z value}}: Wald-type test statistics for testing the hypotheses:
+            \begin{center}
+                  $ \HN $: $ \beta_j=0 $ vs $ \HA $: $ \beta_j\ne 0 $.
+            \end{center}
+      \item \textcolor{Blue}{\texttt{Pr(>|z|)}}: $ p $-value for above Wald test.
 \end{itemize}
 For this model:
 \begin{itemize}
-    \item $ \beta_1 $ is the log odds ratio of mortality for infants born to mothers treated
-          with intensive versus regular care.
+      \item $ \beta_1 $ is the log odds ratio of mortality for infants born to mothers treated
+            with intensive versus regular care.
 \end{itemize}
 \subsection*{Hypothesis test for $ \beta_j $}
 \begin{itemize}
-    \item We may wish to test:
-          \begin{center}
-              $ \HN $: $ \beta_j=\beta^\star $ versus $ \HA $: $ \beta_j\ne \beta^\star $.
-          \end{center}
-    \item The general \textcolor{Blue}{Wald} result for a single parameter $ \beta_j $ is:
-          \[ (\hat{\beta}_j-\beta^\star)^2\bigl(I^{jj}(\hat{\Vector{\beta}})\bigr)^{-1} \sim \chi^2_1, \]
-          equivalently
-          $ \displaystyle \frac{\hat{\beta}_j-\beta^\star}{\se{\hat{\beta}_j}}\sim \N{0,1} $
-          where $ \se{\hat{\beta}_j}=\sqrt{I^{jj}(\hat{\Vector{\beta}})} $.
-    \item We can find the $ p $-value of this test using:
-          \[ p=2\Prob*{Z>\frac{\abs{\hat{\beta}_j-\beta^\star}}{\se{\hat{\beta}_j}}}. \]
-    \item The \lstinline{summary()} output gives the test statistics and $p$-values for testing
-          \begin{center}
-              $ \HN $: $ \beta_j=0 $ vs $ \HA $: $ \beta_j\ne 0 $.
-          \end{center}
+      \item We may wish to test:
+            \begin{center}
+                  $ \HN $: $ \beta_j=\beta^\star $ versus $ \HA $: $ \beta_j\ne \beta^\star $.
+            \end{center}
+      \item The general \textcolor{Blue}{Wald} result for a single parameter $ \beta_j $ is:
+            \[ (\hat{\beta}_j-\beta^\star)^2\bigl(I^{jj}(\hat{\Vector{\beta}})\bigr)^{-1} \sim \chi^2_1, \]
+            equivalently
+            $ \displaystyle \frac{\hat{\beta}_j-\beta^\star}{\se{\hat{\beta}_j}}\sim \N{0,1} $
+            where $ \se{\hat{\beta}_j}=\sqrt{I^{jj}(\hat{\Vector{\beta}})} $.
+      \item We can find the $ p $-value of this test using:
+            \[ p=2\Prob*{Z>\frac{\abs{\hat{\beta}_j-\beta^\star}}{\se{\hat{\beta}_j}}}. \]
+      \item The \texttt{summary()} output gives the test statistics and $p$-values for testing
+            \begin{center}
+                  $ \HN $: $ \beta_j=0 $ vs $ \HA $: $ \beta_j\ne 0 $.
+            \end{center}
 \end{itemize}
 \subsection*{Hypothesis test for $ \beta_1 $ from Model 1: Level of Care Model}
 % \begin{noindent}
@@ -349,29 +349,29 @@ For this model:
     @
 % \end{noindent}
 \begin{itemize}
-    \item We wish to test:
-          \begin{center}
-              $ \HN $: $ \beta_1=0 $ vs $ \HA $: $ \beta_1\ne 0 $
-          \end{center}
-    \item Wald test:
-          \[ z=\frac{\hat{\beta}_1-0}{\se{\hat{\beta}_1}}=\frac{-0.6671}{0.2785}=-2.3949   \]
-    \item $ p $-value:
-          \[ p=2\Prob{Z>\abs{-2.3949}}=0.0166<0.05 \]
-    \item Therefore, we reject the null hypothesis that $ \beta_1=0 $.
+      \item We wish to test:
+            \begin{center}
+                  $ \HN $: $ \beta_1=0 $ vs $ \HA $: $ \beta_1\ne 0 $
+            \end{center}
+      \item Wald test:
+            \[ z=\frac{\hat{\beta}_1-0}{\se{\hat{\beta}_1}}=\frac{-0.6671}{0.2785}=-2.3949   \]
+      \item $ p $-value:
+            \[ p=2\Prob{Z>\abs{-2.3949}}=0.0166<0.05 \]
+      \item Therefore, we reject the null hypothesis that $ \beta_1=0 $.
 \end{itemize}
 \begin{itemize}
-    \item Estimate of $ \OR $ for Mortality for Intensive vs Regular Care:
-          \[ \hat{\psi}=\exp{\hat{\beta}_1}=\exp{-0.6670729}=0.51. \]
-    \item Confidence Interval for OR:
-          \begin{align*}
-              \exp[\big]{\hat{\beta}_1\pm 1.96\se{\hat{\beta}_1}}
-               & =\exp{-0.6671\pm 1.96(0.2785)} \\
-               & =(\exp{-1.2130},\exp{-0.1211}) \\
-               & =(0.30,0.89)
-          \end{align*}
-    \item The estimate and Wald \qty{95}{\percent} CI here match those found previously from
-          the $ 2\times 2 $ table analysis. That is, the $ 2\times 2 $ table analysis is equivalent to
-          a simple logistic regression with a single binary covariate.
+      \item Estimate of $ \OR $ for Mortality for Intensive vs Regular Care:
+            \[ \hat{\psi}=\exp{\hat{\beta}_1}=\exp{-0.6670729}=0.51. \]
+      \item Confidence Interval for OR:
+            \begin{align*}
+                  \exp[\big]{\hat{\beta}_1\pm 1.96\se{\hat{\beta}_1}}
+                   & =\exp{-0.6671\pm 1.96(0.2785)} \\
+                   & =(\exp{-1.2130},\exp{-0.1211}) \\
+                   & =(0.30,0.89)
+            \end{align*}
+      \item The estimate and Wald \qty{95}{\percent} CI here match those found previously from
+            the $ 2\times 2 $ table analysis. That is, the $ 2\times 2 $ table analysis is equivalent to
+            a simple logistic regression with a single binary covariate.
 \end{itemize}
 \subsection*{Fit of Model 2: Main Effects Model}
 \[ \log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}+\textcolor{Blue}{\beta_2x_{i2}}. \]
@@ -382,11 +382,11 @@ For this model:
     @
 % \end{noindent}
 \begin{itemize}
-    \item What is the OR for mortality for Intensive vs Regular Care, now controlling for
-          Clinic?
-          \[ \widehat{\OR}=\hat{\psi}=\exp{-0.1503}=0.86. \]
-    \item \qty{95}{\percent} CI:
-          \[ \exp{-0.1503\pm 1.96\times 0.3302}=(0.4505,1.6436). \]
+      \item What is the OR for mortality for Intensive vs Regular Care, now controlling for
+            Clinic?
+            \[ \widehat{\OR}=\hat{\psi}=\exp{-0.1503}=0.86. \]
+      \item \qty{95}{\percent} CI:
+            \[ \exp{-0.1503\pm 1.96\times 0.3302}=(0.4505,1.6436). \]
 \end{itemize}
 \subsection*{Fit of Model 3: Interaction Model}
 \[ \log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\textcolor{Blue}{\beta_3x_{i3}}. \]
@@ -397,28 +397,28 @@ For this model:
     @
 % \end{noindent}
 \begin{table}[!htbp]
-    \centering
-    \begin{tabular}{cccl}
-        Level of Care & Clinic & $ \Vector{x}_i^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $     \\
-        \midrule
-        Intensive     & A      & $ (1,1,1)^\top $      & $ \beta_0+\beta_1+\beta_2+\beta_3 $ \\
-        Regular       & A      & $ (1,0,1)^\top $      & $ \beta_0+\beta_2 $                 \\
-        Intensive     & B      & $ (1,1,0)^\top $      & $ \beta_0+\beta_1 $                 \\
-        Regular       & B      & $ (1,0,0)^\top $      & $ \beta_0 $                         \\
-        \bottomrule
-    \end{tabular}
+      \centering
+      \begin{tabular}{cccl}
+            Level of Care & Clinic & $ \Vector{x}_i^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $     \\
+            \midrule
+            Intensive     & A      & $ (1,1,1)^\top $      & $ \beta_0+\beta_1+\beta_2+\beta_3 $ \\
+            Regular       & A      & $ (1,0,1)^\top $      & $ \beta_0+\beta_2 $                 \\
+            Intensive     & B      & $ (1,1,0)^\top $      & $ \beta_0+\beta_1 $                 \\
+            Regular       & B      & $ (1,0,0)^\top $      & $ \beta_0 $                         \\
+            \bottomrule
+      \end{tabular}
 \end{table}
 \begin{itemize}
-    \item What is the OR for Mortality for Intensive vs Regular Care at Clinic A?
-          \[ \OR=\psi=\exp{\beta_1+\beta_3}\implies \hat{\psi}=\exp{0.0076-0.2296}=0.8. \]
-    \item $ \se{\hat{\beta}_1+\hat{\beta}_3} $ is required for calculation of \qty{95}{\percent} CI.
-          \begin{itemize}
-              \item Recall $ \Var{\hat{\beta}}=\Matrix{I}^{-1}(\hat{\Vector{\beta}}) $, now for any linear function of $ \Vector{\beta} $'s,
-                    e.g., $ \Vector{c}\Vector{\beta} $ where $ \Vector{c} $ is a row vector of constants, then MLE of $ \Vector{c}\Vector{\beta} $
-                    is $ \Vector{c}\hat{\Vector{\beta}} $, and $ \se{\hat{\Vector{c}\hat{\Vector{\beta}}}}=\sqrt{\Vector{c}\Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{c}^\top} $.
-          \end{itemize}
-    \item Therefore, $ \log{\psi}=\beta_1+\beta_3=\Vector{c}\Vector{\beta} $, $ \Vector{c}=(0,1,0,1)^\top $. In R, \lstinline{vcov(model3)}
-          gives $ \Matrix{I}^{-1}(\hat{\Vector{\beta}}) $.
-    \item What is OR for Mortality for Intensive vs Regular Care at Clinic B?
-          \[ \OR=\psi=\exp{\beta_1}\implies \hat{\psi}=\exp{0.0076}=1.01. \]
+      \item What is the OR for Mortality for Intensive vs Regular Care at Clinic A?
+            \[ \OR=\psi=\exp{\beta_1+\beta_3}\implies \hat{\psi}=\exp{0.0076-0.2296}=0.8. \]
+      \item $ \se{\hat{\beta}_1+\hat{\beta}_3} $ is required for calculation of \qty{95}{\percent} CI.
+            \begin{itemize}
+                  \item Recall $ \Var{\hat{\beta}}=\Matrix{I}^{-1}(\hat{\Vector{\beta}}) $, now for any linear function of $ \Vector{\beta} $'s,
+                        e.g., $ \Vector{c}\Vector{\beta} $ where $ \Vector{c} $ is a row vector of constants, then MLE of $ \Vector{c}\Vector{\beta} $
+                        is $ \Vector{c}\hat{\Vector{\beta}} $, and $ \se{\hat{\Vector{c}\hat{\Vector{\beta}}}}=\sqrt{\Vector{c}\Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{c}^\top} $.
+            \end{itemize}
+      \item Therefore, $ \log{\psi}=\beta_1+\beta_3=\Vector{c}\Vector{\beta} $, $ \Vector{c}=(0,1,0,1)^\top $. In R, \texttt{vcov(model3)}
+            gives $ \Matrix{I}^{-1}(\hat{\Vector{\beta}}) $.
+      \item What is OR for Mortality for Intensive vs Regular Care at Clinic B?
+            \[ \OR=\psi=\exp{\beta_1}\implies \hat{\psi}=\exp{0.0076}=1.01. \]
 \end{itemize}

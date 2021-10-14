@@ -2,3 +2,352 @@
 \section*{Topic 3d: Residuals for Binomial Data and Neuroblastoma Example}
 \addcontentsline{toc}{section}{Topic 3d: Residuals for Binomial Data and Neuroblastoma Example}
 \subsection*{Recall: Residuals in Linear Regression Models}
+\begin{itemize}
+    \item Normal linear regression models (STAT 331),
+          \[ y_i=\Vector{x}_i^\top \Vector{\beta}+\varepsilon_i,\qquad \varepsilon_i\iid\N{0,\sigma^2}. \]
+    \item Fitted values:
+          \[ \hat{y}_i=\Vector{x}_i^\top \hat{\Vector{\beta}}. \]
+    \item Residuals:
+          \[ r_i=y_i-\hat{y}_i. \]
+    \item The overall fit of the model and validity of the model assumptions are assessed using various \textcolor{Blue}{\emph{residual plots}},
+          e.g.,
+          \begin{itemize}
+              \item Residuals $ r_i $ vs fitted value $ \hat{y}_i $ plot (check normality and constant variance).
+              \item QQ plot of residuals $ r_i $'s (check normality).
+          \end{itemize}
+\end{itemize}
+\subsection*{Residuals for Binomial Data}
+\begin{itemize}
+    \item When fit a logistic regression model to Binomial data, we evaluate the adequacy of the model by using the LR deviance test statistic:
+          \begin{align*}
+              D
+               & =\sum_{i=1}^{n} 2\biggl(y_i\log*{\frac{y_i}{m_i\hat{\pi}_i}}+(m_i-y_i)\log*{\frac{m_i-y_i}{m_i(1-\hat{\pi}_i)}}\biggr) \\
+               & =\sum_{i=1}^{n} d_i.
+          \end{align*}
+    \item \textcolor{Blue}{Deviance Residual}:
+          \[ r_i^D=\sign{y_i-m_i\hat{\pi}_i}\sqrt{\abs{d_i}}. \]
+    \item Under $ \HN $: the model is adequate:
+          \[ D=\sum_{i=1}^{n} d_i\stackrel{\text{approx}}{\sim}\chi^2_{n-p}\implies r_i^D\stackrel{\text{approx}}{\sim}\N{0,1}. \]
+    \item We can use the plots of deviance residuals to assess whether $ r_i^D $'s look independent observations from $ \N{0,1} $.
+\end{itemize}
+\subsection*{Example: Prenatal Care Data}
+\[ \logit{\pi_i}=\beta_0+\beta_1\texttt{clinic}_i \]
+% \begin{noindent}
+    <<>>=
+    model4<-glm(resp ~ clinic, family=binomial(link=logit), data=prenatal.dat)
+    summary(model4)
+    @
+% \end{noindent}
+\begin{itemize}
+    \item \textcolor{Blue}{Pearson Residual}:
+          \[ r_i^P=\frac{y_i-m_i\hat{\pi}_i}{\sqrt{m_i\hat{\pi}_i(1-\hat{\pi}_i)}}=\frac{O_i-E_i}{\sqrt{V_i}}.  \]
+    \item Under $ \HN $: the model is adequate,
+          \[ r_i^P \sim \N{0,1}. \]
+    \item Note: if $ m_i\hat{\pi}_i<5 $ (or $ m_i(1-\hat{\pi}_i)<5 $) for one or more cases, we should be concerned about
+          the validity of the approximation ($ \chi^2 $ or $ \N{0,1} $) and hence our conclusions.
+\end{itemize}
+\subsection*{Prognosis for Children with Neuroblastoma}
+\begin{itemize}
+    \item A study is conducted to investigate the probability of \textcolor{Blue}{\emph{disease-free survival}}
+          (surviving 2 years free of disease) following the treatment for neuroblastoma.
+    \item Associated risk factors include \textcolor{Blue}{\emph{age at diagnosis}} and \textcolor{Blue}{\emph{stage of disease at diagnosis}}.
+          \begin{table}
+              \centering
+              \begin{tabular}{cccccc}
+                  \toprule
+                               & \multicolumn{5}{c}{Stage}                                               \\
+                  \midrule
+                  Age (months) & I                         & II        & III      & IV       & V         \\
+                  \midrule
+                  0-11         & $ 11/12 $                 & $ 15/16 $ & $ 2/4 $  & $ 5/18 $ & $ 18/19 $ \\
+                  12-23        & $ 3/4 $                   & $ 3/7 $   & $ 5/8 $  & $ 0/25 $ & $ 1/3 $   \\
+                  24+          & $ 4/5 $                   & $ 4/12 $  & $ 3/15 $ & $ 3/93 $ & $ 2/5 $   \\
+                  \bottomrule
+              \end{tabular}
+          \end{table}
+          \begin{itemize}
+              \item Cell entries are of the form $y/m$ with $y$ representing the number of patients surviving 2
+                    years, and $m$ representing the number of patients in that age-stage combination at the
+                    start of the study.
+          \end{itemize}
+    \item As an initial look at the data, consider the marginal distributions.
+          \begin{table}[!htbp]
+              \centering
+              \begin{NiceTabular}{cccccc|c}
+                  \toprule
+                  &\multicolumn{5}{c}{Stage}\\
+                  \midrule
+                  Age (months) & I & II & III & IV & V & Total\\
+                  \midrule
+                  0-11 & $ 11/12 $ & $ 15/16 $ & $ 2/4 $ & $ 5/18 $ & $ 18/19 $ & $ 51/69 $\\
+                  12-23 & $ 3/4 $ & $ 3/7 $ & $ 5/8 $ & $ 0/25 $ & $ 1/3 $ & $ 12/47 $\\
+                  24+ & $ 4/5 $ & $ 4/12 $ & $ 3/15 $ & $ 3/93 $ & $ 2/5 $ & $ 16/130 $\\
+                  \midrule
+                  Total & $ 18/21 $ & $ 22/35 $ & $ 10/27 $ & $ 8/136 $ & $ 21/27 $ & $ 79/246 $\\
+                  \bottomrule
+              \end{NiceTabular}
+          \end{table}
+          \begin{itemize}
+              \item Higher chance of survival at younger age at diagnosis.
+              \item Higher chance of survival with lower stage of disease at diagnosis.
+          \end{itemize}
+\end{itemize}
+\subsection*{Setup Regression Models for Neuroblastoma Data}
+\begin{itemize}
+    \item Response Variable:
+          \begin{itemize}
+              \item \textcolor{Blue}{$ Y_i $} is the number of 2-yr disease-free survivors out of $ m_i $ total children in
+                    group $ i $, assume $ Y_i \sim \BIN{m_i,\pi_i} $, $ i=1,\ldots,15 $, and
+                    \[ \pi_i=\Prob{\text{2-yr disease-free survival in group $ i $}}. \]
+          \end{itemize}
+    \item Explanatory Variables:
+          \begin{itemize}
+              \item \textcolor{Blue}{Age} (0-11, 12-23, 24+ months); age 0-11 month is the baseline/reference,
+                    \[ x_{i1}  = \begin{cases*}
+                            1 & if age 12-23 months \\
+                            0 & o.w.
+                        \end{cases*} \qquad
+                        x_{i2}  = \begin{cases*}
+                            1 & if age 24+ months \\
+                            0 & o.w.
+                        \end{cases*} \]
+              \item \textcolor{Blue}{Stage} (I, II, III, IV, V); stage 1 is the baseline/reference,
+                    \[ \begin{array}{ll}
+                            x_{i3} = \begin{cases*}
+                                         1 & stage II \\
+                                         0 & o.w.
+                                     \end{cases*}  &
+                            x_{i4}  = \begin{cases*}
+                                          1 & if stage III \\
+                                          0 & o.w.
+                                      \end{cases*} \\
+                            x_{i5}  = \begin{cases*}
+                                          1 & if stage IV \\
+                                          0 & o.w.
+                                      \end{cases*} &
+                            x_{i6}  = \begin{cases*}
+                                          1 & if stage V \\
+                                          0 & o.w.
+                                      \end{cases*}
+                        \end{array} \]
+          \end{itemize}
+    \item Consider the following logistic regression models:
+          \begin{itemize}
+              \item Model 1: Age \& Stage
+                    \[ \logit{\pi_i}=\beta_0+\underbrace{\beta_1x_{i1}+\beta_2x_{i2}}_{\text{Age}}+\underbrace{\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6}}_{\text{Stage}}. \]
+              \item Model 2: Age only
+                    \[ \logit{\pi_i}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}. \]
+              \item Model 3: Stage only
+                    \[ \logit{\pi_i}=\beta_0+\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6}. \]
+          \end{itemize}
+\end{itemize}
+\subsection*{Fitting Logistic Regression Models Using R}
+% \begin{noindent}
+    <<>>=
+    neuro.dat = read.table("neuro.dat", header = T)
+    neuro.dat
+    # here we construct the response variable for logistic regression
+    neuro.dat$resp=cbind(neuro.dat$y,neuro.dat$m-neuro.dat$y)
+    neuro.dat
+    @
+% \end{noindent}
+\subsection*{Summary of Model 1: Age \& Stage}
+\[ \logit{\pi_i}=\beta_0+\underbrace{\beta_1x_{i1}+\beta_2x_{i2}}_{\text{Age}}+\underbrace{\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6}}_{\text{Stage}}. \]
+% \begin{noindent}
+    <<echo=FALSE>>=
+    model1=glm(resp~factor(age)+factor(stage), family=binomial(link=logit),data=neuro.dat)
+    summary(model1)
+    @
+% \end{noindent}
+\begin{itemize}
+    \item Before interpreting these results too much, we should look to see how good the
+          fit is to the data.
+          % \begin{noindent}
+        <<>>=
+        y = neuro.dat$y
+        m = neuro.dat$m
+        fv1 = model1$fitted.values
+        yhat = m*fv1
+        rd1 = residuals.glm(model1,"deviance")
+        rp1 = (y - m*fv1)/sqrt(m*fv1*(1-fv1))
+        cbind(rd1, rp1, yhat, y)
+        @
+    % \end{noindent}
+          % \begin{noindent}
+        <<echo=FALSE, fig.cap ="Plot of Residuals by Fitted Values for Neuroblastoma Data based on Logistic Regression Model with main effects of Age and Stage.">>=
+        plot(fv1,rd1,ylim=c(-3,3), xlab="FITTED VALUES",ylab="RESIDUALS",pch=1)
+        points(fv1,rp1,pch=2)
+        abline(h=-2, lty=2)
+        abline(h= 2, lty=2)
+        legend(0,3,c("Deviance Residual","Pearson Residual"), pch=c(1,2), bty="n")
+        @
+    % \end{noindent}
+    \item Residuals are a random scatter around $ 0 $ and $ \in(-2,2) $ therefore $ r_i^D $ (or $ r_i^P $) $ \sim \N{0,1} $. Therefore,
+          model 1 is adequate.
+    \item We can test $ \HN $: model 1 is adequate using LR/D statistic $ p\text{-value}=\Prob{\chi^2_8>9.625}<0.05 $, do not reject $ \HN $.
+\end{itemize}
+\subsection*{Summary of Model 2: Age only}
+\begin{itemize}
+    \item Now we consider simplifying the model further by examining the decrease in
+          the quality of the fit that results from dropping the stage variable(s).
+          \[ \logit{\pi_i}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}. \]
+          % \begin{noindent}
+        <<>>=
+        model2 = glm(resp~factor(age), family=binomial(link=logit),data=neuro.dat)
+        summary(model2)
+        @
+    % \end{noindent}
+\end{itemize}
+\subsection*{Summary of Model 3: Stage only}
+\begin{itemize}
+    \item Now we fit the model excluding the age variable to examine the drop in the
+          quality of fit from model 1.
+          \[ \logit{\pi_i}=\beta_0+\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6}. \]
+          % \begin{noindent}
+        <<>>=
+        model2 = glm(resp~factor(stage), family=binomial(link=logit),data=neuro.dat)
+        summary(model3)
+        @
+    % \end{noindent}
+\end{itemize}
+\subsection*{Testing Nested Models}
+\begin{itemize}
+    \item Now we can compare nested models using \textcolor{Blue}{LR/Deviance} Tests:
+          \begin{table}[!htbp]
+              \centering
+              \begin{tabular}{cllcc}
+                  \toprule
+                  Model & Covariates   & Deviance ($ D $) & Parameters ($ p $) & DF ($ n-p $) \\
+                  \midrule
+                  M1    & Age \& Stage & $9.625$          & $ 7 $              & $ 8 $        \\
+                  M2    & Age          & $83.583$         & $ 3 $              & $ 12 $       \\
+                  M3    & Stage        & $42.446$         & $ 5 $              & $ 10 $       \\
+                  \bottomrule
+              \end{tabular}
+          \end{table}
+    \item Recall:
+          \[ \Delta D=D_0-D_\text{A}=-2\bigl(\ell(\hat{\Vector{\pi}})-\ell(\tilde{\Vector{\pi}})\bigr) \sim \chi^2_{q-p} \]
+          \begin{itemize}
+              \item $ D_0 $ and $ D_\text{A} $ are deviances from the \textcolor{Blue}{reduced} and \textcolor{Blue}{full} models respectively.
+              \item $ \hat{\Vector{\pi}} $ and $ \tilde{\Vector{\pi}} $ represents the MLEs from the \textcolor{Blue}{reduced} and \textcolor{Blue}{full} models respectively.
+          \end{itemize}
+\end{itemize}
+\begin{Example}{}
+    \textcolor{Blue}{Objective}: Pick the model that best represents the important associations between the
+    outcome and explanatory variables.
+\end{Example}
+\begin{enumerate}[1.]
+    \item \textcolor{Blue}{Is Stage important?}
+          \begin{align*}
+              \HN & \colon \beta_3=\cdots=0                     &  & \text{(Model 2 is as adequate as Model 1)} \\
+              \HA & \colon \text{at least one of them is not 0} &  & \text{(Model 2 is not adequate)}
+          \end{align*}
+          \[ \Delta D=D_2-D_1=83.583-9.625=73.958 \]
+          \[ p=\Prob{\chi^2_{7-3}>73.958}<0.001 \]
+          % \begin{noindent}
+          <<>>=
+          1-pchisq(model2$deviance-model1$deviance, model2$df.residual-model1$df.residual)
+          @
+        % \end{noindent}
+          We reject $ \HN $ and conclude that there is evidence that Stage is important.
+    \item \textcolor{Blue}{Is Age important?}
+          \begin{align*}
+              \HN & \colon \beta_1=\beta_2=0                    &  & \text{(Model 3 is as adequate as Model 1)} \\
+              \HA & \colon \text{at least one of them is not 0} &  & \text{(Model 3 is not adequate)}
+          \end{align*}
+          \[ \Delta D=D_3-D_1=42.446 - 9.625 = 32.821 \]
+          \[ p=\Prob{\chi^2_{7-5}>32.821}<0.001 \]
+          % \begin{noindent}
+        <<>>=
+        1-pchisq(model3$deviance-model1$deviance, model3$df.residual-model1$df.residual)
+        @
+      % \end{noindent}
+          We reject $ \HN $ and conclude that there is evidence that Age is important.
+    \item \textcolor{Blue}{Do we need an Age$*$Stage interaction?}
+          % \begin{noindent}
+          <<>>=
+          1-pchisq(model1$deviance, model1$df.residual)
+          @
+        % \end{noindent}
+          \begin{itemize}
+              \item Model with age, stage, and age$*$stage is the saturated model!
+              \item Do not reject $ \HN $: model 1 is as adequate as the saturated model (interaction model).
+              \item Do not need to consider age$*$stage.
+          \end{itemize}
+\end{enumerate}
+\subsection*{Interpret the Selected Model}
+So we select \textcolor{Blue}{Model 1} for interpretation.
+% \begin{noindent}
+    <<>>=
+    model1=glm(resp ~ factor(age) + factor(stage), family=binomial(link=logit),data=neuro.dat)
+    summary(model1)
+    @
+% \end{noindent}
+\begin{enumerate}[label={Q\arabic*:}]
+    \item What is the \textcolor{Blue}{odds ratio} of 2 yr disease-free survival for a child \textcolor{Blue}{aged 24+ months}
+          versus \textcolor{Blue}{aged $<12$ months}?
+          \begin{table}[!htbp]
+              \centering
+              \begin{tabular}{cccl}
+                  Age  & Stage & $ \Vector{x}_i^\top $                        & $ \log[\big]{\pi_i/(1-\pi_i)} $                                            \\
+                  \midrule
+                  0-11 & ---   & $ (1,0,0,x_{i3},x_{i4},x_{i5},x_{i6})^\top $ & $ \beta_0+\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6} $        \\
+                  24+  & ---   & $ (1,0,1,x_{i3},x_{i4},x_{i5},x_{i6})^\top $ & $ \beta_0+\beta_2+\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6}$ \\
+                  \bottomrule
+              \end{tabular}
+          \end{table}
+          \begin{itemize}
+              \item The odds ratio is therefore $ \psi=\exp{\beta_2} $, its MLE is:
+                    \[ \hat{\psi}=\exp{\hat{\beta}_2}=\exp{-2.614}=0.0733. \]
+              \item The \textcolor{Blue}{\qty{95}{\percent} CI} for this odds ratio is:
+                    \[ \exp{\hat{\beta}_2\pm 1.96\se{\hat{\beta}_2}}=\exp{-2.613\pm 1.96\times 0.5017}=(0.0274,0.1960). \]
+              \item \emph{When controlling for stage at the diagnosis, the odds of 2-yr DFS for children aged 24+ months
+                        is only about \qty{7}{\percent} [\qty{95}{\percent} CI\@: (0.0274,0.1960)] of that for those aged less than 12 months}.
+          \end{itemize}
+    \item What is the \textcolor{Blue}{odds ratio} of 2 yr disease-free survival for a child with
+          \textcolor{Blue}{stage V} versus \textcolor{Blue}{stage II} cancer?
+          \begin{table}[!htbp]
+              \centering
+              \begin{tabular}{cccl}
+                  Age & Stage & $ \Vector{x}_i^\top $              & $ \log[\big]{\pi_i/(1-\pi_i)} $                 \\
+                  \midrule
+                  --- & V     & $ (1,x_{i1},x_{i2},0,0,0,1)^\top $ & $ \beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_6 $ \\
+                  --- & II    & $ (1,x_{i1},x_{i2},1,0,0,0)^\top $ & $ \beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3 $ \\
+                  \bottomrule
+              \end{tabular}
+          \end{table}
+          \begin{itemize}
+              \item The odds ratio is therefore $ \psi=\exp{\beta_6-\beta_3} $, its MLE is:
+                    \[ \hat{\psi}=\exp{\hat{\beta}_6-\hat{\beta}_3}=\exp{-1.022+1.253}=1.26. \]
+              \item \emph{When controlling for age at the diagnosis, the odds of a 2-yr DFS for those
+                        diagnosed in stage V is 1.26 times of that for those diagnosed in stage II}.
+          \end{itemize}
+    \item What is the \textcolor{Blue}{\qty{95}{\percent} CI for OR $ \psi=\exp{\beta_6-\beta_3} $}?
+          \begin{enumerate}[1.]
+              \item Finding the \qty{95}{\percent} CI for $ \eta=\beta_6-\beta_3=\Vector{c}^\top \Vector{\beta} $, where
+                    \[ \Vector{c}^\top =\begin{bmatrix}
+                            0 & 0 & 0 & -1 & 0 & 0 & 1
+                        \end{bmatrix},\qquad \Vector{\beta}=\begin{bmatrix}
+                            \beta_0 \\
+                            \beta_1 \\
+                            \vdots  \\
+                            \beta_6
+                        \end{bmatrix}. \]
+                    Standard error for $ \hat{\eta}=\hat{\beta}_6-\hat{\beta}_3=\Vector{c}^\top\hat{\Vector{\beta}} $:
+                    \begin{align*}
+                        \estVar{\hat{\Vector{\beta}}}       & =\Matrix{I}^{-1}(\hat{\Vector{\beta}})                                  \\
+                        \se{\Vector{c}^\top \Vector{\beta}} & =\sqrt{\Vector{c}\Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{c}^\top}.
+                    \end{align*}
+                    % \begin{noindent}
+            <<>>=
+            C=c(0,0,0,-1,0,0,1)
+            se=sqrt(C%*%vcov(model1)%*%C)
+            se
+            @
+        % \end{noindent}
+                    The \qty{95}{\percent} CI for $ \eta=\beta_6-\beta_3 $ is:
+                    \[ \hat{\eta}\pm 1.96\se{\hat{\eta}}=(-1.0222+1.2529)\pm 1.96\times 0.6729=(-1.0882,1.5496). \]
+              \item Exponentiate it to obtain the \qty{95}{\percent} CI for $ \psi=\exp{\eta}=\exp{\beta_6-\beta_3} $:
+                    \[ \exp{\hat{\eta}\pm 1.96\se{\hat{\eta}}}=(0.3368,4.7098). \]
+          \end{enumerate}
+\end{enumerate}

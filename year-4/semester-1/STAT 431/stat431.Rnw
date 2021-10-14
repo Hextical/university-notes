@@ -13,87 +13,70 @@
 \usepackage{derivative}
 \usepackage{etoolbox}
 \usepackage{siunitx}
-\usepackage{listings}
-\usepackage{XCharter}
-\usepackage[T1]{fontenc}
-\usepackage{amssymb}
+
+% Adds instructions to produce a pdf conforming to PDF/A-1b
+\pdfcompresslevel=0
+\pdfgentounicode=1
+\usepackage[scaled=0.986641]{XCharter}
+\usepackage[scaled=1.02564]{inconsolata}
+\usepackage[scaled=0.972644]{cabin}
+\usepackage[scaled=1.08475]{libertinust1math}
 
 \usepackage{bm}
 \usepackage{tikz}
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
-\makeatletter
-\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
-                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
-                                     {1.5ex \@plus .2ex}%
-                                     {\normalfont\large\bfseries\scshape\color{Blue}}}
-\makeatother
-
-\lstset{frame=none,
-  language=R,
-  showstringspaces=false,
-  columns=flexible,
-  numbers=none,
-  basicstyle={\small\ttfamily},
-  keywordstyle=\color{Blue},
-  stringstyle=\color{Red},
-  commentstyle=\color{DarkGreen},
-  breaklines=true,
-  breakatwhitespace=true,
-  moredelim=**[is][\color{blue}]{@}{@},
-  tabsize=3}
-
 
 % Functions
 \providecommand\given{} % just to make sure it exists
-\DeclarePairedDelimiterXPP{\E}[1]{\operatorname{E}}[]{}{%
+\DeclarePairedDelimiterXPP{\E}[1]{\operatorname{\mathbb{E}}}[]{}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\V}[1]{\operatorname{V}}(){}{%
+\DeclarePairedDelimiterXPP{\V}[1]{\operatorname{\textsf{V}}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\Var}[1]{\operatorname{Var}}(){}{%
+\DeclarePairedDelimiterXPP{\Var}[1]{\operatorname{\textsf{Var}}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\Cov}[1]{\operatorname{Cov}}(){}{%
+\DeclarePairedDelimiterXPP{\Cov}[1]{\operatorname{\textsf{Cov}}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP\Prob[1]{\operatorname{P}}(){}{%
+\DeclarePairedDelimiterXPP\Prob[1]{\operatorname{\mathbb{P}}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP\Ind[1]{\operatorname{I}}\{\}{}{%
+\DeclarePairedDelimiterXPP\Ind[1]{\operatorname{\mathbb{I}}}\{\}{}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\se}[1]{\operatorname{se}}(){}{%
+\DeclarePairedDelimiterXPP{\se}[1]{\operatorname{\textsf{se}}}(){}{%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\estse}[1]{\widehat{\operatorname{se}}}(){}{%
+\DeclarePairedDelimiterXPP{\estse}[1]{\widehat{\operatorname{\textsf{se}}}}(){}{%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\estV}[1]{\widehat{\operatorname{V}}}(){}{
+\DeclarePairedDelimiterXPP{\estV}[1]{\widehat{\operatorname{\textsf{V}}}}(){}{
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\estVar}[1]{\widehat{\operatorname{Var}}}(){}{
+\DeclarePairedDelimiterXPP{\estVar}[1]{\widehat{\operatorname{\textsf{Var}}}}(){}{
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
 \let\exp\relax%
 \let\log\relax%
 \let\ln\relax%
-\DeclarePairedDelimiterXPP{\exp}[1]{\operatorname{exp}}\{\}{}{#1}%
-\DeclarePairedDelimiterXPP{\log}[1]{\operatorname{log}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\ln}[1]{\operatorname{ln}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\diag}[1]{\operatorname{diag}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\sign}[1]{\operatorname{sign}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\exp}[1]{\operatorname{\textsf{exp}}}\{\}{}{#1}%
+\DeclarePairedDelimiterXPP{\log}[1]{\operatorname{\textsf{log}}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\ln}[1]{\operatorname{\textsf{ln}}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\diag}[1]{\operatorname{\textsf{diag}}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\sign}[1]{\operatorname{\textsf{sign}}}(){}{#1}%
 
-\DeclarePairedDelimiterXPP{\expit}[1]{\operatorname{expit}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\logit}[1]{\operatorname{logit}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\expit}[1]{\operatorname{\textsf{expit}}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\logit}[1]{\operatorname{\textsf{logit}}}(){}{#1}%
 \newcommand{\HN}{\textsl{H}_{\textsl{0}}}%
 \newcommand{\HA}{\textsl{H}_{\textsl{A}}}%
 
@@ -158,7 +141,7 @@
     regular/.style={
         boxrule=0pt,
         breakable,
-        sharp corners,
+        sharp corners
     }
 }
 
@@ -208,4 +191,11 @@ pdfkeywords={University of Waterloo, Fall 2021 (1219)}}%
 % Week 5
 <<child='Topic 3/3d.Rnw'>>=
 @
+<<child='Topic 3/3e.Rnw'>>=
+@
 \end{document}
+% For fonts.
+\begin{itemize}
+    \item \sbox0{c}\the\ht0\ versus \sbox0{\texttt{c}}\the\ht0\ versus \sbox0{$c$}\the\ht0\ versus \sbox0{\textsf{c}}\the\ht0\
+    \item c\texttt{c}$c$\textsf{c}
+\end{itemize}

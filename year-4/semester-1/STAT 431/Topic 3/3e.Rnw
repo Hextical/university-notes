@@ -1,0 +1,62 @@
+\section*{Topic 3e: Dose-Response Models}
+\addcontentsline{toc}{section}{Topic 3e: Dose-Response Models}
+\subsection*{Bioassay Experiments}
+\begin{itemize}
+    \item \textcolor{Blue}{Bioassay experiment}: Several groups of subjects are exposed to varying levels
+          of a drug/toxin to determine how many responses within a fixed period of time.
+    \item \textcolor{Blue}{Stimulus}: Each group is subjected to a particular dose of the drug/toxin:
+          \[ \textcolor{Green}{\text{dose}=\log{\text{concentration}}} \]
+    \item \textcolor{Blue}{Response}: As a result of the stimulus, subjects will often manifest a binary
+          response indicating the occurrence of an adverse event (e.g., death).
+    \item \textcolor{Blue}{Tolerance}: We assume that for each subject there is a certain dose level above
+          which the response will always occur.
+          \begin{itemize}
+              \item This level is called the tolerance or threshold.
+              \item The tolerance varies from one individual to another in the population and therefore
+                    from subject to subject in the sample.
+              \item We can therefore ascribe a distribution to it.
+          \end{itemize}
+\end{itemize}
+\subsection*{The Tolerance Distribution}
+\begin{itemize}
+    \item $ z =$ concentration of the stimulus (toxin/drug).
+    \item $ x=\log{z} =$ dose/intensity of the stimulus.
+    \item $ f(x)= $ pdf for the distribution of the tolerance in the population (\emph{i.e., the
+              distribution for the stimulus/dose at which response occurs}).
+    \item Suppose a dose of $ x_0 $ were applied to the population. What proportion would
+          respond?
+          \[ \pi_0=\int_{-\infty}^{x_0}f(s)\odif{s}=F(x_0) \]
+    \item If $ x_0<x_1 $, then $ \pi_0<\pi_1 $.
+\end{itemize}
+\subsection*{Modelling the Dose-Response Relationship}
+For each group $ i=1,\ldots,n $ let:
+\begin{itemize}
+    \item $ x_i= $ dose applied to subjects in group $ i $,
+    \item $ m_i= $ number of subjects in group $ i $,
+    \item $ y_i= $ the number of subjects with response in group $ i $.
+          \begin{table}[!htbp]
+              \centering
+              \begin{tabular}{cccc}
+                  \toprule
+                  Dose       & Responders & Total                  \\
+                  $ x_i $    & $ y_i $    & $ m_i $  & $ y_i/m_i $ \\
+                  \midrule
+                  $ 1.6907 $ & $ 6 $      & $ 59 $   & $ 0.10 $    \\
+                  $ 1.7242 $ & $ 13 $     & $ 60 $   & $ 0.22 $    \\
+                  $ 1.7552 $ & $ 18 $     & $ 62 $   & $ 0.29 $    \\
+                  $\vdots$   & $\vdots$   & $\vdots$ & $\vdots$    \\
+                  \bottomrule
+              \end{tabular}
+          \end{table}
+    \item Assume
+          \[ \textcolor{Blue}{Y_i \sim \BIN{m_i,\pi_i},\; i=1,\ldots,n}, \]
+          \[ \textcolor{Blue}{\pi_i} = \text{probability of response in group $ i $ with dose $ x_i $}. \]
+    \item \textcolor{Red}{Objective}: TO model probability of response $ \pi_i $ as a function of dose $ x_i $.
+    \item Binomial Regression Models:
+          \[ g(\pi)=\beta_0+\beta_1x_i, \]
+          where $ g(\:\cdot\:) $ is a choice of link function.
+    \item Then we have:
+          \[ \pi_i=g^{-1}(\beta_0+\beta_1x_i), \]
+          that is, the probability of response as a function of dose $ x_i $ via $ g^{-1}(\:\cdot\:) $.
+    \item Question: What link function should we select?
+\end{itemize}
