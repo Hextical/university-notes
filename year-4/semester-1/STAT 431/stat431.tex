@@ -64,13 +64,8 @@
 \usepackage{etoolbox}
 \usepackage{siunitx}
 
-% Adds instructions to produce a pdf conforming to PDF/A-1b
-\pdfcompresslevel=0
-\pdfgentounicode=1
-\usepackage[scaled=0.986641]{XCharter}
-\usepackage[scaled=1.02564]{inconsolata}
-\usepackage[scaled=0.972644]{cabin}
-\usepackage[scaled=1.08475]{libertinust1math}
+\usepackage{mlmodern}
+\usepackage{amssymb}
 
 \usepackage{bm}
 \usepackage{tikz}
@@ -1294,7 +1289,8 @@ then
 \[ \OR\approx\RR. \]
 \subsection*{Maximum Likelihood Estimation of Odds Ratio}
 Goal: Estimate odds ratio $ \psi=\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)} $ using likelihood method. Based
-on ``grouped'' binomial data, $ \textcolor{Red}{Y_k \sim \BIN{m_k,\pi_k},\; k=1,2} $,
+on ``grouped'' binomial data,
+\[ \textcolor{Red}{Y_k \sim \BIN{m_k,\pi_k},\; k=1,2} \]
 \begin{align*}
     L(\pi_1,\pi_2)
      & =\binom{m_1}{y_1}\pi_1^{y_1}(1-\pi_1)^{m_1-y_1}\binom{m_2}{y_2}\pi_2^{y_2}(1-\pi_2)^{m_2-y_2}                                                        \\
@@ -1775,8 +1771,8 @@ The \texttt{glm()} function in R is used to fit the generalized linear models:
 \begin{alltt}
 \hlcom{# read file prenatal.data}
 \hlstd{prenatal.dat} \hlkwb{=} \hlkwd{read.table}\hlstd{(}\hlstr{"prenatal.dat"}\hlstd{,} \hlkwc{header} \hlstd{= T)}
-\hlcom{# construct the binomial response for the logistic}
-\hlcom{# regression analysis}
+\hlcom{# construct the binomial response for the logistic regression}
+\hlcom{# analysis}
 \hlstd{prenatal.dat}\hlopt{$}\hlstd{resp} \hlkwb{=} \hlkwd{cbind}\hlstd{(prenatal.dat}\hlopt{$}\hlstd{y, prenatal.dat}\hlopt{$}\hlstd{m} \hlopt{-} \hlstd{prenatal.dat}\hlopt{$}\hlstd{y)}
 \hlstd{prenatal.dat}
 \end{alltt}
@@ -2322,8 +2318,7 @@ Number of Fisher Scoring iterations: 3
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{model4} \hlkwb{<-} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{clinic,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
-  \hlkwc{data} \hlstd{= prenatal.dat)}
+\hlstd{model4} \hlkwb{<-} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{clinic,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),} \hlkwc{data} \hlstd{= prenatal.dat)}
 \hlkwd{summary}\hlstd{(model4)}
 \end{alltt}
 \begin{verbatim}
@@ -2899,63 +2894,408 @@ Number of Fisher Scoring iterations: 4
 \addcontentsline{toc}{section}{Topic 3e: Dose-Response Models}
 \subsection*{Bioassay Experiments}
 \begin{itemize}
-    \item \textcolor{Blue}{Bioassay experiment}: Several groups of subjects are exposed to varying levels
-          of a drug/toxin to determine how many responses within a fixed period of time.
-    \item \textcolor{Blue}{Stimulus}: Each group is subjected to a particular dose of the drug/toxin:
-          \[ \textcolor{Green}{\text{dose}=\log{\text{concentration}}} \]
-    \item \textcolor{Blue}{Response}: As a result of the stimulus, subjects will often manifest a binary
-          response indicating the occurrence of an adverse event (e.g., death).
-    \item \textcolor{Blue}{Tolerance}: We assume that for each subject there is a certain dose level above
-          which the response will always occur.
-          \begin{itemize}
-              \item This level is called the tolerance or threshold.
-              \item The tolerance varies from one individual to another in the population and therefore
-                    from subject to subject in the sample.
-              \item We can therefore ascribe a distribution to it.
-          \end{itemize}
+      \item \textcolor{Blue}{Bioassay experiment}: Several groups of subjects are exposed to varying levels
+            of a drug/toxin to determine how many responses within a fixed period of time.
+      \item \textcolor{Blue}{Stimulus}: Each group is subjected to a particular dose of the drug/toxin:
+            \[ \textcolor{Green}{\text{dose}=\log{\text{concentration}}} \]
+      \item \textcolor{Blue}{Response}: As a result of the stimulus, subjects will often manifest a binary
+            response indicating the occurrence of an adverse event (e.g., death).
+      \item \textcolor{Blue}{Tolerance}: We assume that for each subject there is a certain dose level above
+            which the response will always occur.
+            \begin{itemize}
+                  \item This level is called the tolerance or threshold.
+                  \item The tolerance varies from one individual to another in the population and therefore
+                        from subject to subject in the sample.
+                  \item We can therefore ascribe a distribution to it.
+            \end{itemize}
 \end{itemize}
 \subsection*{The Tolerance Distribution}
 \begin{itemize}
-    \item $ z =$ concentration of the stimulus (toxin/drug).
-    \item $ x=\log{z} =$ dose/intensity of the stimulus.
-    \item $ f(x)= $ pdf for the distribution of the tolerance in the population (\emph{i.e., the
-              distribution for the stimulus/dose at which response occurs}).
-    \item Suppose a dose of $ x_0 $ were applied to the population. What proportion would
-          respond?
-          \[ \pi_0=\int_{-\infty}^{x_0}f(s)\odif{s}=F(x_0) \]
-    \item If $ x_0<x_1 $, then $ \pi_0<\pi_1 $.
+      \item $ z =$ concentration of the stimulus (toxin/drug).
+      \item $ x=\log{z} =$ dose/intensity of the stimulus.
+      \item $ f(x)= $ pdf for the distribution of the tolerance in the population (\emph{i.e., the
+                  distribution for the stimulus/dose at which response occurs}).
+      \item Suppose a dose of $ x_0 $ were applied to the population. What proportion would
+            respond?
+            \[ \pi_0=\int_{-\infty}^{x_0}f(s)\odif{s}=F(x_0) \]
+      \item If $ x_0<x_1 $, then $ \pi_0<\pi_1 $.
 \end{itemize}
 \subsection*{Modelling the Dose-Response Relationship}
 For each group $ i=1,\ldots,n $ let:
 \begin{itemize}
-    \item $ x_i= $ dose applied to subjects in group $ i $,
-    \item $ m_i= $ number of subjects in group $ i $,
-    \item $ y_i= $ the number of subjects with response in group $ i $.
-          \begin{table}[!htbp]
-              \centering
-              \begin{tabular}{cccc}
+      \item $ x_i= $ dose applied to subjects in group $ i $,
+      \item $ m_i= $ number of subjects in group $ i $,
+      \item $ y_i= $ the number of subjects with response in group $ i $.
+            \begin{table}[!htbp]
+                  \centering
+                  \begin{tabular}{cccc}
+                        \toprule
+                        Dose       & Responders & Total                  \\
+                        $ x_i $    & $ y_i $    & $ m_i $  & $ y_i/m_i $ \\
+                        \midrule
+                        $ 1.6907 $ & $ 6 $      & $ 59 $   & $ 0.10 $    \\
+                        $ 1.7242 $ & $ 13 $     & $ 60 $   & $ 0.22 $    \\
+                        $ 1.7552 $ & $ 18 $     & $ 62 $   & $ 0.29 $    \\
+                        $\vdots$   & $\vdots$   & $\vdots$ & $\vdots$    \\
+                        \bottomrule
+                  \end{tabular}
+            \end{table}
+      \item Assume
+            \[ \textcolor{Blue}{Y_i \sim \BIN{m_i,\pi_i},\; i=1,\ldots,n}, \]
+            \[ \textcolor{Blue}{\pi_i} = \text{probability of response in group $ i $ with dose $ x_i $}. \]
+      \item \textcolor{Red}{Objective}: To model probability of response $ \pi_i $ as a function of dose $ x_i $.
+      \item Binomial Regression Models:
+            \[ g(\pi)=\beta_0+\beta_1x_i, \]
+            where $ g(\:\cdot\:) $ is a choice of link function.
+      \item Then we have:
+            \[ \pi_i=g^{-1}(\beta_0+\beta_1x_i), \]
+            that is, the probability of response as a function of dose $ x_i $ via $ g^{-1}(\:\cdot\:) $.
+      \item Question: What link function should we select?
+      \item Realize that:
+            \begin{itemize}
+                  \item If we assume a tolerance distribution $ f(x) $, the probability of response to dose $ x_i $ is:
+                        \[ \pi_i=\int_{-\infty}^{x_i}f(x)\odif{x} =F(x_i). \]
+                  \item With a Binomial regression model and a link function $ g(\:\cdot\:) $, we have:
+                        \[ \pi_i=g^{-1}(\beta_0+\beta_1x_i). \]
+            \end{itemize}
+      \item These suggest that the choice of the tolerance distribution determines the form of the link function, i.e., selecting
+            $ g(\:\cdot\:) $ such that $ g^{-1}(\:\cdot\:) $ is a cdf:
+            \[ \pi_i=g^{-1}(\beta_0+\beta_1x_i)=F^\star(\beta_0+\beta_1x_i). \]
+\end{itemize}
+\subsection*{Some Choices for the Tolerance Distribution}
+\begin{enumerate}[label=\color{Blue}\protect\circled{\arabic*}]
+      \item \textcolor{Blue}{Normal Tolerance Distribution}:
+            \begin{align*}
+                  \pi(x)
+                   & =\int_{-\infty}^{x}f(s)\odif{s}                                                                                        \\
+                   & =\int_{-\infty}^{x}\frac{1}{\sqrt{2\pi\sigma^2}} \exp*{-\frac{1}{2} \biggl(\frac{s-\mu}{\sigma} \biggr)^{\!2}}\odif{s} \\
+                   & =\Phi\biggl(\frac{x-\mu}{\sigma}\biggr)
+            \end{align*}
+            where $ \Phi $ is the $ \N{0,1} $ cdf. This implies that
+            \[ \Phi^{-1}(\pi)=\frac{x-\mu}{\sigma},  \]
+            i.e., the \textcolor{Blue}{Probit link} s.t.,
+            \[ g(\pi)=\Phi^{-1}(\pi)=-\frac{\mu}{\sigma} +\frac{1}{\sigma} x=\beta_0+\beta_1x. \]
+            A Binomial Probit Model:
+            \[ \Phi^{-1}(\pi)=\beta_0+\beta_1x. \]
+            How do we interpret $ \beta_0 $ and $ \beta_1 $?
+            \begin{itemize}
+                  \item They are no longer log odds ratios (as with logistic link)
+                  \item Interpretation is in terms of $ \mu $ and $ \sigma $ the parameters of the Normal
+                        distribution for tolerance, i.e.,
+                        \[ \beta_0=-\frac{\mu}{\sigma} ,\qquad\beta_1=\frac{1}{\sigma} . \]
+            \end{itemize}
+      \item \textcolor{Blue}{Logistic Distribution}:
+            \[ f(x;\mu,s)=\frac{\exp*{-\frac{x-\mu}{s}}}{s\biggl[1+\exp*{-\frac{x-\mu}{s}}\biggr]^2},\; s>0,\,\E{X}=\mu.  \]
+            The probability of response:
+            \begin{align*}
+                  \pi(x)                         & =\int_{-\infty}^{x}f(x;\mu,s)\odif{s}=\biggl[1+\exp*{-\frac{x-\mu}{s} }\biggr]^{-1} \\
+                  1-\pi(x)                       & =\frac{\exp*{-\frac{x-\mu}{s}}}{1+\exp*{-\frac{x-\mu}{s}}}                          \\
+                  \log*{\frac{\pi(x)}{1-\pi(x)}} & =\frac{x-\mu}{s}.
+            \end{align*}
+            This implies the \textcolor{Blue}{Logit link} s.t.,
+            \[ g(\pi)=\logit{\pi}=-\frac{\mu}{s}+\frac{1}{s} x=\beta_0+\beta_1x. \]
+      \item \textcolor{Blue}{Extreme Value Distribution}:
+            \[ f(x;\mu,s)=\frac{1}{s} \exp*{\frac{x-\mu}{s}-\exp*{\frac{x-\mu}{s}}},\;s>0. \]
+            The probability of response:
+            \begin{align*}
+                  \pi(x)
+                                                    & =\int_{-\infty}^{x}f(x;\mu,s)\odif{s} \\
+                                                    & =1-\exp*{-\exp*{-\frac{x-\mu}{s}}}    \\
+                  \log[\Big]{-\log[\big]{1-\pi(x)}} & =\frac{x-\mu}{s}.
+            \end{align*}
+            This implies the \textcolor{Blue}{Complementary log-log link} s.t.,
+            \[ g(\pi)=\log[\big]{-\log{1-\pi}}=-\frac{\mu}{s} +\frac{1}{s} x=\beta_0+\beta_1x. \]
+\end{enumerate}
+\begin{table}[!htbp]
+      \centering
+      \begin{tabular}{ccc}
+            \toprule
+            \textcolor{Blue}{Tolerance Distribution} & \textcolor{Blue}{Link Function} & \textcolor{Blue}{Dose-Response Model}         \\
+            \midrule
+            Normal                                   & Probit                          & $ \Phi^{-1}(\pi)=\beta_0+\beta_1x $           \\
+            Logistic                                 & Logit                           & $ \logit{\pi}=\beta_0+\beta_1x $              \\
+            Extreme Value                            & Complementary log-log           & $ \log[\big]{-\log{1-\pi}}=\beta_0+\beta_1x $ \\
+            \bottomrule
+      \end{tabular}
+\end{table}
+\subsection*{Median Lethal/Effective Dose}
+\begin{itemize}
+      \item The \textcolor{Blue}{median lethal/effective dose} (ED50) is the dose at which \qty{50}{\percent} of the
+            population has the response.
+      \item That is, if we let $ \delta $ be the ED50, then by definition:
+            \[ \pi(\delta)=\int_{-\infty}^{\delta}f(x)\odif{x} =0.50. \]
+      \item How do we find the expression of $ \delta $ given a Dose-Response model? Suppose we fit a Binomial Probit model (i.e., Normal tolerance distribution):
+            \[ \Phi^{-1}(\pi)=\beta_0+\beta_1x. \]
+            Note that at dose $ \delta $ (ED50), $ \pi=0.50 $.
+            \begin{align*}
+                  \Phi^{-1}(0.50) & =\beta_0+\beta_1\delta    \\
+                  0               & =\beta_0+\beta_1\delta    \\
+                  \delta          & =-\frac{\beta_0}{\beta_1}
+            \end{align*}
+\end{itemize}
+\subsection*{A Dose-Response Example --- Beetle Mortality}
+\begin{Example}{Beetle Mortality}
+      Consider an experiment by Bliss (Annals of Applied Biology, 1935) in which groups of
+      beetles were exposed to varying concentrations of carbon disulphide ($\text{CS}_2$) gas.
+      \begin{center}
+            \begin{tabular}{cccc}
                   \toprule
-                  Dose       & Responders & Total                  \\
-                  $ x_i $    & $ y_i $    & $ m_i $  & $ y_i/m_i $ \\
+                                 & \text{\# of insects} & \text{\# of insects}               \\
+                  Dose ($ x_i $) & killed ($ x_i $)     & $ m_i $              & $ y_j/m_i $ \\
                   \midrule
-                  $ 1.6907 $ & $ 6 $      & $ 59 $   & $ 0.10 $    \\
-                  $ 1.7242 $ & $ 13 $     & $ 60 $   & $ 0.22 $    \\
-                  $ 1.7552 $ & $ 18 $     & $ 62 $   & $ 0.29 $    \\
-                  $\vdots$   & $\vdots$   & $\vdots$ & $\vdots$    \\
+                  $ 1.6907 $     & $ 6 $                & $ 59 $               & $ 0.10 $    \\
+                  $ 1.7242 $     & $ 13 $               & $ 60 $               & $ 0.22 $    \\
+                  $ 1.7552 $     & $ 18 $               & $ 62 $               & $ 0.29 $    \\
+                  $1.7842$       & $28$                 & $56$                 & $0.50$      \\
+                  $1.8113$       & $52$                 & $63$                 & $0.83$      \\
+                  $1.8369$       & $53$                 & $59$                 & $0.89$      \\
+                  $1.8610$       & $61$                 & $62$                 & $0.98$      \\
+                  $1.8839$       & $60$                 & $60$                 & $1.00$      \\
                   \bottomrule
-              \end{tabular}
-          \end{table}
-    \item Assume
-          \[ \textcolor{Blue}{Y_i \sim \BIN{m_i,\pi_i},\; i=1,\ldots,n}, \]
-          \[ \textcolor{Blue}{\pi_i} = \text{probability of response in group $ i $ with dose $ x_i $}. \]
-    \item \textcolor{Red}{Objective}: TO model probability of response $ \pi_i $ as a function of dose $ x_i $.
-    \item Binomial Regression Models:
-          \[ g(\pi)=\beta_0+\beta_1x_i, \]
-          where $ g(\:\cdot\:) $ is a choice of link function.
-    \item Then we have:
-          \[ \pi_i=g^{-1}(\beta_0+\beta_1x_i), \]
-          that is, the probability of response as a function of dose $ x_i $ via $ g^{-1}(\:\cdot\:) $.
-    \item Question: What link function should we select?
+            \end{tabular}
+      \end{center}
+\end{Example}
+\begin{itemize}
+      \item \textcolor{Blue}{Objective}: modelling the dose-response relationship.
+      \item We will fit several binomial regression models to this data:
+            \[ g(\pi_i)=\beta_0+\beta_1x_i, \]
+            where $ x_i= $ dose in group $ i $, $ i=1,\ldots,8 $.
+      \item Various link functions will be used to find the best fitted model:
+            \begin{itemize}
+                  \item \texttt{Logistic} link.
+                  \item \texttt{Probit} link.
+                  \item \texttt{Cloglog} link.
+            \end{itemize}
+\end{itemize}
+\subsection*{Dose-Response Analysis using R}
+% \begin{noindent}
+
+% \end{noindent}
+% \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# read beetle data}
+\hlstd{beetle.dat} \hlkwb{=} \hlkwd{read.table}\hlstd{(}\hlstr{"beetle.dat"}\hlstd{,} \hlkwc{header} \hlstd{= T)}
+\hlcom{# here we construct the response variable for Binomial}
+\hlcom{# regression}
+\hlstd{beetle.dat}\hlopt{$}\hlstd{resp} \hlkwb{<-} \hlkwd{cbind}\hlstd{(beetle.dat}\hlopt{$}\hlstd{y, beetle.dat}\hlopt{$}\hlstd{m} \hlopt{-} \hlstd{beetle.dat}\hlopt{$}\hlstd{y)}
+\hlstd{beetle.dat}
+\end{alltt}
+\begin{verbatim}
+    dose  y  m resp.1 resp.2
+1 1.6907  6 59      6     53
+2 1.7242 13 60     13     47
+3 1.7552 18 62     18     44
+4 1.7842 28 56     28     28
+5 1.8113 52 63     52     11
+6 1.8369 53 59     53      6
+7 1.8610 61 62     61      1
+8 1.8839 60 60     60      0
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+% \end{noindent}
+\subsection*{Fit of the Logistic Model}
+% \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{model1} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{dose,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),} \hlkwc{data} \hlstd{= beetle.dat)}
+\hlkwd{summary}\hlstd{(model1)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = resp ~ dose, family = binomial(link = logit), data = beetle.dat)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.5941  -0.3944   0.8329   1.2592   1.5940  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  -60.717      5.181  -11.72   <2e-16 ***
+dose          34.270      2.912   11.77   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 284.202  on 7  degrees of freedom
+Residual deviance:  11.232  on 6  degrees of freedom
+AIC: 41.43
+
+Number of Fisher Scoring iterations: 4
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+% \end{noindent}
+\subsection*{Fit of the Probit Model}
+% \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{model2} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{dose,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= probit),} \hlkwc{data} \hlstd{= beetle.dat)}
+\hlkwd{summary}\hlstd{(model2)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = resp ~ dose, family = binomial(link = probit), 
+    data = beetle.dat)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.5714  -0.4703   0.7501   1.0632   1.3449  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  -34.935      2.648  -13.19   <2e-16 ***
+dose          19.728      1.487   13.27   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 284.20  on 7  degrees of freedom
+Residual deviance:  10.12  on 6  degrees of freedom
+AIC: 40.318
+
+Number of Fisher Scoring iterations: 4
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+% \end{noindent}
+\subsection*{Fit of the Complementary Log-log Model}
+% \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{model3} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{dose,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= cloglog),} \hlkwc{data} \hlstd{= beetle.dat)}
+\hlkwd{summary}\hlstd{(model3)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = resp ~ dose, family = binomial(link = cloglog), 
+    data = beetle.dat)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-0.80329  -0.55135   0.03089   0.38315   1.28883  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  -39.572      3.240  -12.21   <2e-16 ***
+dose          22.041      1.799   12.25   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 284.2024  on 7  degrees of freedom
+Residual deviance:   3.4464  on 6  degrees of freedom
+AIC: 33.644
+
+Number of Fisher Scoring iterations: 4
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+% \end{noindent}
+\subsection*{Deviance Residual Plots}
+% \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-47-1} 
+
+}
+
+
+\end{knitrout}
+% \end{noindent}
+\subsection*{Choice of Tolerance Distribution or Binomial Model}
+\begin{itemize}
+      \item Observed probability of response:
+            \[ \tilde{\pi}_i=\frac{y_i}{m_i}. \]
+      \item Fitted probability of response:
+            \[ \hat{\pi}_i=g^{-1}(\hat{\beta}_0+\hat{\beta}_1x_i). \]
+      \item The tolerance distribution (or the Binomial model) that provides the ``best''
+            agreement between the observed and fitted probability of response is the one that fits the data the ``best.''
+      \item We can check this by plotting the observed and fitted probability of response $ \tilde{\pi}_i $ and $ \hat{\pi}_i $,
+            against dose $ x_i $.
+\end{itemize}
+\subsection*{Fitted Dose-Response Curves}
+% \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Plot the dose-response curves}
+\hlkwd{plot}\hlstd{(beetle.dat}\hlopt{$}\hlstd{dose, beetle.dat}\hlopt{$}\hlstd{y}\hlopt{/}\hlstd{beetle.dat}\hlopt{$}\hlstd{m,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1.65}\hlstd{,} \hlnum{1.95}\hlstd{),}
+  \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1}\hlstd{),} \hlkwc{xlab} \hlstd{=} \hlstr{"DOSE"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"PROBABILITY OF DEATH"}\hlstd{)}
+\hlstd{x} \hlkwb{=} \hlkwd{seq}\hlstd{(}\hlnum{1.65}\hlstd{,} \hlnum{1.95}\hlstd{,} \hlkwc{by} \hlstd{=} \hlnum{0.001}\hlstd{)}
+\hlstd{prob} \hlkwb{=} \hlkwd{as.vector}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwd{length}\hlstd{(x)))}
+\hlstd{beta} \hlkwb{=} \hlkwd{as.vector}\hlstd{(model1}\hlopt{$}\hlstd{coefficients)}  \hlcom{# logistic model}
+\hlkwa{for} \hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(x)) \{}
+  \hlstd{prob[i]} \hlkwb{=} \hlkwd{exp}\hlstd{(beta[}\hlnum{1}\hlstd{]} \hlopt{+} \hlstd{beta[}\hlnum{2}\hlstd{]} \hlopt{*} \hlstd{x[i])}\hlopt{/}\hlstd{(}\hlnum{1} \hlopt{+} \hlkwd{exp}\hlstd{(beta[}\hlnum{1}\hlstd{]} \hlopt{+} \hlstd{beta[}\hlnum{2}\hlstd{]} \hlopt{*}
+    \hlstd{x[i]))}
+\hlstd{\}}
+\hlkwd{lines}\hlstd{(x, prob,} \hlkwc{lty} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlstd{beta} \hlkwb{=} \hlkwd{as.vector}\hlstd{(model2}\hlopt{$}\hlstd{coefficients)}  \hlcom{# probit model}
+\hlkwa{for} \hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(x)) \{}
+  \hlstd{prob[i]} \hlkwb{=} \hlkwd{pnorm}\hlstd{(beta[}\hlnum{1}\hlstd{]} \hlopt{+} \hlstd{beta[}\hlnum{2}\hlstd{]} \hlopt{*} \hlstd{x[i])}
+\hlstd{\}}
+\hlkwd{lines}\hlstd{(x, prob,} \hlkwc{lty} \hlstd{=} \hlnum{5}\hlstd{)}
+\hlstd{beta} \hlkwb{=} \hlkwd{as.vector}\hlstd{(model3}\hlopt{$}\hlstd{coefficients)}  \hlcom{# cloglog model}
+\hlkwa{for} \hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(x)) \{}
+  \hlstd{prob[i]} \hlkwb{=} \hlnum{1} \hlopt{-} \hlkwd{exp}\hlstd{(}\hlopt{-}\hlkwd{exp}\hlstd{(beta[}\hlnum{1}\hlstd{]} \hlopt{+} \hlstd{beta[}\hlnum{2}\hlstd{]} \hlopt{*} \hlstd{x[i]))}
+\hlstd{\}}
+\hlkwd{lines}\hlstd{(x, prob,} \hlkwc{lty} \hlstd{=} \hlnum{1}\hlstd{)}
+\hlkwd{legend}\hlstd{(}\hlnum{1.65}\hlstd{,} \hlnum{1}\hlstd{,} \hlkwd{c}\hlstd{(}\hlstr{"LOGIT"}\hlstd{,} \hlstr{"PROBIT"}\hlstd{,} \hlstr{"CLOGLOG"}\hlstd{),} \hlkwc{lty} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,} \hlnum{5}\hlstd{,} \hlnum{1}\hlstd{),}
+  \hlkwc{bty} \hlstd{=} \hlstr{"n"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-48-1} 
+
+}
+
+
+\end{knitrout}
+% \end{noindent}
+\begin{itemize}
+      \item Note that the curve for the complementary log-log link fits the data better than
+            the other two, as expect from the residual plots and the deviance statistics.
+      \item (The R code for generating above plot see course notes, 2.10.3, page 47).
+\end{itemize}
+\subsection*{Interpretation of Dose-Response Models}
+\begin{itemize}
+      \item Interpretation of regression parameter $ \beta_1 $ will depend on the link function.
+            \begin{itemize}
+                  \item Logistic model: $ \logit{\pi}=\beta_0+\beta_1x $.
+                        \begin{itemize}
+                              \item $ \beta_1= $ log odds ratio for response associated with a one unit increase in dose.
+                        \end{itemize}
+                  \item Probit model: $ \Phi^{-1}(\pi)=\beta_0+\beta_1x $, or Complementary log-log model $ \log[\big]{-\log{1-\pi}}=\beta_0+\beta_1x $,
+                        interpretation of $ \beta $ parameters is not as natural as in logistic models.
+            \end{itemize}
+      \item Estimation of $ \delta $ (ED50) from a Binomial model $ g(\pi)=\beta_0+\beta_1x $:
+            \[ g(\pi=0.5)=\beta_0+\beta_1\delta\implies \hat{\delta}=\frac{g(0.5)-\hat{\beta}_0}{\hat{\beta}_1}.  \]
+      \item \textcolor{Blue}{Exercise}: What are $ \delta_{0.25} $, the dose at which \qty{25}{\percent} of the population has the response?
+            % \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{qnorm}\hlstd{(}\hlnum{0.25}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+[1] -0.6744898
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+            % \end{noindent}
+            \[ \hat{\delta}_{0.25}=\frac{-0.6745+34.9353}{19.7279}=1.737. \]
 \end{itemize}
 \end{document}
 % For fonts.
@@ -2963,3 +3303,7 @@ For each group $ i=1,\ldots,n $ let:
     \item \sbox0{c}\the\ht0\ versus \sbox0{\texttt{c}}\the\ht0\ versus \sbox0{$c$}\the\ht0\ versus \sbox0{\textsf{c}}\the\ht0\
     \item c\texttt{c}$c$\textsf{c}
 \end{itemize}
+Font shape `T1/zi4/m/it' undefined
+(Font)	using `T1/zi4/m/n' instead.
+U/stmry/b/n'
+\SetSymbolFont{stmry}{bold}{U}{stmry}{m}{n}
