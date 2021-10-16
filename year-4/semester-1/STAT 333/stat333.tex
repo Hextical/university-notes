@@ -1,3 +1,4 @@
+\RequirePackage{fix-cm}
 \documentclass[oneside,final]{book}
 \usepackage[svgnames]{xcolor}
 \usepackage[british]{babel}
@@ -21,8 +22,13 @@
 \makeatletter
 \@namedef{T1/zi4/m/it}{<->ssub*XCharterx/m/it}
 \makeatother
+\usepackage{bm}
 
+\usepackage{blkarray}
 \usepackage{multirow}
+
+\usepackage{pgfplots}
+\pgfplotsset{width=10cm,compat=1.18}
 
 % Functions
 \providecommand\given{} % just to make sure it exists
@@ -47,6 +53,10 @@
     \ifblank{#1}{\:\cdot\:}%
     #1}%
 \DeclarePairedDelimiterXPP{\se}[1]{\operatorname{\text{se}}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\let\gcd\relax%
+\DeclarePairedDelimiterXPP{\gcd}[1]{\operatorname{gcd}}\{\}{}{%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
 \let\exp\relax%
@@ -105,12 +115,18 @@
 \DeclareMathOperator*{\arginf}{arg\,inf}
 \DeclareMathOperator*{\argsup}{arg\,sup}
 
+\providecommand{\RandomVector}[1]{\bm{#1}}% general vectors in bold italic
+\providecommand{\Vector}[1]{\underline{#1}}% general vectors in bold italic
+\providecommand{\Matrix}[1]{\bm{#1}}
+\providecommand{\MatrixCal}[1]{\bm{\mathcal{#1}}}
+\providecommand{\Field}[1]{\bm{#1}}
+
 \usepackage{stackengine}
 \usepackage[british]{isodate}
 \newcommand{\makeheading}[2]%
 {%
 \begin{center}%
-    \makebox[\linewidth]{\raisebox{-.5ex}[0cm][0cm]{\stackanchor{\textcolor{Gray}{\textsc{#1}}}{\scriptsize\itshape\printyearoff#2}\;}\color{Crimson!50}\hrulefill}%
+    \makebox[\linewidth]{\raisebox{-.5ex}[0cm][0cm]{\stackanchor{\textcolor{Gray}{\textsc{#1}}}{\emph{\scriptsize\printyearoff#2}}\;}\color{Crimson!50}\hrulefill}%
 \end{center}%
 }%
 

@@ -111,7 +111,7 @@ preferred) way to calculate $ \Var{X_1\given X_2=x_2} $.
     \end{center}
     Note that $ X_1\mid (X_2=1)\sim \BERN{3/4} $. Thus, $ \E{X_1\given X_2=1}=3/4 $ and $ \Var{X_1\given X_2=1}=3/4(1-3/4)=3/16 $.
 \end{Example}
-\begin{Example}{}
+\begin{Example}
     \textbf{Example 2.2}. For $ i=1,2 $, suppose that $ X_i \sim \BIN{n_i,p} $ where $ X_1 $ and $ X_2 $ are independent. Find the
     conditional distribution of $ X_1 $ given $ X_1+X_2=m $.
     \tcblower{}
@@ -133,14 +133,14 @@ preferred) way to calculate $ \Var{X_1\given X_2=x_2} $.
 \underline{Remark}: Looking at the conditional pmf we just obtained, we recognize that $ X_1\mid(X_1+X_2=m)\sim \HG{n_1+n_2,n_1,m} $.
 The result that $ X_1\mid(X_1+X_2=m) $ has a hypergeometric distribution should not be all that surprising. Consider the sequence of $ n_1+n_2 $
 Bernoulli trials represented visually as follows:
-
-TODO figure
-
+\[ \underbrace{\begin{matrix}
+            \boxed{1} & \boxed{2} & \cdots & \boxed{n_1} & \boxed{1} & \boxed{2} & \cdots & \boxed{n_2}
+        \end{matrix}}_{\text{$ n_1+n_2 $ trials}} \]
 Of these $ n_1+n_2 $ trials in which $ m $ of them were known to be successes, we want $ x_1 $ successes to have occurred among the first $ n_1 $
 trials (thereby implying that $ m-x_1 $ successes are obtained during the final $ n_2 $ trials). Since any of these trials were equally likely to be a success
 (i.e., the same success probability $p$ is assumed), the desired result ends up being the obtained
 hypergeometric probability.
-\begin{Example}{}
+\begin{Example}
     \textbf{Example 2.3}. Let $ X_1,X_2,\ldots,X_m $ be independent rvs where $ X_i \sim \POI{\lambda_i} $, $ i=1,2,\ldots,m $. Define
     $ Y=\sum_{i=1}^{m} X_i $. Find the conditional distribution of $ X_j\mid(Y=n) $.
     \tcblower{}
@@ -177,7 +177,7 @@ hypergeometric probability.
     where $ \lambda_Y=\sum_{i=1}^{m} \lambda_i $ and note that $ \lambda_Y^{x_j}\lambda_Y^{n-x_j}=\lambda_Y $. We see that
     \[ X_j\mid (Y=n)\sim \BIN[\bigg]{n,\frac{\lambda_j}{\sum_{i=1}^{m} \lambda_i}}. \]
 \end{Example}
-\begin{Example}{}
+\begin{Example}
     \textbf{Example 2.4}. Suppose that $ X \sim \POI{\lambda} $ and $ Y\mid(X=x)\sim \BIN{x,p} $. Find the conditional distribution of $ X\mid(Y=y) $.
     \tcblower{}
     \textbf{Solution}: We want to calculate the conditional pmf of $ X\mid(Y=y) $, to be denoted by
@@ -187,8 +187,28 @@ hypergeometric probability.
     which implies that
     \[ \Prob{X=x,Y=y}=\Prob{Y=y\given X=x}\Prob{X=x}=\frac{e^{-\lambda}\lambda^x}{x!}\binom{x}{y}p^y(1-p)^{x-y},  \]\
     for $x=0,1,2,\ldots$ and $y=0,1,\ldots,x$.
-    Note that the range of $ y $ depends on the values of $ x $. A graphical display of the region is given below: TODO
-
+    Note that the range of $ y $ depends on the values of $ x $. A graphical display of the region is given below:
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                    xmin=0, xmax=5,
+                    ymin=0, ymax=5,
+                    xtick={0,1,2,3,4},
+                    ytick={0,1,2,3,4},
+                    legend pos=north west,
+                    ymajorgrids=true,
+                    xmajorgrids=true,
+                    grid style=dashed,
+                ]
+                \addplot[color=blue]{x};
+                \addplot[color=blue,mark=*,only marks]
+                coordinates {
+                        (1,0)(2,0)(3,0)(4,0)(2,1)(3,1)(3,2)(4,1)(4,2)(4,3)(0,0)(1,1)(2,2)(3,3)(4,4)
+                    };
+                \legend{$y=x$}
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
     We may rewrite this region with the range of $ x $ depending on the values of $ y $. Specifically, note that $ x=0,1,2,\ldots $ and $ y=0,1,\ldots,x $
     is equivalent to $ y=0,1,2,\ldots $ and $ x=y,y+1,y+2,\ldots $. We use this alternative region to find the marginal pmf of $ Y $.
     \begin{align*}
@@ -213,7 +233,7 @@ hypergeometric probability.
 Specifically, we have that
 \[ X\mid(Y=y)\sim W+y \]
 where $ W \sim \POI[\big]{\lambda(1-p)} $.
-\begin{Regular}{}
+\begin{Regular}
     \textbf{Formulation}: In the jointly discrete case, it was natural to define:
     \[ p_{X\mid Y}(x\mid y)=\Prob{X=x\given Y=y}=\Prob{X=x,Y=y}/\Prob{Y=y}. \]
     Strictly speaking, this no longer makes sense in a continuous context since $ f(x,y)\ne \Prob{X=x,Y=y} $ and
@@ -241,19 +261,37 @@ which we can also express as
 \[ \Prob{a\le X\le b\mid Y=y}=\frac{\int_{a}^{b}f(x,y)\odif{x}}{\int_{-\infty}^{\infty}f(x,y)\odif{x}}.  \]
 In other words, we could view this as a way of assigning probability to an event
 $ \Set{a\le X\le b} $ over a ``slice,'' $ Y=y $, of the (joint) region of support for the pair of rvs $ X $ and $ Y $.
-\begin{Example}{}
+\begin{Example}
     \textbf{Example 2.5}. Suppose that the joint pdf of $ X $ and $ Y $ is given by
     \[ f(x,y)=\begin{cases*}
-            5e^{-3x-y} & \text{, if $ 0\le 2x\le y< \infty $,} \\
-            0          & \text{, elsewhere}.
+            5e^{-3x-y}, & \text{if $ 0\le 2x\le y< \infty $,} \\
+            0,          & \text{elsewhere}.
         \end{cases*} \]
     Determine the conditional distribution of $ Y\mid(X=x) $ where $ 0\le x< \infty $.
     \tcblower{}
     \textbf{Solution}: We wish to find the conditional pdf of $ Y\mid(X=x) $ given by
     \[f_{Y\mid X}(y\mid x)=\frac{f(x,y)}{f_X(x)}\]
     The region of support for this joint distribution looks like:
-    TODO figure
-
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                    xmin=-1, xmax=7,
+                    ymin=-1, ymax=7,
+                    legend pos=north west,
+                    ymajorgrids=true,
+                    xmajorgrids=true,
+                    grid style=dashed,
+                ]
+                \addplot[color=red]{2*x};
+                \addplot+ [fill,color=blue] coordinates {
+                        (0,0) (6,12) (0,12) (0,0)
+                    }
+                --cycle
+                ;
+                \legend{$y=2x$}
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
     For $ 0<x<\infty $:
     \begin{align*}
         f_X(x)
@@ -268,25 +306,42 @@ $ \Set{a\le X\le b} $ over a ``slice,'' $ Y=y $, of the (joint) region of suppor
 \end{Example}
 \underline{Remark}: The conditional pdf of $ Y\mid (X=x) $ is recognized as that of a \emph{shifted exponential distribution}
 ($2x$ units to the right). Specifically, we have that $ Y\mid(X=x) \sim W+2x $, where $ W \sim \EXP{1} $.
-\begin{Regular}{}
+\begin{Regular}
     \textbf{Conditional Expectation}: If $ X $ and $ Y $ are jointly continuous rvs and $ g(\:\cdot\:) $ is an arbitrary
     real-valued function, then the \emph{conditional expectation} of $ g(X) $ given $ Y=y $ is
     \[ \E{g(X)\given Y=y}=\int_{-\infty}^{\infty}g(x)f_{X\mid Y}(x\mid y)\odif{x}, \]
     and so the conditional mean of $ X\mid(Y=y) $ is given by
     \[ \E{X\given Y=y}=\int_{-\infty}^{\infty}x f_{X\mid Y}(x\mid y)\odif{x}. \]
 \end{Regular}
-\begin{Example}{}
+\begin{Example}
     \textbf{Example 2.6}. Suppose that the joint pdf of $ X $ and $ Y $ is given by
     \[ f(x,y)=\begin{dcases}
-            \frac{12}{5}x(2-x-y) & \text{, if $ 0<x<1 $ and $ 0<y<1 $,} \\
-            0                    & \text{, elsewhere}.
+            \frac{12}{5}x(2-x-y), & \text{if $ 0<x<1 $ and $ 0<y<1 $,} \\
+            0,                    & \text{elsewhere}.
         \end{dcases} \]
     Find the conditional distribution of $ X $ given $ Y=y $ where $ 0<y<1 $, and use it to calculate its conditional mean.
     \tcblower{}
     \textbf{Solution}: Using our earlier theory, we wish to find the conditional pdf of $ X\mid(Y=y) $ given by
     \[ f_{X\mid Y}(x\mid y)=\frac{f(x,y)}{f_Y(y)}. \]
-    The region of support for this joint distribution of $ X $ and $ Y $ look like: TODO figure.
-
+    The region of support for this joint distribution of $ X $ and $ Y $ look like:
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                    xmin=-1, xmax=2,
+                    ymin=-1, ymax=2,
+                    legend pos=north west,
+                    ymajorgrids=true,
+                    xmajorgrids=true,
+                    grid style=dashed,
+                ]
+                \addplot+ [fill] coordinates {
+                        (0,0) (0,1) (1,1) (1,0)
+                    }
+                --cycle
+                ;
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
     For $ 0<y<1 $,
     \begin{align*}
         f_Y(y)
@@ -309,7 +364,7 @@ $ \Set{a\le X\le b} $ over a ``slice,'' $ Y=y $, of the (joint) region of suppor
          & =\frac{5-4y}{2(4-3y)}
     \end{align*}
 \end{Example}
-\begin{Regular}{}
+\begin{Regular}
     \textbf{Conditional Variance}: Likewise, as in the jointly discrete case, we can also consider the notion of
     conditional variance, which retains the same definition as before:
     \[ \Var{X\mid Y=y}=\E*{\bigl(X-\E{X\given Y=y}\bigr)^2\given Y=y}=\E{X^2\given Y=y}-\E{X\given Y=y}^2. \]
@@ -318,12 +373,12 @@ $ \Set{a\le X\le b} $ over a ``slice,'' $ Y=y $, of the (joint) region of suppor
     conditional expectation that held in the jointly discrete case continue to hold true in the
     jointly continuous case (as we are effectively replacing summation with integration).
 \end{Regular}
-\begin{Example}{}
+\begin{Example}
     \textbf{Example 2.6}. (\emph{continued}) Calculate $ \Var{X\given Y=y} $ where $ 0<y<1 $ and the joint pdf of
     $ X $ and $ Y $ is given by
     \[ f(x,y)=\begin{dcases}
-            \frac{12}{5}x(2-x-5) & \text{, if $ 0<x<1 $ and $ 0<y<1 $,} \\
-            0                    & \text{, elsewhere}.
+            \frac{12}{5}x(2-x-5), & \text{if $ 0<x<1 $ and $ 0<y<1 $,} \\
+            0,                    & \text{elsewhere}.
         \end{dcases} \]
     \tcblower{}
     \textbf{Solution}: Our earlier results tell us that
@@ -344,7 +399,7 @@ $ \Set{a\le X\le b} $ over a ``slice,'' $ Y=y $, of the (joint) region of suppor
     \end{align*}
 \end{Example}
 \subsection*{Mixed Case}
-\begin{Regular}{}
+\begin{Regular}
     We can also consider conditional distributions where the rvs are neither jointly continuous nor
     jointly discrete. To consider such a situation, suppose $X$ is a continuous rv having pdf $ f_X(x) $
     and $Y$ is a discrete rv having pmf $ p_Y(y) $.
@@ -374,7 +429,7 @@ $ \Set{a\le X\le b} $ over a ``slice,'' $ Y=y $, of the (joint) region of suppor
     Since $ p(y\mid x) $ is a pmf, we have that
     \[ \sum_y p(y\mid x)=1\implies f_X(x)=\sum_y f(x\mid y)p_Y(y). \]
 \end{Regular}
-\begin{Example}{}
+\begin{Example}
     \textbf{Example 2.7}. Suppose that $ X \sim \U{0,1} $ and $ Y\mid(X=x)\sim \BERN{x} $. Find the conditional distribution of $ X\mid(Y=y) $.
     \tcblower{}
     \textbf{Solution}: We wish to find the conditional pdf of $ X\mid (Y=y) $ given by
@@ -420,7 +475,7 @@ expected value of $v(Y)$. In this regard, we would obtain:
 \end{align*}
 \subsection*{Law of Total Expectation}
 The following important result is regarded as the \emph{law of total expectation}.
-\begin{Result}{}
+\begin{Result}
     \textbf{Theorem 2.2}. For rvs $ X $ and $ Y $, $ \E[\big]{g(X)}=\E*{\E[\big]{g(X)\given Y}} $.
     \tcblower{}
     \textbf{Proof}: Without loss of generality, assume that $ X $ and $ Y $ are jointly continuous
@@ -440,7 +495,7 @@ The following important result is regarded as the \emph{law of total expectation
 as follows:
 \[ \E[\big]{g(X,Y)}=\E*{\E[\big]{g(X,Y)\given Y}}. \]
 The usefulness of the law of total expectation is well-demonstrated in the following example.
-\begin{Example}{}
+\begin{Example}
     \textbf{Example 2.8}. Suppose that $ X \sim \GEOt{p} $ with pmf $ p_X(x)=(1-p)^{x-1}p $, $ x=1,2,3,\ldots $.
     Calculate $ \E{X} $ and $ \Var{X} $ using the law of total expectation.
     \tcblower{}
@@ -492,7 +547,7 @@ The usefulness of the law of total expectation is well-demonstrated in the follo
 \begin{enumerate}[(1)]
     \item Note that the obtained mean and variance agree with known results. Moreover, the above
           procedure relied only on basic manipulations and did not involve any complicated sums or
-          the differentiation of an mgf.
+          the differentiation of a mgf.
     \item As part of the above solution, we claimed that $ X\mid(Y=0)\sim Z $ where $ Z=1+X $,
           and this implied that $ \E{X^2\given Y=0}=\E[\big]{(1+X)^2} $. To see why this holds true formally,
           consider first
@@ -520,7 +575,7 @@ The usefulness of the law of total expectation is well-demonstrated in the follo
           \[ \E[\big]{g(X)\given Y=0}=\E[\big]{g(Z)}=\E[\big]{g(1+X)}. \]
 \end{enumerate}
 \subsection*{Computing Variances by Conditioning}
-\begin{Regular}{}
+\begin{Regular}
     In recognizing that $ \E[\big]{g(X)\given Y=y} $ is a function of $ y $, it similarly
     follows that $ \Var{X\given Y=y} $ is also a function of $ y $. Therefore, we can make the
     following definition:
@@ -529,7 +584,7 @@ The usefulness of the law of total expectation is well-demonstrated in the follo
     value. The following result, usually referred to as the \emph{conditional variance formula}, provides a
     convenient way to calculate variance through the use of conditioning.
 \end{Regular}
-\begin{Result}{}
+\begin{Result}
     \textbf{Theorem 2.3}. For rvs $ X $ and $ Y $, $ \Var{X}=\E[\big]{\Var{X\given Y}}+\Var[\big]{\E{X\given Y}} $.
     \tcblower{}
     \textbf{Proof}: First, consider the term $ \E[\big]{\Var{X\given Y}} $. Since
@@ -559,7 +614,7 @@ The usefulness of the law of total expectation is well-demonstrated in the follo
          & =\Var{X}.
     \end{align*}
 \end{Result}
-\begin{Example}{}
+\begin{Example}
     \textbf{Example 2.9}. Suppose that $ \Set{X_i}_{i=1}^\infty $ is an iid sequence of rvs with common mean $ \mu $
     and common variance $ \sigma^2 $. Let $ N $ be a discrete, non-negative integer-valued rv that
     is independent of each $ X_i $. Find the mean and variance of $ T=\sum_{i=1}^{N} X_i $

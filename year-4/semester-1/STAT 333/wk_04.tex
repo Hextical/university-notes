@@ -1,1 +1,436 @@
+\chapter{Discrete-time Markov Chains}
 \makeheading{Week 4}{\daterange{2021-09-29}{2021-10-06}}%chktex 8
+\section{Definitions and Basic Concepts}
+\subsection*{Stochastic Process}
+\begin{Regular}
+    \textbf{Definition}: $ \Set{X(t)\given t\in\mathcal{T}} $ is called a \emph{stochastic process}
+    if $ X(t) $ is a rv (or possibly a random vector) for any given $ t\in\mathcal{T} $.
+    $ \mathcal{T} $ is referred to as the \emph{index set} and is often interpreted in
+    the context of time. As such, $ X(t) $ is often called the \emph{state of the process at time $ t $}.
+    We note that:
+    \[ \text{Index set $ \mathcal{T} $}\begin{cases}
+            \text{can be a \underline{continuum} of values such as $ \mathcal{T}=\Set{t\given t\ge 0} $}, \\
+            \text{can be a set of \underline{discrete} points such as $ \mathcal{T}=\Set{t_0,t_1,t_2,\ldots} $}.
+        \end{cases} \]
+    Since there is a one-to-one correspondence between the sets $ \mathcal{T}=\Set{t_0,t_1,t_2,\ldots} $
+    and $ \mathbb{N}=\Set{0,1,2,\ldots} $, we will use $ \mathcal{T}=\mathbb{N} $ as the general index set for a discrete-time
+    stochastic process (unless otherwise stated). In other words, $ \Set{X(n)\given n\in\mathbb{N}} $ or $ \Set{X_n\given n\in\mathbb{N}} $
+    will represent a general discrete-time stochastic process.
+\end{Regular}
+\subsection*{Discrete-time Stochastic Process}
+Some examples of a discrete-time stochastic process $ \Set{X_n,n\in\mathbb{N}} $ might include:
+\begin{enumerate}[(1)]
+    \item $ X_n $ represents the outcome of the $n\textsuperscript{th}$ toss of a die,
+    \item $ X_n $ represents the price of a stock at the end of day $n$ trading,
+    \item $ X_n $ represents the maximum temperature in Waterloo during the $n\textsuperscript{th}$ month,
+    \item $ X_n $ represents the number of goals scored in game $n$ by the varsity hockey team,
+    \item $ X_n $ represents the number of STAT 333 students in class for the $n\textsuperscript{th}$ lecture.
+\end{enumerate}
+\subsection*{Discrete-time Markov Chain}
+\begin{Regular}
+    \textbf{Definition}: A stochastic process $ \Set{X_n,n\in\mathbb{N}} $ is said to be a
+    \emph{discrete-time Markov chain} (DTMC) if the following two conditions hold true:
+    \begin{enumerate}[(1)]
+        \item For $ n\in\mathbb{N} $, $ X_n $ is a \underline{discrete} rv (i.e., the state space $ \mathcal{S} $ of $ X_n $ is of discrete type).
+        \item For $ n\in\mathbb{N} $ and all states $ x_0,x_1,\ldots,x_{n+1}\in\mathcal{S} $, the \emph{Markov property} must hold:
+              \[ \Prob{X_{n+1}=x_{n+1}\given X_n=x_n,X_{n-1}=x_{n-1},\ldots,X_1=x_1,X_0=x_0}=\Prob{X_{n+1}=x_{n+1}\given X_n=x_n}. \]
+              \emph{In mathematical terms}, this property states that the conditional distribution of any \emph{future}
+              state $ X_{n+1} $ given the past states $ X_0,X_1,\ldots,X_{n-1} $ and the \emph{present} state $ X_n $ is
+              independent of the past states.
+
+              \emph{In a more informal way}, the Markov property tells us, for a random process, that if we
+              know the value taken by the process at a given time, we will not get any additional
+              information about the future behaviour of the process by gathering more knowledge about
+              the past.
+    \end{enumerate}
+    \tcblower{}
+    \underline{Remarks}:
+    \begin{enumerate}[(1)]
+        \item Unless otherwise stated, the state space $ \mathcal{S} $ of a DTMC $ \Set{X_n,n\in\mathbb{N}} $ will be assumed to be $ \mathbb{N} $.
+        \item In general, the sequence of rvs $ \Set{X_n}_{n=0}^\infty $ are neither independent nor identically distributed.
+        \item The Markov property does not require ``full'' information on the past to ensure
+              independence. For example, consider the following conditional probability:
+              \begin{align*}
+                   & \Prob{X_{n+1}=x_{n+1} \given X_{n}=x_{n}, X_{n-2}=x_{n-2}, \ldots, X_{1}=x_{1}, X_{0}=x_{0}}                                                                           \\
+                   & =\frac{\Prob{X_{n+1}=x_{n+1}, X_{n}=x_{n}, X_{n-2}=x_{n-2}, \ldots, X_{1}=x_{1}, X_{0}=x_{0}}}{\Prob{X_{n}=x_{n}, X_{n-2}=x_{n-2}, \ldots, X_{1}=x_{1}, X_{0}=x_{0}}},
+              \end{align*}
+              which is ``missing'' the information for $ X_{n-1} $.
+
+              However, note that:
+              \begin{align*}
+                    & \Prob{X_{n+1}=x_{n+1}, X_{n}=x_{n}, X_{n-2}=x_{n-2}, \ldots, X_{1}=x_{1}, X_{0}=x_{0}}                                                                      \\
+                  = & \sum_{x_{n-1}=0}^{\infty} \Prob{X_{n+1}=x_{n+1}, X_{n}=x_{n}, X_{n-1}=x_{n-1}, X_{n-2}=x_{n-2}, \ldots, X_{1}=x_{1}, X_{0}=x_{0}}                           \\
+                  = & \sum_{x_{n-1}=0}^{\infty} \Prob{X_{n+1}=x_{n+1} \given X_{n}=x_{n}, X_{n-1}=x_{n-1}, X_{n-2}=x_{n-2}, \ldots, X_{1}=x_{1}, X_{0}=x_{0}}                     \\
+                    & \quad\times \Prob{X_{n}=x_{n}, X_{n-1}=x_{n-1}, X_{n-2}=x_{n-2}, \ldots, X_{1}=x_{1}, X_{0}=x_{0}}                                                          \\
+                  = & \Prob{X_{n+1}=x_{n+1} \given X_{n}=x_{n}}                                                                                                                   \\
+                    & \quad\times \sum_{x_{n-1}=0}^{\infty} \Prob{X_{n}=x_{n}, X_{n-1}=x_{n-1}, X_{n-2}=x_{n-2}, \ldots, X_{1}=x_{1}, X_{0}=x_{0}} \text{ \small Markov property} \\
+                  = & \Prob{X_{n+1}=x_{n+1} \given X_{n}=x_{n}} \Prob{X_{n}=x_{n}, X_{n-2}=x_{n-2}, \ldots, X_{1}=x_{1}, X_{0}=x_{0}}.
+              \end{align*}
+              \textbf{We have}:
+              \begin{align*}
+                    & \Prob{X_{n+1}=x_{n+1} \given X_{n}=x_{n}, X_{n-2}=x_{n-2}, \ldots, X_{1}=x_{1}, X_{0}=x_{0}}                                                                         \\
+                  = & \frac{\Prob{X_{n+1}=x_{n+1}, X_{n}=x_{n}, X_{n-2}=x_{n-2}, \ldots, X_{1}=x_{1}, X_{0}=x_{0}}}{\Prob{X_{n}=x_{n}, X_{n-2}=x_{n-2}, \ldots, X_{1}=x_{1}, X_{0}=x_{0}}}
+              \end{align*}
+              and
+              \begin{align*}
+                    & \Prob{X_{n+1}=x_{n+1}, X_{n}=x_{n}, X_{n-2}=x_{n-2}, \ldots, X_{1}=x_{1}, X_{0}=x_{0}}                           \\
+                  = & \Prob{X_{n+1}=x_{n+1} \given X_{n}=x_{n}} \Prob{X_{n}=x_{n}, X_{n-2}=x_{n-2}, \ldots, X_{1}=x_{1}, X_{0}=x_{0}}.
+              \end{align*}
+              Substituting this latter expression into the numerator of the top equation yields
+              \[ \Prob{X_{n+1}=x_{n+1} \given X_{n}=x_{n}, X_{n-2}=x_{n-2}, \ldots, X_{1}=x_{1}, X_{0}=x_{0}}=\Prob{X_{n+1}=x_{n+1} \given X_{n}=x_{n}} \]
+              It is straightforward to extend the above result to any number of previous time points from
+              $ 0,1,\ldots,n-1 $ with ``missing'' information. This is the essence of the Markov property.
+    \end{enumerate}
+\end{Regular}
+\subsection*{One-step Transition Probability Matrix}
+\begin{Regular}
+    \textbf{Definition}: For any pair of states $ i $ and $ j $, the \emph{transition probability} from state $ i $ at time $ n $
+    to state $ j $ at time $ n+1 $ is given by
+    \[ P_{n,i,j}=\Prob{X_{n+1}=j\given X_n=i},\; n\in\mathbb{N}. \]
+    Let $ P_n $ be the associated matrix containing all these transition probabilities, referred to as the
+    \emph{one-step transition probability matrix} (TPM) from time $ n $ to time $ n+1 $. It looks like
+    \[ P_n=[P_{n,i,j}]=
+        \begin{blockarray}{cccccccc}
+            & 0 & 1 & 2 & \cdots & j & \cdots \\
+            \begin{block}{c[ccccccc]}
+                0 & P_{n, 0,0}  & P_{n, 0,1}  & P_{n, 0,2}  & \cdots & P_{n, 0, j} & \cdots \\
+                1 & P_{n, 1,0}  & P_{n, 1,1}  & P_{n, 1,2}  & \cdots & P_{n, 1, j} & \cdots \\
+                \vdots & \vdots      & \vdots      & \vdots      &        & \vdots      &        \\
+                i & P_{n, i, 0} & P_{n, i, 1} & P_{n, i, 2} & \cdots & P_{n, i, j} & \cdots \\
+                \vdots & \vdots      & \vdots      & \vdots      &        & \vdots      &\\
+            \end{block}
+        \end{blockarray}, \]
+    where, for convenience, the states of the DTMC are labelled along the margins of the matrix.
+
+    For each pair of states $ i $ and $ j $, if $ P_{n,i,j}=P_{i,j}\; \forall n\in\mathbb{N} $,
+    then we say that the DTMC is \emph{stationary} or \emph{homogenous}. In this situation, the one-step TPM becomes:
+    \[ P=[P_{i,j}]=
+        \begin{blockarray}{cccccccc}
+            & 0 & 1 & 2 & \cdots & j & \cdots \\
+            \begin{block}{c[ccccccc]}
+                0 & P_{0,0}  & P_{0,1}  & P_{0,2}  & \cdots & P_{0, j} & \cdots \\
+                1 & P_{1,0}  & P_{1,1}  & P_{1,2}  & \cdots & P_{1, j} & \cdots \\
+                \vdots & \vdots      & \vdots      & \vdots      &        & \vdots      &        \\
+                i & P_{i, 0} & P_{i, 1} & P_{i, 2} & \cdots & P_{i, j} & \cdots \\
+                \vdots & \vdots      & \vdots      & \vdots      &        & \vdots      &\\
+            \end{block}
+        \end{blockarray}. \]
+    \tcblower{}
+    \underline{Remark}: In STAT 333, we only consider stationary DTMCs. Moreover, from the construction of the TPM $ P $,
+    it is clear that $ P_{i,j}\ge 0\; \forall i,j\in\mathbb{N} $ and $ \sum_{j=0}^{\infty} P_{i,j}=1\; \forall i\in\mathbb{N} $
+    (i.e., each row sum of $P$ must be $1$). Such a matrix whose elements are non-negative and whose row sums
+    are equal to $1$ is said to be \emph{stochastic}.
+\end{Regular}
+\begin{Example}
+    \textbf{Example 3.1}. On a given day, the weather is either clear, overcast, or raining. If the weather
+    is clear today, then it will be clear, overcast, or raining tomorrow with respective probabilities
+    $0.6$, $0.3$, and $0.1$. If the weather is overcast today, then it will be clear, overcast, or raining
+    tomorrow with respective probabilities $0.2$, $0.5$, and $0.3$. If the weather is raining today, then it
+    will be clear, overcast, or raining tomorrow with respective probabilities $0.4$, $0.2$, and $0.4$.
+    Construct the underlying DTMC and determine its TPM\@.
+    \tcblower{}
+    \textbf{Solution}:
+\end{Example}
+\subsection*{$ n $-step Transition Probability Matrix}
+\begin{Regular}
+    \textbf{Definition}: For any pair of states $ i $ and $ j $, the \emph{$ n $-step transition probability} is given by
+    \[ P_{i,j}^{(n)}=\Prob{X_{m+n}=j\given X_m=i},\; m,n\in\mathbb{N}. \]
+    Due to the stationary assumption, this quantity is actually independent of $m$ (which is why we
+    do not include $m$ in its notation). Thus, $ P_{i,j}^{(n)}=\Prob{X_n=j\given X_0=i} $, $ n\in\mathbb{N} $.
+    Furthermore, it is evident that
+    \[ P_{i,j}^{(0)}=\Prob{X_0=j\given X_0=i}=
+        \begin{cases}
+            0, & \text{ if $ i\ne j $}, \\
+            1, & \text{ if $ i=j $.}
+        \end{cases} \]
+    Similarly, let $ P^{(n)}=\bigl[P_{i,j}^{(n)}\bigr] $ represent the associated $ n $-step TPM\@. Clearly, when $ n=1 $,
+    $ P^{(1)}=P $. When $ n=0 $, $ P^{(0)}=I $, where $ I $ represents the identity matrix. Just as with the one-step TPM, it follows that
+    the row sums of $ P^{(n)} $ must equal $ 1 $ as well.
+\end{Regular}
+\subsection*{Chapman-Kolmogorov Equations}
+\begin{Regular}
+    For $ n\in\mathbb{Z}^+ $, let us consider
+    \begin{align*}
+        P_{i, j}^{(n)} & =\Prob{X_{n}=j \given X_{0}=i}                                                                           \\
+                       & =\sum_{k=0}^{\infty} \Prob{X_{n}=j \given X_{n-1}=k, X_{0}=i} \Prob{X_{n-1}=k \given X_{0}=i}            \\
+                       & =\sum_{k=0}^{\infty} P_{i, k}^{(n-1)} \Prob{X_{n}=j \given X_{n-1}=k, X_{0}=i}                           \\
+                       & =\sum_{k=0}^{\infty} P_{i, k}^{(n-1)} \Prob{X_{n}=j \given X_{n-1}=k} \text{ due to the Markov property} \\
+                       & =\sum_{k=0}^{\infty} P_{i,k}^{(n-1)} P_{k, j}.\label{eq3.1}\tag*{(3.1)}
+    \end{align*}
+    \textbf{We have}: $ P_{i,j}^{(n)}=\sum_{k=0}^{\infty} P_{i,k}^{(n-1)}P_{k,j}\leftarrow $~\ref{eq3.1}.
+    \tcblower{}
+    \underline{Recall}: If $ A=[a_{i,j}] $, $ B=[b_{i,j}] $, and $ C=AB $ where $ C=[c_{i,j}] $, then $ \sum_k a_{i,j}b_{k,j} $.
+
+    As a result, note that~\ref{eq3.1} implies that $ P^{(n)}=P^{(n-1)}P $, $ n\in\mathbb{Z}^+ $. More generally, $ P_{i,j}^{(n)} $
+    can be expressed as
+    \[ P_{i,j}^{(n)}=\sum_{k=0}^{\infty} P_{i,k}^{(n)}P_{k,j}^{(n-m)}\; \forall i,j\in\mathbb{N}\text{ and }0\le m\le n, \]
+    which are referred to as the \emph{Chapman-Kolmogorov} equations for a DTMC\@. In matrix form, this
+    translates to
+    \[ P^{(n)}=P^{(m)}P^{(n-m)},\; 0\le m\le n. \]
+    Coming back to $ P^{(n)}=P^{(n-1)}P $, $ n\in\mathbb{Z}^+ $, let us look at a few values of $n$:
+    \begin{align*}
+        \text{Take }n=2 & \implies P^{(2)}=P^{(1)} P=P P=P^{2},     \\
+        \text{Take }n=3 & \implies P^{(3)}=P^{(2)} P=P^{2} P=P^{3}, \\
+        \text{Take }n=4 & \implies P^{(4)}=P^{(3)} P=P^{3} P=P^{4}.
+    \end{align*}
+    Clearly, we see that
+    \[ P^{(n)}=P^n, \]
+    and so the $ n $-step TPM is simply the one-step TPM multiplied by itself $ n $ times.
+\end{Regular}
+\subsection*{Marginal pmf of $ X_n $}
+\begin{Regular}
+    For $ n\in\mathbb{N} $, let us now introduce a particular row vector, which we will denote as either
+    \[ \Vector{\alpha}_n=(\alpha_{n,0},\alpha_{n,1},\ldots,\alpha_{n,k},\ldots), \]
+    or
+    \[ \Vector{\alpha}_n=\begin{bmatrix}
+            \alpha_{n,0} & \alpha_{n,1} & \cdots & \alpha_{n,k} & \cdots
+        \end{bmatrix}, \]
+    where $ \alpha_{n,k}=\Prob{X_n=k}\; \forall k\in\mathbb{N} $. In other words, $ \alpha_{n,k} $ represents the marginal pmf of $ X_n $,
+    $ n\in\mathbb{N} $. As a consequence, it follows that $ \sum_{k=0}^{\infty} \alpha_{n,k}=1\;\forall n\in\mathbb{N} $.
+
+    If we focus on the case when $ n=0 $, then $ \Vector{\alpha}_0 $ is referred to as the \emph{initial probability row vector}
+    of the DTMC, or simply the \emph{initial conditions} of the DTMC\@.
+
+    For $ n\in\mathbb{Z}^+ $, note that
+    \begin{align*}
+        \alpha_{n, k} & =\Prob{X_{n}=k}                                                                                            \\
+                      & =\sum_{i=0}^{\infty} \Prob{X_{n}=k \given X_{m}=i} \Prob{X_{m}=i} \text{ where} 0 \leq m \leq n            \\
+                      & =\sum_{i=0}^{\infty} \alpha_{m,i} \Prob{X_{n-m}=k \given X_{0}=i} \text{ due to the stationary assumption} \\
+                      & =\sum_{i=0}^{\infty} \alpha_{m,i} P_{i,k}^{(n-m)}
+    \end{align*}
+    In matrix form, the above relation implies that
+    \[ \Vector{\alpha}_{n}=\Vector{\alpha}_{m} P^{(n-m)}=\Vector{\alpha}_{m} P^{n-m},\; 0 \leq m \leq n, \]
+    which subsequently leads to
+    \[ \Vector{\alpha}_n=\Vector{\alpha}_0P^{(n)}=\Vector{\alpha}_0P^{n},\; n\in\mathbb{N}. \]
+\end{Regular}
+\subsection*{Probabilities of Interest}
+\begin{Regular}
+    Having knowledge of the initial conditions and the one-step transition probabilities, one can
+    readily calculate various probabilities of possible interest such as
+    \begin{align*}
+         & \Prob{X_{n}=x_{n}, X_{n-1}=x_{n-1}, \ldots, X_{1}=x_{1}, X_{0}=x_{0}}                                                                             \\
+         & = \Prob{X_{0}=x_{0}} \Prob{X_{1}=x_{1} \given X_{0}=x_{0}} \Prob{X_{2}=x_{2} \given X_{1}=x_{1}, X_{0}=x_{0}} \times \cdots                       \\
+         & \quad \times \Prob{X_{n}=x_{n} \given X_{n-1}=x_{n-1}, X_{n-2}=x_{n-2}, \ldots, X_{0}=x_{0}}                                                      \\
+         & = \Prob{X_{0}=x_{0}} \Prob{X_{1}=x_{1} \given X_{0}=x_{0}} \Prob{X_{2}=x_{2} \given X_{1}=x_{1}} \cdots \Prob{X_{n}=x_{n} \given X_{n-1}=x_{n-1}} \\
+         & =\alpha_{0, x_{0}} P_{x_{0}, x_{1}} P_{x_{1}, x_{2}} \cdots P_{x_{n-1}, x_{n}},
+    \end{align*}
+    where the second last equality follows due to the Markov property.
+
+    Similarly,
+    \begin{align*}
+         & \Prob{X_{n+m}=x_{n+m}, X_{n+m-1}=x_{n+m-1}, \ldots, X_{n+1}=x_{n+1} \given X_{n}=x_{n}}                                                                                                                    \\
+         & = \frac{\Prob{X_{n+m}=x_{n+m}, X_{n+m-1}=x_{n+m-1}, \ldots, X_{n+1}=x_{n+1}, X_{n}=x_{n}}}{\Prob{X_{n}=x_{n}}}                                                                                             \\
+         & = {\scriptstyle\frac{\Prob{X_{n}=x_{n}} \Prob{X_{n+1}=x_{n+1} \given X_{n}=x_{n}} \cdots \Prob{X_{n+m}=x_{n+m} \given X_{n+m-1}=x_{n+m-1}, X_{n+m-2}=x_{n+m-2}, \ldots, X_{n}=x_{n}}}{\Prob{X_{n}=x_{n}}}} \\
+         & = P_{x_{n}, x_{n+1}} P_{x_{n+1}, x_{n+2}} \cdots P_{x_{n+m-1}, x_{n+m}}.
+    \end{align*}
+    The key observation here is that the DTMC is \emph{completely characterized} by its one-step TPM
+    $P$ and the initial conditions $ \Vector{\alpha}_0 $.
+\end{Regular}
+\begin{Example}
+    \textbf{Example 3.2}. A particle moves along the states $ \Set{0,1,2} $ according to a DTMC whose TPM
+    is given by
+    \[ P=\begin{blockarray}{ccccc}
+            & 0 & 1 & 2 \\
+            \begin{block}{c[cccc]}
+                0 & 0.7  & 0.2  & 0.1 \\
+                1 & 0 & 0.6 & 0.4 \\
+                2 & 0.5 & 0 & 0.5 \\
+            \end{block}
+        \end{blockarray}. \]
+
+    Let $X_n$ denote the position of the particle after the $n\textsuperscript{th}$ move. Suppose that the particle is
+    equally likely to start in any of the three positions.
+    \begin{enumerate}[(a)]
+        \item Calculate $ \Prob{X_3=1\given X_0=0} $.
+
+              \textbf{Solution}:
+        \item Calculate $ \Prob{X_4=2} $.
+
+              \textbf{Solution}:
+        \item Calculate $ \Prob{X_6=0,X_4=2} $.
+
+              \textbf{Solution}:
+        \item Calculate $ \Prob{X_9=0,X_7=2\given X_5=1,X_2=0} $.
+
+              \textbf{Solution}:
+    \end{enumerate}
+\end{Example}
+\subsection*{Accessibility and Communication}
+With these basic results in place, we next consider the classification of states in a DTMC\@.
+\begin{Regular}
+    \textbf{Definition}: State $ j $ is \emph{accessible} from state $ i $ (denoted by $ i\to j $) if $ \exists n\in\mathbb{N} $
+    such that $ P_{i,j}^{(n)}>0 $. If states $ i $ and $ j $ are accessible from each other, then the states $ i $ and $ j $
+    \emph{communicate} (denoted by $ i\leftrightarrow j $). In other words, $ i\leftrightarrow j $ iff $ \exists m,n\in\mathbb{N} $
+    such that $ P_{i,j}^{(n)}>0 $ and $ P_{j,i}^{(m)}>0 $.
+
+    \tcblower{}
+    In terms of accessibility, note that the size of the components of $ P $ do not matter. All that
+    matters is which are positive and which are $0$. In particular, if state $ j $ is not accessible from
+    state $ i $, then $ P_{i,j}^{(n)}=0\;\forall n\in\mathbb{N} $ and
+    \begin{align*}
+        \begin{aligned}
+             & \Prob{\text{DTMC ever visits state $ j $}\given X_0 = i}                                                       \\
+             & = \Prob[\big]{\cup_{n=0}^{\infty}\Set{X_{n}=j} \given X_{0}=i}                                                 \\
+             & \leq  \sum_{n=0}^{\infty} \Prob{X_{n}=j \given X_{0}=i} \text{ due to Boole's inequality (see Exercise 1.1.1)} \\
+             & = \sum_{n=0}^{\infty} P_{i,j}^{(n)}                                                                            \\
+             & =0,
+        \end{aligned}
+    \end{align*}
+    implying that $ \Prob{\text{DTMC ever visits state $ j $}\given X_0 = i} = 0 $.
+\end{Regular}
+\subsection*{Equivalence Relation}
+\begin{Regular}
+    The concept of communication forms what is known as an equivalence relation, satisfying the
+    following criteria:
+    \begin{enumerate}[(i)]
+        \item \textbf{Reflexivity}: $i \leftrightarrow i $.
+
+              Clearly true since $P_{i, i}^{(0)}=1>0$.
+        \item \textbf{Symmetry}: $i \leftrightarrow j \Longrightarrow j \leftrightarrow i$.
+
+              This is obviously true by definition.
+
+        \item \textbf{Transitivity}: $i \leftrightarrow j$ and $j \leftrightarrow k \implies i \leftrightarrow k$.
+
+              To see this holds formally, we know that $\exists n \in \mathbb{N}$ such that $P_{i, j}^{(n)}>0$. Also, $\exists m \in \mathbb{N}$ such that $P_{j, k}^{(m)}>0$. Using the Chapman-Kolmogorov equations, we have that
+              \[
+                  P_{i, k}^{(n+m)}=\sum_{\ell=0}^{\infty} P_{i, \ell}^{(n)} P_{\ell, k}^{(m)} \geq P_{i, j}^{(n)} P_{j, k}^{(m)}>0.
+              \]
+              Therefore, $P_{i, k}^{(n+m)}>0$, implying that $i \rightarrow k$. Using precisely the same logic, it is straightforward to show that $k \rightarrow i$. Thus, by definition, $i \leftrightarrow k$
+    \end{enumerate}
+\end{Regular}
+\subsection*{Communication Classes}
+The fact that communication forms an equivalence relation allows us to \emph{partition} all the states
+of a DTMC into various communication classes, so that within each class, all states
+communicate. However, if states $i$ and $j$ belong to \emph{different classes}, then $ i\leftrightarrow j $ is not true
+(i.e., at most one of $ i\rightarrow j $ or $ j\rightarrow i $ can be true).
+\begin{Regular}
+    \textbf{Definition}: A DTMC that has only one communication class is said to be \emph{irreducible}. On the
+    other hand, a DTMC is called \emph{reducible} if there are two or more communication classes.
+\end{Regular}
+\begin{Example}
+    \textbf{Example 3.2}. (\emph{continued}) What are the communication classes of the DTMC\@?
+    \[ P=\begin{blockarray}{ccccc}
+            & 0 & 1 & 2 \\
+            \begin{block}{c[cccc]}
+                0 & 0.7  & 0.2  & 0.1 \\
+                1 & 0 & 0.6 & 0.4 \\
+                2 & 0.5 & 0 & 0.5 \\
+            \end{block}
+        \end{blockarray}. \]
+    \tcblower{}
+    \textbf{Solution}:
+\end{Example}
+\begin{Example}
+    \textbf{Example 3.3}. Consider a DTMC with TPM
+    \[ P=\begin{blockarray}{cccccc}
+            & 0 & 1 & 2 & 3 \\
+            \begin{block}{c[ccccc]}
+                0 & 0 & 1 & 0 & 0 \\
+                1 & 0 & 0 & 1 & 0 \\
+                2 & 0 & 0 & 0 & 1 \\
+                3 & 0.5 & 0 & 0.5 & 0\\
+            \end{block}
+        \end{blockarray}. \]
+    What are the communication classes of this DTMC\@?
+    \tcblower{}
+    \textbf{Solution}:
+\end{Example}
+\begin{Example}
+    \textbf{Example 3.4}. Consider a DTMC with TPM
+    \[ P=\begin{blockarray}{cccccc}
+            & 0 & 1 & 2 & 3 \\
+            \begin{block}{c[ccccc]}
+                0 & \frac{1}{3} & \frac{2}{3} & 0 & 0 \\[2pt]
+                1 & \frac{1}{2} & \frac{1}{4} & \frac{1}{4} & \frac{1}{4} \\[2pt]
+                2 & 0 & 0 & 1 & 0 \\[2pt]
+                3 & \frac{3}{4} & \frac{1}{4} & 0 & 0\\
+            \end{block}
+        \end{blockarray}. \]
+    What are the communication classes of this DTMC\@?
+    \tcblower{}
+    \textbf{Solution}:
+\end{Example}
+\subsection*{Periodicity}
+\begin{Regular}
+    \textbf{Definition}: The \emph{period} of state $i$ is given by $d(i)=\gcd{n \in \mathbb{Z}^{+}: P_{i, i}^{(n)}>0}$,
+    where $\gcd{}$ denotes the greatest common divisor of a set of positive integers.
+    \tcblower{}
+    \underline{Remark}: If $ d(i)=1 $, then state $ i $ is said to be aperiodic.
+    In fact, a DTMC is said to be \emph{aperiodic} if $ d(i)=1\; \forall i\in \mathbb{N} $.
+    Furthermore, if $ P_{i,i}^{(n)}=0\; \forall n \in \mathbb{Z}^{+} $, then we set $ d(i)=\infty $.
+\end{Regular}
+\begin{Example}
+    \textbf{Example 3.5}. Consider a DTMC with TPM
+    \[ P=\begin{blockarray}{cccccc}
+            & 0 & 1 & 2 & 3 \\
+            \begin{block}{c[ccccc]}
+                0 & \frac{1}{3} & 0 & 0 & \frac{2}{3} \\[2pt]
+                1 & \frac{1}{2} & \frac{1}{4} & \frac{1}{4} & \frac{1}{4} \\[2pt]
+                2 & 0 & 0 & 1 & 0 \\[2pt]
+                3 & \frac{3}{4} & 0 & 0 & \frac{1}{4}\\
+            \end{block}
+        \end{blockarray}. \]
+    Determine the communication classes of this DTMC and the period of each state.
+    \tcblower{}
+    \textbf{Solution}:
+\end{Example}
+\begin{Example}
+    \textbf{Example 3.3}. (\emph{continued})  Recall that $\Set{0, 1, 2, 3}$ is the
+    only communication class for the DTMC with TPM
+    \[ P=\begin{blockarray}{cccccc}
+            & 0 & 1 & 2 & 3 \\
+            \begin{block}{c[ccccc]}
+                0 & 0 & 1 & 0 & 0 \\
+                1 & 0 & 0 & 1 & 0 \\
+                2 & 0 & 0 & 0 & 1 \\
+                3 & 0.5 & 0 & 0.5 & 0\\
+            \end{block}
+        \end{blockarray}. \]
+    Determine the period of each state.
+    \tcblower{}
+    \textbf{Solution}:
+\end{Example}
+\begin{Example}
+    \textbf{Example 3.6}. Consider the DTMC with TPM
+    \[ P=\begin{blockarray}{cccccc}
+            & 0 & 1 & 2 & 3 \\
+            \begin{block}{c[ccccc]}
+                0 & \frac{1}{2} & \frac{1}{2} & 0 & 0 \\[2pt]
+                1 & \frac{2}{3} & \frac{1}{3} & 0 & 0 \\[2pt]
+                2 & 0 & 0 & 0 & 1 \\[2pt]
+                3 & 0 & 0 & 1 & 0\\
+            \end{block}
+        \end{blockarray}. \]
+    Find the communication classes of this DTMC and determine the period of each state.
+    \tcblower{}
+    \textbf{Solution}:
+\end{Example}
+The above examples illustrate some kinds of periodic behaviour that can be exhibited by
+DTMCs. However, we do observe that among the states within a given communication class,
+it seems as though the periodic behaviour is consistent. This is not a coincidence, as the next
+theorem indicates.
+\begin{Result}
+    \textbf{Theorem 3.1}. If $ i\leftrightarrow j $, then $ d(i)=d(j) $.
+    \tcblower{}
+    \textbf{Proof}:
+\end{Result}
+\begin{Example}
+    \textbf{Example 3.7}. Consider a DTMC with TPM
+    \[ P=\begin{blockarray}{ccccc}
+            & 0 & 1 & 2 \\
+            \begin{block}{c[cccc]}
+                0 & 0 & \frac{1}{2}  & \frac{1}{2}\\[2pt]
+                1 & \frac{1}{2} & 0 & \frac{1}{2}\\[2pt]
+                2 & \frac{1}{2} & \frac{1}{2} & 0 \\
+            \end{block}
+        \end{blockarray}. \]
+    Find the communication classes of this DTMC and determine the period of each state.
+    \tcblower{}
+    \textbf{Solution}:
+\end{Example}
+\underline{Remark}: As the previous example demonstrates, it is still possible to observe aperiodic
+behaviour even though the main diagonal components of $P$ are all zero. More generally, if
+$ d(i)=k $, then this does not necessarily imply that $ P_{i,i}^{(k)}>0 $ Instead, it implies that if the
+DTMC is in state $i$ at time $0$, then it is impossible to observe the DTMC in state $i$ at time
+$ n\in\mathbb{Z}^+ $ if $n$ is not a multiple of $k$ (i.e., $P_{i,i}^{(n)} = 0$ for such $n$).
