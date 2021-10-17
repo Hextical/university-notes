@@ -3,7 +3,7 @@
 \section{Definitions and Basic Concepts}
 \subsection*{Stochastic Process}
 \begin{Regular}
-    \textbf{Definition}: $ \Set{X(t)\given t\in\mathcal{T}} $ is called a \emph{stochastic process}
+    \textbf{Definition}: $ \Set{X(t), t\in\mathcal{T}} $ is called a \emph{stochastic process}
     if $ X(t) $ is a rv (or possibly a random vector) for any given $ t\in\mathcal{T} $.
     $ \mathcal{T} $ is referred to as the \emph{index set} and is often interpreted in
     the context of time. As such, $ X(t) $ is often called the \emph{state of the process at time $ t $}.
@@ -14,7 +14,7 @@
         \end{cases} \]
     Since there is a one-to-one correspondence between the sets $ \mathcal{T}=\Set{t_0,t_1,t_2,\ldots} $
     and $ \mathbb{N}=\Set{0,1,2,\ldots} $, we will use $ \mathcal{T}=\mathbb{N} $ as the general index set for a discrete-time
-    stochastic process (unless otherwise stated). In other words, $ \Set{X(n)\given n\in\mathbb{N}} $ or $ \Set{X_n\given n\in\mathbb{N}} $
+    stochastic process (unless otherwise stated). In other words, $ \Set{X(n), n\in\mathbb{N}} $ or $ \Set{X_n, n\in\mathbb{N}} $
     will represent a general discrete-time stochastic process.
 \end{Regular}
 \subsection*{Discrete-time Stochastic Process}
@@ -77,7 +77,7 @@ Some examples of a discrete-time stochastic process $ \Set{X_n,n\in\mathbb{N}} $
                   = & \Prob{X_{n+1}=x_{n+1} \given X_{n}=x_{n}} \Prob{X_{n}=x_{n}, X_{n-2}=x_{n-2}, \ldots, X_{1}=x_{1}, X_{0}=x_{0}}.
               \end{align*}
               Substituting this latter expression into the numerator of the top equation yields
-              \[ \Prob{X_{n+1}=x_{n+1} \given X_{n}=x_{n}, X_{n-2}=x_{n-2}, \ldots, X_{1}=x_{1}, X_{0}=x_{0}}=\Prob{X_{n+1}=x_{n+1} \given X_{n}=x_{n}} \]
+              \[ \Prob{X_{n+1}=x_{n+1} \given X_{n}=x_{n}, X_{n-2}=x_{n-2}, \ldots, X_{1}=x_{1}, X_{0}=x_{0}}=\Prob{X_{n+1}=x_{n+1} \given X_{n}=x_{n}}. \]
               It is straightforward to extend the above result to any number of previous time points from
               $ 0,1,\ldots,n-1 $ with ``missing'' information. This is the essence of the Markov property.
     \end{enumerate}
@@ -90,31 +90,28 @@ Some examples of a discrete-time stochastic process $ \Set{X_n,n\in\mathbb{N}} $
     Let $ P_n $ be the associated matrix containing all these transition probabilities, referred to as the
     \emph{one-step transition probability matrix} (TPM) from time $ n $ to time $ n+1 $. It looks like
     \[ P_n=[P_{n,i,j}]=
-        \begin{blockarray}{cccccccc}
-            & 0 & 1 & 2 & \cdots & j & \cdots \\
-            \begin{block}{c[ccccccc]}
-                0 & P_{n, 0,0}  & P_{n, 0,1}  & P_{n, 0,2}  & \cdots & P_{n, 0, j} & \cdots \\
-                1 & P_{n, 1,0}  & P_{n, 1,1}  & P_{n, 1,2}  & \cdots & P_{n, 1, j} & \cdots \\
-                \vdots & \vdots      & \vdots      & \vdots      &        & \vdots      &        \\
-                i & P_{n, i, 0} & P_{n, i, 1} & P_{n, i, 2} & \cdots & P_{n, i, j} & \cdots \\
-                \vdots & \vdots      & \vdots      & \vdots      &        & \vdots      &\\
-            \end{block}
-        \end{blockarray}, \]
+        \begin{bNiceMatrix}[first-row,first-col]
+                   & 0           & 1           & 2           & \cdots & j           & \cdots \\
+            0      & P_{n, 0,0}  & P_{n, 0,1}  & P_{n, 0,2}  & \cdots & P_{n, 0, j} & \cdots \\
+            1      & P_{n, 1,0}  & P_{n, 1,1}  & P_{n, 1,2}  & \cdots & P_{n, 1, j} & \cdots \\
+            \vdots & \vdots      & \vdots      & \vdots      &        & \vdots      &        \\
+            i      & P_{n, i, 0} & P_{n, i, 1} & P_{n, i, 2} & \cdots & P_{n, i, j} & \cdots \\
+            \vdots & \vdots      & \vdots      & \vdots      &        & \vdots      &
+        \end{bNiceMatrix},
+    \]
     where, for convenience, the states of the DTMC are labelled along the margins of the matrix.
 
     For each pair of states $ i $ and $ j $, if $ P_{n,i,j}=P_{i,j}\; \forall n\in\mathbb{N} $,
     then we say that the DTMC is \emph{stationary} or \emph{homogenous}. In this situation, the one-step TPM becomes:
     \[ P=[P_{i,j}]=
-        \begin{blockarray}{cccccccc}
-            & 0 & 1 & 2 & \cdots & j & \cdots \\
-            \begin{block}{c[ccccccc]}
-                0 & P_{0,0}  & P_{0,1}  & P_{0,2}  & \cdots & P_{0, j} & \cdots \\
-                1 & P_{1,0}  & P_{1,1}  & P_{1,2}  & \cdots & P_{1, j} & \cdots \\
-                \vdots & \vdots      & \vdots      & \vdots      &        & \vdots      &        \\
-                i & P_{i, 0} & P_{i, 1} & P_{i, 2} & \cdots & P_{i, j} & \cdots \\
-                \vdots & \vdots      & \vdots      & \vdots      &        & \vdots      &\\
-            \end{block}
-        \end{blockarray}. \]
+        \begin{bNiceMatrix}[first-row,first-col]
+                   & 0        & 1        & 2        & \cdots & j        & \cdots \\
+            0      & P_{0,0}  & P_{0,1}  & P_{0,2}  & \cdots & P_{0, j} & \cdots \\
+            1      & P_{1,0}  & P_{1,1}  & P_{1,2}  & \cdots & P_{1, j} & \cdots \\
+            \vdots & \vdots   & \vdots   & \vdots   &        & \vdots   &        \\
+            i      & P_{i, 0} & P_{i, 1} & P_{i, 2} & \cdots & P_{i, j} & \cdots \\
+            \vdots & \vdots   & \vdots   & \vdots   &        & \vdots   &
+        \end{bNiceMatrix}. \]
     \tcblower{}
     \underline{Remark}: In STAT 333, we only consider stationary DTMCs. Moreover, from the construction of the TPM $ P $,
     it is clear that $ P_{i,j}\ge 0\; \forall i,j\in\mathbb{N} $ and $ \sum_{j=0}^{\infty} P_{i,j}=1\; \forall i\in\mathbb{N} $
@@ -129,7 +126,21 @@ Some examples of a discrete-time stochastic process $ \Set{X_n,n\in\mathbb{N}} $
     will be clear, overcast, or raining tomorrow with respective probabilities $0.4$, $0.2$, and $0.4$.
     Construct the underlying DTMC and determine its TPM\@.
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: Note that the weather tomorrow only depends on the weather
+    today, implying that the Markov property holds true. Thus,
+    letting $ X_n $ denote the state of the weather on the $ n\textsuperscript{th} $
+    day, $ \Set{X_n,n\in\mathbb{N}} $ is a three-state DTMC\@.
+
+    If we let state $ 0 $ correspond to clear weather, state $ 1 $
+    correspond to overcast, and state $ 2 $ correspond to raining,
+    then the state space of the DTMC is $ \mathcal{S}=\Set{0,1,2} $
+    and its TPM is given by
+    \[ P=\begin{bNiceMatrix}[first-row,first-col]
+              & 0   & 1   & 2   \\
+            0 & 0.6 & 0.3 & 0.1 \\
+            1 & 0.2 & 0.5 & 0.3 \\
+            2 & 0.4 & 0.2 & 0.4
+        \end{bNiceMatrix}. \]
 \end{Example}
 \subsection*{$ n $-step Transition Probability Matrix}
 \begin{Regular}
@@ -159,7 +170,7 @@ Some examples of a discrete-time stochastic process $ \Set{X_n,n\in\mathbb{N}} $
     \end{align*}
     \textbf{We have}: $ P_{i,j}^{(n)}=\sum_{k=0}^{\infty} P_{i,k}^{(n-1)}P_{k,j}\leftarrow $~\ref{eq3.1}.
     \tcblower{}
-    \underline{Recall}: If $ A=[a_{i,j}] $, $ B=[b_{i,j}] $, and $ C=AB $ where $ C=[c_{i,j}] $, then $ \sum_k a_{i,j}b_{k,j} $.
+    \underline{Recall}: If $ A=[a_{i,j}] $, $ B=[b_{i,j}] $, and $ C=AB $ where $ C=[c_{i,j}] $, then $ c_{ij}=\sum_k a_{i,k}b_{k,j} $.
 
     As a result, note that~\ref{eq3.1} implies that $ P^{(n)}=P^{(n-1)}P $, $ n\in\mathbb{Z}^+ $. More generally, $ P_{i,j}^{(n)} $
     can be expressed as
@@ -194,9 +205,9 @@ Some examples of a discrete-time stochastic process $ \Set{X_n,n\in\mathbb{N}} $
     For $ n\in\mathbb{Z}^+ $, note that
     \begin{align*}
         \alpha_{n, k} & =\Prob{X_{n}=k}                                                                                            \\
-                      & =\sum_{i=0}^{\infty} \Prob{X_{n}=k \given X_{m}=i} \Prob{X_{m}=i} \text{ where} 0 \leq m \leq n            \\
+                      & =\sum_{i=0}^{\infty} \Prob{X_{n}=k \given X_{m}=i} \Prob{X_{m}=i} \text{ where } 0 \leq m \leq n           \\
                       & =\sum_{i=0}^{\infty} \alpha_{m,i} \Prob{X_{n-m}=k \given X_{0}=i} \text{ due to the stationary assumption} \\
-                      & =\sum_{i=0}^{\infty} \alpha_{m,i} P_{i,k}^{(n-m)}
+                      & =\sum_{i=0}^{\infty} \alpha_{m,i} P_{i,k}^{(n-m)}.
     \end{align*}
     In matrix form, the above relation implies that
     \[ \Vector{\alpha}_{n}=\Vector{\alpha}_{m} P^{(n-m)}=\Vector{\alpha}_{m} P^{n-m},\; 0 \leq m \leq n, \]
@@ -229,30 +240,112 @@ Some examples of a discrete-time stochastic process $ \Set{X_n,n\in\mathbb{N}} $
 \begin{Example}
     \textbf{Example 3.2}. A particle moves along the states $ \Set{0,1,2} $ according to a DTMC whose TPM
     is given by
-    \[ P=\begin{blockarray}{ccccc}
-            & 0 & 1 & 2 \\
-            \begin{block}{c[cccc]}
-                0 & 0.7  & 0.2  & 0.1 \\
-                1 & 0 & 0.6 & 0.4 \\
-                2 & 0.5 & 0 & 0.5 \\
-            \end{block}
-        \end{blockarray}. \]
-
+    \[ P=\begin{bNiceMatrix}[first-row,first-col]
+              & 0   & 1   & 2   \\
+            0 & 0.7 & 0.2 & 0.1 \\
+            1 & 0   & 0.6 & 0.4 \\
+            2 & 0.5 & 0   & 0.5
+        \end{bNiceMatrix}. \]
     Let $X_n$ denote the position of the particle after the $n\textsuperscript{th}$ move. Suppose that the particle is
     equally likely to start in any of the three positions.
     \begin{enumerate}[(a)]
         \item Calculate $ \Prob{X_3=1\given X_0=0} $.
 
-              \textbf{Solution}:
+              \textbf{Solution}: We wish to determine $ P_{0,1}^{(3)} $.
+              To get this, we proceed to calculate $ P^{(3)}=P^3 $. First,
+              \[ P^{(2)}=P^2=\begin{bmatrix}
+                      0.7 & 0.2 & 0.1 \\
+                      0   & 0.6 & 0.4 \\
+                      0.5 & 0   & 0.5
+                  \end{bmatrix}
+                  \begin{bmatrix}
+                      0.7 & 0.2 & 0.1 \\
+                      0   & 0.6 & 0.4 \\
+                      0.5 & 0   & 0.5
+                  \end{bmatrix}=
+                  \begin{bNiceMatrix}[first-row,first-col]
+                        & 0    & 1    & 2    \\
+                      0 & 0.54 & 0.26 & 0.2  \\
+                      1 & 0.2  & 0.36 & 0.44 \\
+                      2 & 0.6  & 0.1  & 0.3
+                  \end{bNiceMatrix}. \]
+              Then,
+              \[ P^{(3)}=P^{(2)}P=
+                  \begin{bmatrix}
+                      0.54 & 0.26 & 0.2  \\
+                      0.2  & 0.36 & 0.44 \\
+                      0.6  & 0.1  & 0.3
+                  \end{bmatrix}
+                  \begin{bmatrix}
+                      0.7 & 0.2 & 0.1 \\
+                      0   & 0.6 & 0.4 \\
+                      0.5 & 0   & 0.5
+                  \end{bmatrix}=
+                  \begin{bNiceMatrix}[first-row,first-col]
+                        & 0     & 1     & 2     \\
+                      0 & 0.478 & 0.264 & 0.258 \\
+                      1 & 0.36  & 0.256 & 0.384 \\
+                      2 & 0.57  & 0.18  & 0.25
+                  \end{bNiceMatrix}.
+              \]
+              Thus, $ \Prob{X_3=1\given X_0=0}=P_{0,1}^{(3)}=0.264 $.
         \item Calculate $ \Prob{X_4=2} $.
 
-              \textbf{Solution}:
+              \textbf{Solution}: We wish to calculate
+              $ \alpha_{4,2}=\Prob{X_4=2} $. Note that
+              \begin{align*}
+                  \Vector{\alpha}_4
+                   & =\begin{bmatrix}
+                          \alpha_{4,0} & \alpha_{4,1} & \alpha_{4,2}
+                      \end{bmatrix} \\
+                   & =\Vector{\alpha}_0 P^{(4)}                  \\
+                   & =\Vector{\alpha}_0 P^{(3)}P                 \\
+                   & =\begin{bmatrix}
+                          \frac{1}{3} & \frac{1}{3} & \frac{1}{3}
+                      \end{bmatrix}
+                  \begin{bmatrix}
+                      0.478 & 0.264 & 0.258 \\
+                      0.36  & 0.256 & 0.384 \\
+                      0.57  & 0.18  & 0.25
+                  \end{bmatrix}\begin{bmatrix}
+                                   0.7 & 0.2 & 0.1 \\
+                                   0   & 0.6 & 0.4 \\
+                                   0.5 & 0   & 0.5
+                               \end{bmatrix}                   \\
+                   & =\begin{bmatrix}
+                          \frac{1}{3} & \frac{1}{3} & \frac{1}{3}
+                      \end{bmatrix}\begin{bmatrix}
+                                       0.4636 & 0.254  & 0.2824 \\
+                                       0.444  & 0.2256 & 0.3304 \\
+                                       0.524  & 0.222  & 0.254
+                                   \end{bmatrix}    \\
+                   & =\begin{bmatrix}
+                          0.4772 & 0.233867 & 0.288933
+                      \end{bmatrix}.
+              \end{align*}
+              Thus, $ \Prob{X_4=2}=0.288933\approx 0.289 $.
         \item Calculate $ \Prob{X_6=0,X_4=2} $.
 
-              \textbf{Solution}:
+              \textbf{Solution}: We have
+              \begin{align*}
+                  \Prob{X_6=0,X_4=2}
+                   & =\Prob{X_4=2}\Prob{X_6=0\given X_4=2} \\
+                   & =\alpha_{4,2}P_{2,0}^{(2)}            \\
+                   & =(0.288933)(0.6)                      \\
+                   & =0.17336                              \\
+                   & \approx 0.173.
+              \end{align*}
         \item Calculate $ \Prob{X_9=0,X_7=2\given X_5=1,X_2=0} $.
 
-              \textbf{Solution}:
+              \textbf{Solution}: We have
+              \begin{align*}
+                   & \Prob{X_9=0,X_7=2\given X_5=1,X_2=0}                                                             \\
+                   & =\Prob{X_7=2\given X_5=1,X_2=0}\Prob{X_9=0\given X_7=2,X_5=1,X_2=0}                              \\
+                   & =\Prob{X_7=2\given X_5=1}\Prob{X_9=0\given X_7=2}                   &  & \text{ Markov property} \\
+                   & =P_{1,2}^{(2)}P_{2,0}^{(2)}                                                                      \\
+                   & =(0.44)(0.6)                                                                                     \\
+                   & =0.264.
+              \end{align*}
     \end{enumerate}
 \end{Example}
 \subsection*{Accessibility and Communication}
@@ -302,7 +395,7 @@ With these basic results in place, we next consider the classification of states
 \subsection*{Communication Classes}
 The fact that communication forms an equivalence relation allows us to \emph{partition} all the states
 of a DTMC into various communication classes, so that within each class, all states
-communicate. However, if states $i$ and $j$ belong to \emph{different classes}, then $ i\leftrightarrow j $ is not true
+communicate. However, if states $i$ and $j$ belong to \emph{different classes}, then $ i\leftrightarrow j $ is \underline{not true}
 (i.e., at most one of $ i\rightarrow j $ or $ j\rightarrow i $ can be true).
 \begin{Regular}
     \textbf{Definition}: A DTMC that has only one communication class is said to be \emph{irreducible}. On the
@@ -310,46 +403,89 @@ communicate. However, if states $i$ and $j$ belong to \emph{different classes}, 
 \end{Regular}
 \begin{Example}
     \textbf{Example 3.2}. (\emph{continued}) What are the communication classes of the DTMC\@?
-    \[ P=\begin{blockarray}{ccccc}
-            & 0 & 1 & 2 \\
-            \begin{block}{c[cccc]}
-                0 & 0.7  & 0.2  & 0.1 \\
-                1 & 0 & 0.6 & 0.4 \\
-                2 & 0.5 & 0 & 0.5 \\
-            \end{block}
-        \end{blockarray}. \]
+    \[ P=\begin{bNiceMatrix}[first-row,first-col]
+              & 0   & 1   & 2   \\
+            0 & 0.7 & 0.2 & 0.1 \\
+            1 & 0   & 0.6 & 0.4 \\
+            2 & 0.5 & 0   & 0.5
+        \end{bNiceMatrix}. \]
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: To answer questions of this nature, it is often useful to
+    draw a \underline{state transition diagram}.
+    \begin{center}
+        \begin{tikzpicture}[thick]
+            \node [place] (0) at ( 0,0) {$0$};
+            \node [place] (1) at ( 2,1) {$1$};
+            \node [place] (2) at (2,-1) {$2$};
+            \draw[->] (0) -- (1);
+            \draw[->] (1) -- (2);
+            \draw[<->] (0) -- (2);
+            \path (0) edge [loop left] node {} (0);
+            \path (1) edge [loop right] node {} (1);
+            \path (2) edge [loop right] node {} (2);
+        \end{tikzpicture}
+    \end{center}
+    It is clear from this diagram that there is only one class for this DTMC,
+    namely $ \Set{0,1,2} $. Therefore, this DTMC is
+    \underline{irreducible}.
 \end{Example}
 \begin{Example}
     \textbf{Example 3.3}. Consider a DTMC with TPM
-    \[ P=\begin{blockarray}{cccccc}
-            & 0 & 1 & 2 & 3 \\
-            \begin{block}{c[ccccc]}
-                0 & 0 & 1 & 0 & 0 \\
-                1 & 0 & 0 & 1 & 0 \\
-                2 & 0 & 0 & 0 & 1 \\
-                3 & 0.5 & 0 & 0.5 & 0\\
-            \end{block}
-        \end{blockarray}. \]
+    \[ P=\begin{bNiceMatrix}[first-row,first-col]
+              & 0   & 1 & 2   & 3 \\
+            0 & 0   & 1 & 0   & 0 \\
+            1 & 0   & 0 & 1   & 0 \\
+            2 & 0   & 0 & 0   & 1 \\
+            3 & 0.5 & 0 & 0.5 & 0
+        \end{bNiceMatrix}. \]
     What are the communication classes of this DTMC\@?
     \tcblower{}
     \textbf{Solution}:
+    \begin{center}
+        \begin{tikzpicture}[thick]
+            \node [place] (0) at ( 0,0) {$0$};
+            \node [place] (1) at ( 2,1) {$1$};
+            \node [place] (2) at ( 4,0) {$2$};
+            \node [place] (3) at (2,-1) {$3$};
+            \draw[->] (0) -- (1);
+            \draw[->] (1) -- (2);
+            \draw[<->] (2) -- (3);
+            \draw[->] (3) -- (0);
+        \end{tikzpicture}
+    \end{center}
+    The above diagram indicates
+    that there is only one communication class for this DTMC, namely $ \Set{0,1,2,3} $.
+    Therefore, this DTMC is \underline{irreducible}.
 \end{Example}
 \begin{Example}
     \textbf{Example 3.4}. Consider a DTMC with TPM
-    \[ P=\begin{blockarray}{cccccc}
-            & 0 & 1 & 2 & 3 \\
-            \begin{block}{c[ccccc]}
-                0 & \frac{1}{3} & \frac{2}{3} & 0 & 0 \\[2pt]
-                1 & \frac{1}{2} & \frac{1}{4} & \frac{1}{4} & \frac{1}{4} \\[2pt]
-                2 & 0 & 0 & 1 & 0 \\[2pt]
-                3 & \frac{3}{4} & \frac{1}{4} & 0 & 0\\
-            \end{block}
-        \end{blockarray}. \]
+    \[ P=\begin{bNiceMatrix}[first-row,first-col,cell-space-limits=1pt]
+              & 0           & 1           & 2           & 3           \\
+            0 & \frac{1}{3} & \frac{2}{3} & 0           & 0           \\
+            1 & \frac{1}{2} & \frac{1}{4} & \frac{1}{8} & \frac{1}{8} \\
+            2 & 0           & 0           & 1           & 0           \\
+            3 & \frac{3}{4} & \frac{1}{4} & 0           & 0
+        \end{bNiceMatrix}. \]
     What are the communication classes of this DTMC\@?
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: \underline{State Transition Diagram}
+    \begin{center}
+        \begin{tikzpicture}[thick]
+            \node [place] (0) at ( 0,0) {$0$};
+            \node [place] (1) at ( 2,1) {$1$};
+            \node [place] (2) at ( 4,0) {$2$};
+            \node [place] (3) at (2,-1) {$3$};
+            \draw[<->] (0) -- (1);
+            \draw[->] (1) -- (2);
+            \draw[<->] (1) -- (3);
+            \draw[->] (3) -- (0);
+            \path (0) edge [loop left] node {} (0);
+            \path (1) edge [loop above] node {} (1);
+            \path (2) edge [loop right] node {} (2);
+        \end{tikzpicture}
+    \end{center}
+    The above diagram indicates that the communication classes are
+    $ \Set{0,1,3} $ and $ \Set{2} $. Thus, this DTMC is \underline{reducible}.
 \end{Example}
 \subsection*{Periodicity}
 \begin{Regular}
@@ -362,15 +498,13 @@ communicate. However, if states $i$ and $j$ belong to \emph{different classes}, 
 \end{Regular}
 \begin{Example}
     \textbf{Example 3.5}. Consider a DTMC with TPM
-    \[ P=\begin{blockarray}{cccccc}
-            & 0 & 1 & 2 & 3 \\
-            \begin{block}{c[ccccc]}
-                0 & \frac{1}{3} & 0 & 0 & \frac{2}{3} \\[2pt]
-                1 & \frac{1}{2} & \frac{1}{4} & \frac{1}{4} & \frac{1}{4} \\[2pt]
-                2 & 0 & 0 & 1 & 0 \\[2pt]
-                3 & \frac{3}{4} & 0 & 0 & \frac{1}{4}\\
-            \end{block}
-        \end{blockarray}. \]
+    \[ P=\begin{bNiceMatrix}[first-row,first-col,cell-space-limits=1pt]
+              & 0           & 1           & 2           & 3           \\
+            0 & \frac{1}{3} & 0           & 0           & \frac{2}{3} \\
+            1 & \frac{1}{2} & \frac{1}{4} & \frac{1}{4} & \frac{1}{4} \\
+            2 & 0           & 0           & 1           & 0           \\
+            3 & \frac{3}{4} & 0           & 0           & \frac{1}{4}
+        \end{bNiceMatrix}. \]
     Determine the communication classes of this DTMC and the period of each state.
     \tcblower{}
     \textbf{Solution}:
@@ -378,30 +512,26 @@ communicate. However, if states $i$ and $j$ belong to \emph{different classes}, 
 \begin{Example}
     \textbf{Example 3.3}. (\emph{continued})  Recall that $\Set{0, 1, 2, 3}$ is the
     only communication class for the DTMC with TPM
-    \[ P=\begin{blockarray}{cccccc}
-            & 0 & 1 & 2 & 3 \\
-            \begin{block}{c[ccccc]}
-                0 & 0 & 1 & 0 & 0 \\
-                1 & 0 & 0 & 1 & 0 \\
-                2 & 0 & 0 & 0 & 1 \\
-                3 & 0.5 & 0 & 0.5 & 0\\
-            \end{block}
-        \end{blockarray}. \]
+    \[ P=\begin{bNiceMatrix}[first-row,first-col]
+              & 0   & 1 & 2   & 3 \\
+            0 & 0   & 1 & 0   & 0 \\
+            1 & 0   & 0 & 1   & 0 \\
+            2 & 0   & 0 & 0   & 1 \\
+            3 & 0.5 & 0 & 0.5 & 0
+        \end{bNiceMatrix}. \]
     Determine the period of each state.
     \tcblower{}
     \textbf{Solution}:
 \end{Example}
 \begin{Example}
     \textbf{Example 3.6}. Consider the DTMC with TPM
-    \[ P=\begin{blockarray}{cccccc}
-            & 0 & 1 & 2 & 3 \\
-            \begin{block}{c[ccccc]}
-                0 & \frac{1}{2} & \frac{1}{2} & 0 & 0 \\[2pt]
-                1 & \frac{2}{3} & \frac{1}{3} & 0 & 0 \\[2pt]
-                2 & 0 & 0 & 0 & 1 \\[2pt]
-                3 & 0 & 0 & 1 & 0\\
-            \end{block}
-        \end{blockarray}. \]
+    \[ P=\begin{bNiceMatrix}[first-row,first-col,cell-space-limits=1pt]
+              & 0           & 1           & 2 & 3 \\
+            0 & \frac{1}{2} & \frac{1}{2} & 0 & 0 \\
+            1 & \frac{2}{3} & \frac{1}{3} & 0 & 0 \\
+            2 & 0           & 0           & 0 & 1 \\
+            3 & 0           & 0           & 1 & 0
+        \end{bNiceMatrix}. \]
     Find the communication classes of this DTMC and determine the period of each state.
     \tcblower{}
     \textbf{Solution}:
@@ -417,14 +547,12 @@ theorem indicates.
 \end{Result}
 \begin{Example}
     \textbf{Example 3.7}. Consider a DTMC with TPM
-    \[ P=\begin{blockarray}{ccccc}
-            & 0 & 1 & 2 \\
-            \begin{block}{c[cccc]}
-                0 & 0 & \frac{1}{2}  & \frac{1}{2}\\[2pt]
-                1 & \frac{1}{2} & 0 & \frac{1}{2}\\[2pt]
-                2 & \frac{1}{2} & \frac{1}{2} & 0 \\
-            \end{block}
-        \end{blockarray}. \]
+    \[ P=\begin{bNiceMatrix}[first-row,first-col,cell-space-limits=1pt]
+              & 0           & 1           & 2           \\
+            0 & 0           & \frac{1}{2} & \frac{1}{2} \\
+            1 & \frac{1}{2} & 0           & \frac{1}{2} \\
+            2 & \frac{1}{2} & \frac{1}{2} & 0
+        \end{bNiceMatrix}. \]
     Find the communication classes of this DTMC and determine the period of each state.
     \tcblower{}
     \textbf{Solution}:

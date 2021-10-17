@@ -1,4 +1,3 @@
-\RequirePackage{fix-cm}
 \documentclass[oneside,final]{book}
 \usepackage[svgnames]{xcolor}
 \usepackage[british]{babel}
@@ -24,59 +23,78 @@
 \makeatother
 \usepackage{bm}
 
-\usepackage{blkarray}
-\usepackage{multirow}
-
 \usepackage{pgfplots}
-\pgfplotsset{width=10cm,compat=1.18}
+\pgfplotsset{compat=1.18}
 
-% Functions
-\providecommand\given{} % just to make sure it exists
-\DeclarePairedDelimiterXPP{\E}[1]{\operatorname{\text{E}}}[]{}{%
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+% just to make sure it exists
+\providecommand\given{}%
+% can be useful to refer to this outside \Set
+\newcommand\SetSymbol[1][]{%
+    \nonscript\:#1\vert{}%
+    \allowbreak%
+    \nonscript\:%
+    \mathopen{}}%
+\DeclarePairedDelimiterXPP{\E}[1]{\operatorname{\mathbb{E}}}[]{}{%
+    \renewcommand\given{\SetSymbol[\delimsize]}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\Var}[1]{\operatorname{\text{Var}}}(){}{%
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+\DeclarePairedDelimiterXPP{\Var}[1]{\operatorname{Var}}(){}{%
+    \renewcommand\given{\SetSymbol[\delimsize]}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\Cov}[1]{\operatorname{\text{Cov}}}(){}{%
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+\DeclarePairedDelimiterXPP{\Cov}[1]{\operatorname{Cov}}(){}{%
+    \renewcommand\given{\SetSymbol[\delimsize]}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
 \DeclarePairedDelimiterXPP\Prob[1]{\operatorname{\mathbb{P}}}(){}{%
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \renewcommand\given{\SetSymbol[\delimsize]}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
 \DeclarePairedDelimiterXPP\Ind[1]{\operatorname{\mathbb{I}}}\{\}{}{%
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \renewcommand\given{\SetSymbol[\delimsize]}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\se}[1]{\operatorname{\text{se}}}(){}{%
-    \ifblank{#1}{\:\cdot\:}%
-    #1}%
+    
 \let\gcd\relax%
-\DeclarePairedDelimiterXPP{\gcd}[1]{\operatorname{gcd}}\{\}{}{%
-    \ifblank{#1}{\:\cdot\:}%
-    #1}%
 \let\exp\relax%
 \let\log\relax%
 \let\ln\relax%
-\DeclarePairedDelimiterXPP{\exp}[1]{\operatorname{\text{exp}}}\{\}{}{#1}%
-\DeclarePairedDelimiterXPP{\log}[1]{\operatorname{\text{log}}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\ln}[1]{\operatorname{\text{ln}}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\diag}[1]{\operatorname{\text{diag}}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\sign}[1]{\operatorname{\text{sign}}}(){}{#1}%
-
-\DeclarePairedDelimiterXPP{\expit}[1]{\operatorname{\text{expit}}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\logit}[1]{\operatorname{\text{logit}}}(){}{#1}%
-\newcommand{\HN}{\text{H}_0}%
-\newcommand{\HA}{\text{H}_{\text{A}}}%
-
 \let\max\relax%
 \let\min\relax%
-\DeclarePairedDelimiterXPP{\max}[1]{\operatorname{\text{max}}}\{\}{}{#1}%
-\DeclarePairedDelimiterXPP{\min}[1]{\operatorname{\text{min}}}\{\}{}{#1}%
+\DeclarePairedDelimiterXPP{\gcd}[1]{\operatorname{gcd}}\{\}{}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\exp}[1]{\operatorname{exp}}\{\}{}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\log}[1]{\operatorname{log}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\ln}[1]{\operatorname{ln}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\min}[1]{\operatorname{min}}\{\}{}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\max}[1]{\operatorname{max}}\{\}{}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\diag}[1]{\operatorname{diag}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\sign}[1]{\operatorname{sign}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\expit}[1]{\operatorname{expit}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\logit}[1]{\operatorname{logit}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+
+\newcommand{\HN}{\text{H}_0}%
+\newcommand{\HA}{\text{H}_{\text{A}}}%
+\newcommand{\iid}{\overset{\text{iid}}{\sim}}%
 
 % Discrete Distributions
 \DeclarePairedDelimiterXPP{\BERN}[1]{\text{BERN}}(){}{#1}%
@@ -91,25 +109,19 @@
 \DeclarePairedDelimiterXPP{\MN}[1]{\text{MN}}(){}{#1}%
 
 % Continuous Distributions
-\let\U\relax
+\let\U\relax%
 \DeclarePairedDelimiterXPP{\U}[1]{\text{U}}(){}{#1}%
 \DeclarePairedDelimiterXPP{\BetaDist}[1]{\text{Beta}}(){}{#1}%
 \DeclarePairedDelimiterXPP{\Erlang}[1]{\text{Erlang}}(){}{#1}%
 \DeclarePairedDelimiterXPP{\EXP}[1]{\text{EXP}}(){}{#1}%
 
-
-\newcommand{\iid}{\overset{\text{iid}}{\sim}}%
-
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-% can be useful to refer to this outside \Set
-\newcommand\SetSymbol[1][]{%
-    \nonscript\:#1\vert{}
-    \allowbreak\nonscript\:
-    \mathopen{}}
+\DeclarePairedDelimiterX\abs[1]\lvert\rvert{%
+    \ifblank{#1}{\:\cdot\:}{#1}%
+}%
 \DeclarePairedDelimiterX\Set[1]\{\}{%
-    \renewcommand\given{:}
-    #1
-}
+    \renewcommand\given{:}%
+    #1%
+}%
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\arginf}{arg\,inf}
@@ -157,6 +169,8 @@ pdfkeywords={University of Waterloo, Fall 2021 (1219)}}%
 \author{Cameron Roopnarine\thanks{\LaTeX{}er}\and Steve Drekic\thanks{Main Instructor}\and Mirabelle Huynh\thanks{Assisting Instructor}}%
 \date{\today}%
 
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,automata,petri,positioning,calc}
 
 \begin{document}
 \maketitle
@@ -165,4 +179,5 @@ pdfkeywords={University of Waterloo, Fall 2021 (1219)}}%
 \input{wk_02.tex}
 \input{wk_03.tex}
 \input{wk_04.tex}
+\input{appendix.tex}
 \end{document}
