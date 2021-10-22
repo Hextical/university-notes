@@ -1,0 +1,273 @@
+\makeheading{Week 5}{\daterange{2021-10-06}{2021-10-20}}%chktex 8
+\section{Transience and Recurrence}
+\subsection*{First Visit Probability}
+\begin{Regular}
+    We now wish to take a closer look at the likelihood of a DTMC beginning in some state of
+    returning to that particular state. To that end, let us consider the probability that, starting
+    from state $i$, the first visit of the DTMC to state $j$ occurs at time $ n\in\mathbb{Z}^+ $, to be denoted by
+    \[ f_{i,j}^{(n)}=\Prob{X_n=j,X_{n-1}\ne j,\ldots,X_2\ne j, X_1\ne j\given X_0=i}\;\forall i,j\in\mathbb{N}. \]
+    Clearly, we see that $ f_{i,j}^{(1)}=P_{i,j} $.
+
+    For $n \geq 2$, however, the determination of $f_{i, j}^{(n)}$ becomes more complicated,
+    and so we wish to construct a procedure which will enable us to compute
+    $f_{i, j}^{(n)}$ for such $n$. To do so, we consider the quantity $P_{i, j}^{(n)}$, $n \in \mathbb{Z}^{+}$,
+    and condition on the time that the first visit to state $j$ is made:
+
+    \begin{align*}
+        P_{i, j}^{(n)}
+         & =\Prob{X_{n}=j \given X_{0}=i}                                                                                                  \\
+         & =\sum_{k=1}^{n} \Prob{X_{n}=j, \text{first visit to state $ j $ occurs at time $k$} \given X_{0}=i}                             \\
+         & =\sum_{k=1}^{n} \Prob{X_{n}=j, X_{k}=j, X_{k-1} \neq j, \ldots, X_{2} \neq j, X_{1} \neq j \given X_{0}=i}                      \\
+         & =\sum_{k=1}^{n} \Prob{X_{k}=j, X_{k-1} \neq j, \ldots, X_{2} \neq j, X_{1} \neq j \given X_{0}=i} \Prob{X_{n}=j \given X_{k}=j} \\
+         & =\sum_{k=1}^{n} f_{i,j}^{(k)} P_{j,j}^{(n-k)}, \label{eq3.2}\tag*{(3.2)}
+    \end{align*}
+    where we applied the Markov property in the second last equality.
+
+    \textbf{We have}: $ P_{i,j}^{(n)}=\sum_{k=1}^{n} f_{i,j}^{(k)}P_{j,j}^{(n-k)}\leftarrow $~\ref{eq3.2}.
+
+    From~\ref{eq3.2}, we can write
+    \[ P_{i,j}^{(n)}=f_{i,j}^{(n)}P_{j,j}^{(0)}+\sum_{k=1}^{n-1} f_{i,j}^{(k)}P_{j,j}^{(n-k)}=f_{i,j}^{(n)}+\sum_{k=1}^{n-1}f_{i,j}^{(k)}P_{j,j}^{(n-k)}, \]
+    implying that
+    \[ f_{i, j}^{(n)}=P_{i, j}^{(n)}-\sum_{k=1}^{n-1} f_{i, j}^{(k)} P_{j, j}^{(n-k)},\; n \in \mathbb{Z}^{+}. \label{eq3.3}\tag*{(3.3)} \]
+    For $ n\ge 2 $, note that~\ref{eq3.3} yields a recursive means to compute $ f_{i,j}^{(n)} $.
+\end{Regular}
+\subsection*{Transience and Recurrence}
+\begin{Regular}
+    Define the related quantity:
+    \[ f_{i,j}=\Prob{\text{DTMC ever makes a future visit to state $ j $}\given X_0=i}. \]
+    Note that
+    \begin{align*}
+        f_{i,j}
+         & =\sum_{k=1}^{\infty} \Prob{\text{DTMC ever makes a future visit to state $ j $, DTMC visits state $ j $ for $ 1\textsuperscript{th} $ time at time $ k $}\given X_0=i} \\
+         & =\sum_{k=1}^{\infty} \Prob{\text{DTMC visits state $ j $ for $ 1\textsuperscript{th} $ time at time $ k $}\given X_0=i}                                                \\
+         & =\sum_{k=1}^{\infty} f_{i,j}^{(k)}\le 1.
+    \end{align*}
+\end{Regular}
+This leads to the following important concept in the study of Markov chains.
+\begin{Regular}
+    \textbf{Definition}: State $ i $ is said to be \emph{transient} if $ f_{i,i}<1 $. On the other hand, state $ i $ is said to be
+    \emph{recurrent} if $ f_{i,i}=1 $.
+\end{Regular}
+\begin{Regular}
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                    axis lines=middle,
+                    xmin=0, xmax=7,
+                    ymin=0, ymax=5,
+                    xtick={0,1,2,3,4,5,6},
+                    ytick={3},
+                    xticklabels={$0$, \stackanchor{visit}{1}, \stackanchor{visit}{2}, \stackanchor{}{$\cdots$}, \stackanchor{visit}{$k-1$}, \stackanchor{visit}{$k$}, \stackanchor{}{$\cdots$}},
+                    yticklabels={$i$},
+                    xlabel = Time,
+                    ylabel = $X_n$,
+                ]
+                \addplot[color=black,mark=*,only marks]
+                coordinates {
+                        (0,3)(1,3)(2,3)(4,3)(5,3)
+                    };
+                \draw [decoration={brace,raise=3pt},decorate,thick] (0,3) -- (1,3) node [above=3pt] at ($(0,3)!.5!(1,3)$) {$f_{i,i}$};
+                \draw [decoration={brace,raise=3pt},decorate,thick] (1,3) -- (2,3) node [above=3pt] at ($(1,3)!.5!(2,3)$) {$f_{i,i}$};
+                \node at ($(2,3)!.5!(4,3)$) {\ldots};
+                \draw [decoration={brace,raise=3pt},decorate,thick] (4,3) -- (5,3) node [above=3pt] at ($(4,3)!.5!(5,3)$) {$f_{i,i}$};
+                \draw [->,thick] (5,3) -- (7,3) node [above=3pt] at ($(5,3)!.5!(7,3)$) {$1-f_{i,i}$};
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    In what follows, we proceed to look at alternative ways
+    of characterizing the notions of transience and recurrence.
+    As such, let us first define $M_i$ to be a rv which
+    counts the number of (future) times the DTMC visits
+    state $i$ (disregarding the possibility of starting in state
+    $i$ at time $0$). If we assume that $f_{i,i} < 1$, then the Markov
+    property and stationary assumption jointly imply that
+    \[ \Prob{M_i=k\given X_0=i}=\biggl(\prod_{n=1}^k f_{i,i}\biggr)(1-f_{i,i})=f_{i,i}^k(1-f_{i,i}),\; k=0,1,2,\ldots, \label{eq3.4}\tag*{(3.4)} \]
+    as the DTMC will return to state $i$, $k$ times with probability $f_{i,i}$, and then never return with
+    probability $ 1-f_{i,i} $.
+
+    \textbf{We have}: $ \Prob{M_i=k\given X_0=i}=f_{i,i}^k(1-f_{i,i}),\; k=0,1,2,\ldots\leftarrow $~\ref{eq3.4}.
+
+    We recognize~\ref{eq3.4} as the pmf of a $ \GEOf{1-f_{i,i}} $ rv, thereby implying that
+    \[ \E{M_i\given X_0=i}=\frac{1-(1-f_{i,i})}{1-f_{i,i}} =\frac{f_{i,i}}{1-f_{i,i}} <\infty\text{ since }f_{i,i}<1. \]
+    However, if $ f_{i,i}=1 $, then $ \Prob{M_i=\infty\given X_0=i}=1 $, immediately implying that $ \E{M_i\given X_0=i}=\infty $.
+    Therefore, an equivalent way of viewing transience/recurrence is as follows:
+    \[ \E{M_i\given X_0=i}\begin{cases}
+            <\infty, & \text{iff state $ i $ is transient}, \\
+            =\infty, & \text{iff state $ i $ is recurrent}.
+        \end{cases} \]
+    Following further on the notion of $ M_i $, define a sequence of indicator rvs $ \Set{A_n}_{n=1}^\infty $ such that
+    \[ A_n=\begin{cases}
+            0, & \text{if $ X_n\ne i $}, \\
+            1, & \text{if $ X_n=i $}.
+        \end{cases} \]
+    With this definition, note that $ M_i=\sum_{n=1}^{\infty} A_n $. Now,
+    \begin{align*}
+        \E{M_i\given X_0=i}
+         & =\E*{\sum_{n=1}^{\infty} A_n\given X_0=i}                                            \\
+         & =\sum_{n=1}^{\infty} \E{A_n\given X_0=i}                                             \\
+         & =\sum_{n=1}^{\infty} \Bigl[0\Prob{A_n=0\given X_0=i}+1\Prob{A_n=1\given X_0=i}\Bigr] \\
+         & =\sum_{n=1}^{\infty} \Prob{X_n=i\given X_0=i}                                        \\
+         & =\sum_{n=1}^{\infty} P_{i,i}^{(n)}.
+    \end{align*}
+    \textbf{We have}: $ \E{M_i\given X_0=i}=\sum_{n=1}^{\infty} P_{i,i}^{(n)} $.
+
+    Therefore, yet another equivalent way of characterizing transience/recurrence is as follows:
+    \[ \sum_{n=1}^{\infty} P_{i,i}^{(n)}\begin{cases}
+            <\infty, & \text{iff state $ i $ is transient}, \\
+            =\infty, & \text{iff state $ i $ is recurrent}.
+        \end{cases} \]
+    \underline{Remark}: A simple way of viewing these concepts is as follows: a recurrent state will be visited
+    \emph{infinitely often}, whereas a transient state will only be visited \emph{finitely often}.
+\end{Regular}
+As was the case concerning the periodicity of states within the same communication class, the
+next theorem indicates that transience/recurrence is \emph{also} a class property.
+\begin{Result}
+    \textbf{Theorem 3.2}. If $ i\leftrightarrow j $ and state $ i $ is recurrent, then state $ j $ is recurrent.
+    \tcblower{}
+    \textbf{Proof}: Since $ i\leftrightarrow j $, $ \exists m,n\in\mathbb{N} $
+    such that $ P_{i,j}^{(m)}>0 $ and $ P_{j,i}^{(n)}>0 $. Also,
+    since state $ i $ is recurrent we know that $ \sum_{\ell=1}^{\infty} P_{i,i}^{(\ell)}=\infty $.
+    Suppose that $ s\in\mathbb{Z}^+ $. Note that
+    \[ P_{j,j}^{(n+s+m)}\ge P_{j,i}^{(n)}P_{i,i}^{(s)}P_{i,j}^{(m)}. \]
+    Look at
+    \begin{align*}
+        \sum_{k=1}^{\infty} P_{j,j}^{(k)}
+         & \ge \sum_{k=n+m+1}^{\infty} P_{j,j}^{(k)}                                                                                                         \\
+         & =\sum_{s=1}^{\infty} P_{j,j}^{(n+s+m)}                                                                                  &  & \text{let $s=k-n-m$} \\
+         & \ge \sum_{s=1}^{\infty} P_{j,i}^{(n)}P_{i,i}^{(s)}P_{i,j}^{(m)}                                                                                   \\
+         & =\underbrace{P_{j,i}^{(n)}}_{>0}\underbrace{P_{i,j}^{(m)}}_{>0}\underbrace{\sum_{s=1}^{\infty} P_{i,i}^{(s)}}_{=\infty}                           \\
+         & =\infty.
+    \end{align*}
+    Therefore, $ \sum_{k=1}^{\infty} P_{j,j}^{(k)}=\infty $ and state $ j $
+    is recurrent.
+\end{Result}
+\underline{Remark}: An obvious by-product of this theorem is that if $ i\leftrightarrow j $ and state $ i $ is transient,
+then state $ j $ must also be transient.
+
+The following theorem serves as a companion result to Theorem 3.2.
+\begin{Result}
+    \textbf{Theorem 3.3}. If $ i\leftrightarrow j $ and state $ i $ is recurrent, then
+    \[ f_{i,j}=\Prob{\text{DTMC ever makes a future visit to state $ j $}\given X_0=i}=1. \]
+    \tcblower{}
+    \textbf{Proof}: Clearly, the result is true if $ i=j $. Therefore, suppose
+    that $ i\ne j $. Since $ i\leftrightarrow j $, the fact that state $ i $
+    is recurrent implies that state $ j $ is recurrent by Theorem 3.2,
+    and $ f_{j,j}=1 $. To prove that $ f_{i,j}=1 $, suppose that $ f_{i,j}<1 $
+    and try to get a contradiction. Since $ i\leftrightarrow j $,
+    $ \exists n\in\mathbb{Z}^+ $, such that $ P_{j,i}^{(n)}>0 $. Let
+    $ n_i $ be the \underline{smallest} such $ n $ satisfying
+    $ P_{j,i}^{(n)}>0 $. Thus, each time the DTMC visits state $ j $,
+    there is the possibility of being in state $ i $, $ n_i $ time
+    units later (with probability $ P_{j,i}^{(n_i)}>0 $). If we suppose that
+    $ f_{i,j}<1 $, then this implies that the probability of
+    returning to state $ j $ after visiting state $ i $ in the
+    future is not guaranteed (as $1-f_{i,j}>0$). Therefore, we have:
+    \begin{align*}
+        1-f_{j,j}
+         & =\Prob{\text{DTMC \underline{never} makes a future visit to state $ j $}\given X_0=j} \\
+         & \ge \underbrace{P_{j,i}^{(n_i)}}_{>0}\underbrace{(1-f_{i,j})}_{>0}                    \\
+         & >0\implies 1-f_{j,j}>0\implies f_{j,j}<1,
+    \end{align*}
+    which is a contradiction since $ f_{j,j}=1 $. Thus, it must hold true
+    that $ f_{i,j}=1 $ when state $ i $ is recurrent and $ i\leftrightarrow j $.
+\end{Result}
+\underline{Remark}: Based on the above result, we know that, starting from any state of a recurrent class,
+a DTMC will visit each state of that class infinitely many times.
+
+At this stage, a natural question to ask is ``\emph{What do the results that we have accumulated thus
+    far tell us about the behaviour of states within the same communication class?}'' The answer
+would be:
+\begin{enumerate}[(i)]
+    \item these states communicate with each other,
+    \item these states all have the same period,
+    \item these states are all either recurrent or all transient.
+\end{enumerate}
+In fact, in an irreducible DTMC, there is only one communication class and so all the states
+are either recurrent or transient. When the assumption that the DTMC has a \underline{finite} number of
+states is included, we obtain the following important result.
+\begin{Result}
+    \textbf{Theorem 3.4}. A finite-state DTMC has at least one recurrent state.
+    \tcblower{}
+    \textbf{Proof}:
+
+    \underline{Remarks}:
+    \begin{enumerate}[(1)]
+        \item Looking at the above result, it is useful to think of it in the following way. There must be
+              at least one recurrent state. After all, the DTMC has to spend its time somewhere, and if
+              it visits each of its \emph{finitely many states finitely many times}, then where else could it
+              possibly go?
+        \item As an immediate consequence of Theorem 3.4, an irreducible, finite-state DTMC must be
+              recurrent (i.e., all states of the DTMC are recurrent).
+    \end{enumerate}
+\end{Result}
+\begin{Example}
+    \textbf{Example 3.3}. (\emph{continued}) Recall that we considered the irreducible DTMC with TPM
+    \[ P=\begin{bNiceMatrix}[first-row,first-col]
+              & 0   & 1 & 2   & 3 \\
+            0 & 0   & 1 & 0   & 0 \\
+            1 & 0   & 0 & 1   & 0 \\
+            2 & 0   & 0 & 0   & 1 \\
+            3 & 0.5 & 0 & 0.5 & 0
+        \end{bNiceMatrix}. \]
+    Determine whether each state is transient or recurrent.
+    \tcblower{}
+    \textbf{Solution}:
+\end{Example}
+Another interesting property concerning recurrence can also be deduced.
+\begin{Result}
+    \textbf{Theorem 3.5}. If state $i$ is recurrent and state $i$ does not communicate with state $j$, then
+    $ P_{i,j}^{(k)}=0\;\forall k\in\mathbb{Z}^+ $.
+    \tcblower{}
+    \textbf{Proof}:
+\end{Result}
+\begin{Example}
+    \textbf{Example 3.4}. (\emph{continued}) Recall our earlier DTMC with TPM
+    \[ P=\begin{bNiceMatrix}[first-row,first-col,cell-space-limits=1pt]
+              & 0           & 1           & 2           & 3           \\
+            0 & \frac{1}{3} & \frac{2}{3} & 0           & 0           \\
+            1 & \frac{1}{2} & \frac{1}{4} & \frac{1}{8} & \frac{1}{8} \\
+            2 & 0           & 0           & 1           & 0           \\
+            3 & \frac{3}{4} & \frac{1}{4} & 0           & 0
+        \end{bNiceMatrix}. \]
+    Determine whether each state is transient or recurrent.
+    \tcblower{}
+    \textbf{Solution}:
+\end{Example}
+\underline{Remark}: As the previous example illustrates, the contrapositive of Theorem 3.5 also provides a
+test for transience, in that if $ \exists k\in\mathbb{Z}^+ $ such that $ P_{i,j}^{(k)}>0 $
+and states $i$ and $j$ do not
+communicate, then state $i$ must be transient. Moreover, this result implies that once a process
+enters a recurrent class of states, it can never leave that class. For this reason, a recurrent
+class is often referred to as a \emph{closed class}.
+\begin{Example}
+    \textbf{Example 3.8}. Consider a DTMC with TPM
+    \[ P=\begin{bNiceMatrix}[first-row,first-col,cell-space-limits=1pt]
+              & 0           & 1           & 2           & 3           \\
+            0 & \frac{1}{4} & 0           & \frac{3}{4} & 0           \\
+            1 & 0           & \frac{1}{3} & 0           & \frac{2}{3} \\
+            2 & 0           & 1           & 0           & 0           \\
+            3 & 0           & \frac{2}{5} & 0           & \frac{3}{5}
+        \end{bNiceMatrix}. \]
+    Determine whether each state is transient or recurrent.
+    \tcblower{}
+    \textbf{Solution}:
+\end{Example}
+\underline{Remark}: Instead of showing that $ f_{1,1}=1 $ in the previous example, we could have used an even
+simpler argument to conclude that $ \Set{1,3} $ is a recurrent class. In particular, after establishing
+that $ \Set{0} $ and $ \Set{2} $ are transient classes, this DTMC has a finite number of states, and so {1, 3}
+must be recurrent due to Theorem 3.4.
+\subsection*{Random Walk}
+\begin{Example}
+    \textbf{Example 3.9}. Consider a DTMC $ \Set{X_n,n\in\mathbb{N}} $ whose state space $ \mathcal{S} $
+    is the set of \underline{all} integers (i.e., $ \mathcal{S}=\mathbb{Z} $). Furthermore, suppose
+    that the TPM for this DTMC satisfies
+    \[ P_{i,i-1}=1-p\text{ and }P_{i,i+1}=p\;\forall i\in\mathbb{Z}\text{ where }0<p<1. \]
+    In other words, from any state, either a jump up by one unit or a jump down by one unit takes
+    place in the next transition. As such, $ X_n $ is expressible as $ X_n=\sum_{k=0}^{n} Y_k $ where $ \Set{Y_k}_{k=0}^\infty $
+    is an independent sequence of rvs with $ Y_0=X_0 $ and $ \Prob{Y_k=-1}=1-p $ and $ \Prob{Y_k=1}=p $,
+    a variety of areas (particularly in finance). It is often referred to as the \emph{Random Walk} or
+    \emph{Drunkard's Walk}. Characterize the behaviour of this DTMC in terms of its communication
+    classes, periodicity, and transience/recurrence.
+    \tcblower{}
+    \textbf{Solution}:
+\end{Example}

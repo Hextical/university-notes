@@ -170,7 +170,7 @@ Some examples of a discrete-time stochastic process $ \Set{X_n,n\in\mathbb{N}} $
     \end{align*}
     \textbf{We have}: $ P_{i,j}^{(n)}=\sum_{k=0}^{\infty} P_{i,k}^{(n-1)}P_{k,j}\leftarrow $~\ref{eq3.1}.
     \tcblower{}
-    \underline{Recall}: If $ A=[a_{i,j}] $, $ B=[b_{i,j}] $, and $ C=AB $ where $ C=[c_{i,j}] $, then $ c_{ij}=\sum_k a_{i,k}b_{k,j} $.
+    \underline{Recall}: If $ A=[a_{i,j}] $, $ B=[b_{i,j}] $, and $ C=AB $ where $ C=[c_{i,j}] $, then $ c_{i,j}=\sum_k a_{i,k}b_{k,j} $.
 
     As a result, note that~\ref{eq3.1} implies that $ P^{(n)}=P^{(n-1)}P $, $ n\in\mathbb{Z}^+ $. More generally, $ P_{i,j}^{(n)} $
     can be expressed as
@@ -440,7 +440,7 @@ communicate. However, if states $i$ and $j$ belong to \emph{different classes}, 
         \end{bNiceMatrix}. \]
     What are the communication classes of this DTMC\@?
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: \underline{State Transition Diagram}
     \begin{center}
         \begin{tikzpicture}[thick]
             \node [place] (0) at ( 0,0) {$0$};
@@ -492,7 +492,7 @@ communicate. However, if states $i$ and $j$ belong to \emph{different classes}, 
     \textbf{Definition}: The \emph{period} of state $i$ is given by $d(i)=\gcd{n \in \mathbb{Z}^{+}: P_{i, i}^{(n)}>0}$,
     where $\gcd{}$ denotes the greatest common divisor of a set of positive integers.
     \tcblower{}
-    \underline{Remark}: If $ d(i)=1 $, then state $ i $ is said to be aperiodic.
+    \underline{Remark}: If $ d(i)=1 $, then state $ i $ is said to be \emph{aperiodic}.
     In fact, a DTMC is said to be \emph{aperiodic} if $ d(i)=1\; \forall i\in \mathbb{N} $.
     Furthermore, if $ P_{i,i}^{(n)}=0\; \forall n \in \mathbb{Z}^{+} $, then we set $ d(i)=\infty $.
 \end{Regular}
@@ -501,13 +501,41 @@ communicate. However, if states $i$ and $j$ belong to \emph{different classes}, 
     \[ P=\begin{bNiceMatrix}[first-row,first-col,cell-space-limits=1pt]
               & 0           & 1           & 2           & 3           \\
             0 & \frac{1}{3} & 0           & 0           & \frac{2}{3} \\
-            1 & \frac{1}{2} & \frac{1}{4} & \frac{1}{4} & \frac{1}{4} \\
+            1 & \frac{1}{2} & \frac{1}{4} & \frac{1}{8} & \frac{1}{8} \\
             2 & 0           & 0           & 1           & 0           \\
             3 & \frac{3}{4} & 0           & 0           & \frac{1}{4}
         \end{bNiceMatrix}. \]
     Determine the communication classes of this DTMC and the period of each state.
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: \underline{State Transition Diagram}
+    \begin{center}
+        \begin{tikzpicture}[thick]
+            \node [place] (0) at ( 0,0) {$0$};
+            \node [place] (1) at ( 2,1) {$1$};
+            \node [place] (2) at ( 4,0) {$2$};
+            \node [place] (3) at (2,-1) {$3$};
+            \draw[<-] (0) -- (1);
+            \draw[->] (1) -- (2);
+            \draw[->] (1) -- (3);
+            \draw[<->] (3) -- (0);
+            \path (0) edge [loop left] node {} (0);
+            \path (1) edge [loop above] node {} (1);
+            \path (2) edge [loop right] node {} (2);
+            \path (3) edge [loop below] node {} (3);
+        \end{tikzpicture}
+    \end{center}
+    Communications are $ \Set{0,3} $, $ \Set{1} $, $ \Set{2} $. Next,
+    we note that
+    \[ d(0)
+        =\gcd{n\in\mathbb{Z}^+: P_{0,0}^{(n)}>0}
+        =\gcd{1,2,3,\ldots}
+        =1, \]
+    as a consequence of a fact that $ P_{0,0}>0 $ (implying
+    $ P_{0,0}^{(n)}\ge (P_{0,0})^n>0 $). In fact,
+    since every term on the main diagonal of $ P $ is positive,
+    this same argument holds for every state. Thus,
+    $ d(1)=d(2)=d(3)=1 $. Note that this DTMC is \underline{aperiodic},
+    but not \underline{irreducible}.
 \end{Example}
 \begin{Example}
     \textbf{Example 3.3}. (\emph{continued})  Recall that $\Set{0, 1, 2, 3}$ is the
@@ -521,7 +549,36 @@ communicate. However, if states $i$ and $j$ belong to \emph{different classes}, 
         \end{bNiceMatrix}. \]
     Determine the period of each state.
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: \underline{State Transition Diagram}
+    \begin{center}
+        \begin{tikzpicture}[thick]
+            \node [place] (0) at ( 0,0) {$0$};
+            \node [place] (1) at ( 2,1) {$1$};
+            \node [place] (2) at ( 4,0) {$2$};
+            \node [place] (3) at (2,-1) {$3$};
+            \draw[->] (0) -- (1);
+            \draw[->] (1) -- (2);
+            \draw[<->] (2) -- (3);
+            \draw[->] (3) -- (0);
+        \end{tikzpicture}
+    \end{center}
+    Examining the state transition diagram, the shortest amount of steps that the DTMC
+    can take to arrive at state $ 0 $, after leaving state $ 0 $ is $ 4 $
+    (corresponding to the path $ 0\to 1\to 2\to 3\to 0 $), so
+    that $ P_{0,0}^{(n)}>0 $ for $ n=4,8,12,\ldots $. We also note that
+    since the DTMC can return to state $ 2 $ immediately after visiting state
+    $ 3 $ (thereby revisiting state $ 3 $ again in a total of 2 steps),
+    $ P_{0,0}^{(n)}>0\; \forall n=4+2k,k\in\mathbb{N} $. Thus,
+    \[ d(0)
+        =\gcd{n\in\mathbb{Z}^+:P_{0,0}^{(n)}>0}
+        =\gcd{4,6,8,10,12,14,\ldots}
+        =2. \]
+    Following a similar line of logic, we find that
+    \begin{align*}
+        d(1) & =\gcd{n\in\mathbb{Z}^+:P_{1,1}^{(n)}>0}=\gcd{4,6,8,10,\ldots}=2,   \\
+        d(2) & =\gcd{n\in\mathbb{Z}^+:P_{2,2}^{(n)}>0}=\gcd{2,4,6,8,10,\ldots}=2, \\
+        d(3) & =\gcd{n\in\mathbb{Z}^+:P_{3,3}^{(n)}>0}=\gcd{2,4,6,8,10,\ldots}=2.
+    \end{align*}
 \end{Example}
 \begin{Example}
     \textbf{Example 3.6}. Consider the DTMC with TPM
@@ -534,7 +591,17 @@ communicate. However, if states $i$ and $j$ belong to \emph{different classes}, 
         \end{bNiceMatrix}. \]
     Find the communication classes of this DTMC and determine the period of each state.
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: The communication classes
+    are clearly $ \Set{0,1} $ and $ \Set{2,3} $. As in Example 3.5, the main
+    diagonal components $ P_{0,0} $ and $ P_{1,1} $ are positive, and
+    so $ d(0)=d(1)=1 $. For states $ 2 $ and $ 3 $, the DTMC
+    will continually alternate (with probability $ 1 $) between each other
+    at every step, i.e., $ 2\to 3\to 2\to 3\to 2\to \cdots $. Therefore,
+    it is clear that
+    \begin{align*}
+        d(2) & =\gcd{n\in\mathbb{Z}^+:P_{2,2}>0}=\gcd{2,4,6,8,\ldots}=2, \\
+        d(3) & =\gcd{n\in\mathbb{Z}^+:P_{3,3}>0}=\gcd{2,4,6,8,\ldots}=2.
+    \end{align*}
 \end{Example}
 The above examples illustrate some kinds of periodic behaviour that can be exhibited by
 DTMCs. However, we do observe that among the states within a given communication class,
@@ -543,7 +610,23 @@ theorem indicates.
 \begin{Result}
     \textbf{Theorem 3.1}. If $ i\leftrightarrow j $, then $ d(i)=d(j) $.
     \tcblower{}
-    \textbf{Proof}:
+    \textbf{Proof}: Since the result is clearly true when $ i=j $, let us assume
+    that $ i\ne j $. Since $ i\leftrightarrow j $, we know by
+    definition that $ P_{i,j}^{(n)}>0 $ for some $ n\in\mathbb{Z}^+ $
+    and $ P_{j,i}^{(m)}>0 $ for some $ m\in\mathbb{Z}^+ $.
+    Moreover, since state $ i $ is accessible from state $ j $
+    and state $ j $ is accessible from state $ i $, $ \exists s\in\mathbb{Z}^+ $
+    such that $ P_{j,j}^{(s)}>0 $. Note that:
+    \[ P_{i,i}^{(n+m)}\ge P_{i,j}^{(n)}P_{j,i}^{(m)}>0 \]
+    and
+    \[ P_{i,i}^{(n+s+m)}\ge P_{i,j}^{(n)}P_{j,j}^{(s)}P_{j,i}^{(m)}>0. \]
+    These two inequalities imply that $ d(i) $ divides both
+    $ n+m $ and $ n+s+m $. Therefore, it follows that $ d(i) $
+    also divides their difference $ (n+s+m)-(n+m)=s $. Since this
+    holds true for any $ s $ which satisfies $ P_{j,j}^{(s)}>0 $, it must
+    be the case that $ d(i) $ divides $ d(j) $. Using the same
+    line of logic, it is straightforward to show that $ d(j) $
+    divides $ d(i) $. Thus, $ d(i)=d(j) $.
 \end{Result}
 \begin{Example}
     \textbf{Example 3.7}. Consider a DTMC with TPM
@@ -555,10 +638,31 @@ theorem indicates.
         \end{bNiceMatrix}. \]
     Find the communication classes of this DTMC and determine the period of each state.
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: \underline{State Transition Diagram}
+    \begin{center}
+        \begin{tikzpicture}[thick]
+            \node [place] (0) at ( 0,0) {$0$};
+            \node [place] (1) at ( 2,1) {$1$};
+            \node [place] (2) at (4,0) {$2$};
+            \draw[<->] (0) -- (1);
+            \draw[<->] (1) -- (2);
+            \draw[<->] (0) -- (2);
+        \end{tikzpicture}
+    \end{center}
+    Clearly, there is one communication class, namely $ \Set{0,1,2} $.
+    This is an irreducible DTMC\@. Note that
+    \begin{align*}
+        P_{0,0}^{(1)} & =0,                                                                                        \\
+        P_{0,0}^{(2)} & \ge P_{0,1}P_{1,0}=\frac{1}{2}\times \frac{1}{2} =\frac{1}{4} >0,                          \\
+        P_{0,0}^{(3)} & \ge P_{0,1}P_{1,2}P_{2,0}=\frac{1}{2}\times \frac{1}{2}\times \frac{1}{2} =\frac{1}{8} >0,
+    \end{align*}
+    implying that
+    \[ d(0)=\gcd{n\in\mathbb{Z}^+:P_{0,0}^{(n)}>0}=\gcd{2,3,\ldots}=1. \]
+    Thus, by Theorem 3.1, we know that
+    \[ d(2)=d(1)=d(0)=1. \]
 \end{Example}
 \underline{Remark}: As the previous example demonstrates, it is still possible to observe aperiodic
 behaviour even though the main diagonal components of $P$ are all zero. More generally, if
-$ d(i)=k $, then this does not necessarily imply that $ P_{i,i}^{(k)}>0 $ Instead, it implies that if the
+$ d(i)=k $, then this does not necessarily imply that $ P_{i,i}^{(k)}>0 $. Instead, it implies that if the
 DTMC is in state $i$ at time $0$, then it is impossible to observe the DTMC in state $i$ at time
 $ n\in\mathbb{Z}^+ $ if $n$ is not a multiple of $k$ (i.e., $P_{i,i}^{(n)} = 0$ for such $n$).

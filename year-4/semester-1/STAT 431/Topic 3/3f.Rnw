@@ -1,0 +1,96 @@
+\makeheading{Week 6}{\daterange{2021-10-11}{2021-10-15}}
+Reading week.
+\makeheading{Week 7}{\daterange{2021-10-18}{2021-10-22}}
+\section*{Topic 3f: Summary of Binomial Regression Models}
+\addcontentsline{toc}{section}{Topic 3f: Summary of Binomial Regression Models}
+\subsection*{Binomial GLM Specification}
+\begin{itemize}
+    \item $ Y_i \sim \BIN{m_i,\pi_i} $, $ i=1,\ldots,n $ independently and
+          \[ g(\pi_i)=\Vector{x}_i^\top \Vector{\beta}, \]
+          where
+          \begin{itemize}
+              \item $ \Vector{x}_i $ is a vector of explanatory variables,
+              \item $ \pi_i $ is the probability of event of interest,
+              \item $ g(\:\cdot\:) $ is a link function that relates explanatory variables $ \Vector{x}_i $
+                    to probability $ \pi_i $, and
+              \item $ \Vector{\beta} $ is a vector of regression parameters.
+          \end{itemize}
+    \item When using the canonical link of Binomial distribution, i.e., $ g(\:\cdot\:)=\logit{} $, we
+          have
+          \[ \logit{\pi_i}=\log*{\frac{\pi_i}{1-\pi_i}}=\Vector{x}_i^\top \Vector{\beta}, \]
+          which is called a \emph{\textcolor{Red}{logistic regression model}} which is commonly used in practice.
+\end{itemize}
+\subsection*{Parameters Estimation}
+\begin{itemize}
+    \item Likelihood methods are used for parameter estimating and inference.
+    \item MLE $ \hat{\Vector{\beta}} $ come from Fisher Scoring using R function \textcolor{Red}{\texttt{glm()}}.
+    \item Interpretation: $ \beta_k $ has a \textcolor{Red}{log OR interpretation} for logistic models.
+    \item Variance covariance estimate for $ \hat{\Vector{\beta}}=\estVar{\hat{\Vector{\beta}}}=\Matrix{I}^{-1}(\hat{\Vector{\beta}}) $,
+          where $ \Matrix{I}^{-1} $ is the inverse of the information matrix evaluated at MLE $ \hat{\Vector{\beta}} $.
+    \item Standard error: $ \se{\hat{\beta}_k}=\sqrt{\bigl[\Matrix{I}^{-1}(\hat{\Vector{\beta}})\bigr]_{kk}}=\sqrt{I^{kk}(\hat{\Vector{\beta}})} $.
+    \item Wald-test of a single parameter: $ \HN $: $ \beta_k=\beta^\star $ vs $ \HA $: $ \beta_k\ne \beta^\star $:
+          \[ \frac{(\hat{\beta}_k-\beta^\star)^2}{I^{kk}(\hat{\beta}_k)}\stackrel{\HN}{\sim}\chi^2_1,  \]
+          or
+          \[ \frac{\hat{\beta}_k-\beta^\star}{\se{\hat{\beta}_k}}\sim \N{0,1}\text{ under $ \HN $}.  \]
+          For testing $ \HN $: $ \beta_k=0 $, we have $ \frac{\hat{\beta_k}}{\se{\hat{\beta}_k}} $, reported as ``\texttt{z-value}'' in \texttt{glm()} summary.
+    \item Confidence interval for a single $ \beta_k $:
+          \[ \hat{\beta}_k\pm Z_{1-\alpha/2}\se{\hat{\beta}_k}. \]
+    \item Confidence interval for $ \eta_i=\Vector{x}_i^\top \Vector{\beta} $:
+          \[ \Vector{x}_i^\top \hat{\Vector{\beta}}\pm Z_{1-\alpha/2}\sqrt{\Vector{x}_i^\top I^{-1}(\hat{\Vector{\beta}})\Vector{x}_i}, \]
+          or equivalently
+          \[ \Vector{x}_i^\top \hat{\Vector{\beta}}\pm Z_{1-\alpha/2}\sqrt{\Vector{x}_i^\top \estVar{\Vector{x}_i^\top \hat{\Vector{\beta}}}\Vector{x}_i}. \]
+          How about CI for $ \pi_i=\expit{\Vector{x}_i^\top \Vector{\beta}} $?
+\end{itemize}
+\subsection*{Model Checking and Selection}
+\begin{itemize}
+    \item LR/Deviance: Recall $ \text{LR}=-2\log*{\frac{L(\hat{\Vector{\pi}})}{L(\tilde{\Vector{\pi}})}}=
+              -2\bigl(\ell(\hat{\Vector{\pi}})-\ell(\tilde{\Vector{\pi}})\bigr) $.
+          \begin{align*}
+              D
+               & =-2\bigl[\ell(\hat{\Vector{\pi}})-\ell(\tilde{\Vector{\pi}})\bigr]                                                        \\
+               & =-2 \sum_{i=1}^{n} \biggl(y_i\log*{\frac{y_i}{m_i\hat{\pi}_i}}+(m_i-y_i)\log*{\frac{m_i-y_i}{m_i(1-\hat{\pi}_i)} }\biggr) \\
+               & =\sum_{i=1}^{n} d_i.
+          \end{align*}
+    \item LR/Deviance test for \textcolor{Red}{\emph{adequacy of a model}} ($ \HN $: fitted model is as adequate as the saturated model):
+          \[ D \sim \chi^2_{n-p}\text{ under $\HN$}. \]
+    \item LR/Difference in Deviance test for \textcolor{Red}{\emph{comparing nested models}} ($ \HN $: reduced/simpler model is as adequate as the fitted model):
+          \[ \Delta D=D_0-D_\text{A} \sim \chi^2_{p-q}\text{ under $ \HN $}. \]
+    \item Deviance Residuals:
+          \[ r_i^D = \sign{y_i-m_i\hat{\pi}_i}\sqrt{\abs{d}}, \]
+          where $ r_i^D $'s should behave like an iid sample from $ \N{0,1} $ for a well-fitted model.
+    \item Residuals plots:
+          \begin{itemize}
+              \item \textcolor{Red}{\emph{deviance residual vs fitted value}} (i.e., $ r_i^D $ vs $ \hat{\pi}_i $),
+              \item \textcolor{Red}{\emph{deviance residual vs covariate}} (i.e., $ r_i^D $ vs $ \Vector{x}_i $).
+              \item In both cases, we expect a pattern of random scatter around $ 0 $, within $ (-2,2) $.
+          \end{itemize}
+    \item Residual plots can be used to evaluate the fit of a model or compare multiple models in general.
+          \begin{itemize}
+              \item For example, non-nested models, using different link functions.
+          \end{itemize}
+\end{itemize}
+\subsection*{Binomial Model for Dose-Response Relationship}
+\begin{itemize}
+    \item Dose: $ X=\log{\text{concentration}} $.
+    \item Tolerance distribution is $ f(x) $ and probability of responding to dose $ x $ is:
+          \[ \pi(x)=\Prob{X\le x}=\int_{-\infty}^{x}f(x)\odif{x}=F(x). \]
+    \item Binomial GLMs can be utilized to evaluate the dose-response relationship:
+          \[ g(\pi)=\beta_0+\beta_1x \]
+          \begin{table}[!htbp]
+              \centering
+              \begin{tabular}{cc}
+                  \toprule
+                  \textcolor{Red}{Link} & \textcolor{Red}{Tolerance Distribution} \\
+                  \midrule
+                  Logit                 & Logistic$(\mu,s)$                       \\
+                  Probit                & Normal$(\mu,s)$                         \\
+                  Cloglog               & Extreme Value$(\mu,s)$                  \\
+                  \bottomrule
+              \end{tabular}
+          \end{table}
+          In every case,
+          \[ \beta_0=-\frac{\mu}{s},\qquad \beta_1=\frac{1}{s}. \]
+    \item Estimation of the \textcolor{Red}{\emph{median lethal/effective dose}} ($ \delta_{0.5} $):
+          \[ g(0.5)=\hat{\beta}_0+\hat{\beta}_1\delta_{0.5}\implies \delta_{0.5}=\frac{g(0.5)-\hat{\beta}_0}{\hat{\beta}_1}.  \]
+    \item Calculation of dose related to $ q\textsuperscript{th} $ percentile of response.
+\end{itemize}
