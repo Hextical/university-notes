@@ -188,18 +188,31 @@ states is included, we obtain the following important result.
 \begin{Result}
     \textbf{Theorem 3.4}. A finite-state DTMC has at least one recurrent state.
     \tcblower{}
-    \textbf{Proof}:
-
-    \underline{Remarks}:
-    \begin{enumerate}[(1)]
-        \item Looking at the above result, it is useful to think of it in the following way. There must be
-              at least one recurrent state. After all, the DTMC has to spend its time somewhere, and if
-              it visits each of its \emph{finitely many states finitely many times}, then where else could it
-              possibly go?
-        \item As an immediate consequence of Theorem 3.4, an irreducible, finite-state DTMC must be
-              recurrent (i.e., all states of the DTMC are recurrent).
-    \end{enumerate}
+    \textbf{Proof}: We wish to prove the existence of at least
+    one recurrent state in a finite-state DTMC, or equivalently,
+    that not all states can be transient. Suppose that $ \Set{0,1,\ldots,N} $
+    represents the states of the DTMC where $ N<\infty $. To prove
+    that not all states can be transient, suppose they
+    are all transient and try to get a contradiction. Now, for each $ i=0,1,2,\ldots N $,
+    if state $ i $ is assumed to be transient, then we know that after
+    a \underline{finite} amount of time (denoted by $ T_i $),
+    state $ i $ will never be visited again. As a result, after a finite amount
+    of time
+    \[ T=\max{T_0,T_1,\ldots,T_N} \]
+    has gone by, none of these states will be visited ever again. However,
+    the DTMC must be in some state after time $ T $, but we have exhausted
+    all states for the DTMC to be in. This is a contradiction. Thus,
+    not all states can be transient in a finite-state DTMC\@.
 \end{Result}
+\underline{Remarks}:
+\begin{enumerate}[(1)]
+    \item Looking at the above result, it is useful to think of it in the following way. There must be
+          at least one recurrent state. After all, the DTMC has to spend its time somewhere, and if
+          it visits each of its \emph{finitely many states finitely many times}, then where else could it
+          possibly go?
+    \item As an immediate consequence of Theorem 3.4, an irreducible, finite-state DTMC must be
+          recurrent (i.e., all states of the DTMC are recurrent).
+\end{enumerate}
 \begin{Example}
     \textbf{Example 3.3}. (\emph{continued}) Recall that we considered the irreducible DTMC with TPM
     \[ P=\begin{bNiceMatrix}[first-row,first-col]
@@ -211,14 +224,22 @@ states is included, we obtain the following important result.
         \end{bNiceMatrix}. \]
     Determine whether each state is transient or recurrent.
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: Since this is a finite-state DTMC as well, each
+    of states $ 0 $, $ 1 $, $ 2 $, and $ 3 $ is therefore recurrent.
 \end{Example}
 Another interesting property concerning recurrence can also be deduced.
 \begin{Result}
     \textbf{Theorem 3.5}. If state $i$ is recurrent and state $i$ does not communicate with state $j$, then
     $ P_{i,j}^{(k)}=0\;\forall k\in\mathbb{Z}^+ $.
     \tcblower{}
-    \textbf{Proof}:
+    \textbf{Proof}: Let us assume that $ P_{i,j}^{(k)}>0 $ for some $ k\in\mathbb{Z}^+ $.
+    Let $ k_i $ be the smallest $ k $ that satisfies $ P_{i,j}^{(k_i)}>0 $.
+    Then, $ P_{j,i}^{(n)} $ would be equal to $ 0 \;\forall n\in\mathbb{Z}^+ $,
+    since otherwise, states $ i $ and $ j $ would communicate. However,
+    the DTMC, starting in state $ i $, would be a positive probability
+    of at least $ P_{i,j}^{(k_i)} $ of never returning to state $ i $
+    (by the nature of how $ k_i $ was chosen). This contradicts the recurrence
+    of state $ i $. Hence, we must have $ P_{i,j}^{(k)}=0\; \forall k\in\mathbb{Z}^+ $.
 \end{Result}
 \begin{Example}
     \textbf{Example 3.4}. (\emph{continued}) Recall our earlier DTMC with TPM
@@ -231,7 +252,20 @@ Another interesting property concerning recurrence can also be deduced.
         \end{bNiceMatrix}. \]
     Determine whether each state is transient or recurrent.
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: We previously found the communication
+    classes for this DTMC were $ \Set{0,1,3} $ and $ \Set{2} $.
+    \[ \sum_{n=1}^{\infty} P_{2,2}^{(n)}=\sum_{n=1}^{\infty} 1=\infty\implies\text{state $2$ is recurrent}. \]
+    Looking at the possible transitions that can take place among states $ 0 $,
+    $ 1 $, and $ 3 $, we strongly suspect state $ 1 $ to be \underline{transient}
+    (since there is a positive probability of never returning to state $ 1 $ if a
+    transition to state $ 2 $ occurs). To prove this formally,
+    assume instead that state $ 1 $ is recurrent and try to get a contradiction.
+    Assuming that state $ 1 $ is recurrent, note that
+    state $ 1 $ does not communicate with state $ 2 $. By Theorem 3.5,
+    we have $ P_{1,2} $ must be equal to $ 0 $. But in fact, we have
+    $ P_{1,2}=1/8\ne 0 $. This is a contradiction. Thus, state $ 1 $
+    must indeed be transient. Thus, state $ 1 $ must be transient,
+    and so $ \Set{0,1,3} $ is a transient class.
 \end{Example}
 \underline{Remark}: As the previous example illustrates, the contrapositive of Theorem 3.5 also provides a
 test for transience, in that if $ \exists k\in\mathbb{Z}^+ $ such that $ P_{i,j}^{(k)}>0 $
@@ -250,11 +284,32 @@ class is often referred to as a \emph{closed class}.
         \end{bNiceMatrix}. \]
     Determine whether each state is transient or recurrent.
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: There are three communication classes,
+    namely $ \Set{0} $, $ \Set{1,3} $, and $ \Set{2} $.
+    \[ \sum_{n=1}^{\infty} P_{0,0}^{(n)}=\sum_{n=1}^{\infty} \biggl(\frac{1}{4}\biggr)^{\!n}=\frac{1/4}{1-1/4}=\frac{1}{3} <\infty,   \]
+    and hence state $ 0 $ is transient.
+    \[ \sum_{n=1}^{\infty} P_{2,2}^{(n)}=\sum_{n=1}^{\infty} 0=0<\infty, \]
+    and hence state $ 2 $ is transient.
+
+    On the other hand, concerning $ \Set{1,3} $,
+    we observe that
+    \[ f_{1,1}^{(1)}=P_{1,1}=\frac{1}{3}, \]
+    and
+    \[ f_{1,1}^{(n)}=\frac{2}{3}\biggl(\frac{3}{5}\biggr)^{\!n-2}\biggl(\frac{2}{5} \biggr),\; n\ge 2. \]
+    Thus,
+    \begin{align*}
+        f_{1,1}
+         & =\sum_{n=1}^{\infty} f_{1,1}^{(n)}                                                                      \\
+         & =\frac{1}{3} +\sum_{n=2}^{\infty}\frac{2}{3}\biggl(\frac{3}{5}\biggr)^{\!n-2}\biggl(\frac{2}{5} \biggr) \\
+         & =\frac{1}{3} +\frac{2}{3}\biggl(\frac{2}{5} \biggr) \frac{1}{1-3/5}                                     \\
+         & =\frac{1}{3} +\frac{2}{3}\biggl(\frac{2}{5} \biggr)\biggl(\frac{5}{2} \biggr)                           \\
+         & =1.
+    \end{align*}
+    By definition, state $ 1 $ is recurrent, and hence the class $ \Set{1,3} $ is recurrent.
 \end{Example}
 \underline{Remark}: Instead of showing that $ f_{1,1}=1 $ in the previous example, we could have used an even
 simpler argument to conclude that $ \Set{1,3} $ is a recurrent class. In particular, after establishing
-that $ \Set{0} $ and $ \Set{2} $ are transient classes, this DTMC has a finite number of states, and so {1, 3}
+that $ \Set{0} $ and $ \Set{2} $ are transient classes, this DTMC has a finite number of states, and so $\Set{1, 3}$
 must be recurrent due to Theorem 3.4.
 \subsection*{Random Walk}
 \begin{Example}
@@ -265,9 +320,215 @@ must be recurrent due to Theorem 3.4.
     In other words, from any state, either a jump up by one unit or a jump down by one unit takes
     place in the next transition. As such, $ X_n $ is expressible as $ X_n=\sum_{k=0}^{n} Y_k $ where $ \Set{Y_k}_{k=0}^\infty $
     is an independent sequence of rvs with $ Y_0=X_0 $ and $ \Prob{Y_k=-1}=1-p $ and $ \Prob{Y_k=1}=p $,
-    a variety of areas (particularly in finance). It is often referred to as the \emph{Random Walk} or
+    $ k\in\mathbb{Z}^+ $. This DTMC is well-studied in the literature and is the basis for many applications
+    in a variety of areas (particularly in finance). It is often referred to as the \emph{Random Walk} or
     \emph{Drunkard's Walk}. Characterize the behaviour of this DTMC in terms of its communication
     classes, periodicity, and transience/recurrence.
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: \underline{State Transition Diagram}
+    \begin{center}
+        \begin{tikzpicture}[thick]
+            \node (-3) at (-6,0) {$\cdots$};
+            \node [place] (-2) at (-4,0) {$-2$};
+            \node [place] (-1) at (-2,0) {$-1$};
+            \node [place] (0) at ( 0,0) {$0$};
+            \node [place] (1) at (2,0) {$1$};
+            \node [place] (2) at (4,0) {$2$};
+            \node (3) at (6,0) {$\cdots$};
+            \draw[->] (-3.north east) to [out=45,in=135] (-2.north west);
+            \draw[->] (-2.north east) to [out=45,in=135] (-1.north west);
+            \draw[->] (-1.north east) to [out=45,in=135] (0.north west);
+            \draw[->] (0.north east) to [out=45,in=135] (1.north west);
+            \draw[->] (1.north east) to [out=45,in=135] (2.north west);
+            \draw[->] (2.north east) to [out=45,in=135] (3.north west);
+            \draw[->,rotate=180] (3.south west) to [out=45,in=135] (2.south east);
+            \draw[->,rotate=180] (2.south west) to [out=45,in=135] (1.south east);
+            \draw[->,rotate=180] (1.south west) to [out=45,in=135] (0.south east);
+            \draw[->,rotate=180] (0.south west) to [out=45,in=135] (-1.south east);
+            \draw[->,rotate=180] (-1.south west) to [out=45,in=135] (-2.south east);
+            \draw[->,rotate=180] (-2.south west) to [out=45,in=135] (-3.south east);
+        \end{tikzpicture}
+    \end{center}
+
+
+    Since $ 0<p<1 $, all states clearly communicate with
+    each other. This implies that $ \Set{X_n,n\in\mathbb{N}} $
+    is an irreducible DTMC\@. Hence, we can determine its
+    periodicity (and likewise transience/recurrence) by analysing
+    any state we wish. Let us select state $0$. Starting from state $0$,
+    note that we cannot possibly be visited in an odd number of transitions,
+    since we are guaranteed to have the number of up (down) jumps
+    exceed the number of down (up) jumps. Thus,
+    \[ P_{0,0}^{(1)}=P_{0,0}^{(3)}=\cdots=0, \]
+    or equivalently
+    \[ P_{0,0}^{(2n-1)}=0\;\forall n\in\mathbb{Z}^+. \]
+    However, since it is clearly possible to return to state $ 0 $ in an \underline{even}
+    number of transitions, it immediately follows that
+    \[ P_{0,0}^{(2n)}>0\;\forall n\in\mathbb{Z}^+. \]
+    Hence,
+    \begin{align*}
+        d(0)
+         & =\gcd{n\in\mathbb{Z}^+:P_{0,0}^{(n)}>0} \\
+         & =\gcd{2,4,6,\ldots}                     \\
+         & =2.
+    \end{align*}
+    Finally, to determine whether state $ 0 $ is transient \underline{or}
+    recurrent, let us consider
+    \begin{align*}
+        \sum_{n=1}^{\infty} P_{0,0}^{(n)}
+         & =\underbrace{P_{0,0}^{(1)}}_{=0}+P_{0,0}^{(2)}+\underbrace{P_{0,0}^{(3)}}_{=0}+P_{0,0}^{(4)}+\cdots \\
+         & =\sum_{n=1}^{\infty} P_{0,0}^{(2n)}                                                                 \\
+         & =\sum_{n=1}^{\infty} \binom{2n}{n}p^n(1-p)^{n},
+    \end{align*}
+    where the last equality follows from the fact that in order for
+    the DTMC to return to state $ 0 $ from state $ 0 $ in $ 2n $ steps,
+    there must be an equal number ($ n $) of up and down jumps,
+    and $ \binom{2n}{n} $ represents the number of ways these jumps could be arranged
+    among the $ 2n $ steps.
+
+    \underline{Recall}: (\emph{Ratio Test for Series}).
+    Suppose that $ \sum_{n=1}^{\infty} a_n $ is a series of positive
+    terms and $ L=\lim\limits_{{n} \to {\infty}} \frac{a_{n+1}}{a_n} $.
+    \begin{enumerate}[(i)]
+        \item If $ L<1 $, the series converges.
+        \item If $ L>1 $, the series diverges.
+        \item If $ L=1 $, the test is inconclusive.
+    \end{enumerate}
+    In our case, $ a_n=\binom{2n}{n}p^n(1-p)^n $.
+    \begin{align*}
+        L
+         & =\lim\limits_{{n} \to {\infty}} \frac{a_{n+1}}{a_n}                                                                    \\
+         & =\lim\limits_{{n} \to {\infty}} \frac{\frac{(2(n+1))!}{(n+1)!(n+1)!}p^{n+1}(1-p)^{n+1}}{\frac{(2n)!}{n!n!}p^n (1-p)^n} \\
+         & =\lim\limits_{{n} \to {\infty}} \frac{(2n+2)(2n+1)}{(n+1)(n+1)} p(1-p)                                                 \\
+         & =4p(1-p).
+    \end{align*}
+    A plot of $ L=4p(1-p) $ reveals the following shape:
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                    xmin=0, xmax=1.1,
+                    ymin=0, ymax=1.1,
+                    xtick={0,0.5,1},
+                    ytick={0,1},
+                    legend pos=north west,
+                    grid style=dashed,
+                    axis lines=middle,
+                    xlabel = $p$,
+                    ylabel = $L$,
+                ]
+                \addplot[smooth,domain=0:1]{4*x*(1-x)};
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    Note that if $ p\ne 1/2 $, then $ L<1 $. By the ratio test, this implies that
+    \[ \sum_{n=1}^{\infty} \binom{2n}{n}p^n(1-p)^n<\infty, \]
+    and so state $0$ is therefore \underline{transient}. Thus, the entire DTMC
+    is transient when $ p\ne 1/2 $.
+    On the other hand, if $ p=1/2 $, then $ L=1 $, and so the ratio test is
+    inconclusive. To determine what is happening when $ p=1/2 $,
+    we consider an alternative approach in which $ p=1/2 $ and $ p\ne 1/2 $
+    can both be handled. First, recall that
+    \[ f_{i,j}=\Prob{\text{DTMC ever makes a future visit to state $ j $}\given X_0=i}. \]
+    Let $ q=1-p $. Condition on the state of the DTMC at time $ 1 $ to get
+    \begin{align*}
+        f_{0,0}
+         & =\Prob{\text{DTMC ever makes a future visit to state $ 0 $}\given X_0=0}                                    \\
+         & =\Prob{X_1=-1\given X_0=0}\Prob{\text{DTMC ever makes a future visit to state $ 0 $}\given X_1=-1,X_0=0}    \\
+         & \quad+\Prob{X_1=1\given X_0=0}\Prob{\text{DTMC ever makes a future visit to state $ 0 $}\given X_1=1,X_0=0} \\
+         & =q f_{-1,0}+p f_{1,0}
+    \end{align*}
+    We have
+    \begin{equation}
+        \boxed{f_{0,0}=q f_{-1,0}+p f_{1,0}}.\label{eq3.5}\tag*{(3.5)}
+    \end{equation} If we let $ \mathcal{F}_0 $
+    represent the event that the DTMC ever makes a future visit to state $ 0 $,
+    then
+    \[ \mathcal{F}_0=\bigcup_{i=1}^\infty\Set{X_i=0}. \] So,
+    \begin{align*}
+        f_{1,0}
+         & =\Prob{\mathcal{F}_0\given X_0=1}                                                                                              \\
+         & =\Prob[\big]{\mathcal{F}_0\cap\Set{X_1=0}\given X_0=1}+\Prob[\big]{\mathcal{F}_0\cap\Set{X_1=2}\given X_0=1}                   \\
+         & =\Prob{\mathcal{F}_0\given X_1=0,X_0=1}\Prob{X_1=0\given X_0=1}+\Prob{\mathcal{F}_0\given X_1=2,X_0=1}\Prob{X_1=2\given X_0=1} \\
+         & =\Prob{X_1=0\given X_0=1}+\Prob{X_1=2\given X_0=1}\Prob{\mathcal{F}_0\given X_1=2,X_0=1}                                       \\
+         & =q+p\Prob{\mathcal{F}_0\given X_1=2}\text{ due to the Markov property}                                                         \\
+         & =q+p\Prob[\bigg]{\bigcup_{i=2}^\infty\Set{X_i=0}\cup \Set{X_1=0}\given X_1=2}                                                  \\
+         & =q+p\Prob[\bigg]{\bigcup_{i=2}^\infty\Set{X_i=0}\given X_1=2}                                                                  \\
+         & =q+p\Prob{\mathcal{F}_0\given X_0=2}\text{ due to the stationary assumption}                                                   \\
+         & =q+p f_{2,0}\text{ by definition}.
+    \end{align*}
+    Moreover, it follows that
+    \begin{align*}
+        f_{1,0}
+         & =q+pf_{2,0}                             \\
+         & =q+pf_{2,1}f_{1,0}                      \\
+         & =q+pf_{1,0}f_{1,0}                      \\
+         & =q+pf_{1,0}^2.\label{eq3.6}\tag*{(3.6)}
+    \end{align*}
+    Rewriting~\ref{eq3.6}, we end up with
+    \[ pf_{1,0}^2-f_{1,0}+q=0, \]
+    which is a quadratic equation in $ f_{1,0} $. Applying the quadratic formula,
+    we get that
+    \begin{align*}
+        f_{1,0}
+         & =\frac{1\pm \sqrt{1-4pq}}{2p}                                     \\
+         & =\frac{1\pm \sqrt{(p+q)^2-4pq}}{2p}     &  & \text{since $p+q=1$} \\
+         & =\frac{1\pm \sqrt{p^2+2pq+q^2-4pq}}{2p}                           \\
+         & =\frac{1\pm \sqrt{p^2+2pq+q^2}}{2p}                               \\
+         & =\frac{1\pm \sqrt{(p-q)^2}}{2p}                                   \\
+         & =\frac{1\pm \abs{p-q}}{2p}.
+    \end{align*}
+    Let
+    \[
+        r_1=\frac{1+\abs{p-q}}{2p},\text{ and }r_2=\frac{1-\abs{p-q}}{2p}
+    \]
+    denote the two roots, and let us consider the case we are mostly
+    interested in, which is when $p=q$ (i.e., $ p=1/2 $). In this case,
+    $ r_1 $ and $ r_2 $ yield the same value, namely
+    \[ \frac{1\pm \abs{1/2-1/2}}{2(1/2)}=1,  \]
+    and so it must be that $ f_{1,0}=1 $. Similarly, it follows
+    (via a symmetry argument) that $ f_{-1,0}=1 $ when $ p=1/2 $.
+    Therefore, for $ p=1/2 $,~\ref{eq3.5} simplifies to become
+    \[ f_{0,0}=\frac{1}{2}(1)+\frac{1}{2} (1)=1, \]
+    implying that state $ 0 $ is recurrent by definition. Thus, we conclude
+    that the DTMC is recurrent only when $ p=1/2 $. Out of mathematical interest,
+    let us now attempt to determine $ f_{0,0} $ for $ p\ne q $. Consider the
+    special case when $ p<q $. Then $ \abs{p-q}=-(p-q) $ and the roots
+    $ r_1 $ and $ r_2 $ simplify to become
+    \[ r_1=\frac{1-(p-q)}{2p}=\frac{1-p+q}{2p}=\frac{2q}{2p}=\frac{q}{p}>1,  \]
+    and
+    \[ r_2=\frac{1+(p-q)}{2p}=\frac{1-q+p}{2p}=\frac{2p}{2p}=1. \]
+    Since $ 0\le f_{1,0}\le 1 $, the root $ r_1 $ must be inadmissible,
+    thereby implying that $ r_2 $ is the correct root to use in this case.
+    Moreover, by interchanging the up and down jump probabilities and applying
+    the same symmetry argument above, it readily follows that
+    \[ f_{-1,0}=1\text{ for $p>q$}. \]
+    \underline{Remark}: For $ p>q $, it can be shown that $ r_2 $
+    is again the admissible root for $ f_{1,0} $, ultimately leading to
+    $ f_{1,0}=q/p $ (see Exercise 3.2.3). As an immediate consequence,
+    we also have $ f_{-1,0}=p/q $ for $ p<q $.
+    Combining our findings for $ p<q $ and $ p>q $, we have that
+    \[ f_{1,0}=\frac{1-\abs{p-q}}{2p} \text{ and }f_{-1,0}=\frac{1-\abs{q-p}}{2q}. \]
+    Therefore,~\ref{eq3.5} gives rise to
+    \begin{align*}
+        f_{0,0}
+         & =q\biggl(\frac{1-\abs{q-p}}{2q} \biggr)+p\biggl(\frac{1-\abs{p-q}}{2p} \biggr) \\
+         & =1-\frac{1}{2} \abs{q-p}-\frac{1}{2} \abs{p-q}                                 \\
+         & =1-\frac{1}{2} \bigl(\abs{q-p}+\abs{p-q}\bigr).
+    \end{align*}
+    If $ p>q $ (i.e., $ 2q<1 $), then
+    \begin{align*}
+        f_{0,0}
+         & =1-\frac{1}{2} \bigl(-(q-p)+(p-q)\bigr) \\
+         & =1-\frac{1}{2}(2p-2q)                   \\
+         & =1-p+q                                  \\
+         & =2q<1.\label{eq3.7}\tag*{(3.7)}
+    \end{align*}
+    Therefore, state $ 0 $ is transient. On the other hand, if $ p<q $ (i.e., $ 2p<1 $),
+    it can be shown that $ f_{0,0}=2p<1 $ (see Exercise 3.2.4), implying also
+    that state $ 0 $ is transient. Thus, if both cases are combined, we end up
+    obtaining
+    \[ f_{0,0}=2\min{p,q}<1\text{ for $ p\ne q $ (i.e., $ p\ne 1/2 $)}. \]
+    However, this formula even gives the correct result
+    when $ p=q=1/2 $. In general,
+    \[ f_{0,0}=2\min{p,1-p},\; 0<p<1. \]
 \end{Example}

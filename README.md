@@ -10,7 +10,7 @@ All my university notes done in LaTeX.
 
 |                                               Course                                               | Completion |       Online       |
 | :------------------------------------------------------------------------------------------------: | :--------: | :----------------: |
-|  [STAT 333](https://hextical.github.io/university-notes/year-4/semester-1/STAT%20333/stat333.pdf)  |   Week 4   | :heavy_check_mark: |
+|  [STAT 333](https://hextical.github.io/university-notes/year-4/semester-1/STAT%20333/stat333.pdf)  |   Week 5   | :heavy_check_mark: |
 |  [STAT 337](https://hextical.github.io/university-notes/year-4/semester-1/STAT%20337/stat337.pdf)  |   Week 1   | :heavy_check_mark: |
 | [STAT 431](https://hextical.github.io/university-notes/year-4/semester-1/STAT%20431/stat431.pdf)\* |   Week 7   | :heavy_check_mark: |
 
