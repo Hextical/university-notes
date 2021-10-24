@@ -13,7 +13,28 @@ examples with varying forms of limiting behaviour.
         \end{bNiceMatrix}. \]
     Determine if $ \lim\limits_{{n} \to {\infty}} P^{(n)} $ exists.
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: There are obviously two communication classes,
+    namely $ \Set{0,2} $ and $ \Set{1} $. Each class is recurrent
+    with periods $ 2 $ and $ 1 $. Moreover, $ n\in\mathbb{Z}^+ $,
+    note that
+    \[ P^{(2n)}=\begin{bNiceMatrix}[first-row,first-col]
+              & 0 & 1 & 2 \\
+            0 & 1 & 0 & 0 \\
+            1 & 0 & 1 & 0 \\
+            2 & 0 & 0 & 1
+        \end{bNiceMatrix}, \text{ and } P^{(2n-1)}=\begin{bNiceMatrix}[first-row,first-col]
+              & 0 & 1 & 2 \\
+            0 & 0 & 0 & 1 \\
+            1 & 0 & 1 & 0 \\
+            2 & 1 & 0 & 0
+        \end{bNiceMatrix}. \]
+    As a result, $ \lim\limits_{{n} \to {\infty}} P^{(n)} $ does not exist
+    since $ P{(n)} $ alternates between these two matrices. For example,
+    $ \lim\limits_{{n} \to {\infty}} P_{0,0}^{(n)} $
+    and $ \lim\limits_{{n} \to {\infty}} P_{0,2}^{(n)} $ do not exist. However,
+    note that some limits do exist such as
+    $ \lim\limits_{{n} \to {\infty}} P_{0,1}^{(n)}=0 $ and
+    $ \lim\limits_{{n} \to {\infty}} P_{1,1}^{(n)}=1 $.
 \end{Example}
 \begin{Example}
     \textbf{Example 3.11}. Consider a DTMC with TPM
@@ -25,7 +46,23 @@ examples with varying forms of limiting behaviour.
         \end{bNiceMatrix}. \]
     Determine if $ \lim\limits_{{n} \to {\infty}} P^{(n)} $ exists.
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: There is clearly only one communication class,
+    and so the DTMC is irreducible. It is also straightforward to verify
+    the DTMC is aperiodic and recurrent. As we will soon learn, it can be shown
+    that
+    \[ \lim\limits_{{n} \to {\infty}} P^{(n)}=
+        \begin{bNiceMatrix}[first-row,first-col,cell-space-limits=1pt]
+              & 0            & 1            & 2            \\
+            0 & \frac{4}{11} & \frac{4}{11} & \frac{3}{11} \\
+            1 & \frac{4}{11} & \frac{4}{11} & \frac{3}{11} \\
+            2 & \frac{4}{11} & \frac{4}{11} & \frac{3}{11} \\
+        \end{bNiceMatrix}. \]
+    Note that this limiting matrix has \underline{identical rows}. This implies
+    that $ P_{i,j}^{(n)} $ converges to a value as $ n\to\infty $
+    which is the same for all initial states $ i $. In other words,
+    there is a limiting probability that the process will be in state $ j $
+    as $ n\to\infty $, and this probability is \underline{independent}
+    of the initial state $ i $.
 \end{Example}
 \begin{Example}
     \textbf{Example 3.12}. Consider a DTMC with TPM
@@ -38,7 +75,25 @@ examples with varying forms of limiting behaviour.
     Examine $ \lim\limits_{{n} \to {\infty}} P^{(n)} $, and explain why the limiting probability of being in a state can depend
     on the initial state of this DTMC\@.
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: Clearly, there are $ 3 $ communication classes:
+    $ \Set{0} $, $ \Set{1} $, $ \Set{2} $. As all the main diagonal elements
+    of $ P $ are positive, each state is aperiodic. Moreover, states $0$ and $2$
+    are recurrent states. In fact, for obvious reasons states $0$ and $2$
+    are examples of what are known as \underline{absorbing states}
+    (i.e., $ P_{0,0}=P_{2,2}=1 $). Finally, since $ P_{1,0}=1/3>0 $
+    and states $0$ and $1$ do not communicate, we can conclude that state $1$
+    is transient by the contrapositive statement of Theorem 3.5. It can be shown
+    that (see Exercise 3.3.3)
+    \[ \lim\limits_{{n} \to {\infty}} P^{(n)}=
+        \begin{bNiceMatrix}[first-row,first-col,cell-space-limits=1pt]
+              & 0           & 1 & 2           \\
+            0 & 1           & 0 & 0           \\
+            1 & \frac{2}{3} & 0 & \frac{1}{3} \\
+            2 & 0           & 0 & 1
+        \end{bNiceMatrix}. \]
+    In looking at the form of $ P^{(n)} $ as $ n\to\infty $,
+    we would say that unlike the previous example, it can matter
+    from which state one begins in this DTMC\@.
 \end{Example}
 In the above example, note that the second column of the limiting matrix contains all zeros.
 Not surprisingly, this is indicative of transient behaviour, implying that one will never end up in
@@ -47,7 +102,27 @@ state $1$ in the long run. This property can be proven more formally in the next
     \textbf{Theorem 3.6}. For any state $i$ and transient state $j$ of a DTMC,
     $ \lim\limits_{{n} \to {\infty}} P_{i,j}^{(n)}=0 $.
     \tcblower{}
-    \textbf{Proof}:
+    \textbf{Proof}: Recall that
+    \[ f_{i,j}^{(n)}=\Prob{X_n=j,X_{n-1}\ne j,\ldots,X_2\ne j, X_1\ne j\given X_0=i}, \]
+    and
+    \[ f_{i,j}=\Prob{\text{DTMC ever makes a future visit to state $ j $}\given X_0=i}=\sum_{n=1}^{\infty} f_{i,j}^{(n)}. \]
+    Recall~\ref{eq3.2} from the previous section:
+    \[ P_{i,j}^{(n)}=\sum_{k=1}^{n} f_{i,j}^{(k)}P_{j,j}^{(n-k)}. \]
+    Using~\ref{eq3.2} as our starting point, note that
+    \begin{align*}
+        \sum_{n=1}^{\infty} P_{i,j}^{(n)}
+         & =\sum_{n=1}^{\infty} \sum_{k=1}^{n} f_{i,j}^{(k)}P_{j,j}^{(n-k)}                                             \\
+         & =\sum_{k=1}^{\infty} \sum_{n=k}^{\infty} f_{i,j}^{(k)}P_{j,j}^{(n-k)}                                        \\
+         & =\sum_{k=1}^{\infty} f_{i,j}^{(k)}\sum_{n=k}^{\infty} P_{j,j}^{(n-k)}                                        \\
+         & =\sum_{k=1}^{\infty} f_{i,j}^{(k)}\sum_{\ell=0}^{\infty} P_{j,j}^{(\ell)} &  & \text{let }\ell=n-k           \\
+         & =f_{i,j}\biggl(1+\sum_{\ell=1}^{\infty} P_{j,j}^{(\ell)}\biggr)                                              \\
+         & \le 1\biggl(1+\sum_{\ell=1}^{\infty} P_{j,j}^{(\ell)}\biggr)                                                 \\
+         & =1+\underbrace{\sum_{\ell=1}^{\infty} P_{j,j}^{(\ell)}}_{<\infty}         &  & \text{state $j$ is transient} \\
+         & <\infty.
+    \end{align*}
+    By the $ n\textsuperscript{th} $ term test for infinite series,
+    we must have
+    \[ \lim\limits_{{n} \to {\infty}} P_{i,j}^{(n)}=0. \]
 \end{Result}
 \subsection*{Mean Recurrent Time}
 As the previous three examples show, there is variation in the limiting behaviour of a DTMC\@.
@@ -178,10 +253,10 @@ referred to as the Basic Limit Theorem (BLT).
               \end{align*}
               which is precisely the above system of equations.
         \item If we define the row vector of limiting probabilities
-        \item \[ \Vector{\pi}=(\pi_0,\pi_1,\ldots,\pi_j,\ldots), \]
+              \[ \Vector{\pi}=(\pi_0,\pi_1,\ldots,\pi_j,\ldots), \]
               then the above system of linear equations can be written succinctly in matrix form as:
               \[ \begin{cases}
-                      \Vector{\pi}=\Vector{\pi}P,
+                      \Vector{\pi}=\Vector{\pi}P, \\
                       \Vector{\pi}\Vector{e}^\top=1.
                   \end{cases} \]
               Therefore, if a DTMC is irreducible and ergodic, then the BLT states that the limiting
@@ -192,7 +267,7 @@ referred to as the Basic Limit Theorem (BLT).
               \[ \pi_j=\sum_{i=0}^{N} \pi_i P_{i,j},\;j=0,1,\ldots,N.\label{eq3.8}\tag*{(3.8)} \]
               Along with the condition $ \sum_{j=0}^{N} \pi_j=1 $, this leads to $N + 2$ equations in $N + 1$ unknowns,
               of which a unique solution must exist. In fact, the first $N + 1$ equations given by~\ref{eq3.8} are
-              linearly dependent (implying that there is a redundancy), and so we can drop any one of
+              linearly dependent (implying that there is a redundancy), and so we can drop \textbf{any one} of
               the equations given by~\ref{eq3.8} and solve the remaining $N + 1$ equations to obtain a unique
               solution.
         \item If the conditions of the BLT are satisfied and state $j$ happens to be null recurrent, then
@@ -209,7 +284,50 @@ referred to as the Basic Limit Theorem (BLT).
         \end{bNiceMatrix}. \]
     Find the limiting probabilities for this DTMC\@.
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: Clearly, the DTMC is irreducible, aperiodic,
+    and positive recurrent. Therefore, the conditions of the BLT are satisfied
+    and $ \Vector{\pi}=(\pi_0,\pi_1,\pi_2) $ is known to exist.
+    To find $ \Vector{\pi} $, we need to solve the system of linear equations defined
+    by
+    \begin{align*}
+        \Vector{\pi}        & =\Vector{\pi}P                                                                               \\
+        (\pi_0,\pi_1,\pi_2) & =(\pi_0,\pi_1,\pi_2)\begin{bNiceMatrix}[cell-space-limits=1pt]
+                                                      \frac{1}{2} & \frac{1}{2} & 0           \\
+                                                      \frac{1}{2} & \frac{1}{4} & \frac{1}{4} \\
+                                                      0           & \frac{1}{3} & \frac{2}{3}
+                                                  \end{bNiceMatrix},\;\text{subject to $ \Vector{\pi}\Vector{e}^\top=1 $}.
+    \end{align*}
+    This leads to:
+    \begin{align*}
+        \pi_0 & =\tfrac{1}{2} \pi_0+\tfrac{1}{2} \pi_1,                    \\
+        \pi_1 & =\tfrac{1}{2} \pi_0+\tfrac{1}{4} \pi_1+\tfrac{1}{3} \pi_2, \\
+        \pi_2 & =\tfrac{1}{4} \pi_1+\tfrac{2}{3} \pi_2,                    \\
+        1     & =\pi_0+\pi_1+\pi_2.
+    \end{align*}
+    We may disregard any one of the first three equations, and so we select
+    the equation for $ \pi_1 $, as it involves the most terms.
+    \[ \pi_0=\tfrac{1}{2} \pi_0+\tfrac{1}{2} \pi_1\implies \tfrac{1}{2} \pi_0=\tfrac{1}{2} \pi_1\implies \pi_0=\pi_1 \]
+    \[ \pi_2=\tfrac{1}{4} \pi_1+\tfrac{2}{3} \pi_2\implies \tfrac{1}{3} \pi_2=\tfrac{1}{4} \pi_1\implies \pi_2=\tfrac{3}{4} \pi_1 \]
+    \[ 1=\pi_0+\pi_1+\pi_2\implies 1=\pi_1+\pi_1+\tfrac{3}{4} \pi_1\implies \pi_1=\tfrac{4}{11} \]
+    It immediately follows that $ \pi_0=\tfrac{4}{11} $, and $ \pi_2=\tfrac{3}{4} \cdot \tfrac{4}{11} =\tfrac{3}{11} $.
+    Thus,
+    \[ \Vector{\pi}=(\tfrac{4}{11},\tfrac{4}{11} ,\tfrac{3}{11}). \]
+    Recall from earlier that
+    \[ \lim\limits_{{n} \to {\infty}} P^{(n)}=
+        \begin{bNiceMatrix}[first-row,first-col,cell-space-limits=1pt]
+              & 0            & 1            & 2            \\
+            0 & \frac{4}{11} & \frac{4}{11} & \frac{3}{11} \\
+            1 & \frac{4}{11} & \frac{4}{11} & \frac{3}{11} \\
+            2 & \frac{4}{11} & \frac{4}{11} & \frac{3}{11} \\
+        \end{bNiceMatrix}
+        =\begin{bNiceMatrix}[first-row,first-col,cell-space-limits=1pt]
+              & 0     & 1     & 2     \\
+            0 & \pi_0 & \pi_1 & \pi_2 \\
+            1 & \pi_0 & \pi_1 & \pi_2 \\
+            2 & \pi_0 & \pi_1 & \pi_2 \\
+        \end{bNiceMatrix}. \]
+    Hence, we observe that each row of $ P^{(n)} $ converges to $ \Vector{\pi} $
+    as $ n\to\infty $.
 \end{Example}
 \subsection*{Doubly Stochastic TPM}
 Recall that the TPM of a DTMC is stochastic, with all row sums of $P$ being equal to $1$.
@@ -222,7 +340,23 @@ the limiting behaviour of a class of such DTMCs.
     probabilities $ \Set{\pi_j}_{j=0}^{N-1} $ exist and are given by
     \[ \pi_j=\frac{1}{N} ,\; j=0,1,\ldots,N-1. \]
     \tcblower{}
-    \textbf{Proof}:
+    \textbf{Proof}: If the DTMC is \underline{irreducible} and aperiodic,
+    then a \underline{unique} limiting probability distribution exists by the BLT,
+    as each state must also be positive recurrent due to there being a finite
+    number of states. To determine the limiting distribution, let us propose that
+    \[ \pi_j=\frac{1}{N} ,\; j=0,1,\ldots,N-1. \]
+    Clearly,
+    \[ \sum_{j=0}^{N-1} \pi_j=\sum_{j=0}^{N-1} \frac{1}{N}=\frac{1}{N}\cdot N=1.  \]
+    Moreover, for $ j=0,1,\ldots,N-1 $, note that
+    \begin{align*}
+        \sum_{k=0}^{N-1} \pi_k P_{k,j}
+         & =\sum_{k=0}^{N-1} \frac{1}{N} P_{k,j}                                                                                                                \\
+         & =\frac{1}{N} \underbrace{\sum_{k=0}^{N-1} P_{k,j}}_{=1} &  & \text{where $\sum_{k=0}^{N-1} P_{k,j}$ is sum of $j\textsuperscript{th}$ column of $P$} \\
+         & =\frac{1}{N}                                            &  & \text{since the TPM is doubly stochastic}                                               \\
+         & =\pi_j.
+    \end{align*}
+    Thus, we conclude that $ \pi_j=\frac{1}{N} ,\; j=0,1,\ldots,N-1 $
+    is the unique limiting distribution.
 \end{Result}
 \subsection*{Alternative Interpretation}
 \begin{Regular}
@@ -297,7 +431,7 @@ the limiting behaviour of a class of such DTMCs.
             \node[anchor=north] at (7.5,0) {\footnotesize\begin{tabular}{c}
                     $(n-1)\textsuperscript{th}$ \\ visit back to \\ state $j$
                 \end{tabular}};
-            \node[anchor=north] at (10.5,0) {\footnotesize\begin{tabular}{c}
+            \node[anchor=north] at (10,0) {\footnotesize\begin{tabular}{l}
                     $n\textsuperscript{th}$ visit \\ back to \\ state $j$
                 \end{tabular}};
             \node[anchor=west] at (12.5,0) {\small Time};
