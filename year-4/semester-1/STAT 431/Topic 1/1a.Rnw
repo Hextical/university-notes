@@ -46,7 +46,7 @@ abline(fit)
       For each subject $ i=1,\ldots,n $ we have:
       \begin{itemize}
             \item $ Y_i = $ random variable representing the response, and
-            \item $ \Vector{x}_i =(1,x_{i1},\ldots,x_{ip})^\top $ a vector of explanatory variables.
+            \item $ \Vector{x}_i =(1,x_{i1},\ldots,x_{ip})^\top $, a vector of explanatory variables.
       \end{itemize}
 \end{Regular}
 \begin{Regular}{Specification for Multiple Linear Regression}
@@ -158,7 +158,7 @@ We visually check this by examining residual plots such as:
 % \begin{noindent}
     <<echo=FALSE>>=
     plot(fit$fitted.values,rstandard(fit), ylab = "Standardized Residuals", xlab = "Fitted Values")
-    qqnorm(rstandard(fit));abline(0,1,lty=2)
+    qqnorm(rstandard(fit), xlab = "Theoretical Quantities\n lm(headcirc ~ gestage)");abline(0,1,lty=2)
     @
 % \end{noindent}
 
@@ -167,7 +167,7 @@ We visually check this by examining residual plots such as:
       \item Under suitable assumptions, the fitted regression parameters are asymptotically
             normally distributed:
             \begin{align*}
-                  \hat{\Vector{\beta}} & \sim \MVN{\Vector{\beta},\sigma^2(\Matrix{X}^\top \Matrix{X})^{-1}},                                              \\
+                  \hat{\Vector{\beta}} & \sim \MVN[\big]{\Vector{\beta},\sigma^2(\Matrix{X}^\top \Matrix{X})^{-1}},                                        \\
                   \hat{\beta}_j        & \sim \N{\beta_j,\sigma^2v_{jj}},\qquad\text{where $v_{jj}=\bigl[(\Matrix{X}^\top\Matrix{X})^{-1}\bigr]_{(j,j)}$}.
             \end{align*}
       \item Since $ \sigma^2 $ is generally unknown, we replace it with the unbiased estimate $ \hat{\sigma}^2 $, and obtain $ \se{\hat{\beta}_j}=\sqrt{\hat{\sigma}^2v_{jj}} $.
@@ -211,6 +211,7 @@ We visually check this by examining residual plots such as:
           %\end{noindent}
       \item Does \emph{toxemia}, after adjustment for gestational age, also affect the head
             circumference?
+            \[ Y_i=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\varepsilon_i. \]
             <<>>=
             fit <- lm(headcirc ~ gestage + factor(toxemia), data=lowbwt)
             summary(fit)

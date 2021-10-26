@@ -35,7 +35,7 @@
 % \begin{noindent}
     <<>>=
     model4<-glm(resp ~ clinic, family=binomial(link=logit), data=prenatal.dat)
-    summary(model4)
+    summary(model4)$deviance.resid
     @
 % \end{noindent}
 \begin{itemize}
@@ -149,19 +149,27 @@
     # here we construct the response variable for logistic regression
     neuro.dat$resp=cbind(neuro.dat$y,neuro.dat$m-neuro.dat$y)
     neuro.dat
+    neuro.dat$age <- factor(neuro.dat$age, levels = c(1,2,3), labels=c("0-11","12-23","24+"))
+    neuro.dat$stage <- factor(neuro.dat$stage, levels = c(1,2,3,4,5), labels=c("I","II","III","IV","V"))
     @
 % \end{noindent}
 \subsection*{Summary of Model 1: Age \& Stage}
 \[ \logit{\pi_i}=\beta_0+\underbrace{\beta_1x_{i1}+\beta_2x_{i2}}_{\text{Age}}+\underbrace{\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6}}_{\text{Stage}}. \]
 % \begin{noindent}
     <<echo=FALSE>>=
-    model1=glm(resp~factor(age)+factor(stage), family=binomial(link=logit),data=neuro.dat)
+    model1=glm(resp~age+stage, family=binomial(link=logit),data=neuro.dat)
     summary(model1)
     @
 % \end{noindent}
 \begin{itemize}
     \item Before interpreting these results too much, we should look to see how good the
           fit is to the data.
+          \begin{itemize}
+              \item \texttt{fv1}: $ \hat{\pi}_i=\expit{\Vector{x}_i^\top \hat{\Vector{\beta}}} $.
+              \item \texttt{yhat}: $ \hat{y}_i=m_i\hat{\pi}_i $.
+              \item \texttt{rd1}: $ r_i^D $ (deviance residual).
+              \item \texttt{rp1}: $ r_i^P $ (Pearson residual).
+          \end{itemize}
           % \begin{noindent}
         <<>>=
         y = neuro.dat$y
@@ -193,8 +201,8 @@
           \[ \logit{\pi_i}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}. \]
           % \begin{noindent}
         <<>>=
-        model2 = glm(resp~factor(age), family=binomial(link=logit),data=neuro.dat)
-        summary(model2)
+        model3 = glm(resp~age, family=binomial(link=logit),data=neuro.dat)
+        summary(model3)
         @
     % \end{noindent}
 \end{itemize}
@@ -205,8 +213,8 @@
           \[ \logit{\pi_i}=\beta_0+\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6}. \]
           % \begin{noindent}
         <<>>=
-        model2 = glm(resp~factor(stage), family=binomial(link=logit),data=neuro.dat)
-        summary(model3)
+        model2 = glm(resp~stage, family=binomial(link=logit),data=neuro.dat)
+        summary(model2)
         @
     % \end{noindent}
 \end{itemize}
@@ -239,7 +247,7 @@
 \begin{enumerate}[1.]
     \item \textcolor{Blue}{Is Stage important?}
           \begin{align*}
-              \HN & \colon \beta_3=\cdots=0                     &  & \text{(Model 2 is as adequate as Model 1)} \\
+              \HN & \colon \beta_3=\cdots=\beta_6=0             &  & \text{(Model 2 is as adequate as Model 1)} \\
               \HA & \colon \text{at least one of them is not 0} &  & \text{(Model 2 is not adequate)}
           \end{align*}
           \[ \Delta D=D_2-D_1=83.583-9.625=73.958 \]
@@ -269,6 +277,7 @@
           1-pchisq(model1$deviance, model1$df.residual)
           @
         % \end{noindent}
+          \[ p\text{-value}=\Prob{\chi^2_8>9.625}=0.292>0.05 \]
           \begin{itemize}
               \item Model with age, stage, and age$*$stage is the saturated model!
               \item Do not reject $ \HN $: model 1 is as adequate as the saturated model (interaction model).
@@ -279,7 +288,7 @@
 So we select \textcolor{Blue}{Model 1} for interpretation.
 % \begin{noindent}
     <<>>=
-    model1=glm(resp ~ factor(age) + factor(stage), family=binomial(link=logit),data=neuro.dat)
+    model1=glm(resp ~ age + stage, family=binomial(link=logit),data=neuro.dat)
     summary(model1)
     @
 % \end{noindent}
@@ -324,8 +333,8 @@ So we select \textcolor{Blue}{Model 1} for interpretation.
           \end{itemize}
     \item What is the \textcolor{Blue}{\qty{95}{\percent} CI for OR $ \psi=\exp{\beta_6-\beta_3} $}?
           \begin{enumerate}[1.]
-              \item Finding the \qty{95}{\percent} CI for $ \eta=\beta_6-\beta_3=\Vector{c}^\top \Vector{\beta} $, where
-                    \[ \Vector{c}^\top =\begin{bmatrix}
+              \item Finding the \qty{95}{\percent} CI for $ \eta=\beta_6-\beta_3=C \Vector{\beta} $, where
+                    \[ C=\begin{bmatrix}
                             0 & 0 & 0 & -1 & 0 & 0 & 1
                         \end{bmatrix},\qquad \Vector{\beta}=\begin{bmatrix}
                             \beta_0 \\
@@ -333,10 +342,10 @@ So we select \textcolor{Blue}{Model 1} for interpretation.
                             \vdots  \\
                             \beta_6
                         \end{bmatrix}. \]
-                    Standard error for $ \hat{\eta}=\hat{\beta}_6-\hat{\beta}_3=\Vector{c}^\top\hat{\Vector{\beta}} $:
+                    Standard error for $ \hat{\eta}=\hat{\beta}_6-\hat{\beta}_3=C^\top\hat{\Vector{\beta}} $:
                     \begin{align*}
-                        \estVar{\hat{\Vector{\beta}}}       & =\Matrix{I}^{-1}(\hat{\Vector{\beta}})                                  \\
-                        \se{\Vector{c}^\top \Vector{\beta}} & =\sqrt{\Vector{c}\Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{c}^\top}.
+                        \estVar{\hat{\Vector{\beta}}} & =\Matrix{I}^{-1}(\hat{\Vector{\beta}})                \\
+                        \se{C\Vector{\beta}}          & =\sqrt{C\Matrix{I}^{-1}(\hat{\Vector{\beta}})C^\top}.
                     \end{align*}
                     % \begin{noindent}
             <<>>=

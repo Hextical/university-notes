@@ -78,7 +78,7 @@ Hence, we have:
      & =\frac{y-b^{\prime}(\theta)}{a(\phi)}\frac{1}{b^{\prime\prime}(\theta)}\pdv{\mu}{\eta}x_j                                                                                           \\
      & =\frac{y-\mu}{\Var{Y}}\pdv{\mu}{\eta}x_j                                                  &  & \text{since $ \mu=b^{\prime}(\theta) $, $ \Var{Y}=a(\phi)b^{\prime\prime}(\theta) $} \\
      & =\frac{y-\mu}{\Var{Y}}\pdv{\mu}{\eta}^{\!2}\pdv{\eta}{\mu}x_j                             &  & \text{since $ \pdv{\mu}{\eta}\pdv{\eta}{\mu}=1 $}                                    \\
-     & =(y-\mu)\Biggl(\Var{Y}\pdv{\mu}{\eta}^{\!2}\Biggr)^{-1}\pdv{\eta}{\mu}x_j                                                                                                           \\
+     & =(y-\mu)\Biggl(\Var{Y}\pdv{\mu}{\eta}^{\!2}\Biggr)^{\!-1}\pdv{\eta}{\mu}x_j                                                                                                         \\
      & =(y-\mu)W\pdv{\eta}{\mu}x_j,
 \end{align*}
 where $ W^{-1}=\Var{Y}\pdv{\eta}{\mu}^2 $. Note that generally $ \pdv{\eta}{\mu} $ is easier to calculate
@@ -93,7 +93,7 @@ We write likelihood and log-likelihood functions as:
 \end{align*}
 The \textcolor{Red}{element of the score vector} is:
 \[ \bigl[\Vector{S}(\Vector{\beta})\bigr]_j=\pdv{\ell}{\beta_j}=\sum_{i=1}^{n} \pdv{\ell_i}{\beta_j}=\sum_{i=1}^{n} (y_i-\mu_i)W_i\pdv{\eta_i}{\mu_i}x_{ij} \]
-where $  W^{-1}=\Var{Y_i}(\pdv{\eta_i}{\mu_i})^2 $, $ g(\mu_i)=\eta_i=\Vector{x}_i^\top \Vector{\beta} $. In vector and matrix form we can write:
+where $  W_i^{-1}=\Var{Y_i}(\pdv{\eta_i}{\mu_i})^2 $, $ g(\mu_i)=\eta_i=\Vector{x}_i^\top \Vector{\beta} $. In vector and matrix form we can write:
 \[ \Vector{S}(\Vector{\beta})=\Matrix{X}\MatrixCal{W}\MatrixCal{A}(\Vector{y}-\Vector{\mu}), \]
 where
 \begin{itemize}
@@ -147,8 +147,8 @@ To get an element of the Expected/Fisher Information matrix:
 \begin{align*}
     \MatrixCal{I}_{jk}
      & =\sum_i\E*{-\pdv{\ell}{\beta_j,\beta_k}}                                                                                                \\
-     & =\sum_i\E*{-(y_i-\mu_i)\pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}+x_{ij}W_i x_{ik}}                       \\
-     & =\sum_i-\textcolor{Red}{\E[\big]{(y_i-\mu_i)}}\pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}+x_{ij}W_i x_{ik} \\
+     & =\sum_i\E*{-(Y_i-\mu_i)\pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}+x_{ij}W_i x_{ik}}                       \\
+     & =\sum_i-\textcolor{Red}{\E[\big]{(Y_i-\mu_i)}}\pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}+x_{ij}W_i x_{ik} \\
      & =\sum_i x_{ij}W_i x_{ik}.
 \end{align*}
 Therefore, we can write the $(j, k)$ element of the Fisher information as:

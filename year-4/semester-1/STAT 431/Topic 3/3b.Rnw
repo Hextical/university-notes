@@ -9,10 +9,10 @@ variables, \textcolor{Blue}{$ 2\times 2 $ contingency table analysis}:
       \begin{NiceTabular}{l|ccc}
             & \multicolumn{2}{c}{\emph{Mortality}}                                                 \\
             Level of Care & Died                            & Survived                                 \\
-            \midrule
+            \cmidrule{1-3}
             Intensive & $ y_1 $                            & $ m_1-y_1 $    & $ Y_1 \sim \BIN{m_1,\pi_1} $         \\
             Regular   & $ y_2 $                            & $ m_2-y_2 $    & $ Y_2 \sim \BIN{m_2,\pi_2} $      \\
-            \bottomrule
+            \cmidrule{1-3}
       \end{NiceTabular}
 \end{table}
 Measure of Association: $ \displaystyle \OR = \psi=\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)} $,
@@ -242,7 +242,7 @@ The predicted number of responses are: $ \hat{Y}_i=m_i\hat{\pi}_i $.
       \end{tabular}
 \end{table}
 \begin{itemize}
-      \item $ \beta_0= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated with
+      \item $ \beta_1= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated with
             \textcolor{Blue}{intensity vs regular} care at \emph{Clinic B}.
       \item $ \beta_1+\beta_3= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated
             with \textcolor{Blue}{intensity vs regular} care at \emph{Clinic A}.
@@ -284,6 +284,7 @@ The \texttt{glm()} function in R is used to fit the generalized linear models:
       \item The default is the canonical link.
 \end{itemize}
 \subsection*{R Code and Output for Analysis of Prenatal Care data}
+For binomial data, we need to construct ``\texttt{resp}'' variable as the pair $ (y_i,m_i-y_i) $.
 % \begin{noindent}
     <<>>=
     # read file prenatal.data
@@ -421,7 +422,7 @@ For this model:
                         e.g., $ \Vector{c}\Vector{\beta} $ where $ \Vector{c} $ is a row vector of constants, then MLE of $ \Vector{c}\Vector{\beta} $
                         is $ \Vector{c}\hat{\Vector{\beta}} $, and $ \se{\hat{\Vector{c}\hat{\Vector{\beta}}}}=\sqrt{\Vector{c}\Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{c}^\top} $.
             \end{itemize}
-      \item Therefore, $ \log{\psi}=\beta_1+\beta_3=\Vector{c}\Vector{\beta} $, $ \Vector{c}=(0,1,0,1)^\top $. In R, \texttt{vcov(model3)}
+      \item Therefore, $ \log{\psi}=\beta_1+\beta_3=\Vector{c}\Vector{\beta} $, $ \Vector{c}=(0,1,0,1) $. In R, \texttt{vcov(model3)}
             gives $ \Matrix{I}^{-1}(\hat{\Vector{\beta}}) $.
       \item What is OR for Mortality for Intensive vs Regular Care at Clinic B?
             \[ \OR=\psi=\exp{\beta_1}\implies \hat{\psi}=\exp{0.0076}=1.01. \]

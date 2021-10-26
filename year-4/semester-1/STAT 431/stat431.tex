@@ -276,7 +276,7 @@ We wish to model the relationship between \emph{gestational age} and \emph{head
       For each subject $ i=1,\ldots,n $ we have:
       \begin{itemize}
             \item $ Y_i = $ random variable representing the response, and
-            \item $ \Vector{x}_i =(1,x_{i1},\ldots,x_{ip})^\top $ a vector of explanatory variables.
+            \item $ \Vector{x}_i =(1,x_{i1},\ldots,x_{ip})^\top $, a vector of explanatory variables.
       \end{itemize}
 \end{Regular}
 \begin{Regular}{Specification for Multiple Linear Regression}
@@ -433,7 +433,7 @@ We visually check this by examining residual plots such as:
       \item Under suitable assumptions, the fitted regression parameters are asymptotically
             normally distributed:
             \begin{align*}
-                  \hat{\Vector{\beta}} & \sim \MVN{\Vector{\beta},\sigma^2(\Matrix{X}^\top \Matrix{X})^{-1}},                                              \\
+                  \hat{\Vector{\beta}} & \sim \MVN[\big]{\Vector{\beta},\sigma^2(\Matrix{X}^\top \Matrix{X})^{-1}},                                        \\
                   \hat{\beta}_j        & \sim \N{\beta_j,\sigma^2v_{jj}},\qquad\text{where $v_{jj}=\bigl[(\Matrix{X}^\top\Matrix{X})^{-1}\bigr]_{(j,j)}$}.
             \end{align*}
       \item Since $ \sigma^2 $ is generally unknown, we replace it with the unbiased estimate $ \hat{\sigma}^2 $, and obtain $ \se{\hat{\beta}_j}=\sqrt{\hat{\sigma}^2v_{jj}} $.
@@ -475,6 +475,7 @@ We visually check this by examining residual plots such as:
           %\end{noindent}
       \item Does \emph{toxemia}, after adjustment for gestational age, also affect the head
             circumference?
+            \[ Y_i=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\varepsilon_i. \]
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -611,8 +612,8 @@ address the above issue.
       \item \textcolor{Red}{Score function}: $ S(\theta)=\pdv{\ell(\theta)}{\theta}=\ell^\prime(\theta)$.
       \item \textcolor{Red}{Information function}: $ I(\theta)=-\pdv[order=2]{\ell(\theta)}{\theta}=-\ell^{\prime\prime}(\theta) $.
       \item \textcolor{Red}{Fisher information function}: $ \mathcal{I}(\theta)=\E[\big]{I(\theta)} $.
-      \item \textcolor{Red}{Relative likelihood function}: $ R(\theta)=L(\theta)/L(\hat{\theta}) $.
-      \item \textcolor{Red}{Log relative likelihood function}: $ r(\theta)=\log[\big]{L(\theta)/L(\hat{\theta})}=\ell(\theta)-\ell(\hat{\theta}) $.
+      \item \textcolor{Red}{Relative likelihood function}: $ R(\theta)=L(\theta)/L(\hat{\theta}) $, $ 0\le R(\theta)\le 1 $.
+      \item \textcolor{Red}{Log relative likelihood function}: $ r(\theta)=\log[\big]{L(\theta)/L(\hat{\theta})}=\ell(\theta)-\ell(\hat{\theta}) $, $ r(\theta)\le 0 $.
 \end{itemize}
 \subsection*{Maximum Likelihood Estimation}
 \begin{itemize}
@@ -634,8 +635,8 @@ address the above issue.
                   monitored for the development of breast cancer during 8.5 years follow-up.
             \item Let
                   \[ Y_i=\begin{cases*}
-                              1 & , if woman $ i $ developed breast cancer, \\
-                              0 & , otherwise,
+                              1, & if woman $ i $ developed breast cancer, \\
+                              0, & otherwise,
                         \end{cases*} \]
                   for $ i=1,\ldots,n $.
             \item Suppose $ Y_i \iid\BERN{\pi} $ where $ \pi=\Prob{Y_i=1} $, then the total number of woman developed breast cancer is:
@@ -654,7 +655,8 @@ address the above issue.
       \item \textcolor{Red}{Maximum Likelihood Estimator}:
             \[ S(\pi)=0\implies \hat{\pi}=\frac{\sum_{i=1}^{n} y_i}{n}=\bar{y}. \]
       \item Second derivative test using \textcolor{Red}{information function}:
-            \[ I(\pi)=-\ell^{\prime\prime}(\pi)=\frac{y}{\pi^2}+\frac{n-y}{(1-\pi)^2}>0\ \forall \pi\in(0,1). \]
+            \[ I(\pi)=-\ell^{\prime\prime}(\pi)=\frac{y}{\pi^2}+\frac{n-y}{(1-\pi)^2}>0\; \forall \pi\in(0,1). \]
+            Confirms that $ \hat{\pi}=\bar{y} $ is the MLE\@.
 \end{itemize}
 \begin{Example}{Example: Hormone Therapy Data}
       \begin{itemize}
@@ -663,6 +665,7 @@ address the above issue.
             \item Assume $ Y \sim \BIN{n,\pi} $ with unknown parameter $ \pi $.
             \item The \textcolor{Red}{maximum likelihood estimate} of $ \pi $ is:
                   \[ \hat{\pi}=\bar{y}=\frac{y}{n} =\frac{166}{8506}=0.0195. \]
+                  Therefore, the probability of breast cancer is estimated to be about \qty{2}{\percent}.
       \end{itemize}
 \end{Example}
 \subsection*{Example: Poisson Distribution}
@@ -675,6 +678,7 @@ Suppose $ y_1,\ldots,y_n $ is an iid sample from a Poisson distribution with pro
             \[ \ell(\lambda)=\biggl(\sum_i y_i\biggr)\log{\lambda}-n\lambda-\sum_{i=1}^{n} \log{y_i!}. \]
       \item \textcolor{Red}{Score function}:
             \[ S(\lambda)=\frac{\sum_i y_i}{\lambda}-n=0\implies \hat{\lambda}=\frac{\sum_{i=1}^{n} y_i}{n} =\bar{y}.  \]
+            Need second derivative test to verify $ \hat{\lambda} $ is the MLE\@.
 \end{itemize}
 \subsection*{Newton Raphson Algorithm For Finding MLE}
 \begin{itemize}
@@ -741,8 +745,9 @@ Suppose we want a $ 100(1-\alpha)\, \% $ confidence interval for $ \theta $.
 where $ r(\theta)=\ell(\theta)-\ell(\hat{\theta}) $.
 \begin{itemize}
       \item For the Binomial distribution: $ \hat{\theta}=y/n $, and
-            \[ r(\theta)=\bigl(y\log{\theta}+(n-y)\log{1-\theta}\bigr)-\biggl(y\log*{\frac{y}{n}}+(n-y)\log*{1-\frac{y}{n}}\biggr). \]
-      \item To find the root of $ -2r(\theta)=\chi^2_1(0.95) $:
+            \[ r(\theta)=\underbrace{\bigl(y\log{\theta}+(n-y)\log{1-\theta}\bigr)}_{\ell(\theta)}-
+                  \underbrace{\biggl(y\log*{\frac{y}{n}}+(n-y)\log*{1-\frac{y}{n}}\biggr)}_{\ell(\hat{\theta})}. \]
+      \item To find the root of $ -2r(\theta)=\chi^2_1(0.95) \iff -2r(\theta)-\chi^2_1(0.95) $:
             %\begin{noindent}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -769,6 +774,11 @@ where $ r(\theta)=\ell(\theta)-\ell(\hat{\theta}) $.
 \end{knitrout}
             %\end{noindent}
       \item The likelihood ratio based $ \qty{95}{\percent} $ CI is $(0.017, 0.023)$.
+            \[ -2r(\theta)<\chi^2_1(0.95)\iff r(\theta)>-\frac{1}{2} \chi^2_1(0.95)=-1.92. \]
+            \begin{figure}[!htbp]
+                  \centering
+                  \includegraphics{figures/1bLR.pdf}
+            \end{figure}
 \end{itemize}
 \textcolor{Red}{Wald} based $ \qty{95}{\percent} $ CI: $ \hat{\theta}\pm Z_{0.975}\bigl(I(\hat{\theta})\bigr)^{-1/2} $.
 \begin{itemize}
@@ -781,10 +791,6 @@ where $ r(\theta)=\ell(\theta)-\ell(\hat{\theta}) $.
                    & =(0.017, 0.022).
             \end{align*}
       \item The Wald based $ \qty{95}{\percent} $ CI is: $ (0.017, 0.022) $.
-            \begin{figure}[!htbp]
-                  \centering
-                  \includegraphics{figures/1bLR.pdf}
-            \end{figure}
 \end{itemize}
 \subsection*{Hypotheses Test}
 Suppose we are interested in testing hypotheses:
@@ -836,7 +842,7 @@ cancer same as that of the general population, say about \qty{1.5}{\percent}.
       \item All three are asymptotically equivalent!
 \end{itemize}
 \subsection*{Likelihood Methods for Parameter Vectors}
-Suppose $ \Vector{\theta}\in \Omega $ is a continuous $ p\times 1 $ parameter vector
+Suppose $ \Vector{\theta}=(\theta_1,\theta_2,\ldots,\theta_p)^\top\in \Omega $ is a continuous $ p\times 1 $ parameter vector
 indexing a probability density (or mass) function $ f(\Vector{y};\Vector{\theta}) $. The likelihood and
 log-likelihood functions are defined as before, but
 \begin{itemize}
@@ -858,20 +864,24 @@ log-likelihood functions are defined as before, but
       \item The Newton Raphson algorithm applies as before, but with vectors and matrices
             as follows:
             \[ \Vector{\theta}^{(i+1)}=\Vector{\theta}^{(i)}+\Matrix{I}^{-1}(\Vector{\theta}^{(i)})\Vector{S}(\Vector{\theta}^{(i)}). \]
-      \item Again, we apply iteratively until we obtain convergence, but now check to
+            Again, we apply iteratively until we obtain convergence, but now check to
             see if $ \Matrix{I}(\hat{\Vector{\theta}}) $ is a positive definite matrix.
-      \item Analogues to the LR, Score and Wald results apply based on partitioning the
-            Information matrix by $ \Vector{\theta}=(\Vector{\alpha},\Vector{\beta})^\top $,
-            where $ \Vector{\alpha} $ is a $ p\times 1 $ vector of nuisance parameters and $ \Vector{\beta} $ is a $ q\times 1 $ vector of parameters of interest:
-            \[ \Matrix{I}=\Matrix{I}(\Vector{\alpha},\Vector{\beta})=\begin{pmatrix}
-                        \Matrix{I}_{\Vector{\alpha}\Vector{\alpha}}(\Vector{\alpha},\Vector{\beta}) & \Matrix{I}_{\Vector{\alpha}\Vector{\beta}}(\Vector{\alpha},\Vector{\beta}) \\
-                        \Matrix{I}_{\Vector{\beta}\Vector{\alpha}}(\Vector{\alpha},\Vector{\beta})  & \Matrix{I}_{\Vector{\beta}\Vector{\beta}}(\Vector{\alpha},\Vector{\beta})
-                  \end{pmatrix}, \]
-            where
-            $ \Matrix{I}_{\Vector{\alpha}\Vector{\alpha}}(\Vector{\alpha},\Vector{\beta})=-\pdv{\ell}{\Vector{\alpha},\Vector{\alpha}^\top} $ is $ p\times p $,
-            $ \Matrix{I}_{\Vector{\alpha}\Vector{\beta}}(\Vector{\alpha},\Vector{\beta})=-\pdv{\ell}{\Vector{\alpha},\Vector{\beta}^\top} $ is $ p\times q $,
-            $ \Matrix{I}_{\Vector{\beta}\Vector{\alpha}}(\Vector{\alpha},\Vector{\beta})=-\pdv{\ell}{\Vector{\beta},\Vector{\alpha}^\top} $ is $ q\times p $, and
-            $ \Matrix{I}_{\Vector{\beta}\Vector{\beta}}(\Vector{\alpha},\Vector{\beta})=-\pdv{\ell}{\Vector{\beta},\Vector{\beta}^\top} $ is $ q\times q $.
+\end{itemize}
+Suppose we want to make inference about a specific parameter in $ \Vector{\theta} $, say we
+partition vector $ \Vector{\theta}=(\alpha,\Vector{\beta})^\top $ and \textcolor{Red}{$ \alpha $
+      is the parameter of interest}. Analogues to the LR, Score, and Wald results apply, e.g.,
+\begin{itemize}
+      \item LR statistic: $ -2\bigl[\ell(\alpha,\hat{\Vector{\beta}}_{\alpha})-\ell(\hat{\alpha},\hat{\Vector{\beta}})\bigr]\sim \chi^2_{(1)} $.
+            \begin{itemize}
+                  \item $ \hat{\Vector{\beta}}_{\alpha} $ is the MLE of $ \Vector{\beta} $ given $ \alpha $ is fixed.
+                  \item $ \hat{\alpha} $ and $ \hat{\Vector{\beta}} $ are the joint MLE of $ \alpha $ and $ \Vector{\beta} $.
+            \end{itemize}
+      \item Score statistic: $ S_\alpha(\alpha,\hat{\Vector{\beta}}_\alpha)^2 I^{\alpha\alpha}\sim \chi^2_{(1)} $.
+            \begin{itemize}
+                  \item $ S_\alpha=\pdv{\ell}{\alpha} $.
+                  \item $ I^{\alpha\alpha} $ is the $ (\alpha,\alpha) $ element of $ \Matrix{I}(\alpha,\Vector{\beta})^{-1} $ (inverse of Information matrix).
+            \end{itemize}
+      \item Wald statistic: $ (\hat{\alpha}-\alpha)^2/I^{\alpha\alpha}\sim \chi^2_{(1)} $.
 \end{itemize}
 
 \section*{Topic 2a: Formulation of Generalized Linear Models}
@@ -953,7 +963,7 @@ Consider a single observation $y$ from the exponential family.
     \tcblower{}
     \textbf{Proof}: Differentiate~\ref{2a:eq1} again,
     \begin{align*}
-        \int\biggl(\pdv*{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)f(y;\theta,\phi)\odif{y}                                                                                                                & =0 \\
+        \pdv*{\int\biggl(\pdv*{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)f(y;\theta,\phi)\odif{y}}{\theta}                                                                                                 & =0 \\
         \int \biggl(\pdv*[order=2]{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)f(y;\theta,\phi)\odif{y}+\int\biggl(\pdv*{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)\pdv*{f(y;\theta,\phi)}{\theta}\odif{y} & =0 \\
         \int \pdv*[order=2]{\log[\big]{f(y;\theta,\phi)}}{\theta}f(y;\theta,\phi)\odif{y}+\int\biggl(\pdv*{f(y;\theta,\phi)}{\theta}\biggr)^2 f(y;\theta,\phi)\odif{y}                                       & =0 \\
         \int -I(\theta)f(y;\theta,\phi)\odif{y}+\int S(\theta)^2 f(y;\theta,\phi)\odif{y}                                                                                                                    & =0 \\
@@ -980,7 +990,7 @@ Note that:
 \begin{itemize}
     \item $ b^\prime(\theta)=\mu $ tells the relationship between \emph{canonical} parameter $ \theta $ and $ \mu $.
     \item $ b^{\prime\prime}(\theta) $ is a function of $ \theta $ and hence can be also expressed as a function of $ \mu $.
-    \item Thus, we write $ b^{\prime\prime}(\theta)=\V{\mu} $ and call $ \V{\mu} $ the \textcolor{Red}{variance function}.
+    \item Thus, we write $ b^{\prime\prime}(\theta)=\V{\mu} $ and call \textcolor{Red}{$ \V{\mu} $} the \textcolor{Red}{variance function}.
     \item Subsequently, we have:
           \[ \Var{Y}=b^{\prime\prime}(\theta)a(\phi)=\V{\mu}a(\phi), \]
           which is the \textcolor{Red}{mean-variance relationship} for the exponential family.
@@ -996,7 +1006,7 @@ Note that:
     \[ g(\mu)=\theta=\eta=\Vector{x}^\top\Vector{\beta} \]
     (i.e., the choice of $ g(\:\cdot\:) $ that sets canonical parameter = linear predictor).
 \end{Regular}
-\subsection*{Examples}
+\subsection*{Example}
 Recall that $ \POI{\lambda} $ is a member of exponential family,
 \[ f(y;\lambda)=\frac{\lambda^y \mathrm{e}^{-\lambda}}{y!}=\exp*{\frac{y\log{\lambda}-\lambda}{1}-\log{y!}}  \]
 where $ \theta=\log{\lambda} $, $ \phi=1 $, $ b(\theta)=\lambda=\mathrm{e}^{\theta} $, and $ a(\phi)=1 $. Now to find the mean, variance function, and canonical link function:
@@ -1033,7 +1043,8 @@ Moving forward, we consider a log-linear model: $ \log{\mu_i}=\Vector{x}_i^\top 
     \end{itemize}
 \end{Regular}
 \subsection*{Topic Summary}
-\begin{enumerate}
+2a Formulation of Generalized Linear Models:
+\begin{itemize}
     \item Definition of the \textcolor{Blue}{Exponential Family}.
           \begin{itemize}
               \item Exponential form of the probability density (or mass) function.
@@ -1042,7 +1053,7 @@ Moving forward, we consider a log-linear model: $ \log{\mu_i}=\Vector{x}_i^\top 
               \item Definition of canonical link.
           \end{itemize}
     \item Definition of a \textcolor{Blue}{Generalized Linear Model}.
-\end{enumerate}
+\end{itemize}
 Next Topic: 2b Estimation for Generalized Linear Models.
 % Week 3
 
@@ -1126,7 +1137,7 @@ Hence, we have:
      & =\frac{y-b^{\prime}(\theta)}{a(\phi)}\frac{1}{b^{\prime\prime}(\theta)}\pdv{\mu}{\eta}x_j                                                                                           \\
      & =\frac{y-\mu}{\Var{Y}}\pdv{\mu}{\eta}x_j                                                  &  & \text{since $ \mu=b^{\prime}(\theta) $, $ \Var{Y}=a(\phi)b^{\prime\prime}(\theta) $} \\
      & =\frac{y-\mu}{\Var{Y}}\pdv{\mu}{\eta}^{\!2}\pdv{\eta}{\mu}x_j                             &  & \text{since $ \pdv{\mu}{\eta}\pdv{\eta}{\mu}=1 $}                                    \\
-     & =(y-\mu)\Biggl(\Var{Y}\pdv{\mu}{\eta}^{\!2}\Biggr)^{-1}\pdv{\eta}{\mu}x_j                                                                                                           \\
+     & =(y-\mu)\Biggl(\Var{Y}\pdv{\mu}{\eta}^{\!2}\Biggr)^{\!-1}\pdv{\eta}{\mu}x_j                                                                                                         \\
      & =(y-\mu)W\pdv{\eta}{\mu}x_j,
 \end{align*}
 where $ W^{-1}=\Var{Y}\pdv{\eta}{\mu}^2 $. Note that generally $ \pdv{\eta}{\mu} $ is easier to calculate
@@ -1141,7 +1152,7 @@ We write likelihood and log-likelihood functions as:
 \end{align*}
 The \textcolor{Red}{element of the score vector} is:
 \[ \bigl[\Vector{S}(\Vector{\beta})\bigr]_j=\pdv{\ell}{\beta_j}=\sum_{i=1}^{n} \pdv{\ell_i}{\beta_j}=\sum_{i=1}^{n} (y_i-\mu_i)W_i\pdv{\eta_i}{\mu_i}x_{ij} \]
-where $  W^{-1}=\Var{Y_i}(\pdv{\eta_i}{\mu_i})^2 $, $ g(\mu_i)=\eta_i=\Vector{x}_i^\top \Vector{\beta} $. In vector and matrix form we can write:
+where $  W_i^{-1}=\Var{Y_i}(\pdv{\eta_i}{\mu_i})^2 $, $ g(\mu_i)=\eta_i=\Vector{x}_i^\top \Vector{\beta} $. In vector and matrix form we can write:
 \[ \Vector{S}(\Vector{\beta})=\Matrix{X}\MatrixCal{W}\MatrixCal{A}(\Vector{y}-\Vector{\mu}), \]
 where
 \begin{itemize}
@@ -1195,8 +1206,8 @@ To get an element of the Expected/Fisher Information matrix:
 \begin{align*}
     \MatrixCal{I}_{jk}
      & =\sum_i\E*{-\pdv{\ell}{\beta_j,\beta_k}}                                                                                                \\
-     & =\sum_i\E*{-(y_i-\mu_i)\pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}+x_{ij}W_i x_{ik}}                       \\
-     & =\sum_i-\textcolor{Red}{\E[\big]{(y_i-\mu_i)}}\pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}+x_{ij}W_i x_{ik} \\
+     & =\sum_i\E*{-(Y_i-\mu_i)\pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}+x_{ij}W_i x_{ik}}                       \\
+     & =\sum_i-\textcolor{Red}{\E[\big]{(Y_i-\mu_i)}}\pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}+x_{ij}W_i x_{ik} \\
      & =\sum_i x_{ij}W_i x_{ik}.
 \end{align*}
 Therefore, we can write the $(j, k)$ element of the Fisher information as:
@@ -1247,31 +1258,31 @@ where $ \RandomVector{Z} $ is a transformation of the response vector $ \RandomV
 \section*{Topic 3a: Binary Data and Odds Ratios}
 \addcontentsline{toc}{section}{Topic 3a: Binary Data and Odds Ratios}
 \subsection*{Binary Data Set-up}
-Consider the simplest case with two \emph{binary} variables:
 \begin{itemize}
-    \item COVID-19: infected or not infected (response).
-    \item Vaccination: yes or no (explanatory variable).
+    \item Consider the simplest case with two \emph{binary} variables:
+          \begin{itemize}
+              \item COVID-19: infected or not infected (response).
+              \item Vaccination: yes or no (explanatory variable).
+          \end{itemize}
+    \item Use a $ 2\times 2 $ table to summarize the data:
+          \begin{table}[!htbp]
+              \centering
+              \begin{NiceTabular}{c|cc|c}
+                  & \multicolumn{2}{c}{\emph{COVID-19}}                                                 \\
+                  Vaccination & infected                            & not infected                                        \\
+                  \midrule
+                  yes & $ y_1 $                            & $ m_1-y_1 $                 & $ m_1 $         \\
+                  no   & $ y_2 $                            & $ m_2-y_2 $                 & $ m_2 $         \\
+                  \midrule
+                  Total& $ y_{\bullet} $                    & $ m_{\bullet}-y_{\bullet} $ & $ m_{\bullet} $
+              \end{NiceTabular}
+          \end{table}
+    \item Treat $ m_1 $ and $ m_2 $ as fixed, assume $ Y_1 $ and $ Y_2 $ are independent binomial r.v.'s
+          \[ \textcolor{Red}{Y_k \sim \BIN{m_k,\pi_k},\qquad k=1,2,} \]
+          where $ \pi_k=\Prob{\text{infection}\given \text{group $ k $}} $.
+    \item How do we measure the associate between COVID-19 infection and vaccination?
 \end{itemize}
-Use a $ 2\times 2 $ table to summarize the data:
-\begin{table}[!htbp]
-    \centering
-    \begin{NiceTabular}{c|cc|c}
-        & \multicolumn{2}{c}{\emph{COVID-19}}                                                 \\
-        Vaccination & infected                            & not infected                                        \\
-        \midrule
-        yes & $ y_1 $                            & $ m_1-y_1 $                 & $ m_1 $         \\
-        no   & $ y_2 $                            & $ m_2-y_2 $                 & $ m_2 $         \\
-        \midrule
-        Total& $ y_{\bullet} $                    & $ m_{\bullet}-y_{\bullet} $ & $ m_{\bullet} $
-    \end{NiceTabular}
-\end{table}
 
-Treat $ m_1 $ and $ m_2 $ as fixed, assume $ Y_1 $ and $ Y_2 $ are independent binomial r.v.'s
-\[ \textcolor{Red}{Y_k \sim \BIN{m_k,\pi_k},\qquad k=1,2,} \]
-where $ \pi_k=\Prob{\text{infection}\given \text{group $ k $}} $.
-
-How do we measure the associate between COVID-19 infection and vaccination?
-\newpage
 \subsection*{Measures of Association}
 \begin{Regular}{Definition (Odds Ratio)}
     The \textcolor{Red}{Odds Ratio} (OR) is the ratio of the odds of an event occurring in one
@@ -1293,55 +1304,57 @@ In the case of a \textcolor{Red}{rare disease} (i.e., when $ \pi_1 $ and $ \pi_2
 then
 \[ \OR\approx\RR. \]
 \subsection*{Maximum Likelihood Estimation of Odds Ratio}
-Goal: Estimate odds ratio $ \psi=\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)} $ using likelihood method. Based
-on ``grouped'' binomial data,
-\[ \textcolor{Red}{Y_k \sim \BIN{m_k,\pi_k},\; k=1,2} \]
-\begin{align*}
-    L(\pi_1,\pi_2)
-     & =\binom{m_1}{y_1}\pi_1^{y_1}(1-\pi_1)^{m_1-y_1}\binom{m_2}{y_2}\pi_2^{y_2}(1-\pi_2)^{m_2-y_2}                                                        \\
-     & \propto\biggl(\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)} \biggr)^{\!y_1}\biggl(\frac{\pi_2}{1-\pi_2}\biggr)^{\! y_2+y_1}(1-\pi_1)^{m_1}(1-\pi_2)^{m_2}.
-\end{align*}
-Note that $ \pi_1,\pi_2\in[0,1] $ and odds ratio $ \psi\in(0,\infty) $ are restricted, we consider re-parameterize:
-\[ \theta_1=\log*{\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)}}=\log{\psi},\qquad \theta_2=\log*{\frac{\pi_2}{1-\pi_2}}, \]
-and now $ \theta_1,\theta_2\in(-\infty,\infty) $.
-
-Our re-parameterization implies:
-\[ \pi_1=\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}},\qquad \pi_2=\frac{\mathrm{e}^{\theta_2}}{1+\mathrm{e}^{\theta_2}}. \]
-Now the likelihood becomes:
-\begin{align*}
-    L(\theta_1,\theta_2)    & =(\mathrm{e}^{\theta_1})^{y_1}(\mathrm{e}^{\theta_2})^{y_1+y_2}(1+\mathrm{e}^{\theta_1+\theta_2})^{m_1}(1+\mathrm{e}^{\theta_2})^{-m_2}, \\
-    \ell(\theta_1,\theta_2) & =y_1\theta_1+(y_1+y_2)\theta_2-m_1\log{1+\mathrm{e}^{\theta_1+\theta_2}}-m_2\log{1+\mathrm{e}^{\theta_2}}.
-\end{align*}
-The score vector is:
-\[ S(\theta_1,\theta_2)=\begin{pmatrix}
-        \pdv{\ell}{\theta_1} \\
-        \pdv{\ell}{\theta_2}
-    \end{pmatrix}=\begin{pmatrix}
-        y_1-m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}} \biggr) \\
-        y_1+y_2-m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}} \biggr)-m_2\biggl(\frac{\mathrm{e}^{\theta_2}}{1+\mathrm{e}^{\theta_2}} \biggr)
-    \end{pmatrix}. \]
-Solving $ \Vector{S}(\theta_1,\theta_2)=\Vector{0} $ gives us the MLEs:
-\[ \hat{\theta}_1=\log*{\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}},\qquad \hat{\theta}_2=\log*{\frac{y_2}{m_2-y_2}}. \]
-So by the invariance property of MLEs, we have:
-\[ \hat{\pi}_1=\frac{y_1}{m_1},\qquad \hat{\pi}_2=\frac{y_2}{m_2},\qquad\hat{\psi}=\frac{\hat{\pi}_1/(1-\hat{\pi}_1)}{\hat{\pi}_2/(1-\hat{\pi}_2)}=\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}.  \]
+\begin{itemize}
+    \item Goal: Estimate odds ratio $ \psi=\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)} $ using likelihood method. Based
+          on ``grouped'' binomial data, $ \textcolor{Red}{Y_k \sim \BIN{m_k,\pi_k},\; k=1,2} $,
+          \begin{align*}
+              L(\pi_1,\pi_2)
+               & =\binom{m_1}{y_1}\pi_1^{y_1}(1-\pi_1)^{m_1-y_1}\binom{m_2}{y_2}\pi_2^{y_2}(1-\pi_2)^{m_2-y_2}                                                        \\
+               & \propto\biggl(\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)} \biggr)^{\!y_1}\biggl(\frac{\pi_2}{1-\pi_2}\biggr)^{\! y_2+y_1}(1-\pi_1)^{m_1}(1-\pi_2)^{m_2}.
+          \end{align*}
+    \item Note that $ \pi_1,\pi_2\in[0,1] $ and odds ratio $ \psi\in(0,\infty) $ are restricted, we consider re-parameterize:
+          \[ \theta_1=\log*{\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)}}=\log{\psi},\qquad \theta_2=\log*{\frac{\pi_2}{1-\pi_2}}, \]
+          and now $ \theta_1,\theta_2\in(-\infty,\infty) $.
+    \item Our re-parameterization implies:
+          \[ \pi_1=\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}},\qquad \pi_2=\frac{\mathrm{e}^{\theta_2}}{1+\mathrm{e}^{\theta_2}}. \]
+          Now the likelihood becomes:
+          \begin{align*}
+              L(\theta_1,\theta_2)    & =(\mathrm{e}^{\theta_1})^{y_1}(\mathrm{e}^{\theta_2})^{y_1+y_2}(1+\mathrm{e}^{\theta_1+\theta_2})^{m_1}(1+\mathrm{e}^{\theta_2})^{-m_2}, \\
+              \ell(\theta_1,\theta_2) & =y_1\theta_1+(y_1+y_2)\theta_2-m_1\log{1+\mathrm{e}^{\theta_1+\theta_2}}-m_2\log{1+\mathrm{e}^{\theta_2}}.
+          \end{align*}
+    \item The score vector is:
+          \[ S(\theta_1,\theta_2)=\begin{pmatrix}
+                  \pdv{\ell}{\theta_1} \\
+                  \pdv{\ell}{\theta_2}
+              \end{pmatrix}=\begin{pmatrix}
+                  y_1-m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}} \biggr) \\
+                  y_1+y_2-m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}} \biggr)-m_2\biggl(\frac{\mathrm{e}^{\theta_2}}{1+\mathrm{e}^{\theta_2}} \biggr)
+              \end{pmatrix}. \]
+    \item Solving $ \Vector{S}(\theta_1,\theta_2)=\Vector{0} $ gives us the MLEs:
+          \[ \hat{\theta}_1=\log*{\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}},\qquad \hat{\theta}_2=\log*{\frac{y_2}{m_2-y_2}}. \]
+    \item So by the invariance property of MLEs, we have:
+          \[ \hat{\pi}_1=\frac{y_1}{m_1},\qquad \hat{\pi}_2=\frac{y_2}{m_2},\qquad\hat{\psi}=\frac{\hat{\pi}_1/(1-\hat{\pi}_1)}{\hat{\pi}_2/(1-\hat{\pi}_2)}=\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}.  \]
+\end{itemize}
 \subsection*{Inference for Odds Ratio}
-In order to do inference we will need the Information Matrix:
-\[ \Matrix{I}(\theta_1,\theta_2)=\begin{bmatrix}
-        I_{11} & I_{12} \\
-        I_{21} & I_{22}
-    \end{bmatrix}\qquad\text{where }I_{jk}=-\pdv*{\ell(\theta_1,\theta_2)}{\theta_j,\theta_k}. \]
-Here, we have:
-\begin{align*}
-    I_{11}          & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr),                                                                             \\
-    I_{12}  =I_{21} & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr),                                                                             \\
-    I_{22}          & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr)+m_2\biggl(\frac{\mathrm{e}^{\theta_2}}{(1+\mathrm{e}^{\theta_2})^2} \biggr).
-\end{align*}
-We are interested in doing inference on $ \theta_1=\log{\psi} $ (while $ \theta_2 $ is nuisance).
-
-Recall the asymptotic distribution result of a \textcolor{Red}{Wald statistic}:
+\begin{itemize}
+    \item In order to do inference we will need the Information Matrix:
+          \[ \Matrix{I}(\theta_1,\theta_2)=\begin{bmatrix}
+                  I_{11} & I_{12} \\
+                  I_{21} & I_{22}
+              \end{bmatrix}\qquad\text{where }I_{jk}=-\pdv*{\ell(\theta_1,\theta_2)}{\theta_j,\theta_k}. \]
+          Here, we have:
+          \begin{align*}
+              I_{11}          & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr),                                                                             \\
+              I_{12}  =I_{21} & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr),                                                                             \\
+              I_{22}          & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr)+m_2\biggl(\frac{\mathrm{e}^{\theta_2}}{(1+\mathrm{e}^{\theta_2})^2} \biggr).
+          \end{align*}
+    \item We are interested in doing inference on $ \theta_1=\log{\psi} $ (while $ \theta_2 $ is nuisance).
+    \item Recall the asymptotic distribution result of a \textcolor{Red}{Wald statistic}:
+\end{itemize}
 \begin{Regular}{Wald Statistic}
     For a vector $ \Vector{\theta}=(\theta_1,\theta_2)^\top $ where $ \theta_1=\log{\psi} $ is a scalar parameter of interest:
-    \[ (\hat{\theta}_1-\theta_1)^2\bigl(I^{11}(\hat{\theta}_1,\hat{\theta}_2)\bigr)^{-1}\sim \chi^2_{(1)}, \]
+    \[ (\hat{\theta}_1-\theta_1)^2\bigl(I^{11}(\hat{\theta}_1,\hat{\theta}_2)\bigr)^{-1}\sim \chi^2_{(1)},
+        \text{ or }(\hat{\theta}_1-\theta)/\sqrt{I^{11}} \sim \N{0,1}, \]
     where $ I^{11} $ is the $ (1,1) $ element of $ \Matrix{I}^{-1} $ evaluated at MLE $ \hat{\theta}_1 $ and $ \hat{\theta}_2 $.
 \end{Regular}
 \begin{itemize}
@@ -1448,26 +1461,13 @@ There is an \textcolor{Blue}{additional explanatory variable}: Clinic (A vs B).
           disappeared when we stratified by clinic.
           \begin{figure}[!htbp]
               \centering
-              \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-                  % Text Node
-                  \draw (99,4) node [anchor=north west][inner sep=0.75pt]   [align=left] {Clinic};
-                  % Text Node
-                  \draw (2,55) node [anchor=north west][inner sep=0.75pt]   [align=left] {Level of Care};
-                  % Text Node
-                  \draw (147,55) node [anchor=north west][inner sep=0.75pt]   [align=left] {Mortality};
-                  % Text Node
-                  \draw (109,44) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 189; green, 16; blue, 224 }  ,opacity=1 ] [align=left] {?};
-                  % Connection
-                  \draw    (133.15,25.32) -- (160.85,49.68) ;
-                  \draw [shift={(162.35,51)}, rotate = 221.32999999999998] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-                  \draw [shift={(131.65,24)}, rotate = 41.33] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-                  % Connection
-                  \draw    (99.79,25.17) -- (65.71,49.83) ;
-                  \draw [shift={(64.09,51)}, rotate = 324.12] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-                  \draw [shift={(101.41,24)}, rotate = 144.12] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-                  % Connection
-                  \draw [color={rgb, 255:red, 189; green, 16; blue, 224 }  ,draw opacity=1 ]   (85,63) -- (142,63) ;
-                  \draw [shift={(144,63)}, rotate = 180] [color={rgb, 255:red, 189; green, 16; blue, 224 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+              \begin{tikzpicture}[thick]
+                  \node (1) at (0,1) {Clinic};
+                  \node (2) at (-2,0) {Level of Care};
+                  \node (3) at (2,0) {Mortality};
+                  \draw[<->] (1) to (2);
+                  \draw[<->] (1) to (3);
+                  \draw[->,Purple] (2) to (3) node[anchor=south,midway] {$?$};
               \end{tikzpicture}
           \end{figure}
     \item Instead of having to examine multiple $ 2\times 2 $ tables we'd like to estimate the $ \OR $
@@ -1487,10 +1487,10 @@ variables, \textcolor{Blue}{$ 2\times 2 $ contingency table analysis}:
       \begin{NiceTabular}{l|ccc}
             & \multicolumn{2}{c}{\emph{Mortality}}                                                 \\
             Level of Care & Died                            & Survived                                 \\
-            \midrule
+            \cmidrule{1-3}
             Intensive & $ y_1 $                            & $ m_1-y_1 $    & $ Y_1 \sim \BIN{m_1,\pi_1} $         \\
             Regular   & $ y_2 $                            & $ m_2-y_2 $    & $ Y_2 \sim \BIN{m_2,\pi_2} $      \\
-            \bottomrule
+            \cmidrule{1-3}
       \end{NiceTabular}
 \end{table}
 Measure of Association: $ \displaystyle \OR = \psi=\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)} $,
@@ -1725,7 +1725,7 @@ The predicted number of responses are: $ \hat{Y}_i=m_i\hat{\pi}_i $.
       \end{tabular}
 \end{table}
 \begin{itemize}
-      \item $ \beta_0= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated with
+      \item $ \beta_1= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated with
             \textcolor{Blue}{intensity vs regular} care at \emph{Clinic B}.
       \item $ \beta_1+\beta_3= $ \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated
             with \textcolor{Blue}{intensity vs regular} care at \emph{Clinic A}.
@@ -1774,6 +1774,7 @@ The \texttt{glm()} function in R is used to fit the generalized linear models:
       \item The default is the canonical link.
 \end{itemize}
 \subsection*{R Code and Output for Analysis of Prenatal Care data}
+For binomial data, we need to construct ``\texttt{resp}'' variable as the pair $ (y_i,m_i-y_i) $.
 % \begin{noindent}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -1968,7 +1969,7 @@ loc:clinic  -0.229649891  0.6949054 -0.33047646 7.410400e-01
                         e.g., $ \Vector{c}\Vector{\beta} $ where $ \Vector{c} $ is a row vector of constants, then MLE of $ \Vector{c}\Vector{\beta} $
                         is $ \Vector{c}\hat{\Vector{\beta}} $, and $ \se{\hat{\Vector{c}\hat{\Vector{\beta}}}}=\sqrt{\Vector{c}\Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{c}^\top} $.
             \end{itemize}
-      \item Therefore, $ \log{\psi}=\beta_1+\beta_3=\Vector{c}\Vector{\beta} $, $ \Vector{c}=(0,1,0,1)^\top $. In R, \texttt{vcov(model3)}
+      \item Therefore, $ \log{\psi}=\beta_1+\beta_3=\Vector{c}\Vector{\beta} $, $ \Vector{c}=(0,1,0,1) $. In R, \texttt{vcov(model3)}
             gives $ \Matrix{I}^{-1}(\hat{\Vector{\beta}}) $.
       \item What is OR for Mortality for Intensive vs Regular Care at Clinic B?
             \[ \OR=\psi=\exp{\beta_1}\implies \hat{\psi}=\exp{0.0076}=1.01. \]
@@ -2029,7 +2030,7 @@ $ i=1,\ldots,n $ independently, with covariate vector $ \Vector{x}_i $ and
             \[ \text{Under $ \HN $:}\quad -2\log*{\frac{L(\hat{\Vector{\theta}})}{L(\tilde{\Vector{\theta}})}}
                   =-2\bigl[\ell(\hat{\Vector{\theta}})-\ell(\tilde{\Vector{\theta}})\bigr]\sim \chi^2_{q-p}. \]
       \item Reject $ \HN $ at $ \theta $ if
-            \[ p\text{-value}=\Prob{\chi^2_{q-p}>-2\bigl[\ell(\hat{\Vector{\theta}})-\ell(\tilde{\Vector{\theta}})\bigr]}<\alpha. \]
+            \[ p\text{-value}=\Prob[\Big]{\chi^2_{q-p}>-2\bigl[\ell(\hat{\Vector{\theta}})-\ell(\tilde{\Vector{\theta}})\bigr]}<\alpha. \]
 \end{itemize}
 \subsection*{Likelihood Ratio Test (Logistic Regression Model)}
 \begin{itemize}
@@ -2131,7 +2132,7 @@ Number of Fisher Scoring iterations: 3
             \begin{itemize}
                   \item As with LR/Deviance statistic, $ P \sim \chi^2_{n-p} $ under $ \HN $: the model is adequate.
                   \item Note that $ P $ has the general form:
-                        \[ P=\sum_{i}\frac{(O_i-E_i)}{V_i}.   \]
+                        \[ P=\sum_{i}\frac{(O_i-E_i)^2}{V_i}.   \]
                   \item The $ \chi^2 $ approximation is a bit better than for deviance statistic $ D $.
                   \item Both are poor if the sample size ($ m_i $) is small though.
             \end{itemize}
@@ -2178,7 +2179,7 @@ Number of Fisher Scoring iterations: 3
                   \item This approximation is much better than when testing an unsaturated
                         model vs the saturated model.
             \end{itemize}
-      \item If $ p=\Prob{\chi^2_{q-p}>\Delta D}<\alpha $ then reject $ \HN $.
+      \item If $ p=\Prob{\chi^2_{q-p}>\Delta D}<\alpha $, reject $ \HN $.
             \begin{itemize}
                   \item Reduced model does not fit the data as well as Full model.
                   \item One or more of covariates $ x_{ip},\ldots,x_{iq-1} $ is important (i.e., associated with the response).
@@ -2328,32 +2329,11 @@ Number of Fisher Scoring iterations: 3
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{model4} \hlkwb{<-} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{clinic,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),} \hlkwc{data} \hlstd{= prenatal.dat)}
-\hlkwd{summary}\hlstd{(model4)}
+\hlkwd{summary}\hlstd{(model4)}\hlopt{$}\hlstd{deviance.resid}
 \end{alltt}
 \begin{verbatim}
-
-Call:
-glm(formula = resp ~ clinic, family = binomial(link = logit), 
-    data = prenatal.dat)
-
-Deviance Residuals: 
-       1         2         3         4  
--0.00432   0.01262   0.43671  -0.35206  
-
-Coefficients:
-            Estimate Std. Error z value Pr(>|z|)    
-(Intercept)  -1.7560     0.1757  -9.996  < 2e-16 ***
-clinic       -1.0624     0.2621  -4.053 5.06e-05 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 16.91763  on 3  degrees of freedom
-Residual deviance:  0.31484  on 2  degrees of freedom
-AIC: 21.47
-
-Number of Fisher Scoring iterations: 4
+           1            2            3            4 
+-0.004318004  0.012618764  0.436709170 -0.352063013 
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -2511,6 +2491,12 @@ Number of Fisher Scoring iterations: 4
 14   3     4  3 93      3     90
 15   3     5  2  5      2      3
 \end{verbatim}
+\begin{alltt}
+\hlstd{neuro.dat}\hlopt{$}\hlstd{age} \hlkwb{<-} \hlkwd{factor}\hlstd{(neuro.dat}\hlopt{$}\hlstd{age,} \hlkwc{levels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{),} \hlkwc{labels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"0-11"}\hlstd{,}
+  \hlstr{"12-23"}\hlstd{,} \hlstr{"24+"}\hlstd{))}
+\hlstd{neuro.dat}\hlopt{$}\hlstd{stage} \hlkwb{<-} \hlkwd{factor}\hlstd{(neuro.dat}\hlopt{$}\hlstd{stage,} \hlkwc{levels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{4}\hlstd{,}
+  \hlnum{5}\hlstd{),} \hlkwc{labels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"I"}\hlstd{,} \hlstr{"II"}\hlstd{,} \hlstr{"III"}\hlstd{,} \hlstr{"IV"}\hlstd{,} \hlstr{"V"}\hlstd{))}
+\end{alltt}
 \end{kframe}
 \end{knitrout}
 % \end{noindent}
@@ -2522,7 +2508,7 @@ Number of Fisher Scoring iterations: 4
 \begin{verbatim}
 
 Call:
-glm(formula = resp ~ factor(age) + factor(stage), family = binomial(link = logit), 
+glm(formula = resp ~ age + stage, family = binomial(link = logit), 
     data = neuro.dat)
 
 Deviance Residuals: 
@@ -2530,14 +2516,14 @@ Deviance Residuals:
 -1.47408  -0.61913  -0.09643   0.53163   1.52114  
 
 Coefficients:
-               Estimate Std. Error z value Pr(>|z|)    
-(Intercept)      3.3175     0.7721   4.297 1.73e-05 ***
-factor(age)2    -2.1181     0.5736  -3.693 0.000222 ***
-factor(age)3    -2.6130     0.5017  -5.208 1.91e-07 ***
-factor(stage)2  -1.2529     0.7837  -1.599 0.109860    
-factor(stage)3  -1.7759     0.8003  -2.219 0.026478 *  
-factor(stage)4  -4.3678     0.7902  -5.528 3.25e-08 ***
-factor(stage)5  -1.0222     0.8644  -1.183 0.236980    
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)   3.3175     0.7721   4.297 1.73e-05 ***
+age12-23     -2.1181     0.5736  -3.693 0.000222 ***
+age24+       -2.6130     0.5017  -5.208 1.91e-07 ***
+stageII      -1.2529     0.7837  -1.599 0.109860    
+stageIII     -1.7759     0.8003  -2.219 0.026478 *  
+stageIV      -4.3678     0.7902  -5.528 3.25e-08 ***
+stageV       -1.0222     0.8644  -1.183 0.236980    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -2555,6 +2541,12 @@ Number of Fisher Scoring iterations: 4
 \begin{itemize}
     \item Before interpreting these results too much, we should look to see how good the
           fit is to the data.
+          \begin{itemize}
+              \item \texttt{fv1}: $ \hat{\pi}_i=\expit{\Vector{x}_i^\top \hat{\Vector{\beta}}} $.
+              \item \texttt{yhat}: $ \hat{y}_i=m_i\hat{\pi}_i $.
+              \item \texttt{rd1}: $ r_i^D $ (deviance residual).
+              \item \texttt{rp1}: $ r_i^P $ (Pearson residual).
+          \end{itemize}
           % \begin{noindent}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -2614,25 +2606,23 @@ Number of Fisher Scoring iterations: 4
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{model2} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlkwd{factor}\hlstd{(age),} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
-  \hlkwc{data} \hlstd{= neuro.dat)}
-\hlkwd{summary}\hlstd{(model2)}
+\hlstd{model3} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{age,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),} \hlkwc{data} \hlstd{= neuro.dat)}
+\hlkwd{summary}\hlstd{(model3)}
 \end{alltt}
 \begin{verbatim}
 
 Call:
-glm(formula = resp ~ factor(age), family = binomial(link = logit), 
-    data = neuro.dat)
+glm(formula = resp ~ age, family = binomial(link = logit), data = neuro.dat)
 
 Deviance Residuals: 
     Min       1Q   Median       3Q      Max  
 -4.0853  -0.3591   1.5613   2.0684   3.4667  
 
 Coefficients:
-             Estimate Std. Error z value Pr(>|z|)    
-(Intercept)    1.0415     0.2742   3.799 0.000145 ***
-factor(age)2  -2.1119     0.4325  -4.883 1.05e-06 ***
-factor(age)3  -3.0051     0.3827  -7.853 4.06e-15 ***
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)   1.0415     0.2742   3.799 0.000145 ***
+age12-23     -2.1119     0.4325  -4.883 1.05e-06 ***
+age24+       -3.0051     0.3827  -7.853 4.06e-15 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -2657,35 +2647,36 @@ Number of Fisher Scoring iterations: 5
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{model2} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlkwd{factor}\hlstd{(stage),} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
-  \hlkwc{data} \hlstd{= neuro.dat)}
-\hlkwd{summary}\hlstd{(model3)}
+\hlstd{model2} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{stage,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),} \hlkwc{data} \hlstd{= neuro.dat)}
+\hlkwd{summary}\hlstd{(model2)}
 \end{alltt}
 \begin{verbatim}
 
 Call:
-glm(formula = resp ~ loc + clinic + loc * clinic, family = binomial(link = logit), 
-    data = prenatal.dat)
+glm(formula = resp ~ stage, family = binomial(link = logit), 
+    data = neuro.dat)
 
 Deviance Residuals: 
-[1]  0  0  0  0
+    Min       1Q   Median       3Q      Max  
+-2.0699  -1.5375  -0.5639   1.0444   2.9391  
 
 Coefficients:
-             Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -1.756843   0.185709  -9.460  < 2e-16 ***
-loc          0.007643   0.572683   0.013  0.98935    
-clinic      -0.928734   0.351430  -2.643  0.00822 ** 
-loc:clinic  -0.229650   0.694905  -0.330  0.74104    
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)   1.7918     0.6236   2.873  0.00406 ** 
+stageII      -1.2657     0.7150  -1.770  0.07671 .  
+stageIII     -2.3224     0.7401  -3.138  0.00170 ** 
+stageIV      -4.5643     0.7223  -6.319 2.63e-10 ***
+stageV       -0.5390     0.7766  -0.694  0.48768    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance:  1.6918e+01  on 3  degrees of freedom
-Residual deviance: -4.3521e-14  on 0  degrees of freedom
-AIC: 25.155
+    Null deviance: 162.832  on 14  degrees of freedom
+Residual deviance:  42.446  on 10  degrees of freedom
+AIC: 84.203
 
-Number of Fisher Scoring iterations: 3
+Number of Fisher Scoring iterations: 5
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -2720,7 +2711,7 @@ Number of Fisher Scoring iterations: 3
 \begin{enumerate}[1.]
     \item \textcolor{Blue}{Is Stage important?}
           \begin{align*}
-              \HN & \colon \beta_3=\cdots=0                     &  & \text{(Model 2 is as adequate as Model 1)} \\
+              \HN & \colon \beta_3=\cdots=\beta_6=0             &  & \text{(Model 2 is as adequate as Model 1)} \\
               \HA & \colon \text{at least one of them is not 0} &  & \text{(Model 2 is not adequate)}
           \end{align*}
           \[ \Delta D=D_2-D_1=83.583-9.625=73.958 \]
@@ -2771,6 +2762,7 @@ Number of Fisher Scoring iterations: 3
 \end{kframe}
 \end{knitrout}
         % \end{noindent}
+          \[ p\text{-value}=\Prob{\chi^2_8>9.625}=0.292>0.05 \]
           \begin{itemize}
               \item Model with age, stage, and age$*$stage is the saturated model!
               \item Do not reject $ \HN $: model 1 is as adequate as the saturated model (interaction model).
@@ -2783,14 +2775,14 @@ So we select \textcolor{Blue}{Model 1} for interpretation.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{model1} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlkwd{factor}\hlstd{(age)} \hlopt{+} \hlkwd{factor}\hlstd{(stage),} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
+\hlstd{model1} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{age} \hlopt{+} \hlstd{stage,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
   \hlkwc{data} \hlstd{= neuro.dat)}
 \hlkwd{summary}\hlstd{(model1)}
 \end{alltt}
 \begin{verbatim}
 
 Call:
-glm(formula = resp ~ factor(age) + factor(stage), family = binomial(link = logit), 
+glm(formula = resp ~ age + stage, family = binomial(link = logit), 
     data = neuro.dat)
 
 Deviance Residuals: 
@@ -2798,14 +2790,14 @@ Deviance Residuals:
 -1.47408  -0.61913  -0.09643   0.53163   1.52114  
 
 Coefficients:
-               Estimate Std. Error z value Pr(>|z|)    
-(Intercept)      3.3175     0.7721   4.297 1.73e-05 ***
-factor(age)2    -2.1181     0.5736  -3.693 0.000222 ***
-factor(age)3    -2.6130     0.5017  -5.208 1.91e-07 ***
-factor(stage)2  -1.2529     0.7837  -1.599 0.109860    
-factor(stage)3  -1.7759     0.8003  -2.219 0.026478 *  
-factor(stage)4  -4.3678     0.7902  -5.528 3.25e-08 ***
-factor(stage)5  -1.0222     0.8644  -1.183 0.236980    
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)   3.3175     0.7721   4.297 1.73e-05 ***
+age12-23     -2.1181     0.5736  -3.693 0.000222 ***
+age24+       -2.6130     0.5017  -5.208 1.91e-07 ***
+stageII      -1.2529     0.7837  -1.599 0.109860    
+stageIII     -1.7759     0.8003  -2.219 0.026478 *  
+stageIV      -4.3678     0.7902  -5.528 3.25e-08 ***
+stageV       -1.0222     0.8644  -1.183 0.236980    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -2861,8 +2853,8 @@ Number of Fisher Scoring iterations: 4
           \end{itemize}
     \item What is the \textcolor{Blue}{\qty{95}{\percent} CI for OR $ \psi=\exp{\beta_6-\beta_3} $}?
           \begin{enumerate}[1.]
-              \item Finding the \qty{95}{\percent} CI for $ \eta=\beta_6-\beta_3=\Vector{c}^\top \Vector{\beta} $, where
-                    \[ \Vector{c}^\top =\begin{bmatrix}
+              \item Finding the \qty{95}{\percent} CI for $ \eta=\beta_6-\beta_3=C \Vector{\beta} $, where
+                    \[ C=\begin{bmatrix}
                             0 & 0 & 0 & -1 & 0 & 0 & 1
                         \end{bmatrix},\qquad \Vector{\beta}=\begin{bmatrix}
                             \beta_0 \\
@@ -2870,10 +2862,10 @@ Number of Fisher Scoring iterations: 4
                             \vdots  \\
                             \beta_6
                         \end{bmatrix}. \]
-                    Standard error for $ \hat{\eta}=\hat{\beta}_6-\hat{\beta}_3=\Vector{c}^\top\hat{\Vector{\beta}} $:
+                    Standard error for $ \hat{\eta}=\hat{\beta}_6-\hat{\beta}_3=C^\top\hat{\Vector{\beta}} $:
                     \begin{align*}
-                        \estVar{\hat{\Vector{\beta}}}       & =\Matrix{I}^{-1}(\hat{\Vector{\beta}})                                  \\
-                        \se{\Vector{c}^\top \Vector{\beta}} & =\sqrt{\Vector{c}\Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{c}^\top}.
+                        \estVar{\hat{\Vector{\beta}}} & =\Matrix{I}^{-1}(\hat{\Vector{\beta}})                \\
+                        \se{C\Vector{\beta}}          & =\sqrt{C\Matrix{I}^{-1}(\hat{\Vector{\beta}})C^\top}.
                     \end{align*}
                     % \begin{noindent}
 \begin{knitrout}
@@ -2904,7 +2896,7 @@ Number of Fisher Scoring iterations: 4
       \item \textcolor{Blue}{Bioassay experiment}: Several groups of subjects are exposed to varying levels
             of a drug/toxin to determine how many responses within a fixed period of time.
       \item \textcolor{Blue}{Stimulus}: Each group is subjected to a particular dose of the drug/toxin:
-            \[ \textcolor{Green}{\text{dose}=\log{\text{concentration}}} \]
+            \[ \textcolor{Blue}{\text{dose}=\log{\text{concentration}}} \]
       \item \textcolor{Blue}{Response}: As a result of the stimulus, subjects will often manifest a binary
             response indicating the occurrence of an adverse event (e.g., death).
       \item \textcolor{Blue}{Tolerance}: We assume that for each subject there is a certain dose level above
@@ -2952,7 +2944,7 @@ For each group $ i=1,\ldots,n $ let:
             \[ \textcolor{Blue}{\pi_i} = \text{probability of response in group $ i $ with dose $ x_i $}. \]
       \item \textcolor{Red}{Objective}: To model probability of response $ \pi_i $ as a function of dose $ x_i $.
       \item Binomial Regression Models:
-            \[ g(\pi)=\beta_0+\beta_1x_i, \]
+            \[ g(\pi_i)=\eta_i=\beta_0+\beta_1x_i, \]
             where $ g(\:\cdot\:) $ is a choice of link function.
       \item Then we have:
             \[ \pi_i=g^{-1}(\beta_0+\beta_1x_i), \]
@@ -3048,7 +3040,7 @@ For each group $ i=1,\ldots,n $ let:
             \begin{tabular}{cccc}
                   \toprule
                                  & \text{\# of insects} & \text{\# of insects}               \\
-                  Dose ($ x_i $) & killed ($ x_i $)     & $ m_i $              & $ y_j/m_i $ \\
+                  Dose ($ x_i $) & killed ($ x_i $)     & $ m_i $              & $ y_i/m_i $ \\
                   \midrule
                   $ 1.6907 $     & $ 6 $                & $ 59 $               & $ 0.10 $    \\
                   $ 1.7242 $     & $ 13 $               & $ 60 $               & $ 0.22 $    \\
@@ -3236,33 +3228,7 @@ Number of Fisher Scoring iterations: 4
 \subsection*{Fitted Dose-Response Curves}
 % \begin{noindent}
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# Plot the dose-response curves}
-\hlkwd{plot}\hlstd{(beetle.dat}\hlopt{$}\hlstd{dose, beetle.dat}\hlopt{$}\hlstd{y}\hlopt{/}\hlstd{beetle.dat}\hlopt{$}\hlstd{m,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1.65}\hlstd{,} \hlnum{1.95}\hlstd{),}
-  \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1}\hlstd{),} \hlkwc{xlab} \hlstd{=} \hlstr{"DOSE"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"PROBABILITY OF DEATH"}\hlstd{)}
-\hlstd{x} \hlkwb{=} \hlkwd{seq}\hlstd{(}\hlnum{1.65}\hlstd{,} \hlnum{1.95}\hlstd{,} \hlkwc{by} \hlstd{=} \hlnum{0.001}\hlstd{)}
-\hlstd{prob} \hlkwb{=} \hlkwd{as.vector}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwd{length}\hlstd{(x)))}
-\hlstd{beta} \hlkwb{=} \hlkwd{as.vector}\hlstd{(model1}\hlopt{$}\hlstd{coefficients)}  \hlcom{# logistic model}
-\hlkwa{for} \hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(x)) \{}
-  \hlstd{prob[i]} \hlkwb{=} \hlkwd{exp}\hlstd{(beta[}\hlnum{1}\hlstd{]} \hlopt{+} \hlstd{beta[}\hlnum{2}\hlstd{]} \hlopt{*} \hlstd{x[i])}\hlopt{/}\hlstd{(}\hlnum{1} \hlopt{+} \hlkwd{exp}\hlstd{(beta[}\hlnum{1}\hlstd{]} \hlopt{+} \hlstd{beta[}\hlnum{2}\hlstd{]} \hlopt{*}
-    \hlstd{x[i]))}
-\hlstd{\}}
-\hlkwd{lines}\hlstd{(x, prob,} \hlkwc{lty} \hlstd{=} \hlnum{2}\hlstd{)}
-\hlstd{beta} \hlkwb{=} \hlkwd{as.vector}\hlstd{(model2}\hlopt{$}\hlstd{coefficients)}  \hlcom{# probit model}
-\hlkwa{for} \hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(x)) \{}
-  \hlstd{prob[i]} \hlkwb{=} \hlkwd{pnorm}\hlstd{(beta[}\hlnum{1}\hlstd{]} \hlopt{+} \hlstd{beta[}\hlnum{2}\hlstd{]} \hlopt{*} \hlstd{x[i])}
-\hlstd{\}}
-\hlkwd{lines}\hlstd{(x, prob,} \hlkwc{lty} \hlstd{=} \hlnum{5}\hlstd{)}
-\hlstd{beta} \hlkwb{=} \hlkwd{as.vector}\hlstd{(model3}\hlopt{$}\hlstd{coefficients)}  \hlcom{# cloglog model}
-\hlkwa{for} \hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(x)) \{}
-  \hlstd{prob[i]} \hlkwb{=} \hlnum{1} \hlopt{-} \hlkwd{exp}\hlstd{(}\hlopt{-}\hlkwd{exp}\hlstd{(beta[}\hlnum{1}\hlstd{]} \hlopt{+} \hlstd{beta[}\hlnum{2}\hlstd{]} \hlopt{*} \hlstd{x[i]))}
-\hlstd{\}}
-\hlkwd{lines}\hlstd{(x, prob,} \hlkwc{lty} \hlstd{=} \hlnum{1}\hlstd{)}
-\hlkwd{legend}\hlstd{(}\hlnum{1.65}\hlstd{,} \hlnum{1}\hlstd{,} \hlkwd{c}\hlstd{(}\hlstr{"LOGIT"}\hlstd{,} \hlstr{"PROBIT"}\hlstd{,} \hlstr{"CLOGLOG"}\hlstd{),} \hlkwc{lty} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,} \hlnum{5}\hlstd{,} \hlnum{1}\hlstd{),}
-  \hlkwc{bty} \hlstd{=} \hlstr{"n"}\hlstd{)}
-\end{alltt}
-\end{kframe}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
 {\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-50-1} 
 
@@ -3300,94 +3266,94 @@ Reading week.
 \addcontentsline{toc}{section}{Topic 3f: Summary of Binomial Regression Models}
 \subsection*{Binomial GLM Specification}
 \begin{itemize}
-    \item $ Y_i \sim \BIN{m_i,\pi_i} $, $ i=1,\ldots,n $ independently and
-          \[ g(\pi_i)=\Vector{x}_i^\top \Vector{\beta}, \]
-          where
-          \begin{itemize}
-              \item $ \Vector{x}_i $ is a vector of explanatory variables,
-              \item $ \pi_i $ is the probability of event of interest,
-              \item $ g(\:\cdot\:) $ is a link function that relates explanatory variables $ \Vector{x}_i $
-                    to probability $ \pi_i $, and
-              \item $ \Vector{\beta} $ is a vector of regression parameters.
-          \end{itemize}
-    \item When using the canonical link of Binomial distribution, i.e., $ g(\:\cdot\:)=\logit{} $, we
-          have
-          \[ \logit{\pi_i}=\log*{\frac{\pi_i}{1-\pi_i}}=\Vector{x}_i^\top \Vector{\beta}, \]
-          which is called a \emph{\textcolor{Red}{logistic regression model}} which is commonly used in practice.
+      \item $ Y_i \sim \BIN{m_i,\pi_i} $, $ i=1,\ldots,n $ independently and
+            \[ g(\pi_i)=\Vector{x}_i^\top \Vector{\beta}, \]
+            where
+            \begin{itemize}
+                  \item $ \Vector{x}_i $ is a vector of explanatory variables,
+                  \item $ \pi_i $ is the probability of event of interest,
+                  \item $ g(\:\cdot\:) $ is a link function that relates explanatory variables $ \Vector{x}_i $
+                        to probability $ \pi_i $, and
+                  \item $ \Vector{\beta} $ is a vector of regression parameters.
+            \end{itemize}
+      \item When using the canonical link of Binomial distribution, i.e., $ g(\:\cdot\:)=\logit{\:\cdot\:} $, we
+            have
+            \[ \logit{\pi_i}=\log*{\frac{\pi_i}{1-\pi_i}}=\Vector{x}_i^\top \Vector{\beta}, \]
+            which is called a \emph{\textcolor{Red}{logistic regression model}} which is commonly used in practice.
 \end{itemize}
 \subsection*{Parameters Estimation}
 \begin{itemize}
-    \item Likelihood methods are used for parameter estimating and inference.
-    \item MLE $ \hat{\Vector{\beta}} $ come from Fisher Scoring using R function \textcolor{Red}{\texttt{glm()}}.
-    \item Interpretation: $ \beta_k $ has a \textcolor{Red}{log OR interpretation} for logistic models.
-    \item Variance covariance estimate for $ \hat{\Vector{\beta}}=\estVar{\hat{\Vector{\beta}}}=\Matrix{I}^{-1}(\hat{\Vector{\beta}}) $,
-          where $ \Matrix{I}^{-1} $ is the inverse of the information matrix evaluated at MLE $ \hat{\Vector{\beta}} $.
-    \item Standard error: $ \se{\hat{\beta}_k}=\sqrt{\bigl[\Matrix{I}^{-1}(\hat{\Vector{\beta}})\bigr]_{kk}}=\sqrt{I^{kk}(\hat{\Vector{\beta}})} $.
-    \item Wald-test of a single parameter: $ \HN $: $ \beta_k=\beta^\star $ vs $ \HA $: $ \beta_k\ne \beta^\star $:
-          \[ \frac{(\hat{\beta}_k-\beta^\star)^2}{I^{kk}(\hat{\beta}_k)}\stackrel{\HN}{\sim}\chi^2_1,  \]
-          or
-          \[ \frac{\hat{\beta}_k-\beta^\star}{\se{\hat{\beta}_k}}\sim \N{0,1}\text{ under $ \HN $}.  \]
-          For testing $ \HN $: $ \beta_k=0 $, we have $ \frac{\hat{\beta_k}}{\se{\hat{\beta}_k}} $, reported as ``\texttt{z-value}'' in \texttt{glm()} summary.
-    \item Confidence interval for a single $ \beta_k $:
-          \[ \hat{\beta}_k\pm Z_{1-\alpha/2}\se{\hat{\beta}_k}. \]
-    \item Confidence interval for $ \eta_i=\Vector{x}_i^\top \Vector{\beta} $:
-          \[ \Vector{x}_i^\top \hat{\Vector{\beta}}\pm Z_{1-\alpha/2}\sqrt{\Vector{x}_i^\top I^{-1}(\hat{\Vector{\beta}})\Vector{x}_i}, \]
-          or equivalently
-          \[ \Vector{x}_i^\top \hat{\Vector{\beta}}\pm Z_{1-\alpha/2}\sqrt{\Vector{x}_i^\top \estVar{\Vector{x}_i^\top \hat{\Vector{\beta}}}\Vector{x}_i}. \]
-          How about CI for $ \pi_i=\expit{\Vector{x}_i^\top \Vector{\beta}} $?
+      \item Likelihood methods are used for parameter estimating and inference.
+      \item MLE $ \hat{\Vector{\beta}} $ come from Fisher Scoring using R function \textcolor{Red}{\texttt{glm()}}.
+      \item Interpretation: $ \beta_k $ has a \textcolor{Red}{log OR interpretation} for logistic models.
+      \item Variance covariance estimate for $ \hat{\Vector{\beta}}=\estVar{\hat{\Vector{\beta}}}=\Matrix{I}^{-1}(\hat{\Vector{\beta}}) $,
+            where $ \Matrix{I}^{-1} $ is the inverse of the information matrix evaluated at MLE $ \hat{\Vector{\beta}} $.
+      \item Standard error: $ \se{\hat{\beta}_k}=\sqrt{\bigl[\Matrix{I}^{-1}(\hat{\Vector{\beta}})\bigr]_{kk}}=\sqrt{I^{kk}(\hat{\Vector{\beta}})} $.
+      \item Wald-test of a single parameter: $ \HN $: $ \beta_k=\beta^\star $ vs $ \HA $: $ \beta_k\ne \beta^\star $:
+            \[ \frac{(\hat{\beta}_k-\beta^\star)^2}{I^{kk}(\hat{\beta}_k)}\stackrel{\HN}{\sim}\chi^2_1,  \]
+            or
+            \[ \frac{\hat{\beta}_k-\beta^\star}{\se{\hat{\beta}_k}}\sim \N{0,1}\text{ under $ \HN $}.  \]
+            For testing $ \HN $: $ \beta_k=0 $, we have $ \frac{\hat{\beta_k}}{\se{\hat{\beta}_k}} $, reported as ``\texttt{z-value}'' in \texttt{glm()} summary.
+      \item Confidence interval for a single $ \beta_k $:
+            \[ \hat{\beta}_k\pm Z_{1-\alpha/2}\se{\hat{\beta}_k}. \]
+      \item Confidence interval for $ \eta_i=\Vector{x}_i^\top \Vector{\beta} $:
+            \[ \Vector{x}_i^\top \hat{\Vector{\beta}}\pm Z_{1-\alpha/2}\sqrt{\Vector{x}_i^\top \Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{x}_i}, \]
+            or equivalently
+            \[ \Vector{x}_i^\top \hat{\Vector{\beta}}\pm Z_{1-\alpha/2}\sqrt{\Vector{x}_i^\top \estVar{\Vector{x}_i^\top \hat{\Vector{\beta}}}\Vector{x}_i}. \]
+            How about CI for $ \pi_i=\expit{\Vector{x}_i^\top \Vector{\beta}} $?
 \end{itemize}
 \subsection*{Model Checking and Selection}
 \begin{itemize}
-    \item LR/Deviance: Recall $ \text{LR}=-2\log*{\frac{L(\hat{\Vector{\pi}})}{L(\tilde{\Vector{\pi}})}}=
-              -2\bigl(\ell(\hat{\Vector{\pi}})-\ell(\tilde{\Vector{\pi}})\bigr) $.
-          \begin{align*}
-              D
-               & =-2\bigl[\ell(\hat{\Vector{\pi}})-\ell(\tilde{\Vector{\pi}})\bigr]                                                        \\
-               & =-2 \sum_{i=1}^{n} \biggl(y_i\log*{\frac{y_i}{m_i\hat{\pi}_i}}+(m_i-y_i)\log*{\frac{m_i-y_i}{m_i(1-\hat{\pi}_i)} }\biggr) \\
-               & =\sum_{i=1}^{n} d_i.
-          \end{align*}
-    \item LR/Deviance test for \textcolor{Red}{\emph{adequacy of a model}} ($ \HN $: fitted model is as adequate as the saturated model):
-          \[ D \sim \chi^2_{n-p}\text{ under $\HN$}. \]
-    \item LR/Difference in Deviance test for \textcolor{Red}{\emph{comparing nested models}} ($ \HN $: reduced/simpler model is as adequate as the fitted model):
-          \[ \Delta D=D_0-D_\text{A} \sim \chi^2_{p-q}\text{ under $ \HN $}. \]
-    \item Deviance Residuals:
-          \[ r_i^D = \sign{y_i-m_i\hat{\pi}_i}\sqrt{\abs{d}}, \]
-          where $ r_i^D $'s should behave like an iid sample from $ \N{0,1} $ for a well-fitted model.
-    \item Residuals plots:
-          \begin{itemize}
-              \item \textcolor{Red}{\emph{deviance residual vs fitted value}} (i.e., $ r_i^D $ vs $ \hat{\pi}_i $),
-              \item \textcolor{Red}{\emph{deviance residual vs covariate}} (i.e., $ r_i^D $ vs $ \Vector{x}_i $).
-              \item In both cases, we expect a pattern of random scatter around $ 0 $, within $ (-2,2) $.
-          \end{itemize}
-    \item Residual plots can be used to evaluate the fit of a model or compare multiple models in general.
-          \begin{itemize}
-              \item For example, non-nested models, using different link functions.
-          \end{itemize}
+      \item LR/Deviance: Recall $ \text{LR}=-2\log*{\frac{L(\hat{\Vector{\pi}})}{L(\tilde{\Vector{\pi}})}}=
+                  -2\bigl(\ell(\hat{\Vector{\pi}})-\ell(\tilde{\Vector{\pi}})\bigr) $.
+            \begin{align*}
+                  D
+                   & =-2\bigl[\ell(\hat{\Vector{\pi}})-\ell(\tilde{\Vector{\pi}})\bigr]                                                        \\
+                   & =-2 \sum_{i=1}^{n} \biggl(y_i\log*{\frac{y_i}{m_i\hat{\pi}_i}}+(m_i-y_i)\log*{\frac{m_i-y_i}{m_i(1-\hat{\pi}_i)} }\biggr) \\
+                   & =\sum_{i=1}^{n} d_i.
+            \end{align*}
+      \item LR/Deviance test for \textcolor{Red}{\emph{adequacy of a model}} ($ \HN $: fitted model is as adequate as the saturated model):
+            \[ D \sim \chi^2_{n-p}\text{ under $\HN$}. \]
+      \item LR/Difference in Deviance test for \textcolor{Red}{\emph{comparing nested models}} ($ \HN $: reduced/simpler model is as adequate as the fitted model):
+            \[ \Delta D=D_0-D_\text{A} \sim \chi^2_{p-q}\text{ under $ \HN $}. \]
+      \item Deviance Residuals:
+            \[ r_i^D = \sign{y_i-m_i\hat{\pi}_i}\sqrt{\abs{d}}, \]
+            where $ r_i^D $'s should behave like an iid sample from $ \N{0,1} $ for a well-fitted model.
+      \item Residuals plots:
+            \begin{itemize}
+                  \item \textcolor{Red}{\emph{deviance residual vs fitted value}} (i.e., $ r_i^D $ vs $ \hat{\pi}_i $),
+                  \item \textcolor{Red}{\emph{deviance residual vs covariate}} (i.e., $ r_i^D $ vs $ \Vector{x}_i $).
+                  \item In both cases, we expect a pattern of random scatter around $ 0 $, within $ (-2,2) $.
+            \end{itemize}
+      \item Residual plots can be used to evaluate the fit of a model or compare multiple models in general.
+            \begin{itemize}
+                  \item For example, non-nested models, using different link functions.
+            \end{itemize}
 \end{itemize}
 \subsection*{Binomial Model for Dose-Response Relationship}
 \begin{itemize}
-    \item Dose: $ X=\log{\text{concentration}} $.
-    \item Tolerance distribution is $ f(x) $ and probability of responding to dose $ x $ is:
-          \[ \pi(x)=\Prob{X\le x}=\int_{-\infty}^{x}f(x)\odif{x}=F(x). \]
-    \item Binomial GLMs can be utilized to evaluate the dose-response relationship:
-          \[ g(\pi)=\beta_0+\beta_1x \]
-          \begin{table}[!htbp]
-              \centering
-              \begin{tabular}{cc}
-                  \toprule
-                  \textcolor{Red}{Link} & \textcolor{Red}{Tolerance Distribution} \\
-                  \midrule
-                  Logit                 & Logistic$(\mu,s)$                       \\
-                  Probit                & Normal$(\mu,s)$                         \\
-                  Cloglog               & Extreme Value$(\mu,s)$                  \\
-                  \bottomrule
-              \end{tabular}
-          \end{table}
-          In every case,
-          \[ \beta_0=-\frac{\mu}{s},\qquad \beta_1=\frac{1}{s}. \]
-    \item Estimation of the \textcolor{Red}{\emph{median lethal/effective dose}} ($ \delta_{0.5} $):
-          \[ g(0.5)=\hat{\beta}_0+\hat{\beta}_1\delta_{0.5}\implies \delta_{0.5}=\frac{g(0.5)-\hat{\beta}_0}{\hat{\beta}_1}.  \]
-    \item Calculation of dose related to $ q\textsuperscript{th} $ percentile of response.
+      \item Dose: $ X=\log{\text{concentration}} $.
+      \item Tolerance distribution is $ f(x) $ and probability of responding to dose $ x $ is:
+            \[ \pi(x)=\Prob{X\le x}=\int_{-\infty}^{x}f(x)\odif{x}=F(x). \]
+      \item Binomial GLMs can be utilized to evaluate the dose-response relationship:
+            \[ g(\pi)=\beta_0+\beta_1x \]
+            \begin{table}[!htbp]
+                  \centering
+                  \begin{tabular}{cc}
+                        \toprule
+                        \textcolor{Red}{Link} & \textcolor{Red}{Tolerance Distribution} \\
+                        \midrule
+                        Logit                 & Logistic$(\mu,s)$                       \\
+                        Probit                & Normal$(\mu,s)$                         \\
+                        Cloglog               & Extreme Value$(\mu,s)$                  \\
+                        \bottomrule
+                  \end{tabular}
+            \end{table}
+            In every case,
+            \[ \beta_0=-\frac{\mu}{s},\qquad \beta_1=\frac{1}{s}. \]
+      \item Estimation of the \textcolor{Red}{\emph{median lethal/effective dose}} ($ \delta_{0.5} $):
+            \[ g(0.5)=\hat{\beta}_0+\hat{\beta}_1\delta_{0.5}\implies \delta_{0.5}=\frac{g(0.5)-\hat{\beta}_0}{\hat{\beta}_1}.  \]
+      \item Calculation of dose related to $ q\textsuperscript{th} $ percentile of response.
 \end{itemize}
 
 \section*{Topic 4a: Poisson GLMs for Count Data}

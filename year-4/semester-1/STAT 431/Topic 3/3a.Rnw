@@ -1,31 +1,31 @@
 \section*{Topic 3a: Binary Data and Odds Ratios}
 \addcontentsline{toc}{section}{Topic 3a: Binary Data and Odds Ratios}
 \subsection*{Binary Data Set-up}
-Consider the simplest case with two \emph{binary} variables:
 \begin{itemize}
-    \item COVID-19: infected or not infected (response).
-    \item Vaccination: yes or no (explanatory variable).
+    \item Consider the simplest case with two \emph{binary} variables:
+          \begin{itemize}
+              \item COVID-19: infected or not infected (response).
+              \item Vaccination: yes or no (explanatory variable).
+          \end{itemize}
+    \item Use a $ 2\times 2 $ table to summarize the data:
+          \begin{table}[!htbp]
+              \centering
+              \begin{NiceTabular}{c|cc|c}
+                  & \multicolumn{2}{c}{\emph{COVID-19}}                                                 \\
+                  Vaccination & infected                            & not infected                                        \\
+                  \midrule
+                  yes & $ y_1 $                            & $ m_1-y_1 $                 & $ m_1 $         \\
+                  no   & $ y_2 $                            & $ m_2-y_2 $                 & $ m_2 $         \\
+                  \midrule
+                  Total& $ y_{\bullet} $                    & $ m_{\bullet}-y_{\bullet} $ & $ m_{\bullet} $
+              \end{NiceTabular}
+          \end{table}
+    \item Treat $ m_1 $ and $ m_2 $ as fixed, assume $ Y_1 $ and $ Y_2 $ are independent binomial r.v.'s
+          \[ \textcolor{Red}{Y_k \sim \BIN{m_k,\pi_k},\qquad k=1,2,} \]
+          where $ \pi_k=\Prob{\text{infection}\given \text{group $ k $}} $.
+    \item How do we measure the associate between COVID-19 infection and vaccination?
 \end{itemize}
-Use a $ 2\times 2 $ table to summarize the data:
-\begin{table}[!htbp]
-    \centering
-    \begin{NiceTabular}{c|cc|c}
-        & \multicolumn{2}{c}{\emph{COVID-19}}                                                 \\
-        Vaccination & infected                            & not infected                                        \\
-        \midrule
-        yes & $ y_1 $                            & $ m_1-y_1 $                 & $ m_1 $         \\
-        no   & $ y_2 $                            & $ m_2-y_2 $                 & $ m_2 $         \\
-        \midrule
-        Total& $ y_{\bullet} $                    & $ m_{\bullet}-y_{\bullet} $ & $ m_{\bullet} $
-    \end{NiceTabular}
-\end{table}
 
-Treat $ m_1 $ and $ m_2 $ as fixed, assume $ Y_1 $ and $ Y_2 $ are independent binomial r.v.'s
-\[ \textcolor{Red}{Y_k \sim \BIN{m_k,\pi_k},\qquad k=1,2,} \]
-where $ \pi_k=\Prob{\text{infection}\given \text{group $ k $}} $.
-
-How do we measure the associate between COVID-19 infection and vaccination?
-\newpage
 \subsection*{Measures of Association}
 \begin{Regular}{Definition (Odds Ratio)}
     The \textcolor{Red}{Odds Ratio} (OR) is the ratio of the odds of an event occurring in one
@@ -47,55 +47,57 @@ In the case of a \textcolor{Red}{rare disease} (i.e., when $ \pi_1 $ and $ \pi_2
 then
 \[ \OR\approx\RR. \]
 \subsection*{Maximum Likelihood Estimation of Odds Ratio}
-Goal: Estimate odds ratio $ \psi=\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)} $ using likelihood method. Based
-on ``grouped'' binomial data,
-\[ \textcolor{Red}{Y_k \sim \BIN{m_k,\pi_k},\; k=1,2} \]
-\begin{align*}
-    L(\pi_1,\pi_2)
-     & =\binom{m_1}{y_1}\pi_1^{y_1}(1-\pi_1)^{m_1-y_1}\binom{m_2}{y_2}\pi_2^{y_2}(1-\pi_2)^{m_2-y_2}                                                        \\
-     & \propto\biggl(\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)} \biggr)^{\!y_1}\biggl(\frac{\pi_2}{1-\pi_2}\biggr)^{\! y_2+y_1}(1-\pi_1)^{m_1}(1-\pi_2)^{m_2}.
-\end{align*}
-Note that $ \pi_1,\pi_2\in[0,1] $ and odds ratio $ \psi\in(0,\infty) $ are restricted, we consider re-parameterize:
-\[ \theta_1=\log*{\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)}}=\log{\psi},\qquad \theta_2=\log*{\frac{\pi_2}{1-\pi_2}}, \]
-and now $ \theta_1,\theta_2\in(-\infty,\infty) $.
-
-Our re-parameterization implies:
-\[ \pi_1=\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}},\qquad \pi_2=\frac{\mathrm{e}^{\theta_2}}{1+\mathrm{e}^{\theta_2}}. \]
-Now the likelihood becomes:
-\begin{align*}
-    L(\theta_1,\theta_2)    & =(\mathrm{e}^{\theta_1})^{y_1}(\mathrm{e}^{\theta_2})^{y_1+y_2}(1+\mathrm{e}^{\theta_1+\theta_2})^{m_1}(1+\mathrm{e}^{\theta_2})^{-m_2}, \\
-    \ell(\theta_1,\theta_2) & =y_1\theta_1+(y_1+y_2)\theta_2-m_1\log{1+\mathrm{e}^{\theta_1+\theta_2}}-m_2\log{1+\mathrm{e}^{\theta_2}}.
-\end{align*}
-The score vector is:
-\[ S(\theta_1,\theta_2)=\begin{pmatrix}
-        \pdv{\ell}{\theta_1} \\
-        \pdv{\ell}{\theta_2}
-    \end{pmatrix}=\begin{pmatrix}
-        y_1-m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}} \biggr) \\
-        y_1+y_2-m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}} \biggr)-m_2\biggl(\frac{\mathrm{e}^{\theta_2}}{1+\mathrm{e}^{\theta_2}} \biggr)
-    \end{pmatrix}. \]
-Solving $ \Vector{S}(\theta_1,\theta_2)=\Vector{0} $ gives us the MLEs:
-\[ \hat{\theta}_1=\log*{\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}},\qquad \hat{\theta}_2=\log*{\frac{y_2}{m_2-y_2}}. \]
-So by the invariance property of MLEs, we have:
-\[ \hat{\pi}_1=\frac{y_1}{m_1},\qquad \hat{\pi}_2=\frac{y_2}{m_2},\qquad\hat{\psi}=\frac{\hat{\pi}_1/(1-\hat{\pi}_1)}{\hat{\pi}_2/(1-\hat{\pi}_2)}=\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}.  \]
+\begin{itemize}
+    \item Goal: Estimate odds ratio $ \psi=\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)} $ using likelihood method. Based
+          on ``grouped'' binomial data, $ \textcolor{Red}{Y_k \sim \BIN{m_k,\pi_k},\; k=1,2} $,
+          \begin{align*}
+              L(\pi_1,\pi_2)
+               & =\binom{m_1}{y_1}\pi_1^{y_1}(1-\pi_1)^{m_1-y_1}\binom{m_2}{y_2}\pi_2^{y_2}(1-\pi_2)^{m_2-y_2}                                                        \\
+               & \propto\biggl(\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)} \biggr)^{\!y_1}\biggl(\frac{\pi_2}{1-\pi_2}\biggr)^{\! y_2+y_1}(1-\pi_1)^{m_1}(1-\pi_2)^{m_2}.
+          \end{align*}
+    \item Note that $ \pi_1,\pi_2\in[0,1] $ and odds ratio $ \psi\in(0,\infty) $ are restricted, we consider re-parameterize:
+          \[ \theta_1=\log*{\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)}}=\log{\psi},\qquad \theta_2=\log*{\frac{\pi_2}{1-\pi_2}}, \]
+          and now $ \theta_1,\theta_2\in(-\infty,\infty) $.
+    \item Our re-parameterization implies:
+          \[ \pi_1=\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}},\qquad \pi_2=\frac{\mathrm{e}^{\theta_2}}{1+\mathrm{e}^{\theta_2}}. \]
+          Now the likelihood becomes:
+          \begin{align*}
+              L(\theta_1,\theta_2)    & =(\mathrm{e}^{\theta_1})^{y_1}(\mathrm{e}^{\theta_2})^{y_1+y_2}(1+\mathrm{e}^{\theta_1+\theta_2})^{m_1}(1+\mathrm{e}^{\theta_2})^{-m_2}, \\
+              \ell(\theta_1,\theta_2) & =y_1\theta_1+(y_1+y_2)\theta_2-m_1\log{1+\mathrm{e}^{\theta_1+\theta_2}}-m_2\log{1+\mathrm{e}^{\theta_2}}.
+          \end{align*}
+    \item The score vector is:
+          \[ S(\theta_1,\theta_2)=\begin{pmatrix}
+                  \pdv{\ell}{\theta_1} \\
+                  \pdv{\ell}{\theta_2}
+              \end{pmatrix}=\begin{pmatrix}
+                  y_1-m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}} \biggr) \\
+                  y_1+y_2-m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}} \biggr)-m_2\biggl(\frac{\mathrm{e}^{\theta_2}}{1+\mathrm{e}^{\theta_2}} \biggr)
+              \end{pmatrix}. \]
+    \item Solving $ \Vector{S}(\theta_1,\theta_2)=\Vector{0} $ gives us the MLEs:
+          \[ \hat{\theta}_1=\log*{\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}},\qquad \hat{\theta}_2=\log*{\frac{y_2}{m_2-y_2}}. \]
+    \item So by the invariance property of MLEs, we have:
+          \[ \hat{\pi}_1=\frac{y_1}{m_1},\qquad \hat{\pi}_2=\frac{y_2}{m_2},\qquad\hat{\psi}=\frac{\hat{\pi}_1/(1-\hat{\pi}_1)}{\hat{\pi}_2/(1-\hat{\pi}_2)}=\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}.  \]
+\end{itemize}
 \subsection*{Inference for Odds Ratio}
-In order to do inference we will need the Information Matrix:
-\[ \Matrix{I}(\theta_1,\theta_2)=\begin{bmatrix}
-        I_{11} & I_{12} \\
-        I_{21} & I_{22}
-    \end{bmatrix}\qquad\text{where }I_{jk}=-\pdv*{\ell(\theta_1,\theta_2)}{\theta_j,\theta_k}. \]
-Here, we have:
-\begin{align*}
-    I_{11}          & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr),                                                                             \\
-    I_{12}  =I_{21} & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr),                                                                             \\
-    I_{22}          & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr)+m_2\biggl(\frac{\mathrm{e}^{\theta_2}}{(1+\mathrm{e}^{\theta_2})^2} \biggr).
-\end{align*}
-We are interested in doing inference on $ \theta_1=\log{\psi} $ (while $ \theta_2 $ is nuisance).
-
-Recall the asymptotic distribution result of a \textcolor{Red}{Wald statistic}:
+\begin{itemize}
+    \item In order to do inference we will need the Information Matrix:
+          \[ \Matrix{I}(\theta_1,\theta_2)=\begin{bmatrix}
+                  I_{11} & I_{12} \\
+                  I_{21} & I_{22}
+              \end{bmatrix}\qquad\text{where }I_{jk}=-\pdv*{\ell(\theta_1,\theta_2)}{\theta_j,\theta_k}. \]
+          Here, we have:
+          \begin{align*}
+              I_{11}          & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr),                                                                             \\
+              I_{12}  =I_{21} & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr),                                                                             \\
+              I_{22}          & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr)+m_2\biggl(\frac{\mathrm{e}^{\theta_2}}{(1+\mathrm{e}^{\theta_2})^2} \biggr).
+          \end{align*}
+    \item We are interested in doing inference on $ \theta_1=\log{\psi} $ (while $ \theta_2 $ is nuisance).
+    \item Recall the asymptotic distribution result of a \textcolor{Red}{Wald statistic}:
+\end{itemize}
 \begin{Regular}{Wald Statistic}
     For a vector $ \Vector{\theta}=(\theta_1,\theta_2)^\top $ where $ \theta_1=\log{\psi} $ is a scalar parameter of interest:
-    \[ (\hat{\theta}_1-\theta_1)^2\bigl(I^{11}(\hat{\theta}_1,\hat{\theta}_2)\bigr)^{-1}\sim \chi^2_{(1)}, \]
+    \[ (\hat{\theta}_1-\theta_1)^2\bigl(I^{11}(\hat{\theta}_1,\hat{\theta}_2)\bigr)^{-1}\sim \chi^2_{(1)},
+        \text{ or }(\hat{\theta}_1-\theta)/\sqrt{I^{11}} \sim \N{0,1}, \]
     where $ I^{11} $ is the $ (1,1) $ element of $ \Matrix{I}^{-1} $ evaluated at MLE $ \hat{\theta}_1 $ and $ \hat{\theta}_2 $.
 \end{Regular}
 \begin{itemize}
@@ -202,26 +204,13 @@ There is an \textcolor{Blue}{additional explanatory variable}: Clinic (A vs B).
           disappeared when we stratified by clinic.
           \begin{figure}[!htbp]
               \centering
-              \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-                  % Text Node
-                  \draw (99,4) node [anchor=north west][inner sep=0.75pt]   [align=left] {Clinic};
-                  % Text Node
-                  \draw (2,55) node [anchor=north west][inner sep=0.75pt]   [align=left] {Level of Care};
-                  % Text Node
-                  \draw (147,55) node [anchor=north west][inner sep=0.75pt]   [align=left] {Mortality};
-                  % Text Node
-                  \draw (109,44) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 189; green, 16; blue, 224 }  ,opacity=1 ] [align=left] {?};
-                  % Connection
-                  \draw    (133.15,25.32) -- (160.85,49.68) ;
-                  \draw [shift={(162.35,51)}, rotate = 221.32999999999998] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-                  \draw [shift={(131.65,24)}, rotate = 41.33] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-                  % Connection
-                  \draw    (99.79,25.17) -- (65.71,49.83) ;
-                  \draw [shift={(64.09,51)}, rotate = 324.12] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-                  \draw [shift={(101.41,24)}, rotate = 144.12] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
-                  % Connection
-                  \draw [color={rgb, 255:red, 189; green, 16; blue, 224 }  ,draw opacity=1 ]   (85,63) -- (142,63) ;
-                  \draw [shift={(144,63)}, rotate = 180] [color={rgb, 255:red, 189; green, 16; blue, 224 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+              \begin{tikzpicture}[thick]
+                  \node (1) at (0,1) {Clinic};
+                  \node (2) at (-2,0) {Level of Care};
+                  \node (3) at (2,0) {Mortality};
+                  \draw[<->] (1) to (2);
+                  \draw[<->] (1) to (3);
+                  \draw[->,Purple] (2) to (3) node[anchor=south,midway] {$?$};
               \end{tikzpicture}
           \end{figure}
     \item Instead of having to examine multiple $ 2\times 2 $ tables we'd like to estimate the $ \OR $
