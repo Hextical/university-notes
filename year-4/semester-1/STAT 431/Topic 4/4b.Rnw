@@ -1,0 +1,18 @@
+\section*{Topic 4b: Ship Damage Example}
+\addcontentsline{toc}{section}{Topic 4b: Ship Damage Example}
+\subsection*{Recall: Regression for Poisson Processes}
+\begin{itemize}
+    \item Last week in Topic 4a, we introduced Poisson GLMs for count data.
+    \item Suppose from each subject $ i=1,\ldots,n $ we observe:
+          \begin{itemize}
+              \item $ N_i(t_i)= $ the number of events observed over $ (0,t_i] $.
+              \item $ \Vector{x}_i=(1,x_{i1},\ldots,x_{ip-1})^\top $, the covariate vector associated with count $ N_i(t_i) $.
+          \end{itemize}
+    \item Assume $ N_i(t) $ is a \textcolor{Red}{\emph{time-homogenous Poisson process}} s.t. $ N_i(t_i)\sim \POI{\:\cdot\:} $ and
+          \[ \E[\big]{N_i(t_i)}=\mu_i(t_i)=\lambda_i t_i, \]
+          where $ \lambda_i $ is the rate of occurrence that is constant, therefore TH process.
+    \item A log linear regression model:
+          \[ \log[\big]{\mu_i(t_i)}=\log{\lambda_i}+\underbrace{\textcolor{Blue}{\log{t_i}}}_{\text{offset}}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
+          Regression part: $ \log{\lambda_i}=\Vector{x}_i^\top \Vector{\beta} $.
+    \item Maximum likelihood methods apply as usual for the estimation and inference of regression coefficients $ \Vector{\beta} $.
+\end{itemize}

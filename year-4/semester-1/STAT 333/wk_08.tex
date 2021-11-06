@@ -1,0 +1,41 @@
+\makeheading{Week 8}{\daterange{2021-11-03}{2021-11-10}}%chktex 8
+\section{Absorbing DTMCs}
+The \emph{Gambler's Ruin Problem} is actually an example of a more general problem which we turn
+our attention to next. In particular, consider a DTMC $ \Set{X_n,n\in\mathbb{N}} $ with a \underline{finite}
+number of states arranged specifically as follows:
+\[ \underbrace{0,1,\ldots,M-1}_{\text{transient states}},\underbrace{M,M+1,\ldots,N}_{\text{absorbing states}}. \]
+The TPM for this DTMC can be expressed as:
+\[ P=\begin{bNiceArray}{cccc|cccc}[first-row,first-col]
+        & 0              & 1 & \cdots & M-1 & M              & M+1 & \cdots & N \\
+        0 & \Block{4-4}{Q} &   &        &     & \Block{4-4}{R}                    \\
+        1                                                                         \\
+        \vdots                                                                    \\
+        M-1                                                                       \\
+        \midrule
+        M & \Block{4-4}{0} &   &        &     & \Block{4-4}{I}                    \\
+        M+1                                                                       \\
+        \vdots                                                                    \\
+        N
+    \end{bNiceArray}, \]
+where
+\[ Q=
+    \begin{bNiceMatrix}[first-row,first-col]
+               & 0         & 1         & \cdots & M-1         \\
+        0      & Q_{0,0}   & Q_{0,1}   & \cdots & Q_{0,M-1}   \\
+        1      & Q_{1,0}   & Q_{1,1}   & \cdots & Q_{1,M-1}   \\
+        \vdots & \vdots    & \vdots    &        & \vdots      \\
+        M-1    & Q_{M-1,0} & Q_{M-1,1} & \cdots & Q_{M-1,M-1}
+    \end{bNiceMatrix},
+\]
+\[ R=
+    \begin{bNiceMatrix}[first-row,first-col]
+               & M         & M+1         & \cdots & N         \\
+        0      & R_{0,M}   & R_{0,M+1}   & \cdots & R_{0,N}   \\
+        1      & R_{1,M}   & R_{1,M+1}   & \cdots & R_{1,N}   \\
+        \vdots & \vdots    & \vdots      &        & \vdots    \\
+        M-1    & R_{M-1,M} & R_{M-1,M+1} & \cdots & R_{M-1,N}
+    \end{bNiceMatrix},
+\]
+$ 0 $ is a matrix of zero dimension $ (N-M+1)\times M $, and $ I $ is an identity matrix of dimension
+$ (N-M+1)\times (N-M+1) $.
+\subsection*{Absorbing DTMCs: Absorption Probability}

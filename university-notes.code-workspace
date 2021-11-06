@@ -5,15 +5,125 @@
 		}
 	],
 	"settings": {
-		"explorer.confirmDragAndDrop": false,
-		"latex-workshop.latex.recipe.default": "lastUsed",
-		"workbench.activityBar.visible": true,
-		"latex-workshop.latex.clean.subfolder.enabled": true,
-		"editor.suggestSelection": "first",
+		"terminal.integrated.fontFamily": "'Iosevka Extended'",
+		"debug.console.fontFamily": "'Iosevka Extended'",
+		"editor.fontFamily": "'Iosevka Extended'",
 		"editor.minimap.enabled": false,
 		"editor.formatOnSave": true,
-		"files.insertFinalNewline": true,
-		"files.eol": "\n",
+		"window.zoomLevel": 1,
+		"ltex.language": "en-GB",
+		"ltex.latex.commands": {
+			"\\usemintedstyle{}": "ignore",
+			"\\code{}": "dummy",
+			"\\texttt{}": "dummy",
+			"\\texorpdfstring{}{}": "dummy",
+			"\\lstinline{}": "dummy",
+			"\\qty{}{}": "dummy"
+		},
+		"ltex.additionalRules.motherTongue": "en-GB",
+		"ltex.additionalRules.enablePickyRules": true,
+		"ltex.completionEnabled": true,
+		"latex-workshop.latex.tools": [
+			{
+				"name": "pdflatex",
+				"command": "pdflatex",
+				"args": [
+					"-file-line-error",
+					"-interaction=nonstopmode",
+					"-output-directory=%OUTDIR%",
+					"-output-format=pdf",
+					"-synctex=1",
+					"-shell-escape",
+					"%DOC%"
+				],
+			},
+			{
+				"name": "xelatex",
+				"command": "xelatex",
+				"args": [
+					"-synctex=1",
+					"-interaction=nonstopmode",
+					"-file-line-error",
+					"-shell-escape",
+					"-output-directory=%OUTDIR%",
+					"%DOC%"
+				]
+			},
+			{
+				"name": "lualatex",
+				"command": "lualatex",
+				"args": [
+					"--file-line-error",
+					"--interaction=nonstopmode",
+					"--output-directory=%OUTDIR%",
+					"--output-format=pdf",
+					"--shell-escape",
+					"--synctex=1",
+					"%DOC%"
+				]
+			},
+			{
+				"name": "rnw2tex",
+				"command": "Rscript",
+				"args": [
+					"-e",
+					"knitr::opts_knit$set(concordance = TRUE); knitr::knit('%DOCFILE_EXT%')"
+				],
+				"env": {}
+			}
+		],
+		"latex-workshop.latex.recipes": [
+			{
+				"name": "pdflatex x1",
+				"tools": [
+					"pdflatex"
+				]
+			},
+			{
+				"name": "xelatex x1",
+				"tools": [
+					"xelatex"
+				]
+			},
+			{
+				"name": "lualatex x2",
+				"tools": [
+					"lualatex",
+					"lualatex"
+				]
+			},
+			{
+				"name": "pdflatex x2",
+				"tools": [
+					"pdflatex"
+				]
+			},
+			{
+				"name": "Compile Rnw files (pdflatex x2)",
+				"tools": [
+					"rnw2tex",
+					"pdflatex",
+					"pdflatex"
+				]
+			},
+			{
+				"name": "Compile Rnw files (lualatex x2)",
+				"tools": [
+					"rnw2tex",
+					"lualatex",
+					"lualatex"
+				]
+			},
+			{
+				"name": "Compile Rnw files (xelatex x2)",
+				"tools": [
+					"rnw2tex",
+					"xelatex",
+					"xelatex"
+				]
+			},
+		],
+		"latex-workshop.latex.recipe.default": "lastUsed",
 		"latex-workshop.chktex.enabled": true,
 		"latex-workshop.chktex.args.active": [
 			"-wall",
@@ -22,7 +132,8 @@
 			"-n46",
 			"-n3",
 			"-n21",
-			"-n36"
+			"-n36",
+			"-n17"
 		],
 		"latex-workshop.view.pdf.external.viewer.command": "okular",
 		"latex-workshop.view.pdf.external.viewer.args": [

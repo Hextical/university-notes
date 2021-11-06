@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[final]{article}
 \usepackage[svgnames]{xcolor}
 \usepackage[british]{babel}
 \usepackage[protrusion,expansion,tracking,kerning,babel,final]{microtype}
@@ -13,108 +13,122 @@
 \usepackage{derivative}
 \usepackage{etoolbox}
 \usepackage{siunitx}
-\usepackage{bm}
+\usepackage{lmodern}
 \usepackage[T1]{fontenc}
-\usepackage{multirow}
+\usepackage[scaled=.98]{XCharter}
+\usepackage[scaled=1.04,varqu,varl]{inconsolata}% inconsolata typewriter
+\usepackage{amssymb}
+\makeatletter
+\@namedef{T1/zi4/m/it}{<->ssub*XCharterx/m/it}
+\makeatother
+\usepackage{bm}
 
-% Functions
-\providecommand\given{} % just to make sure it exists
-\DeclarePairedDelimiterXPP{\E}[1]{\operatorname{\text{E}}}[]{}{%
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% just to make sure it exists
+\providecommand\given{}%
+% can be useful to refer to this outside \Set
+\newcommand\SetSymbol[1][]{%
+    \nonscript\:#1\vert{}%
+    \allowbreak%
+    \nonscript\:%
+    \mathopen{}}%
+\DeclarePairedDelimiterXPP{\E}[1]{\operatorname{\mathbb{E}}}[]{}{%
+    \renewcommand\given{\SetSymbol[\delimsize]}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\V}[1]{\operatorname{\Field{V}}}(){}{%
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+\DeclarePairedDelimiterXPP{\Var}[1]{\operatorname{Var}}(){}{%
+    \renewcommand\given{\SetSymbol[\delimsize]}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\Var}[1]{\operatorname{\text{Var}}}(){}{%
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+\DeclarePairedDelimiterXPP{\Cov}[1]{\operatorname{Cov}}(){}{%
+    \renewcommand\given{\SetSymbol[\delimsize]}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\Cov}[1]{\operatorname{\text{Cov}}}(){}{%
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+\DeclarePairedDelimiterXPP\Prob[1]{\operatorname{\mathbb{P}}}(){}{%
+    \renewcommand\given{\SetSymbol[\delimsize]}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP\Prob[1]{\operatorname{\Field{P}}}(){}{%
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+\DeclarePairedDelimiterXPP\Ind[1]{\operatorname{\mathbb{I}}}\{\}{}{%
+    \renewcommand\given{\SetSymbol[\delimsize]}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP\Ind[1]{\operatorname{\Field{I}}}\{\}{}{%
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
-    \ifblank{#1}{\:\cdot\:}%
-    #1}%
-\DeclarePairedDelimiterXPP{\se}[1]{\operatorname{\text{se}}}(){}{%
-    \ifblank{#1}{\:\cdot\:}%
-    #1}%
-\DeclarePairedDelimiterXPP{\estse}[1]{\widehat{\operatorname{\text{se}}}}(){}{%
-    \ifblank{#1}{\:\cdot\:}%
-    #1}%
-\DeclarePairedDelimiterXPP{\estV}[1]{\widehat{\operatorname{\Field{V}}}}(){}{
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
-    \ifblank{#1}{\:\cdot\:}%
-    #1}%
-\DeclarePairedDelimiterXPP{\estVar}[1]{\widehat{\operatorname{\text{Var}}}}(){}{
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
-    \ifblank{#1}{\:\cdot\:}%
-    #1}%
+    
+\let\gcd\relax%
 \let\exp\relax%
 \let\log\relax%
 \let\ln\relax%
-\DeclarePairedDelimiterXPP{\exp}[1]{\operatorname{\text{exp}}}\{\}{}{#1}%
-\DeclarePairedDelimiterXPP{\log}[1]{\operatorname{\text{log}}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\ln}[1]{\operatorname{\text{ln}}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\diag}[1]{\operatorname{\text{diag}}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\sign}[1]{\operatorname{\text{sign}}}(){}{#1}%
+\let\max\relax%
+\let\min\relax%
+\DeclarePairedDelimiterXPP{\gcd}[1]{\operatorname{gcd}}\{\}{}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\exp}[1]{\operatorname{exp}}\{\}{}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\log}[1]{\operatorname{log}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\ln}[1]{\operatorname{ln}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\min}[1]{\operatorname{min}}\{\}{}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\max}[1]{\operatorname{max}}\{\}{}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\diag}[1]{\operatorname{diag}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\sign}[1]{\operatorname{sign}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\expit}[1]{\operatorname{expit}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\logit}[1]{\operatorname{logit}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
 
-\DeclarePairedDelimiterXPP{\expit}[1]{\operatorname{\text{expit}}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\logit}[1]{\operatorname{\text{logit}}}(){}{#1}%
 \newcommand{\HN}{\text{H}_0}%
 \newcommand{\HA}{\text{H}_{\text{A}}}%
-
-% Distributions
-\DeclarePairedDelimiterXPP{\N}[1]{\mathcal{N}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\Poisson}[1]{\text{Poisson}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\Bin}[1]{\text{Bin}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\Binomial}[1]{\text{Binomial}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\Bernoulli}[1]{\text{Bernoulli}}(){}{#1}%
-\DeclarePairedDelimiterXPP{\MVN}[1]{\text{MVN}}(){}{#1}%
-
 \newcommand{\iid}{\overset{\text{iid}}{\sim}}%
-\newcommand{\ind}{\overset{\text{ind}}{\sim}}%
-\newcommand{\OR}{\text{OR}}%
-\newcommand{\RR}{\text{RR}}%
 
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-% can be useful to refer to this outside \Set
-\newcommand\SetSymbol[1][]{%
-    \nonscript\:#1\vert{}
-    \allowbreak\nonscript\:
-    \mathopen{}}
+% Discrete Distributions
+\DeclarePairedDelimiterXPP{\BERN}[1]{\text{BERN}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\BIN}[1]{\text{BIN}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\NBt}[1]{\text{NB}_t}(){}{#1}%
+\DeclarePairedDelimiterXPP{\NBf}[1]{\text{NB}_f}(){}{#1}%
+\DeclarePairedDelimiterXPP{\GEOt}[1]{\text{GEO}_t}(){}{#1}%
+\DeclarePairedDelimiterXPP{\GEOf}[1]{\text{GEO}_f}(){}{#1}%
+\DeclarePairedDelimiterXPP{\DU}[1]{\text{DU}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\HG}[1]{\text{HG}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\POI}[1]{\text{POI}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\MN}[1]{\text{MN}}(){}{#1}%
+
+% Continuous Distributions
+\let\U\relax%
+\DeclarePairedDelimiterXPP{\U}[1]{\text{U}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\BetaDist}[1]{\text{Beta}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\Erlang}[1]{\text{Erlang}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\EXP}[1]{\text{EXP}}(){}{#1}%
+
+\DeclarePairedDelimiterX\abs[1]\lvert\rvert{%
+    \ifblank{#1}{\:\cdot\:}{#1}%
+}%
 \DeclarePairedDelimiterX\Set[1]\{\}{%
-    \renewcommand\given{:}
-    #1
-}
+    \renewcommand\given{:}%
+    #1%
+}%
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\arginf}{arg\,inf}
 \DeclareMathOperator*{\argsup}{arg\,sup}
 
-% Table of Contents
-\hypersetup{colorlinks,linkcolor=[rgb]{0,0.5,1}}%
-
-\title{%
-    {\LARGE Generalized Linear Models}\\%
-    {\large STAT 431/STAT 831}\\%
-    {\normalsize Spring 2022 (idk)}%
-}%
-\author{%
-    \LaTeX{}er: \emph{Cameron Roopnarine}\\%
-    Instructor: \emph{Leilei Zeng}%
-}%
-\date{\today}%
-
 \providecommand{\RandomVector}[1]{\bm{#1}}% general vectors in bold italic
-\providecommand{\Vector}[1]{\bm{#1}}% general vectors in bold italic
+\providecommand{\Vector}[1]{\underline{#1}}% general vectors in bold italic
 \providecommand{\Matrix}[1]{\bm{#1}}
 \providecommand{\MatrixCal}[1]{\bm{\mathcal{#1}}}
 \providecommand{\Field}[1]{\bm{#1}}
@@ -124,22 +138,22 @@
 \newcommand{\makeheading}[2]%
 {%
 \begin{center}%
-    \makebox[\linewidth]{\raisebox{-.5ex}[0cm][0cm]{\stackanchor{\textcolor{Gray}{\textsc{#1}}}{\scriptsize\itshape\printyearoff #2}\;}\color{Crimson!50}\hrulefill}%
+    \makebox[\linewidth]{\raisebox{-.5ex}[0cm][0cm]{\stackanchor{\textcolor{Gray}{\textsc{#1}}}{\emph{\scriptsize\printyearoff#2}}\;}\color{Crimson!50}\hrulefill}%
 \end{center}%
 }%
 
 \usepackage[breakable]{tcolorbox}
 \tcbset{
     regular/.style={
-        boxrule=0pt,
+        boxrule=0mm,
         breakable,
-        sharp corners,
+        sharp corners
     }
 }
 
-\newtcolorbox{Example}[1]{regular,colframe=Green!20!white,colback=Green!10!white,coltitle=Green,title={#1}}%
-\newtcolorbox{Regular}[1]{regular,colframe=Navy!15!white,colback=Navy!5!white,coltitle=Navy,title={#1}}%
-\newtcolorbox{Result}[1]{regular,colframe=Red!15!white,colback=Red!5!white,coltitle=Red,title={#1}}%
+\newtcolorbox{Example}{regular,colframe=Green!20!white,colback=Green!10!white}%
+\newtcolorbox{Regular}{regular,colframe=Navy!15!white,colback=Navy!5!white}%
+\newtcolorbox{Result}{regular,colframe=Red!15!white,colback=Red!5!white}%
 
 \hypersetup{colorlinks=true,%
 linkcolor=[rgb]{0,0.5,1},%
@@ -154,6 +168,9 @@ pdfkeywords={University of Waterloo, Fall 2021 (1219)}}%
 \normalsize Fall 2021 (1219)\thanks{Online Course}}%
 \author{Cameron Roopnarine\thanks{\LaTeX{}er}\and Cecilia Cotton\thanks{Instructor}}%
 \date{\today}%
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{svg}
 
 \begin{document}
 \maketitle
@@ -161,5 +178,6 @@ pdfkeywords={University of Waterloo, Fall 2021 (1219)}}%
 \tableofcontents
 \newpage
 \input{wk_01.tex}
+\input{wk_02.tex}
 
 \end{document}
