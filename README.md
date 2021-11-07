@@ -14,7 +14,7 @@ All my university notes done in LaTeX.
 |  [STAT 337](https://hextical.github.io/university-notes/year-4/semester-1/STAT%20337/stat337.pdf)  |   Week 1   | :heavy_check_mark: |
 | [STAT 431](https://hextical.github.io/university-notes/year-4/semester-1/STAT%20431/stat431.pdf)\* |   Week 7   | :heavy_check_mark: |
 
-\* STAT 431 $\equiv$ STAT 831.
+\* STAT 431 and STAT 831 have exactly the same lectures.
 
 ## Year 3
 
