@@ -346,7 +346,14 @@ example demonstrates the basic idea.
         \end{bNiceArray}. \]
     What is the mean absorption time for this DTMC, given that it begins in state $0^\star$?
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: Using the matrix equation for
+    $ \Vector{v}^\top=[v_{0^\star}] $, we have
+    \[ v_{0^\star}=(I-Q)^{-1}\Vector{e}^\top=\biggl(1-\frac{1}{2}\biggr)^{\!-1}(1)=2. \]
+    Looking at this particular TPM, given that the DTMC initially begins in state $0^\star$,
+    each transition will return to state $0^\star$ with probability of $ 1/2 $, or become absorbed
+    into one of the two absorbing states with probability $1/3+1/6=1/2$. Therefore, the number of
+    transitions required for absorption to occur simply follows a geometric distribution, namely
+    \[ T\mid(X_0=0^\star)\sim \GEOt*{\frac{1}{2}}\implies \E{T\given X_0=0^\star}=\frac{1}{1/2}=2.  \]
 \end{Example}
 \begin{Example}
     \textbf{Example 3.15}. (\emph{continued}) If the DTMC with TPM
@@ -360,7 +367,25 @@ example demonstrates the basic idea.
         \end{bNiceArray}, \]
     begins in state $1$, how long, on average, does it take to end up in either of states $2$ or $3$?
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: Since we have two transient states, we wish to find $ v_1 $ where
+    \[ \Vector{v}^\top=\begin{bmatrix}
+            v_0 \\
+            v_1
+        \end{bmatrix}. \]
+    Note that
+    \begin{align*}
+        \Vector{v}^\top
+         & =(I-Q)^{-1}\Vector{e}^\top                 \\
+         & =\begin{bNiceMatrix}[cell-space-limits=1pt]
+                \frac{70}{39} & \frac{10}{13} \\
+                \frac{10}{39} & \frac{20}{13}
+            \end{bNiceMatrix}\begin{bmatrix}
+                                 1 \\
+                                 1
+                             \end{bmatrix},
+    \end{align*}
+    and so
+    \[ v_1=\frac{10}{39} +\frac{20}{13} =\frac{70}{39} \simeq 1.79. \]
 \end{Example}
 \subsection*{Absorbing DTMCs: Mean Number of Transient State Visits}
 \begin{Regular}
@@ -382,7 +407,7 @@ example demonstrates the basic idea.
          & =0 \cdot \Prob{A_{0}=0 \given X_{0}=i}+1 \cdot \Prob{\underbrace{A_{0}=1}_{X_{0}=\ell} \given X_{0}=i}+\E*{\sum_{n=1}^{T-1} A_{n} \given X_{0}=i} \\
          & =\delta_{i, \ell}+\E*{\sum_{n=1}^{T-1} A_{n} \given X_{0}=i} .
     \end{align*}
-    To find $\E*{\sum_{n=1}^{T-1} A_{n} \given X_{0}=i}$, we condition on the state of the DTMC at time 1 to obtain
+    To find $\E*{\sum_{n=1}^{T-1} A_{n} \given X_{0}=i}$, we condition on the state of the DTMC at time $1$ to obtain
     \[
         \E*{\sum_{n=1}^{T-1} A_{n} \given X_{0}=i}
         =\sum_{j=0}^{M-1} \E*{\sum_{n=1}^{T-1} A_{n} \given X_{1}=j, X_{0}=i} P_{i, j}
@@ -446,7 +471,7 @@ example demonstrates the basic idea.
         W_{i,\ell}
          & =\E*{\sum_{n=0}^{T-1} A_n\given X_0=i}                                                                                                                                                           \\
          & =\underbrace{\E*{\sum_{n=0}^{T-1} A_n\given X_0=i,X_n=\ell\text{ for some }1\le n\le T-1}}_{\text{state $\ell$ is visited possibly at time $0$ and then at some point later on}}\cdot f_{i,\ell} \\
-         & \;+\underbrace{\E*{\sum_{n=0}^{T-1} A_n\given A_n\given X_0=i,X_n\ne \ell\text{ for some }1\le n\le T-1}}_{\text{only possible visit to state $\ell$ is at time $0$}}\cdot(1-f_{i,\ell})         \\
+         & \quad+\underbrace{\E*{\sum_{n=0}^{T-1} A_n\given A_n\given X_0=i,X_n\ne \ell\text{ for some }1\le n\le T-1}}_{\text{only possible visit to state $\ell$ is at time $0$}}\cdot(1-f_{i,\ell})      \\
          & =(\delta_{i,\ell}+W_{\ell,\ell})\cdot f_{i,\ell}+\delta_{i,\ell}\cdot(1-f_{i,\ell})                                                                                                              \\
          & =\delta_{i,\ell}+W_{\ell,\ell}f_{i,\ell}.
     \end{align*}
@@ -476,5 +501,28 @@ example demonstrates the basic idea.
     Given $X_0 = 1$, what is the average number of visits to state $0$ prior to absorption? Also, what
     is the probability that the DTMC ever makes a visit to state $0$?
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: First, we wish to find $ W_{1,0} $ where
+    \[ W=\begin{bNiceMatrix}[first-row,first-col]
+              & 0       & 1       \\
+            0 & W_{0,0} & W_{0,1} \\
+            1 & W_{1,0} & W_{1,1} \\
+        \end{bNiceMatrix}. \]
+    From our earlier calculations,
+    \begin{align*}
+        W
+         & =(I-Q)^{-1}                                \\
+         & =\begin{bNiceMatrix}[cell-space-limits=1pt]
+                \frac{70}{39} & \frac{10}{13} \\
+                \frac{10}{39} & \frac{20}{13}
+            \end{bNiceMatrix}.
+    \end{align*}
+    Thus, $ W_{1,0}=10/39\simeq 0.257 $. Lastly, we calculate
+    \[
+        f_{1,0}
+        =\frac{W_{1,0}-\delta_{1,0}}{W_{0,0}}
+        =\frac{(10/39)-0}{(70/39)}
+        =\frac{10}{39} \times \frac{39}{70}
+        =\frac{1}{7}
+        \simeq 0.143.
+    \]
 \end{Example}
