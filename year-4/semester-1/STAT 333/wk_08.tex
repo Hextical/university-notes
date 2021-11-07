@@ -39,3 +39,442 @@ where
 $ 0 $ is a matrix of zero dimension $ (N-M+1)\times M $, and $ I $ is an identity matrix of dimension
 $ (N-M+1)\times (N-M+1) $.
 \subsection*{Absorbing DTMCs: Absorption Probability}
+\begin{itemize}
+    \item In what follows, let $ i $ be a \underline{transient} state (i.e., $ 0\le i\le M-1 $) and assume that $ X_0=i $.
+    \item Let $ T=\min{n\in\mathbb{Z}^+:M\le X_n\le N} $ be the \emph{absorption time} rv.
+    \item For $ M\le k\le N $ (i.e., $k$ is an \underline{absorbing} state), consider the \emph{absorption probability into state $k$
+              from state $i$} defined by
+          \[ U_{i,k}=\Prob{X_T=k\given X_0=i}. \]
+          Conditioning on the state of the DTMC at time $1$, note that
+          \begin{align*}
+              U_{i, k}
+               & =\Prob{X_{T}=k \given X_{0}=i}                                                                                                   \\
+               & =\sum_{j=0}^{N} \Prob{X_{T}=k \given X_{1}=j, X_{0}=i} \Prob{X_{1}=j \given X_{0}=i}                                             \\
+               & =\sum_{j=0}^{M-1} \Prob{X_{T}=k \given X_{1}=j, X_{0}=i} P_{i, j}+\sum_{j=M}^{N} \Prob{X_{T}=k \given X_{1}=j, X_{0}=i} P_{i, j} \\
+               & =\sum_{j=0}^{M-1} P_{i, j} \Prob{X_{T}=k \given X_{1}=j, X_{0}=i}+P_{i, k},
+          \end{align*}
+          since it follows that for $ M\le j\le N $, $ T\mid(X_1=j,X_0=i) $ is degenerate at $1$, and so
+          $ \Prob{X_T=k\given X_1=j,X_0=i}=\delta_{j,k} $, where $ \delta_{j,k} $ denotes the \emph{Kronecker delta} function given
+          \[ \delta_{j,k}=\begin{cases}
+                  0, & \text{if $ j\ne k $}, \\
+                  1, & \text{if $ j=k $}.
+              \end{cases} \]
+          For $ 0\le j\le M-1 $, however, note that
+          \[ \Prob{X_T=k\given X_1=j,X_0=i}=\Prob{X_T=k\given X_0=j}=U_{j,k}. \]
+          To see this, let $T_i$ denote the remaining number of transitions until absorption given that the
+          DTMC is currently in transient state $i$. Clearly, $ T\mid(X_0=i)\sim T_i $. Moreover, for transient state $ j $, we have
+          \[ T\mid(X_1=j,X_0=i)\sim (1+T_j)\mid(X_1=j), \]
+          due to the Markov property.
+    \item \textbf{We have}: $ T\mid(X_1=j,X_0=i)\sim (1+T_j)\mid(X_1=j) $. Therefore,
+          \begin{align*}
+              \Prob{X_{T}=k \given X_{1}=j, X_{0}=i}
+               & =\Prob{X_{1+T_{j}}=k \given X_{1}=j}                                         \\
+               & =\Prob{X_{T_{j}}=k \given X_{0}=j} \text{ due to the stationary assumption } \\
+               & =\Prob{X_{T}=k \given X_{0}=j}                                               \\
+               & =U_{j, k},
+          \end{align*}
+          where the second last equality holds due to $ T_j $ and $ T $ being equivalent in distribution under
+          the condition $ X_0=j $. As a result, we ultimately end up with
+          \[ U_{i, k}=P_{i, k}+\sum_{j=0}^{M-1} P_{i, j} U_{j, k}=R_{i, k}+\sum_{j=0}^{M-1} Q_{i, j} U_{j, k}\; \forall 0 \leq i \leq M-1,\; M \leq k \leq N\label{eq3.12}\tag*{(3.12)} \]
+          In other words, to determine $U_{i, k}$ for a particular pair of values for $i$ and $k$, the system of $M$
+          linear equations given by~\ref{eq3.12} must be solved, yielding solutions for $U_{0, k}, U_{1, k}, \ldots, U_{M-1, k}$.
+\end{itemize}
+\begin{Example}
+    \textbf{Example 3.12}. (\emph{continued}) Recall the earlier DTMC we considered having TPM
+    \[ P=\begin{bNiceMatrix}[first-row,first-col,cell-space-limits=1pt]
+              & 0           & 1           & 2           \\
+            0 & 1           & 0           & 0           \\
+            1 & \frac{1}{3} & \frac{1}{2} & \frac{1}{6} \\
+            2 & 0           & 0           & 1
+        \end{bNiceMatrix}. \]
+    We previously claimed that
+    \[ \lim\limits_{{n} \to {\infty}} P^{(n)}=
+        \begin{bNiceMatrix}[first-row,first-col,cell-space-limits=1pt]
+              & 0           & 1 & 2           \\
+            0 & 1           & 0 & 0           \\
+            1 & \frac{2}{3} & 0 & \frac{1}{3} \\
+            2 & 0           & 0 & 1
+        \end{bNiceMatrix}. \]
+    Show that the absorption probabilities from transient
+    state $1$ into states $0$ and $2$ are equal to $ \lim\limits_{{n} \to {\infty}} P_{1,0}^{(n)} $ and $ \lim\limits_{{n} \to {\infty}} P_{1,2}^{(n)} $, respectively.
+    \tcblower{}
+    \textbf{Solution}: First, relabel the states of this DTMC as follows:
+    \begin{align*}
+        0^\star & =\text{state $1$ in the original DTMC}, \\
+        1^\star & =\text{state $0$ in the original DTMC}, \\
+        2^\star & =\text{state $2$ in the original DTMC}.
+    \end{align*}
+    As a result, the ``new'' TPM corresponding to states $ \Set{0^\star,1^\star,2^\star} $ looks like:
+    \[ P=\begin{bNiceArray}{c|cc}[first-row,first-col,cell-space-limits=1pt]
+            & 0^\star           & 1^\star           & 2^\star           \\
+            0^\star & \frac{1}{2}            & \frac{1}{3}           & \frac{1}{6}           \\
+            \midrule
+            1^\star & 0 & 1 & 0 \\
+            2^\star & 0           & 0           & 1
+        \end{bNiceArray}, \]
+    so that
+    \[ Q=\begin{bmatrix}
+            \frac{1}{2}
+        \end{bmatrix},\qquad R=\begin{bmatrix}
+            \frac{1}{3} & \frac{1}{6}
+        \end{bmatrix}. \]
+    Using~\ref{eq3.12} we find that $ U_{0^\star,1^\star} $ and $ U_{0^\star,2^\star} $ to be
+    \[ U_{0^\star,1^\star}=R_{0^\star,1^\star}+Q_{0^\star,0^\star}U_{0^\star,1^\star}=\frac{1}{3}+\frac{1}{2}U_{0^\star,1^\star}\implies U_{0^\star,1^\star}=\frac{2}{3}=\lim\limits_{{n} \to {\infty}} P_{1,0}^{(n)}, \]
+    and
+    \[ U_{0^\star,2^\star}=R_{0^\star,2^\star}+Q_{0^\star,0^\star}U_{0^\star,2^\star}=\frac{1}{6} +\frac{1}{2} U_{0^\star,2^\star}\implies U_{0^\star,2^\star}=\frac{1}{3} =\lim\limits_{{n} \to {\infty}} P_{1,2}^{(n)}. \]
+\end{Example}
+\noindent\underline{Remarks}:
+\begin{enumerate}[(1)]
+    \item If we define $U=[U_{i, k}]$ to be the $M \times(N-M+1)$ matrix of absorption probabilities,
+          then~\ref{eq3.12} can be expressed more succinctly in matrix form as
+          \[ U=R+Q U, \]
+          or equivalently,
+          \[ (I-Q) U=R. \]
+          A known mathematical fact is that the matrix $I-Q$ is invertible, and so an explicit (matrix) solution for $U$ is given by
+          \[ U=(I-Q)^{-1}R.\label{eq3.13}\tag*{(3.13)} \]
+          In the previous example, note that
+          \[
+              U=\begin{bmatrix}
+                  U_{0^\star,1^\star} & U_{0^\star,2^\star}
+              \end{bmatrix}
+              =\biggl(1-\frac{1}{2} \biggr)^{\!-1}\begin{bmatrix}
+                  \frac{1}{3} & \frac{1}{6}
+              \end{bmatrix}
+              =2 \begin{bmatrix}
+                  \frac{1}{3} & \frac{1}{6} \\
+              \end{bmatrix}
+              =\begin{bmatrix}
+                  \frac{2}{3} & \frac{1}{3}
+              \end{bmatrix}\]
+\end{enumerate}
+\subsection*{Absorbing DTMCs: Limiting Behaviour}
+\begin{enumerate}[(2)]
+    \item As demonstrated in the previous example, the limiting behaviour of the general DTMC we
+          are considering can be characterized as follows:
+          \[ \lim\limits_{{n} \to {\infty}} P^{(n)}=\begin{bNiceArray}{cccc|cccc}[first-row,first-col]
+                  & 0              & 1      & \cdots & M-1    & M              & M+1       & \cdots & N       \\
+                  0      & 0              & 0      & \cdots & 0      & U_{0,M}        & U_{0,M+1} & \cdots & U_{0,N} \\
+                  1      & 0              & 0      & \cdots & 0      & U_{1,M}        & U_{1,M+1} & \cdots & U_{1,N} \\
+                  \vdots & \vdots         & \vdots &        & \vdots & \vdots         & \vdots    &        & \vdots  \\
+                  M-1    & 0              & 0      & \cdots & 0      & U_{M-1,M}        & U_{M-1,M+1} & \cdots & U_{M-1,N}                                                                                            \\
+                  \midrule
+                  M      & 0 &  0      &   \cdots     &   0     & 1 & 0 & \cdots & 0                                \\
+                  M+1    & 0 & 0 & \cdots & 0 & 0 & 1 & \cdots & 0                                                                                            \\
+                  \vdots & \vdots         & \vdots &        & \vdots & \vdots         & \vdots    &        & \vdots  \\
+                  N & 0 & 0 & \cdots & 0 & 0 &  0 & \cdots & 1
+              \end{bNiceArray}. \]
+          Another way to see this is through the use of Exercise 3.5.1, which states that
+          \[ P^{(n)}=\begin{bNiceMatrix}[cell-space-limits=2pt]
+                  Q^n & \displaystyle \sum_{i=0}^{n-1} Q^i R \\
+                  0   & I
+              \end{bNiceMatrix},\; n\in\mathbb{Z}^+. \]
+          Therefore, it follows that
+          \[ \lim\limits_{{n} \to {\infty}} P^{(n)}=\begin{bNiceMatrix}[cell-space-limits=2pt]
+                  \lim\limits_{{n} \to {\infty}} Q^n & \displaystyle \biggl(\lim\limits_{{n} \to {\infty}} \sum_{i=0}^{n-1} Q^i\biggr)R \\
+                  0                                  & I
+              \end{bNiceMatrix}. \]
+          However, $ \lim\limits_{{n} \to {\infty}} Q^n=0 $ (as $Q$ has only transient states). Moreover, note that
+          \begin{align*}
+              (I-Q)\biggl(\lim _{n \to \infty} \sum_{i=0}^{n-1} Q^{i}\biggr)
+               & =\lim_{n \to \infty} \sum_{i=0}^{n-1}(I-Q) Q^{i}                                   \\
+               & =\lim_{n \to \infty} \sum_{i=0}^{n-1}(Q^{i}-Q^{i+1})                               \\
+               & =\lim_{n \to \infty}\bigl((Q^{0}-Q^{1})+(Q^{1}-Q^{2})+\cdots+(Q^{n-1}-Q^{n})\bigr) \\
+               & =\lim_{n \to \infty}(I-Q^{n})                                                      \\
+               & =I-\lim_{n \to \infty} Q^{n}                                                       \\
+               & =I.
+          \end{align*}
+          \textbf{We have}: $ U=(I-Q)^{-1}R\leftarrow $~\ref{eq3.13}. Therefore, we have that
+          \[ \sum_{i=0}^{\infty} Q^{i}=\lim_{n \to \infty} \sum_{i=0}^{n-1} Q^{i}=(I-Q)^{-1} I=(I-Q)^{-1}, \]
+          which yields a formula for an infinite geometric series of matrices. From~\ref{eq3.13}, we obtain
+          \[ \lim\limits_{{n} \to {\infty}} P^{(n)}=\begin{bmatrix}
+                  0 & U \\
+                  0 & I
+              \end{bmatrix}. \]
+\end{enumerate}
+\subsection*{Absorbing DTMCs: Gambler's Ruin Problem}
+\begin{enumerate}[(3)]
+    \item In the \emph{Gambler's Ruin Problem}, if we reorder the states $ 0,1,2,\ldots,N-1,N $ as
+          \[ \underbrace{1,2,\ldots,N-1}_{\text{transient}},\underbrace{N,0}_{\text{absorbing}}, \]
+          then $ U_{i,N}=G(i) $ and $ U_{i,0}=1-G(i) $, $ i=1,2,\ldots,N-1 $.
+\end{enumerate}
+\subsection*{Absorbing DTMCs: Absorption Probability}
+\begin{Example}
+    \textbf{Example 3.15}. Consider a DTMC with TPM
+    \[ P=\begin{bNiceArray}{cc|cc}[first-row,first-col]
+            & 0 & 1 & 2 & 3\\
+            0 & 0.4 & 0.3 & 0.2 & 0.1\\
+            1 & 0.1 & 0.3 & 0.3 & 0.3\\
+            \midrule
+            2 & 0 & 0 & 1 & 0\\
+            3 & 0 & 0 & 0 & 1
+        \end{bNiceArray}. \]
+    Suppose that the DTMC begins in state $1$. What is the probability that the DTMC ultimately
+    ends up in state $3$? How would this probability change if the DTMC begins in state $0$ with
+    probability $3/4$ and in state $1$ with probability $1/4$?
+    \tcblower{}
+    \textbf{Solution}: First, we wish to calculate $ U_{1,3} $. In this example,
+    \[ Q=\begin{bNiceMatrix}[first-row,first-col]
+              & 0   & 1   \\
+            0 & 0.4 & 0.3 \\
+            1 & 0.1 & 0.3
+        \end{bNiceMatrix},\qquad R=\begin{bNiceMatrix}[first-row,first-col]
+              & 2   & 3   \\
+            0 & 0.2 & 0.1 \\
+            1 & 0.3 & 0.3
+        \end{bNiceMatrix},\qquad U=\begin{bNiceMatrix}[first-row,first-col]
+              & 2       & 3       \\
+            0 & U_{0,2} & U_{0,3} \\
+            1 & U_{1,2} & U_{1,3}
+        \end{bNiceMatrix}. \]
+    Since $ U=(I-Q)^{-1}R $, we need to find the inverse of
+    \[ I-Q=\begin{bmatrix}
+            0.6  & -0.3 \\
+            -0.1 & 0.7
+        \end{bmatrix}. \]
+    \underline{Recall}: For a $ 2\times 2 $ matrix
+    \[ A=\begin{bmatrix}
+            a & b \\
+            c & d
+        \end{bmatrix}\implies A^{-1}=\frac{1}{ad-bc}\begin{bmatrix}
+            d  & -b \\
+            -c & a
+        \end{bmatrix},\text{ provided that $ad-bc\ne 0$.}  \]
+    Applying this formula, we get:
+    \[ (I-Q)^{-1}=\begin{bNiceMatrix}[cell-space-limits=1pt]
+            \frac{70}{39} & \frac{10}{13} \\
+            \frac{10}{39} & \frac{20}{13}
+        \end{bNiceMatrix}. \]
+    Therefore,
+    \[ U=(I-Q)^{-1}R=\begin{bNiceMatrix}[first-row,first-col,cell-space-limits=1pt]
+              & 2             & 3             \\
+            0 & \frac{23}{39} & \frac{16}{39} \\
+            1 & \frac{20}{39} & \frac{19}{39}
+        \end{bNiceMatrix}. \]
+    Thus, $ U_{1,3}=19/39\simeq 0.487 $. Under the alternative set of conditions, we should calculate:
+    \begin{align*}
+        \Prob{\text{DTMC ultimately ends up in state $3$}}
+         & =\Prob{X_0=0}\Prob{\text{DTMC ultimately ends up in state $3$}\given X_0=0}       \\
+         & \quad +\Prob{X_0=1}\Prob{\text{DTMC ultimately ends up in state $3$}\given X_0=1} \\
+         & =\frac{3}{4}U_{0,3}+\frac{1}{4} U_{1,3}                                           \\
+         & =\frac{3}{4} \cdot \frac{16}{39} +\frac{1}{4} \cdot \frac{19}{39}                 \\
+         & =\frac{67}{156}\simeq 0.429.
+    \end{align*}
+    \underline{Exercise}: Use~\ref{eq3.12} to solve the linear system of equations for $ U_{0,3} $ and $ U_{1,3} $.
+\end{Example}
+An interesting feature of the above methodology is that it can even be used for DTMCs in
+which the set of absorbing states are replaced by one or more recurrent classes. The following
+example demonstrates the basic idea.
+\begin{Example}
+    \textbf{Example 3.16}. Consider a DTMC with TPM
+    \[ P=\begin{bNiceArray}{cc|ccc}[first-row,first-col]
+            & 0 & 1 & 2 & 3 & 4\\
+            0 & 0.4 & 0.3 & 0.2 & 0.1 & 0\\
+            1 & 0.1 & 0.3 & 0.3 & 0.3 & 0\\
+            \midrule
+            2 & 0 & 0 & 1 & 0 & 0\\
+            3 & 0 & 0 & 0 & 0.7 & 0.3\\
+            4 & 0 & 0 & 0 & 0.4 & 0.6
+        \end{bNiceArray}. \]
+    Suppose that the DTMC begins in state $1$. What is the probability that the DTMC ultimately
+    ends up in state $3$?
+    \tcblower{}
+    \textbf{Solution}: We wish to determine $ \lim\limits_{{n} \to {\infty}} P_{1,3}^{(n)} $. To do this, let us group states $3$ and $4$ together
+    as a single state, which will be denoted by $3^\star$. As a result of this grouping, our revised TPM has the form:
+    \[ P=\begin{bNiceArray}{cc|cc}[first-row,first-col]
+            & 0 & 1 & 2 & 3^\star\\
+            0 & 0.4 & 0.3 & 0.2 & 0.1\\
+            1 & 0.1 & 0.3 & 0.3 & 0.3\\
+            \midrule
+            2 & 0 & 0 & 1 & 0\\
+            3^\star & 0 & 0 & 0 & 1
+        \end{bNiceArray}, \]
+    which is identical to the TPM from Example 3.15. Using the results of Example 3.15, we know that $ U_{1,3^\star}=\frac{19}{39} $. However,
+    once in state $3^\star$, the DTMC will remain in recurrent class $ \Set{3,4} $ with associated TPM
+    \[  U=\begin{bNiceMatrix}[first-row,first-col]
+              & 3   & 4   \\
+            3 & 0.7 & 0.3 \\
+            4 & 0.4 & 0.6
+        \end{bNiceMatrix}. \]
+    For this ``smaller'' DTMC, the conditions of the BLT are satisfied, meaning that we can determine
+    the limiting probabilities $ \pi_3 $ and $ \pi_4 $ by solving:
+    \[ (\pi_3,\pi_4)=(\pi_3,\pi_4)\begin{bmatrix}
+            0.7 & 0.3 \\
+            0.4 & 0.6
+        \end{bmatrix},\text{ subject to $\pi_3+\pi_4=1$}. \]
+    This leads to $ \pi_3=4/7 $ and $ \pi_4=3/7 $. Thus, it ultimately follows that
+    \[ \lim\limits_{{n} \to {\infty}} P_{1,3}^{(n)}=U_{1,3^\star}\cdot \pi_3=\frac{19}{39} \cdot \frac{4}{7}=\frac{76}{273}\simeq 0.278. \]
+\end{Example}
+\subsection*{Absorbing DTMCs: Mean Absorption Time}
+\begin{Regular}
+    Next, for $ 0\le i\le M-1 $, let $ v_i=\E{T\given X_0=i} $ be the \emph{mean absorption time from state $i$}. Once again,
+    conditioning on the state of the DTMC at time $1$, we get
+    \begin{align*}
+        v_{i}
+         & =\E{T \given X_{0}=i}                                                                                          \\
+         & =\sum_{j=0}^{M-1} \E{T \given X_{1}=j, X_{0}=i} P_{i, j}+\sum_{j=M}^{N} \E{T \given X_{1}=j, X_{0}=i} P_{i, j} \\
+         & =\sum_{j=0}^{M-1} \E{T \given X_{1}=j, X_{0}=i} P_{i, j}+\sum_{j=M}^{N} 1 \cdot P_{i, j},
+    \end{align*}
+    since $ T\mid(X_1=j,X_0=i) $ is degenerate at $ 1 $ for $ M\le j\le N $. For $ 0\le j\le M-1 $, our previous arguments lead to
+    \[ T\mid(X_1=j,X_0=i)\sim (1+T_j)\mid(X_1=j)\sim 1+T\mid(X_0=j), \]
+    which implies that
+    \begin{align*}
+        v_{i}
+         & =\sum_{j=0}^{M-1}\bigl(1+\E{T \given X_{0}=j}\bigr) P_{i, j}+\sum_{j=M}^{N} 1 \cdot P_{i, j} \\
+         & =1+\sum_{j=0}^{M-1} P_{i, j} v_{j}                                                           \\
+         & =1+\sum_{j=0}^{M-1} Q_{i, j} v_{j}.\label{eq3.14}\tag*{(3.14)}
+    \end{align*}
+    \textbf{We have}: $ v_i=1+\sum_{j=0}^{M-1} Q_{i,j}v_j\leftarrow $~\ref{eq3.14}. If we now define the $ M\times 1 $ column vector of mean absorption times
+    \[ \Vector{v}^\top=\begin{bmatrix}
+            v_0    \\
+            v_1    \\
+            \vdots \\
+            v_{M-1}
+        \end{bmatrix}, \]
+    then~\ref{eq3.14} yields in matrix form
+    \[ \Vector{v}^\top=\Vector{e}^\top +Q \Vector{v}^\top. \]
+    Therefore, an explicit (matrix) solution for $ \Vector{v}^\top $ is
+    \[ \Vector{v}^\top=(I-Q)^{-1}\Vector{e}^\top. \]
+\end{Regular}
+\begin{Example}
+    \textbf{Example 3.12}. (\emph{continued}) Recall the modified TPM
+    \[ P^\star=\begin{bNiceArray}{cc|c}[first-row,first-col]
+            & 0^\star & 1^\star & 2^\star \\
+            0^\star & 1/2 & 1/3 & 1/6\\
+            \midrule
+            1^\star & 0 & 1 & 0\\
+            2^\star & 0 & 0 & 1 \\
+        \end{bNiceArray}. \]
+    What is the mean absorption time for this DTMC, given that it begins in state $0^\star$?
+    \tcblower{}
+    \textbf{Solution}:
+\end{Example}
+\begin{Example}
+    \textbf{Example 3.15}. (\emph{continued}) If the DTMC with TPM
+    \[ P=\begin{bNiceArray}{cc|cc}[first-row,first-col]
+            & 0 & 1 & 2 & 3\\
+            0 & 0.4 & 0.3 & 0.2 & 0.1\\
+            1 & 0.1 & 0.3 & 0.3 & 0.3\\
+            \midrule
+            2 & 0 & 0 & 1 & 0\\
+            3 & 0 & 0 & 0 & 1
+        \end{bNiceArray}, \]
+    begins in state $1$, how long, on average, does it take to end up in either of states $2$ or $3$?
+    \tcblower{}
+    \textbf{Solution}:
+\end{Example}
+\subsection*{Absorbing DTMCs: Mean Number of Transient State Visits}
+\begin{Regular}
+    As before, assume that $X_{0}=i$ where $0 \leq i \leq M-1$. Let $\ell$ be a transient state as well, so that $0 \leq \ell \leq M-1$.
+    Define the following sequence of indicator rvs $ \Set{A_n}_{n=0}^\infty $ such that
+    \[ A_{n}= \begin{cases}
+            0, & \text{if $X_{n} \neq \ell$}, \\
+            1, & \text{if $X_{n}=\ell$}.
+        \end{cases} \]
+    We are interested in computing the quantity
+    \[ W_{i,\ell}=\E*{\sum_{n=0}^{T-1} A_n\given X_0=i}, \]
+    which represents the \emph{mean number of times that state $ \ell $ is visited (including time $0$) prior to
+        absorption given that $ X_0=i $}. To begin, note that
+    \begin{align*}
+        W_{i, \ell}
+         & =\E*{\sum_{n=0}^{T-1} A_{n} \given X_{0}=i}                                                                                                       \\
+         & =\E*{A_{0}+\sum_{n=1}^{T-1} A_{n} \given X_{0}=i}                                                                                                 \\
+         & =\E*{A_{0} \given X_{0}=i}+\E*{\sum_{n=1}^{T-1} A_{n} \given X_{0}=i}                                                                             \\
+         & =0 \cdot \Prob{A_{0}=0 \given X_{0}=i}+1 \cdot \Prob{\underbrace{A_{0}=1}_{X_{0}=\ell} \given X_{0}=i}+\E*{\sum_{n=1}^{T-1} A_{n} \given X_{0}=i} \\
+         & =\delta_{i, \ell}+\E*{\sum_{n=1}^{T-1} A_{n} \given X_{0}=i} .
+    \end{align*}
+    To find $\E*{\sum_{n=1}^{T-1} A_{n} \given X_{0}=i}$, we condition on the state of the DTMC at time 1 to obtain
+    \[
+        \E*{\sum_{n=1}^{T-1} A_{n} \given X_{0}=i}
+        =\sum_{j=0}^{M-1} \E*{\sum_{n=1}^{T-1} A_{n} \given X_{1}=j, X_{0}=i} P_{i, j}
+        +\sum_{j=M}^{N} \E*{\sum_{n=1}^{T-1} A_{n} \given X_{1}=j, X_{0}=i} P_{i, j}.
+    \]
+    When $M \leq j \leq N$, note that
+    \[
+        \E*{\sum_{n=1}^{T-1} A_{n} \given X_{1}=j, X_{0}=i}=\E*{\sum_{n=1}^{1-1} A_{n} \given X_{1}=j, X_{0}=i}=0,
+    \]
+    since $T \mid(X_{1}=j, X_{0}=i)$ is degenerate at $1$.
+    When $0 \leq j \leq M-1$, recall that
+    \[
+        T\mid(X_{1}=j, X_{0}=i) \sim(1+T_{j})\mid(X_{1}=j)
+    \]
+    and
+    \[
+        T_{j} \sim T \mid(X_{0}=j),
+    \]
+    where $T_{j}$ denotes the remaining number of transitions until absorption given that the DTMC is currently in transient state $j$. Therefore,
+    \begin{align*}
+        \sum_{j=0}^{M-1} \E*{\sum_{n=1}^{T-1} A_{n} \given X_{1}=j, X_{0}=i} P_{i, j}
+         & =\sum_{j=0}^{M-1} \E*{\sum_{n=1}^{1+T_{j}-1} A_{n} \given X_{1}=j} P_{i, j} \\
+         & =\sum_{j=0}^{M-1} \E*{\sum_{n=1}^{T_{j}} A_{n} \given X_{1}=j} P_{i, j}     \\
+         & =\sum_{j=0}^{M-1} \E*{\sum_{m=0}^{T_{j}-1} A_{m+1}\given X_{1}=j} P_{i, j}.
+    \end{align*}
+    \begin{align*}
+          & \sum_{j=0}^{M-1} \E*{\sum_{n=1}^{T-1} A_{n} \given X_{1}=j, X_{0}=i} P_{i, j}                                              \\
+        = & \sum_{j=0}^{M-1} \E*{\sum_{m=0}^{T_{j}-1} A_{m+1}\given X_{1}=j} P_{i, j}                                                  \\
+        = & \sum_{j=0}^{M-1} P_{i, j} \E*{\sum_{m=0}^{T_{j}-1} A_{m} \given X_{0}=j} \text{ due to the stationary assumption }         \\
+        = & \sum_{j=0}^{M-1} P_{i, j} \E*{\sum_{m=0}^{T-1} A_{m} \given X_{0}=j} \text{ since } T_{j}\mid(X_{0}=j) \sim T\mid(X_{0}=j) \\
+        = & \sum_{j=0}^{M-1} Q_{i, j} W_{j,\ell}.
+    \end{align*}
+    Therefore, we ultimately end up with
+    \[ W_{i,\ell}=\delta_{i,\ell}+\sum_{j=0}^{M-1} Q_{i,j}W_{j,\ell},\;0\le i,\ell\le M-1.\label{eq3.15}\tag*{(3.15)} \]
+    In matrix notation, define the $ M\times M $ matrix $ W=[W_{i,\ell}] $, so that~\ref{eq3.15} in matrix form then becomes
+    \[ W=I+QW. \]
+    Solving for $ W $ leads to
+    \begin{align*}
+        W-QW   & =I           \\
+        (I-Q)W & =I           \\
+        W      & =(I-Q)^{-1}.
+    \end{align*}
+    \tcblower{}
+    \underline{Remark}: From our earlier result, we recognize that
+    \[ \Vector{v}^\top=(I-Q)^{-1}\Vector{e}^\top=W \Vector{e}^\top. \]
+    In other words, by summing the rows of $W$ (i.e., adding up the mean number of times each of
+    the individual transient states is visited), we actually obtain the mean number of transitions to
+    reach absorption.
+\end{Regular}
+\subsection*{Absorbing DTMCs: Visitation Probability}
+\begin{Regular}
+    Finally, let us again consider $0 \leq i, \ell \leq M-1$ and recall that
+    \begin{align*}
+        f_{i, \ell}
+         & =\Prob{\text{DTMC ever makes a future visit to state $\ell$} \given X_{0}=i} \\
+         & =\Prob{X_{n}=\ell \text{ for some } 1 \leq n \leq T-1 \given X_{0}=i}.
+    \end{align*}
+    Using an elementary conditioning argument (as well as the Markov and stationary properties of
+    the DTMC), note that
+    \begin{align*}
+        W_{i,\ell}
+         & =\E*{\sum_{n=0}^{T-1} A_n\given X_0=i}                                                                                                                                                           \\
+         & =\underbrace{\E*{\sum_{n=0}^{T-1} A_n\given X_0=i,X_n=\ell\text{ for some }1\le n\le T-1}}_{\text{state $\ell$ is visited possibly at time $0$ and then at some point later on}}\cdot f_{i,\ell} \\
+         & \;+\underbrace{\E*{\sum_{n=0}^{T-1} A_n\given A_n\given X_0=i,X_n\ne \ell\text{ for some }1\le n\le T-1}}_{\text{only possible visit to state $\ell$ is at time $0$}}\cdot(1-f_{i,\ell})         \\
+         & =(\delta_{i,\ell}+W_{\ell,\ell})\cdot f_{i,\ell}+\delta_{i,\ell}\cdot(1-f_{i,\ell})                                                                                                              \\
+         & =\delta_{i,\ell}+W_{\ell,\ell}f_{i,\ell}.
+    \end{align*}
+    This immediately leads to
+    \[ f_{i,\ell}=\frac{W_{i,\ell}-\delta_{i,\ell}}{W_{\ell,\ell}}. \]
+    \underline{Remark}: For $ \ell=i $, the probability of the DTMC visiting state $i$ in the future (given that $ X_0=i $) is
+    \[ f_{i,i}=\frac{W_{i,i}-\delta_{i,i}}{W_{i,i}}=1-\frac{1}{W_{i,i}},   \]
+    where $ W_{i,i} $ is the expected number of visits to state $i$ (including time $0$) before absorption. From the above relation,
+    \[ W_{i,i}=\frac{1}{1-f_{i,i}}. \]
+    However, recall that for transient state $i$, the random number $M_i$ of \textbf{future} visits to state $i$,
+    given $ X_0=i $, has conditional pmf given by~\ref{eq3.4}, namely
+    \[ \Prob{M_{i}=k \given X_{0}=i}=f_{i, i}^{k}(1-f_{i, i}), k=0,1,2, \ldots, \]
+    which we recognize as the pmf of a $ \GEOf{1-f_{i,i}} $ rv. Therefore, the expected number of \textbf{future} visits to state $i$ is
+    \[ \E{M_{i} \given X_{0}=i}=\frac{1-(1-f_{i, i})}{1-f_{i, i}}=\frac{1}{1-f_{i, i}}-1=W_{i, i}-1, \]
+    which is in agreement with the definition of $ W_{i,i} $, since we count the initial visit to state $i$ occurring at time $0$.
+\end{Regular}
+\begin{Example}
+    \textbf{Example 3.15}. (\emph{continued}) Recall the DTMC with TPM
+    \[ P=\begin{bNiceArray}{cc|cc}[first-row,first-col]
+            & 0 & 1 & 2 & 3\\
+            0 & 0.4 & 0.3 & 0.2 & 0.1\\
+            1 & 0.1 & 0.3 & 0.3 & 0.3\\
+            \midrule
+            2 & 0 & 0 & 1 & 0\\
+            3 & 0 & 0 & 0 & 1
+        \end{bNiceArray}. \]
+    Given $X_0 = 1$, what is the average number of visits to state $0$ prior to absorption? Also, what
+    is the probability that the DTMC ever makes a visit to state $0$?
+    \tcblower{}
+    \textbf{Solution}:
+\end{Example}
