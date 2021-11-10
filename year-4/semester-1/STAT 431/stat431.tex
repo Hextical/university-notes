@@ -74,6 +74,7 @@
 
 \usepackage{bm}
 \usepackage{tikz}
+\usepackage{float}
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
 
 % Functions
@@ -212,7 +213,9 @@ pdfkeywords={University of Waterloo, Fall 2021 (1219)}}%
 \normalsize Fall 2021 (1219)\thanks{Online Course}}%
 \author{Cameron Roopnarine\thanks{\LaTeX{}er}\and Leilei Zeng\thanks{Instructor}}%
 \date{\today}%
-
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{petri,decorations.pathreplacing,calc}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 
@@ -239,7 +242,7 @@ Question: what is the relationship between \textcolor{Blue}{\emph{gestational ag
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-14-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-17-1} 
 
 }
 
@@ -252,7 +255,7 @@ We wish to model the relationship between \emph{gestational age} and \emph{head
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-15-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-18-1} 
 
 }
 
@@ -413,14 +416,14 @@ We visually check this by examining residual plots such as:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-17-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-20-1} 
 
 }
 
 
 
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-17-2} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-20-2} 
 
 }
 
@@ -466,7 +469,7 @@ We visually check this by examining residual plots such as:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-18-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-21-1} 
 
 }
 
@@ -755,8 +758,8 @@ where $ r(\theta)=\ell(\theta)-\ell(\hat{\theta}) $.
 \hlstd{y} \hlkwb{=} \hlnum{166}
 \hlstd{n} \hlkwb{=} \hlnum{8506}
 \hlstd{LRCI} \hlkwb{=} \hlkwa{function}\hlstd{(}\hlkwc{theta}\hlstd{,} \hlkwc{y}\hlstd{,} \hlkwc{n}\hlstd{) \{}
-  \hlopt{-}\hlnum{2} \hlopt{*} \hlstd{(y} \hlopt{*} \hlkwd{log}\hlstd{(theta)} \hlopt{+} \hlstd{(n} \hlopt{-} \hlstd{y)} \hlopt{*} \hlkwd{log}\hlstd{(}\hlnum{1} \hlopt{-} \hlstd{theta)} \hlopt{-} \hlstd{y} \hlopt{*} \hlkwd{log}\hlstd{(y}\hlopt{/}\hlstd{n)} \hlopt{-}
-    \hlstd{(n} \hlopt{-} \hlstd{y)} \hlopt{*} \hlkwd{log}\hlstd{(}\hlnum{1} \hlopt{-} \hlstd{y}\hlopt{/}\hlstd{n))} \hlopt{-} \hlkwd{qchisq}\hlstd{(}\hlnum{0.95}\hlstd{,} \hlnum{1}\hlstd{)}
+  \hlopt{-}\hlnum{2} \hlopt{*} \hlstd{(y} \hlopt{*} \hlkwd{log}\hlstd{(theta)} \hlopt{+} \hlstd{(n} \hlopt{-} \hlstd{y)} \hlopt{*} \hlkwd{log}\hlstd{(}\hlnum{1} \hlopt{-} \hlstd{theta)} \hlopt{-} \hlstd{y} \hlopt{*} \hlkwd{log}\hlstd{(y}\hlopt{/}\hlstd{n)} \hlopt{-} \hlstd{(n} \hlopt{-}
+    \hlstd{y)} \hlopt{*} \hlkwd{log}\hlstd{(}\hlnum{1} \hlopt{-} \hlstd{y}\hlopt{/}\hlstd{n))} \hlopt{-} \hlkwd{qchisq}\hlstd{(}\hlnum{0.95}\hlstd{,} \hlnum{1}\hlstd{)}
 \hlstd{\}}
 \hlstd{mle} \hlkwb{=} \hlstd{y}\hlopt{/}\hlstd{n}
 \hlkwd{uniroot}\hlstd{(LRCI,} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{, mle),} \hlkwc{y} \hlstd{= y,} \hlkwc{n} \hlstd{= n)}\hlopt{$}\hlstd{root}
@@ -1609,7 +1612,7 @@ The \textcolor{Blue}{Logit link}, $ g(\pi_i)=\log[\big]{\pi_i/(1-\pi_i)} $, is t
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-22-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-25-1} 
 
 }
 
@@ -1908,8 +1911,7 @@ loc         -0.6670729  0.2785400  -2.394891 1.662530e-02
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{model2} \hlkwb{<-} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{loc} \hlopt{+} \hlstd{clinic,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
-  \hlkwc{data} \hlstd{= prenatal.dat)}
+\hlstd{model2} \hlkwb{<-} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{loc} \hlopt{+} \hlstd{clinic,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),} \hlkwc{data} \hlstd{= prenatal.dat)}
 \hlkwd{summary}\hlstd{(model2)}\hlopt{$}\hlstd{coefficients}
 \end{alltt}
 \begin{verbatim}
@@ -2085,8 +2087,7 @@ $ i=1,\ldots,n $ independently, with covariate vector $ \Vector{x}_i $ and
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{model2} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{loc} \hlopt{+} \hlstd{clinic,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
-  \hlkwc{data} \hlstd{= prenatal.dat)}
+\hlstd{model2} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{loc} \hlopt{+} \hlstd{clinic,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),} \hlkwc{data} \hlstd{= prenatal.dat)}
 \hlkwd{summary}\hlstd{(model2)}
 \end{alltt}
 \begin{verbatim}
@@ -2468,8 +2469,7 @@ Number of Fisher Scoring iterations: 3
 15   3     5  2  5
 \end{verbatim}
 \begin{alltt}
-\hlcom{# here we construct the response variable for logistic}
-\hlcom{# regression}
+\hlcom{# here we construct the response variable for logistic regression}
 \hlstd{neuro.dat}\hlopt{$}\hlstd{resp} \hlkwb{=} \hlkwd{cbind}\hlstd{(neuro.dat}\hlopt{$}\hlstd{y, neuro.dat}\hlopt{$}\hlstd{m} \hlopt{-} \hlstd{neuro.dat}\hlopt{$}\hlstd{y)}
 \hlstd{neuro.dat}
 \end{alltt}
@@ -2494,8 +2494,8 @@ Number of Fisher Scoring iterations: 3
 \begin{alltt}
 \hlstd{neuro.dat}\hlopt{$}\hlstd{age} \hlkwb{<-} \hlkwd{factor}\hlstd{(neuro.dat}\hlopt{$}\hlstd{age,} \hlkwc{levels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{),} \hlkwc{labels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"0-11"}\hlstd{,}
   \hlstr{"12-23"}\hlstd{,} \hlstr{"24+"}\hlstd{))}
-\hlstd{neuro.dat}\hlopt{$}\hlstd{stage} \hlkwb{<-} \hlkwd{factor}\hlstd{(neuro.dat}\hlopt{$}\hlstd{stage,} \hlkwc{levels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{4}\hlstd{,}
-  \hlnum{5}\hlstd{),} \hlkwc{labels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"I"}\hlstd{,} \hlstr{"II"}\hlstd{,} \hlstr{"III"}\hlstd{,} \hlstr{"IV"}\hlstd{,} \hlstr{"V"}\hlstd{))}
+\hlstd{neuro.dat}\hlopt{$}\hlstd{stage} \hlkwb{<-} \hlkwd{factor}\hlstd{(neuro.dat}\hlopt{$}\hlstd{stage,} \hlkwc{levels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{4}\hlstd{,} \hlnum{5}\hlstd{),} \hlkwc{labels} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"I"}\hlstd{,}
+  \hlstr{"II"}\hlstd{,} \hlstr{"III"}\hlstd{,} \hlstr{"IV"}\hlstd{,} \hlstr{"V"}\hlstd{))}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -2584,11 +2584,11 @@ Number of Fisher Scoring iterations: 4
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-37-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-40-1} 
 
 }
 
-\caption[Plot of Residuals by Fitted Values for Neuroblastoma Data based on Logistic Regression Model with main effects of Age and Stage]{Plot of Residuals by Fitted Values for Neuroblastoma Data based on Logistic Regression Model with main effects of Age and Stage.}\label{fig:unnamed-chunk-37}
+\caption[Plot of Residuals by Fitted Values for Neuroblastoma Data based on Logistic Regression Model with main effects of Age and Stage]{Plot of Residuals by Fitted Values for Neuroblastoma Data based on Logistic Regression Model with main effects of Age and Stage.}\label{fig:unnamed-chunk-40}
 \end{figure}
 
 \end{knitrout}
@@ -2775,8 +2775,7 @@ So we select \textcolor{Blue}{Model 1} for interpretation.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{model1} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{age} \hlopt{+} \hlstd{stage,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
-  \hlkwc{data} \hlstd{= neuro.dat)}
+\hlstd{model1} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{age} \hlopt{+} \hlstd{stage,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),} \hlkwc{data} \hlstd{= neuro.dat)}
 \hlkwd{summary}\hlstd{(model1)}
 \end{alltt}
 \begin{verbatim}
@@ -3076,8 +3075,7 @@ For each group $ i=1,\ldots,n $ let:
 \begin{alltt}
 \hlcom{# read beetle data}
 \hlstd{beetle.dat} \hlkwb{=} \hlkwd{read.table}\hlstd{(}\hlstr{"beetle.dat"}\hlstd{,} \hlkwc{header} \hlstd{= T)}
-\hlcom{# here we construct the response variable for Binomial}
-\hlcom{# regression}
+\hlcom{# here we construct the response variable for Binomial regression}
 \hlstd{beetle.dat}\hlopt{$}\hlstd{resp} \hlkwb{<-} \hlkwd{cbind}\hlstd{(beetle.dat}\hlopt{$}\hlstd{y, beetle.dat}\hlopt{$}\hlstd{m} \hlopt{-} \hlstd{beetle.dat}\hlopt{$}\hlstd{y)}
 \hlstd{beetle.dat}
 \end{alltt}
@@ -3207,7 +3205,7 @@ Number of Fisher Scoring iterations: 4
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-50-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-53-1} 
 
 }
 
@@ -3230,7 +3228,7 @@ Number of Fisher Scoring iterations: 4
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-51-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-1} 
 
 }
 
@@ -3473,7 +3471,7 @@ Reading week.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-52-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-1} 
 
 }
 
@@ -3526,28 +3524,1830 @@ Next week: an example of fitting Poisson GLM using R.
 \section*{Topic 4b: Ship Damage Example}
 \addcontentsline{toc}{section}{Topic 4b: Ship Damage Example}
 \subsection*{Recall: Regression for Poisson Processes}
+\begin{enumerate}[1.]
+      \item Fitting the main effects log linear model:
+            \begin{itemize}
+                  \item Introduction of the data set.
+                  \item Model 1: main effects + offset(log(months)).
+            \end{itemize}
+      \item Model selection:
+            \begin{itemize}
+                  \item Use Deviance tests of nested non-saturated models.
+            \end{itemize}
+      \item Model interpretation:
+            \begin{itemize}
+                  \item Show that $ \beta_k $ has log relative rate interpretation.
+                  \item Wald based confidence intervals and hypothesis tests.
+            \end{itemize}
+\end{enumerate}
+\subsection*{Example: Ship Damage Incidents}
+\begin{Example}{Example: Ship Damage Incidents}
+      \begin{itemize}
+            \item McCullagh and Nelder (1989) discuss the analysis of a data set which records the
+                  number of times a certain type of damage incident occurs in cargo ships.
+            \item Damage is caused by waves and occurs in the forward section of various cargo
+                  carrying vessels
+            \item In order to prevent this type of damage from occurring in the future, the
+                  investigators want to identify risk factors including:
+                  \begin{itemize}
+                        \item \textbf{Ship type} (A-E),
+                        \item \textbf{Year of construction} (1960-1964; 1965-1969; 1970-1974; 1975-1979),
+                        \item \textbf{Period of operation} (1960-1974; 1975-1979).
+                  \end{itemize}
+      \end{itemize}
+\end{Example}
+\subsection*{Ship Damage Data Set}
+In the dataset we have adopted the following coding conventions:
 \begin{itemize}
-    \item Last week in Topic 4a, we introduced Poisson GLMs for count data.
-    \item Suppose from each subject $ i=1,\ldots,n $ we observe:
+      \item \texttt{type}: The ship type variable is (1, 2, 3, 4, 5) for ship types A, B, C, D, and E,
+            respectively
+      \item \texttt{cyr}: The year of construction variable is (1, 2, 3, 4) for eras 1960-1964,
+            1965-1969, 1970-1974, and 1975-1979, respectively
+      \item \texttt{oyr}: The year of operation variable is 1 for 1960-74 and 2 for 1975-1979
+      \item \texttt{months}: The total number of months of operation for ships of that type and
+            construction year during the period of operation
+      \item \texttt{y}: The number of damage incidents for ships of that type and construction
+            year during the period of operation
+\end{itemize}
+\subsection*{Ship Damage Data Set (\texttt{ship.dat})}
+\begin{Example}{}
+      First ten rows of \texttt{ship.dat}:
+      % \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+   type cyr oyr months  y
+1     1   1   1    127  0
+2     1   1   2     63  0
+3     1   2   1   1095  3
+4     1   2   2   1095  4
+5     1   3   1   1512  6
+6     1   3   2   3353 18
+7     1   4   2   2244 11
+8     2   1   1  44882 39
+9     2   1   2  17176 29
+10    2   2   1  28609 58
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+      % \end{noindent}
+\end{Example}
+\subsection*{R Code \& Output (Models 1 and 2)}
+% \begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# input dataset and create factor variables}
+\hlstd{ship.dat} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlstr{"ship.dat"}\hlstd{,} \hlkwc{header} \hlstd{= T)}
+\hlstd{ship.dat}\hlopt{$}\hlstd{typef} \hlkwb{<-} \hlkwd{factor}\hlstd{(ship.dat}\hlopt{$}\hlstd{type)}
+\hlstd{ship.dat}\hlopt{$}\hlstd{cyrf} \hlkwb{<-} \hlkwd{factor}\hlstd{(ship.dat}\hlopt{$}\hlstd{cyr)}
+\hlstd{ship.dat}\hlopt{$}\hlstd{oyrf} \hlkwb{<-} \hlkwd{factor}\hlstd{(ship.dat}\hlopt{$}\hlstd{oyr)}
+\hlstd{ship.dat}
+\hlcom{# fitting the main effects with the offset term}
+\hlstd{model1} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef} \hlopt{+} \hlstd{cyrf} \hlopt{+} \hlstd{oyrf} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(months)),} \hlkwc{family} \hlstd{= poisson,}
+  \hlkwc{data} \hlstd{= ship.dat)}
+\hlkwd{summary}\hlstd{(model1)}
+\hlcom{# fitting all main effects (treating offset as a covariate for}
+\hlcom{# diagnostics)}
+\hlstd{model2} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef} \hlopt{+} \hlstd{cyrf} \hlopt{+} \hlstd{oyrf} \hlopt{+} \hlkwd{log}\hlstd{(months),} \hlkwc{family} \hlstd{= poisson,}
+  \hlkwc{data} \hlstd{= ship.dat)}
+\hlkwd{summary}\hlstd{(model2)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+% \end{noindent}
+\subsection*{Model 1: Main effects + offset(log(months))}
+\begin{itemize}
+      \item Time homogenous Poisson process: $ \E[\big]{N_i(t_i)}=\mu_t(t_i)=\lambda t_i $.
+      \item Log linear regression model:
+            \[ \log[\big]{\mu_i(t_i)}=\log{\lambda_i}+\log{t_i}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
+      \item Ship Damage main effects model:
+            \begin{align*}
+                  \log[\big]{\mu_i(t_i)}
+                   & =\beta_0+\overbrace{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}+\beta_4x_{i4}}^{\text{ship type}}+ \\
+                   & \quad \underbrace{\beta_5x_{i5}+\beta_6x_{i6}+\beta_7x_{i7}}_{\text{year of construction}}+
+                  \underbrace{\beta_8x_{i8}}_{\text{operation year}}+\underbrace{\log{t_i}}_{\text{offset}},
+            \end{align*}
+            where
+            \[ \begin{array}{cc}
+                        x_{i1}=\Ind{\text{type B}}, & x_{i5}=\Ind{\text{1965-1969}}, \\
+                        x_{i2}=\Ind{\text{type C}}, & x_{i6}=\Ind{\text{1970-1974}}, \\
+                        x_{i3}=\Ind{\text{type D}}, & x_{i7}=\Ind{\text{1975-1979}}, \\
+                        x_{i4}=\Ind{\text{type E}}, & x_{i8}=\Ind{\text{1975-1979}}. \\
+                  \end{array} \]
+\end{itemize}
+\subsection*{Model 1: Main effects + offset(log(months))}
+%\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{summary}\hlstd{(model1)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = y ~ typef + cyrf + oyrf + offset(log(months)), 
+    family = poisson, data = ship.dat)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.6768  -0.8293  -0.4370   0.5058   2.7912  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -6.40590    0.21744 -29.460  < 2e-16 ***
+typef2      -0.54334    0.17759  -3.060  0.00222 ** 
+typef3      -0.68740    0.32904  -2.089  0.03670 *  
+typef4      -0.07596    0.29058  -0.261  0.79377    
+typef5       0.32558    0.23588   1.380  0.16750    
+cyrf2        0.69714    0.14964   4.659 3.18e-06 ***
+cyrf3        0.81843    0.16977   4.821 1.43e-06 ***
+cyrf4        0.45343    0.23317   1.945  0.05182 .  
+oyrf2        0.38447    0.11827   3.251  0.00115 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 146.328  on 33  degrees of freedom
+Residual deviance:  38.695  on 25  degrees of freedom
+AIC: 154.56
+
+Number of Fisher Scoring iterations: 5
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+%\end{noindent}
+\subsection*{Model 2: Main effects + log(months)}
+%\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{summary}\hlstd{(model2)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = y ~ typef + cyrf + oyrf + log(months), family = poisson, 
+    data = ship.dat)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.6580  -0.8939  -0.4900   0.4676   2.7435  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  -5.5940     0.8724  -6.412 1.43e-10 ***
+typef2       -0.3499     0.2702  -1.295  0.19539    
+typef3       -0.7631     0.3382  -2.257  0.02404 *  
+typef4       -0.1355     0.2971  -0.456  0.64842    
+typef5        0.2739     0.2418   1.133  0.25719    
+cyrf2         0.6625     0.1536   4.312 1.61e-05 ***
+cyrf3         0.7597     0.1777   4.276 1.90e-05 ***
+cyrf4         0.3697     0.2458   1.504  0.13259    
+oyrf2         0.3703     0.1181   3.134  0.00172 ** 
+log(months)   0.9027     0.1018   8.867  < 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 614.539  on 33  degrees of freedom
+Residual deviance:  37.804  on 24  degrees of freedom
+AIC: 155.67
+
+Number of Fisher Scoring iterations: 5
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+%\end{noindent}
+\subsection*{Summary of Model 1 versus Model 2}
+\begin{itemize}
+      \item $ \log{\:\cdot\:} $ is the canonical link for the Poisson, so it is the default when \texttt{family=poisson}.
+      \item \textcolor{Blue}{Model 1}: main effects + \texttt{offset(log(months))}: $ \Vector{x}^\top \Vector{\beta}=\log{t_i} $.
+            \begin{itemize}
+                  \item The offset explains some variation in the number of damage incidents due to
+                        different amounts of time at risk.
+            \end{itemize}
+      \item \textcolor{Blue}{Model 2}: main effects + \texttt{log(months)}: $ \Vector{x}^\top \Vector{\beta}\log{t_i} $.
+            \begin{itemize}
+                  \item Examine $ \hat{\beta}_9 $ the coefficient for \texttt{log(months)}.
+                  \item Conduct a Wald-based test of $ \HN $: $ \beta_9=1 $ versus $ \HA $: $ \beta_9\ne 1 $:
+                        \[ p=2\Prob*{Z>\frac{\abs{\hat{\beta}_9-1}}{\se{\hat{\beta}_9}}}=2\Prob{Z>\frac{\abs{0.9027-1}}{0.1018}}=2\Prob{Z>\abs{-0.9558}}=0.34. \]
+                        Therefore, do not reject $ \HN $: $ \beta_9=1 $.
+            \end{itemize}
+      \item We will not typically do this check and just use \texttt{offset(log(ti))} since it's implied
+            through the assumption of a time homogenous Poisson Process.
+\end{itemize}
+\subsection*{R Code (Models 3a, 3b, 3c)}
+Now, consider various models nested within model 1 to see if any of the main effects
+are not significant.
+%\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# testing for the association between ship type and frequency of}
+\hlcom{# events}
+\hlstd{model3a} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{cyrf} \hlopt{+} \hlstd{oyrf} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(months)),} \hlkwc{family} \hlstd{= poisson,}
+  \hlkwc{data} \hlstd{= ship.dat)}
+\hlstd{model3a}\hlopt{$}\hlstd{deviance}
+\hlstd{model3a}\hlopt{$}\hlstd{df.residual}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model3a}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{deviance, model3a}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{df.residual)}
+\hlcom{# testing for association between year of construction and event}
+\hlcom{# frequency}
+\hlstd{model3b} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef} \hlopt{+} \hlstd{oyrf} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(months)),} \hlkwc{family} \hlstd{= poisson,}
+  \hlkwc{data} \hlstd{= ship.dat)}
+\hlstd{model3b}\hlopt{$}\hlstd{deviance}
+\hlstd{model3b}\hlopt{$}\hlstd{df.residual}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model3b}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{deviance, model3b}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{df.residual)}
+\hlcom{# testing for the association between year of operation and event}
+\hlcom{# frequency}
+\hlstd{model3c} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef} \hlopt{+} \hlstd{cyrf} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(months)),} \hlkwc{family} \hlstd{= poisson,}
+  \hlkwc{data} \hlstd{= ship.dat)}
+\hlstd{model3c}\hlopt{$}\hlstd{deviance}
+\hlstd{model3c}\hlopt{$}\hlstd{df.residual}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model3c}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{deviance, model3c}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{df.residual)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+%\end{noindent}
+\subsection*{Model 3a: \texttt{cyrf + oyrf + offset(log(months))}}
+\begin{itemize}
+      \item Use this model to test:
+            \begin{itemize}
+                  \item $ \HN $: Type of Ship is unimportant (i.e., $ \beta_1=\beta_2=\beta_3=\beta_4=0 $).
+                  \item $ \HA $: $ \beta_1\ne 0 $ or $ \cdots $ or $ \beta_4\ne 0 $.
+            \end{itemize}
+            %\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{model3a} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{cyrf} \hlopt{+} \hlstd{oyrf} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(months)),} \hlkwc{family} \hlstd{= poisson,}
+  \hlkwc{data} \hlstd{= ship.dat)}
+\hlstd{model3a}\hlopt{$}\hlstd{deviance}
+\end{alltt}
+\begin{verbatim}
+[1] 62.36534
+\end{verbatim}
+\begin{alltt}
+\hlstd{model3a}\hlopt{$}\hlstd{df.residual}
+\end{alltt}
+\begin{verbatim}
+[1] 29
+\end{verbatim}
+\begin{alltt}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model3a}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{deviance, model3a}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{df.residual)}
+\end{alltt}
+\begin{verbatim}
+[1] 9.299568e-05
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+      %\end{noindent}
+            \[ \Delta D=D_0-D_A \sim \chi^2_{(4)}\text{ under $\HN$}. \]
+            \[ p=\Prob*{\chi^2_{(4)}>(62.365-38.695)}<0.001. \]
+      \item Reject the null hypothesis of no variation in the accident rate across ships of
+            different types.
+      \item This is strong evidence of a need to adjust for the difference in the accident rates
+            between ship types.
+\end{itemize}
+\subsection*{Model 3b: \texttt{typef + oyrf + offset(log(months))}}
+\begin{itemize}
+      \item Use this model to test:
+            \begin{itemize}
+                  \item $ \HN $: Construction year is unimportant (i.e., $ \beta_5=\beta_6=\beta_7=0 $).
+                  \item $ \HA $: $ \beta_5\ne 0 $ or $ \cdots $ or $ \beta_7\ne 0 $.
+            \end{itemize}
+            %\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{model3b} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef} \hlopt{+} \hlstd{oyrf} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(months)),} \hlkwc{family} \hlstd{= poisson,}
+  \hlkwc{data} \hlstd{= ship.dat)}
+\hlstd{model3b}\hlopt{$}\hlstd{deviance}
+\end{alltt}
+\begin{verbatim}
+[1] 70.10294
+\end{verbatim}
+\begin{alltt}
+\hlstd{model3b}\hlopt{$}\hlstd{df.residual}
+\end{alltt}
+\begin{verbatim}
+[1] 28
+\end{verbatim}
+\begin{alltt}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model3b}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{deviance, model3b}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{df.residual)}
+\end{alltt}
+\begin{verbatim}
+[1] 6.974977e-07
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+      %\end{noindent}
+      \item Reject the null hypothesis of no variation in the accident rate across ships of
+            different construction years.
+\end{itemize}
+\subsection*{Model 3c: \texttt{typef + cyrf + offset(log(months))}}
+\begin{itemize}
+      \item Use this model to test:
+            \begin{itemize}
+                  \item $ \HN $: Operation year is unimportant (i.e., $ \beta_8=0 $).
+                  \item $ \HA $: $ \beta_8\ne 0 $.
+            \end{itemize}
+            %\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{model3c} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef} \hlopt{+} \hlstd{cyrf} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(months)),} \hlkwc{family} \hlstd{= poisson,}
+  \hlkwc{data} \hlstd{= ship.dat)}
+\hlstd{model3c}\hlopt{$}\hlstd{deviance}
+\end{alltt}
+\begin{verbatim}
+[1] 49.35519
+\end{verbatim}
+\begin{alltt}
+\hlstd{model3c}\hlopt{$}\hlstd{df.residual}
+\end{alltt}
+\begin{verbatim}
+[1] 26
+\end{verbatim}
+\begin{alltt}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model3c}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{deviance, model3c}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{df.residual)}
+\end{alltt}
+\begin{verbatim}
+[1] 0.001094692
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+      %\end{noindent}
+      \item Reject the null hypothesis of no variation in the accident rate across ships of
+            different periods of operation.
+      \item We are unable to remove any of the main effects from the model (all are
+            statistically significant).
+      \item Next, consider adding interaction effects.
+\end{itemize}
+\subsection*{R Code (Models 4, 5, 6)}
+%\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# testing for the interaction between type of ship and year of}
+\hlcom{# construction}
+\hlstd{model4} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef} \hlopt{+} \hlstd{cyrf} \hlopt{+} \hlstd{oyrf} \hlopt{+} \hlstd{typef} \hlopt{*} \hlstd{cyrf} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(months)),}
+  \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= ship.dat)}
+\hlstd{model4}\hlopt{$}\hlstd{deviance}
+\hlstd{model4}\hlopt{$}\hlstd{df.residual}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model1}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model4}\hlopt{$}\hlstd{deviance, model1}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model4}\hlopt{$}\hlstd{df.residual)}
+\hlkwd{summary}\hlstd{(model4)}
+\hlstd{mrho} \hlkwb{<-} \hlkwd{summary}\hlstd{(model4,} \hlkwc{corr} \hlstd{= T)}\hlopt{$}\hlstd{correlation}
+\hlstd{mrho}
+\hlcom{# testing for the interaction between type of ship and year of}
+\hlcom{# operation}
+\hlstd{model5} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef} \hlopt{+} \hlstd{cyrf} \hlopt{+} \hlstd{oyrf} \hlopt{+} \hlstd{typef} \hlopt{*} \hlstd{oyrf} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(months)),}
+  \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= ship.dat)}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model1}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model5}\hlopt{$}\hlstd{deviance, model1}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model5}\hlopt{$}\hlstd{df.residual)}
+\hlcom{# testing for the interaction between year of construction and}
+\hlcom{# operation}
+\hlstd{model6} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef} \hlopt{+} \hlstd{cyrf} \hlopt{+} \hlstd{oyrf} \hlopt{+} \hlstd{cyrf} \hlopt{*} \hlstd{oyrf} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(months)),}
+  \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= ship.dat)}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model1}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model6}\hlopt{$}\hlstd{deviance, model1}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model6}\hlopt{$}\hlstd{df.residual)}
+\hlcom{# plot the residuals}
+\hlstd{ship.dat}\hlopt{$}\hlstd{rdeviance} \hlkwb{<-} \hlkwd{residuals.glm}\hlstd{(model1,} \hlkwc{type} \hlstd{=} \hlstr{"deviance"}\hlstd{)}
+\hlkwd{plot}\hlstd{(model1}\hlopt{$}\hlstd{fitted.values, ship.dat}\hlopt{$}\hlstd{rdeviance,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{4}\hlstd{,} \hlnum{4}\hlstd{),} \hlkwc{xlab} \hlstd{=} \hlstr{"FITTED VALUES"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"DEVIANCE RESIDUALS"}\hlstd{)}
+\hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlopt{-}\hlnum{2}\hlstd{)}
+\hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-64-1} 
+
+}
+
+
+\end{knitrout}
+%\end{noindent}
+\subsection*{Model 4: \texttt{typef + cyrf + oyrf + typef*cyrf + offset(log(months))}}
+\begin{itemize}
+      \item Use this model to test:
+            \begin{itemize}
+                  \item $ \HN $: the \texttt{typef*cyrf} interaction is unimportant (Model 1).
+                  \item $ \HA $: (model 4).
+            \end{itemize}
+            %\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{model4} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef} \hlopt{+} \hlstd{cyrf} \hlopt{+} \hlstd{oyrf} \hlopt{+} \hlstd{typef} \hlopt{*} \hlstd{cyrf} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(months)),}
+  \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= ship.dat)}
+\hlstd{model4}\hlopt{$}\hlstd{deviance}
+\end{alltt}
+\begin{verbatim}
+[1] 14.58688
+\end{verbatim}
+\begin{alltt}
+\hlstd{model4}\hlopt{$}\hlstd{df.residual}
+\end{alltt}
+\begin{verbatim}
+[1] 13
+\end{verbatim}
+\begin{alltt}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model1}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model4}\hlopt{$}\hlstd{deviance, model1}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model4}\hlopt{$}\hlstd{df.residual)}
+\end{alltt}
+\begin{verbatim}
+[1] 0.01966268
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+      %\end{noindent}
+            \[ \Delta D=D_0-D_A \sim \chi^2_{(12)}\text{ under $\HN$}. \]
+            \[ p=\Prob*{\chi^2_{(12)}>(38.695-14.587)}<0.0197. \]
+            \begin{itemize}
+                  \item Reject the null hypothesis that the main effects model is adequate.
+                  \item That is, we would choose model 4 over model 1.
+            \end{itemize}
+\end{itemize}
+%\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{summary}\hlstd{(model4)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = y ~ typef + cyrf + oyrf + typef * cyrf + offset(log(months)), 
+    family = poisson, data = ship.dat)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-1.99643  -0.09176  -0.00008   0.13849   2.53827  
+
+Coefficients:
+               Estimate Std. Error z value Pr(>|z|)   
+(Intercept)    -23.9891  6625.5245  -0.004  0.99711   
+typef2          17.0506  6625.5245   0.003  0.99795   
+typef3          17.0863  6625.5245   0.003  0.99794   
+typef4          -0.5962  9331.1044   0.000  0.99995   
+typef5           0.8799 11522.0954   0.000  0.99994   
+cyrf2           18.0324  6625.5245   0.003  0.99783   
+cyrf3           18.3969  6625.5245   0.003  0.99778   
+cyrf4           18.2860  6625.5245   0.003  0.99780   
+oyrf2            0.3850     0.1186   3.246  0.00117 **
+typef2:cyrf2   -17.3620  6625.5245  -0.003  0.99791   
+typef3:cyrf2   -18.6108  6625.5246  -0.003  0.99776   
+typef4:cyrf2   -18.4024 11467.2826  -0.002  0.99872   
+typef5:cyrf2     0.4496 11522.0955   0.000  0.99997   
+typef2:cyrf3   -17.6110  6625.5245  -0.003  0.99788   
+typef3:cyrf3   -17.6160  6625.5246  -0.003  0.99788   
+typef4:cyrf3     1.0922  9331.1044   0.000  0.99991   
+typef5:cyrf3    -0.8285 11522.0954   0.000  0.99994   
+typef2:cyrf4   -17.7124  6625.5245  -0.003  0.99787   
+typef3:cyrf4   -17.3813  6625.5246  -0.003  0.99791   
+typef4:cyrf4    -0.3254  9331.1044   0.000  0.99997   
+typef5:cyrf4    -1.8570 11522.0955   0.000  0.99987   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 146.328  on 33  degrees of freedom
+Residual deviance:  14.587  on 13  degrees of freedom
+AIC: 154.45
+
+Number of Fisher Scoring iterations: 17
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+%\end{noindent}
+\begin{itemize}
+      \item Huge standard errors!
+      \item This model is overparameterized!
+      \item Twelve interaction terms.
+      \item Type 4: no events for \texttt{cyr} 1 or 2.
+\end{itemize}
+\subsection*{Model 5: \texttt{typef + cyrf + oyrf + typef*oyrf + offset(log(months))}}
+\begin{itemize}
+      \item Use this model to test:
+            \begin{itemize}
+                  \item $ \HN $: the \texttt{typef*oyrf} interaction is unimportant (Model 1).
+                  \item $ \HA $: (model 5).
+            \end{itemize}
+            %\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{model5} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef} \hlopt{+} \hlstd{cyrf} \hlopt{+} \hlstd{oyrf} \hlopt{+} \hlstd{typef} \hlopt{*} \hlstd{oyrf} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(months)),}
+  \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= ship.dat)}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model1}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model5}\hlopt{$}\hlstd{deviance, model1}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model5}\hlopt{$}\hlstd{df.residual)}
+\end{alltt}
+\begin{verbatim}
+[1] 0.2936317
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+      %\end{noindent}
+            \begin{itemize}
+                  \item Do not reject the null hypothesis that the main effects model is adequate.
+                  \item The interaction between ship type and year of operation is not significant.
+            \end{itemize}
+\end{itemize}
+\subsection*{Model 6: \texttt{typef + cyrf + oyrf + cyrf*oyrf + offset(log(months))}}
+\begin{itemize}
+      \item Use this model to test:
+            \begin{itemize}
+                  \item $ \HN $: the \texttt{cyrf*oyrf} interaction is unimportant (Model 1).
+                  \item $ \HA $: (model 6).
+            \end{itemize}
+            %\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{model6} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef} \hlopt{+} \hlstd{cyrf} \hlopt{+} \hlstd{oyrf} \hlopt{+} \hlstd{cyrf} \hlopt{*} \hlstd{oyrf} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(months)),}
+  \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= ship.dat)}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model1}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model6}\hlopt{$}\hlstd{deviance, model1}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model6}\hlopt{$}\hlstd{df.residual)}
+\end{alltt}
+\begin{verbatim}
+[1] 0.4091268
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+      %\end{noindent}
+            \begin{itemize}
+                  \item Do not reject the null hypothesis that the main effects model is adequate.
+                  \item The interaction between year of construction and year of operation is not
+                        significant.
+            \end{itemize}
+\end{itemize}
+\subsection*{Model 1: \texttt{typef + cyrf + oyrf +offset(log(months))}}
+\begin{itemize}
+      \item Conclude that the best fitting model is the main effects model.
+      \item Check the residual plot:
+            %\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-69-1} 
+
+}
+
+
+\end{knitrout}
+      %\end{noindent}
+            \begin{itemize}
+                  \item $ \hat{\mu}_i=\exp*{\Vector{x}_i^\top \hat{\beta}+\log{t_i}} $.
+                  \item $ D=\sum_{i}2\log*{\frac{y_i}{\hat{\mu}_i}}=\sum_i d_i $.
+                  \item $ r_i^d=\sign{y_i-\hat{\mu}_i}\sqrt{\abs{d_i}} $.
+            \end{itemize}
+\end{itemize}
+\subsection*{Interpretation of Model 1: Main effects + \texttt{offset(log(months))}}
+%\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{model1} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef} \hlopt{+} \hlstd{cyrf} \hlopt{+} \hlstd{oyrf} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(months)),} \hlkwc{family} \hlstd{= poisson,}
+  \hlkwc{data} \hlstd{= ship.dat)}
+\hlkwd{summary}\hlstd{(model1)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = y ~ typef + cyrf + oyrf + offset(log(months)), 
+    family = poisson, data = ship.dat)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.6768  -0.8293  -0.4370   0.5058   2.7912  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -6.40590    0.21744 -29.460  < 2e-16 ***
+typef2      -0.54334    0.17759  -3.060  0.00222 ** 
+typef3      -0.68740    0.32904  -2.089  0.03670 *  
+typef4      -0.07596    0.29058  -0.261  0.79377    
+typef5       0.32558    0.23588   1.380  0.16750    
+cyrf2        0.69714    0.14964   4.659 3.18e-06 ***
+cyrf3        0.81843    0.16977   4.821 1.43e-06 ***
+cyrf4        0.45343    0.23317   1.945  0.05182 .  
+oyrf2        0.38447    0.11827   3.251  0.00115 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 146.328  on 33  degrees of freedom
+Residual deviance:  38.695  on 25  degrees of freedom
+AIC: 154.56
+
+Number of Fisher Scoring iterations: 5
+\end{verbatim}
+\begin{alltt}
+\hlkwd{summary}\hlstd{(model1)}\hlopt{$}\hlstd{cov.unscaled}
+\end{alltt}
+\begin{verbatim}
+             (Intercept)        typef2        typef3       typef4        typef5
+(Intercept)  0.047281921 -0.0313338453 -0.0270722494 -0.023415086 -0.0241001095
+typef2      -0.031333845  0.0315381717  0.0253121856  0.023057691  0.0239048348
+typef3      -0.027072249  0.0253121856  0.1082700615  0.022710437  0.0243415185
+typef4      -0.023415086  0.0230576907  0.0227104372  0.084435953  0.0228773141
+typef5      -0.024100109  0.0239048348  0.0243415185  0.022877314  0.0556390922
+cyrf2       -0.015756834  0.0022749529  0.0017647174  0.001203482 -0.0001442043
+cyrf3       -0.020308913  0.0081833789  0.0025425848  0.001410245 -0.0014853352
+cyrf4       -0.020358789  0.0094600451  0.0074478910 -0.006543921  0.0029036746
+oyrf2       -0.005558091  0.0005331834 -0.0001195467 -0.000162536  0.0007514856
+                    cyrf2        cyrf3        cyrf4         oyrf2
+(Intercept) -0.0157568339 -0.020308913 -0.020358789 -0.0055580913
+typef2       0.0022749529  0.008183379  0.009460045  0.0005331834
+typef3       0.0017647174  0.002542585  0.007447891 -0.0001195467
+typef4       0.0012034818  0.001410245 -0.006543921 -0.0001625360
+typef5      -0.0001442043 -0.001485335  0.002903675  0.0007514856
+cyrf2        0.0223925335  0.016093453  0.016591557 -0.0021248406
+cyrf3        0.0160934529  0.028823065  0.021702485 -0.0052926926
+cyrf4        0.0165915573  0.021702485  0.054368442 -0.0086966553
+oyrf2       -0.0021248406 -0.005292693 -0.008696655  0.0139882936
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+%\end{noindent}
+\subsection*{Interpretation of Log Linear Models for Poisson Processes}
+\begin{itemize}
+      \item Focus on interpretation of Model 1, the main effects model.
+      \item Recall the form of the model
+            \[ \log[\big]{\mu_i(t_i)}=\log{\lambda_i}+\log{t_i}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
+      \item This is based on the Poisson distribution with the expected number of events
+            occurring over $ (0,t] $ given by
+            \[ \E[\big]{N_i(t_i)}=\mu_i(t_i)=\lambda_i t_i. \]
+      \item $ \lambda= $ rate parameter (expected number of events per unit time).
+      \item The regression parameters of this log linear model will have a log \textcolor{Red}{Relative Rate (RR)} interpretation:
+            \begin{Regular}{}
+                  \[ \RR = \frac{\lambda_1}{\lambda_2}=\frac{\text{Number of events in group 1 per unit time}}{\text{Number of events in group 2 per unit time}}. \]
+            \end{Regular}
+\end{itemize}
+\subsection*{Interpretation of Model 1: RR for A vs C}
+\begin{Example}{}
+      \textbf{Task 1}: Controlling for periods of construction and operation estimate the relative rate of
+      accidents for ships of type A versus type C.
+\end{Example}
+\begin{table}[H]
+      \centering
+      \begin{tabular}{ccccl}
+            \texttt{type} & \texttt{cyr} & \texttt{oyr} & $ \Vector{x}_i $                & $ \log{\lambda_i} $                                             \\
+            \midrule
+            A             & ---          & ---          & $ (1,0,0,0,0,x_5,x_6,x_7,x_8) $ & $ \beta_0+\beta_5x_5+\beta_6x_6+\beta_7x_7+\beta_8x_8 $         \\
+            C             & ---          & ---          & $ (1,0,1,0,0,x_5,x_6,x_7,x_8) $ & $ \beta_0+\beta_2+\beta_5x_5+\beta_6x_6+\beta_7x_7+\beta_8x_8 $ \\
+            \midrule
+                          &              &              & $ \log{\lambda_A/\lambda_C}= $  & $ -\beta_2 $
+      \end{tabular}
+\end{table}
+\begin{table}[H]
+      \centering
+      \begin{tabular}{lll}
+                      & $ \beta_2 $                                 & $ \exp{-\beta_2} $                      \\
+            \midrule
+            MLE       & $ -0.6874 $                                 & $ 1.990 $                               \\
+            95\,\% CI & $ -0.6874\pm 1.96(0.329)=(-1.332,-0.0426) $ & $ (e^{0.0426},e^{1.332})=(1.04,3.79) $.
+      \end{tabular}
+\end{table}
+For ships constructed in the same period and operated in the same period the rate of
+accidents for ships of type A is $1.99$ times higher than the rate of accidents for ships of
+type C. A 95\% confidence interval for this relative rate is $(1.04, 3.79)$.
+\begin{itemize}
+      \item Note that the null hypothesis of no effect is equivalent to $ \RR=1 $ or $ \log{\RR}=0 $:
+            \[ \HN\colon \beta_2=0\text{ versus }\HA\colon \beta_2\ne 0. \]
+      \item The R output includes the $ p $-value for this test:
+            \[ 2\Prob*{Z>\frac{\abs{\hat{\beta}_2-0}}{\se{\hat{\beta}_2}}}=2\Prob{Z>2.089}=0.0367. \]
+      \item Therefore, we reject the null hypothesis that the rate of accidents is the same for
+            ships of types A and C (controlling for periods of construction and operation).
+\end{itemize}
+\subsection*{Interpretation of Model 1: RR for E vs B}
+\begin{Example}{}
+      \textbf{Task 2}: Controlling for periods of construction and operation estimate the relative rate of
+      accidents for ships of type E versus type B.
+\end{Example}
+\begin{table}[H]
+      \centering
+      \begin{tabular}{ccccl}
+            \texttt{type} & \texttt{cyr} & \texttt{oyr} & $ \Vector{x}_i $                & $ \log{\lambda_i} $                                             \\
+            \midrule
+            E             & ---          & ---          & $ (1,0,0,0,1,x_5,x_6,x_7,x_8) $ & $ \beta_0+\beta_4+\beta_5x_5+\beta_6x_6+\beta_7x_7+\beta_8x_8 $ \\
+            B             & ---          & ---          & $ (1,1,0,0,0,x_5,x_6,x_7,x_8) $ & $ \beta_0+\beta_1+\beta_5x_5+\beta_6x_6+\beta_7x_7+\beta_8x_8 $ \\
+            \midrule
+                          &              &              & $ \log{\lambda_E/\lambda_B}= $  & $ \beta_4-\beta_1 $
+      \end{tabular}
+\end{table}
+\begin{itemize}
+      \item Note that the log relative risk is a linear combination of two regression parameters.
+      \item Recall that since $ \hat{\Vector{\beta}} $ is an MLE, $ \hat{\Vector{\beta}}\sim \MVN*{\Vector{\beta},I^{-1}(\hat{\Vector{\beta}})} $
+            \[ \Vector{x}^\top \hat{\Vector{\beta}} \sim \N*{\Vector{x}^\top \Vector{\beta},\Vector{x}^\top I^{-1}(\hat{\Vector{\beta}})\Vector{x}}. \]
+      \item In order to estimate $ \se{\beta_4-\beta_1} $:
+            \begin{enumerate}[(i)]
+                  \item If working in R, we can define the contrast $ \Vector{c}=(0,-1,0,0,1,0,0,0,0)^\top $ and
+                        \[ \se{\hat{\beta}_4-\hat{\beta}_1}=\sqrt{\Vector{c}^\top \Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{c}}. \]
+                        %\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{x} \hlkwb{=} \hlkwd{as.matrix}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlopt{-}\hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{),} \hlkwc{ncol} \hlstd{=} \hlnum{1}\hlstd{)}
+\hlstd{v} \hlkwb{=} \hlkwd{summary}\hlstd{(model1)}\hlopt{$}\hlstd{cov.unscaled}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{t}\hlstd{(x)} \hlopt{%*%} \hlstd{v} \hlopt{%*%} \hlstd{x)}
+\end{alltt}
+\begin{verbatim}
+          [,1]
+[1,] 0.1984127
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+                                    %\end{noindent}
+                  \item If working by hand with the R covariance or correlation matrix:
+                        \begin{align*}
+                              \se{\hat{\beta}_4-\hat{\beta}_1}
+                               & =\sqrt{\Var{\hat{\beta}_4}+\Var{\hat{\beta}_1}-2\Cov{\hat{\beta}_4,\hat{\beta}_1}} \\
+                               & =\sqrt{(0.05564)+(0.03154)-2(0.02390)}                                             \\
+                               & =0.198.
+                        \end{align*}
+            \end{enumerate}
+      \item Now to estimate the relative rate $ \exp{\beta_4-\beta_1} $:
+            \begin{table}[H]
+                  \centering
+                  \begin{tabular}{lll}
+                                  & $ \beta_4-\beta_1 $                     & $ \exp{\beta_4-\beta_1} $             \\
+                        \midrule
+                        MLE       & $ -0.3256-(-0.5433)=0.8689 $            & $ \exp{0.08689}=2.38 $                \\
+                        95\,\% CI & $ 0.8669\pm 1.96(0.198)=(0.481,1.257) $ & $ (e^{0.481},e^{1.257})=(1.62,3.51) $
+                  \end{tabular}
+            \end{table}
+      \item \emph{For ships constructed and operated in the same periods those of type E had an
+                  estimated $2.38$, 95\,\% CI $(1.62, 3.51)$, times higher accident rate than those of type
+                  B.}
+      \item Here the null hypothesis of no effect is that ships of types E and B have the same
+            accident rate. That is,
+            \[ \HN\colon \beta_4-\beta_1=0\text{ vs }\HA\colon \beta_4-\beta_1\ne 0. \]
+      \item We test this using a Wald test. Since $ \Vector{x}^\top \hat{\Vector{\beta}} \sim \N*{\Vector{x}^\top \Vector{\beta},\Vector{x}^\top I^{-1}(\hat{\Vector{\beta}})\Vector{x}} $.
+            Then
+            \[ \frac{\Vector{x}^\top \hat{\Vector{\beta}}}{\sqrt{\Vector{x}^\top I^{-1}(\hat{\Vector{\beta}})\Vector{x}}}\sim \N{0,1}. \]
+      \item The $ p $-value for this test is:
+            \[ 2\Prob*{Z>\frac{ \Vector{x}^\top \hat{\Vector{\beta}} }{ \sqrt{\Vector{x}^\top I^{-1}(\hat{\Vector{\beta}})\Vector{x}} }}=2\Prob*{Z>\frac{0.8689}{0.198}}<0.001. \]
+      \item Therefore, we reject the null hypothesis that the accident rate is the same for ships
+            of types E and B (controlling for periods of contraction and operation).
+\end{itemize}
+\subsection*{Interpretation of Model 1: Expected Number Events}
+\begin{Example}{}
+      \textbf{Task 3}: Estimate the expected number of accidents for a group of 10 type B ships built in
+      1970 and operated during the entire period 1975-1979.
+\end{Example}
+\[ \log[\big]{\mu_i(t_i)}=\log{\lambda_i}+\log{t_i}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
+\begin{itemize}
+      \item Estimate $ \log{\lambda_i} $ the log of the event rate and its CI:
+            \begin{table}[H]
+                  \centering
+                  \begin{tabular}{ccccl}
+                        \texttt{type} & \texttt{cyr} & \texttt{oyr} & $ \Vector{x}_i $        & $ \log{\lambda_i} $                 \\
+                        \midrule
+                        B             & 70-74        & 75-79        & $ (1,1,0,0,0,0,1,0,1) $ & $ \beta_0+\beta_1+\beta_6+\beta_8 $ \\
+                        \bottomrule
+                  \end{tabular}
+            \end{table}
+            %\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{x} \hlkwb{=} \hlkwd{as.matrix}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{),} \hlkwc{ncol} \hlstd{=} \hlnum{1}\hlstd{)}
+\hlstd{v} \hlkwb{=} \hlkwd{summary}\hlstd{(model1)}\hlopt{$}\hlstd{cov.unscaled}
+\hlkwd{t}\hlstd{(x)} \hlopt{%*%} \hlstd{model1}\hlopt{$}\hlstd{coeff}
+\end{alltt}
+\begin{verbatim}
+          [,1]
+[1,] -5.746352
+\end{verbatim}
+\begin{alltt}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{t}\hlstd{(x)} \hlopt{%*%} \hlstd{v} \hlopt{%*%} \hlstd{x)}
+\end{alltt}
+\begin{verbatim}
+          [,1]
+[1,] 0.1186486
+\end{verbatim}
+\begin{alltt}
+\hlkwd{t}\hlstd{(x)} \hlopt{%*%} \hlstd{model1}\hlopt{$}\hlstd{coef} \hlopt{+} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{)} \hlopt{*} \hlkwd{qnorm}\hlstd{(}\hlnum{0.975}\hlstd{)} \hlopt{*} \hlkwd{sqrt}\hlstd{(}\hlkwd{t}\hlstd{(x)} \hlopt{%*%} \hlstd{v} \hlopt{%*%} \hlstd{x)}
+\end{alltt}
+\begin{verbatim}
+[1] -5.978899 -5.513805
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+      %\end{noindent}
+\end{itemize}
+\subsection*{Interpretation of Model 1: Expected Number Events}
+\begin{itemize}
+      \item Determine the offset $ t_i= $ months:
+            \begin{align*}
+                  t_i
+                   & =\text{total amount of time at risk of an accident} \\
+                   & =(\text{\# ships})(\text{length of operation})      \\
+                   & =(10)(5\times 12)                                   \\
+                   & =600.
+            \end{align*}
+      \item Calculate the expected number of accidents $ \hat{\mu}_i $:
+            \begin{align*}
+                  \log{\hat{\mu}_i}
+                              & =\log{\hat{\lambda}_i}+\log{t_i} \\
+                  \hat{\mu}_i & =\hat{\lambda}_i t_i             \\
+                              & =\exp{-5.7463}\times 600         \\
+                              & =1.92.
+            \end{align*}
+      \item With 95\,\% CI: $ (600 e^{-5.5138},600 e^{-5.9789})=(1.52,2.42) $.
+      \item \emph{The estimated number of accidents for a group of 10 type B ships built in 1970
+                  and operated during the entire period 1975-1979 is $1.92$ with a 95\,\% CI of $(1.52,2.42)$.}
+\end{itemize}
+% Week 9 (not too sure what the prof is thinking by making this week long af)
+
+\section*{Topic 4c: Poisson Approximation to the Binomial Distribution}
+\addcontentsline{toc}{section}{Topic 4c: Poisson Approximation to the Binomial Distribution}
+\subsection*{Log Linear Models}
+Previously we used a Poisson GLM to model count data arising from a \textcolor{Blue}{time
+    homogeneous Poisson process}:
+\begin{itemize}
+    \item $ N_i(t_i)= $ the number of events observed over $ (0,t_i] $:
+          \[ \E[\big]{N_i(t_i)}=\mu_i(t_i)=\lambda_i t_i \]
+    \item Explanatory variables: $ \Vector{x}_i=(1,x_{i1},\ldots,x_{ip-1})^\top $.
+          \[ \log[\big]{\mu_i(t_i)}=\log{\lambda_i}+\log{t_i}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
+\end{itemize}
+We will consider three other types of data we can analyse with a Poisson GLM:
+\begin{enumerate}[1.]
+    \item Approximating binomial data (topic 4c).
+    \item Time non-homogeneous Poisson processes (topic 4d).
+    \item Contingency tables/Multinomial data (topic 4e).
+\end{enumerate}
+\subsection*{Poisson Approximation to the Binomial}
+\begin{itemize}
+    \item Suppose: \textcolor{Red}{$Y \sim \BIN{m,\pi}$} so that $ \E{Y}=m\pi $.
+    \item Set $ \mu=m\pi $ and examine pmf of $ Y $ in terms of $ \mu $:
+          \begin{align*}
+              f(y)
+               & =\begin{aligned}
+                      f(y) & =\binom{m}{y} \pi^{y}(1-\pi)^{m-y}                                                                                           \\
+                           & =\frac{(m)(m-1) \cdots(m-y)(m-y-1) \cdots(1)}{(m-y) ! y !}\biggl(\frac{\mu}{m}\biggr)^{y}\biggl(1-\frac{\mu}{m}\biggr)^{m-y} \\
+                           & =\underbrace{\frac{(m)(m-1) \cdots(m-(y-1))}{(m)(m) \cdots(m)}}_{\to 1 \text{ as } m \to \infty} \frac{\mu^{y}}{y !}
+                      \underbrace{\biggr(1-\frac{\mu}{m}\biggr)^{m}}_{\to e^{-\mu}} \underbrace{\biggl(1-\frac{\mu}{m}\biggr)^{-y}}_{\to 1}.
+                  \end{aligned}
+          \end{align*}
+    \item Recall:
+          \[ \lim\limits_{{n} \to {\infty}}\biggl(1+\frac{a}{n}\biggr)^{\!n}=e^a. \]
+    \item Therefore, as $ m\to\infty $ with $ \mu=m\pi $ fixed:
+          \[ f(y)\to \frac{\mu^y e^{-\mu}}{y!}\text{ the pmf of the Poisson.} \]
+    \item So for $ Y \sim \BIN{m,\pi} $, as $ m\to\infty $, $ \pi\to 0 $ with $ \E{Y}=\mu=m\pi $ fixed we have:
+          \[ \textcolor{Red}{Y \sim \POI{\mu=m\pi}}. \]
+    \item Using a Poisson GLM (with log link):
+          \[ \log{\mu}=\log{\pi}+\log{m}=\Vector{x}^\top \Vector{\beta}+\underbrace{\log{m}}_\text{offset}. \]
+    \item Use the Poisson distribution to model Binomial data.
+    \item Use with large population ($m$ large) and low event rate ($ \pi $).
+    \item Example: Today and Problem 3.1 in course notes.
+\end{itemize}
+\begin{Example}{Non Melanoma Skin Cancer}
+    Schwarz (2015) gives the incidence of non melanoma skin cancer among women in the early
+    1970s in Minneapolis-St Paul and Dallas-Fort Worth.
+    \begin{center}
+        \begin{tabular}{lllrr}
+            \toprule
+            City         & Age   & Count & Pop. Size \\
+            \midrule
+            \texttt{msp} & 15-25 & 1     & 172675    \\
+            \texttt{msp} & 25-34 & 16    & 123065    \\
+            \texttt{msp} & 35-44 & 30    & 96216     \\
+            \texttt{msp} & 45-54 & 71    & 92051     \\
+            \texttt{msp} & 55-64 & 102   & 72159     \\
+            \texttt{msp} & 65-74 & 130   & 54722     \\
+            \texttt{msp} & 75-84 & 133   & 32185     \\
+            \texttt{msp} & 85+   & 40    & 8328      \\
+            \texttt{dfw} & 15-25 & 4     & 181343    \\
+            \texttt{dfw} & 25-34 & 38    & 146207    \\
+            \texttt{dfw} & 35-44 & 119   & 121374    \\
+            \texttt{dfw} & 45-54 & 221   & 111353    \\
+            \texttt{dfw} & 55-64 & 259   & 83004     \\
+            \texttt{dfw} & 65-74 & 310   & 55932     \\
+            \texttt{dfw} & 75-84 & 226   & 29007     \\
+            \texttt{dfw} & 85+   & 65    & 7538      \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+\end{Example}
+\subsection*{Binomial and Poisson Models}
+\begin{itemize}
+    \item Binomial model:
+          \[ \textcolor{Green}{\log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}+\beta_jx_{ij}}, \]
+          where $ x_{i1}=\Ind{\texttt{city=msp}} $, $ x_{i2}=\Ind{\texttt{agegroup }j} $, $ j=2,3,\ldots,8 $. $ \beta_1 $ and $ \beta_j $
+          have $ \log{\OR} $ interpretations.
+    \item Poisson model:
+          \[ \textcolor{Green}{\log{\mu_i}=\alpha_0+\alpha_1x_{i1}+\alpha_jx_{ij}+\log{m_i}}. \]
+          $ \alpha_1 $ and $ \alpha_j $ have $ \log{\RR} $ interpretations.
+\end{itemize}
+\subsection*{Binomial Model}
+\[ \textcolor{Green}{\log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}+\beta_jx_{ij}},\; j=2,3,\ldots,8. \]
+%\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{melanoma} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlstr{"melanoma.txt"}\hlstd{,} \hlkwc{header} \hlstd{= T)}
+\hlstd{melanoma}\hlopt{$}\hlstd{resp} \hlkwb{=} \hlkwd{cbind}\hlstd{(melanoma}\hlopt{$}\hlstd{Count, melanoma}\hlopt{$}\hlstd{Population} \hlopt{-} \hlstd{melanoma}\hlopt{$}\hlstd{Count)}
+\hlstd{fit.binomial} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlkwd{factor}\hlstd{(City)} \hlopt{+} \hlkwd{factor}\hlstd{(Age),} \hlkwc{family} \hlstd{= binomial,}
+  \hlkwc{data} \hlstd{= melanoma)}
+\hlkwd{summary}\hlstd{(fit.binomial)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = resp ~ factor(City) + factor(Age), family = binomial, 
+    data = melanoma)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-1.49511  -0.47903   0.01814   0.37356   1.23840  
+
+Coefficients:
+                  Estimate Std. Error z value Pr(>|z|)    
+(Intercept)      -10.85279    0.44749 -24.253  < 2e-16 ***
+factor(City)msp   -0.80692    0.05228 -15.433  < 2e-16 ***
+factor(Age)25-34   2.63034    0.46747   5.627 1.84e-08 ***
+factor(Age)35-44   3.84801    0.45467   8.463  < 2e-16 ***
+factor(Age)45-54   4.59672    0.45104  10.191  < 2e-16 ***
+factor(Age)55-64   5.08987    0.45031  11.303  < 2e-16 ***
+factor(Age)65-74   5.64998    0.44976  12.562  < 2e-16 ***
+factor(Age)75-84   6.06540    0.45035  13.468  < 2e-16 ***
+factor(Age)85+     6.18590    0.45782  13.512  < 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 2794.7794  on 15  degrees of freedom
+Residual deviance:    8.0828  on  7  degrees of freedom
+AIC: 120.29
+
+Number of Fisher Scoring iterations: 4
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+%\end{noindent}
+\subsection*{Poisson Model}
+\[ \textcolor{Green}{\log{\mu_i}=\alpha_0+\alpha_1x_{i1}+\alpha_jx_{ij}+\log{m_i}},\; j=2,3,\ldots,8. \]
+%\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{fit.poisson} \hlkwb{=} \hlkwd{glm}\hlstd{(Count} \hlopt{~} \hlkwd{factor}\hlstd{(City)} \hlopt{+} \hlkwd{factor}\hlstd{(Age)} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(Population)),}
+  \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= melanoma)}
+\hlkwd{summary}\hlstd{(fit.poisson)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = Count ~ factor(City) + factor(Age) + offset(log(Population)), 
+    family = poisson, data = melanoma)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.5043  -0.4816   0.0169   0.3697   1.2504  
+
+Coefficients:
+                  Estimate Std. Error z value Pr(>|z|)    
+(Intercept)      -10.85360    0.44749 -24.255  < 2e-16 ***
+factor(City)msp   -0.80428    0.05221 -15.406  < 2e-16 ***
+factor(Age)25-34   2.63019    0.46746   5.627 1.84e-08 ***
+factor(Age)35-44   3.84735    0.45466   8.462  < 2e-16 ***
+factor(Age)45-54   4.59519    0.45103  10.188  < 2e-16 ***
+factor(Age)55-64   5.08728    0.45030  11.298  < 2e-16 ***
+factor(Age)65-74   5.64541    0.44975  12.552  < 2e-16 ***
+factor(Age)75-84   6.05855    0.45032  13.454  < 2e-16 ***
+factor(Age)85+     6.17819    0.45774  13.497  < 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 2790.340  on 15  degrees of freedom
+Residual deviance:    8.195  on  7  degrees of freedom
+AIC: 120.44
+
+Number of Fisher Scoring iterations: 4
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+%\end{noindent}
+\subsection*{Example: Non Melanoma Skin Cancer}
+\begin{enumerate}[1.]
+    \item \textcolor{Green}{What is the OR and RR for developing non melanoma skin cancer for women in
+              Dallas-Forth Worth versus those in Minneapolis-St Paul, controlling for age?}
+          \[ \widehat{\OR}=\exp{-\hat{\beta}_1}=\exp{0.80692}=2.2410. \]
+          \[ \widehat{\RR}=\exp{-\hat{\alpha}_1}=\exp{0.80428}=2.2351. \]
+    \item \textcolor{Green}{What is the predicted number of skin cancer cases in Dallas-Fort Worth among
+              women age 25-34?}
+          \[ \hat{Y}_i=m_i\hat{\pi}_i=(146207)\expit{\hat{\beta}_0+\hat{\beta}_2}=39.25427. \]
+          \[ \hat{\mu}_i=m_i\hat{\pi}_i=(146207)\exp{\hat{\alpha}_0+\hat{\alpha}_2}=39.22713. \]
+\end{enumerate}
+\begin{itemize}
+    \item $m$ (population size) is very large and $ \pi $ (probability of getting non melanoma skin
+          cancer) is very small so the Poisson approximation holds.
+    \item Inference from the two models is nearly identical.
+    \item We might prefer the RR interpretation over the OR interpretation.
+\end{itemize}
+
+\section*{Topic 4d: Time Non-homogeneous Poisson Processes}
+\addcontentsline{toc}{section}{Topic 4d: Time Non-homogeneous Poisson Processes}
+\subsection*{Time Non-Homogeneous Poisson Processes}
+\begin{itemize}
+    \item Now consider
+          \[ \E[\big]{N(t)}=\mu(t)=\lambda(t)\qquad\text{(not $=\lambda t$)}. \]
+    \item The rate is now a \emph{\textcolor{Blue}{function}} of time.
+    \item Lots of possible ways to model the rate $ \lambda(t) $.
           \begin{itemize}
-              \item $ N_i(t_i)= $ the number of events observed over $ (0,t_i] $.
-              \item $ \Vector{x}_i=(1,x_{i1},\ldots,x_{ip-1})^\top $, the covariate vector associated with count $ N_i(t_i) $.
+              \item Piecewise constant:
+                    \[ \lambda(t)=b_1\Ind{0<t<t_1}+b_2\Ind{t_1\le t<t_2}+\cdots. \]
+              \item Piecewise linear:
+                    \[ \lambda(t)=(m_1 t+b_1)\Ind{0<t<t_1}+(m_2 t+b_2)\Ind{t_1\le t<t_2}+\cdots. \]
+              \item Quadratic:
+                    \[ \lambda(t)=at^2+bt+c. \]
+              \item Splines, etc.
           \end{itemize}
-    \item Assume $ N_i(t) $ is a \textcolor{Red}{\emph{time-homogenous Poisson process}} s.t. $ N_i(t_i)\sim \POI{\:\cdot\:} $ and
-          \[ \E[\big]{N_i(t_i)}=\mu_i(t_i)=\lambda_i t_i, \]
-          where $ \lambda_i $ is the rate of occurrence that is constant, therefore TH process.
-    \item A log linear regression model:
-          \[ \log[\big]{\mu_i(t_i)}=\log{\lambda_i}+\underbrace{\textcolor{Blue}{\log{t_i}}}_{\text{offset}}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
-          Regression part: $ \log{\lambda_i}=\Vector{x}_i^\top \Vector{\beta} $.
-    \item Maximum likelihood methods apply as usual for the estimation and inference of regression coefficients $ \Vector{\beta} $.
+\end{itemize}
+\subsection*{Example: Rat Tumour Data}
+\begin{Example}{Rat Tumour Data}
+    \begin{itemize}
+        \item Here we consider data from a study of the development of mammary tumours in
+              rats reported in Gail et al. (1980).
+        \item This study was a carcinogenicity experiment in which 48 rats were exposed to a
+              carcinogen,
+              \begin{itemize}
+                  \item 23 were then assigned to a treatment group where the treatment was designed to
+                        reduce the development of tumours,
+                  \item 25 were assigned to the control group.
+              \end{itemize}
+        \item The rats were carefully examined over 122 days for the development of new
+              tumours (multiple tumours could develop).
+        \item The day (time) of each tumour was recorded.
+        \item Our aim here is to estimate the expected number of tumours in the two groups and
+              make treatment comparisons.
+    \end{itemize}
+    We show the first 5 IDs for each group.
+    \begin{center}
+        $\text{Times to tumours in days}^{(\text{number of tumours detected})}$\\
+        \begin{NiceTabular}{clcl}
+            \toprule
+            \Block{1-2}{Treatment Group} &                          & \Block{1-2}{Control Group}                                               \\
+            \midrule
+            ID                           & Days of Tumour Detection & ID                         & Days of Tumour Detection                    \\
+            \midrule
+            1                            & $122$                    & 1                          & $3, 42, 59, 61^{(2)}, 112, 119$             \\
+            2                            & ---                      & 2                          & $28, 31, 35, 45, 52, 59^{(2)} , 77, 85, 107, 112$ \\
+            3                            & $3,88$                   & 3                          & $31, 38, 48, 52, 74, 77, 101^{(2)} , 119$         \\
+            4                            & $92$                     & 4                          & $ 11, 114  $                                \\
+            5                            & $70,74,85,92$            & 5                          & $35,45,74^{(2)},77,80,85,90^{(2)}$              \\
+            \bottomrule
+        \end{NiceTabular}
+    \end{center}
+\end{Example}
+\subsection*{Timeline plots for data from Gail et al. (1980)}
+
+\subsection*{R Code \& Rat Tumour Data Structure}
+%\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{rats} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlstr{"rats.dat"}\hlstd{,} \hlkwc{header} \hlstd{= F)}
+\hlkwd{dimnames}\hlstd{(rats)[[}\hlnum{2}\hlstd{]]} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"id"}\hlstd{,} \hlstr{"start"}\hlstd{,} \hlstr{"stop"}\hlstd{,} \hlstr{"status"}\hlstd{,} \hlstr{"enum"}\hlstd{,} \hlstr{"trt"}\hlstd{)}
+\hlcom{# function to covert data to the structure of one line per interval}
+\hlcom{# per subject}
+\hlstd{gd.pw.f} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{indata}\hlstd{) \{}
+  \hlstd{pid} \hlkwb{<-} \hlkwd{sort}\hlstd{(}\hlkwd{unique}\hlstd{(indata}\hlopt{$}\hlstd{id))}
+  \hlstd{data} \hlkwb{<-} \hlkwd{matrix}\hlstd{(}\hlnum{0}\hlstd{,} \hlkwc{nrow} \hlstd{= (}\hlkwd{length}\hlstd{(pid)} \hlopt{*} \hlnum{4}\hlstd{),} \hlkwc{ncol} \hlstd{=} \hlnum{5}\hlstd{)}
+  \hlkwa{for} \hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(pid)) \{}
+    \hlstd{tmp} \hlkwb{<-} \hlstd{indata[indata}\hlopt{$}\hlstd{id} \hlopt{==} \hlstd{pid[i], ]}
+    \hlstd{etime} \hlkwb{<-} \hlkwd{floor}\hlstd{(tmp}\hlopt{$}\hlstd{stop[tmp}\hlopt{$}\hlstd{status} \hlopt{==} \hlnum{1}\hlstd{])}
+    \hlstd{startpos} \hlkwb{<-} \hlnum{4} \hlopt{*} \hlstd{(i} \hlopt{-} \hlnum{1}\hlstd{)} \hlopt{+} \hlnum{1}
+    \hlstd{stoppos} \hlkwb{<-} \hlnum{4} \hlopt{*} \hlstd{i}
+    \hlstd{data[startpos}\hlopt{:}\hlstd{stoppos,} \hlnum{1}\hlstd{]} \hlkwb{<-} \hlkwd{rep}\hlstd{(pid[i],} \hlnum{4}\hlstd{)}
+    \hlstd{data[startpos}\hlopt{:}\hlstd{stoppos,} \hlnum{2}\hlstd{]} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{4}\hlstd{)}
+    \hlstd{data[startpos}\hlopt{:}\hlstd{stoppos,} \hlnum{3}\hlstd{]} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{sum}\hlstd{((etime} \hlopt{>} \hlnum{0}\hlstd{)} \hlopt{&} \hlstd{(etime} \hlopt{<=} \hlnum{30}\hlstd{)),}
+      \hlkwd{sum}\hlstd{((etime} \hlopt{>} \hlnum{30}\hlstd{)} \hlopt{&} \hlstd{(etime} \hlopt{<=} \hlnum{60}\hlstd{)),} \hlkwd{sum}\hlstd{((etime} \hlopt{>} \hlnum{60}\hlstd{)} \hlopt{&} \hlstd{(etime} \hlopt{<=}
+        \hlnum{90}\hlstd{)),} \hlkwd{sum}\hlstd{((etime} \hlopt{>} \hlnum{90}\hlstd{)} \hlopt{&} \hlstd{(etime} \hlopt{<=} \hlnum{122}\hlstd{)))}
+    \hlstd{data[startpos}\hlopt{:}\hlstd{stoppos,} \hlnum{4}\hlstd{]} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{30}\hlstd{,} \hlnum{30}\hlstd{,} \hlnum{30}\hlstd{,} \hlnum{32}\hlstd{)}
+    \hlstd{data[startpos}\hlopt{:}\hlstd{stoppos,} \hlnum{5}\hlstd{]} \hlkwb{<-} \hlkwd{rep}\hlstd{(}\hlkwd{unique}\hlstd{(tmp}\hlopt{$}\hlstd{trt),} \hlnum{4}\hlstd{)}
+  \hlstd{\}}
+  \hlstd{data} \hlkwb{<-} \hlkwd{data.frame}\hlstd{(data)}
+  \hlkwd{dimnames}\hlstd{(data)[[}\hlnum{2}\hlstd{]]} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"id"}\hlstd{,} \hlstr{"interval"}\hlstd{,} \hlstr{"count"}\hlstd{,} \hlstr{"len"}\hlstd{,} \hlstr{"trt"}\hlstd{)}
+  \hlkwd{return}\hlstd{(data)}
+\hlstd{\}}
+\hlstd{rats.pw} \hlkwb{<-} \hlkwd{gd.pw.f}\hlstd{(rats)}
+\hlstd{rats.pw[}\hlnum{1}\hlopt{:}\hlnum{20}\hlstd{, ]}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{rats.pw[}\hlnum{1}\hlopt{:}\hlnum{20}\hlstd{, ]}
+\end{alltt}
+\begin{verbatim}
+   id interval count len trt
+1   1        1     0  30   1
+2   1        2     0  30   1
+3   1        3     0  30   1
+4   1        4     1  32   1
+5   2        1     0  30   1
+6   2        2     0  30   1
+7   2        3     0  30   1
+8   2        4     0  32   1
+9   3        1     1  30   1
+10  3        2     0  30   1
+11  3        3     1  30   1
+12  3        4     0  32   1
+13  4        1     0  30   1
+14  4        2     0  30   1
+15  4        3     0  30   1
+16  4        4     1  32   1
+17  5        1     0  30   1
+18  5        2     0  30   1
+19  5        3     3  30   1
+20  5        4     1  32   1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+%\end{noindent}
+\begin{itemize}
+    \item Consider four time intervals.
+    \item One line of data per interval.
+    \item \texttt{count} = number events in interval.
+    \item \texttt{len} = days spent in interval.
+    \item \texttt{trt} = treatment group.
+\end{itemize}
+\subsection*{1. Model Control Group Only (\texttt{pfitC})}
+\[ \log{\mu_{ik}}=\beta_0+\underbrace{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}}_{\text{interval}}+\texttt{offset}(\log{\texttt{len}_{ik}}). \]
+\begin{itemize}
+    \item To start, we fit a \textcolor{Blue}{piecewise constant model} for control rats:
+          \[ \log{\mu_i}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
+    \item \texttt{interval} is a categorical variable at 4 levels:
+          \[ x_{i1}=\Ind{\text{interval 2}},\quad x_{i2}=\Ind{\text{interval 3}},\quad x_{i3}=\Ind{\text{interval 4}}. \]
+    \item Include \texttt{offset(log(len))} to account for the fact that different intervals are of
+          different durations.
+\end{itemize}
+%\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{pfitC} \hlkwb{<-} \hlkwd{glm}\hlstd{(count} \hlopt{~} \hlkwd{factor}\hlstd{(interval)} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(len)),} \hlkwc{family} \hlstd{=} \hlkwd{poisson}\hlstd{(}\hlkwc{link} \hlstd{= log),}
+  \hlkwc{data} \hlstd{= rats.pw,} \hlkwc{subset} \hlstd{= (trt} \hlopt{==} \hlnum{0}\hlstd{))}
+\hlkwd{summary}\hlstd{(pfitC)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = count ~ factor(interval) + offset(log(len)), family = poisson(link = log), 
+    data = rats.pw, subset = (trt == 0))
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.9183  -1.5748  -0.2736   0.6262   2.8959  
+
+Coefficients:
+                  Estimate Std. Error z value Pr(>|z|)    
+(Intercept)        -3.0937     0.1715 -18.039   <2e-16 ***
+factor(interval)2   0.1625     0.2333   0.697    0.486    
+factor(interval)3   0.3023     0.2262   1.337    0.181    
+factor(interval)4  -0.1569     0.2483  -0.632    0.527    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 167.79  on 99  degrees of freedom
+Residual deviance: 163.31  on 96  degrees of freedom
+AIC: 345.25
+
+Number of Fisher Scoring iterations: 5
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+%\end{noindent}
+\subsection*{Plot of $\log[\big]{\lambda(t)}$ for \texttt{pfitC}}
+\begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[
+                xmin=0, xmax=130,
+                ymin=-3.5, ymax=-2.5,
+                xtick={30,60,90,122},
+                legend pos=north west,
+                ymajorgrids=false,
+                xmajorgrids=true,
+                grid style=dashed,
+            ]
+            \addplot[color=red] coordinates {(0,-3.09)(30,-3.09)} node [anchor=south,midway] (beta){$\hat{\beta}_0$} ;
+            \addplot[color=red] coordinates {(30,-2.93)(60,-2.93)} node [anchor=south,midway] (beta){$\hat{\beta}_0+\hat{\beta}_1$};
+            \addplot[color=red] coordinates {(60,-2.79)(90,-2.79)} node [anchor=south,midway] (beta){$\hat{\beta}_0+\hat{\beta}_2$};
+            \addplot[color=red] coordinates {(90,-3.25)(122,-3.25)} node [anchor=south,midway] (beta){$\hat{\beta}_0+\hat{\beta}_3$};
+        \end{axis}
+    \end{tikzpicture}
+\end{center}
+\begin{itemize}
+    \item $ \log{\hat{\lambda}_1}=\hat{\beta}_0=-3.09 $.
+    \item $ \log{\hat{\lambda}_2}=\hat{\beta}_0+\hat{\beta}_1=-3.09+0.16=-2.93 $.
+    \item $ \log{\hat{\lambda}_3}=\hat{\beta}_0+\hat{\beta}_2=-3.09+0.3=-2.79 $.
+    \item $ \log{\hat{\lambda}_4}=\hat{\beta}_0+\hat{\beta}_3=-3.09-0.16=-3.25 $.
+\end{itemize}
+\subsection*{Interpretation of \texttt{pfitC}}
+\[ \textcolor{Green}{\log{\mu_i}=\beta_0+\underbrace{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}}_{\text{interval}}+\log{t_i}} \]
+\begin{itemize}
+    \item Relative Rate of events in interval 2 versus interval 1:
+          \[ \exp{\beta_1}=\frac{\lambda(\text{interval 2})}{\lambda(\text{interval 1})}=\exp{0.16254}=1.176. \]
+    \item Notice none of $ \beta_1,\beta_2,\beta_3 $ are statistically significant.
+    \item There is a trend of a slightly higher rate in intervals 2 and 3 (versus interval 1) but
+          the event rate does not differ significantly across follow-up time in the control rats.
+\end{itemize}
+\subsection*{2. Model Control and Treatment Groups (\texttt{pfit})}
+\begin{itemize}
+    \item Now, fit a model to both the treatment and control groups.
+    \item $ x_{i4}=\Ind{\text{treatment group}} $.
+    \item Assume a piecewise constant baseline rate function.
+    \item Model is now:
+          \[ \textcolor{Green}{\log{\mu_i}=\beta_0+\underbrace{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}}_{\text{interval}}+\beta_4x_{i4}+\texttt{offset}(\log{t_i})}. \]
+    \item $ \exp{\beta_1} $ is now RR of events for interval 2 versus interval 1, for two rats of the
+          same treatment group.
+\end{itemize}
+%\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{pfit} \hlkwb{<-} \hlkwd{glm}\hlstd{(count} \hlopt{~} \hlkwd{factor}\hlstd{(interval)} \hlopt{+} \hlstd{trt} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(len)),} \hlkwc{family} \hlstd{=} \hlkwd{poisson}\hlstd{(}\hlkwc{link} \hlstd{= log),}
+  \hlkwc{data} \hlstd{= rats.pw)}
+\hlkwd{summary}\hlstd{(pfit)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = count ~ factor(interval) + trt + offset(log(len)), 
+    family = poisson(link = log), data = rats.pw)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.8335  -1.1994  -0.3302   0.4701   3.0551  
+
+Coefficients:
+                  Estimate Std. Error z value Pr(>|z|)    
+(Intercept)       -3.08818    0.15079 -20.480  < 2e-16 ***
+factor(interval)2  0.17185    0.19590   0.877    0.380    
+factor(interval)3  0.20634    0.19438   1.062    0.288    
+factor(interval)4 -0.06454    0.20412  -0.316    0.752    
+trt               -0.82302    0.15171  -5.425 5.79e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 301.37  on 191  degrees of freedom
+Residual deviance: 266.32  on 187  degrees of freedom
+AIC: 547.75
+
+Number of Fisher Scoring iterations: 5
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+%\end{noindent}
+\subsection*{Interpretation of \texttt{pfit}}
+\begin{itemize}
+    \item Relative Rate of events for treatment versus control rats:
+          \[ \exp{\beta_4}=\frac{\lambda(\text{treatment})}{\lambda(\text{control})}=\exp{-0.8230}=0.44. \]
+    \item Controlling for interval of follow-up, the rate of tumour development in treated rats
+          in $0.44$ times that of control rats.
+    \item That is, treatment looks beneficial.
+    \item Notice that $ \beta_4 $ is statistically significant.
+    \item $ \beta_1,\beta_2,\beta_3 $ are still not statistically significant.
+    \item Consider do we really need to use a time non-homogeneous model for this data?
+\end{itemize}
+\subsection*{3. Time Homogeneous Model (\texttt{fit})}
+\[ \textcolor{Green}{\log{\mu_i}=\beta_0+\beta_4x_{i4}+\log{t_i}}. \]
+\begin{itemize}
+    \item $ \beta_0= $ log rate of tumour development, per day, control group.
+    \item $ \beta_4= $ log Relative Rate (RR) of tumour development in treated vs control rats.
+    \item This model is nested within the time non-homogeneous model.
+    \item Consider \texttt{pfit} model with $ \beta_1=\beta_2=\beta_3=0 $.
+    \item We can carry out a likelihood ratio test
+\end{itemize}
+%\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{fit} \hlkwb{<-} \hlkwd{glm}\hlstd{(count} \hlopt{~} \hlstd{trt} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(len)),} \hlkwc{family} \hlstd{=} \hlkwd{poisson}\hlstd{(}\hlkwc{link} \hlstd{= log),}
+  \hlkwc{data} \hlstd{= rats.pw)}
+\hlkwd{summary}\hlstd{(fit)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = count ~ trt + offset(log(len)), family = poisson(link = log), 
+    data = rats.pw)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.7800  -1.1421  -0.4235   0.4009   3.2673  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -3.00562    0.08138 -36.934  < 2e-16 ***
+trt         -0.82302    0.15171  -5.425 5.79e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 301.37  on 191  degrees of freedom
+Residual deviance: 269.06  on 190  degrees of freedom
+AIC: 544.49
+
+Number of Fisher Scoring iterations: 5
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+%\end{noindent}
+\subsection*{Interpretation of \texttt{fit}}
+\begin{itemize}
+    \item Note $ \hat{\beta}_4=-0.8230 $ is almost unchanged versus model \texttt{fit}.
+    \item Likelihood Ratio/Deviance test of $ \HN $: $ \beta_1=\beta_2=\beta_3=0 $:
+          \[ \Delta D=D_0-D_A=269.060-266.323 \sim \chi^2_{(3)}\text{ under $\HN$}. \]
+          %\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(fit}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{pfit}\hlopt{$}\hlstd{deviance, fit}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{pfit}\hlopt{$}\hlstd{df.residual)}
+\end{alltt}
+\begin{verbatim}
+[1] 0.4340077
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+    %\end{noindent}
+    \item Do not reject $ \HN $.
+    \item Conclude that the time homogeneous model (model 3) is probably OK in this case.
+    \item However, we retain it for generality and for the following analysis.
+\end{itemize}
+\subsection*{4. Time Non-Homogeneous Model with Treatment Interaction (\texttt{ifit})}
+\begin{itemize}
+    \item Q: Is the treatment effect constant over time?
+    \item Model with interaction:
+          \textcolor{Green}{\begin{align*}
+                  \log{\mu_i}
+                   & =\beta_0+\overbrace{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}}^{\text{interval}}+\overbrace{\beta_4x_{i4}}^{\text{treatment}}+ \\
+                   & \quad +\underbrace{\beta_5x_{i1}x_{i4}+\beta_6x_{i2}x_{i4}+\beta_7x_{i3}x_{i4}}_{\text{interval$*$treatment}}+\log{t_i}
+              \end{align*}}
+    \item Model \texttt{pfit} (time non-homogeneous, without interaction) is nested within this
+          model (consider \texttt{ifit} with $ \beta_5=\beta_6=\beta_7=0 $).
+\end{itemize}
+%\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{ifit} \hlkwb{<-} \hlkwd{glm}\hlstd{(count} \hlopt{~} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(len))} \hlopt{+} \hlkwd{factor}\hlstd{(interval)} \hlopt{*} \hlstd{trt,} \hlkwc{family} \hlstd{=} \hlkwd{poisson}\hlstd{(}\hlkwc{link} \hlstd{= log),}
+  \hlkwc{data} \hlstd{= rats.pw)}
+\hlkwd{summary}\hlstd{(ifit)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = count ~ offset(log(len)) + factor(interval) * trt, 
+    family = poisson(link = log), data = rats.pw)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.9183  -1.2158  -0.3241   0.5125   2.8959  
+
+Coefficients:
+                      Estimate Std. Error z value Pr(>|z|)    
+(Intercept)           -3.09371    0.17150 -18.039   <2e-16 ***
+factor(interval)2      0.16252    0.23326   0.697   0.4860    
+factor(interval)3      0.30228    0.22617   1.337   0.1814    
+factor(interval)4     -0.15691    0.24833  -0.632   0.5275    
+trt                   -0.80392    0.31755  -2.532   0.0114 *  
+factor(interval)2:trt  0.03164    0.42972   0.074   0.9413    
+factor(interval)3:trt -0.37639    0.44663  -0.843   0.3994    
+factor(interval)4:trt  0.28653    0.43808   0.654   0.5131    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 301.37  on 191  degrees of freedom
+Residual deviance: 263.92  on 184  degrees of freedom
+AIC: 551.35
+
+Number of Fisher Scoring iterations: 5
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+%\end{noindent}
+\subsection*{Interpretation of \texttt{ifit}}
+\begin{itemize}
+    \item Note $ \hat{\beta}_4=-0.8038 $ is very similar to \texttt{pfit}.
+    \item Likelihood Ratio/Deviance test of $ \HN $: $ \beta_5=\beta_6=\beta_7=0 $:
+          \[ \Delta D=D_0-D_A=266.323-263.917 \sim \chi^2_{(3)}\text{ under $\HN$}. \]
+          %\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(pfit}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{ifit}\hlopt{$}\hlstd{deviance, pfit}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{ifit}\hlopt{$}\hlstd{df.residual)}
+\end{alltt}
+\begin{verbatim}
+[1] 0.4926145
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+            %\end{noindent}
+    \item Do not reject $ \HN $.
+    \item We do not have evidence that the treatment effect varies across the time intervals.
+\end{itemize}
+\subsection*{Summary of Rat Tumour Data Analysis}
+\begin{itemize}
+    \item Looks like a piecewise constant rate function is not necessary.
+    \item The best model (of the ones we examined) is \texttt{fit}:
+          \[ \textcolor{Green}{\log{\mu_i}=\beta_0+\beta_4x_{i4}+\log{t_i}}. \]
+    \item \textcolor{Blue}{Interpretation}: The relative rate for tumour development in treated versus control
+          rats is:
+          \[ \exp{\hat{\beta}_4}=\exp{-0.822995}=0.439. \]
+    \item That is, treatment is beneficial (treated rates get fewer tumours).
+    \item \textcolor{Blue}{Prediction}: Expected number of tumours for a treated rat observed for 70 days?
+          \[ \log{\hat{\mu}}=\hat{\beta}_0+\hat{\beta}_4+\log{70}=-3.00562-0.82302+\log{70}=0.41986. \]
+          \[ \hat{\mu}=\exp{0.41986}=1.5217. \]
+\end{itemize}
+
+\section*{Topic 4e: Introduction of Contingency Tables}
+\addcontentsline{toc}{section}{Topic 4e: Introduction of Contingency Tables}
+\subsection*{Analysis of Contingency Tables}
+\begin{itemize}
+      \item Contingency tables can be formed to display data when all variables are categorical.
+      \item Below is a two-dimensional $ I\times J $ contingency table.
+            \[ \begin{NiceArray}{c|ccccccc|c}[first-row,first-col]
+                                                       &        & \Block{1-7}{\text{Factor $ W $}}                                                                                                        \\
+                                                       &        & 1                                & 2             & 3             & \cdots & j             & \cdots & J                                  \\
+                        \midrule
+                        \Block{7-1}{\text{Factor $V$}} & 1      & y_{11}                           & y_{12}        & y_{13}        & \cdots & y_{1j}        & \cdots & y_{1J}        & y_{1\bullet}       \\
+                                                       & 2      & y_{21}                           & y_{22}        & y_{23}        & \cdots & y_{2j}        & \cdots & y_{2J}        & y_{2\bullet}       \\
+                                                       & 3      & y_{31}                           & y_{32}        & y_{33}        & \cdots & y_{3j}        & \cdots & y_{3J}        & y_{3\bullet}       \\
+                                                       & \vdots & \vdots                           & \vdots        & \vdots        & \ddots & \vdots        & \ddots & \vdots        & \vdots             \\
+                                                       & i      & y_{i1}                           & y_{i2}        & y_{i3}        & \cdots & y_{ij}        & \cdots & y_{iJ}        & y_{i\bullet}       \\
+                                                       & \vdots & \vdots                           & \vdots        & \vdots        & \ddots & \vdots        & \ddots & \vdots        & \vdots             \\
+                                                       & I      & y_{I1}                           & y_{I2}        & y_{I3}        & \cdots & y_{Ij}        & \cdots & y_{IJ}        & y_{I\bullet}       \\
+                        \midrule
+                                                       &        & y_{\bullet 1}                    & y_{\bullet 2} & y_{\bullet 3} & \cdots & y_{\bullet j} & \cdots & y_{\bullet J} & y_{\bullet\bullet}
+                  \end{NiceArray}. \]
+      \item $ I= $ Number of rows; $ J= $ Number of columns.
+      \item \textcolor{Blue}{Row Totals}: $ y_{i\bullet}=\sum_{j=1}^{J}y_{ij} $.
+      \item \textcolor{Blue}{Column Totals}: $ y_{\bullet j}=\sum_{i=1}^{I}y_{ij} $.
+      \item \textcolor{Blue}{Grand Total}: $ y_{\bullet\bullet}=\sum_{i=1}^{I}\sum_{j=1}^{J}y_{ij} $.
+      \item Want to assess the nature/significance of ANY associations between the variables.
+      \item No special response variable --- all factors are of equal importance.
+      \item Contingency tables are a cross-classification of units with respect to the factors of
+            interest.
+      \item The observations $ y_{ij} $ consist of all the cell counts of the contingency table --- these will be our ``responses.''
+\end{itemize}
+\subsection*{Example: 2-way Contingency Table}
+\begin{Example}{Breast Self-Examination Contingency Table}
+      \begin{itemize}
+            \item Senie \emph{et al}. (1981) investigated the relationship between age and frequency of
+                  breast self-examination in a sample of women.
+            \item Two factors: Age (at 3 levels) and Frequency (at 3 levels).
+                  \begin{center}
+                        \begin{NiceTabular}{c|ccc|c}[first-row,first-col]
+                              &&\Block{1-3}{Frequency of breast self-examination}\\
+                              && Monthly & Occasionally & Never & Total\\
+                              \midrule
+                              \Block{3-1}{Age} & $<$45 & $ 91 $ & $ 90 $ & $ 51 $ & $ 232 $\\
+                              & 45--59 & $ 150 $ & $ 200 $ & $ 155 $ & $ 505 $\\
+                              & $ \ge $60 & $ 109 $ & $ 198 $ & $ 172 $ & $ 479 $\\
+                              \midrule
+                              & Total & $ 350 $ & $ 488 $ & $ 378 $ & $ 1216 $
+                        \end{NiceTabular}
+                  \end{center}
+            \item Is than an association between age and exam frequency?
+      \end{itemize}
+\end{Example}
+\subsection*{Basic Assumption in Contingency Tables}
+\begin{itemize}
+      \item \textcolor{Blue}{Basic Assumption}: Each cell count has an independent Poisson distribution with
+            mean $ \mu_{ij} $ for the $ (i,j) $ cell
+            \[ \Prob{Y_{ij}=y_{ij}}=\frac{\mu_{ij}^{y_{ij}}e^{-\mu_{ij}}}{y_{ij}!},\;y_{ij}=0,1,2,\ldots. \]
+      \item The joint distribution is
+            \[ \Prob{Y_{i j}=y_{i j}, i=1, \ldots, I, j=1, \ldots, J}=
+                  \prod_{i=1}^{I} \prod_{j=1}^{J}\biggl(\frac{\mu_{i j}^{y_{i j}} e^{-\mu_{i j}}}{y_{i j} !}\biggr) \]
+      \item We will condition on the relevant fixed totals (row, column, or grand) (possibly
+            fixed by design) to get a multinomial or product multinomial distribution.
+      \item Will show that these can all by analysed using Poisson GLMs.
+\end{itemize}
+\subsection*{The Multinomial Distribution}
+\begin{itemize}
+      \item Assume the total number of units is fixed $ Y_{\bullet\bullet}=y_{\bullet\bullet} $ ($ =n $).
+      \item Units are then cross-classified by $ 2 $ factors $ V $ and $ W $.
+      \item Our assumption of $ Y_{ij}\sim \POI{\mu_{ij}} $ independently implies
+            \[ Y_{\bullet\bullet}\sim \POI{\mu_{\bullet\bullet}},\text{ where }\mu_{\bullet\bullet}=\sum\sum \mu_{ij}. \]
+      \item To get the joint distribution of the $ Y_{ij} $'s, we must condition on the grand total $ Y_{\bullet\bullet}=y_{\bullet\bullet} $
+            since this is a fixed design:
+            \begin{align*}
+                  \Prob{Y_{ij}=y_{ij}\forall i,j\given Y_{\bullet\bullet}=y_{\bullet\bullet}}
+                   & =\frac{\Prob{Y_{ij}=y_{ij}\forall i,j,Y_{\bullet\bullet}=y_{\bullet\bullet}}}{\Prob{Y_{\bullet\bullet}=y_{\bullet\bullet}}}                                           \\
+                   & =\frac{\prod_{i=1}^{I} \prod_{j=1}^{J}\biggl(\frac{\mu_{i j}^{y_{i j}} \exp{-\mu_{i j}}}{y_{i j} !}\biggr)}{
+                  \mu_{\bullet\bullet}^{y_{\bullet\bullet}}\exp{-\mu_{\bullet\bullet}}/y_{\bullet\bullet}!
+                  }                                                                                                                                                                        \\
+                   & =\biggl(\frac{y_{\bullet\bullet}!}{\prod\prod y_{ij}!}\biggr)\biggl(\frac{\prod\prod \mu_{ij}^{y_{ij}}}{\mu_{\bullet\bullet}^{y_{\bullet\bullet}}}\biggr)
+                  \underbrace{\biggl(\frac{\exp*{-\sum\sum \mu_{ij}}}{\exp{-\mu_{\bullet\bullet}}}\biggr)}_{\textcolor{Green}{\text{$=1$ since $\mu_{\bullet\bullet}=\sum\sum \mu_{ij}$}}} \\
+                   & =\biggl(\frac{y_{\bullet\bullet}!}{\prod\prod y_{ij}!}\biggr)
+                  \underbrace{\prod_{i=1}^I \prod_{j=1}^J \biggl(\frac{\mu_{ij}}{\mu_{\bullet\bullet}}\biggr)^{\! y_{ij}}}_{\textcolor{Green}{\text{since $\mu_{\bullet\bullet}^{y_{\bullet\bullet}}=\mu_{\bullet\bullet}^{\sum\sum y_{ij}}=\prod\prod \mu_{\bullet\bullet}^{y_{ij}}$}}}
+            \end{align*}
+      \item Recall the standard \textcolor{Blue}{Multinomial distribution}:
+            \[ f(x_1,\ldots,x_k;n,\pi_1,\ldots,\pi_k)=\Prob{X_1=x_1,\ldots,X_k=x_k}=\frac{n!}{x_1!\cdots x_k!}\pi_1^{x_1}\cdots \pi_k^{x_k}, \]
+            where $ \sum \pi_i=1 $ and $ \sum x_i=n $.
+      \item The pmf on the previous slide is a multinomial distribution with
+            \[ \pi_{ij}=\mu_{ij}/\mu_{\bullet\bullet}=\Prob{\text{level $i$ of factor $V$ and level $j$ of factor $W$}}. \]
+      \item Note that $\sum\sum \pi_{ij}=1$
+            \[ \textcolor{Blue}{\Prob{Y_{ij}=y_{ij}\forall i,j\given Y_{\bullet\bullet}=y_{\bullet\bullet}}
+                  =\biggl(\frac{y_{\bullet\bullet}!}{\prod\prod y_{ij}!}\biggr)\prod_{i=1}^I \prod_{j=1}^J \pi_{ij}^{y_{ij}}}. \]
+\end{itemize}
+\subsection*{Multinomial Likelihood}
+\[ \Prob{Y_{ij}=y_{ij}\forall i,j\given Y_{\bullet\bullet}=y_{\bullet\bullet}}
+      =\biggl(\frac{y_{\bullet\bullet}!}{\prod\prod y_{ij}!}\biggr)\prod_{i=1}^I \prod_{j=1}^J \pi_{ij}^{y_{ij}}. \]
+\begin{itemize}
+      \item $ \Vector{\pi}=(\pi_{11},\ldots,\pi_{IJ})^\top $ be the parameter vector.
+      \item The likelihood and log-likelihood are given by:
+            \[ L(\Vector{\pi})=\prod_i\prod_j \pi_{ij}^{y_{ij}},\text{ where }\sum\sum \pi_{ij}=1 \]
+            \[ \ell(\Vector{\pi})=\sum_i\sum_j y_{ij}\log{\pi_{ij}}. \]
+\end{itemize}
+\subsection*{Testing for Independence in a 2-way Table}
+\begin{itemize}
+      \item Thinking back to the contingency table, we might be interested in testing the
+            hypothesis that the two methods of classification are \textcolor{Blue}{independent}:
+            \[ \HN\colon \pi_{ij}=\pi_{i\bullet}\pi_{\bullet j}\;\forall i,j \]
+            \[ \HA\colon \pi_{ij}\ne \pi_{i\bullet}\pi_{\bullet j}\;\text{for some } i,j, \]
+            where $ \pi_{i\bullet}=\sum_{j=1}^{J}\pi_{ij} $ and $ \pi_{\bullet j}=\sum_{i=1}^{I}\pi_{ij} $.
+      \item Consider the log-likelihood \textcolor{Blue}{under $ \HN $ (independence)}:
+            \begin{align*}
+                  \ell(\Vector{\pi})
+                   & =\sum_{i} \sum_{j} y_{i j} \log{\pi_{i\bullet} \pi_{\bullet j}}                             \\
+                   & =\sum_{i} \sum_{j} y_{i j}\bigl(\log{\pi_{i\bullet}} +\log{\pi_{\bullet j}} \bigr)          \\
+                   & =\sum_{i} y_{i \bullet} \log{\pi_{i \bullet}}+\sum_{j} y_{\bullet j} \log{\pi_{\bullet j}}.
+            \end{align*}
+      \item The parameters are constrained by $ \sum \pi_{i\bullet}=1 $ and $ \sum \pi_{\bullet j}=1 $.
+      \item The MLEs of $ \pi_{i\bullet} $ and $ \pi_{\bullet j}  $ under $ \HN $ are:
+            \[ \hat{\pi}_{i\bullet}=\frac{y_{i\bullet}}{y_{\bullet\bullet}},\qquad \hat{\pi}_{\bullet j}=\frac{y_{\bullet j}}{y_{\bullet\bullet}}. \]
+      \item And the log-likelihood evaluated at the MLE is:
+            \[ \ell(\hat{\Vector{\pi}})=\sum_{i} \sum_{j} y_{i j} \log*{\frac{y_{i \bullet} y_{\bullet j}}{y_{\bullet\bullet}^{2}}}. \]
+      \item Next consider working \textcolor{Blue}{under $ \HA $ (unconstrained)}.
+      \item The unconstrained MLEs are: $ \tilde{\pi}_{ij}=\frac{y_{ij}}{y_{\bullet\bullet}} $.
+      \item And the log-likelihood evaluated at the unconstrained MLE is:
+            \[ \ell(\tilde{\Vector{\pi}})=\sum_{i} \sum_{j} y_{i j} \log*{\frac{y_{ij}}{y_{\bullet\bullet}}}. \]
+      \item To test for independence we could use a \textcolor{Blue}{Likelihood Ratio/Deviance} test for the
+            multinomial:
+            \begin{align*}
+                  D
+                   & =2\bigl(\ell(\tilde{\Vector{\pi}})-\ell(\hat{\Vector{\pi}})\bigr)                                                             \\
+                   & =2\sum_i\sum_j y_{ij}\log*{\frac{y_{ij}}{y_{\bullet\bullet}}\bigg/\frac{y_{i \bullet} y_{\bullet j}}{y_{\bullet\bullet}^{2}}} \\
+                   & =2\sum_i\sum_j y_{ij}\log*{\frac{y_{ij}}{y_{i\bullet}y_{\bullet j}/y_{\bullet\bullet}}}                                       \\
+                   & =2\sum_i\sum_j O_{ij}\log*{\frac{O_{ij}}{E_{ij}}}.
+            \end{align*}
+      \item Note this has the usual form of a Deviance Statistic with
+            \[ O_{ij}=y_{ij}\quad\text{ and }\quad E_{ij}=y_{\bullet\bullet}\hat{\pi}_{ij}\text{ under $ \HN $}. \]
+      \item We know $ D \sim \chi^2_{(n-p)} $, but what are the degrees of freedom here?
+            \begin{align*}
+                  n-p
+                   & =(\text{\# parameters saturated})-(\text{\# parameters unsaturated}) \\
+                   & =(IJ-1)-\bigl((I-1)+(J-1)\bigr)                                      \\
+                   & =IJ-I-J+1                                                            \\
+                   & =(I-1)(J-1).
+            \end{align*}
+\end{itemize}
+\subsection*{Example: Breast Self-Examination Data ($ \tilde{\mu}_{ij} $ vs $ \hat{\mu}_{ij} $)}
+\begin{itemize}
+      \item \textcolor{Blue}{Observed Data}: $ y_{ij}=\tilde{\mu}_{ij}=\tilde{\pi}_{ij}y_{\bullet\bullet} $:
+            \begin{table}[H]
+                  \centering
+                  \begin{NiceTabular}{c|ccc|c}[first-row,first-col]
+                        &           & \Block{1-3}{Frequency of breast self-examination}                                     \\
+                        &           & Monthly                                           & Occasionally & Never   & Total    \\
+                        \midrule
+                        \Block{3-1}{Age} & $<$45     & $ 91 $                                            & $ 90 $       & $ 51 $  & $ 232 $  \\
+                        & 45--59    & $ 150 $                                           & $ 200 $      & $ 155 $ & $ 505 $  \\
+                        & $ \ge $60 & $ 109 $                                           & $ 198 $      & $ 172 $ & $ 479 $  \\
+                        \midrule
+                        & Total     & $ 350 $                                           & $ 488 $      & $ 378 $ & $ 1216 $
+                  \end{NiceTabular}
+            \end{table}
+      \item \textcolor{Blue}{Expected Data under $ \HN $}: $ \hat{\mu}_{ij}=\hat{\pi}_{ij}y_{\bullet\bullet}=y_{i\bullet}y_{\bullet j}/y_{\bullet\bullet} $:
+            \begin{table}[H]
+                  \centering
+                  \begin{NiceTabular}{c|ccc|c}[first-row,first-col]
+                        &           & \Block{1-3}{Frequency of breast self-examination}                                        \\
+                        &           & Monthly                                           & Occasionally & Never      & Total    \\
+                        \midrule
+                        \Block{3-1}{Age} & $<$45     & $ 66.78 $                                         & $ 93.11 $    & $ 72.12 $  & $ 232 $  \\
+                        & 45--59    & $ 145.35 $                                        & $ 202.66 $   & $ 156.98 $ & $ 505 $  \\
+                        & $ \ge $60 & $ 137.87 $                                        & $ 192.23 $   & $ 148.90 $ & $ 479 $  \\
+                        \midrule
+                        & Total     & $ 350 $                                           & $ 488 $      & $ 378 $    & $ 1216 $
+                  \end{NiceTabular}
+            \end{table}
+\end{itemize}
+\subsection*{Example: Breast Self-Examination Data: ($ \tilde{\pi}_{ij} $ vs $ \hat{\pi}_{ij} $)}
+\begin{itemize}
+      \item \textcolor{Blue}{Unconstrained MLEs}: $ \tilde{\pi}_{ij}=y_{ij}/y_{\bullet\bullet} $ (as percentages):
+            \begin{table}[H]
+                  \centering
+                  \begin{NiceTabular}{c|ccc|c}[first-row,first-col]
+                        &           & \Block{1-3}{Frequency of breast self-examination}                                        \\
+                        &           & Monthly                                           & Occasionally & Never      & Row \%    \\
+                        \midrule
+                        \Block{3-1}{Age} & $<$45     & $ 7.48 $                         & $ 7.40 $    & $ 4.19 $  & $ 19.07 $  \\
+                        & 45--59                     & $ 12.34 $                       & $ 16.45 $   & $ 12.75 $ & $ 41.54 $  \\
+                        & $ \ge $60                  & $ 8.96 $                       & $ 16.28 $   & $ 14.14 $ & $ 39.38 $  \\
+                        \midrule
+                        & Column \%                       & $ 28.78 $                         & $ 40.13 $      & $ 31.08 $    & $ 100 $
+                  \end{NiceTabular}
+            \end{table}
+      \item \textcolor{Blue}{Constrained MLEs under $ \HN $}: $ \hat{\pi}_{ij}=\hat{\pi}_{i\bullet}\hat{\pi}_{\bullet j}=y_{i\bullet}y_{\bullet j}/y_{\bullet\bullet}^2 $:
+            \begin{table}[H]
+                  \centering
+                  \begin{NiceTabular}{c|ccc|c}[first-row,first-col]
+                        &           & \Block{1-3}{Frequency of breast self-examination}                                        \\
+                        &           & Monthly                                           & Occasionally & Never      & Row \%    \\
+                        \midrule
+                        \Block{3-1}{Age} & $<$45     & $ 5.49 $                         & $ 7.66 $    & $ 5.93 $  & $ 19.08 $  \\
+                        & 45--59                     & $ 11.95 $                       & $ 16.67 $   & $ 12.91 $ & $ 41.53 $  \\
+                        & $ \ge $60                  & $ 11.34 $                       & $ 15.81 $   & $ 12.25 $ & $ 39.40 $  \\
+                        \midrule
+                        & Column \%                       & $ 28.78 $                         & $ 40.14  $      & $ 31.09 $    & $ 100 $
+                  \end{NiceTabular}
+            \end{table}
+\end{itemize}
+\subsection*{Example: Breast Self-Examination Data (Testing Independence)}
+\begin{itemize}
+      \item Use the Likelihood Ratio/Deviance test derived for the Multinomial Distribution
+            \[ D=2\sum_i\sum_j y_{ij}\log*{\frac{y_{ij}}{y_{i\bullet}y_{\bullet j}/y_{\bullet\bullet}}}=25.19226. \]
+      \item Compare to a $ \chi^2_{(4)} $ distribution:
+            \[ p=\Prob*{\chi^2_{(4)}>25.19226}<0.001. \]
+      \item So we reject the null hypothesis that age and frequency of breast self-examination
+            are independent.
+\end{itemize}
+\subsection*{The Product Multinomial Distribution}
+\begin{itemize}
+      \item Previously, we assumed the grand total $ Y_{\bullet\bullet}=y_{\bullet\bullet} $ was fixed.
+      \item Now assume that the \textcolor{Blue}{row totals} $ Y_{i\bullet}=y_{i\bullet} $ are fixed.
+            \begin{itemize}
+                  \item Choose a sample of fixed size from populations $ i=1,\ldots,I $ and then classify the
+                        units with response to Factor $W$.
+            \end{itemize}
+      \item Our assumption of $ Y_{ij}\sim \POI{\mu_{ij}} $ independently implies
+            \[ Y_{i\bullet}\sim \POI{\mu_{i\bullet}},\text{ where }\mu_{i\bullet}=\sum_{j}\mu_{ij}. \]
+      \item To get the joint distribution of the $ Y_{ij} $'s we now condition on the row totals
+            $ Y_{i\bullet}=y_{i\bullet} $, $ i=1,\ldots,I $
+            \[ \Prob{Y_{ij}=y_{ij}\forall i,j\given Y_{i\bullet}=y_{i\bullet}\forall i}
+                  =\frac{\Prob{Y_{ij}=y_{ij}\forall i,j,Y_{i\bullet}=y_{i\bullet}\forall i}}{\Prob{Y_{i\bullet}=y_{i\bullet}\forall i}}.     \]
+\end{itemize}
+\subsection*{Example: Another Breast Self-Examination Study}
+\begin{itemize}
+      \item Imagine this time the investigators decided study a fixed number of women of
+            each age group.
+      \item The (hypothetical) 2-way contingency table is now:
+            \begin{Example}{Breast Self-Examination Contingency Table (Hypothetical)}
+                  \begin{center}
+                        \begin{NiceTabular}{c|ccc|c}[first-row,first-col]
+                              &&\Block{1-3}{Frequency of breast self-examination}\\
+                              && Monthly & Occasionally & Never & Total\\
+                              \midrule
+                              \Block{3-1}{Age} & $<$45 & $ 78 $ & $ 78 $ & $ 44 $ & $ 200 $\\
+                              & 45--59 & $ 178 $ & $ 238 $ & $ 184 $ & $ 600 $\\
+                              & $ \ge $60 & $ 91 $ & $ 165 $ & $ 144 $ & $ 400 $\\
+                              \midrule
+                              & Total & $ 347 $ & $ 481 $ & $ 372 $ & $ 1200 $
+                        \end{NiceTabular}
+                  \end{center}
+            \end{Example}
+      \item We need to take this method of sampling into account in the analysis.
+\end{itemize}
+\begin{align*}
+      \Prob{Y_{ij}=y_{ij}\forall i,j\given Y_{i\bullet}=y_{i\bullet}\forall i}
+       & =\biggl(\prod_i \prod_j \biggl(\frac{\mu_{ij}^{y_{ij}} \exp{-\mu_{ij}}}{y_{ij}!}\biggr)\biggr)\Bigg/\biggl(\prod_i \frac{\mu_{i\bullet}^{y_{i\bullet}}\exp{-\mu_{i\bullet}}}{y_{i\bullet}!}\biggr)             \\
+       & =\biggl(\frac{\prod_i y_{i\bullet}!}{\prod\prod y_{ij}!}\biggr)\biggl(\frac{\prod\prod \mu_{ij}^{y_{ij}}}{\prod_i \mu_{i\bullet}^{y_{i\bullet}}}\biggr)
+      \underbrace{\biggl(\frac{\exp{-\sum\sum \mu_{ij}}}{\exp{-\sum_i \mu_i}}\biggr)}_{\textcolor{Green}{\text{$=1$ since $\mu_{i j}=\sum_i \mu_{i\bullet}=\mu_{\bullet\bullet}$ }}}                                    \\
+       & =\prod_{i=1}^I \underbrace{\biggl(\frac{y_{i\bullet}!}{\prod_j y_{ij}!}\prod_{j=1}^J \biggl(\frac{\mu_{ij}}{\mu_{i\bullet}}\biggr)^{\!y_{ij}}\biggr)}_{\textcolor{Green}{\text{Multinomial pmf for row $i$}}}.
+\end{align*}
+\begin{itemize}
+      \item This is the \textcolor{Blue}{product multinomial distribution} with $ \pi_{ij}=\mu_{ij}/\mu_{i\bullet} $.
+      \item Here, $ \pi_{ij}= $ probability of being level $j$ given population level $i$.
+      \item Note that $ \sum_j \pi_{ij}=1 $ for all $ i $.
+\end{itemize}
+\subsection*{Product Multinomial Likelihood}
+\[ \Prob{Y_{ij}=y_{ij}\forall i,j\given Y_{i\bullet}=y_{i\bullet}\forall i}=
+      \prod_{i=1}^I\biggl(\frac{y_{i\bullet}!}{\prod_j y_{ij}!}\prod_{j=1}^J \pi_{ij}^{y_{ij}}\biggr). \]
+\begin{itemize}
+      \item Again, let $ \Vector{\pi}=(\pi_{11},\ldots,\pi_{IJ})^\top $ be the parameter vector.
+      \item Note the $ \pi_{ij} $ have different interpretations here versus the multinomial case.
+      \item The log-likelihood is given by:
+            \[ \ell(\Vector{\pi})=\sum_i\sum_j y_{ij}\log{\pi_{ij}},\text{ where }\sum_j \pi_{ij}=1\;\forall i. \]
+\end{itemize}
+\subsection*{Testing for Independence with the Product Multinomial}
+\begin{itemize}
+      \item In this case we might be interested in testing where the probability of being at
+            factor level $j$ is the same across all stratum/populations $ i=1,\ldots,I $
+            \[ \HN\colon \pi_{1j}=\pi_{2j}=\cdots=\pi_{Ij}=\pi_j,\;j=1,2,\ldots,J, \]
+            \[ \HA\colon \text{at least one }\pi_{ij}\ne \pi_{i^\prime j}. \]
+      \item The log likelihood \textcolor{Blue}{under $ \HN $ (independence)} is
+            \[ \ell(\Vector{\pi})=\sum_i\sum_j y_{ij}\log{\pi_{j}}=\sum_j y_{\bullet j}\log{\pi_{j}}. \]
+      \item The parameters are constrained by $ \sum_{j}\pi_j=1 $.
+      \item The MLEs under $ \HN $ are
+            \[ \hat{\pi}_{ij}=\hat{\pi}_j=\frac{y_{\bullet j}}{y_{\bullet\bullet}}. \]
+      \item \textcolor{Blue}{Under $ \HA $ (unconstrained)} the MLEs are
+            \[ \tilde{\pi}_{ij}=\frac{y_{ij}}{y_{i\bullet}}. \]
+      \item The \textcolor{Blue}{Likelihood Ratio/Deviance} test statistic is:
+            \begin{align*}
+                  D
+                   & =2\bigl(\ell(\tilde{\Vector{\pi}})-\ell(\hat{\Vector{\pi}})\bigr)                                     \\
+                   & =2\sum_i\sum_j y_{ij}\log*{\frac{y_{ij}}{y_{i\bullet}}\bigg/\frac{y_{\bullet j}}{y_{\bullet\bullet}}} \\
+                   & =2\sum_i\sum_j y_{ij}\log*{\frac{y_{ij}}{y_{i\bullet}y_{\bullet j}/y_{\bullet\bullet}}}.
+            \end{align*}
+      \item Which is identical to the Deviance statistic for testing independence under a
+            multinomial distribution.
+      \item Here, $ D \sim \chi^2_{(I-1)(J-1)} $ since
+            \[ n-p=I(J-1)-(J-1)=IJ-I-J+1=(I-1)(J-1). \]
+\end{itemize}
+\subsection*{Example: Another Breast Self-Examination Study}
+\begin{itemize}
+      \item \textcolor{Blue}{Observed Data}: $ y_{ij} $:
+            \begin{table}[H]
+                  \centering
+                  \begin{NiceTabular}{c|ccc|c}[first-row,first-col]
+                        &&\Block{1-3}{Frequency of breast self-examination}\\
+                        && Monthly & Occasionally & Never & Total\\
+                        \midrule
+                        \Block{3-1}{Age} & $<$45 & $ 78 $ & $ 78 $ & $ 44 $ & $ 200 $\\
+                        & 45--59 & $ 178 $ & $ 238 $ & $ 184 $ & $ 600 $\\
+                        & $ \ge $60 & $ 91 $ & $ 165 $ & $ 144 $ & $ 400 $\\
+                        \midrule
+                        & Total & $ 347 $ & $ 481 $ & $ 372 $ & $ 1200 $
+                  \end{NiceTabular}
+            \end{table}
+      \item \textcolor{Blue}{Expected Data under $ \HN $}: $ \hat{\mu}_{ij}=y_{i\bullet}\hat{\pi}_j=y_{i\bullet}y_{\bullet j}/y_{\bullet\bullet} $
+            \begin{table}[H]
+                  \centering
+                  \begin{NiceTabular}{c|ccc|c}[first-row,first-col]
+                        &&\Block{1-3}{Frequency of breast self-examination}\\
+                        && Monthly & Occasionally & Never & Total\\
+                        \midrule
+                        \Block{3-1}{Age} & $<$45 & $ 57.83 $ & $ 80.17 $ & $ 62.00 $ & $ 200 $\\
+                        & 45--59 & $ 173.50 $ & $ 240.50 $ & $ 186.00 $ & $ 600 $\\
+                        & $ \ge $60 & $ 115.67 $ & $ 160.33 $ & $ 124.00 $ & $ 400 $\\
+                        \midrule
+                        & Total & $ 347 $ & $ 481 $ & $ 372 $ & $ 1200 $
+                  \end{NiceTabular}
+            \end{table}
+      \item \textcolor{Blue}{Unconstrained MLEs}: $ \tilde{\pi}_{ij}=y_{ij}/y_{i\bullet} $ (as percentages):
+            \begin{table}[H]
+                  \centering
+                  \begin{NiceTabular}{c|ccc|c}[first-row,first-col]
+                        &&\Block{1-3}{Frequency of breast self-examination}\\
+                        && Monthly & Occasionally & Never & Total\\
+                        \midrule
+                        \Block{3-1}{Age} & $<$45 & $ 39.00 $ & $ 39.00 $ & $ 22.00 $ & $ 100 $\\
+                        & 45--59 & $ 29.67 $ & $ 39.67 $ & $ 30.67 $ & $ 100 $\\
+                        & $ \ge $60 & $ 22.75 $ & $ 41.25 $ & $ 36.00 $ & $ 100 $\\
+                        \bottomrule
+                  \end{NiceTabular}
+            \end{table}
+      \item \textcolor{Blue}{Constrained MLEs}: $ \hat{\pi}_{ij}=\hat{\pi}_j=y_{\bullet j}/y_{\bullet\bullet} $ (as percentages):
+            \begin{table}[H]
+                  \centering
+                  \begin{NiceTabular}{c|ccc|c}[first-row,first-col]
+                        &&\Block{1-3}{Frequency of breast self-examination}\\
+                        && Monthly & Occasionally & Never & Total\\
+                        \midrule
+                        \Block{3-1}{Age} & $<$45 & $ 28.92 $ & $ 40.08 $ & $ 31.00 $ & $ 100 $\\
+                        & 45--59 & $ 28.92 $ & $ 40.08 $ & $ 31.00 $ & $ 100 $\\
+                        & $ \ge $60 & $ 28.92 $ & $ 40.08 $ & $ 31.00 $ & $ 100 $\\
+                        \bottomrule
+                  \end{NiceTabular}
+            \end{table}
+\end{itemize}
+\subsection*{Example: Another Breast Self-Examination Study (Testing Independence)}
+\begin{itemize}
+      \item Use the Likelihood Ratio/Deviance test derived for the Multinomial Distribution
+            \[ D=2\sum_i\sum_j y_{ij}\log*{\frac{y_{ij}}{y_{i\bullet}y_{\bullet j}/y_{\bullet\bullet}}}=21.25615. \]
+      \item Compare to a $ \chi^2_{(4)} $ distribution:
+            \[ p=\Prob*{\chi^2_{(4)}>21.25615}<0.001. \]
+      \item So we reject the null hypothesis that age and frequency of breast self-examination
+            are independent.
+\end{itemize}
+\subsection*{Summary}
+\begin{itemize}
+      \item Today we considered simple 2-way contingency tables.
+      \item With the basic Poisson assumption for the cell counts, depending on the type of
+            sampling used, we can test for independence using:
+            \begin{enumerate}[1.]
+                  \item Multinomial distribution (condition on $ y_{\bullet\bullet} $).
+                  \item Product multinomial (condition on $ y_{i\bullet} $, $ i=1,2,\ldots,I $).
+            \end{enumerate}
+      \item Both yield the same Likelihood Ratio/Deviance test statistic.
+      \item Interestingly we can also use log-linear models to assess these independence
+            hypotheses (next week).
+      \item Easily generalizable to 3-way (and more) contingency tables.
 \end{itemize}
 \end{document}
-% For fonts.
-\begin{itemize}
-    \item \sbox0{c}\the\ht0\ versus \sbox0{\texttt{c}}\the\ht0\ versus \sbox0{$c$}\the\ht0\ versus \sbox0{\textsf{c}}\the\ht0\
-    \item c\texttt{c}$c$\textsf{c}
-\end{itemize}
-Font shape `T1/zi4/m/it' undefined
-(Font)	using `T1/zi4/m/n' instead.
-U/stmry/b/n'
-\SetSymbolFont{stmry}{bold}{U}{stmry}{m}{n}
