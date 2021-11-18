@@ -1,0 +1,232 @@
+\chapter{The Exponential Distribution and the Poisson Process}
+\makeheading{Week 9}{\daterange{2021-11-10}{2021-11-17}}%chktex 8
+\section{Properties of the Exponential Distribution}
+\subsection*{Basic Distributional Results}
+If a rv $ X $ has an exponential distribution with parameter $ \lambda>0 $ (i.e., $ X \sim \EXP{\lambda} $)
+where $ \lambda $ is often referred to as the ``rate''), then we have the following basic distributional results in place:
+\begin{itemize}
+    \item \textbf{pdf}: $ f(x)=\lambda e^{-\lambda x} $, $ x>0 $,
+    \item \textbf{cdf}: $ F(x)=\Prob{X\le x}=\int_{0}^{x}\lambda e^{-\lambda y}\odif{y}=1-e^{-\lambda x} $, $ x\ge 0 $,
+    \item \textbf{tpf}: $ \bar{F}(x)=\Prob{X>x}=1-F(x)=e^{-\lambda x} $, $ x\ge 0 $,
+    \item \textbf{mgf}: $ \phi_X(t)=\E{e^{tX}}
+              =\int_{0}^{\infty}e^{tx}\lambda e^{-\lambda x}\odif{x}
+              =\frac{\lambda}{\lambda-t}\int_{0}^{\infty}(\lambda-t)e^{-(\lambda-t)x}\odif{x}
+              =\frac{\lambda}{\lambda-t} $, $ t<\lambda $,
+    \item \textbf{mean}: $ \E{X}=1/\lambda $,
+    \item \textbf{variance}: $ \Var{X}=1/\lambda^2 $.
+\end{itemize}
+\section*{Minimum of Independent Exponentials}
+\begin{Regular}
+    \textbf{Minimum of Independent Exponentials}: Let $ \Set{X_i}_{i=1}^n $ be a sequence of independent rvs where
+    $ X_i \sim \EXP{\lambda_i} $, $ i=1,2,\ldots,n $. Define $ Y=\min{X_1,X_2,\ldots,X_n} $ to be the
+    smallest \emph{order} statistic of $ \Set{X_1,X_2,\ldots,X_n} $. Clearly, $ Y $ takes on possible values
+    in the state space $ \mathcal{S}=(0,\infty) $. To determine the distribution of $ Y $, consider its tpf:
+    \begin{align*}
+        \bar{F}_Y(y)
+         & =\Prob{Y>y}                                                                                                                                          \\
+         & =\Prob[\big]{\min{X_1,X_2,\ldots,X_n}>y}                                                                                                             \\
+         & =\Prob{X_1>y,X_2>y,\ldots,X_n>y}                                                                                                                     \\
+         & =\Prob{X_1>y}\Prob{X_2>y}\cdots\Prob{X_n>y}                                                                     &  & \text{by independence}          \\
+         & =e^{-\lambda_1y}e^{-\lambda_2y}\cdots e^{-\lambda_n y}                                                          &  & \text{provided that $ y\ge 0 $} \\
+         & =\underbrace{e^{-(-\lambda_1+\lambda_2+\cdots+\lambda_n)y}}_{\text{tpf of $ \EXP*{\sum_{i=1}^{n}\lambda_i} $ }} &  & y\ge 0.
+    \end{align*}
+    Therefore, $ Y=\min{X_1,X_2,\ldots,X_n}\sim \EXP{\sum_{i=1}^{n}\lambda_i} $.
+    \tcblower{}
+    \underline{Remark}: As a special case of this result, if we additionally assume that $ X_1,X_2,\ldots,X_n $
+    are iid $ \EXP{\lambda} $ rvs, then $ Y=\min{X_1,X_2,\ldots,X_n}\sim \EXP{n\lambda} $.
+\end{Regular}
+\begin{Example}
+    \textbf{Example 4.1}. Let $ \Set{X_i}_{i=1}^n $ be a sequence of independent rvs where $ X_i \sim \EXP{\lambda_i} $, $ i=1,2,\ldots,n $.
+    \begin{enumerate}[(a)]
+        \item For $ j\in\Set{1,2,\ldots,n} $, determine $ \Prob[\big]{X_j=\min{X_1,X_2,\ldots,X_n}} $.
+
+              \textbf{Solution}:
+        \item Show that the condition rv $ X_1\mid(X_1<X_2<\cdots<X_n) $ is identically distributed to the rv $ \min{X_1,X_2,\ldots,X_n} $.
+
+              \textbf{Solution}:
+    \end{enumerate}
+    \tcblower{}
+    \begin{enumerate}[(1)]
+        \item In the case when $ n=2 $, note that the result from part (a) simplifies to become
+              \[ \Prob[\big]{X_1=\min{X_1,X_2}}=\Prob{X_1<X_2}=\frac{\lambda_1}{\lambda_1+\lambda_2}, \]
+              which agrees with the result of Example 2.11.
+        \item Interestingly, looking at the derivation in part (b), we see that
+              \begin{align*}
+                   & \Prob{X_1<X_2<\cdots<X_n}                                                                                                 \\
+                   & =\frac{\lambda_1}{\lambda_1+\lambda_2+\cdots+\lambda_n}\cdot \frac{\lambda_2}{\lambda_2+\lambda_3+\cdots+\lambda_n}\cdots
+                  \frac{\lambda_{n-2}}{\lambda_{n-2}+\lambda_{n-1}+\lambda_n}\cdot \frac{\lambda_{n-1}}{\lambda_{n-1}+\lambda_n}               \\
+                   & =\prod_{i=1}^{n-1}\Prob[\big]{X_i=\min{X_i,X_{i+1},\ldots,X_n}}.
+              \end{align*}
+    \end{enumerate}
+\end{Example}
+\subsection*{Memoryless Property}
+\begin{Regular}
+    \textbf{Memoryless Property}: A rv $ X $ is \emph{memoryless} iff
+    \[ \Prob{X>y+z\given X>y}=\Prob{X>z}\;\forall y,z\ge 0. \]
+    Note that if we express $ \Prob{X>y+z\given X>y} $ as $ \Prob{X-y>z\given X>y} $ and think of $X$ as being
+    the lifetime of some component, then the memoryless property (or sometimes referred to as
+    the \emph{forgetfulness property}) states that the distribution of the remaining lifetime is independent
+    of the time the component has already lasted.
+
+    In other words, such a probability distribution is independent of its history.
+\end{Regular}
+An equivalent way to define the memoryless property is given by the following theorem.
+\begin{Result}
+    \textbf{Theorem 4.1}. $ X $ is memoryless iff $ \Prob{X>y+z}=\Prob{X>y}\Prob{X>z}\; \forall y,z\ge 0 $.
+    \tcblower{}
+    \textbf{Proof}:
+\end{Result}
+This leads to the main result concerning the exponential distribution.
+\begin{Result}
+    \textbf{Theorem 4.2}. An exponential distribution is memoryless.
+    \tcblower{}
+    \textbf{Proof}:
+\end{Result}
+\subsection*{The Exponential Distribution}
+\begin{Example}
+    \textbf{Example 4.2}. Suppose that a computer has 3 switches which govern the transfer of electronic
+    impulses. These switches operate simultaneously and independently of one another, with
+    lifetimes that are exponentially distributed with mean lifetimes of 10, 5, and 4 years,
+    respectively.
+    \begin{enumerate}[(a)]
+        \item What is the probability that the time until the very first switch breakdown exceeds 6
+              years?
+
+              \textbf{Solution}:
+        \item What is the probability that switch 2 outlives switch 1?
+
+              \textbf{Solution}:
+        \item What is the probability that switch 1 has the longest lifetime, followed next by switch 3
+              and then switch 2?
+
+              \textbf{Solution}:
+        \item If switch 3 is known to have lasted 2 years, what is the probability it will last at most 3
+              more years?
+
+              \textbf{Solution}:
+        \item Considering only switches 1 and 2, what is the expected amount of time until they have
+              both suffered a breakdown?
+
+              \textbf{Solution}:
+    \end{enumerate}
+\end{Example}
+\subsection*{Memoryless Property}
+\underline{Remarks}:
+\begin{enumerate}[(1)]
+    \item The exponential distribution is the \emph{unique} continuous distribution possessing the
+          memoryless property (incidentally, the geometric distribution is the \emph{unique} discrete
+          distribution which is memoryless, which is not all that surprising in light of Exercise 2.2.3).
+
+          To prove this statement, suppose that $ X $ is a continuous rv satisfying the memoryless property. Let $ \bar{F}(x)=\Prob{X>x} $,
+          which is a continuous function of $ x $. By Theorem 4.2, it follows that
+          \[ \bar{F}(y+z)=\bar{F}(y)\bar{F}(z)\; \forall y,z\ge 0. \]
+          Note that
+          \[ \bar{F}\biggl(\frac{2}{n}\biggr)=\bar{F}\biggl(\frac{1}{n}+\frac{1}{n}\biggr)=\bar{F}^2\biggl(\frac{1}{n}\biggr). \]
+          As a result, it immediately follows that $ \bar{F}(m/n)=\bar{F}^m(1/n) $. Furthermore,
+          \[ \bar{F}(1)=\bar{F}\biggl(\frac{1}{n}+\frac{1}{n}+\cdots+\frac{1}{n}\biggr)=\bar{F}^n\biggl(\frac{1}{n}\biggr), \]
+          or equivalently
+          \[ \bar{F}\biggl(\frac{1}{n}\biggr)=\bigl(\bar{F}(1)\bigr)^{1/n}. \]
+          Thus, $ \bar{F}(x)=\bigl(\bar{F}(1)\bigr)^x $ for all rational values of $ x $, and by the continuity of $ \bar{F}(x) $,
+          this implies that $ \bar{F}(x)=\bigl(\bar{F}(1)\bigr)^x\; \forall x\ge 0 $. However, note that we can write
+          \[ \bar{F}(x)=e^{\ln*{\bar{F}(1)}^x}=e^{x\ln*{\bar{F}(x)}}=e^{-\lambda x}, \]
+          where $ \lambda=-\ln[\big]{\bar{F}(1)}>0 $. In other words,
+          \[ F(x)=\Prob{X\le x}=1-e^{-\lambda x}, \]
+          which shows that $ X $ is exponentially distributed.
+    \item The memoryless property of the exponential distribution even holds in a broader setting. Specifically, if $ X \sim \EXP{\lambda} $,
+          then
+          \[ \Prob{X>Y+Z\given X>Y}=\Prob{X>Z},\tag*{(4.5)}\label{eq4.5} \]
+          where $Y$ and $Z$ are independently distributed non-negative valued rvs which are both
+          independent of $X$. The equality defined by~\ref{eq4.5} is referred to as the \emph{generalized
+              memoryless property}.
+
+          To prove that the above result holds, note that
+          \[ \Prob{X>Y+Z\given X>Y}=\frac{\Prob{X>Y+Z,X>Y}}{\Prob{X>Y}}. \]
+          Without loss of generality, assume that $Y$ and $Z$ are independent continuous rvs, so that
+          \begin{align*}
+               & \Prob{X>Y+Z,X>Y}                                                                                                                                                  \\
+               & =\int_{0}^{\infty}\Prob{X>Y+Z,X>Y\given Y=y}f_Y(y)\odif{y}                                                                                                        \\
+               & =\int_{0}^{\infty}\Prob{X>y+Z,X>y}f_Y(y)\odif{y}                                                          &  & \text{since $X$, $Y$, and $Z$ are independent rvs} \\
+               & =\int_{0}^{\infty}\Prob{X>y+Z}f_Y(y)\odif{y}                                                                                                                      \\
+               & =\int_{0}^{\infty}\biggl(\int_{0}^{\infty}\Prob{X>y+Z\given Z=z}f_Z(z)\odif{z}\biggr)f_Y(y)\odif{y}                                                               \\
+               & =\int_{0}^{\infty}\biggl(\int_{0}^{\infty}\Prob{X>y+z}f_Z(z)\odif{z}\biggr)f_Y(y)\odif{y}                 &  & \text{since $X$ and $Z$ are independent rvs}       \\
+               & =\int_{0}^{\infty}\biggl(\int_{0}^{\infty}e^{-\lambda(y+z)}f_Z(z)\odif{z}\biggr)f_Y(y)\odif{y}                                                                    \\
+               & =\int_{0}^{\infty}\biggl(\int_{0}^{\infty}e^{-\lambda z}f_Z(z)\odif{z}\biggr)e^{-\lambda y}f_Y(y)\odif{y}                                                         \\
+               & =\int_{0}^{\infty}\Prob{X>Z}e^{-\lambda y}f_Y(y)\odif{y}                                                                                                          \\
+               & =\Prob{X>Z}\int_{0}^{\infty}e^{-\lambda y}f_Y(y)\odif{y}                                                                                                          \\
+               & =\Prob{X>Z}\Prob{X>Y},
+          \end{align*}
+          since we have for independent continuous rvs $ Y $ (and similarly for $ Z $)
+          \[ \Prob{X>Y}=\int_{0}^{\infty}\Prob{X>y}f_Y(y)\odif{y}=\int_{0}^{\infty}e^{-\lambda y}f_Y(y)\odif{y}. \]
+          Thus,
+          \[ \Prob{X>Y+Z\given X>Y}=\frac{\Prob{X>Y+Z,X>Y}}{\Prob{X>Y}}=\frac{\Prob{X>Z}\Prob{X>Y}}{\Prob{X>Y}}=\Prob{X>Z}. \]
+    \item The generalized memoryless property implies that $ (X-Y)\mid(X>Y)\sim \EXP{\lambda} $ regardless of the distribution $ Y $. To see this,
+          let $ Z $ be a rv with a degenerate distribution at $ z $. In this case,~\ref{eq4.5} becomes
+          \[ \Prob{X>Y+z\given X>Y}=\Prob{X>z}=e^{-\lambda z}, \]
+          since $ X \sim \EXP{\lambda} $. Thus,
+          \[ \Prob{X-Y>z\given X>Y}=e^{-\lambda z}, \]
+          and so
+          \[ (X-Y)\mid(X>Y)\sim \EXP{\lambda}.  \]
+\end{enumerate}
+\subsection*{The Exponential Distribution}
+\begin{Example}
+    \textbf{Example 4.3}. Let $ X_1 $ and $ X_2 $ be independent rvs where $ X_i \sim \EXP{\lambda_i} $, $ i=1,2 $. Given
+    $ X_1<X_2 $, show that $ X_1 $ and $ X_2-X_1 $ are conditionally independent rvs.
+    \tcblower{}
+    \textbf{Solution}:
+\end{Example}
+\subsection*{The Erlang Distribution}
+\begin{Regular}
+    \textbf{The Erlang Distribution}: Recall that if $ X \sim \Erlang{n,\lambda} $ where $ n\in\mathbb{Z}^+ $ and $ \lambda>0 $, then its pdf is of the form
+    \[ f(x)=\frac{\lambda^n x^{n-1}e^{-\lambda x}}{(n-1)!},\;x>0. \]
+    Letting $ n=1 $, then above pdf simplifies to become $ f(x)=\lambda e^{-\lambda x} $, $ x>0 $, which is the $ \EXP{\lambda} $ pdf. To
+    obtain the corresponding cdf of a $ \Erlang{n,\lambda} $ rv, we consider
+    \[ F(x)=\Prob{X\le x}=\int_{0}^{x}\frac{\lambda^n y^{n-1}e^{-\lambda y}}{(n-1)!}\odif{y}=
+        \frac{\lambda^n}{(n-1)!}\int_{0}^{x}y^{n-1}e^{-\lambda y}\odif{y},\; x\ge 0. \]
+    \textbf{We have}: $ F(x)=\frac{\lambda^n}{(n-1)!}\int_{0}^{x}y^{n-1}e^{-\lambda y}\odif{y} $. Assume that $ n\ge 2 $ and apply integration by parts, that is,
+    \[ \int u\odif{v}=uv-\int v\odif{u}, \]
+    to the above integral. In particular, choose
+    \[ u=y^{n-1}\implies \odv{u}{y}=(n-1)y^{n-2}\implies\odif{u}=(n-1)y^{n-2}\odif{y}, \]
+    and
+    \[ \odif{v}=e^{-\lambda y}\odif{y}\implies \int 1\odif{v}=\int e^{-\lambda y}\odif{y}\implies v=-\frac{1}{\lambda}e^{-\lambda y}, \]
+    so that
+    \begin{align*}
+        \int_{0}^{x}y^{n-1}e^{-\lambda y}\odif{y}
+         & =\biggl[-\frac{1}{\lambda}y^{n-1}e^{-\lambda y}\biggr]_{y=0}^{y=x}+\frac{(n-1)}{\lambda}\int_{0}^{x}y^{n-2}e^{-\lambda y}\odif{y} \\
+         & =-\frac{1}{\lambda}x^{n-1}e^{-\lambda x}+\frac{(n-1)}{\lambda}\int_{0}^{x}y^{n-2}e^{-\lambda y}\odif{y}.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        F(x)
+         & =\frac{\lambda^n}{(n-1)!}\biggl(-\frac{1}{\lambda}x^{n-1}e^{-\lambda x}+\frac{(n-1)}{\lambda}\int_{0}^{x}y^{n-2}e^{-\lambda y}\odif{y}\biggr) \\
+         & =\frac{\lambda^{n-1}}{(n-2)!}\int_{0}^{x}y^{n-2}e^{-\lambda y}\odif{y}-\frac{(\lambda x)^{n-1}}{(n-1)!}e^{-\lambda x}.
+    \end{align*}
+    If we continue to apply integration by parts until the ``$ y $-term'' in the integrand has a power of zero, then it is possible to show that
+    \[ F(x)=1-e^{-\lambda x}\sum_{j=0}^{n-1}\frac{(\lambda x)^j}{j!},\; x\ge 0.\tag*{(4.7)}\label{eq4.7} \]
+    \tcblower{}
+    \underline{Remark}: Substituting $ n=1 $ into~\ref{eq4.7}, we immediately obtain
+    \[ F(x)=1-e^{-\lambda x}\sum_{j=0}^{1-1}\frac{(\lambda x)^j}{j!}=1-e^{-\lambda x},\; x\ge 0, \]
+    which is clearly the cdf of a $ \EXP{\lambda} $ rv.
+
+    To determine the mgf of $ X \sim \Erlang{n,\lambda} $, we consider
+    \begin{align*}
+        \phi_X(t)
+         & =\int_{0}^{\infty}e^{tx}\cdot \frac{\lambda^n x^{n-1}e^{-\lambda x}}{(n-1)!}\odif{x}                                                                                                               \\
+         & =\frac{\lambda^n}{(n-1)!}\int_{0}^{\infty}x^{n-1}e^{-\tilde{\lambda}x}\odif{x}       &                                                      & \text{where we define $ \tilde{\lambda}=\lambda-t $} \\
+         & =\frac{\lambda^n}{\tilde{\lambda}^n}
+        \int_{0}^{\infty}
+        \underbrace{\frac{\tilde{\lambda}^n x^{n-1}e^{-\tilde{\lambda}x}}{(n-1)!}}_{\text{$\Erlang{n,\tilde{\lambda}}$ pdf}}\odif{x}
+         &                                                                                      & \text{provided that $ \tilde{\lambda}=\lambda-t>0 $}                                                        \\
+         & =\biggl(\frac{\lambda}{\lambda-t}\biggr)^{\!n},                                      &                                                      & t<\lambda.
+    \end{align*}
+    However, note that
+    \[ \phi_X(t)=\biggl(\frac{\lambda}{\lambda-t}\biggr)^{\!n}=\prod_{i=1}^n\biggl(\frac{\lambda}{\lambda-t}\biggr),\;t<\lambda, \]
+    is the product of $ n $ terms, where each term is the mgf of a $ \EXP{\lambda} $ rv.
+
+    Let $ \Set{Y_i}_{i=1}^n $ be the iid sequence of $ \EXP{\lambda} $ rvs, with $ \phi_{Y_i}(t)=\frac{\lambda}{\lambda-t} $, $ t<\lambda $,
+    for $ i=1,2,\ldots,n $. Since $ \phi_X(t)=\prod_{i=1}^n \phi_{Y_i}(t) $, it follows that an Erlang distribution can be viewed as the
+    distribution of a sum of iid exponential rvs. As a result, the mean, and variance of a $ \Erlang{n,\lambda} $ rv $ X $
+    are simply obtained as
+    \[ \E{X}=\E*{\sum_{i=1}^{n}Y_i}=\sum_{i=1}^{n}\E{Y_i}=\frac{n}{\lambda} \]
+    and
+    \[ \Var{X}=\Var[\bigg]{\sum_{i=1}^{n}Y_i}=\sum_{i=1}^{n}\Var{Y_i}=\frac{n}{\lambda^2}. \]
+\end{Regular}
