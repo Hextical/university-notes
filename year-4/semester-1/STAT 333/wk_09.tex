@@ -2,7 +2,7 @@
 \makeheading{Week 9}{\daterange{2021-11-10}{2021-11-17}}%chktex 8
 \section{Properties of the Exponential Distribution}
 \subsection*{Basic Distributional Results}
-If a rv $ X $ has an exponential distribution with parameter $ \lambda>0 $ (i.e., $ X \sim \EXP{\lambda} $)
+If a rv $ X $ has an exponential distribution with parameter $ \lambda>0 $ (i.e., $ X \sim \EXP{\lambda} $
 where $ \lambda $ is often referred to as the ``rate''), then we have the following basic distributional results in place:
 \begin{itemize}
     \item \textbf{pdf}: $ f(x)=\lambda e^{-\lambda x} $, $ x>0 $,
@@ -19,16 +19,16 @@ where $ \lambda $ is often referred to as the ``rate''), then we have the follow
 \begin{Regular}
     \textbf{Minimum of Independent Exponentials}: Let $ \Set{X_i}_{i=1}^n $ be a sequence of independent rvs where
     $ X_i \sim \EXP{\lambda_i} $, $ i=1,2,\ldots,n $. Define $ Y=\min{X_1,X_2,\ldots,X_n} $ to be the
-    smallest \emph{order} statistic of $ \Set{X_1,X_2,\ldots,X_n} $. Clearly, $ Y $ takes on possible values
+    smallest \emph{order statistic} of $ \Set{X_1,X_2,\ldots,X_n} $. Clearly, $ Y $ takes on possible values
     in the state space $ \mathcal{S}=(0,\infty) $. To determine the distribution of $ Y $, consider its tpf:
     \begin{align*}
         \bar{F}_Y(y)
-         & =\Prob{Y>y}                                                                                                                                          \\
-         & =\Prob[\big]{\min{X_1,X_2,\ldots,X_n}>y}                                                                                                             \\
-         & =\Prob{X_1>y,X_2>y,\ldots,X_n>y}                                                                                                                     \\
-         & =\Prob{X_1>y}\Prob{X_2>y}\cdots\Prob{X_n>y}                                                                     &  & \text{by independence}          \\
-         & =e^{-\lambda_1y}e^{-\lambda_2y}\cdots e^{-\lambda_n y}                                                          &  & \text{provided that $ y\ge 0 $} \\
-         & =\underbrace{e^{-(-\lambda_1+\lambda_2+\cdots+\lambda_n)y}}_{\text{tpf of $ \EXP*{\sum_{i=1}^{n}\lambda_i} $ }} &  & y\ge 0.
+         & =\Prob{Y>y}                                                                                                                                                \\
+         & =\Prob[\big]{\min{X_1,X_2,\ldots,X_n}>y}                                                                                                                   \\
+         & =\Prob{X_1>y,X_2>y,\ldots,X_n>y}                                                                                                                           \\
+         & =\Prob{X_1>y}\Prob{X_2>y}\cdots\Prob{X_n>y}                                                                           &  & \text{by independence}          \\
+         & =e^{-\lambda_1y}e^{-\lambda_2y}\cdots e^{-\lambda_n y}                                                                &  & \text{provided that $ y\ge 0 $} \\
+         & =\underbrace{e^{-(-\lambda_1+\lambda_2+\cdots+\lambda_n)y}}_{\text{tpf of an $ \EXP*{\sum_{i=1}^{n}\lambda_i} $ rv}}, &  & y\ge 0.
     \end{align*}
     Therefore, $ Y=\min{X_1,X_2,\ldots,X_n}\sim \EXP{\sum_{i=1}^{n}\lambda_i} $.
     \tcblower{}
@@ -40,12 +40,48 @@ where $ \lambda $ is often referred to as the ``rate''), then we have the follow
     \begin{enumerate}[(a)]
         \item For $ j\in\Set{1,2,\ldots,n} $, determine $ \Prob[\big]{X_j=\min{X_1,X_2,\ldots,X_n}} $.
 
-              \textbf{Solution}:
+              \textbf{Solution}: We wish to determine
+              \begin{align*}
+                   & \Prob[\big]{X_j=\min{X_1,X_2,\ldots,X_n}}                                                                                                                                                                                 \\
+                   & =\underbrace{\Prob{X_j<X_1,X_j<X_2,\ldots,X_j<X_n}}_{(n-1)\text{-fold intersection}}                                                                                                                                      \\
+                   & =\int_{0}^{\infty}\Prob{X_j<X_1,X_j<X_2,\ldots,X_j<X_n\given X_j=x}\lambda_j e^{-\lambda_j x}\odif{x}                                                                                                                     \\
+                   & =\int_{0}^{\infty}\Prob{X_1>x,X_2>x,\ldots,X_n>x}\lambda_j e^{-\lambda_j x}\odif{x}\text{ since $X_j$ is independent of $ \Set{X_i}_{i=1}^n\; i\ne j $}                                                                   \\
+                   & =\int_{0}^{\infty}\Prob{X_1>x}\Prob{X_2>x}\cdots\Prob{X_n>x}\lambda_j e^{-\lambda_j x}\odif{x}                                                                                                                            \\
+                   & =\int_{0}^{\infty}e^{-\lambda_1 x}e^{-\lambda_2 x}\cdots e^{-\lambda_n x}\lambda_j e^{-\lambda_j x}\odif{x}                                                                                                               \\
+                   & =\frac{\lambda_j}{\sum_{i=1}^{n}\lambda_i} \int_{0}^{\infty}\underbrace{\biggl(\sum_{i=1}^{n}\lambda_i\biggr)e^{-\bigl(\sum_{i=1}^{n}\lambda_i\bigr)x}}_{\text{$\EXP{\lambda_1+\lambda_2+\cdots+\lambda_n}$ pdf}}\odif{x} \\
+                   & =\frac{\lambda_j}{\sum_{i=1}^{n}\lambda_i}.\tag*{(4.1)}\label{eq4.1}
+              \end{align*}
         \item Show that the condition rv $ X_1\mid(X_1<X_2<\cdots<X_n) $ is identically distributed to the rv $ \min{X_1,X_2,\ldots,X_n} $.
 
-              \textbf{Solution}:
+              \textbf{Solution}: Let $ Y=X_1\mid(X_1<X_2<\cdots<X_n) $. The tpf of $ Y $ is given by
+              \begin{align*}
+                  \bar{F}_Y(y)
+                   & =\Prob{X_1>y\given X_1<X_2<\cdots<X_n}                                                             \\
+                   & =\frac{\Prob{y<X_1<X_2<\cdots<X_n}}{\Prob{X_1<X_2<\cdots<X_n}},\; y\ge 0.\tag*{(4.2)}\label{eq4.2}
+              \end{align*}
+              Note that
+              \begin{align*}
+                   & \Prob{y<X_1<X_2<\cdots<X_n}                                                                                                                                                                                           \\
+                   & =\int_{y}^{\infty}\int_{x_1}^{\infty}\int_{x_2}^{\infty}\cdots \int_{x_{n-1}}^{\infty}\biggl(\prod_{i=1}^n \lambda_i e^{-\lambda_i x_i}\biggr)\odif{x_n}\cdots\odif{x_3}\odif{x_2}\odif{x_1}                          \\
+                   & = \prod_{i=1}^{n-1}\lambda_i\int_{y}^{\infty}e^{-\lambda_1x_1}\int_{x_1}^{\infty}e^{-\lambda_2x_2}\times                                                                                                              \\
+                   & \quad\times\int_{x_2}^{\infty}e^{-\lambda_3x_3}\cdots \int_{x_{n-2}}^{\infty}e^{-\lambda_{n-1}x_{n-1}}\int_{x_{n-1}}^{\infty}\lambda_n e^{-\lambda_n x_n}\odif{x_n}\odif{x_{n-1}}\cdots\odif{x_3}\odif{x_2}\odif{x_1} \\
+                   & =\frac{\prod_{i=1}^{n-1}\lambda_i}{\prod_{i=1}^{n-1}(\sum_{j=i}^{n}\lambda_j)}e^{-\bigl(\sum_{i=1}^{n}\lambda_i\bigr)y}\tag*{(4.3)}\label{eq4.3}.
+              \end{align*}
+              Using~\ref{eq4.3}, we immediately obtain:
+              \begin{align*}
+                  \Prob{X_1<X_2<\cdots<X_n}
+                   & =\Prob{0<X_1<X_2<\cdots<X_n}                                                                             \\
+                   & =\frac{\prod_{i=1}^{n-1}\lambda_i}{\prod_{i=1}^{n-1}(\sum_{j=i}^{n}\lambda_j)}.\tag*{(4.4)}\label{eq4.4}
+              \end{align*}
+              Therefore, substituting~\ref{eq4.3} and~\ref{eq4.4} into~\ref{eq4.2} yields
+              \[ \bar{F}_Y(y)=e^{-\bigl(\sum_{i=1}^{n}\lambda_i\bigr)y},\; y\ge 0, \]
+              which is the tpf of an $ \EXP[\big]{\sum_{i=1}^{n}\lambda_i} $ rv. Since
+              \[ \min{X_1,X_2,\ldots,X_n}\sim \EXP[\bigg]{\sum_{i=1}^{n}\lambda_i}, \]
+              it follows that
+              \[ Y=X_1\mid(X_1<X_2<\cdots<X_n)\sim \min{X_1,X_2\ldots,X_n}. \]
     \end{enumerate}
     \tcblower{}
+    \underline{Remarks}:
     \begin{enumerate}[(1)]
         \item In the case when $ n=2 $, note that the result from part (a) simplifies to become
               \[ \Prob[\big]{X_1=\min{X_1,X_2}}=\Prob{X_1<X_2}=\frac{\lambda_1}{\lambda_1+\lambda_2}, \]
@@ -74,13 +110,42 @@ An equivalent way to define the memoryless property is given by the following th
 \begin{Result}
     \textbf{Theorem 4.1}. $ X $ is memoryless iff $ \Prob{X>y+z}=\Prob{X>y}\Prob{X>z}\; \forall y,z\ge 0 $.
     \tcblower{}
-    \textbf{Proof}:
+    \textbf{Proof}: ($ \implies $) Note
+    \begin{align*}
+        \Prob{X>y+z\given X>y}
+         & =\frac{\Prob{X>y+z,X>y}}{\Prob{X>y}} \\
+         & =\frac{\Prob{X>y+z}}{\Prob{X>y}}.
+    \end{align*}
+    If $ X $ is memoryless, then
+    \[ \Prob{X>y+z\given X>y}=\Prob{X>z}\;\forall y,z\ge 0, \]
+    and so
+    \begin{align*}
+        \Prob{X>z}
+                     & =\frac{\Prob{X>y+z}}{\Prob{X>y}} \\
+        \Prob{X>y+z} & =\Prob{X>z}\Prob{X>y}.
+    \end{align*}
+    ($ \impliedby $) Conversely, if $ \Prob{X>y+z}=\Prob{X>y}\Prob{X>z}\; \forall y,z\ge 0 $,
+    then
+    \begin{align*}
+        \Prob{X>y+z\given X>y}
+         & =\frac{\Prob{X>y+z}}{\Prob{X>y}}         \\
+         & =\frac{\Prob{X>y}\Prob{X>z}}{\Prob{X>y}} \\
+         & =\Prob{X>z}.
+    \end{align*}
+    By definition, $ X $ is memoryless.
 \end{Result}
 This leads to the main result concerning the exponential distribution.
 \begin{Result}
     \textbf{Theorem 4.2}. An exponential distribution is memoryless.
     \tcblower{}
-    \textbf{Proof}:
+    \textbf{Proof}: Suppose that $ X \sim \EXP{\lambda} $. For $ y,z\ge 0 $, we have
+    \begin{align*}
+        \Prob{X>y+z}
+         & =e^{-\lambda(y+z)}            \\
+         & =e^{-\lambda y}e^{-\lambda z} \\
+         & =\Prob{X>y}\Prob{X>z}.
+    \end{align*}
+    Thus, by Theorem 4.1, $ X $ is memoryless.
 \end{Result}
 \subsection*{The Exponential Distribution}
 \begin{Example}
@@ -92,22 +157,60 @@ This leads to the main result concerning the exponential distribution.
         \item What is the probability that the time until the very first switch breakdown exceeds 6
               years?
 
-              \textbf{Solution}:
+              \textbf{Solution}: Let $ X_i $ represent the lifetime of switch $ i $, $ i=1,2,3 $.
+              We know that $ X_i \sim \EXP{\lambda_i} $ where $ \lambda_1=1/10 $, $ \lambda_2=1/5 $,
+              and $ \lambda_3=1/4 $. The time until the $ 1\textsuperscript{st} $ breakdown is defined by
+              the rv $ Y=\min{X_1,X_2,X_3} $. Since the lifetimes are independent of each other,
+              \[ Y \sim \EXP{\lambda},\; \lambda=\frac{1}{10}+\frac{1}{5}+\frac{1}{4}=\frac{11}{20}. \]
+              We wish to calculate:
+              \[ \Prob{Y>6}=e^{-(11/20)(6)}=e^{-3.3}\simeq 0.0369. \]
         \item What is the probability that switch 2 outlives switch 1?
 
-              \textbf{Solution}:
+              \textbf{Solution}: We simply want to compute
+              \[ \Prob{X_1<X_2}=\frac{\lambda_1}{\lambda_1+\lambda_2}=\frac{(1/10)}{(1/10)+(1/5)}=\frac{1}{3}\simeq 0.3\bar{3}. \]
         \item What is the probability that switch 1 has the longest lifetime, followed next by switch 3
               and then switch 2?
 
-              \textbf{Solution}:
+              \textbf{Solution}: We wish to calculate
+              \[ \Prob{X_2<X_3<X_1}. \]
+              To do so, let $ Y_1=X_2 $, $ Y_2=X_3 $, $ Y_3=X_1 $, so that
+              \[ Y_i \sim \EXP{\lambda_i^\star},\; i=1,2,3, \]
+              with $ \lambda_1^\star=1/5 $, $ \lambda_2^\star=1/4 $, and $ \lambda_3^\star=1/10 $. Therefore,
+              \begin{align*}
+                  \Prob{X_2<X_3<X_1}
+                   & =\Prob{Y_1<Y_2<Y_3}                                                                                                   \\
+                   & =\frac{\prod_{i=1}^{3-1}\lambda_i^\star}{\prod_{i=1}^{3-1}(\sum_{j=i}^{3}\lambda_j^\star)} &  & \text{by~\ref{eq4.4}} \\
+                   & =\frac{(1/5)(1/4)}{(1/5+1/4+1/10)(1/4+1/10)}                                                                          \\
+                   & =\frac{1/20}{(11/20)(7/20)}                                                                                           \\
+                   & =\frac{20}{77}\simeq 0.26.
+              \end{align*}
         \item If switch 3 is known to have lasted 2 years, what is the probability it will last at most 3
               more years?
 
-              \textbf{Solution}:
+              \textbf{Solution}: We wish to calculate
+              \begin{align*}
+                  \Prob{X_3\le 5\given X_3>2}
+                   & =1-\Prob{X_3>5\given X_3>2}                                               \\
+                   & =1-\Prob{X_3>2+3\given X_3>2}                                             \\
+                   & =1-\Prob{X_3>3}               &  & \text{ due to the memoryless property} \\
+                   & =1-e^{-(1/4)(3)}                                                          \\
+                   & =1-e^{-0.75}\simeq 0.528.
+              \end{align*}
         \item Considering only switches 1 and 2, what is the expected amount of time until they have
               both suffered a breakdown?
 
-              \textbf{Solution}:
+              \textbf{Solution}: We wish to solve for
+              \[ \E[\big]{\max{X_1,X_2}}. \]
+              We note the following useful identity:
+              \[ \min{X_1,X_2}+\max{X_1,X_2}=X_1+X_2. \]
+              Taking expectations of the above equality, we ultimately obtain:
+              \begin{align*}
+                  \E[\big]{\max{X_1,X_2}}
+                   & =\E{X_1}+\E{X_2}-\E[\big]{\min{X_1,X_2}} \\
+                   & =10+5-\frac{1}{1/10+1/5}                 \\
+                   & =15-\frac{10}{3}                         \\
+                   & =\frac{35}{3}\simeq 11.6\bar{6}.
+              \end{align*}
     \end{enumerate}
 \end{Example}
 \subsection*{Memoryless Property}
@@ -172,14 +275,46 @@ This leads to the main result concerning the exponential distribution.
     \textbf{Example 4.3}. Let $ X_1 $ and $ X_2 $ be independent rvs where $ X_i \sim \EXP{\lambda_i} $, $ i=1,2 $. Given
     $ X_1<X_2 $, show that $ X_1 $ and $ X_2-X_1 $ are conditionally independent rvs.
     \tcblower{}
-    \textbf{Solution}:
+    \textbf{Solution}: Consider the following conditional joint cdf:
+    \begin{align*}
+        \Prob{X_1\le x,X_2-X_1\le y\given X_1<X_2}
+         & =\frac{\Prob{X_1\le x,X_2-X_1\le y,X_1<X_2}}{\Prob{X_1<X_2}}                                       \\
+         & =\frac{\Prob{X_1\le x,X_1\ge X_2-y,X_1<X_2}}{\Prob{X_1<X_2}}                                       \\
+         & =\frac{\Prob{X_1\le x,X_1\ge X_2-y,X_1<X_2}}{\frac{\lambda_1}{\lambda_1+\lambda_2}}                \\
+         & =\frac{\lambda_1+\lambda_2}{\lambda_1}\Prob{X_1\le x,X_1\ge X_2-y,X_1<X_2}                         \\
+         & =\frac{\lambda_1+\lambda_2}{\lambda_1}\Prob[\big]{X_2-y\le X_1\le \min{x,X_2}},\;\forall x,y\ge 0.
+    \end{align*}
+    Suppose that $ x\le y $. It follows that
+    \begin{align*}
+         & \Prob[\big]{X_2-y\le X_1\le \min{x,X_2}}                                                                                                                                                                                                       \\
+         & =\int_{0}^{\infty}\Prob[\big]{X_2-y\le X_1\le \min{x,X_2}\given X_2=w}f_{X_2}(w)\odif{w}                                                                                                                                                       \\
+         & =\int_{0}^{\infty}\Prob[\big]{w-y\le X_1\le \min{x,w}}f_{X_2}(w)\odif{w} \text{ since $X_1$ and $X_2$ are independent}                                                                                                                         \\
+         & =\int_{0}^{x}\Prob[\big]{\underbrace{w-y}_{<0}\le X_1\le \underbrace{\min{x,w}}_{=w}}f_{X_2}(w)\odif{w}+\int_{x}^{y}\Prob[\big]{\underbrace{w-y}_{<0}\le X_1\le \underbrace{\min{x,w}}_{=x}}f_{X_2}(w)\odif{w}                                 \\
+         & \quad+\int_{y}^{y+x}\Prob[\big]{\underbrace{w-y}_{>0}\le X_1\le \underbrace{\min{x,w}}_{=x}}f_{X_2}(w)\odif{w}+\int_{y+x}^{\infty}\underbrace{\Prob[\big]{\underbrace{w-y}_{>x}\le X_1\le \underbrace{\min{x,w}}_{=x}}}_{=0}f_{X_2}(w)\odif{w} \\
+         & =\int_{0}^{x}\Prob{X_1\le w}\lambda_2 e^{-\lambda_2 w}\odif{w}+\Prob{X_2\le x}\int_{x}^{y}\lambda_2 e^{-\lambda_2 w}\odif{w}                                                                                                                   \\
+         & \quad+\int_{y}^{y+x}\bigl[\Prob{X_1>w-y}-\Prob{X_1>x}\bigr]\lambda_2 e^{-\lambda_2 w}\odif{w}                                                                                                                                                  \\
+         & =\int_{0}^{x}(1-e^{-\lambda_1 w})\lambda_2 e^{-\lambda_2 w}\odif{w}+(1-e^{-\lambda_1 x})(e^{-\lambda_2 x}-e^{-\lambda_2 y})+\int_{y}^{y+x}(e^{-\lambda_1(w-y)}-e^{-\lambda_1 x})\lambda_2 e^{-\lambda_2 w}\odif{w}                             \\
+         & =\frac{\lambda_1}{\lambda_1+\lambda_2}\bigl(1-e^{-\lambda_2 y}-e^{-(\lambda_1+\lambda_2)x}+e^{-\lambda_2 y}e^{-(\lambda_1+\lambda_2)x}\bigr).\tag*{(4.6)}\label{eq4.6}
+    \end{align*}
+    Similarly, it can be shown that~\ref{eq4.6} also holds true in the case when $ y\le x $ (Exercise 4.1.2).
+    Therefore, in general, we have:
+    \begin{align*}
+        \Prob{X_1\le x,X_2-X_1\le y\given X_1<X_2}
+         & =\frac{\lambda_1+\lambda_2}{\lambda_1}\cdot \frac{\lambda_1}{\lambda_1+\lambda_2}\bigl(1-e^{-\lambda_2 y}-e^{-(\lambda_1+\lambda_2)x}+e^{-\lambda_2 y}e^{-(\lambda_1+\lambda_2)x}\bigr) \\
+         & =1-e^{-\lambda_2 y}-e^{-(\lambda_1+\lambda_2)x}+e^{-\lambda_2 y}e^{-(\lambda_1+\lambda_2)x}                                                                                             \\
+         & =(1-e^{-(\lambda_1+\lambda_2)x})(1-e^{-\lambda_2 y})                                                                                                                                    \\
+         & =\Prob{X_1\le x\given X_1<X_2}\Prob{X_2-X_1\le y\given X_1<X_2},\;\forall x,y\ge 0,
+    \end{align*}
+    where we applied the result of Example 4.1 (b) (i.e., $ X_1\mid(X_1<X_2)\sim \min{X_1,X_2} $) and the (generalized) memoryless property
+    (i.e., $ (X_2-X_1)\mid(X_2>X_1)\sim X_2 $) to obtain the last equality. Thus, by definition, $ X_1 $ and $ X_2-X_1 $
+    are conditionally (given $ X_1<X_2 $) independent rvs.
 \end{Example}
 \subsection*{The Erlang Distribution}
 \begin{Regular}
     \textbf{The Erlang Distribution}: Recall that if $ X \sim \Erlang{n,\lambda} $ where $ n\in\mathbb{Z}^+ $ and $ \lambda>0 $, then its pdf is of the form
     \[ f(x)=\frac{\lambda^n x^{n-1}e^{-\lambda x}}{(n-1)!},\;x>0. \]
     Letting $ n=1 $, then above pdf simplifies to become $ f(x)=\lambda e^{-\lambda x} $, $ x>0 $, which is the $ \EXP{\lambda} $ pdf. To
-    obtain the corresponding cdf of a $ \Erlang{n,\lambda} $ rv, we consider
+    obtain the corresponding cdf of an $ \Erlang{n,\lambda} $ rv, we consider
     \[ F(x)=\Prob{X\le x}=\int_{0}^{x}\frac{\lambda^n y^{n-1}e^{-\lambda y}}{(n-1)!}\odif{y}=
         \frac{\lambda^n}{(n-1)!}\int_{0}^{x}y^{n-1}e^{-\lambda y}\odif{y},\; x\ge 0. \]
     \textbf{We have}: $ F(x)=\frac{\lambda^n}{(n-1)!}\int_{0}^{x}y^{n-1}e^{-\lambda y}\odif{y} $. Assume that $ n\ge 2 $ and apply integration by parts, that is,
@@ -205,7 +340,7 @@ This leads to the main result concerning the exponential distribution.
     \tcblower{}
     \underline{Remark}: Substituting $ n=1 $ into~\ref{eq4.7}, we immediately obtain
     \[ F(x)=1-e^{-\lambda x}\sum_{j=0}^{1-1}\frac{(\lambda x)^j}{j!}=1-e^{-\lambda x},\; x\ge 0, \]
-    which is clearly the cdf of a $ \EXP{\lambda} $ rv.
+    which is clearly the cdf of an $ \EXP{\lambda} $ rv.
 
     To determine the mgf of $ X \sim \Erlang{n,\lambda} $, we consider
     \begin{align*}
@@ -220,11 +355,10 @@ This leads to the main result concerning the exponential distribution.
     \end{align*}
     However, note that
     \[ \phi_X(t)=\biggl(\frac{\lambda}{\lambda-t}\biggr)^{\!n}=\prod_{i=1}^n\biggl(\frac{\lambda}{\lambda-t}\biggr),\;t<\lambda, \]
-    is the product of $ n $ terms, where each term is the mgf of a $ \EXP{\lambda} $ rv.
-
+    is the product of $ n $ terms, where each term is the mgf of an $ \EXP{\lambda} $ rv.
     Let $ \Set{Y_i}_{i=1}^n $ be the iid sequence of $ \EXP{\lambda} $ rvs, with $ \phi_{Y_i}(t)=\frac{\lambda}{\lambda-t} $, $ t<\lambda $,
     for $ i=1,2,\ldots,n $. Since $ \phi_X(t)=\prod_{i=1}^n \phi_{Y_i}(t) $, it follows that an Erlang distribution can be viewed as the
-    distribution of a sum of iid exponential rvs. As a result, the mean, and variance of a $ \Erlang{n,\lambda} $ rv $ X $
+    distribution of a sum of iid exponential rvs. As a result, the mean, and variance of an $ \Erlang{n,\lambda} $ rv $ X $
     are simply obtained as
     \[ \E{X}=\E*{\sum_{i=1}^{n}Y_i}=\sum_{i=1}^{n}\E{Y_i}=\frac{n}{\lambda} \]
     and
