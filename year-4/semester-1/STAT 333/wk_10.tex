@@ -27,7 +27,7 @@
 We now introduce two important properties associated with counting processes.
 \begin{Regular}
     \textbf{Definition}: A counting process $ \Set[\big]{N(t),t\ge 0} $ has \emph{independent increments} if $ N(t_1)-N(s_1) $ is
-    independent of $ N(t_2)-N(s_2) $ whenever $ (s_1,t_1]\cap (s_2,t_2]=\emptyset $ for all choices of $ s_1,t_1,s_2,t_2 $
+    independent of $ N(t_2)-N(s_2) $ whenever $ (s_1,t_1]\cap (s_2,t_2]=\varnothing $ for all choices of $ s_1,t_1,s_2,t_2 $
     (i.e., the number of events in non-overlapping time intervals are assumed to be independent of each other).
 \end{Regular}
 \begin{Regular}
@@ -69,16 +69,14 @@ Before introducing the formal definition of a Poisson process, we first introduc
         \item $ y=f(x)=x^2 $. Note that
               \[ \lim\limits_{{h} \to {0}}\frac{f(h)}{h}=\lim\limits_{{h} \to {0}}\frac{h^2}{h}=\lim\limits_{{h} \to {0}}h=0. \]
               Thus, $ y=x^2 $ is of order $ h $. In fact, the function of the form $ y=x^r $ is clearly of order $ h $ provided that $ r>1 $.
+        \item Suppose that $ \Set[\big]{f_i(x)}_{i=1}^n $ is a sequence of $ \order{h} $ functions. Consider the linear combination of $ \order{h} $
+              functions, namely $ y=\sum_{i=1}^{n}c_i f_i(x) $, and note that
+              \[ \lim\limits_{{h} \to {0}}\frac{\sum_{i=1}^{n}c_i f_i}{h}=\sum_{i=1}^{n}c_i \underbrace{\lim\limits_{{h} \to {0}}\frac{f_i(h)}{h}}_{=0}=0. \]
+              Thus, a linear combination of $ \order{h} $ functions is still of order $ h $.
+
+              \underline{Remark}: In most cases, this result is actually true when $ n=\infty $.
     \end{enumerate}
 \end{Example}
-\begin{enumerate}[(3)]
-    \item Suppose that $ \Set[\big]{f_i(x)}_{i=1}^n $ is a sequence of $ \order{h} $ functions. Consider the linear combination of $ \order{h} $
-          functions, namely $ y=\sum_{i=1}^{n}c_i f_i(x) $, and note that
-          \[ \lim\limits_{{h} \to {0}}\frac{\sum_{i=1}^{n}c_i f_i}{h}=\sum_{i=1}^{n}c_i \underbrace{\lim\limits_{{h} \to {0}}\frac{f_i(h)}{h}}_{=0}=0. \]
-          Thus, a linear combination of $ \order{h} $ functions is still of order $ h $.
-
-          \underline{Remark}: In most cases, this result is actually true when $ n=\infty $.
-\end{enumerate}
 \subsection*{Poisson Process}
 \begin{Regular}
     \textbf{Definition}: A counting process $ \Set[\big]{N(t),t\ge 0} $ is said to be a \emph{Poisson process} at rate $ \lambda $
@@ -112,7 +110,69 @@ theorem specifies the distribution of $ N(t) $.
 \begin{Result}
     \textbf{Theorem 4.3}. If $ \Set[\big]{N(t),t\ge 0} $ is a Poisson process at rate $ \lambda $, then $ N(t) \sim \POI{\lambda t} $.
     \tcblower{}
-    \textbf{Proof}:
+    \textbf{Proof}: For $ t\ge 0 $, let
+    \[ \underbrace{\phi_t(u)=\E{e^{u N(t)}}}_{\text{mgf of $N(t)$}}. \]
+    For $ h\ge 0 $, consider
+    \begin{align*}
+        \phi_{t+h}(u)
+         & =\E{e^{uN(t+h)}}                                                                         \\
+         & =\E{e^{u\bigl(N(t+h)-N(t)+N(t)\bigr)}}                                                   \\
+         & =\E{e^{u\bigl(N(t+h)-N(t)\bigr)}e^{uN(t)}}                                               \\
+         & =\E{e^{u\bigl(N(t+h)-N(t)\bigr)}}\E{e^{uN(t)}} &  & \text{due to independent increments} \\
+         & =\E{e^{u N(h)}}\E{e^{u N(t)}}                  &  & \text{due to stationary increments}  \\
+         & =\phi_t(u)\phi_h(u)\label{eq4.8}\tag*{(4.8)}.
+    \end{align*}
+    Note that for $ j\ge 2 $,
+    \begin{align*}
+         & 0 \le \Prob[\big]{N(h)=j}\le \Prob[\big]{N(h)\ge 2}                              \\
+         & \implies 0\le \frac{\Prob[\big]{N(h)=j}}{h}\le \frac{\Prob[\big]{N(h)\ge 2}}{h}.
+    \end{align*}
+    Letting $ h\to 0 $, we obtain:
+    \[ 0\le \lim_{h\to 0}\frac{\Prob[\big]{N(h)=j}}{h}\le \lim_{h\to 0}\frac{\Prob[\big]{N(h)\ge 2}}{h}=0, \]
+    since $ \Prob[\big]{N(h)\ge 2} $ is an $ \order{h} $ function by condition (3).
+    Therefore, by the Squeeze Theorem
+    \[ \frac{\Prob[\big]{N(h)=j}}{h}=0\implies \Prob[\big]{N(h)=j}\text{ is of order $h$ for $j\ge 2$}. \]
+    Using this result, we obtain
+    \begin{align*}
+        \phi_h(u)
+         & =\E{e^{u N(h)}}                                                                                                            \\
+         & =\sum_{j=0}^{\infty}e^{u j}\cdot \Prob[\big]{N(h)=j}                                                                       \\
+         & =e^{u(0)}\Prob[\big]{N(h)=0}+e^{u(1)}\Prob[\big]{N(h)=1}+
+        \sum_{j=2}^{\infty}e^{uj}\Prob[\big]{N(h)=j}                                                                                  \\
+         & =\bigl(1-\lambda h+\order{h}\bigr)+e^{u}
+        \bigl(\lambda h+\order{h}\bigr)+\underbrace{\sum_{j=2}^{\infty}c_j\Prob[\big]{N(h)=j}}_{=\order{h}}\text{ where $c_j=e^{uj}$} \\
+         & =1-\lambda h+e^{u}\lambda h+\order{h}.
+    \end{align*}
+    Returning to~\ref{eq4.8}, we now have
+    \begin{align*}
+        \phi_{t+h}(u)
+                                          & =\phi_t(u)\bigl(1-\lambda h+e^{u}\lambda h+\order{h}\bigr)     \\
+                                          & =\phi_t(u)-\lambda h\phi_t(u)+e^u \lambda h\phi_t(u)+\order{h} \\
+        \phi_{t+h}(u)-\phi_t(u)           & =\lambda h \phi_t(u)(e^u-1)+\order{h}                          \\
+        \frac{\phi_{t+h}(u)-\phi_t(u)}{h} & =\frac{\lambda h\phi_t(u)(e^u-1)}{h}+\frac{\order{h}}{h}
+    \end{align*}
+    Letting $ h\to 0 $, we obtain:
+    \begin{align*}
+        \lim\limits_{{h} \to {0}}\frac{\phi_{t+h}(u)-\phi_t(u)}{h} & =\lim\limits_{{h} \to {0}}\lambda (e^u-1)\phi_t(u)+\lim\limits_{{h} \to {0}}\frac{\order{h}}{h} \\
+        \odv*{\phi_t(u)}{t}                                        & =\lambda(e^u-1)\phi_t(u)                                                                        \\
+        \odv*{\phi_s(u)}{s}                                        & =\lambda(e^u-1)\phi_s(u)\text{ let $t=s$}                                                       \\
+        \frac{\odv*{\phi_s(u)}{s} }{\phi_s(u)}                     & =\lambda(e^u-1)                                                                                 \\
+        \odv*{\ln[\big]{\phi_s(u)}}{s}                             & =\lambda (e^u-1)                                                                                \\
+        \odif{\Bigl(\ln[\big]{\phi_s(u)}\Bigr)}                    & =\lambda(e^{u}-1)\odif{s}                                                                       \\
+        \int_{0}^{t}\odif{\Bigl(\ln[\big]{\phi_s(u)}\Bigr)}        & =\int_{0}^{t}\lambda (e^u-1)\odif{s}                                                            \\
+        \Bigl[\ln[\big]{\phi_s(u)}\Bigr]_{s=0}^{s=t}               & =\lambda (e^u-1)t                                                                               \\
+        \ln[\big]{\phi_t(u)}-\ln[\big]{\phi_0(u)}                  & =\lambda (e^u-1)t.
+    \end{align*}
+    \underline{Recall}:
+    \[ \phi_0(u)=\E{e^{u \overbrace{N(0)}^{=0}}}=1. \]
+    It follows that
+    \begin{align*}
+        \ln[\big]{\phi_t(u)} & =\lambda(e^u-1)t                         \\
+        \phi_t(u)            & =e^{\lambda(e^u-1)t}                     \\
+                             & =e^{\lambda t(e^u-1)},\; u\in\mathbb{R}.
+    \end{align*}
+    We recognize this function as the mgf of a $ \POI{\lambda t} $ rv.
+    By the mgf uniqueness property, $ N(t)\sim \POI{\lambda t} $.
 \end{Result}
 \underline{Remark}: As a direct consequence of Theorem 4.3, for all $ s,t\ge 0 $, we have
 \[ \Prob[\big]{N(s+t)-N(s)=k}=\Prob[\big]{N(t)=k}=\frac{e^{-\lambda t}(\lambda t)^k}{k!},\; k=0,1,2,\ldots. \]
@@ -128,7 +188,32 @@ A very important result linking a Poisson process to its interarrival time seque
     \textbf{Theorem 4.4}. If $ \Set[\big]{N(t),t\ge 0} $ is a Poisson process at rate $ \lambda>0 $, then $ \Set{T_i}_{i=1}^\infty $
     is a sequence of iid $ \EXP{\lambda} $ rvs.
     \tcblower{}
-    \textbf{Proof}:
+    \textbf{Proof}: We begin by considering the rv $ T_1 $. For $ t\ge 0 $, note that
+    \begin{align*}
+        \Prob{T_1>t}
+         & =\Prob{\text{no events occur before time $t$}} \\
+         & =\Prob[\big]{N(t)=0}                           \\
+         & =\frac{e^{-\lambda t}(\lambda t)^0}{0!}        \\
+         & =e^{-\lambda t},
+    \end{align*}
+    which is the tpf an $ \EXP{\lambda} $ rv. Thus, $ T_1 \sim \EXP{\lambda} $.
+    Next, for $ s>0 $, and $ t\ge 0 $, consider
+    \begin{align*}
+        \Prob{T_2>t\given T_1=s}
+         & =\Prob[\big]{T_2>t\given N(w)=0\; \forall w\in[0,s)\text{ and }N(s)=1}                                                            \\
+         & =\Prob[\big]{\underbrace{\text{no events occur in $(s,s+t]$}}_{N(s+t)-N(s)=0}\given N(w)=0\; \forall w\in[0,s)\text{ and }N(s)=1} \\
+         & =\Prob[\big]{N(s+t)-N(s)=0}\text{ due to independent increments}                                                                  \\
+         & =\Prob[\big]{N(t)=0}\text{ due to stationary increments}                                                                          \\
+         & =e^{-\lambda t},
+    \end{align*}
+    which is independent of $ s $. Thus, $ T_1 $ and $ T_2 $ are independent rvs and
+    \begin{align*}
+        \Prob{T_2>t}
+         & =\Prob{T_2>t\given T_1=s} \\
+         & =e^{-\lambda t},
+    \end{align*}
+    implying that $ T_2 \sim \EXP{\lambda} $. Carrying out this process inductively,
+    this desired result is established.
 \end{Result}
 \subsection*{Waiting Times}
 \begin{Regular}
@@ -176,10 +261,28 @@ A very important result linking a Poisson process to its interarrival time seque
         \item What is the probability that exactly $5$ claims occur in the time interval $(3.2, 5]$ (measured
               in years)?
 
-              \textbf{Solution}:
+              \textbf{Solution}: Let $ N(t) $ be the number of claims arriving
+              to the company in the interval $ [0,t] $. Since $ \Set[\big]{N(t),t\ge 0} $
+              is a Poisson process with $ \lambda=3.8 $, we want to find
+              \begin{align*}
+                  \Prob[\big]{N(5)-N(3.2)=5}
+                   & =\frac{e^{-3.8(1.8)}\bigl(3.8(1.8)\bigr)^5}{5!}\simeq 0.134.
+              \end{align*}
         \item What is the probability that the time between the $2\textsuperscript{nd}$ and $4\textsuperscript{th}$ claims is between $2$ and $5$
               months?
 
-              \textbf{Solution}:
+              \textbf{Solution}: Let $ T $ be the time between
+              the $2\textsuperscript{nd}$ and $4\textsuperscript{th}$ claims. Thus,
+              $ T=T_3+T_4 $ where $ T_i \sim \EXP{3.8} $ for $ i=3,4 $. Since $ T_3 $
+              and $ T_4 $ are independent rvs, we have $ T \sim \Erlang{2,3.8} $.
+              Recall that
+              \begin{align*}
+                  \Prob{T>t}
+                   & =e^{-3.8 t}\sum_{j=0}^{2-1}\frac{(3.8 t)^j}{j!} \\
+                   & =e^{-3.8 t}(1+3.8t),\; t\ge 0.
+              \end{align*}
+              We wish to calculate
+              \[\Prob*{\frac{1}{6}<T<\frac{5}{12}}
+                  =\Prob*{T>\frac{1}{6}}-\Prob*{T>\frac{5}{12}}\simeq 0.337.\]
     \end{enumerate}
 \end{Example}
