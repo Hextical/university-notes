@@ -95,6 +95,10 @@
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
+\DeclarePairedDelimiterXPP{\Covadj}[1]{\operatorname{\textsf{Cov}_{\text{adj}}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
 \DeclarePairedDelimiterXPP\Prob[1]{\operatorname{\mathbb{P}}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
@@ -104,6 +108,14 @@
     \ifblank{#1}{\:\cdot\:}%
     #1}%
 \DeclarePairedDelimiterXPP{\se}[1]{\operatorname{\textsf{se}}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\seadj}[1]{\operatorname{\textsf{se}_{\text{adj}}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\estseadj}[1]{\operatorname{\widehat{\textsf{se}}_{\text{adj}}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
 \DeclarePairedDelimiterXPP{\estse}[1]{\widehat{\operatorname{\textsf{se}}}}(){}{%
@@ -137,11 +149,13 @@
 \DeclarePairedDelimiterXPP{\BIN}[1]{\text{BIN}}(){}{#1}%
 \DeclarePairedDelimiterXPP{\BERN}[1]{\text{BERN}}(){}{#1}%
 \DeclarePairedDelimiterXPP{\MVN}[1]{\text{MVN}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\NB}[1]{\text{NB}}(){}{#1}%
 
 \newcommand{\iid}{\overset{\text{iid}}{\sim}}%
 \newcommand{\ind}{\overset{\text{ind}}{\sim}}%
 \newcommand{\OR}{\text{OR}}%
 \newcommand{\RR}{\text{RR}}%
+\newcommand{\cOR}{\text{cOR}}%
 
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}
 % can be useful to refer to this outside \Set
@@ -242,7 +256,7 @@ Question: what is the relationship between \textcolor{Blue}{\emph{gestational ag
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-19-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-21-1} 
 
 }
 
@@ -255,7 +269,7 @@ We wish to model the relationship between \emph{gestational age} and \emph{head
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-20-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-22-1} 
 
 }
 
@@ -416,14 +430,14 @@ We visually check this by examining residual plots such as:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-22-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-24-1} 
 
 }
 
 
 
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-22-2} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-24-2} 
 
 }
 
@@ -469,7 +483,7 @@ We visually check this by examining residual plots such as:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-23-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-25-1} 
 
 }
 
@@ -1612,7 +1626,7 @@ The \textcolor{Blue}{Logit link}, $ g(\pi_i)=\log[\big]{\pi_i/(1-\pi_i)} $, is t
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-27-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-29-1} 
 
 }
 
@@ -2584,11 +2598,11 @@ Number of Fisher Scoring iterations: 4
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-42-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-44-1} 
 
 }
 
-\caption[Plot of Residuals by Fitted Values for Neuroblastoma Data based on Logistic Regression Model with main effects of Age and Stage]{Plot of Residuals by Fitted Values for Neuroblastoma Data based on Logistic Regression Model with main effects of Age and Stage.}\label{fig:unnamed-chunk-42}
+\caption[Plot of Residuals by Fitted Values for Neuroblastoma Data based on Logistic Regression Model with main effects of Age and Stage]{Plot of Residuals by Fitted Values for Neuroblastoma Data based on Logistic Regression Model with main effects of Age and Stage.}\label{fig:unnamed-chunk-44}
 \end{figure}
 
 \end{knitrout}
@@ -3205,7 +3219,7 @@ Number of Fisher Scoring iterations: 4
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-57-1} 
 
 }
 
@@ -3228,7 +3242,7 @@ Number of Fisher Scoring iterations: 4
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-56-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-58-1} 
 
 }
 
@@ -3471,7 +3485,7 @@ Reading week.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-57-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-59-1} 
 
 }
 
@@ -3921,7 +3935,7 @@ are not significant.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-66-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-68-1} 
 
 }
 
@@ -4088,7 +4102,7 @@ Number of Fisher Scoring iterations: 17
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-71-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-73-1} 
 
 }
 
@@ -6386,7 +6400,7 @@ These are called \textcolor{Blue}{hierarchical} log-linear models:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-99-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-101-1} 
 
 }
 
@@ -6420,5 +6434,1034 @@ The following analysis of deviance table summarizes our findings.
             independent of his/her gender ($G$), given his/her party affiliation ($P$).
       \item We will return to this analysis in the next topic to discuss interpretation of the
             regression parameters.
+\end{itemize}
+% Week 11
+
+\makeheading{Week 11}{\daterange{2021-11-15}{2021-11-19}}
+\section*{Topic 4h: Log Linear Model Applications Wrap-Up}
+\addcontentsline{toc}{section}{Topic 4h: Log Linear Model Applications Wrap-Up}
+\subsection*{Application 2: Seatbelt Use and Fatality of Accidents}
+We now consider the special case of a $ 2\times 2\times 2 $ table.
+\begin{Example}{Florida Department of Highway Safety and Motor vehicles (Bishop \emph{et al} 1975)}
+    \begin{center}
+        \begin{NiceTabular}{ccrr}
+            \toprule
+            &                 &           \Block{1-2}{Injury ($ Z $)} \\
+            Seatbelt ($ V $) & Ejected ($ W $) & Non-fatal & Fatal          \\
+            \midrule
+            \Block{2-1}{Used} & Yes & $ 1105 $ & $ 14 $\\
+            & No & $ 411111 $ & $ 483 $\\
+            \Block{2-1}{Not Used} & Yes & $ 4624 $ & $ 497 $\\
+            & No & $ 157342 $ & $ 1008 $\\
+            \bottomrule
+        \end{NiceTabular}
+    \end{center}
+\end{Example}
+\begin{itemize}
+    \item Rewriting the data table in general notation, we have:
+          \begin{table}[H]
+              \centering
+              \begin{NiceTabular}{cccc}
+                  \toprule
+                  &                 &           \Block{1-2}{Injury ($ Z $)} \\
+                  Seatbelt ($ V $) & Ejected ($ W $) & Non-fatal ($ k=1 $) & Fatal ($ k=2 $)          \\
+                  \midrule
+                  \Block{2-1}{Used ($ i=2 $)} & Yes  ($ j=2 $) & $ y_{221} $ & $ y_{222} $\\
+                  & No  ($ j=1 $) & $ y_{211} $ & $ y_{212} $\\
+                  \Block{2-1}{Not Used ($ i=1 $)} & Yes ($ j=2 $) & $ y_{121} $ & $ y_{122} $\\
+                  & No ($ j=1 $) & $ y_{111} $ & $ y_{112} $\\
+                  \bottomrule
+              \end{NiceTabular}
+          \end{table}
+    \item Where $ Y_{ijk}\sim \POI{\mu_{ijk}} $, $ i=1,2 $, $ j=1,2 $, $ k=1,2 $.
+    \item The saturated model is:
+          \[ \textcolor{Blue}{\log{\mu_{ijk}}=u+u_i^V+u_j^W+u_k^Z+u_{ij}^{VW}+u_{ik}^{VZ}+u_{jk}^{WZ}+u_{ijk}^{VWZ}}. \]
+    \item Try to identify simpler models which still fit the data well and are easy to interpret.
+    \item Note that in this table only $ y_{\bullet\bullet\bullet} $ is fixed and so only the intercept needs to be
+          included by design.
+\end{itemize}
+\subsection*{R Dataset}
+\begin{Example}{Accident Data}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+  s e i      y
+1 1 1 1 157342
+2 1 1 2   1008
+3 1 2 1   4624
+4 1 2 2    497
+5 2 1 1 411111
+6 2 1 2    483
+7 2 2 1   1105
+8 2 2 2     14
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{Example}
+\subsection*{R Code}
+%\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{acc.dat}\hlopt{$}\hlstd{s} \hlkwb{=} \hlkwd{factor}\hlstd{(acc.dat}\hlopt{$}\hlstd{s)}
+\hlstd{acc.dat}\hlopt{$}\hlstd{e} \hlkwb{=} \hlkwd{factor}\hlstd{(acc.dat}\hlopt{$}\hlstd{e)}
+\hlstd{acc.dat}\hlopt{$}\hlstd{i} \hlkwb{=} \hlkwd{factor}\hlstd{(acc.dat}\hlopt{$}\hlstd{i)}
+\hlcom{# Model 1: (VWZ) Saturated}
+\hlstd{model1} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{e} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
+\hlkwd{summary}\hlstd{(model1)}
+\hlcom{# Model 2 (VW,VZ,WZ) Homogeneous Association (test vs Model 1)}
+\hlstd{model2} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{e} \hlopt{+} \hlstd{s} \hlopt{*} \hlstd{i} \hlopt{+} \hlstd{e} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
+\hlkwd{summary}\hlstd{(model2)}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model2}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{deviance, model2}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{df.residual)}
+\hlstd{acc.dat}\hlopt{$}\hlstd{fv} \hlkwb{=} \hlstd{model2}\hlopt{$}\hlstd{fitted.values}
+\hlstd{acc.dat}
+\hlcom{# Model 3: (VW, VZ) Conditional Independence Model (test vs Model 2)}
+\hlstd{model3} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{e} \hlopt{+} \hlstd{s} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
+\hlstd{model3}\hlopt{$}\hlstd{df.residual}
+\hlstd{model3}\hlopt{$}\hlstd{deviance}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model3}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model2}\hlopt{$}\hlstd{deviance, model3}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model2}\hlopt{$}\hlstd{df.residual)}
+\hlcom{# Model 4: (VW, WZ) Conditional Independence Model (test vs Model 2)}
+\hlstd{model4} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{e} \hlopt{+} \hlstd{e} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
+\hlstd{model4}\hlopt{$}\hlstd{df.residual}
+\hlstd{model4}\hlopt{$}\hlstd{deviance}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model4}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model2}\hlopt{$}\hlstd{deviance, model4}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model2}\hlopt{$}\hlstd{df.residual)}
+\hlcom{# Model 5: (VZ, WZ) Conditional Independence Model (test vs Model 2)}
+\hlstd{model5} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{i} \hlopt{+} \hlstd{e} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
+\hlstd{model5}\hlopt{$}\hlstd{df.residual}
+\hlstd{model5}\hlopt{$}\hlstd{deviance}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model5}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model2}\hlopt{$}\hlstd{deviance, model5}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model2}\hlopt{$}\hlstd{df.residual)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+%\end{noindent}
+\subsection*{R Output: Model 1 $ (VWZ) $}
+%\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{summary}\hlstd{(model1)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = y ~ s * e * i, family = poisson, data = acc.dat)
+
+Deviance Residuals: 
+[1]  0  0  0  0  0  0  0  0
+
+Coefficients:
+             Estimate Std. Error  z value Pr(>|z|)    
+(Intercept) 11.966177   0.002521 4746.547   <2e-16 ***
+s2           0.960441   0.002964  323.985   <2e-16 ***
+e2          -3.527162   0.014920 -236.398   <2e-16 ***
+i2          -5.050454   0.031598 -159.836   <2e-16 ***
+s2:e2       -2.391856   0.033616  -71.153   <2e-16 ***
+s2:i2       -1.696148   0.055419  -30.606   <2e-16 ***
+e2:i2        2.820028   0.056805   49.644   <2e-16 ***
+s2:e2:i2    -0.441970   0.278627   -1.586    0.113    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 1.6249e+06  on 7  degrees of freedom
+Residual deviance: 7.4852e-11  on 0  degrees of freedom
+AIC: 92.999
+
+Number of Fisher Scoring iterations: 3
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+%\end{noindent}
+\subsection*{R Output: Model 2 $ (VW,VZ,WZ) $}
+%\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{summary}\hlstd{(model2)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = y ~ s * e + s * i + e * i, family = poisson, data = acc.dat)
+
+Deviance Residuals: 
+       1         2         3         4         5         6         7         8  
+ 0.01731  -0.21583  -0.10095   0.30951  -0.01071   0.31400   0.20704  -1.59987  
+
+Coefficients:
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept) 11.966133   0.002521 4746.70   <2e-16 ***
+s2           0.960502   0.002964  324.03   <2e-16 ***
+e2          -3.525634   0.014879 -236.95   <2e-16 ***
+i2          -5.043620   0.031202 -161.65   <2e-16 ***
+s2:e2       -2.399636   0.033340  -71.97   <2e-16 ***
+s2:i2       -1.717321   0.054015  -31.79   <2e-16 ***
+e2:i2        2.797795   0.055256   50.63   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 1.6249e+06  on 7  degrees of freedom
+Residual deviance: 2.8540e+00  on 1  degrees of freedom
+AIC: 93.853
+
+Number of Fisher Scoring iterations: 3
+\end{verbatim}
+\begin{alltt}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model2}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{deviance, model2}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{df.residual)}
+\end{alltt}
+\begin{verbatim}
+[1] 0.09114565
+\end{verbatim}
+\begin{alltt}
+\hlstd{acc.dat}\hlopt{$}\hlstd{fv} \hlkwb{=} \hlstd{model2}\hlopt{$}\hlstd{fitted.values}
+\hlstd{acc.dat}
+\end{alltt}
+\begin{verbatim}
+  s e i      y           fv
+1 1 1 1 157342 157335.13193
+2 1 1 2   1008   1014.86807
+3 1 2 1   4624   4630.86807
+4 1 2 2    497    490.13193
+5 2 1 1 411111 411117.86807
+6 2 1 2    483    476.13193
+7 2 2 1   1105   1098.13193
+8 2 2 2     14     20.86807
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+%\end{noindent}
+\begin{itemize}
+    \item $ \HN $: $ u_{222}^{VWZ}=0 $ versus $ \HA $: $ u_{222}^{VWZ}\ne 0 $.
+          \[ p=\Prob*{\chi^2_{(1)}>2.854}=0.09. \]
+    \item \textcolor{Blue}{Do not reject} the null hypothesis that the fit of model 2 is adequate, as compared
+          to model 1 (saturated).
+\end{itemize}
+\subsection*{R Output: Models 3 $(VW , VZ )$, 4 $(VW , WZ )$, 5 $(VZ , WZ )$}
+%\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Model 3: (VW, VZ) Conditional Independence Model (test vs Model 2)}
+\hlstd{model3} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{e} \hlopt{+} \hlstd{s} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
+\hlstd{model3}\hlopt{$}\hlstd{df.residual}
+\end{alltt}
+\begin{verbatim}
+[1] 2
+\end{verbatim}
+\begin{alltt}
+\hlstd{model3}\hlopt{$}\hlstd{deviance}
+\end{alltt}
+\begin{verbatim}
+[1] 1680.412
+\end{verbatim}
+\begin{alltt}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model3}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model2}\hlopt{$}\hlstd{deviance, model3}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model2}\hlopt{$}\hlstd{df.residual)}
+\end{alltt}
+\begin{verbatim}
+[1] 0
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Model 4: (VW, WZ) Conditional Independence Model (test vs Model 2)}
+\hlstd{model4} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{e} \hlopt{+} \hlstd{e} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
+\hlstd{model4}\hlopt{$}\hlstd{df.residual}
+\end{alltt}
+\begin{verbatim}
+[1] 2
+\end{verbatim}
+\begin{alltt}
+\hlstd{model4}\hlopt{$}\hlstd{deviance}
+\end{alltt}
+\begin{verbatim}
+[1] 1144.636
+\end{verbatim}
+\begin{alltt}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model4}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model2}\hlopt{$}\hlstd{deviance, model4}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model2}\hlopt{$}\hlstd{df.residual)}
+\end{alltt}
+\begin{verbatim}
+[1] 0
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Model 5: (VZ, WZ) Conditional Independence Model (test vs Model 2)}
+\hlstd{model5} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{i} \hlopt{+} \hlstd{e} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
+\hlstd{model5}\hlopt{$}\hlstd{df.residual}
+\end{alltt}
+\begin{verbatim}
+[1] 2
+\end{verbatim}
+\begin{alltt}
+\hlstd{model5}\hlopt{$}\hlstd{deviance}
+\end{alltt}
+\begin{verbatim}
+[1] 7133.978
+\end{verbatim}
+\begin{alltt}
+\hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model5}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model2}\hlopt{$}\hlstd{deviance, model5}\hlopt{$}\hlstd{df.residual} \hlopt{-} \hlstd{model2}\hlopt{$}\hlstd{df.residual)}
+\end{alltt}
+\begin{verbatim}
+[1] 0
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+%\end{noindent}
+\begin{itemize}
+    \item \textcolor{Blue}{Reject} the null hypotheses that the fit of models 3, 4, 5 are adequate, as
+          compared to model 2.
+\end{itemize}
+\subsection*{Summary of Fitted Models}
+The following analysis of deviance table summarizes our findings.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccccc}
+        \toprule
+        \textcolor{Blue}{Model} & \textcolor{Blue}{Form} & \textcolor{Blue}{Residual Deviance} & \textcolor{Blue}{Residual d.f.} & \textcolor{Blue}{$ p $-value} \\
+        \midrule
+        1                       & $ (VWZ) $              & 0                                   & 0                               & NA                            \\
+        \midrule
+        2                       & $(VW, VZ, WZ)$         & $2.85$                              & $1$                             & $0.09$ (vs 1)                 \\
+        \midrule
+        3                       & $(VW, VZ)$             & $1680.41$                           & $2$                             & $<0.001$ (vs 2)               \\
+        4                       & $(VW, WZ)$             & $1144.64$                           & $2$                             & $<0.001$  (vs 2)              \\
+        5                       & $(VZ, WZ)$             & $7133.98$                           & $2$                             & $<0.001$  (vs 2)              \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+\begin{itemize}
+    \item Conclude that \textcolor{Blue}{Model 2 $ (VW,VZ,WZ) $ is most appropriate}.
+    \item \textcolor{Blue}{Homogeneous Association}: All variables are associated in a pairwise fashion, but
+          this degree of association does not depend on the level of the third variable.
+\end{itemize}
+\subsection*{Interpretation of Model 2 $(VW , VZ , WZ )$}
+\begin{itemize}
+    \item Consider the following table of fitted and observed values from this model:
+          \begin{table}[H]
+              \centering
+              \begin{NiceTabular}{cccc}
+                  \toprule
+                  &                 &           \Block{1-2}{Injury ($ Z $)} \\
+                  Seatbelt ($ V $) & Ejected ($ W $) & Non-fatal ($ k=1 $) & Fatal ($ k=2 $)          \\
+                  \midrule
+                  \Block{2-1}{Used ($ i=2 $)} & Yes  ($ j=2 $) & $ \hat{\mu}_{221}=1098.1 $, $y_{221}=1105 $ & $ \hat{\mu}_{222}=20.9 $, $ y_{222}=14 $\\
+                  & No  ($ j=1 $) & $ \hat{\mu}_{211}=411117.9 $, $ y_{211}=411111 $ & $ \hat{\mu}_{212}=476.1 $, $ y_{212}=483 $\\
+                  \Block{2-1}{Not Used ($ i=1 $)} & Yes ($ j=2 $) & $ \hat{\mu}_{121}=4630.9 $, $ y_{121}=4624 $ & $ \hat{\mu}_{122}=490.1 $, $ y_{122}=497 $\\
+                  & No ($ j=1 $) & $ \hat{\mu}_{111}=157335.1 $, $ y_{111}=157342 $ & $ \hat{\mu}_{112}=1014.9 $, $ y_{112}=1008 $\\
+                  \bottomrule
+              \end{NiceTabular}
+          \end{table}
+    \item And the following row percentages (across levels of $ VW $):
+          \begin{table}[H]
+              \centering
+              \begin{NiceTabular}{ccrr}
+                  \toprule
+                  &                 &           \Block{1-2}{Injury ($ Z $)} \\
+                  Seatbelt ($ V $) & Ejected ($ W $) & Non-fatal & Fatal          \\
+                  \midrule
+                  \Block{2-1}{Used} & Yes & $ 98.7 $ & $ 1.3 $\\
+                  & No & $ 99.9 $ & $ 0.1 $\\
+                  \Block{2-1}{Not Used} & Yes & $ 90.4 $ & $ 9.6 $\\
+                  & No & $ 99.4 $ & $ 0.6 $\\
+                  \bottomrule
+              \end{NiceTabular}
+          \end{table}
+\end{itemize}
+\[ \textcolor{Blue}{\log{\mu_{ijk}}=u+u_i^V+u_j^W+u_k^Z+u_{ij}^{VW}+u_{ik}^{VZ}+u_{jk}^{WZ}+u_{ijk}^{VWZ}}. \]
+\begin{itemize}
+    \item In previous Poisson log linear models (ships \& rats examples) the regression
+          coefficients had \textcolor{Red}{log Relative Rate} interpretation
+    \item Parameters for log linear models of contingency tables will have a \textcolor{Red}{log Odds Ratio}
+          interpretation!
+    \item For $ 2\times 2\times K $ tables we can define:
+          \begin{itemize}
+              \item \textcolor{Blue}{Conditional Odds Ratio}:
+                    \[ \psi_{(k)}^{VW}=\frac{\pi_{11k}\pi_{22k}}{\pi_{12k}\pi_{21k}}. \]
+              \item \textcolor{Blue}{Marginal Odds Ratio}:
+                    \[ \psi^{VW}=\frac{\pi_{11\bullet}\pi_{22\bullet}}{\pi_{12\bullet}\pi_{21\bullet}}. \]
+          \end{itemize}
+\end{itemize}
+\subsection*{Conditional Odds Ratio $(2\times 2\times K)$}
+\begin{itemize}
+    \item The Odds Ratio of \textcolor{HotPink}{response ($V = 2$)} in subjects with \textcolor{Green}{$ W = 2 $} versus \textcolor{Green}{$ W = 1 $} at
+          (conditional on being) level $Z = k$.
+          \begin{align*}
+              \psi_{(k)}^{VW}
+               & =\frac{
+                  \Prob{\textcolor{HotPink}{V=2}\given \textcolor{Green}{W=2},Z=k}/\Prob{\textcolor{HotPink}{V=1}\given \textcolor{Green}{W=2},Z=k}
+              }{
+                  \Prob{\textcolor{HotPink}{V=2}\given \textcolor{Green}{W=1},Z=k}/\Prob{\textcolor{HotPink}{V=1}\given \textcolor{Green}{W=1},Z=k}
+              }                                                    \\
+               & =\frac{\pi_{22k}/\pi_{12k}}{\pi_{21k}/\pi_{11k}}  \\
+               & =\frac{\pi_{11k}\pi_{22k}}{\pi_{12k}\pi_{21k}}    \\
+               & =\frac{\pi_{22k}/\pi_{21k}}{\pi_{12k}/\pi_{11k}}.
+          \end{align*}
+    \item This is also the Odds Ratio of \textcolor{Green}{response ($W = 2$)} in subjects with
+          \textcolor{HotPink}{$ V = 2 $} versus \textcolor{HotPink}{$ V = 1 $} at (conditional on being) level $Z = k$.
+\end{itemize}
+\subsection*{Interpretation of Model 2 $(VW , VZ , WZ )$}
+\begin{Example}{}
+    \textbf{Q}: Find the (conditional OR) for a $ \overbrace{\text{\textcolor{Blue}{fatal}}}^{Z=2} $ accident for those
+    $ \overbrace{\text{\textcolor{Blue}{ejected}}}^{W=2} $ \textcolor{Blue}{versus} $ \overbrace{\text{\textcolor{Blue}{not ejected}}}^{W=1} $
+    among passengers who $ \underbrace{\text{\textcolor{Blue}{did not use}}}_{V=1} $ their seatbelt.
+\end{Example}
+\[ \cOR=\psi_{(1)}^{ZW}=\frac{\pi_{122}/\pi_{121}}{\pi_{112}/\pi_{111}}. \]
+\begin{itemize}
+    \item Find the odds of a fatal accident ($Z = 2$) in ejected ($W = 2$), no seatbelt ($V = 1$).
+          \[ \frac{\Prob{Z=2\given W=2,V=1}}{\Prob{Z=1\given W=2,V=1}}=\frac{\Prob{Z=2,W=2,V=1}}{\Prob{Z=1,W=2,V=1}}=\frac{\pi_{122}}{\pi_{121}}
+              =\frac{\mu_{122}/\mu_{\bullet\bullet\bullet}}{\mu_{121}/\mu_{\bullet\bullet\bullet}}=\frac{\mu_{122}}{\mu_{121}}. \]
+          \begin{table}[H]
+              \centering
+              \begin{tabular}{cccl}
+                  $ V $                                           & $ W $                                     & $ Z $ & $ \log{\mu_{ijk}} $           \\
+                  \midrule
+                  $1$                                             & $2$                                       & $2$   & $ u+u_2^W+u_2^Z+u_{22}^{WZ} $ \\
+                  $1$                                             & $2$                                       & $1$   & $ u+u_2^W $                   \\
+                  \midrule
+                  \multicolumn{3}{c}{$\log{\mu_{122}/\mu_{121}}$} & $=\textcolor{HotPink}{u_2^Z+u_{22}^{WZ}}$
+              \end{tabular}
+          \end{table}
+    \item Find the odds of a fatal accident ($ Z=2 $) in not ejected ($ W=1 $), no seatbelt ($ V=1 $).
+          \[ \frac{\Prob{Z=2\given W=1,V=1}}{\Prob{Z=1\given W=1,V=1}}=\frac{\Prob{Z=2,W=1,V=1}}{\Prob{Z=1,W=1,V=1}}=\frac{\pi_{112}}{\pi_{111}}
+              =\frac{\mu_{112}/\mu_{\bullet\bullet\bullet}}{\mu_{111}/\mu_{\bullet\bullet\bullet}}=\frac{\mu_{112}}{\mu_{111}}. \]
+          \begin{table}[H]
+              \centering
+              \begin{tabular}{cccl}
+                  $ V $                                           & $ W $                       & $ Z $ & $ \log{\mu_{ijk}} $ \\
+                  \midrule
+                  $1$                                             & $1$                         & $2$   & $ u+u_2^W+u_2^Z $   \\
+                  $1$                                             & $1$                         & $1$   & $ u $               \\
+                  \midrule
+                  \multicolumn{3}{c}{$\log{\mu_{122}/\mu_{121}}$} & $=\textcolor{Green}{u_2^Z}$
+              \end{tabular}
+          \end{table}
+    \item The expression for the (log) conditional OR is:
+          \[ \log{\cOR}=\log*{\frac{\pi_{122}/\pi_{121}}{\pi_{112}/\pi_{111}}}=\log*{\frac{\mu_{122}/\mu_{121}}{\mu_{112}/\mu_{111}}}=(\textcolor{HotPink}{u_2^Z+u_{22}^{WZ}})-\textcolor{Green}{u_2^Z}=u_{22}^{WZ}. \]
+    \item The estimate of the conditional OR is:
+          \[ \widehat{\cOR}=\exp{\hat{u}_{22}^{WZ}}=\exp{2.80}=16.4. \]
+\end{itemize}
+\begin{Example}{}
+    \textbf{Q}: How would this change if the 3-way interaction term were included in the model?
+\end{Example}
+\begin{itemize}
+    \item No change in the $ \cOR $ for $ V=1 $ (no seatbelt).
+    \item Check that for $ V=2 $ (seatbelt worn) the $ \cOR $ becomes:
+          \[ \psi_{(2)}^{ZW}=\frac{\pi_{222}/\pi_{221}}{\pi_{212}/\pi_{211}}=\exp{u_{22}^{WZ}+u_{222}^{VWZ}}. \]
+          \begin{table}[H]
+              \centering
+              \begin{tabular}{cccl}
+                  $ V $                                           & $ W $                                                               & $ Z $ & $ \log{\mu_{ijk}} $                                                       \\
+                  \midrule
+                  $2$                                             & $2$                                                                 & $2$   & $ u+u_2^V+u_2^W+u_2^Z+u_{22}^{VW}+u_{22}^{VZ}+u_{22}^{WZ}+u_{222}^{VWZ} $ \\
+                  $2$                                             & $2$                                                                 & $1$   & $ u+u_2^V+u_2^W+u_{22}^{VW} $                                             \\
+                  \midrule
+                  \multicolumn{3}{c}{$\log{\mu_{122}/\mu_{121}}$} & $=\textcolor{HotPink}{u_2^Z+u_{22}^{VZ}+u_{22}^{WZ}+u_{22}^{VWZ}} $
+              \end{tabular}
+          \end{table}
+          \begin{table}[H]
+              \centering
+              \begin{tabular}{cccl}
+                  $ V $                                           & $ W $                                    & $ Z $ & $ \log{\mu_{ijk}} $           \\
+                  \midrule
+                  $2$                                             & $1$                                      & $2$   & $ u+u_2^V+u_2^Z+u_{22}^{VZ} $ \\
+                  $2$                                             & $1$                                      & $1$   & $ u+u_2^V $                   \\
+                  \midrule
+                  \multicolumn{3}{c}{$\log{\mu_{122}/\mu_{121}}$} & $=\textcolor{Green}{u_2^Z+u_{22}^{VZ}} $
+              \end{tabular}
+          \end{table}
+          \[ (\textcolor{HotPink}{u_2^Z+u_{22}^{VZ}+u_{22}^{WZ}+u_{22}^{VWZ}})-(\textcolor{Green}{u_2^Z+u_{22}^{VZ}})=u_{22}^{WZ}+u_{222}^{VWZ}. \]
+\end{itemize}
+
+\begin{itemize}
+    \item We can construct several conditional odds ratios for this data set for the saturated
+          model M1 and evaluate under M2:
+          \begin{table}[H]
+              \centering
+              \begin{NiceTabular}{c|c|c|c|c}
+                  \toprule
+                  Outcome & Comparison & At & Form (M1) & Value (M2)\\
+                  \midrule
+                  $ Z=2 $ & $ W=2 $ vs. $ W=1 $ & $ V=1 $ & $ \exp{u_{22}^{WZ}} $ & $ \exp{2.80}=16.4 $\\
+                  $ Z=2 $ & $ W=2 $ vs. $ W=1 $ & $ V=2 $ & $ \exp{u_{22}^{WZ}+u_{222}^{VWZ}} $ & $ \exp{2.80+0}=16.4 $\\\\
+                  $ Z=2 $ & $ V=2 $ vs. $ V=1 $ & $ W=1 $ & $ \exp{u_{22}^{VZ}} $ & $ \exp{-1.72}=0.18 $\\
+                  $ Z=2 $ & $ V=2 $ vs. $ V=1 $ & $ W=2 $ & $ \exp{u_{22}^{VZ}+u_{222}^{VWZ}} $ & $ \exp{-1.72+0}=0.18 $\\\\
+                  $ W=2 $ & $ V=2 $ vs. $ V=1 $ & $ Z=1 $ & $ \exp{u_{22}^{VW}} $ & $ \exp{-2.40}=0.09 $\\
+                  $ W=2 $ & $ V=2 $ vs. $ V=1 $ & $ Z=2 $ & $ \exp{u_{22}^{VW}+u_{222}^{VWZ}} $ & $ \exp{-2.40+0}=0.09 $\\
+                  \bottomrule
+              \end{NiceTabular}
+          \end{table}
+    \item \textcolor{Blue}{Homogeneous Association}: All variables are associated in a pairwise fashion, but
+          this degree of association does not depend on the level of the third variable.
+    \item That is, the conditional odds ratios between two factors are identical at all levels of
+          the third factor.
+    \item These odds ratios make sense since they suggest:
+          \begin{itemize}
+              \item The relative odds of fatality among those ejected compared to those not ejected is
+                    $16.4$,
+              \item The relative odds of fatality among those using a seatbelt compared to those who do
+                    not use a seatbelt is $0.18$, and
+              \item The relative odds of ejection for those using a seatbelt compared to those who do
+                    not use a seatbelt is $0.09$.
+          \end{itemize}
+    \item The fact that we could not reduce the model further means these terms are all
+          significant.
+    \item The odds ratios relating to fatality could have been obtained from a logistic model,
+          so it is natural to ask: What we have gained here?
+    \item We are able to examine the relationship between all variables including $V$ and $W$.
+\end{itemize}
+\subsection*{Application 1: General Social Survey}
+\begin{Example}{2008 US General Social Survey ($ 2\times 5\times 7 $)}
+    \begin{center}
+        \begin{NiceTabular}{crrrrrrrr}
+            Gender ($ G $)     & Highest Degree ($ D $) & \Block{1-7}{Political Party Affiliation ($ P $)} \\
+            &                        & 1  & 2  & 3  & 4  & 5  & 6  & 7 \\
+            \midrule
+            \Block{5-1}{Males}   &
+            $<$ High school      & 32                     & 20 & 18 & 29 & 11 & 12 & 9      \\
+            &$<$ High school      & 67                     & 85 & 63 & 68 & 48 & 65 & 44     \\
+            &Junior college       & 12                     & 14 & 6  & 9  & 13 & 17 & 6      \\
+            &Bachelor             & 23                     & 21 & 29 & 20 & 19 & 32 & 20     \\
+            &Graduate             & 16                     & 9  & 12 & 13 & 7  & 14 & 13     \\
+            \midrule
+            \Block{5-1}{Females} &
+            $<$ High school      & 31                     & 25 & 16 & 58 & 8  & 8  & 16     \\
+            &High school          & 118                    & 98 & 69 & 88 & 30 & 82 & 54     \\
+            &Junior college       & 20                     & 16 & 13 & 13 & 7  & 16 & 7      \\
+            &Bachelor             & 33                     & 23 & 28 & 11 & 16 & 44 & 23     \\
+            &Graduate             & 38                     & 20 & 8  & 13 & 3  & 13 & 9      \\
+            \bottomrule
+        \end{NiceTabular}
+    \end{center}
+\end{Example}
+\begin{itemize}
+    \item Recall the best fitting model was \textcolor{Green}{Model 5 $ (GP,DP) $}.
+    \item \textcolor{Blue}{Conditional Independence}: The responders educational level ($D$) is conditionally
+          independent of his/her gender ($G$), given his/her party affiliation ($P$).
+          \[ \textcolor{Blue}{\log{\mu_{ijk}}=u+u_i^G+u_j^D+u_k^P+u_{ik}^{GP}+u_{jk}^{DP}}. \]
+    \item The regression parameters will have various log Odds Ratio interpretations.
+\end{itemize}
+\subsection*{``Odds Ratio'' Definitions in 2-way Tables ($I \times J$)}
+\begin{itemize}
+    \item For a general $ (I\times J) $ table, \emph{many} types of ``OR'' can be defined.
+          \begin{itemize}
+              \item \textcolor{Blue}{Nominal Odds Ratios} are formed by comparing back to a reference category (e.g
+                    $V = 1$, $W = 1$ in a 2-way table):
+                    \[ \psi_{ij}^{N\;VW}
+                        =\frac{\frac{\Prob{V=i\given W=j}}{\Prob{V=1\given W=j}}}{\frac{\Prob{V=i\given W=1}}{\Prob{V=1\given W=1}}}
+                        =\frac{\pi_{ij}\pi_{11}}{\pi_{1i}\pi_{1j}}. \]
+              \item \textcolor{Blue}{Local Odds Ratios} are formed by comparing 2 successive rows ($ i $ and $ i+1 $) and columns
+                    ($ j $ and $ j+1 $) of an $ I\times J $ table:
+                    \[ \psi_{ij}^{L\;VW}
+                        =\frac{\frac{\Prob{V=i+1\given W=j+1}}{\Prob{V=i\given W=j+1}}}{\frac{\Prob{V=i+1\given W=j}}{\Prob{V=i\given W=j}}}
+                        =\frac{\pi_{ij}\pi_{i+1,j+1}}{\pi_{i+1,j}\pi_{i,j+1}}. \]
+          \end{itemize}
+\end{itemize}
+\subsection*{Odds Ratios for 3-way Tables ($ I\times J\times K $)}
+\begin{itemize}
+    \item For a 3-way table consider conditional and marginal versions of the nominal or
+          local odds ratios.
+          \begin{itemize}
+              \item \textcolor{Blue}{Conditional Local OR} condition on the level of a third variable:
+                    \[ \psi_{ij(k)}^{L\;VW}=\frac{\pi_{i+1,j+1,k}/\pi_{i,j+1,k}}{\pi_{i+1,j,k}/\pi_{ijk}}=\frac{\pi_{ijk}\pi_{i+1,j+1,k}}{\pi_{i+1,j,k}\pi_{i,j+1,k}}. \]
+              \item \textcolor{Blue}{Marginal Local OR} ignore the level of a third variable:
+                    \[ \psi_{ij\bullet}^{M\;VW}
+                        =\frac{\pi_{i+1,j+1,\bullet}/\pi_{i,j+1,\bullet}}{\pi_{i+1,j,\bullet}/\pi_{ij\bullet}}
+                        =\frac{\pi_{ij\bullet}\pi_{i+1,j+1,\bullet}}{\pi_{i+1,j,\bullet}\pi_{i,j+1,\bullet}}. \]
+          \end{itemize}
+    \item Most relevant when factor variables have a meaningful order.
+    \item These aren't true odds ratios. Actually ratios of relative probabilities.
+\end{itemize}
+\subsection*{General Social Survey: Interpretation}
+\[ \textcolor{Blue}{\log{\mu_{ijk}}=u+u_i^G+u_j^D+u_k^P+u_{ik}^{GP}+u_{jk}^{DP}}. \]
+\begin{Example}{}
+    \textbf{Q}: Find an expression for the Conditional Local OR for being a $ \overbrace{\text{``not strong Democrat''}}^{P=2} $
+    versus a $ \underbrace{\text{``strong Democrat''}}_{P=1} $ comparing those with $ \underbrace{\text{``a High School Degree''}}_{D=2} $
+    to those with $ \underbrace{\text{``less than High School''}}_{D=1} $, among $ \underbrace{\text{``males''}}_{G=1} $.
+\end{Example}
+\begin{align*}
+    \psi_{(i)jk}^{L\; DP} & =\frac{\pi_{ijk}\pi_{i,j+1,k+1}}{\pi_{i,j+1,k}\pi_{i,j,k+1}}\quad\text{(general expression)} \\
+    \psi_{(1)11}^{L\; DP} & =\frac{\pi_{111}\pi_{122}}{\pi_{121}\pi_{112}}.
+\end{align*}
+\[ \log{\psi_{(1)11}^{L\; DP}}=\log{\mu_{122}/\mu_{121}}-\log{\mu_{112}/\mu_{111}}=(\textcolor{HotPink}{u_2^P+u_{22}^{DP}})-\textcolor{Green}{u_2^P}=u_{22}^{DP}. \]
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cccl}
+        $ G $                                             & $ D $                                       & $ P $ & $ \log{\mu_{ijk}} $           \\
+        \midrule
+        $ 1 $                                             & $ 2 $                                       & $ 2 $ & $ u+u_2^D+u_2^P+u_{22}^{DP} $ \\
+        $ 1 $                                             & $ 2 $                                       & $ 1 $ & $ u+u_2^D $                   \\
+        \midrule
+        \multicolumn{3}{c}{$ \log{\mu_{122}/\mu_{121}} $} & $ =\textcolor{HotPink}{u_2^P+u_{22}^{DP}} $                                         \\\\
+        \midrule
+        $ 1 $                                             & $ 1 $                                       & $ 2 $ & $ u+u_2^P $                   \\
+        $ 1 $                                             & $ 1 $                                       & $ 1 $ & $ u $                         \\
+        \midrule
+        \multicolumn{3}{c}{$ \log{\mu_{112}/\mu_{111}} $} & $ =\textcolor{Green}{u_2^P} $
+    \end{tabular}
+\end{table}
+\[ \hat{\psi}_{(1)11}^{L\;DP}=\exp{\hat{u}_{22}^{DP}}=\exp{0.32560}=1.38. \]
+\subsection*{R Output: Model 5 $(GP, DP)$}
+%\begin{noindent}
+    %\begin{noindent}
+
+    %\end{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+Call:
+glm(formula = Y ~ G * P + D * P, family = poisson, data = party)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.6951  -0.3522   0.0008   0.3338   1.6843  
+
+Coefficients:
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept)   3.18762    0.14133  22.554  < 2e-16 ***
+Gfemale       0.47000    0.10408   4.516 6.31e-06 ***
+P2           -0.17913    0.21421  -0.836 0.403026    
+P3           -0.37758    0.23105  -1.634 0.102218    
+P4            0.43821    0.18857   2.324 0.020134 *  
+P5           -0.74581    0.27684  -2.694 0.007059 ** 
+P6           -0.96398    0.27169  -3.548 0.000388 ***
+P7           -0.75026    0.25665  -2.923 0.003464 ** 
+DHSc          1.07722    0.14587   7.385 1.53e-13 ***
+DJunCol      -0.67740    0.21708  -3.121 0.001805 ** 
+DBachelor    -0.11778    0.18366  -0.641 0.521316    
+DGraduate    -0.15415    0.18545  -0.831 0.405845    
+Gfemale:P2   -0.26994    0.15179  -1.778 0.075332 .  
+Gfemale:P3   -0.42419    0.16158  -2.625 0.008658 ** 
+Gfemale:P4   -0.19499    0.15327  -1.272 0.203302    
+Gfemale:P5   -0.89609    0.19147  -4.680 2.87e-06 ***
+Gfemale:P6   -0.31790    0.15528  -2.047 0.040631 *  
+Gfemale:P7   -0.30044    0.17572  -1.710 0.087303 .  
+P2:DHSc       0.32560    0.22128   1.471 0.141170    
+P3:DHSc       0.27922    0.24138   1.157 0.247374    
+P4:DHSc      -0.49327    0.19795  -2.492 0.012704 *  
+P5:DHSc       0.33505    0.29450   1.138 0.255252    
+P6:DHSc       0.91748    0.27943   3.283 0.001026 ** 
+P7:DHSc       0.28887    0.26736   1.080 0.279943    
+P2:DJunCol    0.27193    0.32043   0.849 0.396082    
+P3:DJunCol    0.09548    0.35940   0.266 0.790501    
+P4:DJunCol   -0.69747    0.32260  -2.162 0.030618 *  
+P5:DJunCol    0.72869    0.38698   1.883 0.059698 .  
+P6:DJunCol    1.17817    0.35697   3.301 0.000965 ***
+P7:DJunCol    0.02347    0.40503   0.058 0.953786    
+P2:DBachelor  0.09531    0.28050   0.340 0.734016    
+P3:DBachelor  0.63447    0.28405   2.234 0.025506 *  
+P4:DBachelor -0.91414    0.27836  -3.284 0.001023 ** 
+P5:DBachelor  0.72869    0.33902   2.149 0.031601 *  
+P6:DBachelor  1.45278    0.31127   4.667 3.05e-06 ***
+P7:DBachelor  0.66011    0.31143   2.120 0.034037 *  
+P2:DGraduate -0.28522    0.30182  -0.945 0.344669    
+P3:DGraduate -0.37648    0.33735  -1.116 0.264425    
+P4:DGraduate -1.05366    0.29043  -3.628 0.000286 ***
+P5:DGraduate -0.48770    0.43246  -1.128 0.259431    
+P6:DGraduate  0.45426    0.34847   1.304 0.192375    
+P7:DGraduate  0.02632    0.34619   0.076 0.939403    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 1257.316  on 69  degrees of freedom
+Residual deviance:   29.323  on 28  degrees of freedom
+AIC: 453.83
+
+Number of Fisher Scoring iterations: 4
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+%\end{noindent}
+\subsection*{General Social Survey: Interpretation}
+\[ \textcolor{Blue}{\log{\mu_{ijk}}=u+u_i^G+u_j^D+u_k^P+u_{ik}^{GP}+u_{jk}^{DP}}. \]
+\begin{Example}{}
+    \textbf{Q}: Find an expression for the Marginal Nominal OR of being a $ \overbrace{\text{strong Republican}}^{P=7} $
+    versus a $ \underbrace{\text{``strong Democrat''}}_{P=1} $ for $ \underbrace{\text{``females''}}_{G=2} $ vs $ \underbrace{\text{``males''}}_{G=1} $.
+\end{Example}
+\begin{align*}
+    \psi_{i\bullet k}^{M\; GP} & =\frac{\pi_{i\bullet k}\pi_{1\bullet 1}}{\pi_{i\bullet 1}\pi_{1\bullet k}}\quad\text{(general expression)} \\
+    \psi_{2\bullet 7}^{M\; GP} & =\frac{\mu_{2\bullet 7}\mu_{1\bullet 1}}{\mu_{2\bullet 1}\mu_{1\bullet 7}}.
+\end{align*}
+\[ \log{\psi_{2\bullet 7}^{M\; GP}}=\log{\mu_{2\bullet 7}/\mu_{2\bullet 1}}-\log{\mu_{1\bullet 7}/\mu_{1\bullet 1}}=u_{27}^{GP} \]
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cccl}
+        $ G $                                                           & $ D $                                                   & $ P $ & $ \log{\mu_{ijk}} $                             \\
+        \midrule
+        $ 2 $                                                           & $ j $                                                   & $ 7 $ & $ u+u_2^G+u_j^D+u_7^P+u_{27}^{GP}+u_{7j}^{DP} $ \\
+        $ 2 $                                                           & $ j $                                                   & $ 1 $ & $ u+u_2^G+u_j^D $                               \\
+        \midrule
+        \multicolumn{3}{c}{$ \log{\mu_{2\bullet 7}/\mu_{2\bullet 1}} $} & $ =\textcolor{HotPink}{u_7^P+u_{27}^{GP}+u_{7j}^{DP}} $                                                           \\\\
+        \midrule
+        $ 1 $                                                           & $ j $                                                   & $ 7 $ & $ u+u_j^D+u_7^P+u_{7j}^{DP} $                   \\
+        $ 1 $                                                           & $ j $                                                   & $ 1 $ & $ u+u_j^D $                                     \\
+        \midrule
+        \multicolumn{3}{c}{$ \log{\mu_{1\bullet 7}/\mu_{1\bullet 1}} $} & $ =\textcolor{Green}{u_7^P+u_{7j}^{DP}} $
+    \end{tabular}
+\end{table}
+\begin{Example}{}
+    \textbf{Q}: Find a general expression for the Marginal Nominal OR for party affiliation and
+    gender.
+\end{Example}
+\[ \psi_{i\bullet k}^{M\; GP}=\exp{u_{ik}^{GP}},\; i=2,\, k=2,\ldots,7 \]
+\begin{Example}{}
+    \textbf{Q}: Find a general expression for the Marginal Nominal OR for party affiliation and
+    highest degree earned.
+\end{Example}
+\begin{align*}
+    \psi_{\bullet jk}^{M\; DP}
+     & =\frac{\pi_{\bullet jk}\pi_{\bullet,j+1,k+1}}{\pi_{\bullet,j+1,k}\pi_{\bullet,j,k+1}} \\
+     & =\frac{\mu_{\bullet jk}\mu_{\bullet,j+1,k+1}}{\mu_{\bullet,j+1,k}\mu_{\bullet,j,k+1}} \\
+     & =\exp{u_{jk}^{DP}+u_{j+1,k+1}^{DP}-u_{j+1,k}^{DP}-u_{j,k+1}^{DP} }.
+\end{align*}
+\begin{align*}
+    \log{\psi_{\bullet jk}^{M\; DP}}
+     & =\log{\mu_{\bullet jk}/\mu_{\bullet,j+1,k}}-\log{\mu_{\bullet,j,k+1}/\mu_{\bullet,j+1,k+1}}                                                 \\
+     & =(\textcolor{HotPink}{u_j^D+u_{jk}^{DP}-u_{j+1}^{D}-u_{j+1,k}^{DP}})-(\textcolor{Green}{u_j^D+u_{j,k+1}^{DP}-u_{j+1}^{D}-u_{j+1,k+1}^{DP}}) \\
+     & =u_j^D+u_{jk}^{DP}-u_{j+1}^{D}-u_{j+1,k}^{DP}-u_j^D-u_{j,k+1}^{DP}+u_{j+1}^{D}+u_{j+1,k+1}^{DP}                                             \\
+     & =u_{jk}^{DP}-u_{j+1,k}^{DP}-u_{j,k+1}^{DP}+u_{j+1,k+1}^{DP}                                                                                 \\
+     & =u_{jk}^{DP}+u_{j+1,k+1}^{DP}-u_{j+1,k}^{DP}-u_{j,k+1}^{DP}.
+\end{align*}
+Therefore,
+\[ \psi_{\bullet jk}^{M\; DP}=\exp{u_{jk}^{DP}+u_{j+1,k+1}^{DP}-u_{j+1,k}^{DP}-u_{j,k+1}^{DP}}. \]
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cccl}
+        $ G $                                                                   & $ D $                                                                     & $ P $   & $ \log{\mu_{ijk}} $                                             \\
+        \midrule
+        $ i $                                                                   & $ j $                                                                     & $ k $   & $ u+u_i^G+u_j^D+u_k^P+u_{ik}^{GP}+u_{jk}^{DP} $                 \\
+        $ i $                                                                   & $ j+1 $                                                                   & $ k $   & $ u+u_i^G+u_{j+1}^D+u_k^P+u_{ik}^{GP}+u_{j+1,k}^{DP} $          \\
+        \midrule
+        \multicolumn{3}{c}{$ \log{\mu_{\bullet jk}/\mu_{\bullet,j+1,k}} $}      & $ =\textcolor{HotPink}{u_j^D+u_{jk}^{DP}-u_{j+1}^{D}-u_{j+1,k}^{DP}} $                                                                                \\\\
+        \midrule
+        $ i $                                                                   & $ j $                                                                     & $ k+1 $ & $ u+u_i^G+u_{j}^D+u_{k+1}^P+u_{i,k+1}^{GP}+u_{j,k+1}^{DP} $     \\
+        $ i $                                                                   & $ j+1 $                                                                   & $ k+1 $ & $ u+u_i^G+u_{j+1}^D+u_{k+1}^P+u_{i,k+1}^{GP}+u_{j+1,k+1}^{DP} $ \\
+        \midrule
+        \multicolumn{3}{c}{$ \log{\mu_{\bullet,j,k+1}/\mu_{\bullet,j+1,k+1}} $} & $ =\textcolor{Green}{u_j^D+u_{j,k+1}^{DP}-u_{j+1}^{D}-u_{j+1,k+1}^{DP}} $
+    \end{tabular}
+\end{table}
+
+\section*{Topic 5a: Introduction to Overdispersion}
+\addcontentsline{toc}{section}{Topic 5a: Introduction to Overdispersion}
+\subsection*{Chapter 5: Introduction to Overdispersion}
+\begin{itemize}
+      \item Recall the Exponential Family:
+            \[ \textcolor{Blue}{ f(y;\theta,\phi)=\exp*{\frac{y\theta-b(\theta)}{a(\phi)}+c(y;\phi)} }. \]
+      \item \textcolor{Blue}{Canonical parameter}: $ \theta $.
+      \item \textcolor{Blue}{Dispersion parameter}: $ \phi $.
+      \item \textcolor{Blue}{Mean}: $ \E{Y}=b^\prime(\theta)=\mu $.
+      \item \textcolor{Blue}{Variance}: $ \Var{Y}=b^{\prime\prime}(\theta)a(\phi) $.
+      \item Up to now, we always had either $ \phi=1 $ (Binomial \& Poisson) or $ \phi $ known (Normal with $ \sigma^2 $ known).
+\end{itemize}
+\subsection*{Introduction to Overdispersion}
+\begin{itemize}
+      \item Frequently we will have a poor fit of a GLM to the data because the variance of
+            our model is too restrictive.
+      \item Recall for the Poisson: $ \E{Y}=\Var{Y}=\mu $.
+      \item But what if we observe count data where $ \Var{Y}>\E{Y} $?
+            \begin{itemize}
+                  \item Here, we say the data is \textcolor{Red}{overdispersed}.
+            \end{itemize}
+      \item Recall for the Binomial: $ \E{Y}=n\pi $ and $ \Var{Y}=n\pi(1-\pi) $.
+      \item \textcolor{Blue}{We will cover 2 methods for dealing with overdispersion}:
+            \begin{enumerate}[1.]
+                  \item \textcolor{Blue}{Ad hoc}: Introduce and estimate a dispersion parameter $ \phi $ for a distribution that
+                        doesn't naturally have one.
+                  \item \textcolor{Blue}{Mixed Model}: Introduce a new random variable which acts as a dispersion factor.
+            \end{enumerate}
+\end{itemize}
+\subsection*{Why Adjust for Overdispersion?}
+\begin{itemize}
+      \item If the data is \textcolor{Red}{overdispersed}, then generally $ \Var{\hat{\beta}_j} $ will be underestimated.
+      \item \textcolor{Blue}{We adjust for overdispersion to}:
+            \begin{itemize}
+                  \item ``Correct'' the fitted standard errors.
+                  \item Increase the width of confidence intervals to reflect variation in the data.
+                  \item Reduce the risk false positive findings for covariate effects (i.e., when we reject $ \HN $: $ \beta_j=0 $
+                        because $ \se{\hat{\beta}_j} $ is too small).
+            \end{itemize}
+\end{itemize}
+\subsection*{Ad Hoc Method for Poisson}
+\begin{itemize}
+      \item Consider one observation from a Poisson distribution:
+            \[ \textcolor{Blue}{f(y;\theta,\phi)=\frac{\mu^y e^{-\mu}}{y!}=\exp{y\log{\mu}-\mu-\log{y!}}}. \]
+            \[ \begin{array}{lll}
+                        \theta=\log{\mu} & b(\theta)=e^{\theta} & \E{Y}=b^\prime(\theta)=e^{\theta}=\mu.                  \\
+                        \phi=1           & a(\phi)=1            & \Var{Y}=b^{\prime\prime}(\theta)a(\phi)=e^{\theta}=\mu.
+                  \end{array} \]
+      \item We want to allow for data where $ \Var{Y}>\E{Y} $.
+      \item Introduce a \textcolor{Red}{dispersion parameter} $ a(\phi)=\phi>0 $.
+      \item Let $ \Var{Y}=\mu\phi $ to allow for \emph{extra Poisson variation}.
+      \item This does not actually correspond to an actual probability model.
+      \item How do we estimate $ \phi $?
+\end{itemize}
+\subsection*{Ad Hoc Method for any GLM}
+\begin{itemize}
+      \item Consider one observation from the exponential family:
+            \[ \textcolor{Blue}{f(y_i,\theta_i,\phi)=\exp*{\frac{y_i\theta_i-b(\theta_i)}{a_i(\phi)}+c(y_i;\phi)}}, \]
+            where we assume $ a_i(\phi)=\phi/w_i $.
+      \item We can then write the log-likelihood of a random sample as:
+            \begin{align*}
+                  \ell(\theta,\phi)
+                   & =\sum \ell_i(\theta_i;y_i,\phi)                             \\
+                   & =\sum w_i \frac{y_i\theta_i-b(\theta_i)}{\phi}+c(y_i;\phi).
+            \end{align*}
+      \item Consider a LR/Deviance test of
+            \begin{itemize}
+                  \item $ \HN $: $ p $-dim model constrained is adequate ($ \hat{\theta}_i $).
+                  \item $ \HA $: $ q $-dim model is adequate ($ \tilde{\theta}_i $), $ n\ge q>p $.
+            \end{itemize}
+      \item The Deviance can be written as:
+            \begin{align*}
+                  D^\star
+                   & =2\bigl(\ell(\tilde{\theta},\phi)-\ell(\hat{\theta},\phi)\bigr)                                                                         \\
+                   & =2\biggl(\sum  w_i \frac{y_i\tilde{\theta}_i-b(\tilde{\theta}_i)}{\phi} -  w_i \frac{y_i\hat{\theta}_i-b(\hat{\theta}_i)}{\phi} \biggr) \\
+                   & =\frac{D}{\phi},
+            \end{align*}
+            where $ D $ is the deviance from a LRT when $ \phi=1 $, that is, the distribution with $ a_i(\phi)=1/w_i $ (easy to get from R).
+\end{itemize}
+\[ D^\star \frac{D}{\phi}. \]
+\begin{itemize}
+      \item Recall $ \HN $: unsaturated $ p $-dim model is adequate vs $ q $-dim super model.
+      \item \textcolor{Blue}{Scaled Deviance}: $ D^\star \sim \chi^2_{q-p} $ under $ \HN $, which implies \textcolor{Blue}{Deviance}: $ D \sim \chi^2_{q-p} $ under $ \HN $.
+      \item Note: $ q=n $ if the alternative model is the saturated model.
+      \item Fact: $ \E{\chi^2_{(m)}}=m $ and therefore $ \E{\chi^2_{n-p}}=n-p $.
+      \item Fit an unsaturated $ p $-dim model with a GLM with $ \phi=1 $ to estimate $ D $.
+      \item Check if $ D \sim \chi^2_{n-p} $ by comparing to $ \E{D}=n-p $.
+            \begin{itemize}
+                  \item If $ D\gg n-p $, then this indicates overdispersion exists \textcolor{Blue}{(need to estimate $ \phi $)}.
+                  \item If $ D \approx n-p $, then $ \phi\approx 1 $, and there's no overdispersion.
+            \end{itemize}
+      \item \textcolor{Blue}{How do we estimate $ \phi $?}
+      \item Fit an unsaturated $ p $-dim model with a GLM with $ \phi=1 $.
+      \item Method of Moments estimator:
+            \[ \E{D}=\phi(n-p)\implies \hat{\phi}=\frac{D}{n-p}. \]
+      \item \textcolor{Blue}{How do we use $ \hat{\phi} $ to adjust standard errors?}
+      \item Unadjusted covariance matrix (from GLM with $ \phi=1 $):
+            \[ \Cov{\hat{\Vector{\beta}}}=(\Matrix{X}\MatrixCal{W}\Matrix{X}^\top)^{-1}=\mathcal{I}^{-1}. \]
+      \item Adjusted covariance matrix:
+            \[ \Covadj{\hat{\Vector{\beta}}}\simeq \hat{\phi} (\Matrix{X}\MatrixCal{W}\Matrix{X}^\top)^{-1}=\hat{\phi}\mathcal{I}^{-1}. \]
+      \item Adjusted standard errors:
+            \[ \seadj{\hat{\beta}_j}=\sqrt{\hat{\phi}}\se{\hat{\beta}_j}. \]
+\end{itemize}
+\subsection*{Summary: Ad Hoc Method}
+\begin{enumerate}[1.]
+      \item Fit the usual GLM to the data and find the best fitting model.
+      \item Check for evidence of overdispersion (i.e., $ D\gg n-p $).
+      \item If overdispersion is present, estimate
+            \[ \hat{\phi}=\frac{D}{n-p}. \]
+      \item Adjusted covariance matrix and standard error estimates
+            \[ \Covadj{\hat{\Vector{\beta}}}\simeq \hat{\phi}\Cov{\hat{\Vector{\beta}}}=\hat{\phi}\mathcal{I}^{-1},
+                  \qquad \seadj{\hat{\beta}_j}=\sqrt{\hat{\phi}}\se{\hat{\beta}_j}. \]
+      \item This does not change the estimates $ \hat{\beta}_j $ from the GLM.
+      \item May change the significance of the estimates though.
+      \item With $ \phi>1 $, confidence intervals will increase in width.
+\end{enumerate}
+\subsection*{Application: Analysis of an Epilepsy Trial}
+\begin{itemize}
+      \item Clinical trial was conducted involving $59$ patients with epilepsy.
+      \item Patients were randomized to one of two treatments, a \textcolor{Blue}{standard therapy} or a \textcolor{Blue}{new drug}
+            designed to reduce the number of epileptic attacks experienced.
+      \item The primary response is the number of attacks experienced during the first two
+            weeks after randomization.
+      \item The data are given on the next slide where:
+            \begin{itemize}
+                  \item $ Y_k= $ number attacks in $ k\textsuperscript{th} $ period after randomization.
+                  \item \texttt{treat} is the treatment indicator variable with \texttt{treat=1} for the experimental treatment
+                        and \texttt{treat=0} otherwise.
+                  \item \texttt{prior} records the number of epileptic attacks experience for the month prior to entry into the study.
+                  \item \texttt{age} is a patient age at randomization in years.
+            \end{itemize}
+\end{itemize}
+\subsection*{R Data for Univariate Analysis}
+\begin{itemize}
+      \item First consider analyses based on the data from the first two-week period after
+            randomization, that is, $ Y_{i1} $, $ i=1,2,\ldots,n $.
+      \item \textcolor{Blue}{Poisson Model}, that is, $ Y_{i1}\sim \POI{\mu_i} $, with $ \log{\mu_i}=\Vector{x}_i^\top \Vector{\beta} $.
+      \item Explanatory variables:
+            \begin{align*}
+                  x_{i1} & =\Ind{\texttt{treat=1}}, \\
+                  x_{i2} & =\Ind{\texttt{prior}},   \\
+                  x_{i3} & =\Ind{\texttt{age}}.
+            \end{align*}
+      \item We are primarily interested in the \texttt{treatment effect} $ \beta_1 $.
+\end{itemize}
+\begin{Example}{Data from Epilepsy Trial}
+      We show the first 5 rows.
+      %\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+  treat prior age yi1 treatf treatft
+1     0    11  31   5      0       0
+2     0    11  30   3      0       0
+3     0     6  25   2      0       0
+4     0     8  36   4      0       0
+5     0    66  22   7      0       0
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+      %\end{noindent}
+\end{Example}
+\subsection*{R Code and Output: Poisson Model}
+%\begin{noindent}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{poisson1} \hlkwb{<-} \hlkwd{glm}\hlstd{(yi1} \hlopt{~} \hlstd{treatft} \hlopt{+} \hlstd{prior} \hlopt{+} \hlstd{age,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= epi.dat)}
+\hlkwd{summary}\hlstd{(poisson1)}
+\end{alltt}
+\begin{verbatim}
+
+Call:
+glm(formula = yi1 ~ treatft + prior + age, family = poisson, 
+    data = epi.dat)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-3.1032  -1.3062  -0.5186   0.2927   5.1109  
+
+Coefficients:
+              Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  0.2049069  0.2269314   0.903   0.3666    
+treatft1    -0.2046787  0.0895007  -2.287   0.0222 *  
+prior        0.0253958  0.0009733  26.092  < 2e-16 ***
+age          0.0324881  0.0063375   5.126 2.95e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 746.44  on 58  degrees of freedom
+Residual deviance: 197.61  on 55  degrees of freedom
+AIC: 402.11
+
+Number of Fisher Scoring iterations: 5
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+%\end{noindent}
+\subsection*{Results of Fitted Poisson Model}
+\[ \log{\mu_i}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}. \]
+\begin{table}[H]
+      \centering
+      \begin{tabular}{lccc}
+            Model             & Parameter   & Estimate    & $ \widehat{\text{se}} $ \\
+            \midrule
+            \texttt{poisson1} & $ \beta_1 $ & $ -0.2047 $ & $ 0.0895 $              \\
+            \bottomrule
+      \end{tabular}
+\end{table}
+\[ \hat{\RR}=\exp{\hat{\beta}_1}=\exp{-0.2047}=0.815. \]
+\begin{itemize}
+      \item The relative rate of seizures in the treatment group versus the control group over
+            the first two weeks of the study controlling for prior seizure count and age.
+\end{itemize}
+\subsection*{Ad Hoc Method}
+\begin{itemize}
+      \item $ D\gg n-p $, so we need to account for overdispersion in this model:
+            \[ \hat{\phi}=\frac{D}{n-p}=\frac{197.61}{59-4}=3.593. \]
+      \item Use $ \hat{\phi} $ to adjust the standard error estimates:
+            \[ \estseadj{\hat{\beta}_1}=\sqrt{\hat{\phi}}\estse{\hat{\beta}_1}=\sqrt{3.593}(0.0895)=0.1696. \]
+            \begin{table}[H]
+                  \centering
+                  \begin{tabular}{lcccc}
+                        Model             & Parameter   & Estimate    & $ \hat{\text{se}} $ & $ \widehat{\hat{se}}_{\text{adj}} $ \\
+                        \midrule
+                        \texttt{poisson1} & $ \beta_1 $ & $ -0.2047 $ & $ 0.0895 $          & $0.1696$                            \\
+                                          & $ \phi $    & $3.593$                                                                 \\
+                        \bottomrule
+                  \end{tabular}
+            \end{table}
+      \item In the Poisson model the treatment effect was statistically significant ($ p=0.0222 $).
+      \item Is $ \beta_1 $ statistically significant after account for the overdispersion?
+      \item Test $ \HN $: $ \beta_1=0 $ versus $ \HA $: $ \beta_1\ne 0 $ using a Wald test:
+            \[ t=\frac{\abs{\hat{\beta}_1-0}}{\estseadj{\hat{\beta}_1}}=\frac{\abs{-0.2047}}{0.1696}=1.21. \]
+            \[ p=\Prob{\abs{Z}>1.21}=0.23. \]
+      \item After adjustment for overdispersion, we do not reject the null hypothesis of no
+            treatment effect.
+\end{itemize}
+\subsection*{Mixed Poisson Model}
+\begin{itemize}
+      \item To form a Mixed Model we introduce a new random variable $ u_i $ which acts as a
+            \textcolor{Blue}{dispersion factor}. Assume:
+            \[ \E{u_i}=1\qquad \text{and}\qquad \Var{u_i}=\phi. \]
+      \item For a Poisson model let: $ Y_i\mid u_i \sim \POI{u_i,\lambda} $, so that
+            \[ f(y_i\mid u_i;\lambda)=\frac{(u_i\lambda)^{y_i}e^{-u_i\lambda}}{y_i!},\; y=0,1,2,\ldots. \]
+      \item This is called a \textcolor{Blue}{mixed Poisson model}.
+      \item The $ u_i>0 $ factor deflates ($ u_i<1 $) or inflates ($ u_i>1 $) the mean response for the $ i\textsuperscript{th} $ subject relative to $ \lambda $.
+      \item Recall we assume $ \E{u_i}=1 $ and $ \Var{u_i}=\phi $.
+      \item Find the unconditional mean and variance of $ Y_i $:
+            \begin{align*}
+                  \E{Y_i}
+                   & =\E[\big]{\E{Y_i\given u_i}}                    \\
+                   & =\E{u_i\lambda}                                 \\
+                   & =\lambda\E{u_i}                                 \\
+                   & =\lambda=\text{(the population mean response)}.
+            \end{align*}
+            \begin{align*}
+                  \Var{Y_i}
+                   & =\Var[\big]{\E{Y_i\given u_i}}+\E[\big]{\Var{Y_i\given u_i}} \\
+                   & =\Var{u_i\lambda}+\E{u_i\lambda}                             \\
+                   & =\lambda^2\Var{u_i}+\lambda\E{u_i}                           \\
+                   & =\lambda^2 \phi+\lambda                                      \\
+                   & =\lambda(1+\lambda \phi).
+            \end{align*}
+      \item The variance is inflated by a factor of $ 1+\lambda\phi $.
+      \item Now we need to pick a distribution for $ u_i>0 $.
+      \item Assume $ u_i $ has a \textcolor{Blue}{Gamma Distribution}:
+            \[ g(u_i;\alpha,\beta)=\frac{1}{\Gamma(\alpha)\beta^\alpha}u_i^{\alpha-1}e^{-u_i/\beta}, \]
+            with $ \E{u_i}=\alpha\beta $ and $ \Var{u_i}=\alpha\beta^2 $.
+      \item With $ \E{u_i}=1 $ and $ \Var{u_i}=\phi $, this implies $ \alpha=1/\phi $ and $ \beta=\phi $.
+      \item Mixed Poisson model with Gamma distribution $ \implies $ \textcolor{Blue}{Negative Binomial distribution}.
+      \item We will derive the marginal (unconditional) likelihood.
+      \item We've assumed that $ u_i $ has a \textcolor{Blue}{Gamma Distribution}:
+            \[ g(u_i;\alpha,\beta)=\frac{1}{\Gamma(\alpha)\beta^\alpha}u_i^{\alpha-1}e^{-u_i/\beta}. \]
+      \item \textcolor{Blue}{Fact}: the probability mass function's integrate to one,
+            \[ 1=\int_{0}^{\infty}\frac{1}{\Gamma(\alpha)\beta^\alpha}u^{\alpha-1}e^{-u/\beta}\odif{u}. \]
+      \item Which implies:
+            \[ \Gamma(\alpha)\beta^\alpha=\int_{0}^{\infty}u^{\alpha-1}e^{-u\beta}\odif{u}. \]
+      \item Therefore,
+            \begin{align*}
+                  p(y_i;\lambda,\phi)
+                   & =\int_{0}^{\infty} f(y_i\mid u_i,\lambda) g(u_i; \phi) \odif{u}                                                                                                       \\
+                   & =\int_{0}^{\infty} \frac{(u_i \lambda)^{y_i} e^{-u_i \lambda}}{y_i!}\frac{u_i^{\alpha-1} e^{-u_i / \beta}}{\Gamma(\alpha) \beta^{\alpha}} \odif{u}                    \\
+                   & =\frac{\lambda^{y_i}}{y_i ! \Gamma(\alpha) \beta^{\alpha}} \int_{0}^{\infty} u_i^{y_i+\alpha-1} e^{-u_i(\lambda+1 / \beta)} \odif{u}                                  \\
+                   & =\frac{\lambda^{y_i}}{y_i ! \Gamma(\alpha) \beta^{\alpha}} \Gamma(y_i+\alpha)\biggl(\frac{\beta}{1+\beta \lambda}\biggr)^{\! y_i+\alpha}                              \\
+                   & =\frac{\Gamma(y_i+\alpha)}{y_i ! \Gamma(\alpha)}\biggl(\frac{\lambda \beta}{1+\lambda \beta}\biggr)^{\!y_i}\biggl(\frac{1}{1+\lambda \beta}\biggr)^{\alpha}           \\
+                   & =\frac{\Gamma(y_i+\phi^{-1})}{y_{i !} \Gamma(\phi^{-1})}\biggl(\frac{\lambda \phi}{1+\lambda \phi}\biggr)^{\! y_i}\biggl(\frac{1}{1+\lambda \phi}\biggr)^{\phi^{-1}}.
+            \end{align*}
+\end{itemize}
+\subsection*{Negative Binomial Distribution}
+\begin{itemize}
+      \item The pmf of the Negative Binomial can be written as:
+            \[ \Prob{X=x}=\frac{\Gamma(a+x)}{\Gamma(a)\Gamma(x+1)}\biggl(\frac{b}{1+b}\biggr)^{\!x}\biggl(\frac{1}{1+b}\biggr)^{a}, \]
+            with $ \E{X}=ab $, and $ \Var{X}=ab(1+b) $.
+      \item Here we have $ Y_i \sim \NB{a=1/\phi,b=\lambda\phi} $, where
+            \begin{align*}
+                  \E{Y_i} & =ab=\frac{1}{\phi}(\lambda\phi)=\lambda. \\
+                  \Var{Y_i}=ab(1+b)=\frac{1}{\phi}(\lambda\phi)(1+\lambda\phi)=\lambda(1+\lambda\phi).
+            \end{align*}
+      \item Therefore, we've shown that Poisson model mixed with Gamma distribution $ \implies $ Negative Binomial distribution.
+\end{itemize}
+\subsection*{Negative Binomial Model}
+\begin{itemize}
+      \item Now consider including covariates in the model.
+      \item Assume we are using a \textcolor{Blue}{log link}:
+            \[ \log{\lambda_i}=\Vector{x}_i^\top \Vector{\beta}. \]
+      \item The likelihood for a sample of size $ n $ with $ Y_1,\ldots,Y_n $ and $ \Vector{x}_i $ a $ p\times 1 $ vector of explanatory
+            variables is:
+            \[ L(\Vector{\beta},\phi)=\prod_{i=1}^n
+                  \biggl[\frac{\Gamma(y_i+\phi^{-1})}{y_i!\Gamma(\phi^{-1})}
+                  \biggl(\frac{\phi e^{\Vector{x}_i^\top \Vector{\beta}}}{1+\phi e^{\Vector{x}_i^\top \Vector{\beta}}}\biggr)^{\!y_i}
+                  \biggl(\frac{1}{1+\phi e^{\Vector{x}_i^\top \Vector{\beta}}}\biggr)^{\!\phi^{-1}}
+                  \biggr]. \]
+      \item Not a member the exponential family (unless $ \phi $ known).
+      \item Use iterative maximization in R: \texttt{glm.nb()} from \texttt{MASS} library.
+            \begin{itemize}
+                  \item Maximize $ \ell(\Vector{\beta},\hat{\phi}^{(r)}) $ at the current estimate $ \hat{\phi}^{(r)}\implies \hat{\Vector{\beta}}^{(r)} $ (IRWLS).
+                  \item Maximize $ \ell(\Vector{\beta},\phi) $ with respect to $ \phi\implies \hat{\phi}^{(r+1)} $.
+            \end{itemize}
 \end{itemize}
 \end{document}

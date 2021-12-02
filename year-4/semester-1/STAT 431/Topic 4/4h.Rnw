@@ -1,0 +1,516 @@
+\makeheading{Week 11}{\daterange{2021-11-15}{2021-11-19}}
+\section*{Topic 4h: Log Linear Model Applications Wrap-Up}
+\addcontentsline{toc}{section}{Topic 4h: Log Linear Model Applications Wrap-Up}
+\subsection*{Application 2: Seatbelt Use and Fatality of Accidents}
+We now consider the special case of a $ 2\times 2\times 2 $ table.
+\begin{Example}{Florida Department of Highway Safety and Motor vehicles (Bishop \emph{et al} 1975)}
+    \begin{center}
+        \begin{NiceTabular}{ccrr}
+            \toprule
+            &                 &           \Block{1-2}{Injury ($ Z $)} \\
+            Seatbelt ($ V $) & Ejected ($ W $) & Non-fatal & Fatal          \\
+            \midrule
+            \Block{2-1}{Used} & Yes & $ 1105 $ & $ 14 $\\
+            & No & $ 411111 $ & $ 483 $\\
+            \Block{2-1}{Not Used} & Yes & $ 4624 $ & $ 497 $\\
+            & No & $ 157342 $ & $ 1008 $\\
+            \bottomrule
+        \end{NiceTabular}
+    \end{center}
+\end{Example}
+\begin{itemize}
+    \item Rewriting the data table in general notation, we have:
+          \begin{table}[H]
+              \centering
+              \begin{NiceTabular}{cccc}
+                  \toprule
+                  &                 &           \Block{1-2}{Injury ($ Z $)} \\
+                  Seatbelt ($ V $) & Ejected ($ W $) & Non-fatal ($ k=1 $) & Fatal ($ k=2 $)          \\
+                  \midrule
+                  \Block{2-1}{Used ($ i=2 $)} & Yes  ($ j=2 $) & $ y_{221} $ & $ y_{222} $\\
+                  & No  ($ j=1 $) & $ y_{211} $ & $ y_{212} $\\
+                  \Block{2-1}{Not Used ($ i=1 $)} & Yes ($ j=2 $) & $ y_{121} $ & $ y_{122} $\\
+                  & No ($ j=1 $) & $ y_{111} $ & $ y_{112} $\\
+                  \bottomrule
+              \end{NiceTabular}
+          \end{table}
+    \item Where $ Y_{ijk}\sim \POI{\mu_{ijk}} $, $ i=1,2 $, $ j=1,2 $, $ k=1,2 $.
+    \item The saturated model is:
+          \[ \textcolor{Blue}{\log{\mu_{ijk}}=u+u_i^V+u_j^W+u_k^Z+u_{ij}^{VW}+u_{ik}^{VZ}+u_{jk}^{WZ}+u_{ijk}^{VWZ}}. \]
+    \item Try to identify simpler models which still fit the data well and are easy to interpret.
+    \item Note that in this table only $ y_{\bullet\bullet\bullet} $ is fixed and so only the intercept needs to be
+          included by design.
+\end{itemize}
+\subsection*{R Dataset}
+\begin{Example}{Accident Data}
+    <<echo=FALSE>>=
+    acc.dat = read.table("acc.dat", header = T)
+    acc.dat
+    @
+\end{Example}
+\subsection*{R Code}
+%\begin{noindent}
+    <<results='hide',fig.show='hide'>>=
+    acc.dat$s = factor(acc.dat$s)
+    acc.dat$e = factor(acc.dat$e)
+    acc.dat$i = factor(acc.dat$i)
+
+    # Model 1: (VWZ) Saturated
+    model1=glm(y~s*e*i,family=poisson,data=acc.dat)
+    summary(model1)
+
+    # Model 2  (VW,VZ,WZ) Homogeneous Association (test vs Model 1)
+    model2=glm(y~s*e+s*i+e*i,family=poisson,data=acc.dat)
+    summary(model2)
+    1-pchisq(model2$deviance-model1$deviance,model2$df.residual-model1$df.residual)
+    acc.dat$fv = model2$fitted.values
+    acc.dat
+
+    # Model 3: (VW, VZ) Conditional Independence Model (test vs Model 2)
+    model3=glm(y~s*e+s*i,family=poisson,data=acc.dat)
+    model3$df.residual
+    model3$deviance
+    1-pchisq(model3$deviance-model2$deviance,model3$df.residual-model2$df.residual)
+
+    # Model 4: (VW, WZ) Conditional Independence Model (test vs Model 2)
+    model4=glm(y~s*e+e*i,family=poisson,data=acc.dat)
+    model4$df.residual
+    model4$deviance
+    1-pchisq(model4$deviance-model2$deviance,model4$df.residual-model2$df.residual)
+
+    # Model 5: (VZ, WZ) Conditional Independence Model (test vs Model 2)
+    model5=glm(y~s*i+e*i,family=poisson,data=acc.dat)
+    model5$df.residual
+    model5$deviance
+    1-pchisq(model5$deviance-model2$deviance,model5$df.residual-model2$df.residual)
+    @
+%\end{noindent}
+\subsection*{R Output: Model 1 $ (VWZ) $}
+%\begin{noindent}
+    <<>>=
+    summary(model1)
+    @
+%\end{noindent}
+\subsection*{R Output: Model 2 $ (VW,VZ,WZ) $}
+%\begin{noindent}
+    <<>>=
+    summary(model2)
+    1-pchisq(model2$deviance-model1$deviance,model2$df.residual-model1$df.residual)
+    acc.dat$fv = model2$fitted.values
+    acc.dat
+    @
+%\end{noindent}
+\begin{itemize}
+    \item $ \HN $: $ u_{222}^{VWZ}=0 $ versus $ \HA $: $ u_{222}^{VWZ}\ne 0 $.
+          \[ p=\Prob*{\chi^2_{(1)}>2.854}=0.09. \]
+    \item \textcolor{Blue}{Do not reject} the null hypothesis that the fit of model 2 is adequate, as compared
+          to model 1 (saturated).
+\end{itemize}
+\subsection*{R Output: Models 3 $(VW , VZ )$, 4 $(VW , WZ )$, 5 $(VZ , WZ )$}
+%\begin{noindent}
+    <<>>=
+    # Model 3: (VW, VZ) Conditional Independence Model (test vs Model 2)
+    model3=glm(y~s*e+s*i,family=poisson,data=acc.dat)
+    model3$df.residual
+    model3$deviance
+    1-pchisq(model3$deviance-model2$deviance,model3$df.residual-model2$df.residual)
+
+    # Model 4: (VW, WZ) Conditional Independence Model (test vs Model 2)
+    model4=glm(y~s*e+e*i,family=poisson,data=acc.dat)
+    model4$df.residual
+    model4$deviance
+    1-pchisq(model4$deviance-model2$deviance,model4$df.residual-model2$df.residual)
+
+    # Model 5: (VZ, WZ) Conditional Independence Model (test vs Model 2)
+    model5=glm(y~s*i+e*i,family=poisson,data=acc.dat)
+    model5$df.residual
+    model5$deviance
+    1-pchisq(model5$deviance-model2$deviance,model5$df.residual-model2$df.residual)
+    @
+%\end{noindent}
+\begin{itemize}
+    \item \textcolor{Blue}{Reject} the null hypotheses that the fit of models 3, 4, 5 are adequate, as
+          compared to model 2.
+\end{itemize}
+\subsection*{Summary of Fitted Models}
+The following analysis of deviance table summarizes our findings.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccccc}
+        \toprule
+        \textcolor{Blue}{Model} & \textcolor{Blue}{Form} & \textcolor{Blue}{Residual Deviance} & \textcolor{Blue}{Residual d.f.} & \textcolor{Blue}{$ p $-value} \\
+        \midrule
+        1                       & $ (VWZ) $              & 0                                   & 0                               & NA                            \\
+        \midrule
+        2                       & $(VW, VZ, WZ)$         & $2.85$                              & $1$                             & $0.09$ (vs 1)                 \\
+        \midrule
+        3                       & $(VW, VZ)$             & $1680.41$                           & $2$                             & $<0.001$ (vs 2)               \\
+        4                       & $(VW, WZ)$             & $1144.64$                           & $2$                             & $<0.001$  (vs 2)              \\
+        5                       & $(VZ, WZ)$             & $7133.98$                           & $2$                             & $<0.001$  (vs 2)              \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+\begin{itemize}
+    \item Conclude that \textcolor{Blue}{Model 2 $ (VW,VZ,WZ) $ is most appropriate}.
+    \item \textcolor{Blue}{Homogeneous Association}: All variables are associated in a pairwise fashion, but
+          this degree of association does not depend on the level of the third variable.
+\end{itemize}
+\subsection*{Interpretation of Model 2 $(VW , VZ , WZ )$}
+\begin{itemize}
+    \item Consider the following table of fitted and observed values from this model:
+          \begin{table}[H]
+              \centering
+              \begin{NiceTabular}{cccc}
+                  \toprule
+                  &                 &           \Block{1-2}{Injury ($ Z $)} \\
+                  Seatbelt ($ V $) & Ejected ($ W $) & Non-fatal ($ k=1 $) & Fatal ($ k=2 $)          \\
+                  \midrule
+                  \Block{2-1}{Used ($ i=2 $)} & Yes  ($ j=2 $) & $ \hat{\mu}_{221}=1098.1 $, $y_{221}=1105 $ & $ \hat{\mu}_{222}=20.9 $, $ y_{222}=14 $\\
+                  & No  ($ j=1 $) & $ \hat{\mu}_{211}=411117.9 $, $ y_{211}=411111 $ & $ \hat{\mu}_{212}=476.1 $, $ y_{212}=483 $\\
+                  \Block{2-1}{Not Used ($ i=1 $)} & Yes ($ j=2 $) & $ \hat{\mu}_{121}=4630.9 $, $ y_{121}=4624 $ & $ \hat{\mu}_{122}=490.1 $, $ y_{122}=497 $\\
+                  & No ($ j=1 $) & $ \hat{\mu}_{111}=157335.1 $, $ y_{111}=157342 $ & $ \hat{\mu}_{112}=1014.9 $, $ y_{112}=1008 $\\
+                  \bottomrule
+              \end{NiceTabular}
+          \end{table}
+    \item And the following row percentages (across levels of $ VW $):
+          \begin{table}[H]
+              \centering
+              \begin{NiceTabular}{ccrr}
+                  \toprule
+                  &                 &           \Block{1-2}{Injury ($ Z $)} \\
+                  Seatbelt ($ V $) & Ejected ($ W $) & Non-fatal & Fatal          \\
+                  \midrule
+                  \Block{2-1}{Used} & Yes & $ 98.7 $ & $ 1.3 $\\
+                  & No & $ 99.9 $ & $ 0.1 $\\
+                  \Block{2-1}{Not Used} & Yes & $ 90.4 $ & $ 9.6 $\\
+                  & No & $ 99.4 $ & $ 0.6 $\\
+                  \bottomrule
+              \end{NiceTabular}
+          \end{table}
+\end{itemize}
+\[ \textcolor{Blue}{\log{\mu_{ijk}}=u+u_i^V+u_j^W+u_k^Z+u_{ij}^{VW}+u_{ik}^{VZ}+u_{jk}^{WZ}+u_{ijk}^{VWZ}}. \]
+\begin{itemize}
+    \item In previous Poisson log linear models (ships \& rats examples) the regression
+          coefficients had \textcolor{Red}{log Relative Rate} interpretation
+    \item Parameters for log linear models of contingency tables will have a \textcolor{Red}{log Odds Ratio}
+          interpretation!
+    \item For $ 2\times 2\times K $ tables we can define:
+          \begin{itemize}
+              \item \textcolor{Blue}{Conditional Odds Ratio}:
+                    \[ \psi_{(k)}^{VW}=\frac{\pi_{11k}\pi_{22k}}{\pi_{12k}\pi_{21k}}. \]
+              \item \textcolor{Blue}{Marginal Odds Ratio}:
+                    \[ \psi^{VW}=\frac{\pi_{11\bullet}\pi_{22\bullet}}{\pi_{12\bullet}\pi_{21\bullet}}. \]
+          \end{itemize}
+\end{itemize}
+\subsection*{Conditional Odds Ratio $(2\times 2\times K)$}
+\begin{itemize}
+    \item The Odds Ratio of \textcolor{HotPink}{response ($V = 2$)} in subjects with \textcolor{Green}{$ W = 2 $} versus \textcolor{Green}{$ W = 1 $} at
+          (conditional on being) level $Z = k$.
+          \begin{align*}
+              \psi_{(k)}^{VW}
+               & =\frac{
+                  \Prob{\textcolor{HotPink}{V=2}\given \textcolor{Green}{W=2},Z=k}/\Prob{\textcolor{HotPink}{V=1}\given \textcolor{Green}{W=2},Z=k}
+              }{
+                  \Prob{\textcolor{HotPink}{V=2}\given \textcolor{Green}{W=1},Z=k}/\Prob{\textcolor{HotPink}{V=1}\given \textcolor{Green}{W=1},Z=k}
+              }                                                    \\
+               & =\frac{\pi_{22k}/\pi_{12k}}{\pi_{21k}/\pi_{11k}}  \\
+               & =\frac{\pi_{11k}\pi_{22k}}{\pi_{12k}\pi_{21k}}    \\
+               & =\frac{\pi_{22k}/\pi_{21k}}{\pi_{12k}/\pi_{11k}}.
+          \end{align*}
+    \item This is also the Odds Ratio of \textcolor{Green}{response ($W = 2$)} in subjects with
+          \textcolor{HotPink}{$ V = 2 $} versus \textcolor{HotPink}{$ V = 1 $} at (conditional on being) level $Z = k$.
+\end{itemize}
+\subsection*{Interpretation of Model 2 $(VW , VZ , WZ )$}
+\begin{Example}{}
+    \textbf{Q}: Find the (conditional OR) for a $ \overbrace{\text{\textcolor{Blue}{fatal}}}^{Z=2} $ accident for those
+    $ \overbrace{\text{\textcolor{Blue}{ejected}}}^{W=2} $ \textcolor{Blue}{versus} $ \overbrace{\text{\textcolor{Blue}{not ejected}}}^{W=1} $
+    among passengers who $ \underbrace{\text{\textcolor{Blue}{did not use}}}_{V=1} $ their seatbelt.
+\end{Example}
+\[ \cOR=\psi_{(1)}^{ZW}=\frac{\pi_{122}/\pi_{121}}{\pi_{112}/\pi_{111}}. \]
+\begin{itemize}
+    \item Find the odds of a fatal accident ($Z = 2$) in ejected ($W = 2$), no seatbelt ($V = 1$).
+          \[ \frac{\Prob{Z=2\given W=2,V=1}}{\Prob{Z=1\given W=2,V=1}}=\frac{\Prob{Z=2,W=2,V=1}}{\Prob{Z=1,W=2,V=1}}=\frac{\pi_{122}}{\pi_{121}}
+              =\frac{\mu_{122}/\mu_{\bullet\bullet\bullet}}{\mu_{121}/\mu_{\bullet\bullet\bullet}}=\frac{\mu_{122}}{\mu_{121}}. \]
+          \begin{table}[H]
+              \centering
+              \begin{tabular}{cccl}
+                  $ V $                                           & $ W $                                     & $ Z $ & $ \log{\mu_{ijk}} $           \\
+                  \midrule
+                  $1$                                             & $2$                                       & $2$   & $ u+u_2^W+u_2^Z+u_{22}^{WZ} $ \\
+                  $1$                                             & $2$                                       & $1$   & $ u+u_2^W $                   \\
+                  \midrule
+                  \multicolumn{3}{c}{$\log{\mu_{122}/\mu_{121}}$} & $=\textcolor{HotPink}{u_2^Z+u_{22}^{WZ}}$
+              \end{tabular}
+          \end{table}
+    \item Find the odds of a fatal accident ($ Z=2 $) in not ejected ($ W=1 $), no seatbelt ($ V=1 $).
+          \[ \frac{\Prob{Z=2\given W=1,V=1}}{\Prob{Z=1\given W=1,V=1}}=\frac{\Prob{Z=2,W=1,V=1}}{\Prob{Z=1,W=1,V=1}}=\frac{\pi_{112}}{\pi_{111}}
+              =\frac{\mu_{112}/\mu_{\bullet\bullet\bullet}}{\mu_{111}/\mu_{\bullet\bullet\bullet}}=\frac{\mu_{112}}{\mu_{111}}. \]
+          \begin{table}[H]
+              \centering
+              \begin{tabular}{cccl}
+                  $ V $                                           & $ W $                       & $ Z $ & $ \log{\mu_{ijk}} $ \\
+                  \midrule
+                  $1$                                             & $1$                         & $2$   & $ u+u_2^W+u_2^Z $   \\
+                  $1$                                             & $1$                         & $1$   & $ u $               \\
+                  \midrule
+                  \multicolumn{3}{c}{$\log{\mu_{122}/\mu_{121}}$} & $=\textcolor{Green}{u_2^Z}$
+              \end{tabular}
+          \end{table}
+    \item The expression for the (log) conditional OR is:
+          \[ \log{\cOR}=\log*{\frac{\pi_{122}/\pi_{121}}{\pi_{112}/\pi_{111}}}=\log*{\frac{\mu_{122}/\mu_{121}}{\mu_{112}/\mu_{111}}}=(\textcolor{HotPink}{u_2^Z+u_{22}^{WZ}})-\textcolor{Green}{u_2^Z}=u_{22}^{WZ}. \]
+    \item The estimate of the conditional OR is:
+          \[ \widehat{\cOR}=\exp{\hat{u}_{22}^{WZ}}=\exp{2.80}=16.4. \]
+\end{itemize}
+\begin{Example}{}
+    \textbf{Q}: How would this change if the 3-way interaction term were included in the model?
+\end{Example}
+\begin{itemize}
+    \item No change in the $ \cOR $ for $ V=1 $ (no seatbelt).
+    \item Check that for $ V=2 $ (seatbelt worn) the $ \cOR $ becomes:
+          \[ \psi_{(2)}^{ZW}=\frac{\pi_{222}/\pi_{221}}{\pi_{212}/\pi_{211}}=\exp{u_{22}^{WZ}+u_{222}^{VWZ}}. \]
+          \begin{table}[H]
+              \centering
+              \begin{tabular}{cccl}
+                  $ V $                                           & $ W $                                                               & $ Z $ & $ \log{\mu_{ijk}} $                                                       \\
+                  \midrule
+                  $2$                                             & $2$                                                                 & $2$   & $ u+u_2^V+u_2^W+u_2^Z+u_{22}^{VW}+u_{22}^{VZ}+u_{22}^{WZ}+u_{222}^{VWZ} $ \\
+                  $2$                                             & $2$                                                                 & $1$   & $ u+u_2^V+u_2^W+u_{22}^{VW} $                                             \\
+                  \midrule
+                  \multicolumn{3}{c}{$\log{\mu_{122}/\mu_{121}}$} & $=\textcolor{HotPink}{u_2^Z+u_{22}^{VZ}+u_{22}^{WZ}+u_{22}^{VWZ}} $
+              \end{tabular}
+          \end{table}
+          \begin{table}[H]
+              \centering
+              \begin{tabular}{cccl}
+                  $ V $                                           & $ W $                                    & $ Z $ & $ \log{\mu_{ijk}} $           \\
+                  \midrule
+                  $2$                                             & $1$                                      & $2$   & $ u+u_2^V+u_2^Z+u_{22}^{VZ} $ \\
+                  $2$                                             & $1$                                      & $1$   & $ u+u_2^V $                   \\
+                  \midrule
+                  \multicolumn{3}{c}{$\log{\mu_{122}/\mu_{121}}$} & $=\textcolor{Green}{u_2^Z+u_{22}^{VZ}} $
+              \end{tabular}
+          \end{table}
+          \[ (\textcolor{HotPink}{u_2^Z+u_{22}^{VZ}+u_{22}^{WZ}+u_{22}^{VWZ}})-(\textcolor{Green}{u_2^Z+u_{22}^{VZ}})=u_{22}^{WZ}+u_{222}^{VWZ}. \]
+\end{itemize}
+
+\begin{itemize}
+    \item We can construct several conditional odds ratios for this data set for the saturated
+          model M1 and evaluate under M2:
+          \begin{table}[H]
+              \centering
+              \begin{NiceTabular}{c|c|c|c|c}
+                  \toprule
+                  Outcome & Comparison & At & Form (M1) & Value (M2)\\
+                  \midrule
+                  $ Z=2 $ & $ W=2 $ vs. $ W=1 $ & $ V=1 $ & $ \exp{u_{22}^{WZ}} $ & $ \exp{2.80}=16.4 $\\
+                  $ Z=2 $ & $ W=2 $ vs. $ W=1 $ & $ V=2 $ & $ \exp{u_{22}^{WZ}+u_{222}^{VWZ}} $ & $ \exp{2.80+0}=16.4 $\\\\
+                  $ Z=2 $ & $ V=2 $ vs. $ V=1 $ & $ W=1 $ & $ \exp{u_{22}^{VZ}} $ & $ \exp{-1.72}=0.18 $\\
+                  $ Z=2 $ & $ V=2 $ vs. $ V=1 $ & $ W=2 $ & $ \exp{u_{22}^{VZ}+u_{222}^{VWZ}} $ & $ \exp{-1.72+0}=0.18 $\\\\
+                  $ W=2 $ & $ V=2 $ vs. $ V=1 $ & $ Z=1 $ & $ \exp{u_{22}^{VW}} $ & $ \exp{-2.40}=0.09 $\\
+                  $ W=2 $ & $ V=2 $ vs. $ V=1 $ & $ Z=2 $ & $ \exp{u_{22}^{VW}+u_{222}^{VWZ}} $ & $ \exp{-2.40+0}=0.09 $\\
+                  \bottomrule
+              \end{NiceTabular}
+          \end{table}
+    \item \textcolor{Blue}{Homogeneous Association}: All variables are associated in a pairwise fashion, but
+          this degree of association does not depend on the level of the third variable.
+    \item That is, the conditional odds ratios between two factors are identical at all levels of
+          the third factor.
+    \item These odds ratios make sense since they suggest:
+          \begin{itemize}
+              \item The relative odds of fatality among those ejected compared to those not ejected is
+                    $16.4$,
+              \item The relative odds of fatality among those using a seatbelt compared to those who do
+                    not use a seatbelt is $0.18$, and
+              \item The relative odds of ejection for those using a seatbelt compared to those who do
+                    not use a seatbelt is $0.09$.
+          \end{itemize}
+    \item The fact that we could not reduce the model further means these terms are all
+          significant.
+    \item The odds ratios relating to fatality could have been obtained from a logistic model,
+          so it is natural to ask: What we have gained here?
+    \item We are able to examine the relationship between all variables including $V$ and $W$.
+\end{itemize}
+\subsection*{Application 1: General Social Survey}
+\begin{Example}{2008 US General Social Survey ($ 2\times 5\times 7 $)}
+    \begin{center}
+        \begin{NiceTabular}{crrrrrrrr}
+            Gender ($ G $)     & Highest Degree ($ D $) & \Block{1-7}{Political Party Affiliation ($ P $)} \\
+            &                        & 1  & 2  & 3  & 4  & 5  & 6  & 7 \\
+            \midrule
+            \Block{5-1}{Males}   &
+            $<$ High school      & 32                     & 20 & 18 & 29 & 11 & 12 & 9      \\
+            &$<$ High school      & 67                     & 85 & 63 & 68 & 48 & 65 & 44     \\
+            &Junior college       & 12                     & 14 & 6  & 9  & 13 & 17 & 6      \\
+            &Bachelor             & 23                     & 21 & 29 & 20 & 19 & 32 & 20     \\
+            &Graduate             & 16                     & 9  & 12 & 13 & 7  & 14 & 13     \\
+            \midrule
+            \Block{5-1}{Females} &
+            $<$ High school      & 31                     & 25 & 16 & 58 & 8  & 8  & 16     \\
+            &High school          & 118                    & 98 & 69 & 88 & 30 & 82 & 54     \\
+            &Junior college       & 20                     & 16 & 13 & 13 & 7  & 16 & 7      \\
+            &Bachelor             & 33                     & 23 & 28 & 11 & 16 & 44 & 23     \\
+            &Graduate             & 38                     & 20 & 8  & 13 & 3  & 13 & 9      \\
+            \bottomrule
+        \end{NiceTabular}
+    \end{center}
+\end{Example}
+\begin{itemize}
+    \item Recall the best fitting model was \textcolor{Green}{Model 5 $ (GP,DP) $}.
+    \item \textcolor{Blue}{Conditional Independence}: The responders educational level ($D$) is conditionally
+          independent of his/her gender ($G$), given his/her party affiliation ($P$).
+          \[ \textcolor{Blue}{\log{\mu_{ijk}}=u+u_i^G+u_j^D+u_k^P+u_{ik}^{GP}+u_{jk}^{DP}}. \]
+    \item The regression parameters will have various log Odds Ratio interpretations.
+\end{itemize}
+\subsection*{``Odds Ratio'' Definitions in 2-way Tables ($I \times J$)}
+\begin{itemize}
+    \item For a general $ (I\times J) $ table, \emph{many} types of ``OR'' can be defined.
+          \begin{itemize}
+              \item \textcolor{Blue}{Nominal Odds Ratios} are formed by comparing back to a reference category (e.g
+                    $V = 1$, $W = 1$ in a 2-way table):
+                    \[ \psi_{ij}^{N\;VW}
+                        =\frac{\frac{\Prob{V=i\given W=j}}{\Prob{V=1\given W=j}}}{\frac{\Prob{V=i\given W=1}}{\Prob{V=1\given W=1}}}
+                        =\frac{\pi_{ij}\pi_{11}}{\pi_{1i}\pi_{1j}}. \]
+              \item \textcolor{Blue}{Local Odds Ratios} are formed by comparing 2 successive rows ($ i $ and $ i+1 $) and columns
+                    ($ j $ and $ j+1 $) of an $ I\times J $ table:
+                    \[ \psi_{ij}^{L\;VW}
+                        =\frac{\frac{\Prob{V=i+1\given W=j+1}}{\Prob{V=i\given W=j+1}}}{\frac{\Prob{V=i+1\given W=j}}{\Prob{V=i\given W=j}}}
+                        =\frac{\pi_{ij}\pi_{i+1,j+1}}{\pi_{i+1,j}\pi_{i,j+1}}. \]
+          \end{itemize}
+\end{itemize}
+\subsection*{Odds Ratios for 3-way Tables ($ I\times J\times K $)}
+\begin{itemize}
+    \item For a 3-way table consider conditional and marginal versions of the nominal or
+          local odds ratios.
+          \begin{itemize}
+              \item \textcolor{Blue}{Conditional Local OR} condition on the level of a third variable:
+                    \[ \psi_{ij(k)}^{L\;VW}=\frac{\pi_{i+1,j+1,k}/\pi_{i,j+1,k}}{\pi_{i+1,j,k}/\pi_{ijk}}=\frac{\pi_{ijk}\pi_{i+1,j+1,k}}{\pi_{i+1,j,k}\pi_{i,j+1,k}}. \]
+              \item \textcolor{Blue}{Marginal Local OR} ignore the level of a third variable:
+                    \[ \psi_{ij\bullet}^{M\;VW}
+                        =\frac{\pi_{i+1,j+1,\bullet}/\pi_{i,j+1,\bullet}}{\pi_{i+1,j,\bullet}/\pi_{ij\bullet}}
+                        =\frac{\pi_{ij\bullet}\pi_{i+1,j+1,\bullet}}{\pi_{i+1,j,\bullet}\pi_{i,j+1,\bullet}}. \]
+          \end{itemize}
+    \item Most relevant when factor variables have a meaningful order.
+    \item These aren't true odds ratios. Actually ratios of relative probabilities.
+\end{itemize}
+\subsection*{General Social Survey: Interpretation}
+\[ \textcolor{Blue}{\log{\mu_{ijk}}=u+u_i^G+u_j^D+u_k^P+u_{ik}^{GP}+u_{jk}^{DP}}. \]
+\begin{Example}{}
+    \textbf{Q}: Find an expression for the Conditional Local OR for being a $ \overbrace{\text{``not strong Democrat''}}^{P=2} $
+    versus a $ \underbrace{\text{``strong Democrat''}}_{P=1} $ comparing those with $ \underbrace{\text{``a High School Degree''}}_{D=2} $
+    to those with $ \underbrace{\text{``less than High School''}}_{D=1} $, among $ \underbrace{\text{``males''}}_{G=1} $.
+\end{Example}
+\begin{align*}
+    \psi_{(i)jk}^{L\; DP} & =\frac{\pi_{ijk}\pi_{i,j+1,k+1}}{\pi_{i,j+1,k}\pi_{i,j,k+1}}\quad\text{(general expression)} \\
+    \psi_{(1)11}^{L\; DP} & =\frac{\pi_{111}\pi_{122}}{\pi_{121}\pi_{112}}.
+\end{align*}
+\[ \log{\psi_{(1)11}^{L\; DP}}=\log{\mu_{122}/\mu_{121}}-\log{\mu_{112}/\mu_{111}}=(\textcolor{HotPink}{u_2^P+u_{22}^{DP}})-\textcolor{Green}{u_2^P}=u_{22}^{DP}. \]
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cccl}
+        $ G $                                             & $ D $                                       & $ P $ & $ \log{\mu_{ijk}} $           \\
+        \midrule
+        $ 1 $                                             & $ 2 $                                       & $ 2 $ & $ u+u_2^D+u_2^P+u_{22}^{DP} $ \\
+        $ 1 $                                             & $ 2 $                                       & $ 1 $ & $ u+u_2^D $                   \\
+        \midrule
+        \multicolumn{3}{c}{$ \log{\mu_{122}/\mu_{121}} $} & $ =\textcolor{HotPink}{u_2^P+u_{22}^{DP}} $                                         \\\\
+        \midrule
+        $ 1 $                                             & $ 1 $                                       & $ 2 $ & $ u+u_2^P $                   \\
+        $ 1 $                                             & $ 1 $                                       & $ 1 $ & $ u $                         \\
+        \midrule
+        \multicolumn{3}{c}{$ \log{\mu_{112}/\mu_{111}} $} & $ =\textcolor{Green}{u_2^P} $
+    \end{tabular}
+\end{table}
+\[ \hat{\psi}_{(1)11}^{L\;DP}=\exp{\hat{u}_{22}^{DP}}=\exp{0.32560}=1.38. \]
+\subsection*{R Output: Model 5 $(GP, DP)$}
+%\begin{noindent}
+    %\begin{noindent}
+        <<results='hide',echo=FALSE>>=
+      ## Input the data for the 5 x 7 x 2 contingency table
+      freq = c(32,67,12,23,16,20,85,14,21,9,18,63,6,29,12,29,68,9,
+      20,13,11,48,13,19,7,12,65,17,32,14,9,44,6,20,13,
+      31,118,20,33,38,25,98,16,23,20,16,69,13,28,8,58,88,
+      13,11,13,8,30,7,16,3,8,82,16,44,13,16,54,7,23,9)
+      names = list(D=c("LT HSc","HSc","JunCol","Bachelor","Graduate"),
+      P=c("1","2","3","4","5","6","7"),
+      G=c("male","female"))
+      party.3D = array (freq, c(5,7,2), dimnames=names)
+
+      ## Flattened contingency table
+      library(plyr)
+      party = count(as.table(party.3D))
+      party = party[,1:4]
+      names(party)=c("D","P","G","Y")
+        @
+    %\end{noindent}
+<<echo=FALSE>>=
+summary(glm( Y ~ G*P + D*P, family=poisson, data=party))
+@
+%\end{noindent}
+\subsection*{General Social Survey: Interpretation}
+\[ \textcolor{Blue}{\log{\mu_{ijk}}=u+u_i^G+u_j^D+u_k^P+u_{ik}^{GP}+u_{jk}^{DP}}. \]
+\begin{Example}{}
+    \textbf{Q}: Find an expression for the Marginal Nominal OR of being a $ \overbrace{\text{strong Republican}}^{P=7} $
+    versus a $ \underbrace{\text{``strong Democrat''}}_{P=1} $ for $ \underbrace{\text{``females''}}_{G=2} $ vs $ \underbrace{\text{``males''}}_{G=1} $.
+\end{Example}
+\begin{align*}
+    \psi_{i\bullet k}^{M\; GP} & =\frac{\pi_{i\bullet k}\pi_{1\bullet 1}}{\pi_{i\bullet 1}\pi_{1\bullet k}}\quad\text{(general expression)} \\
+    \psi_{2\bullet 7}^{M\; GP} & =\frac{\mu_{2\bullet 7}\mu_{1\bullet 1}}{\mu_{2\bullet 1}\mu_{1\bullet 7}}.
+\end{align*}
+\[ \log{\psi_{2\bullet 7}^{M\; GP}}=\log{\mu_{2\bullet 7}/\mu_{2\bullet 1}}-\log{\mu_{1\bullet 7}/\mu_{1\bullet 1}}=u_{27}^{GP} \]
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cccl}
+        $ G $                                                           & $ D $                                                   & $ P $ & $ \log{\mu_{ijk}} $                             \\
+        \midrule
+        $ 2 $                                                           & $ j $                                                   & $ 7 $ & $ u+u_2^G+u_j^D+u_7^P+u_{27}^{GP}+u_{7j}^{DP} $ \\
+        $ 2 $                                                           & $ j $                                                   & $ 1 $ & $ u+u_2^G+u_j^D $                               \\
+        \midrule
+        \multicolumn{3}{c}{$ \log{\mu_{2\bullet 7}/\mu_{2\bullet 1}} $} & $ =\textcolor{HotPink}{u_7^P+u_{27}^{GP}+u_{7j}^{DP}} $                                                           \\\\
+        \midrule
+        $ 1 $                                                           & $ j $                                                   & $ 7 $ & $ u+u_j^D+u_7^P+u_{7j}^{DP} $                   \\
+        $ 1 $                                                           & $ j $                                                   & $ 1 $ & $ u+u_j^D $                                     \\
+        \midrule
+        \multicolumn{3}{c}{$ \log{\mu_{1\bullet 7}/\mu_{1\bullet 1}} $} & $ =\textcolor{Green}{u_7^P+u_{7j}^{DP}} $
+    \end{tabular}
+\end{table}
+\begin{Example}{}
+    \textbf{Q}: Find a general expression for the Marginal Nominal OR for party affiliation and
+    gender.
+\end{Example}
+\[ \psi_{i\bullet k}^{M\; GP}=\exp{u_{ik}^{GP}},\; i=2,\, k=2,\ldots,7 \]
+\begin{Example}{}
+    \textbf{Q}: Find a general expression for the Marginal Nominal OR for party affiliation and
+    highest degree earned.
+\end{Example}
+\begin{align*}
+    \psi_{\bullet jk}^{M\; DP}
+     & =\frac{\pi_{\bullet jk}\pi_{\bullet,j+1,k+1}}{\pi_{\bullet,j+1,k}\pi_{\bullet,j,k+1}} \\
+     & =\frac{\mu_{\bullet jk}\mu_{\bullet,j+1,k+1}}{\mu_{\bullet,j+1,k}\mu_{\bullet,j,k+1}} \\
+     & =\exp{u_{jk}^{DP}+u_{j+1,k+1}^{DP}-u_{j+1,k}^{DP}-u_{j,k+1}^{DP} }.
+\end{align*}
+\begin{align*}
+    \log{\psi_{\bullet jk}^{M\; DP}}
+     & =\log{\mu_{\bullet jk}/\mu_{\bullet,j+1,k}}-\log{\mu_{\bullet,j,k+1}/\mu_{\bullet,j+1,k+1}}                                                 \\
+     & =(\textcolor{HotPink}{u_j^D+u_{jk}^{DP}-u_{j+1}^{D}-u_{j+1,k}^{DP}})-(\textcolor{Green}{u_j^D+u_{j,k+1}^{DP}-u_{j+1}^{D}-u_{j+1,k+1}^{DP}}) \\
+     & =u_j^D+u_{jk}^{DP}-u_{j+1}^{D}-u_{j+1,k}^{DP}-u_j^D-u_{j,k+1}^{DP}+u_{j+1}^{D}+u_{j+1,k+1}^{DP}                                             \\
+     & =u_{jk}^{DP}-u_{j+1,k}^{DP}-u_{j,k+1}^{DP}+u_{j+1,k+1}^{DP}                                                                                 \\
+     & =u_{jk}^{DP}+u_{j+1,k+1}^{DP}-u_{j+1,k}^{DP}-u_{j,k+1}^{DP}.
+\end{align*}
+Therefore,
+\[ \psi_{\bullet jk}^{M\; DP}=\exp{u_{jk}^{DP}+u_{j+1,k+1}^{DP}-u_{j+1,k}^{DP}-u_{j,k+1}^{DP}}. \]
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cccl}
+        $ G $                                                                   & $ D $                                                                     & $ P $   & $ \log{\mu_{ijk}} $                                             \\
+        \midrule
+        $ i $                                                                   & $ j $                                                                     & $ k $   & $ u+u_i^G+u_j^D+u_k^P+u_{ik}^{GP}+u_{jk}^{DP} $                 \\
+        $ i $                                                                   & $ j+1 $                                                                   & $ k $   & $ u+u_i^G+u_{j+1}^D+u_k^P+u_{ik}^{GP}+u_{j+1,k}^{DP} $          \\
+        \midrule
+        \multicolumn{3}{c}{$ \log{\mu_{\bullet jk}/\mu_{\bullet,j+1,k}} $}      & $ =\textcolor{HotPink}{u_j^D+u_{jk}^{DP}-u_{j+1}^{D}-u_{j+1,k}^{DP}} $                                                                                \\\\
+        \midrule
+        $ i $                                                                   & $ j $                                                                     & $ k+1 $ & $ u+u_i^G+u_{j}^D+u_{k+1}^P+u_{i,k+1}^{GP}+u_{j,k+1}^{DP} $     \\
+        $ i $                                                                   & $ j+1 $                                                                   & $ k+1 $ & $ u+u_i^G+u_{j+1}^D+u_{k+1}^P+u_{i,k+1}^{GP}+u_{j+1,k+1}^{DP} $ \\
+        \midrule
+        \multicolumn{3}{c}{$ \log{\mu_{\bullet,j,k+1}/\mu_{\bullet,j+1,k+1}} $} & $ =\textcolor{Green}{u_j^D+u_{j,k+1}^{DP}-u_{j+1}^{D}-u_{j+1,k+1}^{DP}} $
+    \end{tabular}
+\end{table}
