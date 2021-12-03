@@ -1,0 +1,353 @@
+\makeheading{Week 12}{\daterange{2021-11-29}{2021-12-03}}
+\section*{Topic 5b: Poisson Overdispersion}
+\addcontentsline{toc}{section}{Topic 5b: Poisson Overdispersion}
+\subsection*{Methods for Handling Overdispersion}
+\addcontentsline{toc}{subsection}{Overdispersion}
+\begin{enumerate}[1.]
+      \item \textcolor{Blue}{Ad hoc Method}:
+            \begin{enumerate}[1.]
+                  \item Fit the usual GLM to the data and find the best fitting model.
+                  \item Check for evidence of overdispersion (i.e., $ D\gg n-p $).
+                  \item If overdispersion is present, estimate
+                        \[ \hat{\phi}=\frac{D}{n-p}. \]
+                  \item Adjusted covariance matrix and standard error estimates
+                        \[ \Covadj{\hat{\Vector{\beta}}}\simeq \hat{\phi}\Cov{\hat{\Vector{\beta}}}=\hat{\phi}\mathcal{I}^{-1},
+                              \qquad \seadj{\hat{\beta}_j}=\sqrt{\hat{\phi}}\se{\hat{\beta}_j}. \]
+            \end{enumerate}
+      \item \textcolor{Blue}{Mixed Model Method}:
+            \begin{itemize}
+                  \item For a Poisson model, let $ Y_i\mid u_i \sim \POI{u_i\lambda} $.
+                  \item Introduce \textcolor{Blue}{dispersion factor} $ u_i \sim \GAM{\alpha=1/\phi,\beta=\phi} $.
+                  \item Then, $ Y_i \sim \NB{a=1/\phi,b=\lambda\phi} $ with $ \E{Y_i}=\lambda_i $ and $ \Var{Y_i}=\lambda_i(1+\lambda_i\phi) $.
+            \end{itemize}
+\end{enumerate}
+\subsection*{Application: Analysis of an Epilepsy Trial}
+\addcontentsline{toc}{subsection}{Application: Analysis of an Epilepsy Trial}
+\begin{itemize}
+      \item Clinical trial was conducted involving $59$ patients with epilepsy.
+      \item Patients were randomized to one of two treatments, a \textcolor{Blue}{standard therapy} or a \textcolor{Blue}{new drug}
+            designed to reduce the number of epileptic attacks experienced.
+      \item The primary response is the number of attacks experienced during the first two
+            weeks after randomization.
+      \item The data are given on the next slide where:
+            \begin{itemize}
+                  \item $ Y_k= $ number attacks in $ k\textsuperscript{th} $ period after randomization.
+                  \item \texttt{treat} is the treatment indicator variable with \texttt{treat=1} for the experimental treatment
+                        and \texttt{treat=0} otherwise.
+                  \item \texttt{prior} records the number of epileptic attacks experience for the month prior to entry into the study.
+                  \item \texttt{age} is a patient age at randomization in years.
+            \end{itemize}
+\end{itemize}
+\subsubsection*{Univariate Analyses}
+\begin{itemize}
+      \item First consider analyses based on the data from the first two week period after
+            randomization, that is, $ Y_{i1} $, $ i=1,2,\ldots,n $.
+      \item \textcolor{Blue}{Poisson Model}, that is, $ Y_i \sim \POI{\mu_i} $:
+            \[ \log{\mu_i}=\Vector{x}_i^\top \Vector{\beta}. \]
+      \item \textcolor{Blue}{Negative Binomial Model}, that is, $ Y_{i1}\mid u_i \sim \POI{u_i\lambda_i} $ and $ u_i \sim \GAM{1/\phi,\phi} $. Regression:
+            \begin{align*}
+                  \mu_i       & =\E{Y_{i1}\given u_i}                       \\
+                  \mu_i       & =u_i\lambda_i                               \\
+                  \log{\mu_i} & =\log{u_i}+\log{\lambda_i}                  \\
+                  \log{\mu_i} & =\alpha_i+\Vector{x}_i^\top \Vector{\beta}.
+            \end{align*}
+      \item $ \alpha_i= $ log gamma random variable called a ``\textcolor{Blue}{random effect}'', $ \E{\alpha_i}=0 $.
+\end{itemize}
+\subsubsection*{R Program}
+%\begin{noindent}
+      <<results='hide',fig.show='hide'>>=
+      epi.dat=read.table("epi.dat",header=T)
+      epi.dat$treatf=factor(epi.dat$treat)
+      attach(epi.dat)
+      library(MASS)
+
+      # contrast findings from Poisson and negative binomial regression
+      poisson1=glm(yi1~treatf+prior+age,family=poisson)
+      summary(poisson1)
+      epi.dat$rdeviance1=residuals.glm(poisson1,type="deviance")
+      epi.dat$fitted.values1=poisson1$fitted.values
+
+      negbin2=glm.nb(yi1~treatf+prior+age,link=log,init.theta=1.00,trace=T)
+      summary(negbin2)
+      epi.dat$rdeviance2=residuals.glm(negbin2,type="deviance")
+      epi.dat$fitted.values2=negbin2$fitted.values
+      epi.dat
+
+      # Constructing deviance residual plots
+      plot(log(epi.dat$fitted.values1),epi.dat$rdeviance1,ylim=c(-5,5),xlab="LOG FITTED VALUES", ylab="DEVIANCE RESIDUALS",main="POISSON MODEL")
+      abline(h=-2,lty=2);abline(h=2,lty=2)
+      plot(log(epi.dat$fitted.values2),epi.dat$rdeviance2,ylim=c(-5,5),xlab="LOG FITTED VALUES", ylab="DEVIANCE RESIDUALS",main="NEG BIN MODEL")
+      abline(h=-2,lty=2);abline(h=2,lty=2)
+
+      # Fitting some additional negative binomial models
+      negbin3=glm.nb(yi1~treatf,link=log,init.theta=1.00,trace=T)
+      summary(negbin3)
+      @
+%\end{noindent}
+\subsubsection*{R Output: Poisson Model}
+%\begin{noindent}
+      <<echo=FALSE>>=
+      summary(poisson1)
+      @
+%\end{noindent}
+\subsubsection*{Results of Fitted Poisson Model}
+\begin{itemize}
+      \item Estimated relative rate of seizures in treatment versus control:
+            \[ \widehat{\RR}=\exp{\hat{\beta}_1}=\exp{-0.2047}=0.815. \]
+      \item Ad hoc estimate of dispersion factor and adjusted standard error for $ \hat{\beta}_1 $:
+            \[ \hat{\phi}=\frac{D}{n-p}=\frac{197.61}{59-4}=3.593. \]
+            \[ \estseadj{\hat{\beta}_1}=\sqrt{\hat{\phi}}\estse{\hat{\beta}_1}\sqrt{3.593}(0.0895)=0.1696. \]
+      \item Adjusted Wald-based hypothesis test of $ \HN $: $ \beta_1=0 $ versus $ \HA $: $ \beta_1\ne 0 $:
+            \[ p=\Prob*{\abs{Z}>\frac{\abs{-0.2047}}{0.1696}}=0.23. \]
+      \item Adjusted 95\% confidence interval for the relative rate:
+            \[ \exp{\hat{\beta}_1\pm z_{0.975}\estseadj{\hat{\beta}_1}}=\exp{-0.2047\pm 1.96(0.1696)}=(0.58,1.14). \]
+\end{itemize}
+\subsubsection*{R Output: Negative Binomial Model}
+%\begin{noindent}
+      <<echo=FALSE>>=
+      summary(negbin2)
+      @
+%\end{noindent}
+\subsubsection*{Results of Fitted Models}
+\begin{table}[H]
+      \centering
+      \begin{tabular}{lcccc}
+            Model             & Parameter   & Estimate    & $ \widehat{\text{se}} $ & $ \widehat{\text{se}}_{\text{adj}} $ \\
+            \midrule
+            \texttt{poisson1} & $ \beta_1 $ & $ -0.2047 $ & $ 0.0895 $              & $0.1696$                             \\
+                              & $ \phi $    & $3.593$                                                                      \\
+            \texttt{negbin2}  & $ \beta_1 $ & $ -0.3302 $ & $ 0.1854 $                                                     \\
+                              & $ \theta $  & $3.079$     & $0.875$                                                        \\
+            \bottomrule
+      \end{tabular}
+\end{table}
+\begin{itemize}
+      \item For R Negative Binomial Model, $ \theta=\phi^{-1} $, so
+            \[ \Var{Y_i}=\lambda_i(1+\lambda_i\phi)=\lambda_i(1+\lambda_i/\theta). \]
+      \item Note: $ \phi $ from Poisson is not the same as $ \phi $ in Negative Binomial.
+            \begin{itemize}
+                  \item Poisson: $ \estseadj{\hat{\beta}_j}=\sqrt{\hat{\phi}}\estse{\hat{\beta}_j} $.
+                  \item Negative Binomial: $ \phi=\theta^{-1} $ already incorporated into standard error estimates.
+            \end{itemize}
+      \item $ \widehat{\text{se}} $ Negative Binomial is larger than naive Poisson $ \widehat{\text{se}} $
+            because the Negative Binomial model accounts for the overdispersion.
+      \item $ \widehat{\text{se}}_{\text{adj}} $ from the Poisson is comparable to $ \widehat{\text{se}} $ from Negative Binomial.
+\end{itemize}
+\subsubsection*{Results of Fitted Negative Binomial Model}
+\begin{itemize}
+      \item Estimated relative rate of seizures in treatment versus control:
+            \[ \widehat{\RR}=\exp{\hat{\beta}_1}=\exp{-0.3302}=0.719. \]
+      \item Wald-based hypothesis test of $ \HN $: $ \beta_1=0 $ versus $ \HA $: $ \beta_1\ne 0 $:
+            \[ p=\Prob*{\abs{Z}>\frac{\abs{-0.3302}}{0.1854}}=0.0749. \]
+      \item 95\% confidence interval for the relative rate:
+            \[ \exp{\hat{\beta}_1\pm z_{0.975}\estseadj{\hat{\beta}_1}}=\exp{-0.3302\pm 1.96(0.1854)}=(0.50,1.03). \]
+\end{itemize}
+\subsubsection*{Poisson and Negative Binomial Models --- Remarks}
+\begin{itemize}
+      \item The estimates and standard errors are different in the Poisson and Negative
+            Binomial models.
+      \item The estimates are different in part because the observations are weighted
+            differently for the Poisson and Negative Binomial estimating equations.
+      \item The standard errors are larger with the Negative Binomial model because it
+            accounts for more variability in the data (which is needed here).
+      \item Notice the treat variable is only statistically significant in the Poisson model.
+\end{itemize}
+\subsubsection*{Residual Plots for Poisson and Negative Binomial Models}
+%\begin{noindent}
+      <<echo=FALSE>>=
+      plot(log(epi.dat$fitted.values1),epi.dat$rdeviance1,ylim=c(-5,5),xlab="LOG FITTED VALUES", ylab="DEVIANCE RESIDUALS",main="POISSON MODEL")
+      abline(h=-2,lty=2);abline(h=2,lty=2)
+      plot(log(epi.dat$fitted.values2),epi.dat$rdeviance2,ylim=c(-5,5),xlab="LOG FITTED VALUES", ylab="DEVIANCE RESIDUALS",main="NEG BIN MODEL")
+      abline(h=-2,lty=2);abline(h=2,lty=2)
+      @
+%\end{noindent}
+\subsubsection*{R Output: Alternative Negative Binomial Model}
+%\begin{noindent}
+      <<echo=FALSE>>=
+      summary(negbin3)
+      @
+%\end{noindent}
+\subsubsection*{Results of Fitted Models}
+\begin{table}[H]
+      \centering
+      \begin{tabular}{lcccc}
+            Model             & Parameter   & Estimate    & $ \widehat{\text{se}} $ & $ \widehat{\text{se}}_{\text{adj}} $ \\
+            \midrule
+            \texttt{poisson1} & $ \beta_1 $ & $ -0.2047 $ & $ 0.0895 $              & $0.1696$                             \\
+                              & $ \phi $    & $3.593$                                                                      \\
+            \texttt{negbin2}  & $ \beta_1 $ & $ -0.3302 $ & $ 0.1854 $                                                     \\
+                              & $ \theta $  & $3.079$     & $0.875$                                                        \\
+            \texttt{negbin3}  & $ \beta_1 $ & $ -0.0866 $ & $ 0.2922 $                                                     \\
+                              & $ \theta $  & $0.874$     & $0.166$                                                        \\
+            \bottomrule
+      \end{tabular}
+\end{table}
+\begin{itemize}
+      \item Recall for the Negative Binomial that $ \Var{Y_i}=\lambda_i(1+\lambda_i\phi)=\lambda_i(1+\lambda_i/\theta) $.
+      \item Compare the $ \theta $ estimates from the two Negative Binomial Models:
+            \[ \hat{\phi}_2=\theta_2^{-1}=(3.079)^{-1}=0.325. \]
+            \[ \hat{\phi}_3=\theta_3^{-1}=(0.874)^{-1}=1.144, \]
+\end{itemize}
+\subsubsection*{Univariate Analyses --- Final Remarks}
+\begin{itemize}
+      \item $ \hat{\phi}_3 $ is much larger than $ \hat{\phi}_2 $ because the \texttt{negbin3} model excludes the \texttt{prior} count
+            and \texttt{age} variables.
+      \item This makes sense since they explain much of the variability between the subjects
+            for the rate of events.
+      \item For Negative Binomial: $ \phi=0 $ would imply no overdispersion in the data.
+      \item To get $ \Var{\phi} $ use the $ \delta $-method ($ \Var{\theta^{-1}}\ne 1/\Var{\theta} $).
+      \item Note that \textcolor{Blue}{Overdispersion} can be caused by a number of factors including:
+            \begin{itemize}
+                  \item Missing important explanatory variables.
+                  \item Excess variation that can not be explained by Poisson model.
+                  \item Non-independent observations (e.g., clustered data).
+            \end{itemize}
+\end{itemize}
+\subsection*{Adaptation to Clustered Count Data}
+\addcontentsline{toc}{subsection}{Clustered Count Data}
+\begin{itemize}
+      \item Up to now we have always assumed responses $ Y_i $ are \textcolor{Blue}{iid}.
+      \item Now consider the following data structure:
+            \[ \begin{matrix}
+                        y_{11} & \cdots & y_{1n_1}   \\
+                        y_{21} & \cdots & y_{2n_2}   \\
+                        \vdots & \ddots & \vdots     \\
+                        y_{K1} & \cdots & y_{K n_K},
+                  \end{matrix} \]
+            where $ i=1,\ldots,K $ are clusters, and $ j=1,\ldots,n_i $ are observations per cluster.
+      \item $ Y_{ij}= $ response for observation $ j $ of cluster $ i $.
+      \item Expect observations within the same cluster to be correlated.
+      \item For example, cluster = families, litters, schools, etc.
+      \item Assume $ Y_{ij}\mid u_i \sim \POI{u_i\lambda} $ independently.
+            \begin{itemize}
+                  \item Observation from same cluster are independent given $ u_i $.
+                  \item Observation from different clusters are independent.
+            \end{itemize}
+      \item Assume $ \E{u_i}=1 $ and $ \Var{u_i}=\phi $.
+      \item Then, $ \E{Y_{ij}}=\lambda $ and $ \Var{Y_{ij}}=\lambda(1+\lambda\phi) $ as before.
+      \item Correlation within clusters?
+            \begin{align*}
+                  \Cov{Y_{ij},Y_{ik}}
+                   & =\Cov[\big]{ E{Y_{ij}\given u_i},\E{Y_{ik}\given u_i} } + \E[\big]{\Cov{Y_{ij,Y_{ik}}\given u_i}} \\
+                   & =\Cov{u_i\lambda,u_i\lambda}+\E{0}                                                                \\
+                   & =\lambda^2\Var{u_i}                                                                               \\
+                   & =\lambda^2\phi.
+            \end{align*}
+            \[ \Corr{Y_{ij},Y_{ik}}=\frac{\Cov{Y_{ij},Y_{ik}}}{\sqrt{\Var{Y_{ij}}\Var{Y_{ik}} }}=\frac{\lambda^2\phi}{\lambda(1+\lambda\phi)}=\frac{\lambda\phi}{1+\lambda\phi}. \]
+      \item We have a model which accommodates a correlation of responses within clusters.
+\end{itemize}
+\subsection*{Application: Joint Analyses of an Epilepsy Trial}
+\addcontentsline{toc}{subsection}{Joint Analyses}
+\begin{itemize}
+      \item We now consider analyses based on the full 8 weeks of follow-up data.
+      \item Four responses per subject: $ Y_{i1},Y_{i2},Y_{i3},Y_{i4} $.
+      \item Consider the total seizure count: $ Y_{i\bullet}=\sum_{j=1}^{4}Y_{ij} $.
+      \item Assume $ Y_{ij}\mid u_i \sim \POI{u_i\lambda_i} $ independently.
+      \item This implies $ Y_{i\bullet}\mid u_i \sim \POI{4u_i\lambda_i} $.
+      \item Can show that $ Y_{i\bullet} $ has an (almost) Negative Binomial distribution (Problem 4.3).
+\end{itemize}
+\subsubsection*{Problem 4.3}
+\begin{align*}
+      \Prob{Y_{i1},\ldots,Y_{i4}}
+       & =\int_{0}^{\infty}\prod_{j=1}^4\underbrace{p(y_{ij}\mid u_i\lambda_i)}_{\POI{u_i\lambda_i}}\underbrace{f(u_i;\phi)}_{\GAM{\alpha,\beta}}\odif{u_i}                                                   \\
+       & \vdotswithin{=}                                                                                                                                                                                      \\
+       & \propto \frac{\Gamma(y_{i\bullet}+\alpha)}{\Gamma(\alpha)\prod y_{ij}!}\biggl(\frac{4\lambda_i\beta}{1+4\lambda_i\beta}\biggr)^{\!y_{i\bullet}}\biggl(\frac{1}{1+4\lambda_i\beta}\biggr)^{\!\alpha}.
+\end{align*}
+\begin{itemize}
+      \item This is proportional to a Negative Binomial distribution.
+      \item $ Y_{i\bullet} $ is \textcolor{Blue}{sufficient} for the joint distribution of $ Y_{i1},Y_{i2},Y_{i3},Y_{i4} $.
+            \begin{itemize}
+                  \item Factorization Theorem: If you can write $ p(x)=h(x)g\bigl(\theta,T(x)\bigr) $, then $ T(x) $ is a sufficient statistic.
+            \end{itemize}
+\end{itemize}
+\subsubsection*{Epilepsy Trial Joint Analysis Data}
+\begin{Example}{}
+      We show the first 5 rows.
+      %\begin{noindent}
+            <<echo=FALSE>>=
+            epi8.dat <- read.table("epi8.dat", header=T)
+            epi8.dat$treatf <- factor(epi.dat$treat)
+            epi8.dat[seq(1,5),]
+            @
+      %\end{noindent}
+\end{Example}
+\begin{itemize}
+      \item \texttt{yidot} is the sum of the seizure counts for each of the four counts obtained every two weeks.
+      \item Explanatory variables:
+            \begin{align*}
+                  x_{i1} & =\Ind{\texttt{treat=1}}, \\
+                  x_{i2} & =\Ind{\texttt{prior}},   \\
+                  x_{i3} & =\Ind{\texttt{age}}.
+            \end{align*}
+      \item We are primarily interested in the \textcolor{Blue}{treatment effect} $ \beta_1 $.
+\end{itemize}
+\subsubsection*{Negative Binomial Model}
+\begin{align*}
+      \mu_i       & =\E{Y_{i\bullet}\given u_i}                                  \\
+      \mu_i       & =4u_i\lambda_i                                               \\
+      \log{\mu_i} & =\log{u_i}+\log{4}+\log{\lambda_i}                           \\
+      \log{\mu_i} & =\alpha_i+\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}.
+\end{align*}
+\begin{itemize}
+      \item $ \alpha_i $ is an unobservable random effect, $ \E{\alpha_i}=0 $.
+      \item We could include $ \log{4} $ as an offset or let it be absorbed into the intercept term:
+            \[ \beta_0=\beta_0^\star +\log{4}. \]
+\end{itemize}
+\subsubsection*{R Program}
+%\begin{noindent}
+      <<results='hide'>>=
+      epi8.dat <- read.table("epi8.dat", header=T)
+      epi8.dat$treatf <- factor(epi.dat$treat)
+      epi.dat
+
+      # fitting the negative binomial model for clustered count data
+      joint=glm.nb(yidot~treatf+prior+age,link=log,init.theta=1.00,trace=T,data=epi8.dat)
+      summary(joint)
+      @
+%\end{noindent}
+\subsubsection*{R Output: Joint Negative Binomial Model}
+%\begin{noindent}
+      <<echo=FALSE>>=
+      summary(joint)
+      @
+%\end{noindent}
+\subsubsection*{Joint Negative Binomial Model}
+\begin{table}[H]
+      \centering
+      \begin{tabular}{lcccc}
+            Model          & Parameter   & Estimate    & $ \widehat{\text{se}} $ & $ \widehat{\text{se}}_{\text{adj}} $ \\
+            \midrule
+            \texttt{joint} & $ \beta_1 $ & $ -0.2124 $ & $ 0.1534 $              &                                      \\
+                           & $ \theta $  & $3.357$     & $ 0.709 $                                                      \\
+                           & $ \phi $    & $0.2979$                                                                     \\
+            \bottomrule
+      \end{tabular}
+\end{table}
+\begin{Example}{}
+      \textbf{Q1}: Based on the joint model give an estimate and 95\% confidence interval for the
+      relative rate (over 8 weeks) of epileptic attacks for treated versus control subjects.
+\end{Example}
+\begin{itemize}
+      \item Estimated relative rate of seizures in treatment versus control:
+            \[ \widehat{\RR}=\exp{\hat{\beta}_1}=\exp{-0.2124}=0.809. \]
+      \item 95\% confidence interval for the relative rate:
+            \[ \exp{\hat{\beta}_1\pm z_{0.975}\estse{\hat{\beta}_1}}=\exp{-0.2124\pm 1.96(0.1534)}=(0.60,1.09). \]
+\end{itemize}
+\begin{Example}{}
+      \textbf{Q2}: Q2: Based on the joint model estimate the correlation between the first and third
+      responses $(Yi1 \& Yi3)$ for an untreated subject with a prior seizure count of $11$, age 31.
+\end{Example}
+\begin{itemize}
+      \item First, we need an estimate of $ \hat{\lambda}_i $ for this subject:
+            \begin{align*}
+                  \log{4}+\log{\hat{\lambda}_i}
+                                  & =\hat{\beta}_0+\hat{\beta}_1(0)+\hat{\beta}_2(11)+\hat{\beta}_3(31) \\
+                  \hat{\lambda}_i & =\exp{2.0601+0.0275(11)+0.0127(31)}/4                               \\
+                                  & =\exp{2.756}/4                                                      \\
+                                  & =3.936.
+            \end{align*}
+      \item Now, find the Correlation:
+            \[ \hat{\rho}=\frac{\hat{\lambda}_i\hat{\phi}}{1+\hat{\lambda}_i\hat{\phi}}=\frac{3.936(1/3.357)}{1+3.936(1/3.357)}=0.54. \]
+      \item Moderate positive correlation between seizure counts within the same subject
+            across time periods.
+\end{itemize}

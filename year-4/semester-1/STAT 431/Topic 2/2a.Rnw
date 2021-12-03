@@ -1,171 +1,172 @@
+\chapter{Likelihoods for Generalized Linear Models}
 \section*{Topic 2a: Formulation of Generalized Linear Models}
 \addcontentsline{toc}{section}{Topic 2a: Formulation of Generalized Linear Models}
 \subsection*{The Exponential Family}
 \begin{Regular}{Definition (Exponential Family)}
-    Consider a random variable $ Y $ with probability density (or mass) function $ f(y;\theta,\phi) $,
-    we say that the distribution is a member of the \textcolor{Red}{exponential family} if we can write
-    \[ f(y;\theta,\phi)=\exp*{\frac{y\theta-b(\theta)}{a(\phi)}+c(y;\phi)}, \]
-    for some functions $ a(\:\cdot\:) $, $ b(\:\cdot\:) $, and $ c(\:\cdot\:) $.
-    \begin{itemize}
-        \item The parameter $ \theta $ is called the \textcolor{Red}{canonical} parameter, and it is unknown.
-        \item The parameter $ \phi $ is called the \textcolor{Red}{scale/dispersion} parameter, is constant, and assumed to be known.
-    \end{itemize}
+      Consider a random variable $ Y $ with probability density (or mass) function $ f(y;\theta,\phi) $,
+      we say that the distribution is a member of the \textcolor{Red}{exponential family} if we can write
+      \[ f(y;\theta,\phi)=\exp*{\frac{y\theta-b(\theta)}{a(\phi)}+c(y;\phi)}, \]
+      for some functions $ a(\:\cdot\:) $, $ b(\:\cdot\:) $, and $ c(\:\cdot\:) $.
+      \begin{itemize}
+            \item The parameter $ \theta $ is called the \textcolor{Red}{canonical} parameter, and it is unknown.
+            \item The parameter $ \phi $ is called the \textcolor{Red}{scale/dispersion} parameter, is constant, and assumed to be known.
+      \end{itemize}
 \end{Regular}
 Many well known distributions (continuous/discrete) can be shown to be a
 member of the exponential family.
 \subsection*{Examples}
 \begin{itemize}
-    \item Poisson Distribution: $ Y \sim \POI{\lambda} $,
-          \[ f(y;\lambda)=\frac{\lambda^y \mathrm{e}^{-\lambda}}{y!},\; \lambda>0,\, y=0,1,\ldots.  \]
-          Show that Poisson is a member of exponential family and identify the canonical
-          parameter and the functions $ a(\:\cdot\:) $, $ b(\:\cdot\:) $, and $ c(\:\cdot\:) $.
+      \item Poisson Distribution: $ Y \sim \POI{\lambda} $,
+            \[ f(y;\lambda)=\frac{\lambda^y \mathrm{e}^{-\lambda}}{y!},\; \lambda>0,\, y=0,1,\ldots.  \]
+            Show that Poisson is a member of exponential family and identify the canonical
+            parameter and the functions $ a(\:\cdot\:) $, $ b(\:\cdot\:) $, and $ c(\:\cdot\:) $.
 
-          \textbf{Solution.} $ f(y;\lambda)=\exp[\big]{\log{f(y;\lambda)}}=\exp*{\frac{y\log{\lambda}-\lambda}{1} -\log{y!}} $. Therefore,
-          \begin{align*}
-              \theta    & =\log{\lambda}\qquad\text{(canonical/natural parameter)}, \\
-              b(\theta) & =\lambda=\mathrm{e}^{\theta},                             \\
-              \phi      & =1,                                                       \\
-              a(\phi)   & =1,                                                       \\
-              c(y;\phi) & =-\log{y!}.
-          \end{align*}
-    \item Normal Distribution: $ Y \sim \N{\mu,\sigma^2} $ and $ \sigma^2 $ known,
-          \[ f(y;\theta,\phi)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp*{-\frac{(y-\mu)^2}{2\sigma^2}}. \]
-          Show that this Normal distribution is a member of the exponential family.
+            \textbf{Solution.} $ f(y;\lambda)=\exp[\big]{\log{f(y;\lambda)}}=\exp*{\frac{y\log{\lambda}-\lambda}{1} -\log{y!}} $. Therefore,
+            \begin{align*}
+                  \theta    & =\log{\lambda}\qquad\text{(canonical/natural parameter)}, \\
+                  b(\theta) & =\lambda=\mathrm{e}^{\theta},                             \\
+                  \phi      & =1,                                                       \\
+                  a(\phi)   & =1,                                                       \\
+                  c(y;\phi) & =-\log{y!}.
+            \end{align*}
+      \item Normal Distribution: $ Y \sim \N{\mu,\sigma^2} $ and $ \sigma^2 $ known,
+            \[ f(y;\theta,\phi)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp*{-\frac{(y-\mu)^2}{2\sigma^2}}. \]
+            Show that this Normal distribution is a member of the exponential family.
 
-          \textbf{Solution.}
-          \begin{align*}
-              f(y;\mu,\sigma^2)
-               & =\exp*{-\frac{y^2-2\mu y+\mu^2}{\sigma^2}-\frac{1}{2} \log{2\pi\sigma^2}}                   \\
-               & =\exp*{\frac{y\mu-\mu^2/2}{\sigma^2}-\frac{y^2}{2\sigma^2}-\frac{1}{2} \log{2\pi\sigma^2}}.
-          \end{align*}
-          Therefore,
-          \begin{align*}
-              \theta    & =\mu,                                                   \\
-              \phi      & =\sigma^2,                                              \\
-              a(\phi)   & =\phi=\sigma^2,                                         \\
-              b(\theta) & =\frac{\mu^2}{2}=\frac{\theta^2}{2},                    \\
-              c(y;\phi) & =-\frac{y^2}{2\sigma^2}-\frac{1}{2} \log{2\pi\sigma^2}.
-          \end{align*}
+            \textbf{Solution.}
+            \begin{align*}
+                  f(y;\mu,\sigma^2)
+                   & =\exp*{-\frac{y^2-2\mu y+\mu^2}{\sigma^2}-\frac{1}{2} \log{2\pi\sigma^2}}                   \\
+                   & =\exp*{\frac{y\mu-\mu^2/2}{\sigma^2}-\frac{y^2}{2\sigma^2}-\frac{1}{2} \log{2\pi\sigma^2}}.
+            \end{align*}
+            Therefore,
+            \begin{align*}
+                  \theta    & =\mu,                                                   \\
+                  \phi      & =\sigma^2,                                              \\
+                  a(\phi)   & =\phi=\sigma^2,                                         \\
+                  b(\theta) & =\frac{\mu^2}{2}=\frac{\theta^2}{2},                    \\
+                  c(y;\phi) & =-\frac{y^2}{2\sigma^2}-\frac{1}{2} \log{2\pi\sigma^2}.
+            \end{align*}
 \end{itemize}
 \subsection*{Properties of Exponential Family}
 Consider a single observation $y$ from the exponential family.
 \begin{align*}
-    L(\theta,\phi;y)    & =f(y;\theta,\phi)=\exp*{\frac{y\theta-b(\theta)}{a(\phi)}+c(y;\phi)}.      \\
-    \ell(\theta,\phi;y) & =\log[\big]{f(y;\theta,\phi)}=\frac{y\theta-b(\theta)}{a(\phi)}+c(y;\phi). \\
-    S(\theta)           & =\pdv{\ell}{\theta}=\frac{y-b^\prime(\theta)}{a(\phi)}.                    \\
-    I(\theta)           & =-\pdv[order=2]{\ell}{\theta}=\frac{b^{\prime\prime}(\theta)}{a(\phi)}.    \\
-    \mathcal{I}(\theta) & =\E*{-\pdv[order=2]{\ell}{\theta}}=I(\theta).
+      L(\theta,\phi;y)    & =f(y;\theta,\phi)=\exp*{\frac{y\theta-b(\theta)}{a(\phi)}+c(y;\phi)}.      \\
+      \ell(\theta,\phi;y) & =\log[\big]{f(y;\theta,\phi)}=\frac{y\theta-b(\theta)}{a(\phi)}+c(y;\phi). \\
+      S(\theta)           & =\pdv{\ell}{\theta}=\frac{y-b^\prime(\theta)}{a(\phi)}.                    \\
+      I(\theta)           & =-\pdv[order=2]{\ell}{\theta}=\frac{b^{\prime\prime}(\theta)}{a(\phi)}.    \\
+      \mathcal{I}(\theta) & =\E*{-\pdv[order=2]{\ell}{\theta}}=I(\theta).
 \end{align*}
 \subsection*{Some General Results for Score and Information}
 \begin{Result}{Result \# 1}
-    The expectation of the score function is zero.
-    \[ \E[\big]{S(\theta)}=0. \]
-    \tcblower{}
-    \textbf{Proof}:
-    \begin{align*}
-        \int f(y;\theta,\phi)\odif{y}                                                         & =1                               \\
-        \pdv*{\int f(y;\theta,\phi)\odif{y}}{\theta}                                          & =0                               \\
-        \int\pdv*{f(y;\theta,\phi)}{\theta} \odif{y}                                          & =0                               \\
-        \int\biggl(\pdv*{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)f(y;\theta,\phi)\odif{y} & =0 &  & \label{2a:eq1}\tag*{(1)} \\
-        \int S(\theta)f(y;\theta,\phi)\odif{y}                                                & =0                               \\
-        \E[\big]{S(\theta)}                                                                   & =0
-    \end{align*}
+      The expectation of the score function is zero.
+      \[ \E[\big]{S(\theta)}=0. \]
+      \tcblower{}
+      \textbf{Proof}:
+      \begin{align*}
+            \int f(y;\theta,\phi)\odif{y}                                                         & =1                               \\
+            \pdv*{\int f(y;\theta,\phi)\odif{y}}{\theta}                                          & =0                               \\
+            \int\pdv*{f(y;\theta,\phi)}{\theta} \odif{y}                                          & =0                               \\
+            \int\biggl(\pdv*{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)f(y;\theta,\phi)\odif{y} & =0 &  & \label{2a:eq1}\tag*{(1)} \\
+            \int S(\theta)f(y;\theta,\phi)\odif{y}                                                & =0                               \\
+            \E[\big]{S(\theta)}                                                                   & =0
+      \end{align*}
 \end{Result}
 \begin{Result}{Result \# 2}
-    The expectation of the score function squared is the expected information.
-    \[  \E[\big]{S(\theta;y)^2}=\E[\big]{I(\theta;y)} \]
-    \tcblower{}
-    \textbf{Proof}: Differentiate~\ref{2a:eq1} again,
-    \begin{align*}
-        \pdv*{\int\biggl(\pdv*{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)f(y;\theta,\phi)\odif{y}}{\theta}                                                                                                 & =0 \\
-        \int \biggl(\pdv*[order=2]{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)f(y;\theta,\phi)\odif{y}+\int\biggl(\pdv*{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)\pdv*{f(y;\theta,\phi)}{\theta}\odif{y} & =0 \\
-        \int \pdv*[order=2]{\log[\big]{f(y;\theta,\phi)}}{\theta}f(y;\theta,\phi)\odif{y}+\int\biggl(\pdv*{f(y;\theta,\phi)}{\theta}\biggr)^2 f(y;\theta,\phi)\odif{y}                                       & =0 \\
-        \int -I(\theta)f(y;\theta,\phi)\odif{y}+\int S(\theta)^2 f(y;\theta,\phi)\odif{y}                                                                                                                    & =0 \\
-        \E[\big]{-I(\theta;y)}+\E[\big]{S(\theta;y)^2}                                                                                                                                                       & =0
-    \end{align*}
+      The expectation of the score function squared is the expected information.
+      \[  \E[\big]{S(\theta;y)^2}=\E[\big]{I(\theta;y)} \]
+      \tcblower{}
+      \textbf{Proof}: Differentiate~\ref{2a:eq1} again,
+      \begin{align*}
+            \pdv*{\int\biggl(\pdv*{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)f(y;\theta,\phi)\odif{y}}{\theta}                                                                                                 & =0 \\
+            \int \biggl(\pdv*[order=2]{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)f(y;\theta,\phi)\odif{y}+\int\biggl(\pdv*{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)\pdv*{f(y;\theta,\phi)}{\theta}\odif{y} & =0 \\
+            \int \pdv*[order=2]{\log[\big]{f(y;\theta,\phi)}}{\theta}f(y;\theta,\phi)\odif{y}+\int\biggl(\pdv*{f(y;\theta,\phi)}{\theta}\biggr)^2 f(y;\theta,\phi)\odif{y}                                       & =0 \\
+            \int -I(\theta)f(y;\theta,\phi)\odif{y}+\int S(\theta)^2 f(y;\theta,\phi)\odif{y}                                                                                                                    & =0 \\
+            \E[\big]{-I(\theta;y)}+\E[\big]{S(\theta;y)^2}                                                                                                                                                       & =0
+      \end{align*}
 \end{Result}
 Now for the exponential family, we apply above results and obtain:
 \begin{align*}
-    \E[\big]{S(\theta)}                                          & =0,                                             \\
-    \E*{\frac{Y-b^{\prime}(\theta)}{a(\phi)}}                    & =0,                                             \\
-    \E{Y}                                                        & =b^\prime(\theta),                              \\\\
-    \E[\big]{S(\theta)^2}                                        & =\E[\big]{I(\theta)},                           \\
-    \E*{\biggl(\frac{Y-b^\prime(\theta)}{a(\phi)} \biggr)^{\!2}} & =\E*{\frac{b^{\prime\prime}(\theta)}{a(\phi)}}, \\
-    \frac{1}{a(\phi)^2}\E*{\bigl(Y-\E{Y}\bigr)^2}                & =\frac{b^{\prime\prime}(\theta)}{a(\phi)},      \\
-    \Var{Y}                                                      & =b^{\prime\prime}(\theta)a(\phi).
+      \E[\big]{S(\theta)}                                          & =0,                                             \\
+      \E*{\frac{Y-b^{\prime}(\theta)}{a(\phi)}}                    & =0,                                             \\
+      \E{Y}                                                        & =b^\prime(\theta),                              \\\\
+      \E[\big]{S(\theta)^2}                                        & =\E[\big]{I(\theta)},                           \\
+      \E*{\biggl(\frac{Y-b^\prime(\theta)}{a(\phi)} \biggr)^{\!2}} & =\E*{\frac{b^{\prime\prime}(\theta)}{a(\phi)}}, \\
+      \frac{1}{a(\phi)^2}\E*{\bigl(Y-\E{Y}\bigr)^2}                & =\frac{b^{\prime\prime}(\theta)}{a(\phi)},      \\
+      \Var{Y}                                                      & =b^{\prime\prime}(\theta)a(\phi).
 \end{align*}
 \begin{Regular}{Mean and Variance for the Exponential Family}
-    \begin{itemize}
-        \item Mean: $ \E{Y}=b^\prime(\theta)=\mu $.
-        \item Variance: $ \Var{Y}=b^{\prime\prime}(\theta)a(\phi) $.
-    \end{itemize}
+      \begin{itemize}
+            \item Mean: $ \E{Y}=b^\prime(\theta)=\mu $.
+            \item Variance: $ \Var{Y}=b^{\prime\prime}(\theta)a(\phi) $.
+      \end{itemize}
 \end{Regular}
 Note that:
 \begin{itemize}
-    \item $ b^\prime(\theta)=\mu $ tells the relationship between \emph{canonical} parameter $ \theta $ and $ \mu $.
-    \item $ b^{\prime\prime}(\theta) $ is a function of $ \theta $ and hence can be also expressed as a function of $ \mu $.
-    \item Thus, we write $ b^{\prime\prime}(\theta)=\V{\mu} $ and call \textcolor{Red}{$ \V{\mu} $} the \textcolor{Red}{variance function}.
-    \item Subsequently, we have:
-          \[ \Var{Y}=b^{\prime\prime}(\theta)a(\phi)=\V{\mu}a(\phi), \]
-          which is the \textcolor{Red}{mean-variance relationship} for the exponential family.
+      \item $ b^\prime(\theta)=\mu $ tells the relationship between \emph{canonical} parameter $ \theta $ and $ \mu $.
+      \item $ b^{\prime\prime}(\theta) $ is a function of $ \theta $ and hence can be also expressed as a function of $ \mu $.
+      \item Thus, we write $ b^{\prime\prime}(\theta)=\V{\mu} $ and call \textcolor{Red}{$ \V{\mu} $} the \textcolor{Red}{variance function}.
+      \item Subsequently, we have:
+            \[ \Var{Y}=b^{\prime\prime}(\theta)a(\phi)=\V{\mu}a(\phi), \]
+            which is the \textcolor{Red}{mean-variance relationship} for the exponential family.
 \end{itemize}
 \subsection*{Link Functions}
 \begin{Regular}{Definition (Link Function)}
-    The \textcolor{Red}{link function} relates the linear predictor $ \eta=\Vector{x}^\top\Vector{\beta} $ to the expected value $ \mu $ of the random variable $ Y $, i.e.,
-    \[ g(\mu)=\eta=\Vector{x}^\top\Vector{\beta}, \]
-    where $ g(\:\cdot\:) $ is the link function.
+      The \textcolor{Red}{link function} relates the linear predictor $ \eta=\Vector{x}^\top\Vector{\beta} $ to the expected value $ \mu $ of the random variable $ Y $, i.e.,
+      \[ g(\mu)=\eta=\Vector{x}^\top\Vector{\beta}, \]
+      where $ g(\:\cdot\:) $ is the link function.
 \end{Regular}
 \begin{Regular}{Definition (Canonical Link Function)}
-    When $Y$ is a member of the exponential family we define the \textcolor{Red}{canonical link function} to be:
-    \[ g(\mu)=\theta=\eta=\Vector{x}^\top\Vector{\beta} \]
-    (i.e., the choice of $ g(\:\cdot\:) $ that sets canonical parameter = linear predictor).
+      When $Y$ is a member of the exponential family we define the \textcolor{Red}{canonical link function} to be:
+      \[ g(\mu)=\theta=\eta=\Vector{x}^\top\Vector{\beta} \]
+      (i.e., the choice of $ g(\:\cdot\:) $ that sets canonical parameter = linear predictor).
 \end{Regular}
 \subsection*{Example}
 Recall that $ \POI{\lambda} $ is a member of exponential family,
 \[ f(y;\lambda)=\frac{\lambda^y \mathrm{e}^{-\lambda}}{y!}=\exp*{\frac{y\log{\lambda}-\lambda}{1}-\log{y!}}  \]
 where $ \theta=\log{\lambda} $, $ \phi=1 $, $ b(\theta)=\lambda=\mathrm{e}^{\theta} $, and $ a(\phi)=1 $. Now to find the mean, variance function, and canonical link function:
 \begin{itemize}
-    \item \textcolor{Blue}{Mean}: $ \E{Y}=b^\prime(\theta)=\mathrm{e}^{\theta}=\mu\implies \theta=\log{\mu} $.
-    \item \textcolor{Blue}{Variance Function}: $ \V{\mu}=b^{\prime\prime}(\theta)=\mathrm{e}^{\theta}\implies \V{\mu}=\mu $.
-    \item \textcolor{Blue}{Variance}: $ \Var{Y}=\V{\mu}a(\phi)=\mu $ (mean-variance relationship).
-    \item \textcolor{Blue}{Canonical link}: set $ \theta=\eta $ using $ \theta=\log{\mu}=\eta=\Vector{x}^\top \Vector{\beta} $, i.e., $ g(\mu)=\log{\mu} $ where $ \log{\:\cdot\:} $
-          is the canonical link.
+      \item \textcolor{Blue}{Mean}: $ \E{Y}=b^\prime(\theta)=\mathrm{e}^{\theta}=\mu\implies \theta=\log{\mu} $.
+      \item \textcolor{Blue}{Variance Function}: $ \V{\mu}=b^{\prime\prime}(\theta)=\mathrm{e}^{\theta}\implies \V{\mu}=\mu $.
+      \item \textcolor{Blue}{Variance}: $ \Var{Y}=\V{\mu}a(\phi)=\mu $ (mean-variance relationship).
+      \item \textcolor{Blue}{Canonical link}: set $ \theta=\eta $ using $ \theta=\log{\mu}=\eta=\Vector{x}^\top \Vector{\beta} $, i.e., $ g(\mu)=\log{\mu} $ where $ \log{\:\cdot\:} $
+            is the canonical link.
 \end{itemize}
 Moving forward, we consider a log-linear model: $ \log{\mu_i}=\Vector{x}_i^\top \Vector{\beta} $.
 
 \subsection*{Remarks on Link Function}
 \begin{itemize}
-    \item We can choose any function $ g(\:\cdot\:) $ as the link function in theory.
-    \item The canonical link is a special link function, we often choose to use
-          canonical link for its good statistical properties.
-    \item Context and goodness of fit should motivate the choice of link function in
-          practice.
+      \item We can choose any function $ g(\:\cdot\:) $ as the link function in theory.
+      \item The canonical link is a special link function, we often choose to use
+            canonical link for its good statistical properties.
+      \item Context and goodness of fit should motivate the choice of link function in
+            practice.
 \end{itemize}
 \subsection*{Generalized Linear Models}
 \begin{Regular}{Definition (Generalized Linear Model (GLM))}
-    A \textcolor{Red}{Generalized Linear Model (GLM)} is composed of three components:
-    \begin{itemize}
-        \item \textcolor{Red}{Random Component}: The responses $ Y_1,\ldots,Y_n $ are
-              independent random variables and each $ Y_i $ is assumed to come from a parametric distribution that is a member of the
-              exponential family.
-        \item \textcolor{Red}{Systematic Component} (or linear predictor):
-              \[ \eta_i=\Vector{x}_i^\top\Vector{\beta}, \]
-              a linear combination of explanatory variables $ \Vector{x}_i $ and regression parameters $ \Vector{\beta} $.
-        \item \textcolor{Red}{Link function}:
-              \[ g(\mu_i)=\eta_i=\Vector{x}_i^\top\Vector{\beta}, \]
-              a function that relates the mean of response to the linear predictor.
-    \end{itemize}
+      A \textcolor{Red}{Generalized Linear Model (GLM)} is composed of three components:
+      \begin{itemize}
+            \item \textcolor{Red}{Random Component}: The responses $ Y_1,\ldots,Y_n $ are
+                  independent random variables and each $ Y_i $ is assumed to come from a parametric distribution that is a member of the
+                  exponential family.
+            \item \textcolor{Red}{Systematic Component} (or linear predictor):
+                  \[ \eta_i=\Vector{x}_i^\top\Vector{\beta}, \]
+                  a linear combination of explanatory variables $ \Vector{x}_i $ and regression parameters $ \Vector{\beta} $.
+            \item \textcolor{Red}{Link function}:
+                  \[ g(\mu_i)=\eta_i=\Vector{x}_i^\top\Vector{\beta}, \]
+                  a function that relates the mean of response to the linear predictor.
+      \end{itemize}
 \end{Regular}
 \subsection*{Topic Summary}
 2a Formulation of Generalized Linear Models:
 \begin{itemize}
-    \item Definition of the \textcolor{Blue}{Exponential Family}.
-          \begin{itemize}
-              \item Exponential form of the probability density (or mass) function.
-              \item Derivation of Score and Information.
-              \item Properties of exponential family, mean-variance relationship.
-              \item Definition of canonical link.
-          \end{itemize}
-    \item Definition of a \textcolor{Blue}{Generalized Linear Model}.
+      \item Definition of the \textcolor{Blue}{Exponential Family}.
+            \begin{itemize}
+                  \item Exponential form of the probability density (or mass) function.
+                  \item Derivation of Score and Information.
+                  \item Properties of exponential family, mean-variance relationship.
+                  \item Definition of canonical link.
+            \end{itemize}
+      \item Definition of a \textcolor{Blue}{Generalized Linear Model}.
 \end{itemize}
 Next Topic: 2b Estimation for Generalized Linear Models.

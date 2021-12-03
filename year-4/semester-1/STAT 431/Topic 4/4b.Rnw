@@ -1,63 +1,63 @@
 \makeheading{Week 8}{\daterange{2021-10-25}{2021-10-29}}
 \section*{Topic 4b: Ship Damage Example}
 \addcontentsline{toc}{section}{Topic 4b: Ship Damage Example}
-\subsection*{Recall: Regression for Poisson Processes}
 \begin{enumerate}[1.]
-    \item Fitting the main effects log linear model:
-          \begin{itemize}
-              \item Introduction of the data set.
-              \item Model 1: main effects + offset(log(months)).
-          \end{itemize}
-    \item Model selection:
-          \begin{itemize}
-              \item Use Deviance tests of nested non-saturated models.
-          \end{itemize}
-    \item Model interpretation:
-          \begin{itemize}
-              \item Show that $ \beta_k $ has log relative rate interpretation.
-              \item Wald based confidence intervals and hypothesis tests.
-          \end{itemize}
+      \item Fitting the main effects log linear model:
+            \begin{itemize}
+                  \item Introduction of the data set.
+                  \item Model 1: main effects + offset(log(months)).
+            \end{itemize}
+      \item Model selection:
+            \begin{itemize}
+                  \item Use Deviance tests of nested non-saturated models.
+            \end{itemize}
+      \item Model interpretation:
+            \begin{itemize}
+                  \item Show that $ \beta_k $ has log relative rate interpretation.
+                  \item Wald based confidence intervals and hypothesis tests.
+            \end{itemize}
 \end{enumerate}
 \subsection*{Example: Ship Damage Incidents}
+\addcontentsline{toc}{subsection}{Main Effects Model}
 \begin{Example}{Example: Ship Damage Incidents}
-    \begin{itemize}
-        \item McCullagh and Nelder (1989) discuss the analysis of a data set which records the
-              number of times a certain type of damage incident occurs in cargo ships.
-        \item Damage is caused by waves and occurs in the forward section of various cargo
-              carrying vessels
-        \item In order to prevent this type of damage from occurring in the future, the
-              investigators want to identify risk factors including:
-              \begin{itemize}
-                  \item \textbf{Ship type} (A-E),
-                  \item \textbf{Year of construction} (1960-1964; 1965-1969; 1970-1974; 1975-1979),
-                  \item \textbf{Period of operation} (1960-1974; 1975-1979).
-              \end{itemize}
-    \end{itemize}
+      \begin{itemize}
+            \item McCullagh and Nelder (1989) discuss the analysis of a data set which records the
+                  number of times a certain type of damage incident occurs in cargo ships.
+            \item Damage is caused by waves and occurs in the forward section of various cargo
+                  carrying vessels
+            \item In order to prevent this type of damage from occurring in the future, the
+                  investigators want to identify risk factors including:
+                  \begin{itemize}
+                        \item \textbf{Ship type} (A-E),
+                        \item \textbf{Year of construction} (1960-1964; 1965-1969; 1970-1974; 1975-1979),
+                        \item \textbf{Period of operation} (1960-1974; 1975-1979).
+                  \end{itemize}
+      \end{itemize}
 \end{Example}
-\subsection*{Ship Damage Data Set}
+\subsubsection*{Ship Damage Data Set}
 In the dataset we have adopted the following coding conventions:
 \begin{itemize}
-    \item \texttt{type}: The ship type variable is (1, 2, 3, 4, 5) for ship types A, B, C, D, and E,
-          respectively
-    \item \texttt{cyr}: The year of construction variable is (1, 2, 3, 4) for eras 1960-1964,
-          1965-1969, 1970-1974, and 1975-1979, respectively
-    \item \texttt{oyr}: The year of operation variable is 1 for 1960-74 and 2 for 1975-1979
-    \item \texttt{months}: The total number of months of operation for ships of that type and
-          construction year during the period of operation
-    \item \texttt{y}: The number of damage incidents for ships of that type and construction
-          year during the period of operation
+      \item \texttt{type}: The ship type variable is (1, 2, 3, 4, 5) for ship types A, B, C, D, and E,
+            respectively
+      \item \texttt{cyr}: The year of construction variable is (1, 2, 3, 4) for eras 1960-1964,
+            1965-1969, 1970-1974, and 1975-1979, respectively
+      \item \texttt{oyr}: The year of operation variable is 1 for 1960-74 and 2 for 1975-1979
+      \item \texttt{months}: The total number of months of operation for ships of that type and
+            construction year during the period of operation
+      \item \texttt{y}: The number of damage incidents for ships of that type and construction
+            year during the period of operation
 \end{itemize}
-\subsection*{Ship Damage Data Set (\texttt{ship.dat})}
+\subsubsection*{Ship Damage Data Set (\texttt{ship.dat})}
 \begin{Example}{}
-    First ten rows of \texttt{ship.dat}:
-    % \begin{noindent}
+      First ten rows of \texttt{ship.dat}:
+      % \begin{noindent}
       <<echo=FALSE>>=
       ship.dat = read.table("ship.dat", header = T)
       ship.dat[seq(1,10),]
       @
       % \end{noindent}
 \end{Example}
-\subsection*{R Code \& Output (Models 1 and 2)}
+\subsubsection*{R Code \& Output (Models 1 and 2)}
 % \begin{noindent}
       <<results='hide'>>=
       # input dataset and create factor variables
@@ -78,57 +78,58 @@ In the dataset we have adopted the following coding conventions:
       summary(model2)
       @
 % \end{noindent}
-\subsection*{Model 1: Main effects + offset(log(months))}
+\subsubsection*{Model 1: Main effects + offset(log(months))}
 \begin{itemize}
-    \item Time homogenous Poisson process: $ \E[\big]{N_i(t_i)}=\mu_t(t_i)=\lambda t_i $.
-    \item Log linear regression model:
-          \[ \log[\big]{\mu_i(t_i)}=\log{\lambda_i}+\log{t_i}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
-    \item Ship Damage main effects model:
-          \begin{align*}
-              \log[\big]{\mu_i(t_i)}
-               & =\beta_0+\overbrace{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}+\beta_4x_{i4}}^{\text{ship type}}+ \\
-               & \quad \underbrace{\beta_5x_{i5}+\beta_6x_{i6}+\beta_7x_{i7}}_{\text{year of construction}}+
-              \underbrace{\beta_8x_{i8}}_{\text{operation year}}+\underbrace{\log{t_i}}_{\text{offset}},
-          \end{align*}
-          where
-          \[ \begin{array}{cc}
-                  x_{i1}=\Ind{\text{type B}}, & x_{i5}=\Ind{\text{1965-1969}}, \\
-                  x_{i2}=\Ind{\text{type C}}, & x_{i6}=\Ind{\text{1970-1974}}, \\
-                  x_{i3}=\Ind{\text{type D}}, & x_{i7}=\Ind{\text{1975-1979}}, \\
-                  x_{i4}=\Ind{\text{type E}}, & x_{i8}=\Ind{\text{1975-1979}}. \\
-              \end{array} \]
+      \item Time homogenous Poisson process: $ \E[\big]{N_i(t_i)}=\mu_t(t_i)=\lambda t_i $.
+      \item Log linear regression model:
+            \[ \log[\big]{\mu_i(t_i)}=\log{\lambda_i}+\log{t_i}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
+      \item Ship Damage main effects model:
+            \begin{align*}
+                  \log[\big]{\mu_i(t_i)}
+                   & =\beta_0+\overbrace{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}+\beta_4x_{i4}}^{\text{ship type}}+ \\
+                   & \quad \underbrace{\beta_5x_{i5}+\beta_6x_{i6}+\beta_7x_{i7}}_{\text{year of construction}}+
+                  \underbrace{\beta_8x_{i8}}_{\text{operation year}}+\underbrace{\log{t_i}}_{\text{offset}},
+            \end{align*}
+            where
+            \[ \begin{array}{cc}
+                        x_{i1}=\Ind{\text{type B}}, & x_{i5}=\Ind{\text{1965-1969}}, \\
+                        x_{i2}=\Ind{\text{type C}}, & x_{i6}=\Ind{\text{1970-1974}}, \\
+                        x_{i3}=\Ind{\text{type D}}, & x_{i7}=\Ind{\text{1975-1979}}, \\
+                        x_{i4}=\Ind{\text{type E}}, & x_{i8}=\Ind{\text{1975-1979}}. \\
+                  \end{array} \]
 \end{itemize}
-\subsection*{Model 1: Main effects + offset(log(months))}
+\subsubsection*{Model 1: Main effects + offset(log(months))}
 %\begin{noindent}
       <<>>=
       summary(model1)
       @
 %\end{noindent}
-\subsection*{Model 2: Main effects + log(months)}
+\subsubsection*{Model 2: Main effects + log(months)}
 %\begin{noindent}
       <<>>=
       summary(model2)
       @
 %\end{noindent}
-\subsection*{Summary of Model 1 versus Model 2}
+\subsubsection*{Summary of Model 1 versus Model 2}
 \begin{itemize}
-    \item $ \log{\:\cdot\:} $ is the canonical link for the Poisson, so it is the default when \texttt{family=poisson}.
-    \item \textcolor{Blue}{Model 1}: main effects + \texttt{offset(log(months))}: $ \Vector{x}^\top \Vector{\beta}=\log{t_i} $.
-          \begin{itemize}
-              \item The offset explains some variation in the number of damage incidents due to
-                    different amounts of time at risk.
-          \end{itemize}
-    \item \textcolor{Blue}{Model 2}: main effects + \texttt{log(months)}: $ \Vector{x}^\top \Vector{\beta}\log{t_i} $.
-          \begin{itemize}
-              \item Examine $ \hat{\beta}_9 $ the coefficient for \texttt{log(months)}.
-              \item Conduct a Wald-based test of $ \HN $: $ \beta_9=1 $ versus $ \HA $: $ \beta_9\ne 1 $:
-                    \[ p=2\Prob*{Z>\frac{\abs{\hat{\beta}_9-1}}{\se{\hat{\beta}_9}}}=2\Prob{Z>\frac{\abs{0.9027-1}}{0.1018}}=2\Prob{Z>\abs{-0.9558}}=0.34. \]
-                    Therefore, do not reject $ \HN $: $ \beta_9=1 $.
-          \end{itemize}
-    \item We will not typically do this check and just use \texttt{offset(log(ti))} since it's implied
-          through the assumption of a time homogenous Poisson Process.
+      \item $ \log{\:\cdot\:} $ is the canonical link for the Poisson, so it is the default when \texttt{family=poisson}.
+      \item \textcolor{Blue}{Model 1}: main effects + \texttt{offset(log(months))}: $ \Vector{x}^\top \Vector{\beta}=\log{t_i} $.
+            \begin{itemize}
+                  \item The offset explains some variation in the number of damage incidents due to
+                        different amounts of time at risk.
+            \end{itemize}
+      \item \textcolor{Blue}{Model 2}: main effects + \texttt{log(months)}: $ \Vector{x}^\top \Vector{\beta}\log{t_i} $.
+            \begin{itemize}
+                  \item Examine $ \hat{\beta}_9 $ the coefficient for \texttt{log(months)}.
+                  \item Conduct a Wald-based test of $ \HN $: $ \beta_9=1 $ versus $ \HA $: $ \beta_9\ne 1 $:
+                        \[ p=2\Prob*{Z>\frac{\abs{\hat{\beta}_9-1}}{\se{\hat{\beta}_9}}}=2\Prob{Z>\frac{\abs{0.9027-1}}{0.1018}}=2\Prob{Z>\abs{-0.9558}}=0.34. \]
+                        Therefore, do not reject $ \HN $: $ \beta_9=1 $.
+            \end{itemize}
+      \item We will not typically do this check and just use \texttt{offset(log(ti))} since it's implied
+            through the assumption of a time homogenous Poisson Process.
 \end{itemize}
 \subsection*{R Code (Models 3a, 3b, 3c)}
+\addcontentsline{toc}{subsection}{Model Selection}
 Now, consider various models nested within model 1 to see if any of the main effects
 are not significant.
 %\begin{noindent}
@@ -152,14 +153,14 @@ are not significant.
       1-pchisq(model3c$deviance-model1$deviance, model3c$df.residual-model1$df.residual)
       @
 %\end{noindent}
-\subsection*{Model 3a: \texttt{cyrf + oyrf + offset(log(months))}}
+\subsubsection*{Model 3a: \texttt{cyrf + oyrf + offset(log(months))}}
 \begin{itemize}
-    \item Use this model to test:
-          \begin{itemize}
-              \item $ \HN $: Type of Ship is unimportant (i.e., $ \beta_1=\beta_2=\beta_3=\beta_4=0 $).
-              \item $ \HA $: $ \beta_1\ne 0 $ or $ \cdots $ or $ \beta_4\ne 0 $.
-          \end{itemize}
-          %\begin{noindent}
+      \item Use this model to test:
+            \begin{itemize}
+                  \item $ \HN $: Type of Ship is unimportant (i.e., $ \beta_1=\beta_2=\beta_3=\beta_4=0 $).
+                  \item $ \HA $: $ \beta_1\ne 0 $ or $ \cdots $ or $ \beta_4\ne 0 $.
+            \end{itemize}
+            %\begin{noindent}
             <<>>=
             model3a <- glm(y ~ cyrf + oyrf + offset(log(months)), family=poisson, data=ship.dat)
             model3a$deviance
@@ -167,21 +168,21 @@ are not significant.
             1-pchisq(model3a$deviance-model1$deviance, model3a$df.residual-model1$df.residual)
             @
       %\end{noindent}
-          \[ \Delta D=D_0-D_A \sim \chi^2_{(4)}\text{ under $\HN$}. \]
-          \[ p=\Prob*{\chi^2_{(4)}>(62.365-38.695)}<0.001. \]
-    \item Reject the null hypothesis of no variation in the accident rate across ships of
-          different types.
-    \item This is strong evidence of a need to adjust for the difference in the accident rates
-          between ship types.
+            \[ \Delta D=D_0-D_A \sim \chi^2_{4}\text{ under $\HN$}. \]
+            \[ p=\Prob*{\chi^2_{4}>(62.365-38.695)}<0.001. \]
+      \item Reject the null hypothesis of no variation in the accident rate across ships of
+            different types.
+      \item This is strong evidence of a need to adjust for the difference in the accident rates
+            between ship types.
 \end{itemize}
-\subsection*{Model 3b: \texttt{typef + oyrf + offset(log(months))}}
+\subsubsection*{Model 3b: \texttt{typef + oyrf + offset(log(months))}}
 \begin{itemize}
-    \item Use this model to test:
-          \begin{itemize}
-              \item $ \HN $: Construction year is unimportant (i.e., $ \beta_5=\beta_6=\beta_7=0 $).
-              \item $ \HA $: $ \beta_5\ne 0 $ or $ \cdots $ or $ \beta_7\ne 0 $.
-          \end{itemize}
-          %\begin{noindent}
+      \item Use this model to test:
+            \begin{itemize}
+                  \item $ \HN $: Construction year is unimportant (i.e., $ \beta_5=\beta_6=\beta_7=0 $).
+                  \item $ \HA $: $ \beta_5\ne 0 $ or $ \cdots $ or $ \beta_7\ne 0 $.
+            \end{itemize}
+            %\begin{noindent}
             <<>>=
             model3b <- glm(y ~ typef + oyrf + offset(log(months)), family=poisson, data=ship.dat)
             model3b$deviance
@@ -189,17 +190,17 @@ are not significant.
             1-pchisq(model3b$deviance-model1$deviance, model3b$df.residual-model1$df.residual)
             @
       %\end{noindent}
-    \item Reject the null hypothesis of no variation in the accident rate across ships of
-          different construction years.
+      \item Reject the null hypothesis of no variation in the accident rate across ships of
+            different construction years.
 \end{itemize}
-\subsection*{Model 3c: \texttt{typef + cyrf + offset(log(months))}}
+\subsubsection*{Model 3c: \texttt{typef + cyrf + offset(log(months))}}
 \begin{itemize}
-    \item Use this model to test:
-          \begin{itemize}
-              \item $ \HN $: Operation year is unimportant (i.e., $ \beta_8=0 $).
-              \item $ \HA $: $ \beta_8\ne 0 $.
-          \end{itemize}
-          %\begin{noindent}
+      \item Use this model to test:
+            \begin{itemize}
+                  \item $ \HN $: Operation year is unimportant (i.e., $ \beta_8=0 $).
+                  \item $ \HA $: $ \beta_8\ne 0 $.
+            \end{itemize}
+            %\begin{noindent}
             <<>>=
             model3c <- glm(y ~ typef + cyrf + offset(log(months)), family=poisson, data=ship.dat)
             model3c$deviance
@@ -207,13 +208,13 @@ are not significant.
             1-pchisq(model3c$deviance-model1$deviance, model3c$df.residual-model1$df.residual)
             @
       %\end{noindent}
-    \item Reject the null hypothesis of no variation in the accident rate across ships of
-          different periods of operation.
-    \item We are unable to remove any of the main effects from the model (all are
-          statistically significant).
-    \item Next, consider adding interaction effects.
+      \item Reject the null hypothesis of no variation in the accident rate across ships of
+            different periods of operation.
+      \item We are unable to remove any of the main effects from the model (all are
+            statistically significant).
+      \item Next, consider adding interaction effects.
 \end{itemize}
-\subsection*{R Code (Models 4, 5, 6)}
+\subsubsection*{R Code (Models 4, 5, 6)}
 %\begin{noindent}
       <<results='hide'>>=
       # testing for the interaction between type of ship and year of construction
@@ -240,14 +241,14 @@ are not significant.
       abline(h= 2)
       @
 %\end{noindent}
-\subsection*{Model 4: \texttt{typef + cyrf + oyrf + typef*cyrf + offset(log(months))}}
+\subsubsection*{Model 4: \texttt{typef + cyrf + oyrf + typef*cyrf + offset(log(months))}}
 \begin{itemize}
-    \item Use this model to test:
-          \begin{itemize}
-              \item $ \HN $: the \texttt{typef*cyrf} interaction is unimportant (Model 1).
-              \item $ \HA $: (model 4).
-          \end{itemize}
-          %\begin{noindent}
+      \item Use this model to test:
+            \begin{itemize}
+                  \item $ \HN $: the \texttt{typef*cyrf} interaction is unimportant (Model 1).
+                  \item $ \HA $: (model 4).
+            \end{itemize}
+            %\begin{noindent}
             <<>>=
             model4 <- glm(y ~ typef + cyrf + oyrf + typef*cyrf + offset(log(months)), family=poisson, data=ship.dat)
             model4$deviance
@@ -255,12 +256,12 @@ are not significant.
             1-pchisq(model1$deviance-model4$deviance, model1$df.residual-model4$df.residual)
             @
       %\end{noindent}
-          \[ \Delta D=D_0-D_A \sim \chi^2_{(12)}\text{ under $\HN$}. \]
-          \[ p=\Prob*{\chi^2_{(12)}>(38.695-14.587)}<0.0197. \]
-          \begin{itemize}
-              \item Reject the null hypothesis that the main effects model is adequate.
-              \item That is, we would choose model 4 over model 1.
-          \end{itemize}
+            \[ \Delta D=D_0-D_A \sim \chi^2_{12}\text{ under $\HN$}. \]
+            \[ p=\Prob*{\chi^2_{12}>(38.695-14.587)}<0.0197. \]
+            \begin{itemize}
+                  \item Reject the null hypothesis that the main effects model is adequate.
+                  \item That is, we would choose model 4 over model 1.
+            \end{itemize}
 \end{itemize}
 %\begin{noindent}
       <<>>=
@@ -268,53 +269,53 @@ are not significant.
       @
 %\end{noindent}
 \begin{itemize}
-    \item Huge standard errors!
-    \item This model is overparameterized!
-    \item Twelve interaction terms.
-    \item Type 4: no events for \texttt{cyr} 1 or 2.
+      \item Huge standard errors!
+      \item This model is overparameterized!
+      \item Twelve interaction terms.
+      \item Type 4: no events for \texttt{cyr} 1 or 2.
 \end{itemize}
-\subsection*{Model 5: \texttt{typef + cyrf + oyrf + typef*oyrf + offset(log(months))}}
+\subsubsection*{Model 5: \texttt{typef + cyrf + oyrf + typef*oyrf + offset(log(months))}}
 \begin{itemize}
-    \item Use this model to test:
-          \begin{itemize}
-              \item $ \HN $: the \texttt{typef*oyrf} interaction is unimportant (Model 1).
-              \item $ \HA $: (model 5).
-          \end{itemize}
-          %\begin{noindent}
+      \item Use this model to test:
+            \begin{itemize}
+                  \item $ \HN $: the \texttt{typef*oyrf} interaction is unimportant (Model 1).
+                  \item $ \HA $: (model 5).
+            \end{itemize}
+            %\begin{noindent}
             <<>>=
             model5 <- glm(y ~ typef + cyrf + oyrf + typef*oyrf + offset(log(months)), family=poisson, data=ship.dat)
             1-pchisq(model1$deviance-model5$deviance, model1$df.residual-model5$df.residual)
             @
       %\end{noindent}
-          \begin{itemize}
-              \item Do not reject the null hypothesis that the main effects model is adequate.
-              \item The interaction between ship type and year of operation is not significant.
-          \end{itemize}
+            \begin{itemize}
+                  \item Do not reject the null hypothesis that the main effects model is adequate.
+                  \item The interaction between ship type and year of operation is not significant.
+            \end{itemize}
 \end{itemize}
-\subsection*{Model 6: \texttt{typef + cyrf + oyrf + cyrf*oyrf + offset(log(months))}}
+\subsubsection*{Model 6: \texttt{typef + cyrf + oyrf + cyrf*oyrf + offset(log(months))}}
 \begin{itemize}
-    \item Use this model to test:
-          \begin{itemize}
-              \item $ \HN $: the \texttt{cyrf*oyrf} interaction is unimportant (Model 1).
-              \item $ \HA $: (model 6).
-          \end{itemize}
-          %\begin{noindent}
+      \item Use this model to test:
+            \begin{itemize}
+                  \item $ \HN $: the \texttt{cyrf*oyrf} interaction is unimportant (Model 1).
+                  \item $ \HA $: (model 6).
+            \end{itemize}
+            %\begin{noindent}
             <<>>=
             model6 <- glm(y ~ typef + cyrf + oyrf + cyrf*oyrf + offset(log(months)), family=poisson, data=ship.dat)
             1-pchisq(model1$deviance-model6$deviance, model1$df.residual-model6$df.residual)
             @
       %\end{noindent}
-          \begin{itemize}
-              \item Do not reject the null hypothesis that the main effects model is adequate.
-              \item The interaction between year of construction and year of operation is not
-                    significant.
-          \end{itemize}
+            \begin{itemize}
+                  \item Do not reject the null hypothesis that the main effects model is adequate.
+                  \item The interaction between year of construction and year of operation is not
+                        significant.
+            \end{itemize}
 \end{itemize}
-\subsection*{Model 1: \texttt{typef + cyrf + oyrf +offset(log(months))}}
+\subsubsection*{Model 1: \texttt{typef + cyrf + oyrf +offset(log(months))}}
 \begin{itemize}
-    \item Conclude that the best fitting model is the main effects model.
-    \item Check the residual plot:
-          %\begin{noindent}
+      \item Conclude that the best fitting model is the main effects model.
+      \item Check the residual plot:
+            %\begin{noindent}
             <<echo=FALSE>>=
             ship.dat$rdeviance <- residuals.glm(model1,type="deviance")
             plot(model1$fitted.values,ship.dat$rdeviance,ylim=c(-4,4),xlab="FITTED VALUES",ylab="DEVIANCE RESIDUALS")
@@ -322,13 +323,14 @@ are not significant.
             abline(h= 2)
             @
       %\end{noindent}
-          \begin{itemize}
-              \item $ \hat{\mu}_i=\exp*{\Vector{x}_i^\top \hat{\beta}+\log{t_i}} $.
-              \item $ D=\sum_{i}2\log*{\frac{y_i}{\hat{\mu}_i}}=\sum_i d_i $.
-              \item $ r_i^d=\sign{y_i-\hat{\mu}_i}\sqrt{\abs{d_i}} $.
-          \end{itemize}
+            \begin{itemize}
+                  \item $ \hat{\mu}_i=\exp*{\Vector{x}_i^\top \hat{\beta}+\log{t_i}} $.
+                  \item $ D=\sum_{i}2\log*{\frac{y_i}{\hat{\mu}_i}}=\sum_i d_i $.
+                  \item $ r_i^d=\sign{y_i-\hat{\mu}_i}\sqrt{\abs{d_i}} $.
+            \end{itemize}
 \end{itemize}
 \subsection*{Interpretation of Model 1: Main effects + \texttt{offset(log(months))}}
+\addcontentsline{toc}{subsection}{Model Interpretation}
 %\begin{noindent}
       <<>>=
       model1<- glm(y~typef + cyrf + oyrf + offset(log(months)), family=poisson, data=ship.dat)
@@ -336,137 +338,137 @@ are not significant.
       summary(model1)$cov.unscaled
       @
 %\end{noindent}
-\subsection*{Interpretation of Log Linear Models for Poisson Processes}
+\subsubsection*{Interpretation of Log Linear Models for Poisson Processes}
 \begin{itemize}
-    \item Focus on interpretation of Model 1, the main effects model.
-    \item Recall the form of the model
-          \[ \log[\big]{\mu_i(t_i)}=\log{\lambda_i}+\log{t_i}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
-    \item This is based on the Poisson distribution with the expected number of events
-          occurring over $ (0,t] $ given by
-          \[ \E[\big]{N_i(t_i)}=\mu_i(t_i)=\lambda_i t_i. \]
-    \item $ \lambda= $ rate parameter (expected number of events per unit time).
-    \item The regression parameters of this log linear model will have a log \textcolor{Red}{Relative Rate (RR)} interpretation:
-          \begin{Regular}{}
-              \[ \RR = \frac{\lambda_1}{\lambda_2}=\frac{\text{Number of events in group 1 per unit time}}{\text{Number of events in group 2 per unit time}}. \]
-          \end{Regular}
+      \item Focus on interpretation of Model 1, the main effects model.
+      \item Recall the form of the model
+            \[ \log[\big]{\mu_i(t_i)}=\log{\lambda_i}+\log{t_i}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
+      \item This is based on the Poisson distribution with the expected number of events
+            occurring over $ (0,t] $ given by
+            \[ \E[\big]{N_i(t_i)}=\mu_i(t_i)=\lambda_i t_i. \]
+      \item $ \lambda= $ rate parameter (expected number of events per unit time).
+      \item The regression parameters of this log linear model will have a log \textcolor{Red}{Relative Rate (RR)} interpretation:
+            \begin{Regular}{}
+                  \[ \RR = \frac{\lambda_1}{\lambda_2}=\frac{\text{Number of events in group 1 per unit time}}{\text{Number of events in group 2 per unit time}}. \]
+            \end{Regular}
 \end{itemize}
-\subsection*{Interpretation of Model 1: RR for A vs C}
+\subsubsection*{Interpretation of Model 1: RR for A vs C}
 \begin{Example}{}
-    \textbf{Task 1}: Controlling for periods of construction and operation estimate the relative rate of
-    accidents for ships of type A versus type C.
+      \textbf{Task 1}: Controlling for periods of construction and operation estimate the relative rate of
+      accidents for ships of type A versus type C.
 \end{Example}
 \begin{table}[H]
-    \centering
-    \begin{tabular}{ccccl}
-        \texttt{type} & \texttt{cyr} & \texttt{oyr} & $ \Vector{x}_i $                & $ \log{\lambda_i} $                                             \\
-        \midrule
-        A             & ---          & ---          & $ (1,0,0,0,0,x_5,x_6,x_7,x_8) $ & $ \beta_0+\beta_5x_5+\beta_6x_6+\beta_7x_7+\beta_8x_8 $         \\
-        C             & ---          & ---          & $ (1,0,1,0,0,x_5,x_6,x_7,x_8) $ & $ \beta_0+\beta_2+\beta_5x_5+\beta_6x_6+\beta_7x_7+\beta_8x_8 $ \\
-        \midrule
-                      &              &              & $ \log{\lambda_A/\lambda_C}= $  & $ -\beta_2 $
-    \end{tabular}
+      \centering
+      \begin{tabular}{ccccl}
+            \texttt{type} & \texttt{cyr} & \texttt{oyr} & $ \Vector{x}_i $                & $ \log{\lambda_i} $                                             \\
+            \midrule
+            A             & ---          & ---          & $ (1,0,0,0,0,x_5,x_6,x_7,x_8) $ & $ \beta_0+\beta_5x_5+\beta_6x_6+\beta_7x_7+\beta_8x_8 $         \\
+            C             & ---          & ---          & $ (1,0,1,0,0,x_5,x_6,x_7,x_8) $ & $ \beta_0+\beta_2+\beta_5x_5+\beta_6x_6+\beta_7x_7+\beta_8x_8 $ \\
+            \midrule
+                          &              &              & $ \log{\lambda_A/\lambda_C}= $  & $ -\beta_2 $
+      \end{tabular}
 \end{table}
 \begin{table}[H]
-    \centering
-    \begin{tabular}{lll}
-                  & $ \beta_2 $                                 & $ \exp{-\beta_2} $                      \\
-        \midrule
-        MLE       & $ -0.6874 $                                 & $ 1.990 $                               \\
-        95\,\% CI & $ -0.6874\pm 1.96(0.329)=(-1.332,-0.0426) $ & $ (e^{0.0426},e^{1.332})=(1.04,3.79) $.
-    \end{tabular}
+      \centering
+      \begin{tabular}{lll}
+                      & $ \beta_2 $                                 & $ \exp{-\beta_2} $                      \\
+            \midrule
+            MLE       & $ -0.6874 $                                 & $ 1.990 $                               \\
+            95\,\% CI & $ -0.6874\pm 1.96(0.329)=(-1.332,-0.0426) $ & $ (e^{0.0426},e^{1.332})=(1.04,3.79) $.
+      \end{tabular}
 \end{table}
 For ships constructed in the same period and operated in the same period the rate of
 accidents for ships of type A is $1.99$ times higher than the rate of accidents for ships of
 type C. A 95\% confidence interval for this relative rate is $(1.04, 3.79)$.
 \begin{itemize}
-    \item Note that the null hypothesis of no effect is equivalent to $ \RR=1 $ or $ \log{\RR}=0 $:
-          \[ \HN\colon \beta_2=0\text{ versus }\HA\colon \beta_2\ne 0. \]
-    \item The R output includes the $ p $-value for this test:
-          \[ 2\Prob*{Z>\frac{\abs{\hat{\beta}_2-0}}{\se{\hat{\beta}_2}}}=2\Prob{Z>2.089}=0.0367. \]
-    \item Therefore, we reject the null hypothesis that the rate of accidents is the same for
-          ships of types A and C (controlling for periods of construction and operation).
+      \item Note that the null hypothesis of no effect is equivalent to $ \RR=1 $ or $ \log{\RR}=0 $:
+            \[ \HN\colon \beta_2=0\text{ versus }\HA\colon \beta_2\ne 0. \]
+      \item The R output includes the $ p $-value for this test:
+            \[ 2\Prob*{Z>\frac{\abs{\hat{\beta}_2-0}}{\se{\hat{\beta}_2}}}=2\Prob{Z>2.089}=0.0367. \]
+      \item Therefore, we reject the null hypothesis that the rate of accidents is the same for
+            ships of types A and C (controlling for periods of construction and operation).
 \end{itemize}
 \subsection*{Interpretation of Model 1: RR for E vs B}
 \begin{Example}{}
-    \textbf{Task 2}: Controlling for periods of construction and operation estimate the relative rate of
-    accidents for ships of type E versus type B.
+      \textbf{Task 2}: Controlling for periods of construction and operation estimate the relative rate of
+      accidents for ships of type E versus type B.
 \end{Example}
 \begin{table}[H]
-    \centering
-    \begin{tabular}{ccccl}
-        \texttt{type} & \texttt{cyr} & \texttt{oyr} & $ \Vector{x}_i $                & $ \log{\lambda_i} $                                             \\
-        \midrule
-        E             & ---          & ---          & $ (1,0,0,0,1,x_5,x_6,x_7,x_8) $ & $ \beta_0+\beta_4+\beta_5x_5+\beta_6x_6+\beta_7x_7+\beta_8x_8 $ \\
-        B             & ---          & ---          & $ (1,1,0,0,0,x_5,x_6,x_7,x_8) $ & $ \beta_0+\beta_1+\beta_5x_5+\beta_6x_6+\beta_7x_7+\beta_8x_8 $ \\
-        \midrule
-                      &              &              & $ \log{\lambda_E/\lambda_B}= $  & $ \beta_4-\beta_1 $
-    \end{tabular}
+      \centering
+      \begin{tabular}{ccccl}
+            \texttt{type} & \texttt{cyr} & \texttt{oyr} & $ \Vector{x}_i $                & $ \log{\lambda_i} $                                             \\
+            \midrule
+            E             & ---          & ---          & $ (1,0,0,0,1,x_5,x_6,x_7,x_8) $ & $ \beta_0+\beta_4+\beta_5x_5+\beta_6x_6+\beta_7x_7+\beta_8x_8 $ \\
+            B             & ---          & ---          & $ (1,1,0,0,0,x_5,x_6,x_7,x_8) $ & $ \beta_0+\beta_1+\beta_5x_5+\beta_6x_6+\beta_7x_7+\beta_8x_8 $ \\
+            \midrule
+                          &              &              & $ \log{\lambda_E/\lambda_B}= $  & $ \beta_4-\beta_1 $
+      \end{tabular}
 \end{table}
 \begin{itemize}
-    \item Note that the log relative risk is a linear combination of two regression parameters.
-    \item Recall that since $ \hat{\Vector{\beta}} $ is an MLE, $ \hat{\Vector{\beta}}\sim \MVN*{\Vector{\beta},I^{-1}(\hat{\Vector{\beta}})} $
-          \[ \Vector{x}^\top \hat{\Vector{\beta}} \sim \N*{\Vector{x}^\top \Vector{\beta},\Vector{x}^\top I^{-1}(\hat{\Vector{\beta}})\Vector{x}}. \]
-    \item In order to estimate $ \se{\beta_4-\beta_1} $:
-          \begin{enumerate}[(i)]
-              \item If working in R, we can define the contrast $ \Vector{c}=(0,-1,0,0,1,0,0,0,0)^\top $ and
-                    \[ \se{\hat{\beta}_4-\hat{\beta}_1}=\sqrt{\Vector{c}^\top \Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{c}}. \]
-                    %\begin{noindent}
+      \item Note that the log relative risk is a linear combination of two regression parameters.
+      \item Recall that since $ \hat{\Vector{\beta}} $ is an MLE, $ \hat{\Vector{\beta}}\sim \MVN*{\Vector{\beta},I^{-1}(\hat{\Vector{\beta}})} $
+            \[ \Vector{x}^\top \hat{\Vector{\beta}} \sim \N*{\Vector{x}^\top \Vector{\beta},\Vector{x}^\top I^{-1}(\hat{\Vector{\beta}})\Vector{x}}. \]
+      \item In order to estimate $ \se{\beta_4-\beta_1} $:
+            \begin{enumerate}[(i)]
+                  \item If working in R, we can define the contrast $ \Vector{c}=(0,-1,0,0,1,0,0,0,0)^\top $ and
+                        \[ \se{\hat{\beta}_4-\hat{\beta}_1}=\sqrt{\Vector{c}^\top \Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{c}}. \]
+                        %\begin{noindent}
                                     <<>>=
                                     x=as.matrix(c(0,-1,0,0,1,0,0,0,0),ncol=1)
                                     v=summary(model1)$cov.unscaled
                                     sqrt(t(x)%*%v%*%x)
                                     @
                                     %\end{noindent}
-              \item If working by hand with the R covariance or correlation matrix:
-                    \begin{align*}
-                        \se{\hat{\beta}_4-\hat{\beta}_1}
-                         & =\sqrt{\Var{\hat{\beta}_4}+\Var{\hat{\beta}_1}-2\Cov{\hat{\beta}_4,\hat{\beta}_1}} \\
-                         & =\sqrt{(0.05564)+(0.03154)-2(0.02390)}                                             \\
-                         & =0.198.
-                    \end{align*}
-          \end{enumerate}
-    \item Now to estimate the relative rate $ \exp{\beta_4-\beta_1} $:
-          \begin{table}[H]
-              \centering
-              \begin{tabular}{lll}
-                            & $ \beta_4-\beta_1 $                     & $ \exp{\beta_4-\beta_1} $             \\
-                  \midrule
-                  MLE       & $ -0.3256-(-0.5433)=0.8689 $            & $ \exp{0.08689}=2.38 $                \\
-                  95\,\% CI & $ 0.8669\pm 1.96(0.198)=(0.481,1.257) $ & $ (e^{0.481},e^{1.257})=(1.62,3.51) $
-              \end{tabular}
-          \end{table}
-    \item \emph{For ships constructed and operated in the same periods those of type E had an
-              estimated $2.38$, 95\,\% CI $(1.62, 3.51)$, times higher accident rate than those of type
-              B.}
-    \item Here the null hypothesis of no effect is that ships of types E and B have the same
-          accident rate. That is,
-          \[ \HN\colon \beta_4-\beta_1=0\text{ vs }\HA\colon \beta_4-\beta_1\ne 0. \]
-    \item We test this using a Wald test. Since $ \Vector{x}^\top \hat{\Vector{\beta}} \sim \N*{\Vector{x}^\top \Vector{\beta},\Vector{x}^\top I^{-1}(\hat{\Vector{\beta}})\Vector{x}} $.
-          Then
-          \[ \frac{\Vector{x}^\top \hat{\Vector{\beta}}}{\sqrt{\Vector{x}^\top I^{-1}(\hat{\Vector{\beta}})\Vector{x}}}\sim \N{0,1}. \]
-    \item The $ p $-value for this test is:
-          \[ 2\Prob*{Z>\frac{ \Vector{x}^\top \hat{\Vector{\beta}} }{ \sqrt{\Vector{x}^\top I^{-1}(\hat{\Vector{\beta}})\Vector{x}} }}=2\Prob*{Z>\frac{0.8689}{0.198}}<0.001. \]
-    \item Therefore, we reject the null hypothesis that the accident rate is the same for ships
-          of types E and B (controlling for periods of contraction and operation).
+                  \item If working by hand with the R covariance or correlation matrix:
+                        \begin{align*}
+                              \se{\hat{\beta}_4-\hat{\beta}_1}
+                               & =\sqrt{\Var{\hat{\beta}_4}+\Var{\hat{\beta}_1}-2\Cov{\hat{\beta}_4,\hat{\beta}_1}} \\
+                               & =\sqrt{(0.05564)+(0.03154)-2(0.02390)}                                             \\
+                               & =0.198.
+                        \end{align*}
+            \end{enumerate}
+      \item Now to estimate the relative rate $ \exp{\beta_4-\beta_1} $:
+            \begin{table}[H]
+                  \centering
+                  \begin{tabular}{lll}
+                                  & $ \beta_4-\beta_1 $                     & $ \exp{\beta_4-\beta_1} $             \\
+                        \midrule
+                        MLE       & $ -0.3256-(-0.5433)=0.8689 $            & $ \exp{0.08689}=2.38 $                \\
+                        95\,\% CI & $ 0.8669\pm 1.96(0.198)=(0.481,1.257) $ & $ (e^{0.481},e^{1.257})=(1.62,3.51) $
+                  \end{tabular}
+            \end{table}
+      \item \emph{For ships constructed and operated in the same periods those of type E had an
+                  estimated $2.38$, 95\,\% CI $(1.62, 3.51)$, times higher accident rate than those of type
+                  B.}
+      \item Here the null hypothesis of no effect is that ships of types E and B have the same
+            accident rate. That is,
+            \[ \HN\colon \beta_4-\beta_1=0\text{ vs }\HA\colon \beta_4-\beta_1\ne 0. \]
+      \item We test this using a Wald test. Since $ \Vector{x}^\top \hat{\Vector{\beta}} \sim \N*{\Vector{x}^\top \Vector{\beta},\Vector{x}^\top I^{-1}(\hat{\Vector{\beta}})\Vector{x}} $.
+            Then
+            \[ \frac{\Vector{x}^\top \hat{\Vector{\beta}}}{\sqrt{\Vector{x}^\top I^{-1}(\hat{\Vector{\beta}})\Vector{x}}}\sim \N{0,1}. \]
+      \item The $ p $-value for this test is:
+            \[ 2\Prob*{Z>\frac{ \Vector{x}^\top \hat{\Vector{\beta}} }{ \sqrt{\Vector{x}^\top I^{-1}(\hat{\Vector{\beta}})\Vector{x}} }}=2\Prob*{Z>\frac{0.8689}{0.198}}<0.001. \]
+      \item Therefore, we reject the null hypothesis that the accident rate is the same for ships
+            of types E and B (controlling for periods of contraction and operation).
 \end{itemize}
 \subsection*{Interpretation of Model 1: Expected Number Events}
 \begin{Example}{}
-    \textbf{Task 3}: Estimate the expected number of accidents for a group of 10 type B ships built in
-    1970 and operated during the entire period 1975-1979.
+      \textbf{Task 3}: Estimate the expected number of accidents for a group of 10 type B ships built in
+      1970 and operated during the entire period 1975-1979.
 \end{Example}
 \[ \log[\big]{\mu_i(t_i)}=\log{\lambda_i}+\log{t_i}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
 \begin{itemize}
-    \item Estimate $ \log{\lambda_i} $ the log of the event rate and its CI:
-          \begin{table}[H]
-              \centering
-              \begin{tabular}{ccccl}
-                  \texttt{type} & \texttt{cyr} & \texttt{oyr} & $ \Vector{x}_i $        & $ \log{\lambda_i} $                 \\
-                  \midrule
-                  B             & 70-74        & 75-79        & $ (1,1,0,0,0,0,1,0,1) $ & $ \beta_0+\beta_1+\beta_6+\beta_8 $ \\
-                  \bottomrule
-              \end{tabular}
-          \end{table}
-          %\begin{noindent}
+      \item Estimate $ \log{\lambda_i} $ the log of the event rate and its CI:
+            \begin{table}[H]
+                  \centering
+                  \begin{tabular}{ccccl}
+                        \texttt{type} & \texttt{cyr} & \texttt{oyr} & $ \Vector{x}_i $        & $ \log{\lambda_i} $                 \\
+                        \midrule
+                        B             & 70-74        & 75-79        & $ (1,1,0,0,0,0,1,0,1) $ & $ \beta_0+\beta_1+\beta_6+\beta_8 $ \\
+                        \bottomrule
+                  \end{tabular}
+            \end{table}
+            %\begin{noindent}
             <<>>=
             x=as.matrix(c(1,1,0,0,0,0,1,0,1),ncol=1)
             v=summary(model1)$cov.unscaled
@@ -476,25 +478,25 @@ type C. A 95\% confidence interval for this relative rate is $(1.04, 3.79)$.
             @
       %\end{noindent}
 \end{itemize}
-\subsection*{Interpretation of Model 1: Expected Number Events}
+\subsubsection*{Interpretation of Model 1: Expected Number Events}
 \begin{itemize}
-    \item Determine the offset $ t_i= $ months:
-          \begin{align*}
-              t_i
-               & =\text{total amount of time at risk of an accident} \\
-               & =(\text{\# ships})(\text{length of operation})      \\
-               & =(10)(5\times 12)                                   \\
-               & =600.
-          \end{align*}
-    \item Calculate the expected number of accidents $ \hat{\mu}_i $:
-          \begin{align*}
-              \log{\hat{\mu}_i}
-                          & =\log{\hat{\lambda}_i}+\log{t_i} \\
-              \hat{\mu}_i & =\hat{\lambda}_i t_i             \\
-                          & =\exp{-5.7463}\times 600         \\
-                          & =1.92.
-          \end{align*}
-    \item With 95\,\% CI: $ (600 e^{-5.5138},600 e^{-5.9789})=(1.52,2.42) $.
-    \item \emph{The estimated number of accidents for a group of 10 type B ships built in 1970
-              and operated during the entire period 1975-1979 is $1.92$ with a 95\,\% CI of $(1.52,2.42)$.}
+      \item Determine the offset $ t_i= $ months:
+            \begin{align*}
+                  t_i
+                   & =\text{total amount of time at risk of an accident} \\
+                   & =(\text{\# ships})(\text{length of operation})      \\
+                   & =(10)(5\times 12)                                   \\
+                   & =600.
+            \end{align*}
+      \item Calculate the expected number of accidents $ \hat{\mu}_i $:
+            \begin{align*}
+                  \log{\hat{\mu}_i}
+                              & =\log{\hat{\lambda}_i}+\log{t_i} \\
+                  \hat{\mu}_i & =\hat{\lambda}_i t_i             \\
+                              & =\exp{-5.7463}\times 600         \\
+                              & =1.92.
+            \end{align*}
+      \item With 95\,\% CI: $ (600 e^{-5.5138},600 e^{-5.9789})=(1.52,2.42) $.
+      \item \emph{The estimated number of accidents for a group of 10 type B ships built in 1970
+                  and operated during the entire period 1975-1979 is $1.92$ with a 95\,\% CI of $(1.52,2.42)$.}
 \end{itemize}

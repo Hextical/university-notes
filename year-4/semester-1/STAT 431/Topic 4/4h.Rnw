@@ -2,6 +2,7 @@
 \section*{Topic 4h: Log Linear Model Applications Wrap-Up}
 \addcontentsline{toc}{section}{Topic 4h: Log Linear Model Applications Wrap-Up}
 \subsection*{Application 2: Seatbelt Use and Fatality of Accidents}
+\addcontentsline{toc}{subsection}{Application 2: Accidents}
 We now consider the special case of a $ 2\times 2\times 2 $ table.
 \begin{Example}{Florida Department of Highway Safety and Motor vehicles (Bishop \emph{et al} 1975)}
     \begin{center}
@@ -41,14 +42,14 @@ We now consider the special case of a $ 2\times 2\times 2 $ table.
     \item Note that in this table only $ y_{\bullet\bullet\bullet} $ is fixed and so only the intercept needs to be
           included by design.
 \end{itemize}
-\subsection*{R Dataset}
+\subsubsection*{R Dataset}
 \begin{Example}{Accident Data}
     <<echo=FALSE>>=
     acc.dat = read.table("acc.dat", header = T)
     acc.dat
     @
 \end{Example}
-\subsection*{R Code}
+\subsubsection*{R Code}
 %\begin{noindent}
     <<results='hide',fig.show='hide'>>=
     acc.dat$s = factor(acc.dat$s)
@@ -85,13 +86,13 @@ We now consider the special case of a $ 2\times 2\times 2 $ table.
     1-pchisq(model5$deviance-model2$deviance,model5$df.residual-model2$df.residual)
     @
 %\end{noindent}
-\subsection*{R Output: Model 1 $ (VWZ) $}
+\subsubsection*{R Output: Model 1 $ (VWZ) $}
 %\begin{noindent}
     <<>>=
     summary(model1)
     @
 %\end{noindent}
-\subsection*{R Output: Model 2 $ (VW,VZ,WZ) $}
+\subsubsection*{R Output: Model 2 $ (VW,VZ,WZ) $}
 %\begin{noindent}
     <<>>=
     summary(model2)
@@ -102,11 +103,11 @@ We now consider the special case of a $ 2\times 2\times 2 $ table.
 %\end{noindent}
 \begin{itemize}
     \item $ \HN $: $ u_{222}^{VWZ}=0 $ versus $ \HA $: $ u_{222}^{VWZ}\ne 0 $.
-          \[ p=\Prob*{\chi^2_{(1)}>2.854}=0.09. \]
+          \[ p=\Prob*{\chi^2_{1}>2.854}=0.09. \]
     \item \textcolor{Blue}{Do not reject} the null hypothesis that the fit of model 2 is adequate, as compared
           to model 1 (saturated).
 \end{itemize}
-\subsection*{R Output: Models 3 $(VW , VZ )$, 4 $(VW , WZ )$, 5 $(VZ , WZ )$}
+\subsubsection*{R Output: Models 3 $(VW , VZ )$, 4 $(VW , WZ )$, 5 $(VZ , WZ )$}
 %\begin{noindent}
     <<>>=
     # Model 3: (VW, VZ) Conditional Independence Model (test vs Model 2)
@@ -132,7 +133,7 @@ We now consider the special case of a $ 2\times 2\times 2 $ table.
     \item \textcolor{Blue}{Reject} the null hypotheses that the fit of models 3, 4, 5 are adequate, as
           compared to model 2.
 \end{itemize}
-\subsection*{Summary of Fitted Models}
+\subsubsection*{Summary of Fitted Models}
 The following analysis of deviance table summarizes our findings.
 \begin{table}[H]
     \centering
@@ -155,7 +156,7 @@ The following analysis of deviance table summarizes our findings.
     \item \textcolor{Blue}{Homogeneous Association}: All variables are associated in a pairwise fashion, but
           this degree of association does not depend on the level of the third variable.
 \end{itemize}
-\subsection*{Interpretation of Model 2 $(VW , VZ , WZ )$}
+\subsubsection*{Interpretation of Model 2 $(VW , VZ , WZ )$}
 \begin{itemize}
     \item Consider the following table of fitted and observed values from this model:
           \begin{table}[H]
@@ -202,7 +203,7 @@ The following analysis of deviance table summarizes our findings.
                     \[ \psi^{VW}=\frac{\pi_{11\bullet}\pi_{22\bullet}}{\pi_{12\bullet}\pi_{21\bullet}}. \]
           \end{itemize}
 \end{itemize}
-\subsection*{Conditional Odds Ratio $(2\times 2\times K)$}
+\subsubsection*{Conditional Odds Ratio $(2\times 2\times K)$}
 \begin{itemize}
     \item The Odds Ratio of \textcolor{HotPink}{response ($V = 2$)} in subjects with \textcolor{Green}{$ W = 2 $} versus \textcolor{Green}{$ W = 1 $} at
           (conditional on being) level $Z = k$.
@@ -220,7 +221,7 @@ The following analysis of deviance table summarizes our findings.
     \item This is also the Odds Ratio of \textcolor{Green}{response ($W = 2$)} in subjects with
           \textcolor{HotPink}{$ V = 2 $} versus \textcolor{HotPink}{$ V = 1 $} at (conditional on being) level $Z = k$.
 \end{itemize}
-\subsection*{Interpretation of Model 2 $(VW , VZ , WZ )$}
+\subsubsection*{Interpretation of Model 2 $(VW , VZ , WZ )$}
 \begin{Example}{}
     \textbf{Q}: Find the (conditional OR) for a $ \overbrace{\text{\textcolor{Blue}{fatal}}}^{Z=2} $ accident for those
     $ \overbrace{\text{\textcolor{Blue}{ejected}}}^{W=2} $ \textcolor{Blue}{versus} $ \overbrace{\text{\textcolor{Blue}{not ejected}}}^{W=1} $
@@ -331,6 +332,7 @@ The following analysis of deviance table summarizes our findings.
     \item We are able to examine the relationship between all variables including $V$ and $W$.
 \end{itemize}
 \subsection*{Application 1: General Social Survey}
+\addcontentsline{toc}{subsection}{Application 1: General Social Survey}
 \begin{Example}{2008 US General Social Survey ($ 2\times 5\times 7 $)}
     \begin{center}
         \begin{NiceTabular}{crrrrrrrr}
@@ -361,7 +363,7 @@ The following analysis of deviance table summarizes our findings.
           \[ \textcolor{Blue}{\log{\mu_{ijk}}=u+u_i^G+u_j^D+u_k^P+u_{ik}^{GP}+u_{jk}^{DP}}. \]
     \item The regression parameters will have various log Odds Ratio interpretations.
 \end{itemize}
-\subsection*{``Odds Ratio'' Definitions in 2-way Tables ($I \times J$)}
+\subsubsection*{``Odds Ratio'' Definitions in 2-way Tables ($I \times J$)}
 \begin{itemize}
     \item For a general $ (I\times J) $ table, \emph{many} types of ``OR'' can be defined.
           \begin{itemize}
@@ -377,7 +379,7 @@ The following analysis of deviance table summarizes our findings.
                         =\frac{\pi_{ij}\pi_{i+1,j+1}}{\pi_{i+1,j}\pi_{i,j+1}}. \]
           \end{itemize}
 \end{itemize}
-\subsection*{Odds Ratios for 3-way Tables ($ I\times J\times K $)}
+\subsubsection*{Odds Ratios for 3-way Tables ($ I\times J\times K $)}
 \begin{itemize}
     \item For a 3-way table consider conditional and marginal versions of the nominal or
           local odds ratios.
@@ -392,7 +394,7 @@ The following analysis of deviance table summarizes our findings.
     \item Most relevant when factor variables have a meaningful order.
     \item These aren't true odds ratios. Actually ratios of relative probabilities.
 \end{itemize}
-\subsection*{General Social Survey: Interpretation}
+\subsubsection*{General Social Survey: Interpretation}
 \[ \textcolor{Blue}{\log{\mu_{ijk}}=u+u_i^G+u_j^D+u_k^P+u_{ik}^{GP}+u_{jk}^{DP}}. \]
 \begin{Example}{}
     \textbf{Q}: Find an expression for the Conditional Local OR for being a $ \overbrace{\text{``not strong Democrat''}}^{P=2} $
@@ -421,7 +423,7 @@ The following analysis of deviance table summarizes our findings.
     \end{tabular}
 \end{table}
 \[ \hat{\psi}_{(1)11}^{L\;DP}=\exp{\hat{u}_{22}^{DP}}=\exp{0.32560}=1.38. \]
-\subsection*{R Output: Model 5 $(GP, DP)$}
+\subsubsection*{R Output: Model 5 $(GP, DP)$}
 %\begin{noindent}
     %\begin{noindent}
         <<results='hide',echo=FALSE>>=
@@ -446,7 +448,7 @@ The following analysis of deviance table summarizes our findings.
 summary(glm( Y ~ G*P + D*P, family=poisson, data=party))
 @
 %\end{noindent}
-\subsection*{General Social Survey: Interpretation}
+\subsubsection*{General Social Survey: Interpretation}
 \[ \textcolor{Blue}{\log{\mu_{ijk}}=u+u_i^G+u_j^D+u_k^P+u_{ik}^{GP}+u_{jk}^{DP}}. \]
 \begin{Example}{}
     \textbf{Q}: Find an expression for the Marginal Nominal OR of being a $ \overbrace{\text{strong Republican}}^{P=7} $

@@ -1,7 +1,7 @@
-\documentclass{article}
+\documentclass[oneside]{book}
 \usepackage[svgnames]{xcolor}
 \usepackage[british]{babel}
-\usepackage[protrusion,expansion,tracking,kerning,babel,final]{microtype}
+\usepackage[protrusion,expansion,babel,final]{microtype}
 \usepackage[margin=1in]{geometry}
 \usepackage[pdfversion=1.7]{hyperref}
 \usepackage[shortlabels]{enumitem}
@@ -42,6 +42,10 @@
     \ifblank{#1}{\:\cdot\:}%
     #1}%
 \DeclarePairedDelimiterXPP{\Cov}[1]{\operatorname{\textsf{Cov}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\Corr}[1]{\operatorname{\textsf{Corr}}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
@@ -100,6 +104,8 @@
 \DeclarePairedDelimiterXPP{\BERN}[1]{\text{BERN}}(){}{#1}%
 \DeclarePairedDelimiterXPP{\MVN}[1]{\text{MVN}}(){}{#1}%
 \DeclarePairedDelimiterXPP{\NB}[1]{\text{NB}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\GAM}[1]{\text{GAM}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\BetaDist}[1]{\text{Beta}}(){}{#1}%
 
 \newcommand{\iid}{\overset{\text{iid}}{\sim}}%
 \newcommand{\ind}{\overset{\text{ind}}{\sim}}%
@@ -121,20 +127,6 @@
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\arginf}{arg\,inf}
 \DeclareMathOperator*{\argsup}{arg\,sup}
-
-% Table of Contents
-\hypersetup{colorlinks,linkcolor=[rgb]{0,0.5,1}}%
-
-\title{%
-    {\LARGE Generalized Linear Models}\\%
-    {\large STAT 431/STAT 831}\\%
-    {\normalsize Spring 2022 (idk)}%
-}%
-\author{%
-    \LaTeX{}er: \emph{Cameron Roopnarine}\\%
-    Instructor: \emph{Leilei Zeng}%
-}%
-\date{\today}%
 
 \providecommand{\RandomVector}[1]{\bm{#1}}% general vectors in bold italic
 \providecommand{\Vector}[1]{\bm{#1}}% general vectors in bold italic
@@ -185,9 +177,7 @@ pdfkeywords={University of Waterloo, Fall 2021 (1219)}}%
 <<child='setup.Rnw'>>=
 @
 \maketitle
-\newpage
 \tableofcontents
-\newpage
 % Week 1
 <<child='Topic 1/1a.Rnw'>>=
 @
@@ -219,7 +209,7 @@ pdfkeywords={University of Waterloo, Fall 2021 (1219)}}%
 % Week 8
 <<child='Topic 4/4b.Rnw'>>=
 @
-% Week 9 (not too sure what the prof is thinking by making this week long af)
+% Week 9
 <<child='Topic 4/4c.Rnw'>>=
 @
 <<child='Topic 4/4d.Rnw'>>=
@@ -234,6 +224,11 @@ pdfkeywords={University of Waterloo, Fall 2021 (1219)}}%
 % Week 11
 <<child='Topic 4/4h.Rnw'>>=
 @
+% Week 12
 <<child='Topic 5/5a.Rnw'>>=
+@
+<<child='Topic 5/5b.Rnw'>>=
+@
+<<child='Topic 5/5c.Rnw'>>=
 @
 \end{document}

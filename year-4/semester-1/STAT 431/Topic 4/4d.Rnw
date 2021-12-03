@@ -1,60 +1,62 @@
 \section*{Topic 4d: Time Non-homogeneous Poisson Processes}
 \addcontentsline{toc}{section}{Topic 4d: Time Non-homogeneous Poisson Processes}
 \subsection*{Time Non-Homogeneous Poisson Processes}
+\addcontentsline{toc}{subsection}{Time Non-Homogeneous Poisson Processes}
 \begin{itemize}
-    \item Now consider
-          \[ \E[\big]{N(t)}=\mu(t)=\lambda(t)\qquad\text{(not $=\lambda t$)}. \]
-    \item The rate is now a \emph{\textcolor{Blue}{function}} of time.
-    \item Lots of possible ways to model the rate $ \lambda(t) $.
-          \begin{itemize}
-              \item Piecewise constant:
-                    \[ \lambda(t)=b_1\Ind{0<t<t_1}+b_2\Ind{t_1\le t<t_2}+\cdots. \]
-              \item Piecewise linear:
-                    \[ \lambda(t)=(m_1 t+b_1)\Ind{0<t<t_1}+(m_2 t+b_2)\Ind{t_1\le t<t_2}+\cdots. \]
-              \item Quadratic:
-                    \[ \lambda(t)=at^2+bt+c. \]
-              \item Splines, etc.
-          \end{itemize}
+      \item Now consider
+            \[ \E[\big]{N(t)}=\mu(t)=\lambda(t)\qquad\text{(not $=\lambda t$)}. \]
+      \item The rate is now a \emph{\textcolor{Blue}{function}} of time.
+      \item Lots of possible ways to model the rate $ \lambda(t) $.
+            \begin{itemize}
+                  \item Piecewise constant:
+                        \[ \lambda(t)=b_1\Ind{0<t<t_1}+b_2\Ind{t_1\le t<t_2}+\cdots. \]
+                  \item Piecewise linear:
+                        \[ \lambda(t)=(m_1 t+b_1)\Ind{0<t<t_1}+(m_2 t+b_2)\Ind{t_1\le t<t_2}+\cdots. \]
+                  \item Quadratic:
+                        \[ \lambda(t)=at^2+bt+c. \]
+                  \item Splines, etc.
+            \end{itemize}
 \end{itemize}
 \subsection*{Example: Rat Tumour Data}
+\addcontentsline{toc}{subsection}{Example: Rat Tumours}
 \begin{Example}{Rat Tumour Data}
-    \begin{itemize}
-        \item Here we consider data from a study of the development of mammary tumours in
-              rats reported in Gail et al. (1980).
-        \item This study was a carcinogenicity experiment in which 48 rats were exposed to a
-              carcinogen,
-              \begin{itemize}
-                  \item 23 were then assigned to a treatment group where the treatment was designed to
-                        reduce the development of tumours,
-                  \item 25 were assigned to the control group.
-              \end{itemize}
-        \item The rats were carefully examined over 122 days for the development of new
-              tumours (multiple tumours could develop).
-        \item The day (time) of each tumour was recorded.
-        \item Our aim here is to estimate the expected number of tumours in the two groups and
-              make treatment comparisons.
-    \end{itemize}
-    We show the first 5 IDs for each group.
-    \begin{center}
-        $\text{Times to tumours in days}^{(\text{number of tumours detected})}$\\
-        \begin{NiceTabular}{clcl}
-            \toprule
-            \Block{1-2}{Treatment Group} &                          & \Block{1-2}{Control Group}                                               \\
-            \midrule
-            ID                           & Days of Tumour Detection & ID                         & Days of Tumour Detection                    \\
-            \midrule
-            1                            & $122$                    & 1                          & $3, 42, 59, 61^{(2)}, 112, 119$             \\
-            2                            & ---                      & 2                          & $28, 31, 35, 45, 52, 59^{(2)} , 77, 85, 107, 112$ \\
-            3                            & $3,88$                   & 3                          & $31, 38, 48, 52, 74, 77, 101^{(2)} , 119$         \\
-            4                            & $92$                     & 4                          & $ 11, 114  $                                \\
-            5                            & $70,74,85,92$            & 5                          & $35,45,74^{(2)},77,80,85,90^{(2)}$              \\
-            \bottomrule
-        \end{NiceTabular}
-    \end{center}
+      \begin{itemize}
+            \item Here we consider data from a study of the development of mammary tumours in
+                  rats reported in Gail et al. (1980).
+            \item This study was a carcinogenicity experiment in which 48 rats were exposed to a
+                  carcinogen,
+                  \begin{itemize}
+                        \item 23 were then assigned to a treatment group where the treatment was designed to
+                              reduce the development of tumours,
+                        \item 25 were assigned to the control group.
+                  \end{itemize}
+            \item The rats were carefully examined over 122 days for the development of new
+                  tumours (multiple tumours could develop).
+            \item The day (time) of each tumour was recorded.
+            \item Our aim here is to estimate the expected number of tumours in the two groups and
+                  make treatment comparisons.
+      \end{itemize}
+      We show the first 5 IDs for each group.
+      \begin{center}
+            $\text{Times to tumours in days}^{(\text{number of tumours detected})}$\\
+            \begin{NiceTabular}{clcl}
+                  \toprule
+                  \Block{1-2}{Treatment Group} &                          & \Block{1-2}{Control Group}                                               \\
+                  \midrule
+                  ID                           & Days of Tumour Detection & ID                         & Days of Tumour Detection                    \\
+                  \midrule
+                  1                            & $122$                    & 1                          & $3, 42, 59, 61^{(2)}, 112, 119$             \\
+                  2                            & ---                      & 2                          & $28, 31, 35, 45, 52, 59^{(2)} , 77, 85, 107, 112$ \\
+                  3                            & $3,88$                   & 3                          & $31, 38, 48, 52, 74, 77, 101^{(2)} , 119$         \\
+                  4                            & $92$                     & 4                          & $ 11, 114  $                                \\
+                  5                            & $70,74,85,92$            & 5                          & $35,45,74^{(2)},77,80,85,90^{(2)}$              \\
+                  \bottomrule
+            \end{NiceTabular}
+      \end{center}
 \end{Example}
-\subsection*{Timeline plots for data from Gail et al. (1980)}
+\subsubsection*{Timeline plots for data from Gail et al. (1980)}
 
-\subsection*{R Code \& Rat Tumour Data Structure}
+\subsubsection*{R Code \& Rat Tumour Data Structure}
 %\begin{noindent}
     <<results='hide'>>=
     rats <- read.table("rats.dat", header=F)
@@ -97,21 +99,21 @@
     @
 %\end{noindent}
 \begin{itemize}
-    \item Consider four time intervals.
-    \item One line of data per interval.
-    \item \texttt{count} = number events in interval.
-    \item \texttt{len} = days spent in interval.
-    \item \texttt{trt} = treatment group.
+      \item Consider four time intervals.
+      \item One line of data per interval.
+      \item \texttt{count} = number events in interval.
+      \item \texttt{len} = days spent in interval.
+      \item \texttt{trt} = treatment group.
 \end{itemize}
-\subsection*{1. Model Control Group Only (\texttt{pfitC})}
+\subsubsection*{1. Model Control Group Only (\texttt{pfitC})}
 \[ \log{\mu_{ik}}=\beta_0+\underbrace{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}}_{\text{interval}}+\texttt{offset}(\log{\texttt{len}_{ik}}). \]
 \begin{itemize}
-    \item To start, we fit a \textcolor{Blue}{piecewise constant model} for control rats:
-          \[ \log{\mu_i}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
-    \item \texttt{interval} is a categorical variable at 4 levels:
-          \[ x_{i1}=\Ind{\text{interval 2}},\quad x_{i2}=\Ind{\text{interval 3}},\quad x_{i3}=\Ind{\text{interval 4}}. \]
-    \item Include \texttt{offset(log(len))} to account for the fact that different intervals are of
-          different durations.
+      \item To start, we fit a \textcolor{Blue}{piecewise constant model} for control rats:
+            \[ \log{\mu_i}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
+      \item \texttt{interval} is a categorical variable at 4 levels:
+            \[ x_{i1}=\Ind{\text{interval 2}},\quad x_{i2}=\Ind{\text{interval 3}},\quad x_{i3}=\Ind{\text{interval 4}}. \]
+      \item Include \texttt{offset(log(len))} to account for the fact that different intervals are of
+            different durations.
 \end{itemize}
 %\begin{noindent}
     <<>>=
@@ -119,49 +121,49 @@
     summary(pfitC)
     @
 %\end{noindent}
-\subsection*{Plot of $\log[\big]{\lambda(t)}$ for \texttt{pfitC}}
+\subsubsection*{Plot of $\log[\big]{\lambda(t)}$ for \texttt{pfitC}}
 \begin{center}
-    \begin{tikzpicture}
-        \begin{axis}[
-                xmin=0, xmax=130,
-                ymin=-3.5, ymax=-2.5,
-                xtick={30,60,90,122},
-                legend pos=north west,
-                ymajorgrids=false,
-                xmajorgrids=true,
-                grid style=dashed,
-            ]
-            \addplot[color=red] coordinates {(0,-3.09)(30,-3.09)} node [anchor=south,midway] (beta){$\hat{\beta}_0$} ;
-            \addplot[color=red] coordinates {(30,-2.93)(60,-2.93)} node [anchor=south,midway] (beta){$\hat{\beta}_0+\hat{\beta}_1$};
-            \addplot[color=red] coordinates {(60,-2.79)(90,-2.79)} node [anchor=south,midway] (beta){$\hat{\beta}_0+\hat{\beta}_2$};
-            \addplot[color=red] coordinates {(90,-3.25)(122,-3.25)} node [anchor=south,midway] (beta){$\hat{\beta}_0+\hat{\beta}_3$};
-        \end{axis}
-    \end{tikzpicture}
+      \begin{tikzpicture}
+            \begin{axis}[
+                        xmin=0, xmax=130,
+                        ymin=-3.5, ymax=-2.5,
+                        xtick={30,60,90,122},
+                        legend pos=north west,
+                        ymajorgrids=false,
+                        xmajorgrids=true,
+                        grid style=dashed,
+                  ]
+                  \addplot[color=red] coordinates {(0,-3.09)(30,-3.09)} node [anchor=south,midway] (beta){$\hat{\beta}_0$} ;
+                  \addplot[color=red] coordinates {(30,-2.93)(60,-2.93)} node [anchor=south,midway] (beta){$\hat{\beta}_0+\hat{\beta}_1$};
+                  \addplot[color=red] coordinates {(60,-2.79)(90,-2.79)} node [anchor=south,midway] (beta){$\hat{\beta}_0+\hat{\beta}_2$};
+                  \addplot[color=red] coordinates {(90,-3.25)(122,-3.25)} node [anchor=south,midway] (beta){$\hat{\beta}_0+\hat{\beta}_3$};
+            \end{axis}
+      \end{tikzpicture}
 \end{center}
 \begin{itemize}
-    \item $ \log{\hat{\lambda}_1}=\hat{\beta}_0=-3.09 $.
-    \item $ \log{\hat{\lambda}_2}=\hat{\beta}_0+\hat{\beta}_1=-3.09+0.16=-2.93 $.
-    \item $ \log{\hat{\lambda}_3}=\hat{\beta}_0+\hat{\beta}_2=-3.09+0.3=-2.79 $.
-    \item $ \log{\hat{\lambda}_4}=\hat{\beta}_0+\hat{\beta}_3=-3.09-0.16=-3.25 $.
+      \item $ \log{\hat{\lambda}_1}=\hat{\beta}_0=-3.09 $.
+      \item $ \log{\hat{\lambda}_2}=\hat{\beta}_0+\hat{\beta}_1=-3.09+0.16=-2.93 $.
+      \item $ \log{\hat{\lambda}_3}=\hat{\beta}_0+\hat{\beta}_2=-3.09+0.3=-2.79 $.
+      \item $ \log{\hat{\lambda}_4}=\hat{\beta}_0+\hat{\beta}_3=-3.09-0.16=-3.25 $.
 \end{itemize}
-\subsection*{Interpretation of \texttt{pfitC}}
+\subsubsection*{Interpretation of \texttt{pfitC}}
 \[ \textcolor{Green}{\log{\mu_i}=\beta_0+\underbrace{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}}_{\text{interval}}+\log{t_i}} \]
 \begin{itemize}
-    \item Relative Rate of events in interval 2 versus interval 1:
-          \[ \exp{\beta_1}=\frac{\lambda(\text{interval 2})}{\lambda(\text{interval 1})}=\exp{0.16254}=1.176. \]
-    \item Notice none of $ \beta_1,\beta_2,\beta_3 $ are statistically significant.
-    \item There is a trend of a slightly higher rate in intervals 2 and 3 (versus interval 1) but
-          the event rate does not differ significantly across follow-up time in the control rats.
+      \item Relative Rate of events in interval 2 versus interval 1:
+            \[ \exp{\beta_1}=\frac{\lambda(\text{interval 2})}{\lambda(\text{interval 1})}=\exp{0.16254}=1.176. \]
+      \item Notice none of $ \beta_1,\beta_2,\beta_3 $ are statistically significant.
+      \item There is a trend of a slightly higher rate in intervals 2 and 3 (versus interval 1) but
+            the event rate does not differ significantly across follow-up time in the control rats.
 \end{itemize}
-\subsection*{2. Model Control and Treatment Groups (\texttt{pfit})}
+\subsubsection*{2. Model Control and Treatment Groups (\texttt{pfit})}
 \begin{itemize}
-    \item Now, fit a model to both the treatment and control groups.
-    \item $ x_{i4}=\Ind{\text{treatment group}} $.
-    \item Assume a piecewise constant baseline rate function.
-    \item Model is now:
-          \[ \textcolor{Green}{\log{\mu_i}=\beta_0+\underbrace{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}}_{\text{interval}}+\beta_4x_{i4}+\texttt{offset}(\log{t_i})}. \]
-    \item $ \exp{\beta_1} $ is now RR of events for interval 2 versus interval 1, for two rats of the
-          same treatment group.
+      \item Now, fit a model to both the treatment and control groups.
+      \item $ x_{i4}=\Ind{\text{treatment group}} $.
+      \item Assume a piecewise constant baseline rate function.
+      \item Model is now:
+            \[ \textcolor{Green}{\log{\mu_i}=\beta_0+\underbrace{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}}_{\text{interval}}+\beta_4x_{i4}+\texttt{offset}(\log{t_i})}. \]
+      \item $ \exp{\beta_1} $ is now RR of events for interval 2 versus interval 1, for two rats of the
+            same treatment group.
 \end{itemize}
 %\begin{noindent}
     <<>>=
@@ -169,25 +171,25 @@
     summary(pfit)
     @
 %\end{noindent}
-\subsection*{Interpretation of \texttt{pfit}}
+\subsubsection*{Interpretation of \texttt{pfit}}
 \begin{itemize}
-    \item Relative Rate of events for treatment versus control rats:
-          \[ \exp{\beta_4}=\frac{\lambda(\text{treatment})}{\lambda(\text{control})}=\exp{-0.8230}=0.44. \]
-    \item Controlling for interval of follow-up, the rate of tumour development in treated rats
-          in $0.44$ times that of control rats.
-    \item That is, treatment looks beneficial.
-    \item Notice that $ \beta_4 $ is statistically significant.
-    \item $ \beta_1,\beta_2,\beta_3 $ are still not statistically significant.
-    \item Consider do we really need to use a time non-homogeneous model for this data?
+      \item Relative Rate of events for treatment versus control rats:
+            \[ \exp{\beta_4}=\frac{\lambda(\text{treatment})}{\lambda(\text{control})}=\exp{-0.8230}=0.44. \]
+      \item Controlling for interval of follow-up, the rate of tumour development in treated rats
+            in $0.44$ times that of control rats.
+      \item That is, treatment looks beneficial.
+      \item Notice that $ \beta_4 $ is statistically significant.
+      \item $ \beta_1,\beta_2,\beta_3 $ are still not statistically significant.
+      \item Consider do we really need to use a time non-homogeneous model for this data?
 \end{itemize}
-\subsection*{3. Time Homogeneous Model (\texttt{fit})}
+\subsubsection*{3. Time Homogeneous Model (\texttt{fit})}
 \[ \textcolor{Green}{\log{\mu_i}=\beta_0+\beta_4x_{i4}+\log{t_i}}. \]
 \begin{itemize}
-    \item $ \beta_0= $ log rate of tumour development, per day, control group.
-    \item $ \beta_4= $ log Relative Rate (RR) of tumour development in treated vs control rats.
-    \item This model is nested within the time non-homogeneous model.
-    \item Consider \texttt{pfit} model with $ \beta_1=\beta_2=\beta_3=0 $.
-    \item We can carry out a likelihood ratio test
+      \item $ \beta_0= $ log rate of tumour development, per day, control group.
+      \item $ \beta_4= $ log Relative Rate (RR) of tumour development in treated vs control rats.
+      \item This model is nested within the time non-homogeneous model.
+      \item Consider \texttt{pfit} model with $ \beta_1=\beta_2=\beta_3=0 $.
+      \item We can carry out a likelihood ratio test
 \end{itemize}
 %\begin{noindent}
     <<>>=
@@ -195,31 +197,31 @@
     summary(fit)
     @
 %\end{noindent}
-\subsection*{Interpretation of \texttt{fit}}
+\subsubsection*{Interpretation of \texttt{fit}}
 \begin{itemize}
-    \item Note $ \hat{\beta}_4=-0.8230 $ is almost unchanged versus model \texttt{fit}.
-    \item Likelihood Ratio/Deviance test of $ \HN $: $ \beta_1=\beta_2=\beta_3=0 $:
-          \[ \Delta D=D_0-D_A=269.060-266.323 \sim \chi^2_{(3)}\text{ under $\HN$}. \]
-          %\begin{noindent}
+      \item Note $ \hat{\beta}_4=-0.8230 $ is almost unchanged versus model \texttt{fit}.
+      \item Likelihood Ratio/Deviance test of $ \HN $: $ \beta_1=\beta_2=\beta_3=0 $:
+            \[ \Delta D=D_0-D_A=269.060-266.323 \sim \chi^2_{3}\text{ under $\HN$}. \]
+            %\begin{noindent}
         <<>>=
         1-pchisq(fit$deviance-pfit$deviance,fit$df.residual-pfit$df.residual)
         @
     %\end{noindent}
-    \item Do not reject $ \HN $.
-    \item Conclude that the time homogeneous model (model 3) is probably OK in this case.
-    \item However, we retain it for generality and for the following analysis.
+      \item Do not reject $ \HN $.
+      \item Conclude that the time homogeneous model (model 3) is probably OK in this case.
+      \item However, we retain it for generality and for the following analysis.
 \end{itemize}
-\subsection*{4. Time Non-Homogeneous Model with Treatment Interaction (\texttt{ifit})}
+\subsubsection*{4. Time Non-Homogeneous Model with Treatment Interaction (\texttt{ifit})}
 \begin{itemize}
-    \item Q: Is the treatment effect constant over time?
-    \item Model with interaction:
-          \textcolor{Green}{\begin{align*}
-                  \log{\mu_i}
-                   & =\beta_0+\overbrace{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}}^{\text{interval}}+\overbrace{\beta_4x_{i4}}^{\text{treatment}}+ \\
-                   & \quad +\underbrace{\beta_5x_{i1}x_{i4}+\beta_6x_{i2}x_{i4}+\beta_7x_{i3}x_{i4}}_{\text{interval$*$treatment}}+\log{t_i}
-              \end{align*}}
-    \item Model \texttt{pfit} (time non-homogeneous, without interaction) is nested within this
-          model (consider \texttt{ifit} with $ \beta_5=\beta_6=\beta_7=0 $).
+      \item Q: Is the treatment effect constant over time?
+      \item Model with interaction:
+            \textcolor{Green}{\begin{align*}
+                        \log{\mu_i}
+                         & =\beta_0+\overbrace{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}}^{\text{interval}}+\overbrace{\beta_4x_{i4}}^{\text{treatment}}+ \\
+                         & \quad +\underbrace{\beta_5x_{i1}x_{i4}+\beta_6x_{i2}x_{i4}+\beta_7x_{i3}x_{i4}}_{\text{interval$*$treatment}}+\log{t_i}
+                  \end{align*}}
+      \item Model \texttt{pfit} (time non-homogeneous, without interaction) is nested within this
+            model (consider \texttt{ifit} with $ \beta_5=\beta_6=\beta_7=0 $).
 \end{itemize}
 %\begin{noindent}
     <<>>=
@@ -227,29 +229,29 @@
     summary(ifit)
     @
 %\end{noindent}
-\subsection*{Interpretation of \texttt{ifit}}
+\subsubsection*{Interpretation of \texttt{ifit}}
 \begin{itemize}
-    \item Note $ \hat{\beta}_4=-0.8038 $ is very similar to \texttt{pfit}.
-    \item Likelihood Ratio/Deviance test of $ \HN $: $ \beta_5=\beta_6=\beta_7=0 $:
-          \[ \Delta D=D_0-D_A=266.323-263.917 \sim \chi^2_{(3)}\text{ under $\HN$}. \]
-          %\begin{noindent}
+      \item Note $ \hat{\beta}_4=-0.8038 $ is very similar to \texttt{pfit}.
+      \item Likelihood Ratio/Deviance test of $ \HN $: $ \beta_5=\beta_6=\beta_7=0 $:
+            \[ \Delta D=D_0-D_A=266.323-263.917 \sim \chi^2_{3}\text{ under $\HN$}. \]
+            %\begin{noindent}
                 <<>>=
                 1-pchisq(pfit$deviance-ifit$deviance,pfit$df.residual-ifit$df.residual)
                 @
             %\end{noindent}
-    \item Do not reject $ \HN $.
-    \item We do not have evidence that the treatment effect varies across the time intervals.
+      \item Do not reject $ \HN $.
+      \item We do not have evidence that the treatment effect varies across the time intervals.
 \end{itemize}
-\subsection*{Summary of Rat Tumour Data Analysis}
+\subsubsection*{Summary of Rat Tumour Data Analysis}
 \begin{itemize}
-    \item Looks like a piecewise constant rate function is not necessary.
-    \item The best model (of the ones we examined) is \texttt{fit}:
-          \[ \textcolor{Green}{\log{\mu_i}=\beta_0+\beta_4x_{i4}+\log{t_i}}. \]
-    \item \textcolor{Blue}{Interpretation}: The relative rate for tumour development in treated versus control
-          rats is:
-          \[ \exp{\hat{\beta}_4}=\exp{-0.822995}=0.439. \]
-    \item That is, treatment is beneficial (treated rates get fewer tumours).
-    \item \textcolor{Blue}{Prediction}: Expected number of tumours for a treated rat observed for 70 days?
-          \[ \log{\hat{\mu}}=\hat{\beta}_0+\hat{\beta}_4+\log{70}=-3.00562-0.82302+\log{70}=0.41986. \]
-          \[ \hat{\mu}=\exp{0.41986}=1.5217. \]
+      \item Looks like a piecewise constant rate function is not necessary.
+      \item The best model (of the ones we examined) is \texttt{fit}:
+            \[ \textcolor{Green}{\log{\mu_i}=\beta_0+\beta_4x_{i4}+\log{t_i}}. \]
+      \item \textcolor{Blue}{Interpretation}: The relative rate for tumour development in treated versus control
+            rats is:
+            \[ \exp{\hat{\beta}_4}=\exp{-0.822995}=0.439. \]
+      \item That is, treatment is beneficial (treated rates get fewer tumours).
+      \item \textcolor{Blue}{Prediction}: Expected number of tumours for a treated rat observed for 70 days?
+            \[ \log{\hat{\mu}}=\hat{\beta}_0+\hat{\beta}_4+\log{70}=-3.00562-0.82302+\log{70}=0.41986. \]
+            \[ \hat{\mu}=\exp{0.41986}=1.5217. \]
 \end{itemize}
