@@ -1,0 +1,266 @@
+\makeheading{Week 12}{\daterange{2021-12-01}{2021-12-07}}%chktex 8
+\section{Two Important Generalizations}
+\subsection*{The Non-homogeneous Poisson Process}
+Oftentimes, we find the Poisson process difficult to apply in applications of real-life
+phenomena, largely due to the fact that the Poisson process assumes a \emph{constant} arrival rate of
+$ \lambda $ for all time. In what follows, we consider a more general type of process in which the arrival
+rate is allowed to vary as a function of time.
+\begin{Regular}
+    \textbf{Definition}: The counting process $ \Set[\big]{N(t),t\ge 0} $ is a \emph{non-homogeneous} (or non-stationary)
+    Poisson process with \emph{rate function} $ \lambda(t) $ if the following three conditions hold true:
+    \begin{enumerate}[(1)]
+        \item $ \Set[\big]{N(t),t\ge 0} $ has independent increments.
+        \item $ \Prob[\big]{N(t+h)-N(t)=1}=h\lambda(t)+\order{h} $.
+        \item $ \Prob[\big]{N(t+h)-N(t)\ge 2}=\order{h} $.
+    \end{enumerate}
+\end{Regular}
+Many applications that generate random points in time are modelled more realistically with
+non-homogeneous processes. For instance:
+\begin{itemize}
+    \item The rate of customers entering a supermarket is not the same during the entire day.
+    \item The average arrival rate of vehicles on a highway fluctuates between its maximum during
+          rush hours and its minimum during low traffic times.
+\end{itemize}
+The mathematical cost of this generalization, however, is that we lose the stationary
+increments property.
+
+For $ s_1,s_2\ge 0 $, the following theorem specifies the distribution of $ N(s_1+s_2)-N(s_1) $.
+\begin{Result}
+    \textbf{Theorem 4.8}. If $ \Set[\big]{N(t),t\ge 0} $ is a non-homogeneous Poisson process with rate function
+    $ \lambda(t) $, then $ N(s_1+s_2)-N(s_1)\sim \POI[\big]{m(s_1+s_2)-m(s_1)} $ where the \emph{mean value function}
+    $ m(t) $ is given by
+    \[ m(t)=\int_{0}^{t}\lambda(\tau)\odif{\tau},\; t\ge 0. \]
+    \tcblower{}
+    \textbf{Proof}: Let $ \phi_u(s_1,s_2)=\E[\Big]{e^{u\bigl(N(s_1+s_2)-N(s_1)\bigr)}} $, which is the mgf of $ N(s_1+s_2)-N(s_1) $,
+    where $ u $ serves as the argument of the mgf. For $ h\ge 0 $, we first note that
+    \begin{align*}
+        \phi_u(s_1,s_2+h)
+         & =\E[\Big]{e^{u\bigl(N(s_1+s_2+h)-N(s_1)\bigr)}}                                                                                      \\
+         & =\E[\Big]{e^{u\bigl(N(s_1+s_2+h)-N(s_1+s_2)+N(s_1+s_2)-N(s_1)\bigr)}}                                                                \\
+         & =\E[\Big]{e^{u\bigl(N(s_1+s_2+h)-N(s_1+s_2)\bigr)}e^{u\bigl(N(s_1+s_2)-N(s_1)\bigr)}}                                                \\
+         & =\E[\Big]{e^{u\bigl(N(s_1+s_2+h)-N(s_1+s_2)\bigr)}}\E[\big]{e^{u\bigl(N(s_1+s_2)-N(s_1)\bigr)}}\text{ due to independent increments} \\
+         & =\phi_u(s_1+s_2,h)\phi_u(s_1,s_2).\label{eq4.13}\tag*{(4.13)}
+    \end{align*}
+    Applying a similar approach to that used in the proof of Theorem 4.3, it can be shown that~\ref{eq4.13} ultimately give rise
+    to the first-order differential equation (see Exercise 4.4.1).
+    \begin{align*}
+        \odv*{\phi_u(s_1,s_2)}{s_2}
+                                                             & =\lambda(s_1+s_2)(e^u-1)\phi_u(s_1,s_2)                \\
+        \odv*{\phi_u(s_1,t)}{t}
+                                                             & =\lambda(s_1+t)(e^u-1)\phi_u(s_1,t)\text{ let $s_2=t$} \\
+        \frac{\odv*{\phi_u(s_1,t)}{t}}{\phi_u(s_1,t)}        & =\lambda(s_1+t)(e^u-1)                                 \\
+        \odv*{\ln[\big]{\phi_u(s_1,t)}}{t}                   & =\lambda(s_1+t)(e^u-1)                                 \\
+        \odif{\ln[\big]{\phi_u(s_1,t)}}                      & =\lambda(s_1+t)(e^u-1)\odif{t}                         \\
+        \int_{0}^{s_2}\odif{\ln[\big]{\phi_u(s_1,t)}}        & =\int_{0}^{s_2}\lambda(s_1+t)(e^u-1)\odif{t}           \\
+        \biggl[\ln[\big]{\phi_u(s_1,t)}\biggr]_{t=0}^{t=s_2} & =(e^u-1)\int_{0}^{s_2}\lambda(s_1+t)(e^u-1)\odif{t}    \\
+        \ln[\big]{\phi_u(s_1,s_2)}-\ln[\big]{\phi_u(s_1,0)}  & =(e^u-1)\int_{s_1}^{s_1+s_2}\lambda(\tau)\odif{\tau}.
+    \end{align*}
+    However,
+    \[ \phi_u(s_1,0)=\E[\Big]{e^{u\bigl(N(s_1)-N(s_1)\bigr)}}=\E{e^{u\cdot 0}}=\E{e^0}=1. \]
+    \begin{align*}
+        \ln[\big]{\phi_u(s_1,s_2)} & =(e^u-1)\int_{s_1}^{s_1+s_2}\lambda(\tau)\odif{\tau}                        \\
+        \phi_u(s_1,s_2)            & =e^{(e^u-1)\int_{s_1}^{s_1+s_2}\lambda(\tau)\odif{\tau}},\; u\in\mathbb{R}.
+    \end{align*}
+    Since
+    \begin{align*}
+        \int_{s_1}^{s_1+s_2}\lambda(\tau)\odif{\tau}
+         & =\int_{0}^{s_1+s_2}\lambda(\tau)\odif{\tau}-\int_{0}^{s_1}\lambda(\tau)\odif{\tau} \\
+         & =m(s_1+s_2)-m(s_1).
+    \end{align*}
+    Thus, we have
+    \[
+        \phi_u(s_1,s_2)=e^{(e^u-1)\bigl(m(s_1+s_2)-m(s_1)\bigr)},\; u\in\mathbb{R},
+    \]
+    which is the mgf of a $ \POI[\big]{m(s_1+s_2)-m(s_1)} $ rv. By the mgf uniqueness property,
+    \[  N(s_1+s_2)-N(s_1)\sim \POI[\big]{m(s_1+s_2)-m(s_1)}. \]
+\end{Result}
+\underline{Remarks}:
+\begin{enumerate}[(1)]
+    \item As a direct consequence of Theorem 4.8, for all $ s,t\ge 0 $, we have
+          \[ \Prob[\big]{N(s+t)-N(s)=n}=e^{-\bigl(m(s+t)-m(s)\bigr)}\frac{\bigl(m(s+t)-m(s)\bigr)^n}{n!},\; n=0,1,2,\ldots. \]
+    \item If the rate function $ \lambda(\tau)=\lambda\; \forall \tau\ge 0 $, then note that
+          \[ \int_{s}^{s+t}\lambda(\tau)\odif{\tau}=\int_{s}^{s+t}\lambda\odif{\tau}=\lambda(s+t-s)=\lambda t \]
+          and
+          \[ \Prob[\big]{N(s+t)-N(s)=n}=\frac{e^{-\lambda t}(\lambda t)^n}{n!},\; n=0,1,2,\ldots. \]
+          This is expected, since $ \Set[\big]{N(t),t\ge 0} $ simplifies to become the standard (i.e.,
+          stationary) Poisson process.
+\end{enumerate}
+\begin{Example}
+    \textbf{Example 4.7}. Requests for technical support within the statistics department occur according
+    to a non-homogeneous Poisson process $ \Set[\big]{N(t),t\ge 0} $ having rate function
+    \[ \lambda(t)=\begin{cases}
+            5t/2,       & \text{if $0\le t<1$},    \\
+            t^2/2+2,    & \text{if $1\le t<4$},    \\
+            (9-t)(t-2), & \text{if $4\le t\le 9$},
+        \end{cases} \]
+    where $t$ is measured in hours from the start of the workday. What is the probability that four
+    requests occur in the first two hours of the workday and ten more occur in the final two hours
+    of the workday?
+    \tcblower{}
+    \textbf{Solution}: The plot below provides a visual depiction of the rate function in use:
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                    xmin=0, xmax=10,
+                    ymin=0, ymax=13,
+                    xtick={0,1,4,5,9},
+                    ytick={0,5/2,10,12},
+                    yticklabels={$0$,$5/2$,$10$,$12$},
+                    legend pos=north west,
+                    axis lines=middle,
+                    xlabel = $t$,
+                    ylabel = $\lambda(t)$,
+                    ymajorgrids=true,
+                    xmajorgrids=true,
+                    grid style=dashed,
+                ]
+                \addplot[domain=0:1]{5*x/2};
+                \addplot[domain=1:4]{x^2/2+2};
+                \addplot[domain=4:9]{(9-x)*(x-2)};
+                %\addplot[name path=null, draw=none]{5/6};
+                %\addplot[fill=blue,fill opacity=0.05]
+                %fill between[of=f and null,soft clip={domain=0:5/12},];
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    We wish to calculate
+    \[ \Prob[\big]{N(2)=4,N(9)-N(7)=10}. \]
+    Using the independent increments property, we first have
+    \[ \Prob[\big]{N(2)=4,N(9)-N(7)=10}=
+        \Prob[\big]{N(2)=4}\Prob[big]{N(9)-N(7)=10}. \]
+    Now, we need to calculate
+    \begin{align*}
+        m(2)-m(0)
+         & =\int_{0}^{2}\lambda(t)\odif{t}                                                      \\
+         & =\int_{0}^{1}\frac{5t}{2}\odif{t}+\int_{1}^{2}\frac{t^2}{2}+2\odif{t}                \\
+         & =\biggl[\frac{5t^2}{4}\biggr]_{t=0}^{t=1}+\biggl[\frac{t^3}{6}+2t\biggr]_{t=1}^{t=2} \\
+         & =\frac{53}{12}.
+    \end{align*}
+    Also,
+    \begin{align*}
+        m(9)-m(7)
+         & =\int_{7}^{9}\lambda(t)\odif{t}                               \\
+         & =\int_{7}^{9}(9-t)(t-2)\odif{t}                               \\
+         & =\int_{7}^{9}(-18+11t-t^2)\odif{t}                            \\
+         & =\biggl[-18t+\frac{11t^2}{t}-\frac{t^3}{3}\biggr]_{t=7}^{t=9} \\
+         & =\frac{34}{3}.
+    \end{align*}
+    As a result, it follows that
+    \begin{align*}
+        \Prob[\big]{N(2)=4}
+         & =e^{-\bigl(m(2)-m(0)\bigr)}\frac{\bigl(m(2)-m(0)\bigr)^4}{4!} \\
+         & =\frac{e^{-53/12}(53/12)^4}{4!},
+    \end{align*}
+    and
+    \begin{align*}
+        \Prob[\big]{N(9)-N(7)=10}
+         & =e^{-\bigl(m(9)-m(7)\bigr)}\frac{\bigl(m(9)-m(7)\bigr)^{10}}{10!} \\
+         & =\frac{e^{-34/3}(34/3)^{10}}{10!}.
+    \end{align*}
+    Finally,
+    \begin{align*}
+        \Prob[\big]{N(2)=4,N(9)-N(7)=10}
+         & =\Prob[\big]{N(2)=4}\Prob[big]{N(9)-N(7)=10}                          \\
+         & =\frac{e^{-53/12}(53/12)^4}{4!}\cdot \frac{e^{-34/3}(34/3)^{10}}{10!} \\
+         & \simeq 0.0221.
+    \end{align*}
+\end{Example}
+\subsection*{The Compound Poisson Process}
+Another restriction we might wish to relax concerns the assumption that arrivals in a Poisson
+process occur strictly one after the other.
+
+For instance, vehicles crossing the Canada-USA border would usually have more than just one
+passenger on board. Individuals arriving to a sporting event often arrive in groups of two or
+more.
+
+There are also applications where each arrival might generate a random monetary amount.
+For example, in an insurance company where claims occur according to a Poisson process, the
+claim sizes themselves are (random) amounts of money, and one would typically be interested
+in the total amount of money paid out by the insurance company by time $t$.
+
+In any of the above scenarios, each arrival in a Poisson process comes with an associated
+real-valued rv that represents the \emph{value} of the arrival in a sense.
+
+This gives rise to the following definition.
+\begin{Regular}
+    \textbf{Definition}: Let $ \Set{Y_i}_{i=1}^\infty $ be an iid sequence of rvs. Let $ \Set[\big]{N(t),t\ge 0} $ be a
+    Poisson process at rate $ \lambda $, independent of each $ Y_i $, $ i=1,2,3,\ldots $. If $ X(t)=\sum_{i=1}^{N(t)}Y_i $, then the
+    process $ \Set[\big]{X(t),t\ge 0} $ is a \emph{compound} Poisson process.
+    \tcblower{}
+    \underline{Remarks}:
+    \begin{enumerate}[(1)]
+        \item The above definition is another way of generalizing the Poisson process, since if we
+              choose the distribution of each $Y_i$ to be degenerate at $1$ (i.e., $Y_i = 1$ with probability $1$
+              $ \forall i\in\mathbb{Z}^+ $), then $ \Set[\big]{X(t),t\ge 0} $ and $ \Set{N(t),t\ge 0} $ are identical processes.
+        \item The compound Poisson process $ \Set[\big]{X(t),t\ge 0} $ inherits the independent and stationary increments
+              properties from the Poisson processes $ \Set[\big]{N(t),t\ge 0} $. To see this formally,
+              let $ (s_1,t_1] $ and $ (s_2,t_2] $ be time intervals such that $ t_1\le s_2 $ (resulting in $ (s_1,t_1] \cap (s_2,t_2]=\emptyset $).
+                  Making use of the assumptions concerning $ \Set{Y_i}_{i=1}^\infty $ and $ \Set{N(t),t\ge 0} $, note that
+              \begin{align*}
+                   & \Prob[\big]{X(t_{1})-X(s_{1}) \leq a_{1}, X(t_{2})-X(s_{2}) \leq a_{2}}                                                                              \\
+                   & =\Prob[\bigg]{\sum_{i=1}^{N(t_{1})} Y_{i}-\sum_{i=1}^{N(s_{1})}Y_{i} \leq a_{1}, \sum_{i=1}^{N(t_{2})} Y_{i}-\sum_{i=1}^{N(s_{2})} Y_{i} \leq a_{2}} \\
+                   & =\Prob[\bigg]{\sum_{i=N(s_{1})+1}^{N(t_{1})} Y_{i}\leq a_{1}, \sum_{i=N(s_{2})+1}^{N(t_{2})} Y_{i} \leq a_{2}}                                       \\
+                   & =\sum_{m_{1}=0}^{\infty} \sum_{n_{1}=0}^{\infty} \sum_{m_{2}=0}^{\infty} \sum_{n_{2}=0}^{\infty}                                                     \\
+                   & \phantom{{}={}} \Prob[\bigg]{\sum_{i=N(s_{1})+1}^{N(t_{1})} Y_{i} \leq a_{1}, \sum_{i=N(s_{2})+1}^{N(t_{2})} Y_{i} \leq a_{2} \given
+                  \begin{array}{l}
+                          N(s_{1})=m_{1}, N(t_{1})-N(s_{1})=n_{1}, \\
+                          N(s_2)-N(t_1)=m_2,N(t_2)-N(s_2)=n_2
+                      \end{array}}                                                                                                                \\
+                   & \phantom{{}={}}\times
+                  \Prob[\big]{N(s_{1})=m_{1}, N(t_{1})-N(s_{1})=n_{1}, N(s_{2})-N(t_{1})=m_{2}, N(t_{2})-N(s_{2})=n_{2}}                                                  \\
+                   & =\sum_{m_{1}=0}^{\infty} \sum_{n_{1}=0}^{\infty} \sum_{m_{2}=0}^{\infty} \sum_{n_{2}=0}^{\infty}
+                  \Prob[\bigg]{\sum_{i=m_1+1}^{m_1+n_1}Y_i\le a_1,\sum_{i=m_1+n_1+m_2+1}^{m_1+n_1+m_2+n_2}Y_i\le a_2}                                                     \\
+                   & \phantom{{}={}}\times \Prob[\big]{N(s_1)=m_1}\Prob[\big]{N(t_1)-N(s_1)=n_1}\Prob[\big]{N(s_2)-N(t_1)=m_2}\Prob[\big]{N(t_2)-N(s_2)=n_2}              \\
+                   & =\Set*{\sum_{n_1=0}^{\infty}\Prob{\sum_{i=1}^{n_1}Y_i\le a_1}\Prob[\big]{N(t_1-s_1)=n_1}}
+                  \Set*{\sum_{n_2=0}^{\infty}\Prob{\sum_{i=1}^{n_2}Y_i\le a_2}\Prob[\big]{N(t_2-s_2)=n_2}}                                                                \\
+                   & =\Prob[\bigg]{\sum_{i=1}^{N(t_1-s_1)}Y_i\le a_1}\Prob[\bigg]{\sum_{i=1}^{N(t_2-s_2)}Y_i\le a_2}                                                      \\
+                   & =\Prob[\big]{X(t_1-s_1)\le a_1}\Prob[\big]{X(t_2-s_2)\le a_2}.
+              \end{align*}
+        \item For $t > 0$, determining the probability distribution of $X(t)$ is, generally speaking, a
+              challenging mathematical problem. On the other hand, the mean and variance of $X(t)$
+              are readily accessible. In particular, by making use of the results for the mean and
+              variance of a random sum (see Example 2.9), we immediately obtain
+              \[ \E[\big]{X(t)}=\E[\big]{N(t)}\E{Y_1}=\lambda t\E{Y_1} \]
+              and
+              \begin{align*}
+                  \Var[\big]{X(t)}
+                   & =\Var{Y_1}\E[\big]{N(t)}+\E{Y_1}^2\Var[\big]{N(t)} \\
+                   & =\lambda t\bigl(\Var{Y_1}-\E{Y_1}^2\bigr)          \\
+                   & =\lambda t\E{Y_1^2}.
+              \end{align*}
+    \end{enumerate}
+\end{Regular}
+\begin{Example}
+    \textbf{Example 4.8}. Claims received by an insurance company occur according to a Poisson process
+    at a rate of $30$ claims per year. Individual claim amounts, which are assumed to be
+    independent, are known to be either $\$1000$, $\$2000$, or $\$3000$. Company records indicate that
+    one year ago, the average total amount paid out was $\$56000$ and that the standard deviation
+    of the total amount paid out was $\$11000$. Based on this information, how likely was it that an
+    individual claim of $\$3000$ took place last year?
+    \tcblower{}
+    \textbf{Solution}: Let $ N(t) $ represent the number of claims received by the company
+    by time $ t $ (measured in years), which is known to have a $ \POI{30t} $
+    distribution in the past year. In addition, let $ Y_i $, $ i\in\mathbb{Z}^+ $,
+    be the size of the $ i\textsuperscript{th} $ individual claim amount (measured in thousands of dollars),
+    having pmf of the form
+    \[ \Prob{Y_i=y}=\begin{cases}
+            \alpha,         & \text{if $y=1$}, \\
+            \beta,          & \text{if $y=2$}, \\
+            1-\alpha-\beta, & \text{if $y=3$}.
+        \end{cases} \]
+    Therefore, $ X(t)=\sum_{i=1}^{N(t)}Y_i $ represents the total amount paid out (measured in thousands of dollars) by time $ t $.
+    We have:
+    \[ \E[\big]{X(1)}=30\E{Y_1}=56\implies \E{Y_1}=\frac{56}{30}=\frac{28}{15}. \]
+    That is,
+    \[ \alpha+2\beta+3(1-\alpha-\beta)=\frac{28}{15}\implies 30\alpha+15\beta=17.\label{eq4.14}\tag*{(4.14)} \]
+    Furthermore,
+    \[ \Var[\big]{X(1)}=(30)\E{Y_1^2}=11^2\implies \E{Y_1^2}=\frac{121}{30}. \]
+    That is,
+    \[ \alpha+4\beta+9(1-\alpha-\beta)=\frac{121}{30}\implies 240\alpha+150\beta=149.\label{eq4.15}\tag*{(4.15)} \]
+    The above equations~\ref{eq4.14} and~\ref{eq4.15} are linear, and can be solved to find $ \alpha $ and $ \beta $ as follows:
+    \[ 10\times\ref{eq4.14}-\ref{eq4.15}\implies 60\alpha=21\implies \alpha=\frac{7}{20}\label{eq4.16}\tag*{(4.16)} \]
+    Plugging~\ref{eq4.16} into~\ref{eq4.14} leads to
+    \[ 30\times \frac{7}{20}+15\beta=7\implies \beta=\frac{13}{30}. \]
+    From above, the desired probability is simply
+    \[ 1-\alpha-\beta=1-\frac{7}{20}-\frac{13}{30}=\frac{13}{60}\simeq 0.217. \]
+\end{Example}
