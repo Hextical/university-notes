@@ -150,11 +150,12 @@
             differently for the Poisson and Negative Binomial estimating equations.
       \item The standard errors are larger with the Negative Binomial model because it
             accounts for more variability in the data (which is needed here).
-      \item Notice the treat variable is only statistically significant in the Poisson model.
+      \item Notice the \texttt{treat} variable is only statistically significant in the Poisson model.
 \end{itemize}
 \subsubsection*{Residual Plots for Poisson and Negative Binomial Models}
 %\begin{noindent}
       <<echo=FALSE>>=
+      par(mfrow=c(1,2))
       plot(log(epi.dat$fitted.values1),epi.dat$rdeviance1,ylim=c(-5,5),xlab="LOG FITTED VALUES", ylab="DEVIANCE RESIDUALS",main="POISSON MODEL")
       abline(h=-2,lty=2);abline(h=2,lty=2)
       plot(log(epi.dat$fitted.values2),epi.dat$rdeviance2,ylim=c(-5,5),xlab="LOG FITTED VALUES", ylab="DEVIANCE RESIDUALS",main="NEG BIN MODEL")
@@ -228,9 +229,9 @@
       \item Correlation within clusters?
             \begin{align*}
                   \Cov{Y_{ij},Y_{ik}}
-                   & =\Cov[\big]{ E{Y_{ij}\given u_i},\E{Y_{ik}\given u_i} } + \E[\big]{\Cov{Y_{ij,Y_{ik}}\given u_i}} \\
-                   & =\Cov{u_i\lambda,u_i\lambda}+\E{0}                                                                \\
-                   & =\lambda^2\Var{u_i}                                                                               \\
+                   & =\Cov[\big]{ \E{Y_{ij}\given u_i},\E{Y_{ik}\given u_i} } + \E[\big]{\Cov{Y_{ij},Y_{ik}\given u_i}} \\
+                   & =\Cov{u_i\lambda,u_i\lambda}+\E{0}                                                                 \\
+                   & =\lambda^2\Var{u_i}                                                                                \\
                    & =\lambda^2\phi.
             \end{align*}
             \[ \Corr{Y_{ij},Y_{ik}}=\frac{\Cov{Y_{ij},Y_{ik}}}{\sqrt{\Var{Y_{ij}}\Var{Y_{ik}} }}=\frac{\lambda^2\phi}{\lambda(1+\lambda\phi)}=\frac{\lambda\phi}{1+\lambda\phi}. \]
@@ -243,7 +244,7 @@
       \item Four responses per subject: $ Y_{i1},Y_{i2},Y_{i3},Y_{i4} $.
       \item Consider the total seizure count: $ Y_{i\bullet}=\sum_{j=1}^{4}Y_{ij} $.
       \item Assume $ Y_{ij}\mid u_i \sim \POI{u_i\lambda_i} $ independently.
-      \item This implies $ Y_{i\bullet}\mid u_i \sim \POI{4u_i\lambda_i} $.
+      \item This implies \textcolor{Blue}{$ Y_{i\bullet}\mid u_i \sim \POI{4u_i\lambda_i} $}.
       \item Can show that $ Y_{i\bullet} $ has an (almost) Negative Binomial distribution (Problem 4.3).
 \end{itemize}
 \subsubsection*{Problem 4.3}
@@ -334,8 +335,8 @@
             \[ \exp{\hat{\beta}_1\pm z_{0.975}\estse{\hat{\beta}_1}}=\exp{-0.2124\pm 1.96(0.1534)}=(0.60,1.09). \]
 \end{itemize}
 \begin{Example}{}
-      \textbf{Q2}: Q2: Based on the joint model estimate the correlation between the first and third
-      responses $(Yi1 \& Yi3)$ for an untreated subject with a prior seizure count of $11$, age 31.
+      \textbf{Q2}: Based on the joint model estimate the correlation between the first and third
+      responses $(Y_{i1}\;\&\;Y_{i3})$ for an untreated subject with a prior seizure count of $11$, age 31.
 \end{Example}
 \begin{itemize}
       \item First, we need an estimate of $ \hat{\lambda}_i $ for this subject:

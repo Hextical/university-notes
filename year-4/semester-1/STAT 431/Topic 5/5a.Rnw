@@ -4,154 +4,154 @@
 \subsection*{Chapter 5: Introduction to Overdispersion}
 \addcontentsline{toc}{subsection}{Introduction}
 \begin{itemize}
-    \item Recall the Exponential Family:
-          \[ \textcolor{Blue}{ f(y;\theta,\phi)=\exp*{\frac{y\theta-b(\theta)}{a(\phi)}+c(y;\phi)} }. \]
-    \item \textcolor{Blue}{Canonical parameter}: $ \theta $.
-    \item \textcolor{Blue}{Dispersion parameter}: $ \phi $.
-    \item \textcolor{Blue}{Mean}: $ \E{Y}=b^\prime(\theta)=\mu $.
-    \item \textcolor{Blue}{Variance}: $ \Var{Y}=b^{\prime\prime}(\theta)a(\phi) $.
-    \item Up to now, we always had either $ \phi=1 $ (Binomial \& Poisson) or $ \phi $ known (Normal with $ \sigma^2 $ known).
+      \item Recall the Exponential Family:
+            \[ \textcolor{Blue}{ f(y;\theta,\phi)=\exp*{\frac{y\theta-b(\theta)}{a(\phi)}+c(y;\phi)} }. \]
+      \item \textcolor{Blue}{Canonical parameter}: $ \theta $.
+      \item \textcolor{Blue}{Dispersion parameter}: $ \phi $.
+      \item \textcolor{Blue}{Mean}: $ \E{Y}=b^\prime(\theta)=\mu $.
+      \item \textcolor{Blue}{Variance}: $ \Var{Y}=b^{\prime\prime}(\theta)a(\phi) $.
+      \item Up to now, we always had either $ \phi=1 $ (Binomial \& Poisson) or $ \phi $ known (Normal with $ \sigma^2 $ known).
 \end{itemize}
 \subsubsection*{Introduction to Overdispersion}
 \begin{itemize}
-    \item Frequently we will have a poor fit of a GLM to the data because the variance of
-          our model is too restrictive.
-    \item Recall for the Poisson: $ \E{Y}=\Var{Y}=\mu $.
-    \item But what if we observe count data where $ \Var{Y}>\E{Y} $?
-          \begin{itemize}
-              \item Here, we say the data is \textcolor{Red}{overdispersed}.
-          \end{itemize}
-    \item Recall for the Binomial: $ \E{Y}=n\pi $ and $ \Var{Y}=n\pi(1-\pi) $.
-    \item \textcolor{Blue}{We will cover 2 methods for dealing with overdispersion}:
-          \begin{enumerate}[1.]
-              \item \textcolor{Blue}{Ad hoc}: Introduce and estimate a dispersion parameter $ \phi $ for a distribution that
-                    doesn't naturally have one.
-              \item \textcolor{Blue}{Mixed Model}: Introduce a new random variable which acts as a dispersion factor.
-          \end{enumerate}
+      \item Frequently we will have a poor fit of a GLM to the data because the variance of
+            our model is too restrictive.
+      \item Recall for the Poisson: $ \E{Y}=\Var{Y}=\mu $.
+      \item But what if we observe count data where $ \Var{Y}>\E{Y} $?
+            \begin{itemize}
+                  \item Here, we say the data is \textcolor{Red}{overdispersed}.
+            \end{itemize}
+      \item Recall for the Binomial: $ \E{Y}=n\pi $ and $ \Var{Y}=n\pi(1-\pi) $.
+      \item \textcolor{Blue}{We will cover 2 methods for dealing with overdispersion}:
+            \begin{enumerate}[1.]
+                  \item \textcolor{Blue}{Ad hoc}: Introduce and estimate a dispersion parameter $ \phi $ for a distribution that
+                        doesn't naturally have one.
+                  \item \textcolor{Blue}{Mixed Model}: Introduce a new random variable which acts as a dispersion factor.
+            \end{enumerate}
 \end{itemize}
 \subsubsection*{Why Adjust for Overdispersion?}
 \begin{itemize}
-    \item If the data is \textcolor{Red}{overdispersed}, then generally $ \Var{\hat{\beta}_j} $ will be underestimated.
-    \item \textcolor{Blue}{We adjust for overdispersion to}:
-          \begin{itemize}
-              \item ``Correct'' the fitted standard errors.
-              \item Increase the width of confidence intervals to reflect variation in the data.
-              \item Reduce the risk false positive findings for covariate effects (i.e., when we reject $ \HN $: $ \beta_j=0 $
-                    because $ \se{\hat{\beta}_j} $ is too small).
-          \end{itemize}
+      \item If the data is \textcolor{Red}{overdispersed}, then generally $ \Var{\hat{\beta}_j} $ will be underestimated.
+      \item \textcolor{Blue}{We adjust for overdispersion to}:
+            \begin{itemize}
+                  \item ``Correct'' the fitted standard errors.
+                  \item Increase the width of confidence intervals to reflect variation in the data.
+                  \item Reduce the risk false positive findings for covariate effects (i.e., when we reject $ \HN $: $ \beta_j=0 $
+                        because $ \se{\hat{\beta}_j} $ is too small).
+            \end{itemize}
 \end{itemize}
 \subsection*{Ad Hoc Method for Poisson}
 \addcontentsline{toc}{subsection}{1. Ad Hoc Method}
 \begin{itemize}
-    \item Consider one observation from a Poisson distribution:
-          \[ \textcolor{Blue}{f(y;\theta,\phi)=\frac{\mu^y e^{-\mu}}{y!}=\exp{y\log{\mu}-\mu-\log{y!}}}. \]
-          \[ \begin{array}{lll}
-                  \theta=\log{\mu} & b(\theta)=e^{\theta} & \E{Y}=b^\prime(\theta)=e^{\theta}=\mu.                  \\
-                  \phi=1           & a(\phi)=1            & \Var{Y}=b^{\prime\prime}(\theta)a(\phi)=e^{\theta}=\mu.
-              \end{array} \]
-    \item We want to allow for data where $ \Var{Y}>\E{Y} $.
-    \item Introduce a \textcolor{Red}{dispersion parameter} $ a(\phi)=\phi>0 $.
-    \item Let $ \Var{Y}=\mu\phi $ to allow for \emph{extra Poisson variation}.
-    \item This does not actually correspond to an actual probability model.
-    \item How do we estimate $ \phi $?
+      \item Consider one observation from a Poisson distribution:
+            \[ \textcolor{Blue}{f(y;\theta,\phi)=\frac{\mu^y e^{-\mu}}{y!}=\exp{y\log{\mu}-\mu-\log{y!}}}. \]
+            \[ \begin{array}{lll}
+                        \theta=\log{\mu} & b(\theta)=e^{\theta} & \E{Y}=b^\prime(\theta)=e^{\theta}=\mu.                  \\
+                        \phi=1           & a(\phi)=1            & \Var{Y}=b^{\prime\prime}(\theta)a(\phi)=e^{\theta}=\mu.
+                  \end{array} \]
+      \item We want to allow for data where $ \Var{Y}>\E{Y} $.
+      \item Introduce a \textcolor{Red}{dispersion parameter} $ a(\phi)=\phi>0 $.
+      \item Let $ \Var{Y}=\mu\phi $ to allow for \emph{extra Poisson variation}.
+      \item This does not actually correspond to an actual probability model.
+      \item How do we estimate $ \phi $?
 \end{itemize}
 \subsubsection*{Ad Hoc Method for any GLM}
 \begin{itemize}
-    \item Consider one observation from the exponential family:
-          \[ \textcolor{Blue}{f(y_i,\theta_i,\phi)=\exp*{\frac{y_i\theta_i-b(\theta_i)}{a_i(\phi)}+c(y_i;\phi)}}, \]
-          where we assume $ a_i(\phi)=\phi/w_i $.
-    \item We can then write the log-likelihood of a random sample as:
-          \begin{align*}
-              \ell(\theta,\phi)
-               & =\sum \ell_i(\theta_i;y_i,\phi)                             \\
-               & =\sum w_i \frac{y_i\theta_i-b(\theta_i)}{\phi}+c(y_i;\phi).
-          \end{align*}
-    \item Consider a LR/Deviance test of
-          \begin{itemize}
-              \item $ \HN $: $ p $-dim model constrained is adequate ($ \hat{\theta}_i $).
-              \item $ \HA $: $ q $-dim model is adequate ($ \tilde{\theta}_i $), $ n\ge q>p $.
-          \end{itemize}
-    \item The Deviance can be written as:
-          \begin{align*}
-              D^\star
-               & =2\bigl(\ell(\tilde{\theta},\phi)-\ell(\hat{\theta},\phi)\bigr)                                                                         \\
-               & =2\biggl(\sum  w_i \frac{y_i\tilde{\theta}_i-b(\tilde{\theta}_i)}{\phi} -  w_i \frac{y_i\hat{\theta}_i-b(\hat{\theta}_i)}{\phi} \biggr) \\
-               & =\frac{D}{\phi},
-          \end{align*}
-          where $ D $ is the deviance from a LRT when $ \phi=1 $, that is, the distribution with $ a_i(\phi)=1/w_i $ (easy to get from R).
+      \item Consider one observation from the exponential family:
+            \[ \textcolor{Blue}{f(y_i,\theta_i,\phi)=\exp*{\frac{y_i\theta_i-b(\theta_i)}{a_i(\phi)}+c(y_i;\phi)}}, \]
+            where we assume $ a_i(\phi)=\phi/w_i $.
+      \item We can then write the log-likelihood of a random sample as:
+            \begin{align*}
+                  \ell(\theta;\phi)
+                   & =\sum \ell_i(\theta_i;y_i,\phi)                             \\
+                   & =\sum w_i \frac{y_i\theta_i-b(\theta_i)}{\phi}+c(y_i;\phi).
+            \end{align*}
+      \item Consider a LR/Deviance test of
+            \begin{itemize}
+                  \item $ \HN $: $ p $-dim model constrained is adequate ($ \hat{\theta}_i $).
+                  \item $ \HA $: $ q $-dim model is adequate ($ \tilde{\theta}_i $), $ n\ge q>p $.
+            \end{itemize}
+      \item The Deviance can be written as:
+            \begin{align*}
+                  D^\star
+                   & =2\bigl(\ell(\tilde{\theta},\phi)-\ell(\hat{\theta},\phi)\bigr)                                                                            \\
+                   & =2\biggl(\sum  w_i \frac{y_i\tilde{\theta}_i-b(\tilde{\theta}_i)}{\phi} -\sum w_i \frac{y_i\hat{\theta}_i-b(\hat{\theta}_i)}{\phi} \biggr) \\
+                   & =\frac{D}{\phi},
+            \end{align*}
+            where $ D $ is the deviance from a LRT when $ \phi=1 $, that is, the distribution with $ a_i(\phi)=1/w_i $ (easy to get from R).
 \end{itemize}
 \[ D^\star=\frac{D}{\phi}. \]
 \begin{itemize}
-    \item Recall $ \HN $: unsaturated $ p $-dim model is adequate vs $ q $-dim super model.
-    \item \textcolor{Blue}{Scaled Deviance}: $ D^\star \sim \chi^2_{q-p} $ under $ \HN $, which implies \textcolor{Blue}{Deviance}: $ D \sim \phi\chi^2_{q-p} $ under $ \HN $.
-    \item Note: $ q=n $ if the alternative model is the saturated model.
-    \item Fact: $ \E{\chi^2_{m}}=m $ and therefore $ \E{\chi^2_{n-p}}=n-p $.
-    \item Fit an unsaturated $ p $-dim model with a GLM with $ \phi=1 $ to estimate $ D $.
-    \item Check if $ D \sim \chi^2_{n-p} $ by comparing to $ \E{D}=n-p $.
-          \begin{itemize}
-              \item If $ D\gg n-p $, then this indicates overdispersion exists \textcolor{Blue}{(need to estimate $ \phi $)}.
-              \item If $ D \approx n-p $, then $ \phi\approx 1 $, and there's no overdispersion.
-          \end{itemize}
-    \item \textcolor{Blue}{How do we estimate $ \phi $?}
-    \item Fit an unsaturated $ p $-dim model with a GLM with $ \phi=1 $.
-    \item Method of Moments estimator:
-          \[ \E{D}=\phi(n-p)\implies \hat{\phi}=\frac{D}{n-p}. \]
-    \item \textcolor{Blue}{How do we use $ \hat{\phi} $ to adjust standard errors?}
-    \item Unadjusted covariance matrix (from GLM with $ \phi=1 $):
-          \[ \Cov{\hat{\Vector{\beta}}}=(\Matrix{X}\MatrixCal{W}\Matrix{X}^\top)^{-1}=\mathcal{I}^{-1}. \]
-    \item Adjusted covariance matrix:
-          \[ \Covadj{\hat{\Vector{\beta}}}\simeq \hat{\phi} (\Matrix{X}\MatrixCal{W}\Matrix{X}^\top)^{-1}=\hat{\phi}\mathcal{I}^{-1}. \]
-    \item Adjusted standard errors:
-          \[ \seadj{\hat{\beta}_j}=\sqrt{\hat{\phi}}\se{\hat{\beta}_j}. \]
+      \item Recall $ \HN $: unsaturated $ p $-dim model is adequate vs $ q $-dim super model.
+      \item \textcolor{Blue}{Scaled Deviance}: $ D^\star \sim \chi^2_{q-p} $ under $ \HN $, which implies \textcolor{Blue}{Deviance}: $ D \sim \phi\chi^2_{q-p} $ under $ \HN $.
+      \item Note: $ q=n $ if the alternative model is the saturated model.
+      \item Fact: $ \E{\chi^2_{m}}=m $ and therefore $ \E{\chi^2_{n-p}}=n-p $.
+      \item Fit an unsaturated $ p $-dim model with a GLM with $ \phi=1 $ to estimate $ D $.
+      \item Check if $ D \sim \chi^2_{n-p} $ by comparing to $ \E{D}=n-p $.
+            \begin{itemize}
+                  \item If $ D\gg n-p $, then this indicates overdispersion exists \textcolor{Blue}{(need to estimate $ \phi $)}.
+                  \item If $ D \approx n-p $, then $ \phi\approx 1 $, and there's no overdispersion.
+            \end{itemize}
+      \item \textcolor{Blue}{How do we estimate $ \phi $?}
+      \item Fit an unsaturated $ p $-dim model with a GLM with $ \phi=1 $.
+      \item Method of Moments estimator:
+            \[ \E{D}=\phi(n-p)\implies \hat{\phi}=\frac{D}{n-p}. \]
+      \item \textcolor{Blue}{How do we use $ \hat{\phi} $ to adjust standard errors?}
+      \item Unadjusted covariance matrix (from GLM with $ \phi=1 $):
+            \[ \Cov{\hat{\Vector{\beta}}}=(\Matrix{X}\MatrixCal{W}\Matrix{X}^\top)^{-1}=\mathcal{I}^{-1}. \]
+      \item Adjusted covariance matrix:
+            \[ \Covadj{\hat{\Vector{\beta}}}\simeq \hat{\phi} (\Matrix{X}\MatrixCal{W}\Matrix{X}^\top)^{-1}=\hat{\phi}\mathcal{I}^{-1}. \]
+      \item Adjusted standard errors:
+            \[ \seadj{\hat{\beta}_j}=\sqrt{\hat{\phi}}\se{\hat{\beta}_j}. \]
 \end{itemize}
 \subsubsection*{Summary: Ad Hoc Method}
 \begin{enumerate}[1.]
-    \item Fit the usual GLM to the data and find the best fitting model.
-    \item Check for evidence of overdispersion (i.e., $ D\gg n-p $).
-    \item If overdispersion is present, estimate
-          \[ \hat{\phi}=\frac{D}{n-p}. \]
-    \item Adjusted covariance matrix and standard error estimates
-          \[ \Covadj{\hat{\Vector{\beta}}}\simeq \hat{\phi}\Cov{\hat{\Vector{\beta}}}=\hat{\phi}\mathcal{I}^{-1},
-              \qquad \seadj{\hat{\beta}_j}=\sqrt{\hat{\phi}}\se{\hat{\beta}_j}. \]
-          \begin{itemize}
-              \item This does not change the estimates $ \hat{\beta}_j $ from the GLM.
-              \item May change the significance of the estimates though.
-              \item With $ \phi>1 $, confidence intervals will increase in width.
-          \end{itemize}
+      \item Fit the usual GLM to the data and find the best fitting model.
+      \item Check for evidence of overdispersion (i.e., $ D\gg n-p $).
+      \item If overdispersion is present, estimate
+            \[ \hat{\phi}=\frac{D}{n-p}. \]
+      \item Adjusted covariance matrix and standard error estimates
+            \[ \Covadj{\hat{\Vector{\beta}}}=\hat{\phi}\Cov{\hat{\Vector{\beta}}}=\hat{\phi}\mathcal{I}^{-1},
+                  \qquad \seadj{\hat{\beta}_j}=\sqrt{\hat{\phi}}\se{\hat{\beta}_j}. \]
+            \begin{itemize}
+                  \item This does not change the estimates $ \hat{\beta}_j $ from the GLM.
+                  \item May change the significance of the estimates though.
+                  \item With $ \phi>1 $, confidence intervals will increase in width.
+            \end{itemize}
 \end{enumerate}
 \subsection*{Application: Analysis of an Epilepsy Trial}
 \addcontentsline{toc}{subsection}{Application: Analysis of an Epilepsy Trial}
 \begin{itemize}
-    \item Clinical trial was conducted involving $59$ patients with epilepsy.
-    \item Patients were randomized to one of two treatments, a \textcolor{Blue}{standard therapy} or a \textcolor{Blue}{new drug}
-          designed to reduce the number of epileptic attacks experienced.
-    \item The primary response is the number of attacks experienced during the first two
-          weeks after randomization.
-    \item The data are given on the next slide where:
-          \begin{itemize}
-              \item $ Y_k= $ number attacks in $ k\textsuperscript{th} $ period after randomization.
-              \item \texttt{treat} is the treatment indicator variable with \texttt{treat=1} for the experimental treatment
-                    and \texttt{treat=0} otherwise.
-              \item \texttt{prior} records the number of epileptic attacks experience for the month prior to entry into the study.
-              \item \texttt{age} is a patient age at randomization in years.
-          \end{itemize}
+      \item Clinical trial was conducted involving $59$ patients with epilepsy.
+      \item Patients were randomized to one of two treatments, a \textcolor{Blue}{standard therapy} or a \textcolor{Blue}{new drug}
+            designed to reduce the number of epileptic attacks experienced.
+      \item The primary response is the number of attacks experienced during the first two
+            weeks after randomization.
+      \item The data are given on the next slide where:
+            \begin{itemize}
+                  \item $ Y_k= $ number attacks in $ k\textsuperscript{th} $ period after randomization.
+                  \item \texttt{treat} is the treatment indicator variable with \texttt{treat=1} for the experimental treatment
+                        and \texttt{treat=0} otherwise.
+                  \item \texttt{prior} records the number of epileptic attacks experience for the month prior to entry into the study.
+                  \item \texttt{age} is a patient age at randomization in years.
+            \end{itemize}
 \end{itemize}
 \subsubsection*{R Data for Univariate Analysis}
 \begin{itemize}
-    \item First consider analyses based on the data from the first two-week period after
-          randomization, that is, $ Y_{i1} $, $ i=1,2,\ldots,n $.
-    \item \textcolor{Blue}{Poisson Model}, that is, $ Y_{i1}\sim \POI{\mu_i} $, with $ \log{\mu_i}=\Vector{x}_i^\top \Vector{\beta} $.
-    \item Explanatory variables:
-          \begin{align*}
-              x_{i1} & =\Ind{\texttt{treat=1}}, \\
-              x_{i2} & =\Ind{\texttt{prior}},   \\
-              x_{i3} & =\Ind{\texttt{age}}.
-          \end{align*}
-    \item We are primarily interested in the \texttt{treatment effect} $ \beta_1 $.
+      \item First consider analyses based on the data from the first two-week period after
+            randomization, that is, $ Y_{i1} $, $ i=1,2,\ldots,n $.
+      \item \textcolor{Blue}{Poisson Model}, that is, $ Y_{i1}\sim \POI{\mu_i} $, with $ \log{\mu_i}=\Vector{x}_i^\top \Vector{\beta} $.
+      \item Explanatory variables:
+            \begin{align*}
+                  x_{i1} & =\Ind{\texttt{treat=1}}, \\
+                  x_{i2} & =\Ind{\texttt{prior}},   \\
+                  x_{i3} & =\Ind{\texttt{age}}.
+            \end{align*}
+      \item We are primarily interested in the \textcolor{Blue}{treatment effect} $ \beta_1 $.
 \end{itemize}
 \begin{Example}{Data from Epilepsy Trial}
-    We show the first 5 rows.
-    %\begin{noindent}
+      We show the first 5 rows.
+      %\begin{noindent}
             <<echo=FALSE>>=
             epi.dat <- read.table("epi.dat", header=T)
             epi.dat$treatf <- factor(epi.dat$treat)
@@ -170,123 +170,123 @@
 \subsubsection*{Results of Fitted Poisson Model}
 \[ \log{\mu_i}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}. \]
 \begin{table}[H]
-    \centering
-    \begin{tabular}{lccc}
-        Model             & Parameter   & Estimate    & $ \widehat{\text{se}} $ \\
-        \midrule
-        \texttt{poisson1} & $ \beta_1 $ & $ -0.2047 $ & $ 0.0895 $              \\
-        \bottomrule
-    \end{tabular}
+      \centering
+      \begin{tabular}{lccc}
+            Model             & Parameter   & Estimate    & $ \widehat{\text{se}} $ \\
+            \midrule
+            \texttt{poisson1} & $ \beta_1 $ & $ -0.2047 $ & $ 0.0895 $              \\
+            \bottomrule
+      \end{tabular}
 \end{table}
 \[ \widehat{\RR}=\exp{\hat{\beta}_1}=\exp{-0.2047}=0.815. \]
 \begin{itemize}
-    \item The relative rate of seizures in the treatment group versus the control group over
-          the first two weeks of the study controlling for prior seizure count and age.
+      \item The relative rate of seizures in the treatment group versus the control group over
+            the first two weeks of the study controlling for prior seizure count and age.
 \end{itemize}
 \subsubsection*{Ad Hoc Method}
 \begin{itemize}
-    \item $ D\gg n-p $, so we need to account for overdispersion in this model:
-          \[ \hat{\phi}=\frac{D}{n-p}=\frac{197.61}{59-4}=3.593. \]
-    \item Use $ \hat{\phi} $ to adjust the standard error estimates:
-          \[ \estseadj{\hat{\beta}_1}=\sqrt{\hat{\phi}}\estse{\hat{\beta}_1}=\sqrt{3.593}(0.0895)=0.1696. \]
-          \begin{table}[H]
-              \centering
-              \begin{tabular}{lcccc}
-                  Model             & Parameter   & Estimate    & $ \hat{\text{se}} $ & $ \widehat{\hat{se}}_{\text{adj}} $ \\
-                  \midrule
-                  \texttt{poisson1} & $ \beta_1 $ & $ -0.2047 $ & $ 0.0895 $          & $0.1696$                            \\
-                                    & $ \phi $    & $3.593$                                                                 \\
-                  \bottomrule
-              \end{tabular}
-          \end{table}
-    \item In the Poisson model the treatment effect was statistically significant ($ p=0.0222 $).
-    \item Is $ \beta_1 $ statistically significant after account for the overdispersion?
-    \item Test $ \HN $: $ \beta_1=0 $ versus $ \HA $: $ \beta_1\ne 0 $ using a Wald test:
-          \[ t=\frac{\abs{\hat{\beta}_1-0}}{\estseadj{\hat{\beta}_1}}=\frac{\abs{-0.2047}}{0.1696}=1.21. \]
-          \[ p=\Prob{\abs{Z}>1.21}=0.23. \]
-    \item After adjustment for overdispersion, we do not reject the null hypothesis of no
-          treatment effect.
+      \item $ D\gg n-p $, so we need to account for overdispersion in this model:
+            \[ \hat{\phi}=\frac{D}{n-p}=\frac{197.61}{59-4}=3.593. \]
+      \item Use $ \hat{\phi} $ to adjust the standard error estimates:
+            \[ \estseadj{\hat{\beta}_1}=\sqrt{\hat{\phi}}\estse{\hat{\beta}_1}=\sqrt{3.593}(0.0895)=0.1696. \]
+            \begin{table}[H]
+                  \centering
+                  \begin{tabular}{lcccc}
+                        Model             & Parameter   & Estimate    & $ \hat{\text{se}} $ & $ \widehat{\hat{se}}_{\text{adj}} $ \\
+                        \midrule
+                        \texttt{poisson1} & $ \beta_1 $ & $ -0.2047 $ & $ 0.0895 $          & $0.1696$                            \\
+                                          & $ \phi $    & $3.593$                                                                 \\
+                        \bottomrule
+                  \end{tabular}
+            \end{table}
+      \item In the Poisson model the treatment effect was statistically significant ($ p=0.0222 $).
+      \item Is $ \beta_1 $ statistically significant after account for the overdispersion?
+      \item Test $ \HN $: $ \beta_1=0 $ versus $ \HA $: $ \beta_1\ne 0 $ using a Wald test:
+            \[ t=\frac{\abs{\hat{\beta}_1-0}}{\estseadj{\hat{\beta}_1}}=\frac{\abs{-0.2047}}{0.1696}=1.21. \]
+            \[ p=\Prob{\abs{Z}>1.21}=0.23. \]
+      \item After adjustment for overdispersion, we do not reject the null hypothesis of no
+            treatment effect.
 \end{itemize}
 \subsection*{Mixed Poisson Model}
 \addcontentsline{toc}{subsection}{2. Mixed Model}
 \begin{itemize}
-    \item To form a Mixed Model we introduce a new random variable $ u_i $ which acts as a
-          \textcolor{Blue}{dispersion factor}. Assume:
-          \[ \E{u_i}=1\qquad \text{and}\qquad \Var{u_i}=\phi. \]
-    \item For a Poisson model let: $ Y_i\mid u_i \sim \POI{u_i,\lambda} $, so that
-          \[ f(y_i\mid u_i;\lambda)=\frac{(u_i\lambda)^{y_i}e^{-u_i\lambda}}{y_i!},\; y=0,1,2,\ldots. \]
-    \item This is called a \textcolor{Blue}{mixed Poisson model}.
-    \item The $ u_i>0 $ factor deflates ($ u_i<1 $) or inflates ($ u_i>1 $) the mean response for the $ i\textsuperscript{th} $ subject relative to $ \lambda $.
-    \item Recall we assume $ \E{u_i}=1 $ and $ \Var{u_i}=\phi $.
-    \item Find the unconditional mean and variance of $ Y_i $:
-          \begin{align*}
-              \E{Y_i}
-               & =\E[\big]{\E{Y_i\given u_i}}                    \\
-               & =\E{u_i\lambda}                                 \\
-               & =\lambda\E{u_i}                                 \\
-               & =\lambda=\text{(the population mean response)}.
-          \end{align*}
-          \begin{align*}
-              \Var{Y_i}
-               & =\Var[\big]{\E{Y_i\given u_i}}+\E[\big]{\Var{Y_i\given u_i}} \\
-               & =\Var{u_i\lambda}+\E{u_i\lambda}                             \\
-               & =\lambda^2\Var{u_i}+\lambda\E{u_i}                           \\
-               & =\lambda^2 \phi+\lambda                                      \\
-               & =\lambda(1+\lambda \phi).
-          \end{align*}
-    \item The variance is inflated by a factor of $ 1+\lambda\phi $.
-    \item Now we need to pick a distribution for $ u_i>0 $.
-    \item Assume $ u_i $ has a \textcolor{Blue}{Gamma Distribution}:
-          \[ g(u_i;\alpha,\beta)=\frac{1}{\Gamma(\alpha)\beta^\alpha}u_i^{\alpha-1}e^{-u_i/\beta}, \]
-          with $ \E{u_i}=\alpha\beta $ and $ \Var{u_i}=\alpha\beta^2 $.
-    \item With $ \E{u_i}=1 $ and $ \Var{u_i}=\phi $, this implies $ \alpha=1/\phi $ and $ \beta=\phi $.
-    \item Mixed Poisson model with Gamma distribution $ \implies $ \textcolor{Blue}{Negative Binomial distribution}.
-    \item We will derive the marginal (unconditional) likelihood.
-    \item We've assumed that $ u_i $ has a \textcolor{Blue}{Gamma Distribution}:
-          \[ g(u_i;\alpha,\beta)=\frac{1}{\Gamma(\alpha)\beta^\alpha}u_i^{\alpha-1}e^{-u_i/\beta}. \]
-    \item \textcolor{Blue}{Fact}: the probability mass function's integrate to one,
-          \[ 1=\int_{0}^{\infty}\frac{1}{\Gamma(\alpha)\beta^\alpha}u^{\alpha-1}e^{-u/\beta}\odif{u}. \]
-    \item Which implies:
-          \[ \Gamma(\alpha)\beta^\alpha=\int_{0}^{\infty}u^{\alpha-1}e^{-u\beta}\odif{u}. \]
-    \item Therefore,
-          \begin{align*}
-              p(y_i;\lambda,\phi)
-               & =\int_{0}^{\infty} f(y_i\mid u_i,\lambda) g(u_i; \phi) \odif{u}                                                                                                       \\
-               & =\int_{0}^{\infty} \frac{(u_i \lambda)^{y_i} e^{-u_i \lambda}}{y_i!}\frac{u_i^{\alpha-1} e^{-u_i / \beta}}{\Gamma(\alpha) \beta^{\alpha}} \odif{u}                    \\
-               & =\frac{\lambda^{y_i}}{y_i ! \Gamma(\alpha) \beta^{\alpha}} \int_{0}^{\infty} u_i^{y_i+\alpha-1} e^{-u_i(\lambda+1 / \beta)} \odif{u}                                  \\
-               & =\frac{\lambda^{y_i}}{y_i ! \Gamma(\alpha) \beta^{\alpha}} \Gamma(y_i+\alpha)\biggl(\frac{\beta}{1+\beta \lambda}\biggr)^{\! y_i+\alpha}                              \\
-               & =\frac{\Gamma(y_i+\alpha)}{y_i ! \Gamma(\alpha)}\biggl(\frac{\lambda \beta}{1+\lambda \beta}\biggr)^{\!y_i}\biggl(\frac{1}{1+\lambda \beta}\biggr)^{\alpha}           \\
-               & =\frac{\Gamma(y_i+\phi^{-1})}{y_{i !} \Gamma(\phi^{-1})}\biggl(\frac{\lambda \phi}{1+\lambda \phi}\biggr)^{\! y_i}\biggl(\frac{1}{1+\lambda \phi}\biggr)^{\phi^{-1}}.
-          \end{align*}
+      \item To form a Mixed Model we introduce a new random variable $ u_i $ which acts as a
+            \textcolor{Blue}{dispersion factor}. Assume:
+            \[ \E{u_i}=1\qquad \text{and}\qquad \Var{u_i}=\phi. \]
+      \item For a Poisson model let: $ Y_i\mid u_i \sim \POI{u_i\lambda} $, so that
+            \[ f(y_i\mid u_i;\lambda)=\frac{(u_i\lambda)^{y_i}e^{-u_i\lambda}}{y_i!},\; y=0,1,2,\ldots. \]
+      \item This is called a \textcolor{Blue}{mixed Poisson model}.
+      \item The $ u_i>0 $ factor deflates ($ u_i<1 $) or inflates ($ u_i>1 $) the mean response for the $ i\textsuperscript{th} $ subject relative to $ \lambda $.
+      \item Recall we assume $ \E{u_i}=1 $ and $ \Var{u_i}=\phi $.
+      \item Find the unconditional mean and variance of $ Y_i $:
+            \begin{align*}
+                  \E{Y_i}
+                   & =\E[\big]{\E{Y_i\given u_i}}                    \\
+                   & =\E{u_i\lambda}                                 \\
+                   & =\lambda\E{u_i}                                 \\
+                   & =\lambda=\text{(the population mean response)}.
+            \end{align*}
+            \begin{align*}
+                  \Var{Y_i}
+                   & =\Var[\big]{\E{Y_i\given u_i}}+\E[\big]{\Var{Y_i\given u_i}} \\
+                   & =\Var{u_i\lambda}+\E{u_i\lambda}                             \\
+                   & =\lambda^2\Var{u_i}+\lambda\E{u_i}                           \\
+                   & =\lambda^2 \phi+\lambda                                      \\
+                   & =\lambda(1+\lambda \phi).
+            \end{align*}
+      \item The variance is inflated by a factor of $ 1+\lambda\phi $.
+      \item Now we need to pick a distribution for $ u_i>0 $.
+      \item Assume $ u_i $ has a \textcolor{Blue}{Gamma Distribution}:
+            \[ g(u_i;\alpha,\beta)=\frac{1}{\Gamma(\alpha)\beta^\alpha}u_i^{\alpha-1}e^{-u_i/\beta}, \]
+            with $ \E{u_i}=\alpha\beta $ and $ \Var{u_i}=\alpha\beta^2 $.
+      \item With $ \E{u_i}=1 $ and $ \Var{u_i}=\phi $, this implies $ \alpha=1/\phi $ and $ \beta=\phi $.
+      \item Mixed Poisson model with Gamma distribution $ \implies $ \textcolor{Blue}{Negative Binomial distribution}.
+      \item We will derive the marginal (unconditional) likelihood.
+      \item We've assumed that $ u_i $ has a \textcolor{Blue}{Gamma Distribution}:
+            \[ g(u_i;\alpha,\beta)=\frac{1}{\Gamma(\alpha)\beta^\alpha}u_i^{\alpha-1}e^{-u_i/\beta}. \]
+      \item \textcolor{Blue}{Fact}: the probability mass function's integrate to one,
+            \[ 1=\int_{0}^{\infty}\frac{1}{\Gamma(\alpha)\beta^\alpha}u^{\alpha-1}e^{-u/\beta}\odif{u}. \]
+      \item Which implies:
+            \[ \Gamma(\alpha)\beta^\alpha=\int_{0}^{\infty}u^{\alpha-1}e^{-u/\beta}\odif{u}. \]
+      \item Therefore,
+            \begin{align*}
+                  p(y_i;\lambda,\phi)
+                   & =\int_{0}^{\infty} f(y_i\mid u_i,\lambda) g(u_i; \phi) \odif{u_i}                                                                                                     \\
+                   & =\int_{0}^{\infty} \frac{(u_i \lambda)^{y_i} e^{-u_i \lambda}}{y_i!}\frac{u_i^{\alpha-1} e^{-u_i / \beta}}{\Gamma(\alpha) \beta^{\alpha}} \odif{u_i}                  \\
+                   & =\frac{\lambda^{y_i}}{y_i ! \Gamma(\alpha) \beta^{\alpha}} \int_{0}^{\infty} u_i^{y_i+\alpha-1} e^{-u_i(\lambda+1 / \beta)} \odif{u_i}                                \\
+                   & =\frac{\lambda^{y_i}}{y_i ! \Gamma(\alpha) \beta^{\alpha}} \Gamma(y_i+\alpha)\biggl(\frac{\beta}{1+\beta \lambda}\biggr)^{\! y_i+\alpha}                              \\
+                   & =\frac{\Gamma(y_i+\alpha)}{y_i ! \Gamma(\alpha)}\biggl(\frac{\lambda \beta}{1+\lambda \beta}\biggr)^{\!y_i}\biggl(\frac{1}{1+\lambda \beta}\biggr)^{\alpha}           \\
+                   & =\frac{\Gamma(y_i+\phi^{-1})}{y_{i !} \Gamma(\phi^{-1})}\biggl(\frac{\lambda \phi}{1+\lambda \phi}\biggr)^{\! y_i}\biggl(\frac{1}{1+\lambda \phi}\biggr)^{\phi^{-1}}.
+            \end{align*}
 \end{itemize}
 \subsubsection*{Negative Binomial Distribution}
 \begin{itemize}
-    \item The pmf of the Negative Binomial can be written as:
-          \[ \Prob{X=x}=\frac{\Gamma(a+x)}{\Gamma(a)\Gamma(x+1)}\biggl(\frac{b}{1+b}\biggr)^{\!x}\biggl(\frac{1}{1+b}\biggr)^{a}, \]
-          with $ \E{X}=ab $, and $ \Var{X}=ab(1+b) $.
-    \item Here we have $ Y_i \sim \NB{a=1/\phi,b=\lambda\phi} $, where
-          \begin{align*}
-              \E{Y_i}   & =ab=\frac{1}{\phi}(\lambda\phi)=\lambda.                                    \\
-              \Var{Y_i} & =ab(1+b)=\frac{1}{\phi}(\lambda\phi)(1+\lambda\phi)=\lambda(1+\lambda\phi).
-          \end{align*}
-    \item Therefore, we've shown that Poisson model mixed with Gamma distribution $ \implies $ Negative Binomial distribution.
+      \item The pmf of the Negative Binomial can be written as:
+            \[ \Prob{X=x}=\frac{\Gamma(a+x)}{\Gamma(a)\Gamma(x+1)}\biggl(\frac{b}{1+b}\biggr)^{\!x}\biggl(\frac{1}{1+b}\biggr)^{a}, \]
+            with $ \E{X}=ab $, and $ \Var{X}=ab(1+b) $.
+      \item Here we have $ Y_i \sim \NB{a=1/\phi,b=\lambda\phi} $, where
+            \begin{align*}
+                  \E{Y_i}   & =ab=\frac{1}{\phi}(\lambda\phi)=\lambda.                                    \\
+                  \Var{Y_i} & =ab(1+b)=\frac{1}{\phi}(\lambda\phi)(1+\lambda\phi)=\lambda(1+\lambda\phi).
+            \end{align*}
+      \item Therefore, we've shown that Poisson model mixed with Gamma distribution $ \implies $ Negative Binomial distribution.
 \end{itemize}
 \subsubsection*{Negative Binomial Model}
 \begin{itemize}
-    \item Now consider including covariates in the model.
-    \item Assume we are using a \textcolor{Blue}{log link}:
-          \[ \log{\lambda_i}=\Vector{x}_i^\top \Vector{\beta}. \]
-    \item The likelihood for a sample of size $ n $ with $ Y_1,\ldots,Y_n $ and $ \Vector{x}_i $ a $ p\times 1 $ vector of explanatory
-          variables is:
-          \[ L(\Vector{\beta},\phi)=\prod_{i=1}^n
-              \biggl(\frac{\Gamma(y_i+\phi^{-1})}{y_i!\Gamma(\phi^{-1})}
-              \biggl(\frac{\phi e^{\Vector{x}_i^\top \Vector{\beta}}}{1+\phi e^{\Vector{x}_i^\top \Vector{\beta}}}\biggr)^{\!y_i}
-              \biggl(\frac{1}{1+\phi e^{\Vector{x}_i^\top \Vector{\beta}}}\biggr)^{\!\phi^{-1}}
-              \biggr). \]
-    \item Not a member the exponential family (unless $ \phi $ known).
-    \item Use iterative maximization in R: \texttt{glm.nb()} from \texttt{MASS} library.
-          \begin{itemize}
-              \item Maximize $ \ell(\Vector{\beta},\hat{\phi}^{(r)}) $ at the current estimate $ \hat{\phi}^{(r)}\implies \hat{\Vector{\beta}}^{(r)} $ (IRWLS).
-              \item Maximize $ \ell(\Vector{\beta},\phi) $ with respect to $ \phi\implies \hat{\phi}^{(r+1)} $.
-          \end{itemize}
+      \item Now consider including covariates in the model.
+      \item Assume we are using a \textcolor{Blue}{log link}:
+            \[ \log{\lambda_i}=\Vector{x}_i^\top \Vector{\beta}. \]
+      \item The likelihood for a sample of size $ n $ with $ Y_1,\ldots,Y_n $ and $ \Vector{x}_i $ a $ p\times 1 $ vector of explanatory
+            variables is:
+            \[ L(\Vector{\beta},\phi)=\prod_{i=1}^n
+                  \biggl(\frac{\Gamma(y_i+\phi^{-1})}{y_i!\Gamma(\phi^{-1})}
+                  \biggl(\frac{\phi e^{\Vector{x}_i^\top \Vector{\beta}}}{1+\phi e^{\Vector{x}_i^\top \Vector{\beta}}}\biggr)^{\!y_i}
+                  \biggl(\frac{1}{1+\phi e^{\Vector{x}_i^\top \Vector{\beta}}}\biggr)^{\!\phi^{-1}}
+                  \biggr). \]
+      \item Not a member the exponential family (unless $ \phi $ known).
+      \item Use iterative maximization in R: \texttt{glm.nb()} from \texttt{MASS} library.
+            \begin{itemize}
+                  \item Maximize $ \ell(\Vector{\beta},\hat{\phi}^{(r)}) $ at the current estimate $ \hat{\phi}^{(r)}\implies \hat{\Vector{\beta}}^{(r)} $ (IRWLS).
+                  \item Maximize $ \ell(\Vector{\beta}^{(r)},\phi) $ with respect to $ \phi\implies \hat{\phi}^{(r+1)} $.
+            \end{itemize}
 \end{itemize}
