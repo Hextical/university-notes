@@ -1,0 +1,485 @@
+\makeheading{Week 5}{\daterange{2021-10-04}{2021-10-08}}
+\section*{Topic 2d: Logistic Regression: Residuals \& CIs}
+\addcontentsline{toc}{section}{Topic 2d: Logistic Regression: Residuals \& Confidence Intervals}
+\begin{Regular}{Binomial GLM / Logistic Regression Model}
+      $ Y_i \sim \BIN{m_i,\pi_i} $, $ i=1,\ldots,n $ independently with explanatory variables $ \Vector{x}_i $:
+      \[ \log*{\frac{\pi_i}{1-\pi_i}}=\Vector{x}_i^\top \Vector{\beta} \]
+\end{Regular}
+\begin{itemize}
+      \item \textcolor{Blue}{Estimation}: $ \hat{\Vector{\beta}} $ come from Fisher scoring using R function \texttt{glm()}.
+      \item \textcolor{Blue}{Interpretation}: $ \beta_k $ have log OR interpretations ($ k>0 $).
+      \item Wald based \textcolor{Blue}{Hypothesis Tests} of $ \HN $: $ \beta_k=\beta_{k0} $ versus $ \HA $: $ \beta_k\ne \beta_{k0} $.
+      \item \textcolor{Blue}{Confidence Intervals}: $ \hat{\beta}_k\pm z_{1-\alpha/2}\se{\hat{\beta}_k} $ where $ \se{\hat{\beta}_k}=\sqrt{I^{kk}(\hat{\Vector{\beta}})} $.
+      \item Deviance/LR based \textcolor{Blue}{Hypothesis Tests} for nested models:
+            \begin{center}
+                  $ \HN $: $ \beta_p=\cdots=\beta_{q-1}=0 $ vs $ \HA $: at least one of $ \beta_p,\ldots,\beta_{q-1}\ne 0 $
+            \end{center}
+            using $ \Delta D=D_0-D_\text{A} \sim \chi^2_{q-p} $ under $ \HN $.
+\end{itemize}
+\subsection*{Topic 2d: Logistic Regression: Residuals \& Confidence Intervals}
+\begin{enumerate}
+      \item Residuals for Binomial Data --- \textcolor{Blue}{Deviance Residuals}:
+            \[ r_i^D=\sign{y_i-m_i\hat{\pi}_i}\sqrt{\abs{d_i}} \]
+      \item \textcolor{Green}{Neuroblastoma Example}:
+            \begin{itemize}
+                  \item Categorical explanatory variables: use of dummy variables.
+                  \item Residual plots using Deviance Residuals.
+                  \item Finding requested Odds Ratios.
+            \end{itemize}
+      \item \textcolor{Blue}{Confidence Intervals} for non-linear functions of $ \eta_i $:
+            \begin{itemize}
+                  \item How to get a CI for $ \exp{\beta_2-\beta_1} $ or $ \pi_i=\expit{\Vector{x}_i^\top \Vector{\beta}} $.
+            \end{itemize}
+\end{enumerate}
+\subsection*{Residuals for Normal Linear Regression Models}
+\addcontentsline{toc}{subsection}{Residuals for Normal Linear Regression Models}
+\begin{itemize}
+      \item The \textcolor{Blue}{raw residuals} were:
+            \[ r_i=y_i-\hat{\mu}_i \]
+      \item The \textcolor{Blue}{standardized residuals} were:
+            \[ d_i=\frac{(y_i-\hat{\mu}_i)}{\hat{\sigma}\sqrt{1-h_{ii}}}\sim t_{n-p}\to \N{0,1}  \]
+      \item The overall fit of the model and appropriateness of its underlying assumptions can
+            be assessed using various types of \textcolor{Blue}{Residual Plots}. For example:
+            \begin{itemize}
+                  \item Residuals versus covariate $ x_j $ (checks linearity assumption).
+                  \item Residuals versus fitted values $ \hat{\mu}_i $ (check normality and constant variance).
+                  \item Normal QQ (quantile-quantile) plots of residuals (checks normality).
+            \end{itemize}
+\end{itemize}
+\subsection*{2.7 Residuals for Binomial Data --- Deviance Residuals}
+\begin{itemize}
+      \item Recall the \textcolor{Blue}{LR/Deviance} test statistic:
+            \begin{align*}
+                  D
+                   & =2\Biggl[\sum_{i=1}^{n} \Biggl(y_i\log*{\frac{y_i}{m_i\hat{\pi}_i}}+(m_i-y_i)\log*{\frac{m_i-y_i}{m_i(1-\hat{\pi}_i)}}\Biggr)\Biggr] \\
+                   & =\sum_{i=1}^{n} d_i
+            \end{align*}
+      \item Define the \textcolor{Red}{Deviance Residuals} to be:
+            \[ r_i^D=\sign{y_i-m_i\hat{\pi}_i}\sqrt{\abs{d_i}} \]
+      \item Under $ \HN $: the model is adequate,
+            \[ \sum_{i=1}^{n} d_i \sim \chi^2_{n-p}\implies r_i^D \sim \N{0,1} \]
+      \item Use the plots of the deviance residuals to assess whether the $ r_i^D $ looks like independent $ \N{0,1} $ observations.
+\end{itemize}
+\subsection*{Residuals for Binomial Data --- Pearson Residuals}
+\begin{itemize}
+      \item Define the \textcolor{Red}{Pearson Residuals} to be:
+            \[ \textcolor{Blue}{r_i^P=\frac{y_i-m_i\hat{\pi}_i}{\sqrt{m_i\hat{\pi}_i(1-\hat{\pi}_i)}}} \]
+      \item Under $ \HN $: the model is adequate,
+            $ r_i^P \sim \N{0,1} $.
+      \item Note: if $ m_i\hat{\pi}_i<5 $ for one or more $ i $, we should be concerned about the validity of
+            the approximation ($ \chi^2 $ or $ \N{0,1} $) and hence your conclusions (the same holds for $ m_i(1-\hat{\pi}_i) $).
+\end{itemize}
+\subsection*{2.8 Estimation of Prognosis for Children with Neuroblastoma}
+\addcontentsline{toc}{subsection}{Neuroblastoma Example}
+\begin{Example}{}
+      \textbf{Purpose of Study}: To investigate the relationship between the probability of surviving
+      2 years free of disease following diagnosis and treatment for neuroblastoma, and age at
+      diagnosis and stage of disease at diagnosis.
+      \begin{center}
+            \begin{NiceTabular}{cccccc}
+                  \toprule
+                  &\multicolumn{5}{c}{Stage}\\
+                  \midrule
+                  Age (months) & I & II & III & IV & V\\
+                  \midrule
+                  0-11 & $ 11/12 $ & $ 15/16 $ & $ 2/4 $ & $ 5/18 $ & $ 18/19 $\\
+                  12-23 & $ 3/4 $ & $ 3/7 $ & $ 5/8 $ & $ 0/25 $ & $ 1/3 $\\
+                  24+ & $ 4/5 $ & $ 4/12 $ & $ 3/15 $ & $ 3/93 $ & $ 2/5 $\\
+                  \bottomrule
+            \end{NiceTabular}
+      \end{center}
+      Cell entries are of the form $y/m$ with $y$ representing the number of patients surviving 2
+      years, and $m$ representing the number of patients in that age-stage combination at the
+      start of the study.
+\end{Example}
+As an initial look at the data, consider the marginal distributions.
+\begin{table}[!htbp]
+      \centering
+      \begin{NiceTabular}{cccccc|c}
+            \toprule
+            &\multicolumn{5}{c}{Stage}\\
+            \midrule
+            Age (months) & I & II & III & IV & V & Total\\
+            \midrule
+            0-11 & $ 11/12 $ & $ 15/16 $ & $ 2/4 $ & $ 5/18 $ & $ 18/19 $ & $ 51/69 $\\
+            12-23 & $ 3/4 $ & $ 3/7 $ & $ 5/8 $ & $ 0/25 $ & $ 1/3 $ & $ 12/47 $\\
+            24+ & $ 4/5 $ & $ 4/12 $ & $ 3/15 $ & $ 3/93 $ & $ 2/5 $ & $ 16/130 $\\
+            \midrule
+            Total & $ 18/21 $ & $ 22/35 $ & $ 10/27 $ & $ 8/136 $ & $ 21/27 $ & $ 79/246 $\\
+            \bottomrule
+      \end{NiceTabular}
+\end{table}
+\subsection*{Setting up the Regression Models}
+\begin{itemize}
+      \item \textcolor{Blue}{Outcome}: Let $Y_i$ be the number of children in group $i$ who survived 2 years out of
+            $m_i$ total children in group $i$. Assume $ Y_i \sim \BIN{m_i,\pi_i} $ independently $ i=1,\ldots,15 $.
+      \item \textcolor{Blue}{Explanatory variables}: Use dummy variables to represent Age and Stage levels:
+            \[ \begin{array}{lll}
+                        x_{i1}  = \begin{cases*}
+                                        1 & if age 12-23 months \\
+                                        0 & o.w.
+                                  \end{cases*} &
+                        x_{i2}  = \begin{cases*}
+                                        1 & if age 24+ months \\
+                                        0 & o.w.
+                                  \end{cases*}   &
+                        x_{i3} = \begin{cases*}
+                                       1 & stage II \\
+                                       0 & o.w.
+                                 \end{cases*}            \\
+                        x_{i4}  = \begin{cases*}
+                                        1 & if stage III \\
+                                        0 & o.w.
+                                  \end{cases*}   &
+                        x_{i5}  = \begin{cases*}
+                                        1 & if stage IV \\
+                                        0 & o.w.
+                                  \end{cases*}   &
+                        x_{i6}  = \begin{cases*}
+                                        1 & if stage V \\
+                                        0 & o.w.
+                                  \end{cases*}
+                  \end{array} \]
+      \item Now consider the models:
+            \begin{enumerate}[1.]
+                  \item \textcolor{Green}{Age \& Stage}:
+                        \[ \logit{\pi_i}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6} \]
+                  \item \textcolor{Green}{Age only}:
+                        \[ \logit{\pi_i}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2} \]
+                  \item \textcolor{Green}{Stage only}:
+                        \[ \logit{\pi_i}=\beta_0+\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6} \]
+            \end{enumerate}
+\end{itemize}
+\subsection*{R Data and Code}
+\begin{Example}{Data file \texttt{neuro.dat}}
+      <<echo=FALSE>>=
+      neuro.dat = read.table("neuro.dat", header = T)
+      neuro.dat
+      @
+\end{Example}
+\begin{itemize}
+      \item First line contains the variable labels.
+      \item $ 15 $ observations.
+      \item Recall \textbf{age} and \textbf{stage} are categorical (ordinal) variables, so we will have to compute the indicator variables in the R program.
+\end{itemize}
+% \begin{noindent}
+    <<results = 'hide'>>=
+    # Read in the Neuroblastoma dataset
+    neuro.dat = read.table("neuro.dat", header = T)
+
+    # here we create indicator variables for age and stage
+    neuro.dat$agef = factor(neuro.dat$age)
+    neuro.dat$stagef = factor(neuro.dat$stage)
+
+    # here we construct the response variable for logistic regression: (y, m-y)
+    neuro.dat$resp = cbind(neuro.dat$y, neuro.dat$m-neuro.dat$y)
+    neuro.dat
+
+    # here we fit the model with age and stage and print out summary statistics
+    model1 = glm(resp ~ agef + stagef, family=binomial(link=logit), data=neuro.dat)
+    summary(model1)
+    summary(model1,corr=T)$correlation
+
+    # record deviance residuals (rd1), linear predcitor (lp1), and fitted values (fv1)
+    rd1 = residuals.glm(model1,"deviance")
+    lp1 = model1$linear.predictors
+    fv1 = model1$fitted.values
+
+    # here we compute the Pearson residual as an exercise
+    rp1 = (neuro.dat$y - neuro.dat$m*fv1)/sqrt(neuro.dat$m*fv1*(1-fv1))
+
+    # here we verify that the fitted values agree with what we expect from the linear predictor
+    fv2 = exp(lp1)/(1+exp(lp1))
+
+    cbind(rd1,rp1,lp1,fv1,fv2)
+
+    # plotting the deviance and Pearson residuals
+    pdf("neuro-residual.pdf",height=6,width=8)
+    plot(fv1,rd1,ylim=c(-3,3), xlab="FITTED VALUES",ylab="RESIDUALS",pch=1)
+    points(fv1,rp1,pch=2)
+    abline(h=-2, lty=2)
+    abline(h= 2, lty=2)
+    legend(0,3,c("Deviance Residual","Pearson Residual"), pch=c(1,2), bty="n")
+    dev.off
+
+    # here we fit two reduced models to enable us to test the importance of age and stage
+    model2 = glm(resp ~ agef, family=binomial(link=logit), data=neuro.dat)
+    summary(model2)
+    model3 = glm(resp ~ stagef, family=binomial(link=logit), data=neuro.dat)
+    summary(model3)
+    @
+% \end{noindent}
+\subsection*{Selected R Output}
+The final data object \texttt{neuro.dat} is given by:
+% \begin{noindent}
+    <<>>=
+    neuro.dat
+    @
+% \end{noindent}
+Here is the summary of model 1 including both \textcolor{Green}{Age \& Stage}:
+\[ \logit{\pi_i}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6} \]
+% \begin{noindent}
+    <<>>=
+    model1 = glm(resp ~ agef + stagef, family=binomial(link=logit), data=neuro.dat)
+    summary(model1)
+    @
+% \end{noindent}
+Before interpreting these results too much, we should look to see how good the fit is to
+the data.
+% \begin{noindent}
+    <<>>=
+    rd1 = residuals.glm(model1,"deviance")
+    rp1 = (neuro.dat$y - neuro.dat$m*fv1)/sqrt(neuro.dat$m*fv1*(1-fv1))
+    lp1 = model1$linear.predictors
+    fv1 = model1$fitted.values
+    fv2 = exp(lp1)/(1+exp(lp1))
+    cbind(rd1,rp1,lp1,fv1,fv2)
+    @
+% \end{noindent}
+% \begin{noindent}
+    <<echo=FALSE, fig.cap ="Plot of Residuals by Fitted Values for Neuroblastoma Model with Age and Stage">>=
+    plot(fv1,rd1,ylim=c(-3,3), xlab="FITTED VALUES",ylab="RESIDUALS",pch=1)
+    points(fv1,rp1,pch=2)
+    abline(h=-2, lty=2)
+    abline(h= 2, lty=2)
+    legend(0,3,c("Deviance Residual","Pearson Residual"), pch=c(1,2), bty="n")
+    @
+% \end{noindent}
+Now we consider simplifying the model further by examining the decrease in the quality
+of the fit that results from dropping the stage variable(s).
+\[ \logit{\pi_i}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2} \]
+% \begin{noindent}
+    <<>>=
+    model2 = glm(resp ~ agef, family=binomial(link=logit), data=neuro.dat)
+    summary(model2)
+    @
+% \end{noindent}
+Now we fit the model excluding the age variable to examine the drop in the quality of
+fit from model one (with age and stage).
+\[ \logit{\pi_i}=\beta_0+\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6} \]
+% \begin{noindent}
+    <<>>=
+    model3 = glm(resp ~ stagef, family=binomial(link=logit), data=neuro.dat)
+    summary(model3)
+    @
+% \end{noindent}
+\subsection*{Testing Nested Models}
+Now we can consider testing nested models using \textcolor{Blue}{Deviance/Likelihood Ratio Tests}.
+\begin{table}[!htbp]
+      \centering
+      \begin{NiceTabular}{cllcc}
+            \toprule
+            \textcolor{Blue}{Model} & \textcolor{Blue}{Factors In Model} & \textcolor{Blue}{Deviance} & $ \textcolor{Blue}{p} $ & $ \textcolor{Blue}{n-p} $\\
+            \midrule
+            1 & Age + Stage & $9.625$ & $ 7 $ & $ 8 $\\
+            2 & Age & $83.583$ & $ 3 $ & $ 12 $\\
+            3 & Stage & $42.446$ & $ 5 $ & $ 10 $\\
+            4 & Intercept only & $162.832$ & $ 1 $ & $14 $\\
+            \bottomrule
+      \end{NiceTabular}
+\end{table}
+Recall:
+\begin{align*}
+      \Delta D
+       & =D_0-D_\text{A}                                                                      \\
+       & =-2\bigl(\ell(\hat{\Vector{\pi}})-\ell(\tilde{\Vector{\pi}})\bigr) \sim \chi^2_{q-p}
+\end{align*}
+where $ \hat{\Vector{\pi}} $ represents the MLEs from the \textcolor{Blue}{reduced (nested)} model and $ \tilde{\Vector{\pi}} $ are the MLEs from the \textcolor{Blue}{full} model.
+\begin{Example}{}
+      Task \#1: Pick the model that best represents the important associations between the
+      outcome and explanatory variables.
+\end{Example}
+\begin{enumerate}[1.]
+      \item \textcolor{Blue}{Is Stage important?}
+            \begin{align*}
+                  \HN & \colon \beta_3=\beta_4=\beta_5=\beta_6=0                                                      &  & \text{(Model 2 is adequate vs Model 1)} \\
+                  \HA & \colon \beta_3\ne 0 \text{ or } \beta_4\ne 0 \text{ or } \beta_5\ne 0 \text{ or }\beta_6\ne 0 &  & \text{(Model 2 is not adequate)}
+            \end{align*}
+            \[ \Delta D=D_2-D_1=83.583-9.625=73.958 \]
+            \[ p=\Prob{\chi^2_{7-3}>73.958}<0.001 \]
+            % \begin{noindent}
+            <<>>=
+            1-pchisq(model2$deviance-model1$deviance, model2$df.residual-model1$df.residual)
+            @
+          % \end{noindent}
+            Therefore we reject the null hypothesis that stage is unimportant.
+      \item \textcolor{Blue}{Is Age important?}
+            \begin{align*}
+                  \HN & \colon \beta_1=\beta_2=0                     &  & \text{(Model 3 is adequate vs Model 1)} \\
+                  \HA & \colon \beta_1\ne 0 \text{ or } \beta_2\ne 0 &  & \text{(Model 3 is not adequate)}
+            \end{align*}
+            \[ \Delta D=D_3-D_1=42.446 - 9.625 = 32.821 \]
+            \[ p=\Prob{\chi^2_{7-5}>32.821}<0.001 \]
+            % \begin{noindent}
+            <<>>=
+            1-pchisq(model3$deviance-model1$deviance, model3$df.residual-model1$df.residual)
+            @
+          % \end{noindent}
+            Therefore we reject the null hypothesis that age is unimportant.
+      \item \textcolor{Blue}{Do we need an Age$*$Stage interaction?}
+            % \begin{noindent}
+            <<>>=
+            1-pchisq(model1$deviance, model1$df.residual)
+            @
+          % \end{noindent}
+\end{enumerate}
+So we select \textcolor{Blue}{Model 1} for interpretation. Here’s the fitted R \texttt{summary()} again for
+reference.
+\[ \logit{\pi_i}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6} \]
+% \begin{noindent}
+    <<>>=
+    model1 = glm(resp ~ agef + stagef, family=binomial(link=logit), data=neuro.dat)
+    summary(model1)
+    @
+% \end{noindent}
+\subsection*{Model Interpretation}
+\begin{Example}{}
+      Task \#2: Interpret the selected model through estimated ORs.
+\end{Example}
+\begin{enumerate}[A.]
+      \item \textcolor{Blue}{What is the odds ratio of surviving two years for a patient with disease in stage IV versus stage I?}
+            \begin{table}[!htbp]
+                  \centering
+                  \begin{NiceTabular}{cccc}
+                        Age & Stage & $ (1,x_{i1},x_{i2},x_{i3},x_{i4},x_{i5},x_{i6})^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $\\
+                        \midrule
+                        NA & IV & $ (1,x_{i1},x_{i2},0,0,1,0)^\top $ & $ \beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_5 $\\
+                        NA & I & $ (1,x_{i1},x_{i2},0,0,0,0)^\top $ & $ \beta_0+\beta_1x_{i1}+\beta_2x_{i2} $\\
+                        \bottomrule
+                  \end{NiceTabular}
+            \end{table}
+            \[ \widehat{\text{OR}}=\exp{\hat{\beta}_5}=\exp{-4.368}=0.013 \]
+            When controlling for age, the odds of surviving two years among those diagnosed
+            in state IV is $0.013$ times the odds among subjects diagnosed in stage I.
+      \item \textcolor{Blue}{What is the odds ratio of surviving for a patient aged 24+ months versus 12-23 months?}
+            \begin{table}[!htbp]
+                  \centering
+                  \begin{NiceTabular}{cccc}
+                        Age & Stage & $ (1,x_{i1},x_{i2},x_{i3},x_{i4},x_{i5},x_{i6})^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $\\
+                        \midrule
+                        24+ & NA & $ (1,0,1,x_{i3},x_{i4},x_{i5},x_{i6})^\top $ & $ \beta_0+\beta_2+\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6} $\\
+                        12-23 & NA & $ (1,1,0,x_{i3},x_{i4},x_{i5},x_{i6})^\top $ & $ \beta_0+\beta_1+\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6}$\\
+                        \bottomrule
+                  \end{NiceTabular}
+            \end{table}
+            \[ \widehat{\text{OR}}=\exp{\hat{\beta}_2-\hat{\beta}_1}=\exp[\big]{-2.613-(-2.118)}=0.61 \]
+            When controlling for stage, the odds of surviving two years among those diagnosed at
+            24+ months of age is $0.61$ times the odds of surviving two years among subjects
+            diagnosed at 12-23 months of age.
+\end{enumerate}
+\subsection*{Constructing Confidence Intervals}
+\begin{Example}{}
+      Task \#3: Get Confidence Intervals for our estimated ORs.
+\end{Example}
+\begin{enumerate}[A.]
+      \item $ \text{OR}=\exp{\beta_5} $, so we can use a Wald-based CI,
+            \[ \exp[\big]{\hat{\beta}_5\pm 1.96\se{\hat{\beta}_5}}=\exp[\big]{-4.368\pm 1.96(0.7902)}=(0.003,0.060) \]
+      \item What about a CI for $ \text{OR}=\exp{\beta_2-\beta_1} $?
+            \begin{itemize}
+                  \item In order to calculate a CI we need to obtain $ \se{\hat{\beta}_2-\hat{\beta}_1} $.
+                  \item This is not directly available from R \texttt{summary()}.
+                        \begin{align*}
+                              \Var{aX+bY}                       & =a^2\Var{X}+b^2\Var{Y}+2ab\Cov{X,Y}                                         \\
+                              \Var{\hat{\beta}_2-\hat{\beta}_1} & =\Var{\hat{\beta}_2}+\Var{\hat{\beta}_1}-2\Cov{\hat{\beta}_2,\hat{\beta}_1}
+                        \end{align*}
+                  \item The covariance matrix ($ \Matrix{I}^{-1} $) is available from \texttt{summary(model1)\$cov.unscaled}.
+            \end{itemize}
+\end{enumerate}
+\subsection*{2.9 Confidence Intervals for non-linear functions of $ \eta_i $}
+\addcontentsline{toc}{subsection}{Confidence Intervals for non-linear functions of \texorpdfstring{$ \eta_i $}{ηi}}
+Recall that since $ \hat{\Vector{\beta}} $ is an MLE, $ \textcolor{Blue}{\hat{\Vector{\beta}} \sim \MVN[\big]{\beta,\Matrix{I}^{-1}(\hat{\Vector{\beta}})}} $ approximately. This means that:
+\[ \Vector{x}_i^\top \hat{\Vector{\beta}}\sim \N[\big]{\Vector{x}_i^\top \Vector{\beta},\Vector{x}_i^\top \Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{x}_i} \]
+and
+\[ \frac{\Vector{x}_i^\top \hat{\Vector{\beta}}-\Vector{x}_i^\top \Vector{\beta}}{\sqrt{\Vector{x}_i^\top \Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{x}_i}} \sim \N{0,1}  \]
+\begin{Regular}{}
+      \begin{enumerate}[1.]
+            \item An approximate \qty{95}{\percent} CI for $ \eta_i=\Vector{x}_i^\top \Vector{\beta} $ is then given by:
+                  \[ \Vector{x}_i^\top \hat{\Vector{\beta}}\pm 1.96\sqrt{\Vector{x}_i^\top \Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{x}_i}=(\hat{\eta}_\text{L},\hat{\eta}_\text{U}) \]
+            \item If the OR of interest is expressed as $ \exp{\Vector{c}^\top \Vector{\beta}} $ where $ \Vector{c} $ is a column vector defining
+                  the contrast of the regression coefficients, then an approximate \qty{95}{\percent} CI for this OR is:
+                  \[ \exp*{\Vector{c}^\top\hat{\Vector{\beta}}\pm 1.96\sqrt{\Vector{c}^\top\Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{c}}} \]
+            \item An approximate \qty{95}{\percent} CI for $ \pi_i=\exp{\Vector{x}_i^\top \Vector{\beta}}/\bigl(1+\exp{\Vector{x}_i^\top \Vector{\beta}}\bigr)=\expit{\Vector{x}_i^\top \Vector{\beta}}. $ is:
+                  \[ \Bigl(\expit{\hat{\eta}_\text{L}},\expit{\hat{\eta}_\text{U}}\Bigr). \]
+      \end{enumerate}
+\end{Regular}
+\subsection*{Back to the Neuroblastoma Example}
+\begin{enumerate}[B.]
+      \item Find a confidence interval for $ \text{OR}=\exp{\beta_2-\beta_1} $.
+            \begin{itemize}
+                  \item The vector defining the contrast of interest is $ \Vector{c}=(0,-1,1,0,0,0,0)^\top $:
+                        \[ \Vector{c}^\top \hat{\Vector{\beta}}=\begin{bmatrix}
+                                    0 & -1 & 1 & 0 & 0 & 0 & 0
+                              \end{bmatrix}\begin{bmatrix}
+                                    \hat{\beta}_0 \\
+                                    \hat{\beta}_1 \\
+                                    \vdots        \\
+                                    \hat{\beta}_6
+                              \end{bmatrix}=\hat{\beta}_2-\hat{\beta}_1 \]
+                        \begin{align*}
+                              \Vector{c}^\top \Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{c} & =\begin{bmatrix}
+                                                                                                       0 & -1 & 1 & 0 & 0 & 0 & 0
+                                                                                                 \end{bmatrix}\begin{bmatrix}
+                                                                                                                    I^{00}     & I^{01}     & I^{02}     & \cdots & I^{0(p-1)}     \\
+                                                                                                                    I^{10}     & I^{11}     & I^{12}     & \cdots & I^{1(p-1)}     \\
+                                                                                                                    I^{21}     & I^{21}     & I^{22}     & \cdots & I^{2(p-1)}     \\
+                                                                                                                    \vdots     & \vdots     & \vdots     & \ddots & \vdots         \\
+                                                                                                                    I^{(p-1)1} & I^{(p-1)1} & I^{(p-1)2} & \cdots & I^{(p-1)(p-1)}
+                                                                                                              \end{bmatrix}\begin{bmatrix}
+                                                                                                                                 0  \\
+                                                                                                                                 -1 \\
+                                                                                                                                 1  \\
+                                                                                                                                 0  \\
+                                                                                                                                 0  \\
+                                                                                                                                 0  \\
+                                                                                                                                 0
+                                                                                                                           \end{bmatrix} \\
+                                                                                              & =I^{11} + I^{22} - I^{12} - I^{21}                                           \\
+                                                                                              & =\Var{\hat{\beta}_2}+\Var{\hat{\beta}_1}-2\Cov{\hat{\beta}_2,\hat{\beta}_1}
+                        \end{align*}
+                  \item The program used to compute the variance is as follows:
+                        % \begin{noindent}
+                <<results = 'hide'>>=
+                # use the summary.glm function and store the result in the tmp object
+                tmp = summary.glm(model1)
+
+                # examine the contents of the tmp objects and store the covariance matrix in v
+                names(tmp)
+                v = tmp$cov.unscaled
+                v
+                
+                # create x vector to get contrast of regression coefficients
+                x=c(0,-1,1,0,0,0,0)
+                x=as.matrix(x,7,1)
+                dim(x)
+
+                # compute the variance estimate of difference in estimates for age parameters
+                t(x) %*% v %*% x
+                @
+                % \end{noindent}
+                  \item The resulting output is as follows.
+                        <<>>=
+                        # use the summary.glm function and store the result in the tmp object
+                        tmp = summary.glm(model1)
+
+                        # examine the contents of the tmp objects and store the covariance matrix in v
+                        names(tmp)
+                        v = tmp$cov.unscaled
+                        v
+                        x=c(0,-1,1,0,0,0,0)
+                        x=as.matrix(x,7,1)
+                        dim(x)
+
+                        # compute the variance estimate of difference in estimates for age parameters
+                        t(x) %*% v %*% x
+                        @
+                        % \end{noindent}
+                  \item We previously found that:
+                        \[ \widehat{\text{OR}}=\exp{\hat{\beta}_2-\hat{\beta}_1}=\exp[\big]{-2.613-(-2.118)}=0.61 \]
+                  \item From the new R output, we have calculated:
+                        \[ \estVar{\hat{\beta}_2-\hat{\beta}_1}=0.2649 \]
+                  \item An approximate \qty{95}{\percent} CI for $ \beta_2-\beta_1 $ is therefore:
+                        \[ -0.495\pm 1.96\sqrt{0.2649}=(-1.504,0.514) \]
+                  \item The corresponding interval for the odds ratio is:
+                        \[ \exp[\big]{(-1.504,0.514)}=(0.22,1.67) \]
+            \end{itemize}
+\end{enumerate}

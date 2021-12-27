@@ -1,172 +1,300 @@
-\chapter{Likelihoods for Generalized Linear Models}
-\section*{Topic 2a: Formulation of Generalized Linear Models}
-\addcontentsline{toc}{section}{Topic 2a: Formulation of Generalized Linear Models}
-\subsection*{The Exponential Family}
-\begin{Regular}{Definition (Exponential Family)}
-      Consider a random variable $ Y $ with probability density (or mass) function $ f(y;\theta,\phi) $,
-      we say that the distribution is a member of the \textcolor{Red}{exponential family} if we can write
-      \[ f(y;\theta,\phi)=\exp*{\frac{y\theta-b(\theta)}{a(\phi)}+c(y;\phi)}, \]
-      for some functions $ a(\:\cdot\:) $, $ b(\:\cdot\:) $, and $ c(\:\cdot\:) $.
-      \begin{itemize}
-            \item The parameter $ \theta $ is called the \textcolor{Red}{canonical} parameter, and it is unknown.
-            \item The parameter $ \phi $ is called the \textcolor{Red}{scale/dispersion} parameter, is constant, and assumed to be known.
-      \end{itemize}
-\end{Regular}
-Many well known distributions (continuous/discrete) can be shown to be a
-member of the exponential family.
-\subsection*{Examples}
+\section*{Topic 2a: Binary Data: Estimation of the Odds Ratio}
+\addcontentsline{toc}{section}{Topic 2a: Binary Data: Estimation of the Odds Ratio}
+\begin{enumerate}[1.]
+    \item Definition of the Odds Ratio as a measure of association.
+    \item Likelihood based estimation of the Odds Ratio.
+    \item Inference for the Odds Ratio (Wald based confidence interval).
+    \item Example: Prenatal Care.
+\end{enumerate}
+\subsection*{2.1 Introduction to the Analysis of Binary Data}
+\addcontentsline{toc}{subsection}{Odds Ratios}
 \begin{itemize}
-      \item Poisson Distribution: $ Y \sim \POI{\lambda} $,
-            \[ f(y;\lambda)=\frac{\lambda^y \mathrm{e}^{-\lambda}}{y!},\; \lambda>0,\, y=0,1,\ldots.  \]
-            Show that Poisson is a member of exponential family and identify the canonical
-            parameter and the functions $ a(\:\cdot\:) $, $ b(\:\cdot\:) $, and $ c(\:\cdot\:) $.
-
-            \textbf{Solution.} $ f(y;\lambda)=\exp[\big]{\log{f(y;\lambda)}}=\exp*{\frac{y\log{\lambda}-\lambda}{1} -\log{y!}} $. Therefore,
-            \begin{align*}
-                  \theta    & =\log{\lambda}\qquad\text{(canonical/natural parameter)}, \\
-                  b(\theta) & =\lambda=\mathrm{e}^{\theta},                             \\
-                  \phi      & =1,                                                       \\
-                  a(\phi)   & =1,                                                       \\
-                  c(y;\phi) & =-\log{y!}.
-            \end{align*}
-      \item Normal Distribution: $ Y \sim \N{\mu,\sigma^2} $ and $ \sigma^2 $ known,
-            \[ f(y;\theta,\phi)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp*{-\frac{(y-\mu)^2}{2\sigma^2}}. \]
-            Show that this Normal distribution is a member of the exponential family.
-
-            \textbf{Solution.}
-            \begin{align*}
-                  f(y;\mu,\sigma^2)
-                   & =\exp*{-\frac{y^2-2\mu y+\mu^2}{\sigma^2}-\frac{1}{2} \log{2\pi\sigma^2}}                   \\
-                   & =\exp*{\frac{y\mu-\mu^2/2}{\sigma^2}-\frac{y^2}{2\sigma^2}-\frac{1}{2} \log{2\pi\sigma^2}}.
-            \end{align*}
-            Therefore,
-            \begin{align*}
-                  \theta    & =\mu,                                                   \\
-                  \phi      & =\sigma^2,                                              \\
-                  a(\phi)   & =\phi=\sigma^2,                                         \\
-                  b(\theta) & =\frac{\mu^2}{2}=\frac{\theta^2}{2},                    \\
-                  c(y;\phi) & =-\frac{y^2}{2\sigma^2}-\frac{1}{2} \log{2\pi\sigma^2}.
-            \end{align*}
+    \item \textcolor{Blue}{Outcome/Response}: Binary (yes/no, diseased/healthy).
+    \item \textcolor{Blue}{Explanatory Variable}: Binary (yes/no, treatment/control).
+    \item Use a $ 2\times 2 $ table to summarize the data:
+          \begin{table}[!htbp]
+              \centering
+              \begin{NiceTabular}{l|cc|c}
+                  & \multicolumn{2}{c}{\emph{Disease}}                                                 \\
+                  & Present                            & Absent                                        \\
+                  \midrule
+                  Treatment & $ y_1 $                            & $ m_1-y_1 $                 & $ m_1 $         \\
+                  Control   & $ y_2 $                            & $ m_2-y_2 $                 & $ m_2 $         \\
+                  \midrule
+                  & $ y_{\bullet} $                    & $ m_{\bullet}-y_{\bullet} $ & $ m_{\bullet} $
+              \end{NiceTabular}
+          \end{table}
+    \item Treat $ m_1 $ and $ m_2 $ as fixed.
+    \item Assume $ Y_k $ are independent binomial random variables:
+          \[ \textcolor{Blue}{Y_k \sim \BIN{m_k,\pi_k}\qquad\text{where $0<\pi_k<1$ for $k=1,2$}} \]
+    \item $ \pi_k=\Prob*{\text{response}\given \text{group $k$}} $.
 \end{itemize}
-\subsection*{Properties of Exponential Family}
-Consider a single observation $y$ from the exponential family.
+\subsection*{Definition: Odds}
+How do we measure the association between treatment and response?
+\begin{Regular}{Definition}
+    The \textcolor{Blue}{Odds} is the ratio of the probability
+    that an event occurs ($ \pi $) to the
+    probability that it does not occur:
+    \[ \text{Odds}=\frac{\pi}{1-\pi} \]
+\end{Regular}
+The odds is a one-to-one monotonically increasing function of $ \pi $ which takes on values on the
+non-negative real line.
+\subsection*{Measures of Association}
+\begin{Regular}{Definition}
+    The \textcolor{Blue}{Odds Ratio} is the ratio of the odds of an event occurring in one group to the odds
+    of the event occurring in another group:
+    \[ \text{Odds Ratio}=\psi=\frac{\pi_1/(1-\pi_2)}{\pi_2/(1-\pi_2)} \]
+\end{Regular}
+\begin{Regular}{Definition}
+    The \textcolor{Blue}{Relative Risk} is the ratio of the probability of an event occurring in one group
+    versus another group:
+    \[ \text{Relative Risk}=\frac{\pi_1}{\pi_2} \]
+\end{Regular}
+\begin{itemize}
+    \item In the case of a rare disease (i.e., when $ \pi_1 $ and $ \pi_2 $ are very small), then:
+          \[ \text{OR}\approx \text{RR} \]
+    \item This can be seen by noting that:
+          \[ \text{OR}=\psi=\frac{\pi_1/(1-\pi_2)}{\pi_2/(1-\pi_2)}=\frac{\pi_1}{\pi_2} \underbracket{\biggl(\frac{1-\pi_2}{1-\pi_1}\biggr)}_{\approx 1}\approx \frac{\pi_1}{\pi_2} \approx \text{RR}  \]
+    \item \textcolor{Blue}{Interpretation of OR}:
+          \[ \begin{array}{lcl}
+                  \pi_1=\pi_2  \implies & \text{OR}=1   & \implies  \text{equal risk}             \\
+                  \pi_1>\pi_2  \implies & \text{OR}>1   & \implies  \text{higher risk in group 1} \\
+                  \pi_1<\pi_2  \implies & 0<\text{OR}<1 & \implies  \text{higher risk in group 2}
+              \end{array} \]
+\end{itemize}
+\subsection*{Odds Ratio Example Calculations}
+\begin{Example}{}
+    \begin{itemize}
+        \item $ \pi_1=0.50 $, $ \pi_2=0.25 $, so $ \text{RR}=0.50/0.25=2 $ and $ \text{OR}=\bigl(0.50/0.50\bigr)/\bigl(0.25/0.75\bigr)=3 $.
+        \item $ \pi_1=0.10 $, $ \pi_2=0.05 $, so $ \text{RR}=0.10/0.05=2 $ and $ \text{OR}=\bigl(0.10/0.90\bigr)/\bigl(0.05/0.95\bigr)=2.11 $.
+        \item  $ \pi_1=0.25 $, $ \pi_2=0.10 $, so $ \text{RR}=0.25/0.10=2.5 $ and $ \text{OR}=\bigl(0.25/0.75\bigr)/\bigl(0.10/0.90\bigr)=3 $.
+    \end{itemize}
+\end{Example}
+\subsection*{2.2 (Likelihood Based) Estimation of the Odds Ratio}
+\addcontentsline{toc}{subsection}{Estimation of the Odds Ratio}
+\begin{itemize}
+    \item \textcolor{Blue}{Goal}: Use Likelihood Theory to estimate $ \text{OR}=\psi=\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)} $.
+    \item Assumption: \textcolor{Blue}{$ Y_k \sim \BIN{m_k,\pi_k} $, $ k=1,2 $} independently.
+\end{itemize}
 \begin{align*}
-      L(\theta,\phi;y)    & =f(y;\theta,\phi)=\exp*{\frac{y\theta-b(\theta)}{a(\phi)}+c(y;\phi)}.      \\
-      \ell(\theta,\phi;y) & =\log[\big]{f(y;\theta,\phi)}=\frac{y\theta-b(\theta)}{a(\phi)}+c(y;\phi). \\
-      S(\theta)           & =\pdv{\ell}{\theta}=\frac{y-b^\prime(\theta)}{a(\phi)}.                    \\
-      I(\theta)           & =-\pdv[order=2]{\ell}{\theta}=\frac{b^{\prime\prime}(\theta)}{a(\phi)}.    \\
-      \mathcal{I}(\theta) & =\E*{-\pdv[order=2]{\ell}{\theta}}=I(\theta).
+    \mathcal{L}(\pi_1,\pi_2)
+     & =\Prob*{Y_1=y_1,Y_2=y_2\given \pi_1,\pi_2}                                                                                                                                                                  \\
+     & =\Prob*{Y_1=y_1\given \pi_1}\Prob*{Y_2=y_2\given \pi_2}                                                                                                                                                     \\
+     & =\binom{m_1}{y_1}\pi_1^{y_1}(1-\pi_1)^{m_1-y_1}\binom{m_2}{y_2}\pi_2^{y_2}(1-\pi_2)^{m_2-y_2}                                                                                                               \\
+     & \propto \biggl(\frac{\pi_1}{1-\pi_1}\biggr)^{\!y_1}(1-\pi_1)^{m_1}\biggl(\frac{\pi_2}{1-\pi_2}\biggr)^{\!y_2}(1-\pi_2)^{m_2}\textcolor{Blue}{\biggl(\frac{\pi_2/(1-\pi_2)}{\pi_2/(1-\pi_2)}\biggr)^{\!y_1}} \\
+     & \propto \biggl(\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)}\biggr)^{\!y_1}\biggl(\frac{\pi_2}{1-\pi_2} \biggr)^{\!y_2+y_1}(1-\pi_1)^{m_1}(1-\pi_2)^{m_2}
 \end{align*}
-\subsection*{Some General Results for Score and Information}
-\begin{Result}{Result \# 1}
-      The expectation of the score function is zero.
-      \[ \E[\big]{S(\theta)}=0. \]
-      \tcblower{}
-      \textbf{Proof}:
-      \begin{align*}
-            \int f(y;\theta,\phi)\odif{y}                                                         & =1                               \\
-            \pdv*{\int f(y;\theta,\phi)\odif{y}}{\theta}                                          & =0                               \\
-            \int\pdv*{f(y;\theta,\phi)}{\theta} \odif{y}                                          & =0                               \\
-            \int\biggl(\pdv*{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)f(y;\theta,\phi)\odif{y} & =0 &  & \label{2a:eq1}\tag*{(1)} \\
-            \int S(\theta)f(y;\theta,\phi)\odif{y}                                                & =0                               \\
-            \E[\big]{S(\theta)}                                                                   & =0
-      \end{align*}
-\end{Result}
-\begin{Result}{Result \# 2}
-      The expectation of the score function squared is the expected information.
-      \[  \E[\big]{S(\theta;y)^2}=\E[\big]{I(\theta;y)} \]
-      \tcblower{}
-      \textbf{Proof}: Differentiate~\ref{2a:eq1} again,
-      \begin{align*}
-            \pdv*{\int\biggl(\pdv*{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)f(y;\theta,\phi)\odif{y}}{\theta}                                                                                                 & =0 \\
-            \int \biggl(\pdv*[order=2]{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)f(y;\theta,\phi)\odif{y}+\int\biggl(\pdv*{\log[\big]{f(y;\theta,\phi)}}{\theta}\biggr)\pdv*{f(y;\theta,\phi)}{\theta}\odif{y} & =0 \\
-            \int \pdv*[order=2]{\log[\big]{f(y;\theta,\phi)}}{\theta}f(y;\theta,\phi)\odif{y}+\int\biggl(\pdv*{f(y;\theta,\phi)}{\theta}\biggr)^2 f(y;\theta,\phi)\odif{y}                                       & =0 \\
-            \int -I(\theta)f(y;\theta,\phi)\odif{y}+\int S(\theta)^2 f(y;\theta,\phi)\odif{y}                                                                                                                    & =0 \\
-            \E[\big]{-I(\theta;y)}+\E[\big]{S(\theta;y)^2}                                                                                                                                                       & =0
-      \end{align*}
-\end{Result}
-Now for the exponential family, we apply above results and obtain:
-\begin{align*}
-      \E[\big]{S(\theta)}                                          & =0,                                             \\
-      \E*{\frac{Y-b^{\prime}(\theta)}{a(\phi)}}                    & =0,                                             \\
-      \E{Y}                                                        & =b^\prime(\theta),                              \\\\
-      \E[\big]{S(\theta)^2}                                        & =\E[\big]{I(\theta)},                           \\
-      \E*{\biggl(\frac{Y-b^\prime(\theta)}{a(\phi)} \biggr)^{\!2}} & =\E*{\frac{b^{\prime\prime}(\theta)}{a(\phi)}}, \\
-      \frac{1}{a(\phi)^2}\E*{\bigl(Y-\E{Y}\bigr)^2}                & =\frac{b^{\prime\prime}(\theta)}{a(\phi)},      \\
-      \Var{Y}                                                      & =b^{\prime\prime}(\theta)a(\phi).
-\end{align*}
-\begin{Regular}{Mean and Variance for the Exponential Family}
-      \begin{itemize}
-            \item Mean: $ \E{Y}=b^\prime(\theta)=\mu $.
-            \item Variance: $ \Var{Y}=b^{\prime\prime}(\theta)a(\phi) $.
-      \end{itemize}
-\end{Regular}
-Note that:
+\subsection*{Estimation of the Odds Ratio}
 \begin{itemize}
-      \item $ b^\prime(\theta)=\mu $ tells the relationship between \emph{canonical} parameter $ \theta $ and $ \mu $.
-      \item $ b^{\prime\prime}(\theta) $ is a function of $ \theta $ and hence can be also expressed as a function of $ \mu $.
-      \item Thus, we write $ b^{\prime\prime}(\theta)=\V{\mu} $ and call \textcolor{Red}{$ \V{\mu} $} the \textcolor{Red}{variance function}.
-      \item Subsequently, we have:
-            \[ \Var{Y}=b^{\prime\prime}(\theta)a(\phi)=\V{\mu}a(\phi), \]
-            which is the \textcolor{Red}{mean-variance relationship} for the exponential family.
+    \item Since we want to estimate $ \psi $, we can \textcolor{Blue}{reparameterize} using:
+          \[ \theta_1=\log*{\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)}}=\log{\psi},\qquad \theta_2=\log*{\frac{\pi_2}{1-\pi_2}}  \]
+    \item Note that $ \pi_1,\pi_2\in(0,1) $ but $ \theta_1,\theta_2\in(-\infty,\infty) $.
+    \item Our reparameterization implies:
+          \[ \pi_2=\frac{e^{\theta_2}}{1+e^{\theta_2}},\qquad \pi_1=\frac{e^{\theta_1+\theta_2}}{1+e^{\theta_1+\theta_2}} \]
+    \item Now the likelihood becomes:
+          \begin{align*}
+              \mathcal{L}(\pi_1,\pi_2)       & \propto \biggl(\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)}\biggr)^{\!y_1}\biggl(\frac{\pi_2}{1-\pi_2} \biggr)^{\!y_2+y_1}(1-\pi_1)^{m_1}(1-\pi_2)^{m_2} \\
+              \mathcal{L}(\theta_1,\theta_2) & =(e^{\theta_1})^{y_1}(e^{\theta_2})^{y_1+y_2}(1+e^{\theta_1+\theta_2})^{-m_1}(1+e^{\theta_2})^{-m_2}
+          \end{align*}
+    \item Recall our goal was to estimate $ \text{OR}=\psi=e^{\theta_1} $.
+          \begin{align*}
+              \mathcal{L}(\theta_1,\theta_2) & =(e^{\theta_1})^{y_1}(e^{\theta_2})^{y_1+y_2}(1+e^{\theta_1+\theta_2})^{-m_1}(1+e^{\theta_2})^{-m_2}                                 \\
+              \ell(\theta_1,\theta_2)        & =y_1\theta_1+(y_1+y_2)\theta_2-m_1\log{1+e^{\theta_1+\theta_2}}-m_2\log{1+e^{\theta_2}}                                              \\
+              S_1(\theta_1,\theta_2)         & =y_1-m_1\biggl(\frac{e^{\theta_1+\theta_2}}{1+e^{\theta_1+\theta_2}}\biggr)                                                          \\
+              S_2(\theta_1,\theta_2)         & =y_1+y_2-m_1\biggl(\frac{e^{\theta_1+\theta_2}}{1+e^{\theta_1+\theta_2}}\biggr)-m_2\biggl(\frac{e^{\theta_2}}{1+e^{\theta_2}}\biggr)
+          \end{align*}
+    \item Solving $ \Vector{S}(\theta_1,\theta_2)=\Vector{0} $ gives us the MLEs:
+          \[ \hat{\theta}_1=\log*{\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}},\qquad \hat{\theta}_2=\log*{\frac{y_2}{m_2-y_2}} \]
+    \item So by the invariance property of MLEs we have:
+          \[ \hat{\psi}=\frac{\hat{\pi}_1/(1-\hat{\pi}_1)}{\hat{\pi}_2/(1-\hat{\pi}_2)},\qquad\hat{\pi}=\frac{y_1}{m_1},\qquad\hat{\pi}=\frac{y_2}{m_2}  \]
 \end{itemize}
-\subsection*{Link Functions}
-\begin{Regular}{Definition (Link Function)}
-      The \textcolor{Red}{link function} relates the linear predictor $ \eta=\Vector{x}^\top\Vector{\beta} $ to the expected value $ \mu $ of the random variable $ Y $, i.e.,
-      \[ g(\mu)=\eta=\Vector{x}^\top\Vector{\beta}, \]
-      where $ g(\:\cdot\:) $ is the link function.
-\end{Regular}
-\begin{Regular}{Definition (Canonical Link Function)}
-      When $Y$ is a member of the exponential family we define the \textcolor{Red}{canonical link function} to be:
-      \[ g(\mu)=\theta=\eta=\Vector{x}^\top\Vector{\beta} \]
-      (i.e., the choice of $ g(\:\cdot\:) $ that sets canonical parameter = linear predictor).
-\end{Regular}
-\subsection*{Example}
-Recall that $ \POI{\lambda} $ is a member of exponential family,
-\[ f(y;\lambda)=\frac{\lambda^y \mathrm{e}^{-\lambda}}{y!}=\exp*{\frac{y\log{\lambda}-\lambda}{1}-\log{y!}}  \]
-where $ \theta=\log{\lambda} $, $ \phi=1 $, $ b(\theta)=\lambda=\mathrm{e}^{\theta} $, and $ a(\phi)=1 $. Now to find the mean, variance function, and canonical link function:
+\begin{Example}{Example: Prenatal Care Data from Two Clinics}
+    Consider the data below describing the relationship between the level of prenatal care
+    and fetal mortality.
+    \begin{center}
+        \begin{NiceTabular}{l|cc|c}
+            Level of Care & Died                            & Survived & Total                                        \\
+            \midrule
+            Intensive & $ 20 $                            & $ 316 $                 & $ 336 $         \\
+            Regular   & $ 46 $                            & $ 373 $                 & $ 419 $         \\
+            \midrule
+            & $ 66 $                    & $ 689 $ & $ 755 $
+        \end{NiceTabular}
+    \end{center}
+\end{Example}
+\[ \hat{\theta}_1=\log*{\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}}=\log*{\frac{y_1(m_2-y_2)}{y_2(m_1-y_1)}}=\log*{\frac{(20)(373)}{(46)(316)}}=-0.6670729 \]
+\[ \widehat{\text{OR}}=\hat{\psi}=\frac{y_1(m_2-y_2)}{y_2(m_1-y_1)}=\frac{(20)(373)}{(46)(316)}=0.5132086 \]
+\subsection*{Inference for the Odds Ratio}
+\addcontentsline{toc}{subsection}{Inference of the Odds Ratio}
 \begin{itemize}
-      \item \textcolor{Blue}{Mean}: $ \E{Y}=b^\prime(\theta)=\mathrm{e}^{\theta}=\mu\implies \theta=\log{\mu} $.
-      \item \textcolor{Blue}{Variance Function}: $ \V{\mu}=b^{\prime\prime}(\theta)=\mathrm{e}^{\theta}\implies \V{\mu}=\mu $.
-      \item \textcolor{Blue}{Variance}: $ \Var{Y}=\V{\mu}a(\phi)=\mu $ (mean-variance relationship).
-      \item \textcolor{Blue}{Canonical link}: set $ \theta=\eta $ using $ \theta=\log{\mu}=\eta=\Vector{x}^\top \Vector{\beta} $, i.e., $ g(\mu)=\log{\mu} $ where $ \log{\:\cdot\:} $
-            is the canonical link.
+    \item In order to do inference we will need the Information Matrix:
+          \[ \Matrix{I}(\theta_1,\theta_2)=\begin{bmatrix}
+                  I_{11} & I_{12} \\
+                  I_{21} & I_{22}
+              \end{bmatrix},\quad\text{where $I_{jk}=-\pdv*{\ell(\theta_1,\theta_2)}{\theta_j,\theta_k}$} \]
+    \item Differentiating we have:
+          \begin{align*}
+              I_{11}          & =m_1\biggl(\frac{e^{\theta_1+\theta_2}}{(1+e^{\theta_1+\theta_2})^{2}} \biggr)=\textcolor{Blue}{m_1\pi_1(1-\pi_1)}                                                                                                 \\
+              I_{12}  =I_{21} & =m_1\biggl(\frac{e^{\theta_1+\theta_2}}{(1+e^{\theta_1+\theta_2})^{2}} \biggr)=\textcolor{Blue}{m_1\pi_1(1-\pi_1)}                                                                                                 \\
+              I_{22}          & =m_1\biggl(\frac{e^{\theta_1+\theta_2}}{(1+e^{\theta_1+\theta_2})^{2}} \biggr)=m_1\pi_1(1-\pi_1)+m_2\biggl(\frac{e^{\theta_2}}{(1+e^{\theta_2})^{2}} \biggr)=\textcolor{Blue}{m_1\pi_1(1-\pi_1)+m_2\pi_2(1-\pi_2)}
+          \end{align*}
 \end{itemize}
-Moving forward, we consider a log-linear model: $ \log{\mu_i}=\Vector{x}_i^\top \Vector{\beta} $.
-
-\subsection*{Remarks on Link Function}
+\subsection*{Asymptotic Distribution of a Multidimensional MLE (A.3)}
 \begin{itemize}
-      \item We can choose any function $ g(\:\cdot\:) $ as the link function in theory.
-      \item The canonical link is a special link function, we often choose to use
-            canonical link for its good statistical properties.
-      \item Context and goodness of fit should motivate the choice of link function in
-            practice.
+    \item We are interested in doing inference on $ \theta_1=\log{\psi} $ while $ \theta_2 $ can be viewed as a nuisance parameter.
+    \item Recall the Wald Result for a scalar parameter $ \theta $ is $ (\hat{\theta}-\theta)I(\hat{\theta}) \sim \chi^2_1 $.
 \end{itemize}
-\subsection*{Generalized Linear Models}
-\begin{Regular}{Definition (Generalized Linear Model (GLM))}
-      A \textcolor{Red}{Generalized Linear Model (GLM)} is composed of three components:
-      \begin{itemize}
-            \item \textcolor{Red}{Random Component}: The responses $ Y_1,\ldots,Y_n $ are
-                  independent random variables and each $ Y_i $ is assumed to come from a parametric distribution that is a member of the
-                  exponential family.
-            \item \textcolor{Red}{Systematic Component} (or linear predictor):
-                  \[ \eta_i=\Vector{x}_i^\top\Vector{\beta}, \]
-                  a linear combination of explanatory variables $ \Vector{x}_i $ and regression parameters $ \Vector{\beta} $.
-            \item \textcolor{Red}{Link function}:
-                  \[ g(\mu_i)=\eta_i=\Vector{x}_i^\top\Vector{\beta}, \]
-                  a function that relates the mean of response to the linear predictor.
-      \end{itemize}
+\begin{Regular}{Wald Result for a scalar parameter from a vector}
+    For the vector $ \Vector{\theta}=(\theta_1,\theta_2)^\top $, where $ \theta_1 $ is a scalar parameter of interest:
+    \[ (\hat{\theta}_1-\theta_1)^2\bigl(I^{11}(\hat{\theta}_1,\hat{\theta}_2)\bigr)^{-1} \sim \chi^2_1 \]
+    asymptotically, where $ I^{11} $ is the $ (1,1) $ element of $ \Matrix{I}^{-1}(\hat{\theta}_1,\hat{\theta}_2) $ (i.e., the inverse of the information at the MLE)
+    given by:
+    \[ I^{11}=(I_{11}-I_{12}I_{22}^{-1}I_{21})^{-1} \]
 \end{Regular}
-\subsection*{Topic Summary}
-2a Formulation of Generalized Linear Models:
 \begin{itemize}
-      \item Definition of the \textcolor{Blue}{Exponential Family}.
-            \begin{itemize}
-                  \item Exponential form of the probability density (or mass) function.
-                  \item Derivation of Score and Information.
-                  \item Properties of exponential family, mean-variance relationship.
-                  \item Definition of canonical link.
-            \end{itemize}
-      \item Definition of a \textcolor{Blue}{Generalized Linear Model}.
+    \item General result $ \Matrix{I} $ is a $ p\times p $ partitioned matrix.
+          \begin{itemize}
+              \item \textcolor{Blue}{Information Matrix}:
+                    \[ \Matrix{I}(\theta_1,\theta_2)=\begin{bmatrix}
+                            \Matrix{I}_{11} & \Matrix{I}_{12} \\
+                            \Matrix{I}_{21} & \Matrix{I}_{22}
+                        \end{bmatrix} \]
+              \item \textcolor{Blue}{Inverse Information Matrix}:
+                    \[ \Matrix{I}^{-1}(\theta_1,\theta_2)=\begin{bmatrix}
+                            \textcolor{Red}{I^{11}} & I^{12} \\
+                            I^{21}                  & I^{22}
+                        \end{bmatrix} \]
+                    where $ \textcolor{Red}{I^{11}}=(\Matrix{I}_{11}-\Matrix{I}_{12}\Matrix{I}_{22}^{-1}\Matrix{I}_{21})^{-1} $.
+          \end{itemize}
+    \item Consider the $ 2\times 2 $ matrix case:
+          \[ \Matrix{A}=\begin{bmatrix}
+                  a & b \\
+                  c & d
+              \end{bmatrix}\implies \Matrix{A}^{-1}=\frac{1}{ad-bc} \begin{bmatrix}
+                  d  & -b \\
+                  -c & a
+              \end{bmatrix}=\begin{bmatrix}
+                  \textcolor{Red}{A^{11}} & A^{12} \\
+                  A^{21}                  & A^{22}
+              \end{bmatrix} \]
+          where $ \textcolor{Red}{A^{11}}=\frac{d}{ad-bc}=\frac{1}{a-(bc)/d}=(a-bd^{-1}c)^{-1} $.
 \end{itemize}
-Next Topic: 2b Estimation for Generalized Linear Models.
+\subsection*{Confidence Interval for the Odds Ratio}
+\begin{itemize}
+    \item We will use this result to find the confidence interval for $ \theta_1=\log{\psi} $.
+    \item First, we need to find $ I^{11}(\theta_1,\theta_2) $.
+          \begin{align*}
+              I^{11}
+               & =(I_{11}-I_{12}I_{22}^{-1}I_{21})^{-1}                                                                               \\
+               & =\biggl(m_1\pi_1(1-\pi_1)-\frac{\bigl(m_1\pi_1(1-\pi_1)\bigr)^2}{m_1\pi_1(1-\pi_1)+m_2\pi_2(1-\pi_2)} \biggr)^{\!-1} \\
+               & =\biggl(\frac{m_1\pi_1(1-\pi_1)m_2\pi_2(1-\pi_2)}{m_1\pi_1(1-\pi_1)+m_2\pi_2(1-\pi_2)} \biggr)^{\!-1}                \\
+               & =\frac{1}{m_1\pi_1(1-\pi_1)}+\frac{1}{m_2\pi_2(1-\pi_2)}                                                             \\
+               & =\frac{1}{m_1\pi_1} +\frac{1}{m_1(1-\pi_1)}+\frac{1}{m_2\pi_2} +\frac{1}{m_2(1-\pi_2)}
+          \end{align*}
+\end{itemize}
+\subsection*{Confidence Interval for the Odds Ratio}
+\begin{itemize}
+    \item Now we can calculate $ I^{11}(\hat{\theta}_1,\hat{\theta}_2) $ using the invariance property of MLEs:
+          \begin{align*}
+              I^{11}(\hat{\theta}_1,\hat{\theta}_2)
+               & =\frac{1}{m_1\hat{\pi}_1} +\frac{1}{m_1(1-\hat{\pi}_1)}+\frac{1}{m_2\hat{\pi}_2} +\frac{1}{m_2(1-\hat{\pi}_2)} \\
+               & =\frac{1}{y_1} +\frac{1}{m_1-y_1} +\frac{1}{y_2} +\frac{1}{m_2-y_2}
+          \end{align*}
+    \item Thus a Wald-based \qty{95}{\percent} confidence interval for $ \theta_1=\log{\psi} $ is:
+          \[ \hat{\theta}_1\pm 1.96\sqrt{\frac{1}{y_1} +\frac{1}{m_1-y_1} +\frac{1}{y_2} +\frac{1}{m_2-y_2}}=(\hat{\theta}_{1\text{L}},\hat{\theta}_{1\text{U}}) \]
+    \item A \qty{95}{\percent} confidence interval for the Odds Ratio $ \psi $ is:
+          \[ \bigl(\exp{\hat{\theta}_{1\text{L}}},\exp{\hat{\theta}_{1\text{U}}}\bigr) \]
+\end{itemize}
+\subsection*{Example: Prenatal Care Data from Two Clinics}
+\addcontentsline{toc}{subsection}{Example: Prenatal Care}
+\begin{Example}{Example: Prenatal Care Data from Two Clinics}
+    \begin{center}
+        \begin{NiceTabular}{l|cc|c}
+            Level of Care & Died                            & Survived & Total                                        \\
+            \midrule
+            Intensive & $ 20 $                            & $ 316 $                 & $ 336 $         \\
+            Regular   & $ 46 $                            & $ 373 $                 & $ 419 $         \\
+            \midrule
+            & $ 66 $                    & $ 689 $ & $ 755 $
+        \end{NiceTabular}
+    \end{center}
+\end{Example}
+\[ I^{11}(\hat{\theta}_1,\hat{\theta}_2)=\Var{\hat{\theta}_1}=\frac{1}{20} +\frac{1}{316} +\frac{1}{46}+\frac{1}{373}=0.07758465 \]
+\qty{95}{\percent} confidence interval for $ \theta_1=\log{\psi} $:
+\[ \hat{\theta}_1\pm 1.96\sqrt{I^{11}(\hat{\theta}_1,\hat{\theta}_2)}=-0.6671\pm 1.96\sqrt{0.07758}=(-1.2130,-0.1211) \]
+\qty{95}{\percent} confidence interval for the Odds Ratio $ \psi $:
+\[ \exp*{\hat{\theta}_1\pm 1.96\sqrt{I^{11}(\hat{\theta}_1,\hat{\theta}_2)}}=\exp[\big]{-1.2130,-0.1211}=(0.2973, 0.8859) \]
+\begin{itemize}
+    \item \textcolor{Blue}{Outcome}: Fetal death vs Survival.
+    \item \textcolor{Blue}{Explanatory Variable}: Level of Care: Intensive vs Regular.
+          \begin{itemize}
+              \item Using results from the previous section we have: $ \hat{\psi}=0.51 $, and a \qty{95}{\percent} confidence interval for $ \psi $ was $ (0.30,0.89) $.
+          \end{itemize}
+    \item \textcolor{Blue}{Additional Explanatory Variable}: Clinic: A vs B.
+\end{itemize}
+\begin{Example}{Prenatal Care Data Stratified by Clinic}
+    \begin{center}
+        \begin{NiceTabular}{l|cc|c|cc|c}
+            & \multicolumn{3}{c}{\emph{Clinic A}} & \multicolumn{3}{c}{\emph{Clinic B}} \\
+            Level of Care & Died                            & Survived & Total    & Died & Survived & Total                                    \\
+            \midrule
+            Intensive & $ 16 $                            & $ 293 $                 & $ 309 $ & $ 4 $ & $ 23 $ & $ 27 $        \\
+            Regular   & $ 12 $                            & $ 176 $                 & $ 188 $ & $ 34 $ & $ 197 $ & $ 231 $        \\
+            \midrule
+            & $ 28 $                    & $ 469 $ & $ 497 $ & $ 38 $ & $ 220 $ & $ 258 $
+        \end{NiceTabular}
+    \end{center}
+\end{Example}
+\begin{itemize}
+    \item $ \hat{\psi}_\text{A}=0.80 $, and a \qty{95}{\percent} confidence interval for $ \psi_\text{A} $ is $ (0.37,1.73) $.
+    \item $ \hat{\psi}_\text{B}=1.01 $, and a \qty{95}{\percent} confidence interval for $ \psi_\text{B} $ is $ (0.33,3.10) $.
+    \item These results do not agree with the results from the pooled analysis on the
+          previous slide.
+\end{itemize}
+\begin{Example}{Association Between Clinic and Level of Care}
+    \begin{center}
+        \begin{NiceTabular}{l|cc|c}
+            & A                            & B &                                         \\
+            \midrule
+            Intensive & $ 309 $                            & $ 27 $                 & $ 336 $         \\
+            Regular   & $ 118 $                            & $ 231 $                 & $ 419 $         \\
+            \midrule
+            & $ 497 $                    & $ 258 $ & $ 755 $
+        \end{NiceTabular}
+    \end{center}
+    $ \hat{\psi}=14.06 $, and a \qty{95}{\percent} confidence interval for $ \psi $ is $ (9.12,21.76) $.
+\end{Example}
+\begin{Example}{Association Between Clinic and Mortality}
+    \begin{center}
+        \begin{NiceTabular}{l|cc|c}
+            & A                            & B &                                         \\
+            \midrule
+            Died & $ 28 $                            & $ 38 $                 & $ 66 $         \\
+            Survived   & $ 469 $                            & $ 220 $                 & $ 689 $         \\
+            \midrule
+            & $ 497 $                    & $ 258 $ & $ 755 $
+        \end{NiceTabular}
+    \end{center}
+    $ \hat{\psi}=0.35 $, and a \qty{95}{\percent} confidence interval for $ \psi $ is $ (0.21,0.58) $.
+\end{Example}
+\begin{itemize}
+    \item The initial strong association between Level of Care and Fetal Mortality ($ \hat{\psi}=0.51 $)
+          disappeared when we stratified by clinic ($ \hat{\psi}_\text{A}=0.80 $ and $ \hat{\psi}_\text{B}=1.01 $).
+    \item Instead of having to examine multiple $ 2\times 2 $ tables we'd like to estimate the OR
+          and compute associations using a regression model.
+    \item I.e., OR for the association between Level of Care and Mortality \textcolor{Blue}{adjusted} for Clinic.
+    \item One way to do this by fitting a Binomial GLM to the data.
+\end{itemize}
+\subsection*{2.3 Multiple Regression (GLM) for Binary Responses}
+\begin{itemize}
+    \item Our previous derivations held for a binary response with a single binary
+          explanatory variable.
+    \item More often we need multiple regression methodology since we may:
+          \begin{enumerate}[a.]
+              \item Want to be able to control for confounding variables and hence want to examine the
+                    effect of several (possibly related collinear) variables simultaneously.
+              \item Want to examine the effect of categorical covariates ($ >2 $ levels) or continuous
+                    covariates.
+              \item Want to develop sophisticated models that describe complex relationships.
+          \end{enumerate}
+\end{itemize}

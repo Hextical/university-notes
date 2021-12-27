@@ -1,502 +1,354 @@
-\makeheading{Week 8}{\daterange{2021-10-25}{2021-10-29}}
-\section*{Topic 4b: Ship Damage Example}
-\addcontentsline{toc}{section}{Topic 4b: Ship Damage Example}
+\makeheading{Week 12}{\daterange{2021-11-29}{2021-12-03}}
+\section*{Topic 4b: Poisson Overdispersion}
+\addcontentsline{toc}{section}{Topic 4b: Poisson Overdispersion}
+\subsection*{Methods for Handling Overdispersion}
+\addcontentsline{toc}{subsection}{Overdispersion}
 \begin{enumerate}[1.]
-      \item Fitting the main effects log linear model:
-            \begin{itemize}
-                  \item Introduction of the data set.
-                  \item Model 1: main effects + offset(log(months)).
-            \end{itemize}
-      \item Model selection:
-            \begin{itemize}
-                  \item Use Deviance tests of nested non-saturated models.
-            \end{itemize}
-      \item Model interpretation:
-            \begin{itemize}
-                  \item Show that $ \beta_k $ has log relative rate interpretation.
-                  \item Wald based confidence intervals and hypothesis tests.
-            \end{itemize}
+    \item \textcolor{Blue}{Ad hoc Method}:
+          \begin{enumerate}[1.]
+              \item Fit the usual GLM to the data and find the best fitting model.
+              \item Check for evidence of overdispersion (i.e., $ D\gg n-p $).
+              \item If overdispersion is present, estimate
+                    \[ \hat{\phi}=\frac{D}{n-p}. \]
+              \item Adjusted covariance matrix and standard error estimates
+                    \[ \Covadj{\hat{\Vector{\beta}}}\simeq \hat{\phi}\Cov{\hat{\Vector{\beta}}}=\hat{\phi}\mathcal{I}^{-1},
+                        \qquad \seadj{\hat{\beta}_j}=\sqrt{\hat{\phi}}\se{\hat{\beta}_j}. \]
+          \end{enumerate}
+    \item \textcolor{Blue}{Mixed Model Method}:
+          \begin{itemize}
+              \item For a Poisson model, let $ Y_i\mid u_i \sim \POI{u_i\lambda} $.
+              \item Introduce \textcolor{Blue}{dispersion factor} $ u_i \sim \GAM{\alpha=1/\phi,\beta=\phi} $.
+              \item Then, $ Y_i \sim \NB{a=1/\phi,b=\lambda\phi} $ with $ \E{Y_i}=\lambda_i $ and $ \Var{Y_i}=\lambda_i(1+\lambda_i\phi) $.
+          \end{itemize}
 \end{enumerate}
-\subsection*{Example: Ship Damage Incidents}
-\addcontentsline{toc}{subsection}{Main Effects Model}
-\begin{Example}{Example: Ship Damage Incidents}
-      \begin{itemize}
-            \item McCullagh and Nelder (1989) discuss the analysis of a data set which records the
-                  number of times a certain type of damage incident occurs in cargo ships.
-            \item Damage is caused by waves and occurs in the forward section of various cargo
-                  carrying vessels
-            \item In order to prevent this type of damage from occurring in the future, the
-                  investigators want to identify risk factors including:
-                  \begin{itemize}
-                        \item \textbf{Ship type} (A-E),
-                        \item \textbf{Year of construction} (1960-1964; 1965-1969; 1970-1974; 1975-1979),
-                        \item \textbf{Period of operation} (1960-1974; 1975-1979).
-                  \end{itemize}
-      \end{itemize}
-\end{Example}
-\subsubsection*{Ship Damage Data Set}
-In the dataset we have adopted the following coding conventions:
+\subsection*{Application: Analysis of an Epilepsy Trial}
+\addcontentsline{toc}{subsection}{Application: Analysis of an Epilepsy Trial}
 \begin{itemize}
-      \item \texttt{type}: The ship type variable is (1, 2, 3, 4, 5) for ship types A, B, C, D, and E,
-            respectively
-      \item \texttt{cyr}: The year of construction variable is (1, 2, 3, 4) for eras 1960-1964,
-            1965-1969, 1970-1974, and 1975-1979, respectively
-      \item \texttt{oyr}: The year of operation variable is 1 for 1960-74 and 2 for 1975-1979
-      \item \texttt{months}: The total number of months of operation for ships of that type and
-            construction year during the period of operation
-      \item \texttt{y}: The number of damage incidents for ships of that type and construction
-            year during the period of operation
+    \item Clinical trial was conducted involving $59$ patients with epilepsy.
+    \item Patients were randomized to one of two treatments, a \textcolor{Blue}{standard therapy} or a \textcolor{Blue}{new drug}
+          designed to reduce the number of epileptic attacks experienced.
+    \item The primary response is the number of attacks experienced during the first two
+          weeks after randomization.
+    \item The data are given on the next slide where:
+          \begin{itemize}
+              \item $ Y_k= $ number attacks in $ k\textsuperscript{th} $ period after randomization.
+              \item \texttt{treat} is the treatment indicator variable with \texttt{treat=1} for the experimental treatment
+                    and \texttt{treat=0} otherwise.
+              \item \texttt{prior} records the number of epileptic attacks experience for the month prior to entry into the study.
+              \item \texttt{age} is a patient age at randomization in years.
+          \end{itemize}
 \end{itemize}
-\subsubsection*{Ship Damage Data Set (\texttt{ship.dat})}
-\begin{Example}{}
-      First ten rows of \texttt{ship.dat}:
-      % \begin{noindent}
+\subsubsection*{Univariate Analyses}
+\begin{itemize}
+    \item First consider analyses based on the data from the first two week period after
+          randomization, that is, $ Y_{i1} $, $ i=1,2,\ldots,n $.
+    \item \textcolor{Blue}{Poisson Model}, that is, $ Y_i \sim \POI{\mu_i} $:
+          \[ \log{\mu_i}=\Vector{x}_i^\top \Vector{\beta}. \]
+    \item \textcolor{Blue}{Negative Binomial Model}, that is, $ Y_{i1}\mid u_i \sim \POI{u_i\lambda_i} $ and $ u_i \sim \GAM{1/\phi,\phi} $. Regression:
+          \begin{align*}
+              \mu_i       & =\E{Y_{i1}\given u_i}                       \\
+              \mu_i       & =u_i\lambda_i                               \\
+              \log{\mu_i} & =\log{u_i}+\log{\lambda_i}                  \\
+              \log{\mu_i} & =\alpha_i+\Vector{x}_i^\top \Vector{\beta}.
+          \end{align*}
+    \item $ \alpha_i= $ log gamma random variable called a ``\textcolor{Blue}{random effect}'', $ \E{\alpha_i}=0 $.
+\end{itemize}
+\subsubsection*{R Program}
+%\begin{noindent}
+      <<results='hide',fig.show='hide'>>=
+      epi.dat=read.table("epi.dat",header=T)
+      epi.dat$treatf=factor(epi.dat$treat)
+      attach(epi.dat)
+      library(MASS)
+
+      # contrast findings from Poisson and negative binomial regression
+      poisson1=glm(yi1~treatf+prior+age,family=poisson)
+      summary(poisson1)
+      epi.dat$rdeviance1=residuals.glm(poisson1,type="deviance")
+      epi.dat$fitted.values1=poisson1$fitted.values
+
+      negbin2=glm.nb(yi1~treatf+prior+age,link=log,init.theta=1.00,trace=T)
+      summary(negbin2)
+      epi.dat$rdeviance2=residuals.glm(negbin2,type="deviance")
+      epi.dat$fitted.values2=negbin2$fitted.values
+      epi.dat
+
+      # Constructing deviance residual plots
+      plot(log(epi.dat$fitted.values1),epi.dat$rdeviance1,ylim=c(-5,5),xlab="LOG FITTED VALUES", ylab="DEVIANCE RESIDUALS",main="POISSON MODEL")
+      abline(h=-2,lty=2);abline(h=2,lty=2)
+      plot(log(epi.dat$fitted.values2),epi.dat$rdeviance2,ylim=c(-5,5),xlab="LOG FITTED VALUES", ylab="DEVIANCE RESIDUALS",main="NEG BIN MODEL")
+      abline(h=-2,lty=2);abline(h=2,lty=2)
+
+      # Fitting some additional negative binomial models
+      negbin3=glm.nb(yi1~treatf,link=log,init.theta=1.00,trace=T)
+      summary(negbin3)
+      @
+%\end{noindent}
+\subsubsection*{R Output: Poisson Model}
+%\begin{noindent}
       <<echo=FALSE>>=
-      ship.dat = read.table("ship.dat", header = T)
-      ship.dat[seq(1,10),]
-      @
-      % \end{noindent}
-\end{Example}
-\subsubsection*{R Code \& Output (Models 1 and 2)}
-% \begin{noindent}
-      <<results='hide'>>=
-      # input dataset and create factor variables
-      ship.dat <- read.table("ship.dat", header=T)
-      
-      ship.dat$typef <- factor(ship.dat$type)
-      ship.dat$cyrf <- factor(ship.dat$cyr)
-      ship.dat$oyrf <- factor(ship.dat$oyr)
-
-      ship.dat
-      
-      # fitting the main effects with the offset term
-      model1<- glm(y~typef + cyrf + oyrf + offset(log(months)), family=poisson, data=ship.dat)
-      summary(model1)
-
-      # fitting all main effects (treating offset as a covariate for diagnostics)
-      model2<- glm(y~typef + cyrf + oyrf +log(months), family=poisson, data=ship.dat)
-      summary(model2)
-      @
-% \end{noindent}
-\subsubsection*{Model 1: Main effects + offset(log(months))}
-\begin{itemize}
-      \item Time homogenous Poisson process: $ \E[\big]{N_i(t_i)}=\mu_t(t_i)=\lambda t_i $.
-      \item Log linear regression model:
-            \[ \log[\big]{\mu_i(t_i)}=\log{\lambda_i}+\log{t_i}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
-      \item Ship Damage main effects model:
-            \begin{align*}
-                  \log[\big]{\mu_i(t_i)}
-                   & =\beta_0+\overbrace{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}+\beta_4x_{i4}}^{\text{ship type}}+ \\
-                   & \quad \underbrace{\beta_5x_{i5}+\beta_6x_{i6}+\beta_7x_{i7}}_{\text{year of construction}}+
-                  \underbrace{\beta_8x_{i8}}_{\text{operation year}}+\underbrace{\log{t_i}}_{\text{offset}},
-            \end{align*}
-            where
-            \[ \begin{array}{cc}
-                        x_{i1}=\Ind{\text{type B}}, & x_{i5}=\Ind{\text{1965-1969}}, \\
-                        x_{i2}=\Ind{\text{type C}}, & x_{i6}=\Ind{\text{1970-1974}}, \\
-                        x_{i3}=\Ind{\text{type D}}, & x_{i7}=\Ind{\text{1975-1979}}, \\
-                        x_{i4}=\Ind{\text{type E}}, & x_{i8}=\Ind{\text{1975-1979}}. \\
-                  \end{array} \]
-\end{itemize}
-\subsubsection*{Model 1: Main effects + offset(log(months))}
-%\begin{noindent}
-      <<>>=
-      summary(model1)
+      summary(poisson1)
       @
 %\end{noindent}
-\subsubsection*{Model 2: Main effects + log(months)}
+\subsubsection*{Results of Fitted Poisson Model}
+\begin{itemize}
+    \item Estimated relative rate of seizures in treatment versus control:
+          \[ \widehat{\RR}=\exp{\hat{\beta}_1}=\exp{-0.2047}=0.815. \]
+    \item Ad hoc estimate of dispersion factor and adjusted standard error for $ \hat{\beta}_1 $:
+          \[ \hat{\phi}=\frac{D}{n-p}=\frac{197.61}{59-4}=3.593. \]
+          \[ \estseadj{\hat{\beta}_1}=\sqrt{\hat{\phi}}\estse{\hat{\beta}_1}\sqrt{3.593}(0.0895)=0.1696. \]
+    \item Adjusted Wald-based hypothesis test of $ \HN $: $ \beta_1=0 $ versus $ \HA $: $ \beta_1\ne 0 $:
+          \[ p=\Prob*{\abs{Z}>\frac{\abs{-0.2047}}{0.1696}}=0.23. \]
+    \item Adjusted 95\% confidence interval for the relative rate:
+          \[ \exp{\hat{\beta}_1\pm z_{0.975}\estseadj{\hat{\beta}_1}}=\exp{-0.2047\pm 1.96(0.1696)}=(0.58,1.14). \]
+\end{itemize}
+\subsubsection*{R Output: Negative Binomial Model}
 %\begin{noindent}
-      <<>>=
-      summary(model2)
+      <<echo=FALSE>>=
+      summary(negbin2)
       @
 %\end{noindent}
-\subsubsection*{Summary of Model 1 versus Model 2}
+\subsubsection*{Results of Fitted Models}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lcccc}
+        Model             & Parameter   & Estimate    & $ \widehat{\text{se}} $ & $ \widehat{\text{se}}_{\text{adj}} $ \\
+        \midrule
+        \texttt{poisson1} & $ \beta_1 $ & $ -0.2047 $ & $ 0.0895 $              & $0.1696$                             \\
+                          & $ \phi $    & $3.593$                                                                      \\
+        \texttt{negbin2}  & $ \beta_1 $ & $ -0.3302 $ & $ 0.1854 $                                                     \\
+                          & $ \theta $  & $3.079$     & $0.875$                                                        \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 \begin{itemize}
-      \item $ \log{\:\cdot\:} $ is the canonical link for the Poisson, so it is the default when \texttt{family=poisson}.
-      \item \textcolor{Blue}{Model 1}: main effects + \texttt{offset(log(months))}: $ \Vector{x}^\top \Vector{\beta}=\log{t_i} $.
-            \begin{itemize}
-                  \item The offset explains some variation in the number of damage incidents due to
-                        different amounts of time at risk.
-            \end{itemize}
-      \item \textcolor{Blue}{Model 2}: main effects + \texttt{log(months)}: $ \Vector{x}^\top \Vector{\beta}\log{t_i} $.
-            \begin{itemize}
-                  \item Examine $ \hat{\beta}_9 $ the coefficient for \texttt{log(months)}.
-                  \item Conduct a Wald-based test of $ \HN $: $ \beta_9=1 $ versus $ \HA $: $ \beta_9\ne 1 $:
-                        \[ p=2\Prob*{Z>\frac{\abs{\hat{\beta}_9-1}}{\se{\hat{\beta}_9}}}=2\Prob{Z>\frac{\abs{0.9027-1}}{0.1018}}=2\Prob{Z>\abs{-0.9558}}=0.34. \]
-                        Therefore, do not reject $ \HN $: $ \beta_9=1 $.
-            \end{itemize}
-      \item We will not typically do this check and just use \texttt{offset(log(ti))} since it's implied
-            through the assumption of a time homogenous Poisson Process.
+    \item For R Negative Binomial Model, $ \theta=\phi^{-1} $, so
+          \[ \Var{Y_i}=\lambda_i(1+\lambda_i\phi)=\lambda_i(1+\lambda_i/\theta). \]
+    \item Note: $ \phi $ from Poisson is not the same as $ \phi $ in Negative Binomial.
+          \begin{itemize}
+              \item Poisson: $ \estseadj{\hat{\beta}_j}=\sqrt{\hat{\phi}}\estse{\hat{\beta}_j} $.
+              \item Negative Binomial: $ \phi=\theta^{-1} $ already incorporated into standard error estimates.
+          \end{itemize}
+    \item $ \widehat{\text{se}} $ Negative Binomial is larger than naive Poisson $ \widehat{\text{se}} $
+          because the Negative Binomial model accounts for the overdispersion.
+    \item $ \widehat{\text{se}}_{\text{adj}} $ from the Poisson is comparable to $ \widehat{\text{se}} $ from Negative Binomial.
 \end{itemize}
-\subsection*{R Code (Models 3a, 3b, 3c)}
-\addcontentsline{toc}{subsection}{Model Selection}
-Now, consider various models nested within model 1 to see if any of the main effects
-are not significant.
+\subsubsection*{Results of Fitted Negative Binomial Model}
+\begin{itemize}
+    \item Estimated relative rate of seizures in treatment versus control:
+          \[ \widehat{\RR}=\exp{\hat{\beta}_1}=\exp{-0.3302}=0.719. \]
+    \item Wald-based hypothesis test of $ \HN $: $ \beta_1=0 $ versus $ \HA $: $ \beta_1\ne 0 $:
+          \[ p=\Prob*{\abs{Z}>\frac{\abs{-0.3302}}{0.1854}}=0.0749. \]
+    \item 95\% confidence interval for the relative rate:
+          \[ \exp{\hat{\beta}_1\pm z_{0.975}\estseadj{\hat{\beta}_1}}=\exp{-0.3302\pm 1.96(0.1854)}=(0.50,1.03). \]
+\end{itemize}
+\subsubsection*{Poisson and Negative Binomial Models --- Remarks}
+\begin{itemize}
+    \item The estimates and standard errors are different in the Poisson and Negative
+          Binomial models.
+    \item The estimates are different in part because the observations are weighted
+          differently for the Poisson and Negative Binomial estimating equations.
+    \item The standard errors are larger with the Negative Binomial model because it
+          accounts for more variability in the data (which is needed here).
+    \item Notice the \texttt{treat} variable is only statistically significant in the Poisson model.
+\end{itemize}
+\subsubsection*{Residual Plots for Poisson and Negative Binomial Models}
 %\begin{noindent}
-      <<results='hide'>>=
-      # testing for the association between ship type and frequency of events
-      model3a <- glm(y ~ cyrf + oyrf + offset(log(months)), family=poisson, data=ship.dat)
-      model3a$deviance
-      model3a$df.residual
-      1-pchisq(model3a$deviance-model1$deviance, model3a$df.residual-model1$df.residual)
-
-      # testing for association between year of construction and event frequency
-      model3b <- glm(y ~ typef + oyrf + offset(log(months)), family=poisson, data=ship.dat)
-      model3b$deviance
-      model3b$df.residual
-      1-pchisq(model3b$deviance-model1$deviance, model3b$df.residual-model1$df.residual)
-
-      # testing for the association between year of operation and event frequency
-      model3c <- glm(y ~ typef + cyrf + offset(log(months)), family=poisson, data=ship.dat)
-      model3c$deviance
-      model3c$df.residual
-      1-pchisq(model3c$deviance-model1$deviance, model3c$df.residual-model1$df.residual)
+      <<echo=FALSE>>=
+      par(mfrow=c(1,2))
+      plot(log(epi.dat$fitted.values1),epi.dat$rdeviance1,ylim=c(-5,5),xlab="LOG FITTED VALUES", ylab="DEVIANCE RESIDUALS",main="POISSON MODEL")
+      abline(h=-2,lty=2);abline(h=2,lty=2)
+      plot(log(epi.dat$fitted.values2),epi.dat$rdeviance2,ylim=c(-5,5),xlab="LOG FITTED VALUES", ylab="DEVIANCE RESIDUALS",main="NEG BIN MODEL")
+      abline(h=-2,lty=2);abline(h=2,lty=2)
       @
 %\end{noindent}
-\subsubsection*{Model 3a: \texttt{cyrf + oyrf + offset(log(months))}}
-\begin{itemize}
-      \item Use this model to test:
-            \begin{itemize}
-                  \item $ \HN $: Type of Ship is unimportant (i.e., $ \beta_1=\beta_2=\beta_3=\beta_4=0 $).
-                  \item $ \HA $: $ \beta_1\ne 0 $ or $ \cdots $ or $ \beta_4\ne 0 $.
-            \end{itemize}
-            %\begin{noindent}
-            <<>>=
-            model3a <- glm(y ~ cyrf + oyrf + offset(log(months)), family=poisson, data=ship.dat)
-            model3a$deviance
-            model3a$df.residual
-            1-pchisq(model3a$deviance-model1$deviance, model3a$df.residual-model1$df.residual)
-            @
-      %\end{noindent}
-            \[ \Delta D=D_0-D_A \sim \chi^2_{4}\text{ under $\HN$}. \]
-            \[ p=\Prob*{\chi^2_{4}>(62.365-38.695)}<0.001. \]
-      \item Reject the null hypothesis of no variation in the accident rate across ships of
-            different types.
-      \item This is strong evidence of a need to adjust for the difference in the accident rates
-            between ship types.
-\end{itemize}
-\subsubsection*{Model 3b: \texttt{typef + oyrf + offset(log(months))}}
-\begin{itemize}
-      \item Use this model to test:
-            \begin{itemize}
-                  \item $ \HN $: Construction year is unimportant (i.e., $ \beta_5=\beta_6=\beta_7=0 $).
-                  \item $ \HA $: $ \beta_5\ne 0 $ or $ \cdots $ or $ \beta_7\ne 0 $.
-            \end{itemize}
-            %\begin{noindent}
-            <<>>=
-            model3b <- glm(y ~ typef + oyrf + offset(log(months)), family=poisson, data=ship.dat)
-            model3b$deviance
-            model3b$df.residual
-            1-pchisq(model3b$deviance-model1$deviance, model3b$df.residual-model1$df.residual)
-            @
-      %\end{noindent}
-      \item Reject the null hypothesis of no variation in the accident rate across ships of
-            different construction years.
-\end{itemize}
-\subsubsection*{Model 3c: \texttt{typef + cyrf + offset(log(months))}}
-\begin{itemize}
-      \item Use this model to test:
-            \begin{itemize}
-                  \item $ \HN $: Operation year is unimportant (i.e., $ \beta_8=0 $).
-                  \item $ \HA $: $ \beta_8\ne 0 $.
-            \end{itemize}
-            %\begin{noindent}
-            <<>>=
-            model3c <- glm(y ~ typef + cyrf + offset(log(months)), family=poisson, data=ship.dat)
-            model3c$deviance
-            model3c$df.residual
-            1-pchisq(model3c$deviance-model1$deviance, model3c$df.residual-model1$df.residual)
-            @
-      %\end{noindent}
-      \item Reject the null hypothesis of no variation in the accident rate across ships of
-            different periods of operation.
-      \item We are unable to remove any of the main effects from the model (all are
-            statistically significant).
-      \item Next, consider adding interaction effects.
-\end{itemize}
-\subsubsection*{R Code (Models 4, 5, 6)}
+\subsubsection*{R Output: Alternative Negative Binomial Model}
 %\begin{noindent}
-      <<results='hide'>>=
-      # testing for the interaction between type of ship and year of construction
-      model4 <- glm(y ~ typef + cyrf + oyrf + typef*cyrf + offset(log(months)), family=poisson, data=ship.dat)
-      model4$deviance
-      model4$df.residual
-      1-pchisq(model1$deviance-model4$deviance, model1$df.residual-model4$df.residual)
-      summary(model4)
-      mrho <- summary(model4,corr=T)$correlation
-      mrho
-
-      # testing for the interaction between type of ship and year of operation
-      model5 <- glm(y ~ typef + cyrf + oyrf + typef*oyrf + offset(log(months)), family=poisson, data=ship.dat)
-      1-pchisq(model1$deviance-model5$deviance, model1$df.residual-model5$df.residual)
-
-      # testing for the interaction between year of construction and operation
-      model6 <- glm(y ~ typef + cyrf + oyrf + cyrf*oyrf + offset(log(months)), family=poisson, data=ship.dat)
-      1-pchisq(model1$deviance-model6$deviance, model1$df.residual-model6$df.residual)
-
-      # plot the residuals
-      ship.dat$rdeviance <- residuals.glm(model1,type="deviance")
-      plot(model1$fitted.values,ship.dat$rdeviance,ylim=c(-4,4),xlab="FITTED VALUES",ylab="DEVIANCE RESIDUALS")
-      abline(h=-2)
-      abline(h= 2)
+      <<echo=FALSE>>=
+      summary(negbin3)
       @
 %\end{noindent}
-\subsubsection*{Model 4: \texttt{typef + cyrf + oyrf + typef*cyrf + offset(log(months))}}
+\subsubsection*{Results of Fitted Models}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lcccc}
+        Model             & Parameter   & Estimate    & $ \widehat{\text{se}} $ & $ \widehat{\text{se}}_{\text{adj}} $ \\
+        \midrule
+        \texttt{poisson1} & $ \beta_1 $ & $ -0.2047 $ & $ 0.0895 $              & $0.1696$                             \\
+                          & $ \phi $    & $3.593$                                                                      \\
+        \texttt{negbin2}  & $ \beta_1 $ & $ -0.3302 $ & $ 0.1854 $                                                     \\
+                          & $ \theta $  & $3.079$     & $0.875$                                                        \\
+        \texttt{negbin3}  & $ \beta_1 $ & $ -0.0866 $ & $ 0.2922 $                                                     \\
+                          & $ \theta $  & $0.874$     & $0.166$                                                        \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 \begin{itemize}
-      \item Use this model to test:
-            \begin{itemize}
-                  \item $ \HN $: the \texttt{typef*cyrf} interaction is unimportant (Model 1).
-                  \item $ \HA $: (model 4).
-            \end{itemize}
-            %\begin{noindent}
-            <<>>=
-            model4 <- glm(y ~ typef + cyrf + oyrf + typef*cyrf + offset(log(months)), family=poisson, data=ship.dat)
-            model4$deviance
-            model4$df.residual
-            1-pchisq(model1$deviance-model4$deviance, model1$df.residual-model4$df.residual)
-            @
-      %\end{noindent}
-            \[ \Delta D=D_0-D_A \sim \chi^2_{12}\text{ under $\HN$}. \]
-            \[ p=\Prob*{\chi^2_{12}>(38.695-14.587)}<0.0197. \]
-            \begin{itemize}
-                  \item Reject the null hypothesis that the main effects model is adequate.
-                  \item That is, we would choose model 4 over model 1.
-            \end{itemize}
+    \item Recall for the Negative Binomial that $ \Var{Y_i}=\lambda_i(1+\lambda_i\phi)=\lambda_i(1+\lambda_i/\theta) $.
+    \item Compare the $ \theta $ estimates from the two Negative Binomial Models:
+          \[ \hat{\phi}_2=\theta_2^{-1}=(3.079)^{-1}=0.325. \]
+          \[ \hat{\phi}_3=\theta_3^{-1}=(0.874)^{-1}=1.144, \]
 \end{itemize}
-%\begin{noindent}
-      <<>>=
-      summary(model4)
-      @
-%\end{noindent}
+\subsubsection*{Univariate Analyses --- Final Remarks}
 \begin{itemize}
-      \item Huge standard errors!
-      \item This model is overparameterized!
-      \item Twelve interaction terms.
-      \item Type 4: no events for \texttt{cyr} 1 or 2.
+    \item $ \hat{\phi}_3 $ is much larger than $ \hat{\phi}_2 $ because the \texttt{negbin3} model excludes the \texttt{prior} count
+          and \texttt{age} variables.
+    \item This makes sense since they explain much of the variability between the subjects
+          for the rate of events.
+    \item For Negative Binomial: $ \phi=0 $ would imply no overdispersion in the data.
+    \item To get $ \Var{\phi} $ use the $ \delta $-method ($ \Var{\theta^{-1}}\ne 1/\Var{\theta} $).
+    \item Note that \textcolor{Blue}{Overdispersion} can be caused by a number of factors including:
+          \begin{itemize}
+              \item Missing important explanatory variables.
+              \item Excess variation that can not be explained by Poisson model.
+              \item Non-independent observations (e.g., clustered data).
+          \end{itemize}
 \end{itemize}
-\subsubsection*{Model 5: \texttt{typef + cyrf + oyrf + typef*oyrf + offset(log(months))}}
+\subsection*{Adaptation to Clustered Count Data}
+\addcontentsline{toc}{subsection}{Clustered Count Data}
 \begin{itemize}
-      \item Use this model to test:
-            \begin{itemize}
-                  \item $ \HN $: the \texttt{typef*oyrf} interaction is unimportant (Model 1).
-                  \item $ \HA $: (model 5).
-            \end{itemize}
-            %\begin{noindent}
-            <<>>=
-            model5 <- glm(y ~ typef + cyrf + oyrf + typef*oyrf + offset(log(months)), family=poisson, data=ship.dat)
-            1-pchisq(model1$deviance-model5$deviance, model1$df.residual-model5$df.residual)
-            @
-      %\end{noindent}
-            \begin{itemize}
-                  \item Do not reject the null hypothesis that the main effects model is adequate.
-                  \item The interaction between ship type and year of operation is not significant.
-            \end{itemize}
+    \item Up to now we have always assumed responses $ Y_i $ are \textcolor{Blue}{iid}.
+    \item Now consider the following data structure:
+          \[ \begin{matrix}
+                  y_{11} & \cdots & y_{1n_1}   \\
+                  y_{21} & \cdots & y_{2n_2}   \\
+                  \vdots & \ddots & \vdots     \\
+                  y_{K1} & \cdots & y_{K n_K},
+              \end{matrix} \]
+          where $ i=1,\ldots,K $ are clusters, and $ j=1,\ldots,n_i $ are observations per cluster.
+    \item $ Y_{ij}= $ response for observation $ j $ of cluster $ i $.
+    \item Expect observations within the same cluster to be correlated.
+    \item For example, cluster = families, litters, schools, etc.
+    \item Assume $ Y_{ij}\mid u_i \sim \POI{u_i\lambda} $ independently.
+          \begin{itemize}
+              \item Observation from same cluster are independent given $ u_i $.
+              \item Observation from different clusters are independent.
+          \end{itemize}
+    \item Assume $ \E{u_i}=1 $ and $ \Var{u_i}=\phi $.
+    \item Then, $ \E{Y_{ij}}=\lambda $ and $ \Var{Y_{ij}}=\lambda(1+\lambda\phi) $ as before.
+    \item Correlation within clusters?
+          \begin{align*}
+              \Cov{Y_{ij},Y_{ik}}
+               & =\Cov[\big]{ \E{Y_{ij}\given u_i},\E{Y_{ik}\given u_i} } + \E[\big]{\Cov{Y_{ij},Y_{ik}\given u_i}} \\
+               & =\Cov{u_i\lambda,u_i\lambda}+\E{0}                                                                 \\
+               & =\lambda^2\Var{u_i}                                                                                \\
+               & =\lambda^2\phi.
+          \end{align*}
+          \[ \Corr{Y_{ij},Y_{ik}}=\frac{\Cov{Y_{ij},Y_{ik}}}{\sqrt{\Var{Y_{ij}}\Var{Y_{ik}} }}=\frac{\lambda^2\phi}{\lambda(1+\lambda\phi)}=\frac{\lambda\phi}{1+\lambda\phi}. \]
+    \item We have a model which accommodates a correlation of responses within clusters.
 \end{itemize}
-\subsubsection*{Model 6: \texttt{typef + cyrf + oyrf + cyrf*oyrf + offset(log(months))}}
+\subsection*{Application: Joint Analyses of an Epilepsy Trial}
+\addcontentsline{toc}{subsection}{Joint Analyses}
 \begin{itemize}
-      \item Use this model to test:
-            \begin{itemize}
-                  \item $ \HN $: the \texttt{cyrf*oyrf} interaction is unimportant (Model 1).
-                  \item $ \HA $: (model 6).
-            \end{itemize}
-            %\begin{noindent}
-            <<>>=
-            model6 <- glm(y ~ typef + cyrf + oyrf + cyrf*oyrf + offset(log(months)), family=poisson, data=ship.dat)
-            1-pchisq(model1$deviance-model6$deviance, model1$df.residual-model6$df.residual)
-            @
-      %\end{noindent}
-            \begin{itemize}
-                  \item Do not reject the null hypothesis that the main effects model is adequate.
-                  \item The interaction between year of construction and year of operation is not
-                        significant.
-            \end{itemize}
+    \item We now consider analyses based on the full 8 weeks of follow-up data.
+    \item Four responses per subject: $ Y_{i1},Y_{i2},Y_{i3},Y_{i4} $.
+    \item Consider the total seizure count: $ Y_{i\bullet}=\sum_{j=1}^{4}Y_{ij} $.
+    \item Assume $ Y_{ij}\mid u_i \sim \POI{u_i\lambda_i} $ independently.
+    \item This implies \textcolor{Blue}{$ Y_{i\bullet}\mid u_i \sim \POI{4u_i\lambda_i} $}.
+    \item Can show that $ Y_{i\bullet} $ has an (almost) Negative Binomial distribution (Problem 4.3).
 \end{itemize}
-\subsubsection*{Model 1: \texttt{typef + cyrf + oyrf +offset(log(months))}}
+\subsubsection*{Problem 4.3}
+\begin{align*}
+    \Prob{Y_{i1},\ldots,Y_{i4}}
+     & =\int_{0}^{\infty}\prod_{j=1}^4\underbrace{p(y_{ij}\mid u_i\lambda_i)}_{\POI{u_i\lambda_i}}\underbrace{f(u_i;\phi)}_{\GAM{\alpha,\beta}}\odif{u_i}                                                   \\
+     & \vdotswithin{=}                                                                                                                                                                                      \\
+     & \propto \frac{\Gamma(y_{i\bullet}+\alpha)}{\Gamma(\alpha)\prod y_{ij}!}\biggl(\frac{4\lambda_i\beta}{1+4\lambda_i\beta}\biggr)^{\!y_{i\bullet}}\biggl(\frac{1}{1+4\lambda_i\beta}\biggr)^{\!\alpha}.
+\end{align*}
 \begin{itemize}
-      \item Conclude that the best fitting model is the main effects model.
-      \item Check the residual plot:
-            %\begin{noindent}
+    \item This is proportional to a Negative Binomial distribution.
+    \item $ Y_{i\bullet} $ is \textcolor{Blue}{sufficient} for the joint distribution of $ Y_{i1},Y_{i2},Y_{i3},Y_{i4} $.
+          \begin{itemize}
+              \item Factorization Theorem: If you can write $ p(x)=h(x)g\bigl(\theta,T(x)\bigr) $, then $ T(x) $ is a sufficient statistic.
+          \end{itemize}
+\end{itemize}
+\subsubsection*{Epilepsy Trial Joint Analysis Data}
+\begin{Example}{}
+    We show the first 5 rows.
+    %\begin{noindent}
             <<echo=FALSE>>=
-            ship.dat$rdeviance <- residuals.glm(model1,type="deviance")
-            plot(model1$fitted.values,ship.dat$rdeviance,ylim=c(-4,4),xlab="FITTED VALUES",ylab="DEVIANCE RESIDUALS")
-            abline(h=-2)
-            abline(h= 2)
+            epi8.dat <- read.table("epi8.dat", header=T)
+            epi8.dat$treatf <- factor(epi.dat$treat)
+            epi8.dat[seq(1,5),]
             @
       %\end{noindent}
-            \begin{itemize}
-                  \item $ \hat{\mu}_i=\exp*{\Vector{x}_i^\top \hat{\beta}+\log{t_i}} $.
-                  \item $ D=\sum_{i}2\log*{\frac{y_i}{\hat{\mu}_i}}=\sum_i d_i $.
-                  \item $ r_i^d=\sign{y_i-\hat{\mu}_i}\sqrt{\abs{d_i}} $.
-            \end{itemize}
+\end{Example}
+\begin{itemize}
+    \item \texttt{yidot} is the sum of the seizure counts for each of the four counts obtained every two weeks.
+    \item Explanatory variables:
+          \begin{align*}
+              x_{i1} & =\Ind{\texttt{treat=1}}, \\
+              x_{i2} & =\Ind{\texttt{prior}},   \\
+              x_{i3} & =\Ind{\texttt{age}}.
+          \end{align*}
+    \item We are primarily interested in the \textcolor{Blue}{treatment effect} $ \beta_1 $.
 \end{itemize}
-\subsection*{Interpretation of Model 1: Main effects + \texttt{offset(log(months))}}
-\addcontentsline{toc}{subsection}{Model Interpretation}
+\subsubsection*{Negative Binomial Model}
+\begin{align*}
+    \mu_i       & =\E{Y_{i\bullet}\given u_i}                                  \\
+    \mu_i       & =4u_i\lambda_i                                               \\
+    \log{\mu_i} & =\log{u_i}+\log{4}+\log{\lambda_i}                           \\
+    \log{\mu_i} & =\alpha_i+\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}.
+\end{align*}
+\begin{itemize}
+    \item $ \alpha_i $ is an unobservable random effect, $ \E{\alpha_i}=0 $.
+    \item We could include $ \log{4} $ as an offset or let it be absorbed into the intercept term:
+          \[ \beta_0=\beta_0^\star +\log{4}. \]
+\end{itemize}
+\subsubsection*{R Program}
 %\begin{noindent}
-      <<>>=
-      model1<- glm(y~typef + cyrf + oyrf + offset(log(months)), family=poisson, data=ship.dat)
-      summary(model1)
-      summary(model1)$cov.unscaled
+      <<results='hide'>>=
+      epi8.dat <- read.table("epi8.dat", header=T)
+      epi8.dat$treatf <- factor(epi.dat$treat)
+      epi.dat
+
+      # fitting the negative binomial model for clustered count data
+      joint=glm.nb(yidot~treatf+prior+age,link=log,init.theta=1.00,trace=T,data=epi8.dat)
+      summary(joint)
       @
 %\end{noindent}
-\subsubsection*{Interpretation of Log Linear Models for Poisson Processes}
-\begin{itemize}
-      \item Focus on interpretation of Model 1, the main effects model.
-      \item Recall the form of the model
-            \[ \log[\big]{\mu_i(t_i)}=\log{\lambda_i}+\log{t_i}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
-      \item This is based on the Poisson distribution with the expected number of events
-            occurring over $ (0,t] $ given by
-            \[ \E[\big]{N_i(t_i)}=\mu_i(t_i)=\lambda_i t_i. \]
-      \item $ \lambda= $ rate parameter (expected number of events per unit time).
-      \item The regression parameters of this log linear model will have a log \textcolor{Red}{Relative Rate (RR)} interpretation:
-            \begin{Regular}{}
-                  \[ \RR = \frac{\lambda_1}{\lambda_2}=\frac{\text{Number of events in group 1 per unit time}}{\text{Number of events in group 2 per unit time}}. \]
-            \end{Regular}
-\end{itemize}
-\subsubsection*{Interpretation of Model 1: RR for A vs C}
-\begin{Example}{}
-      \textbf{Task 1}: Controlling for periods of construction and operation estimate the relative rate of
-      accidents for ships of type A versus type C.
-\end{Example}
+\subsubsection*{R Output: Joint Negative Binomial Model}
+%\begin{noindent}
+      <<echo=FALSE>>=
+      summary(joint)
+      @
+%\end{noindent}
+\subsubsection*{Joint Negative Binomial Model}
 \begin{table}[H]
-      \centering
-      \begin{tabular}{ccccl}
-            \texttt{type} & \texttt{cyr} & \texttt{oyr} & $ \Vector{x}_i $                & $ \log{\lambda_i} $                                             \\
-            \midrule
-            A             & ---          & ---          & $ (1,0,0,0,0,x_5,x_6,x_7,x_8) $ & $ \beta_0+\beta_5x_5+\beta_6x_6+\beta_7x_7+\beta_8x_8 $         \\
-            C             & ---          & ---          & $ (1,0,1,0,0,x_5,x_6,x_7,x_8) $ & $ \beta_0+\beta_2+\beta_5x_5+\beta_6x_6+\beta_7x_7+\beta_8x_8 $ \\
-            \midrule
-                          &              &              & $ \log{\lambda_A/\lambda_C}= $  & $ -\beta_2 $
-      \end{tabular}
+    \centering
+    \begin{tabular}{lcccc}
+        Model          & Parameter   & Estimate    & $ \widehat{\text{se}} $ & $ \widehat{\text{se}}_{\text{adj}} $ \\
+        \midrule
+        \texttt{joint} & $ \beta_1 $ & $ -0.2124 $ & $ 0.1534 $              &                                      \\
+                       & $ \theta $  & $3.357$     & $ 0.709 $                                                      \\
+                       & $ \phi $    & $0.2979$                                                                     \\
+        \bottomrule
+    \end{tabular}
 \end{table}
-\begin{table}[H]
-      \centering
-      \begin{tabular}{lll}
-                      & $ \beta_2 $                                 & $ \exp{-\beta_2} $                      \\
-            \midrule
-            MLE       & $ -0.6874 $                                 & $ 1.990 $                               \\
-            95\,\% CI & $ -0.6874\pm 1.96(0.329)=(-1.332,-0.0426) $ & $ (e^{0.0426},e^{1.332})=(1.04,3.79) $.
-      \end{tabular}
-\end{table}
-For ships constructed in the same period and operated in the same period the rate of
-accidents for ships of type A is $1.99$ times higher than the rate of accidents for ships of
-type C. A 95\% confidence interval for this relative rate is $(1.04, 3.79)$.
-\begin{itemize}
-      \item Note that the null hypothesis of no effect is equivalent to $ \RR=1 $ or $ \log{\RR}=0 $:
-            \[ \HN\colon \beta_2=0\text{ versus }\HA\colon \beta_2\ne 0. \]
-      \item The R output includes the $ p $-value for this test:
-            \[ 2\Prob*{Z>\frac{\abs{\hat{\beta}_2-0}}{\se{\hat{\beta}_2}}}=2\Prob{Z>2.089}=0.0367. \]
-      \item Therefore, we reject the null hypothesis that the rate of accidents is the same for
-            ships of types A and C (controlling for periods of construction and operation).
-\end{itemize}
-\subsection*{Interpretation of Model 1: RR for E vs B}
 \begin{Example}{}
-      \textbf{Task 2}: Controlling for periods of construction and operation estimate the relative rate of
-      accidents for ships of type E versus type B.
+    \textbf{Q1}: Based on the joint model give an estimate and 95\% confidence interval for the
+    relative rate (over 8 weeks) of epileptic attacks for treated versus control subjects.
 \end{Example}
-\begin{table}[H]
-      \centering
-      \begin{tabular}{ccccl}
-            \texttt{type} & \texttt{cyr} & \texttt{oyr} & $ \Vector{x}_i $                & $ \log{\lambda_i} $                                             \\
-            \midrule
-            E             & ---          & ---          & $ (1,0,0,0,1,x_5,x_6,x_7,x_8) $ & $ \beta_0+\beta_4+\beta_5x_5+\beta_6x_6+\beta_7x_7+\beta_8x_8 $ \\
-            B             & ---          & ---          & $ (1,1,0,0,0,x_5,x_6,x_7,x_8) $ & $ \beta_0+\beta_1+\beta_5x_5+\beta_6x_6+\beta_7x_7+\beta_8x_8 $ \\
-            \midrule
-                          &              &              & $ \log{\lambda_E/\lambda_B}= $  & $ \beta_4-\beta_1 $
-      \end{tabular}
-\end{table}
 \begin{itemize}
-      \item Note that the log relative risk is a linear combination of two regression parameters.
-      \item Recall that since $ \hat{\Vector{\beta}} $ is an MLE, $ \hat{\Vector{\beta}}\sim \MVN*{\Vector{\beta},I^{-1}(\hat{\Vector{\beta}})} $
-            \[ \Vector{x}^\top \hat{\Vector{\beta}} \sim \N*{\Vector{x}^\top \Vector{\beta},\Vector{x}^\top I^{-1}(\hat{\Vector{\beta}})\Vector{x}}. \]
-      \item In order to estimate $ \se{\beta_4-\beta_1} $:
-            \begin{enumerate}[(i)]
-                  \item If working in R, we can define the contrast $ \Vector{c}=(0,-1,0,0,1,0,0,0,0)^\top $ and
-                        \[ \se{\hat{\beta}_4-\hat{\beta}_1}=\sqrt{\Vector{c}^\top \Matrix{I}^{-1}(\hat{\Vector{\beta}})\Vector{c}}. \]
-                        %\begin{noindent}
-                                    <<>>=
-                                    x=as.matrix(c(0,-1,0,0,1,0,0,0,0),ncol=1)
-                                    v=summary(model1)$cov.unscaled
-                                    sqrt(t(x)%*%v%*%x)
-                                    @
-                                    %\end{noindent}
-                  \item If working by hand with the R covariance or correlation matrix:
-                        \begin{align*}
-                              \se{\hat{\beta}_4-\hat{\beta}_1}
-                               & =\sqrt{\Var{\hat{\beta}_4}+\Var{\hat{\beta}_1}-2\Cov{\hat{\beta}_4,\hat{\beta}_1}} \\
-                               & =\sqrt{(0.05564)+(0.03154)-2(0.02390)}                                             \\
-                               & =0.198.
-                        \end{align*}
-            \end{enumerate}
-      \item Now to estimate the relative rate $ \exp{\beta_4-\beta_1} $:
-            \begin{table}[H]
-                  \centering
-                  \begin{tabular}{lll}
-                                  & $ \beta_4-\beta_1 $                     & $ \exp{\beta_4-\beta_1} $             \\
-                        \midrule
-                        MLE       & $ -0.3256-(-0.5433)=0.8689 $            & $ \exp{0.08689}=2.38 $                \\
-                        95\,\% CI & $ 0.8669\pm 1.96(0.198)=(0.481,1.257) $ & $ (e^{0.481},e^{1.257})=(1.62,3.51) $
-                  \end{tabular}
-            \end{table}
-      \item \emph{For ships constructed and operated in the same periods those of type E had an
-                  estimated $2.38$, 95\,\% CI $(1.62, 3.51)$, times higher accident rate than those of type
-                  B.}
-      \item Here the null hypothesis of no effect is that ships of types E and B have the same
-            accident rate. That is,
-            \[ \HN\colon \beta_4-\beta_1=0\text{ vs }\HA\colon \beta_4-\beta_1\ne 0. \]
-      \item We test this using a Wald test. Since $ \Vector{x}^\top \hat{\Vector{\beta}} \sim \N*{\Vector{x}^\top \Vector{\beta},\Vector{x}^\top I^{-1}(\hat{\Vector{\beta}})\Vector{x}} $.
-            Then
-            \[ \frac{\Vector{x}^\top \hat{\Vector{\beta}}}{\sqrt{\Vector{x}^\top I^{-1}(\hat{\Vector{\beta}})\Vector{x}}}\sim \N{0,1}. \]
-      \item The $ p $-value for this test is:
-            \[ 2\Prob*{Z>\frac{ \Vector{x}^\top \hat{\Vector{\beta}} }{ \sqrt{\Vector{x}^\top I^{-1}(\hat{\Vector{\beta}})\Vector{x}} }}=2\Prob*{Z>\frac{0.8689}{0.198}}<0.001. \]
-      \item Therefore, we reject the null hypothesis that the accident rate is the same for ships
-            of types E and B (controlling for periods of contraction and operation).
+    \item Estimated relative rate of seizures in treatment versus control:
+          \[ \widehat{\RR}=\exp{\hat{\beta}_1}=\exp{-0.2124}=0.809. \]
+    \item 95\% confidence interval for the relative rate:
+          \[ \exp{\hat{\beta}_1\pm z_{0.975}\estse{\hat{\beta}_1}}=\exp{-0.2124\pm 1.96(0.1534)}=(0.60,1.09). \]
 \end{itemize}
-\subsection*{Interpretation of Model 1: Expected Number Events}
 \begin{Example}{}
-      \textbf{Task 3}: Estimate the expected number of accidents for a group of 10 type B ships built in
-      1970 and operated during the entire period 1975-1979.
+    \textbf{Q2}: Based on the joint model estimate the correlation between the first and third
+    responses $(Y_{i1}\;\&\;Y_{i3})$ for an untreated subject with a prior seizure count of $11$, age 31.
 \end{Example}
-\[ \log[\big]{\mu_i(t_i)}=\log{\lambda_i}+\log{t_i}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
 \begin{itemize}
-      \item Estimate $ \log{\lambda_i} $ the log of the event rate and its CI:
-            \begin{table}[H]
-                  \centering
-                  \begin{tabular}{ccccl}
-                        \texttt{type} & \texttt{cyr} & \texttt{oyr} & $ \Vector{x}_i $        & $ \log{\lambda_i} $                 \\
-                        \midrule
-                        B             & 70-74        & 75-79        & $ (1,1,0,0,0,0,1,0,1) $ & $ \beta_0+\beta_1+\beta_6+\beta_8 $ \\
-                        \bottomrule
-                  \end{tabular}
-            \end{table}
-            %\begin{noindent}
-            <<>>=
-            x=as.matrix(c(1,1,0,0,0,0,1,0,1),ncol=1)
-            v=summary(model1)$cov.unscaled
-            t(x)%*%model1$coeff
-            sqrt(t(x)%*%v%*%x)
-            t(x)%*%model1$coef+c(-1,1)*qnorm(0.975)*sqrt(t(x)%*%v%*%x)
-            @
-      %\end{noindent}
-\end{itemize}
-\subsubsection*{Interpretation of Model 1: Expected Number Events}
-\begin{itemize}
-      \item Determine the offset $ t_i= $ months:
-            \begin{align*}
-                  t_i
-                   & =\text{total amount of time at risk of an accident} \\
-                   & =(\text{\# ships})(\text{length of operation})      \\
-                   & =(10)(5\times 12)                                   \\
-                   & =600.
-            \end{align*}
-      \item Calculate the expected number of accidents $ \hat{\mu}_i $:
-            \begin{align*}
-                  \log{\hat{\mu}_i}
-                              & =\log{\hat{\lambda}_i}+\log{t_i} \\
-                  \hat{\mu}_i & =\hat{\lambda}_i t_i             \\
-                              & =\exp{-5.7463}\times 600         \\
-                              & =1.92.
-            \end{align*}
-      \item With 95\,\% CI: $ (600 e^{-5.5138},600 e^{-5.9789})=(1.52,2.42) $.
-      \item \emph{The estimated number of accidents for a group of 10 type B ships built in 1970
-                  and operated during the entire period 1975-1979 is $1.92$ with a 95\,\% CI of $(1.52,2.42)$.}
+    \item First, we need an estimate of $ \hat{\lambda}_i $ for this subject:
+          \begin{align*}
+              \log{4}+\log{\hat{\lambda}_i}
+                              & =\hat{\beta}_0+\hat{\beta}_1(0)+\hat{\beta}_2(11)+\hat{\beta}_3(31) \\
+              \hat{\lambda}_i & =\exp{2.0601+0.0275(11)+0.0127(31)}/4                               \\
+                              & =\exp{2.756}/4                                                      \\
+                              & =3.936.
+          \end{align*}
+    \item Now, find the Correlation:
+          \[ \hat{\rho}=\frac{\hat{\lambda}_i\hat{\phi}}{1+\hat{\lambda}_i\hat{\phi}}=\frac{3.936(1/3.357)}{1+3.936(1/3.357)}=0.54. \]
+    \item Moderate positive correlation between seizure counts within the same subject
+          across time periods.
 \end{itemize}

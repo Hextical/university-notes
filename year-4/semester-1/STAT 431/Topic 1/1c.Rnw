@@ -1,0 +1,200 @@
+\makeheading{Week 3}{\daterange{2021-09-20}{2021-09-24}}
+\section*{Topic 1c: Likelihood for Generalized Linear Models}
+\addcontentsline{toc}{section}{Topic 1c: Likelihood for Generalized Linear Models}
+\subsection*{Likelihood for Generalized Linear Models}
+Recall Stat 331/371: Assume $ Y_i \sim \N{\mu_i,\sigma^2} $ independently. For linear regression:
+\[ \E{Y_i}=\Vector{x}_i^\top \Vector{\beta} \]
+How can we do regression analysis if the distribution of $Y_i$ is not Normal?
+\begin{enumerate}[1.]
+      \item Definition of the \textcolor{Blue}{Exponential Family}.
+            \begin{itemize}
+                  \item Derivation of general likelihood results for the Score and Information.
+                  \item Application of general results to the Exponential Family.
+                  \item Definition of the canonical link.
+                  \item Poisson example.
+            \end{itemize}
+      \item Definition of a \textcolor{Blue}{Generalized Linear Model}.
+\end{enumerate}
+\subsection*{The Exponential Family}
+\addcontentsline{toc}{subsection}{Exponential Family}
+\begin{Regular}{Definition (Exponential Family)}
+      Consider a random variable $ Y_i $ with p.d.f.\ $ f(y_i\mid \theta_i,\phi) $, $ \theta_i $
+      unknown, $ \phi $ known. We say that
+      the distribution is a member of the \textcolor{Blue}{exponential family} if we can write the p.d.f.\ in the
+      form:
+      \[ f(y_i\mid \theta_i,\phi)=\exp[\bigg]{\frac{\bigl(y_i\theta_i-b(\theta_i)\bigr)}{a_i(\phi)}+c(y_i\mid \phi)} \]
+      for some specific functions $ a_i(\:\cdot\:) $, $ b(\:\cdot\:) $, and $ c(\:\cdot\:) $.
+\end{Regular}
+\begin{itemize}
+      \item The parameter $ \theta_i $ is called the \textcolor{Blue}{canonical parameter}.
+      \item The parameter $ \phi $, termed the \textcolor{Blue}{scale/dispersion parameter}, is constant and assumed
+            to be known.
+\end{itemize}
+\subsection*{Likelihood for the Exponential Family}
+Consider a single observation $ y_i $ from the exponential family.
+\begin{itemize}
+      \item \textcolor{Blue}{Likelihood}:
+            \[ \mathcal{L}_i(\theta_i,\phi\mid y_i)=f(y_i\mid \theta_i,\phi)=\exp[\bigg]{\frac{\bigl(y_i\theta_i-b(\theta_i)\bigr)}{a_i(\phi)}+c(y_i\mid \phi)} \]
+      \item \textcolor{Blue}{Log-likelihood}:
+            \[ \ell_i(\theta_i,\phi\mid y_i)=\log[\big]{f(y_i\mid \theta_i,\phi)}=\frac{\bigl(y_i\theta_i-b(\theta_i)\bigr)}{a_i(\phi)}+c(y_i\mid \phi) \]
+      \item \textcolor{Blue}{Score}:
+            \[ S_i(\theta_i)=\pdv{\ell_i}{\theta_i}=\frac{y_i-b^\prime(\theta_i)}{a_i(\phi)} \]
+      \item \textcolor{Blue}{Observed Information}:
+            \[ I_i(\theta_i)=\pdv[order=2]{\ell_i}{\theta_i}=\frac{b^{\prime\prime}(\theta_i)}{a_i(\phi)} \]
+      \item \textcolor{Blue}{Fisher/Expected Info}:
+            \[ \mathcal{I}_i(\theta_i)=\E*{-\pdv[order=2]{\ell_i}{\theta_i}} \]
+\end{itemize}
+\subsection*{Aside: General Results for the Score and Information}
+\textcolor{Blue}{Fact}: Probability density functions integrate to 1. Using this,
+\begin{align*}
+      \int f(y_i\mid \theta_i,\phi)\odif{y_i}                  & =1                         \\
+      \pdv*{\int f(y_i\mid \theta_i,\phi)\odif{y_i}}{\theta_i} & =\pdv{1}{\theta_i}         \\
+      \int \pdv*{f(y_i\mid \theta_i,\phi)}{\theta_i}\odif{y_i} & =0\label{1c:eq1}\tag*{(1)}
+\end{align*}
+When differentiating the log-likelihood we have:
+\begin{align*}
+      \pdv*{\log[\big]{f(y_i\mid \theta_i,\phi)}}{\theta_i}                         & =\frac{1}{f(y_i\mid \theta_i,\phi)}\pdv*{f(y_i\mid \theta_i,\phi)}{\theta_i} \\
+      f(y_i\mid \theta_i,\phi)\pdv*{\log[\big]{f(y_i\mid \theta_i,\phi)}}{\theta_i} & =\pdv*{f(y_i\mid \theta_i,\phi)}{\theta_i}\label{1c:eq2}\tag*{(2)}
+\end{align*}
+Substituting~\ref{1c:eq2} into~\ref{1c:eq1} we get:
+\begin{align*}
+      \int f(y_i\mid \theta_i,\phi)\pdv*{\log[\big]{f(y_i\mid \theta_i,\phi)}}{\theta_i}\odif{y_i} & =0\label{1c:eq3}\tag*{(3)} \\
+      \int f(y_i\mid \theta_i,\phi)S_i(\theta_i)\odif{y_i}                                         & =0                         \\
+      \textcolor{Red}{\E*{S_i(\theta_i)}}                                                          & =0
+\end{align*}
+since by definition $ \displaystyle \E*{g(X)}=\int g(x)f(x\mid \theta)\odif{x} $.
+\begin{Result}{Result \# 1}
+      The expectation of the score function is zero.
+      \[ \E*{S_i(\theta_i)}=0 \]
+\end{Result}
+Differentiate~\ref{1c:eq3} again:
+\begin{align*}
+      0                 & =\int f(y_i\mid \theta_i,\phi)\pdv*{\log[\big]{f(y_i\mid \theta_i,\phi)}}{\theta_i}\odif{y_i}                                                                                                                                                                                                          \\
+      \pdv{0}{\theta_i} & =\pdv*{\int f(y_i\mid \theta_i,\phi)\pdv*{\log[\big]{f(y_i\mid \theta_i,\phi)}}{\theta_i}\odif{y_i}}{\theta_i}                                                                                                                                                                                         \\
+      0                 & =\int \biggl[\pdv*[order=2]{\log[\big]{f(y_i\mid \theta_i,\phi)}}{\theta_i}\biggr]f(y_i\mid \theta_i,\phi)\odif{y_i}+\int \pdv*{\log[\big]{f(y_i\mid \theta_i,\phi)}}{\theta_i}\biggl[\textcolor{Blue}{\pdv*{f(y_i\mid \theta_i,\phi)}{\theta_i}}\biggr]\odif{y_i}                                     \\
+      0                 & =\int \pdv*[order=2]{\log[\big]{f(y_i\mid \theta_i,\phi)}}{\theta_i}f(y_i\mid \theta_i,\phi)\odif{y_i}+\int \biggl(\pdv*{\log[\big]{f(y_i\mid \theta_i,\phi)}}{\theta_i}\biggr)^{\!2}f(y_i\mid \theta_i,\phi)\odif{y_i}                                                   &  & \text{Sub~\ref{1c:eq2}} \\
+      0                 & =\E*{\pdv*[order=2]{\log[\big]{f(y_i\mid \theta_i,\phi)}}{\theta_i}}+\E*{\biggl(\pdv*{\log[\big]{f(y_i\mid \theta_i,\phi)}}{\theta_i}\biggr)^{\!2}}                                                                                              \label{1c:eq4}\tag*{(4)}
+\end{align*}
+Examining~\ref{1c:eq4} we get:
+\begin{align*}
+      \E*{\pdv*[order=2]{\log[\big]{f(y_i\mid \theta_i,\phi)}}{\theta_i}}+\E*{\biggl(\pdv*{\log[\big]{f(y_i\mid \theta_i,\phi)}}{\theta_i}\biggr)^{\!2}} & =0                                                           \\
+      \E*{-I_i(\theta_i)}+\E*{S_i(\theta_i)^2}                                                                                                           & =0                                                           \\
+      \textcolor{Red}{\E*{S_i(\theta_i)^2}}                                                                                                              & =\textcolor{Red}{\E*{I_i(\theta_i)}=\mathcal{I}_i(\theta_i)}
+\end{align*}
+\begin{Result}{Result \# 2}
+      The expectation of the score function squared is the expected information.
+      \[  \E*{S_i(\theta_i)^2}=\E*{I_i(\theta_i)}=\mathcal{I}_i(\theta_i) \]
+\end{Result}
+Recall that $ \Var*{X}=\E*{X^2}-\bigl(\E{X}\bigr)^2 $. Using Results \#1 and \#2 we have:
+\begin{align*}
+      \Var*{S_i(\theta_i)} & =\E*{S_i(\theta_i)^2}-\E*{S_i(\theta_i)}^2 \\
+                           & =\mathcal{I}_i(\theta_i)-0^2               \\
+                           & =\mathcal{I}_i(\theta_i)
+\end{align*}
+\begin{Result}{Result \# 3}
+      The variance of the score function is the expected information:
+      \[ \Var*{S_i(\theta_i)}=\mathcal{I}_i(\theta_i) \]
+\end{Result}
+\subsection*{Applying these Results to the Exponential Family}
+\begin{align*}
+      \E{S_i(\theta_i)}                             & =0                                     \\
+      \E*{\frac{Y_i-b^\prime(\theta_i)}{a_i(\phi)}} & =0                                     \\
+      \textcolor{Green}{\E{Y_i}}                    & =\textcolor{Green}{b^\prime(\theta_i)} \\
+\end{align*}
+\begin{align*}
+      \E*{S_i(\theta_i)^2}                                              & =\E*{I_i(\theta_i)}                                      \\
+      \E*{\biggl(\frac{Y_i-b^\prime(\theta_i)}{a_i(\phi)}\biggr)^{\!2}} & =\E*{\frac{b^{\prime\prime}(\theta_i)}{a_i(\phi)}}       \\
+      \frac{1}{a_i(\phi)^2}\E*{(Y_i-\E*{Y_i})^2}                        & = \frac{b^{\prime\prime}(\theta_i)}{a_i(\phi)}           \\
+      \textcolor{Green}{\Var{Y_i}}                                      & = \textcolor{Green}{b^{\prime\prime}(\theta_i)a_i(\phi)}
+\end{align*}
+\subsection*{Properties of the Exponential Family}
+For a random variable $Y_i$ with a distribution in the exponential family, $ \theta_i $ unknown, $ \phi $
+known:
+\[ \mathcal{L}_i(\theta_i,\phi\mid y_i)=f(y_i\mid \theta_i,\phi)=\exp[\bigg]{\frac{\bigl(y_i\theta_i-b(\theta_i)\bigr)}{a_i(\phi)}+c(y_i\mid \phi)} \]
+\begin{Regular}{Mean and Variance for the Exponential Family}
+      \begin{itemize}
+            \item Mean: $ \E{Y_i}=b^\prime(\theta_i)=\mu_i $.
+            \item Variance: $ \Var{Y_i}=b^{\prime\prime}(\theta_i)a_i(\phi) $
+      \end{itemize}
+\end{Regular}
+\begin{itemize}
+      \item $ \V{\mu_i}=b^{\prime\prime}(\theta_i) $ is called the \textcolor{Blue}{Variance function}.
+      \item $ b^{\prime\prime}(\theta_i) $ is a function of the \textcolor{Blue}{canonical parameter} $ \theta_i $ and hence a function of the mean
+            (mean-variance relationship)
+      \item $ a_i(\phi) $ is a known function of the \textcolor{Blue}{dispersion parameter} $ \phi $.
+      \item Often we can write $ a_i(\phi)=\phi/w_i $ where $ w_i $ is a weight.
+\end{itemize}
+\subsection*{Link Functions}
+\begin{Regular}{Definition (Link Function)}
+      The \textcolor{Blue}{link function} $ g(\mu_i) $ relates the \textcolor{Blue}{linear predictor} $ \eta_i=\Vector{x}^\top\Vector{\beta} $ to the expected value $ \mu_i $ of the random variable $ Y_i $.
+      \[ g(\mu_i)=\eta_i=\Vector{x}_i^\top\Vector{\beta} \]
+\end{Regular}
+\begin{Regular}{Definition (Canonical Link Function)}
+      When $Y_i$ is a member of the \textcolor{Blue}{exponential family} we define the \textcolor{Blue}{canonical link function} to be:
+      \[ g(\mu_i)=\theta_i=\eta_i=\Vector{x}_i^\top\Vector{\beta} \]
+      (i.e., canonical parameter = linear predictor)
+\end{Regular}
+\subsection*{Examples}
+Many well known distributions belong to the exponential family:
+\begin{itemize}
+      \item \textcolor{Blue}{Normal distribution}: $ Y \sim \N{\mu,\sigma^2} $, $ \sigma^2 $ known.
+            \[ f(y\mid \theta,\phi)=\frac{1}{\sqrt{2\pi\sigma^2}} \exp*{-\frac{(y-\mu)^2}{2\sigma^2}},\qquad y\in(-\infty,\infty) \]
+      \item \textcolor{Blue}{Poisson Distribution}: $ Y \sim \POI{\lambda} $.
+            \[ f(y\mid \lambda)=\frac{\lambda^y e^{-\lambda}}{y!},\qquad y=0,1,2,\ldots  \]
+      \item \textcolor{Blue}{Binomial Distribution}: $ Y \sim \BIN{m,\pi} $.
+            \[ f(y\mid \pi)=\binom{m}{y}\pi^y(1-\pi)^{m-y},\qquad y=0,1,\ldots,m \]
+\end{itemize}
+\begin{Example}{The Poisson Distribution}
+      Let $ Y_i $, $ i=1,2,\ldots,n $ be iid $ \POI{\lambda_i} $.
+      \[ f(y_i\mid \lambda_i)=\frac{\lambda_i^{y_i} e^{-\lambda_i}}{y_i!},\qquad y_i=0,1,2,\ldots \]
+      Show that the distribution of $ Y_i $ is a member of the exponential family and find the
+      mean, variance, variance function and canonical link function.
+\end{Example}
+\subsection*{Exponential Family: Full Disclosure}
+The definition of the exponential family used in the Stat 431 course notes is actually a
+special case of:
+\begin{Regular}{Definition (General Exponential Family)}
+      A distribution is a member of the \textcolor{Blue}{General Exponential Family} if it can be expressed as:
+      \[ f(y\mid \Vector{\theta})=\exp[\bigg]{\sum_{i=1}^{k} w_i(\Vector{\theta})t_i(y)+b(\Vector{\theta})+h(y)} \]
+      for $ t_1(y),\ldots,t_k(y) $ real-valued function of $ y $, and $ w_1(\Vector{\theta}),\ldots,w_k(\Vector{\theta}) $ real-valued
+      functions of the possibly vector-valued parameter $ \Vector{\theta} $.
+\end{Regular}
+\subsection*{Random Sample from the Exponential Family}
+Now suppose $ Y_i $, $ i=1,2,\ldots,n $ are iid with a distribution that is a member of the
+\textcolor{Blue}{exponential family}. Then:
+\[ \mathcal{L}(\Vector{\theta},\phi\mid \Vector{y})=\prod_{i=1}^n f(y_i\mid \theta_i,\phi)=\prod_{i=1}^n\exp[\bigg]{\frac{\bigl(y_i\theta_i-b(\theta_i)\bigr)}{a_i(\phi)}+c(y_i\mid \phi)} \]
+\[ \ell(\Vector{\theta},\phi\mid \Vector{y})=\sum_{i=1}^n \log[\big]{f(y_i\mid \theta_i,\phi)}=\sum_{i=1}^n \biggl(\frac{\bigl(y_i\theta_i-b(\theta_i)\bigr)}{a_i(\phi)}+c(y_i\mid \phi)\biggr) \]
+In a regression context, we are interested in estimating $ \Vector{\beta} $ under the \textcolor{Blue}{link function}:
+\[ g(\mu_i)=\Vector{x}_i^\top\Vector{\beta} \]
+where $ \Vector{x}_i $ is a vector of explanatory variables for subject $ i=1,2,\ldots, n $.
+\subsection*{Generalized Linear Models}
+\addcontentsline{toc}{subsection}{Generalized Linear Models}
+\begin{Regular}{Definition (Generalized Linear Model (GLM))}
+      A \textcolor{Blue}{Generalized Linear Model (GLM)} is composed of:
+      \begin{itemize}
+            \item The \textcolor{Blue}{Random Component}: The distribution of the iid response variables $ Y_i $ is
+                  assumed to come from a parametric distribution that is a member of the
+                  exponential family.
+            \item The \textcolor{Blue}{Systematic Component} or linear predictor $ \eta_i=\Vector{x}_i^\top\Vector{\beta} $, a linear combination of
+                  explanatory variables $ \Vector{x}_i $ and regression parameters $ \Vector{\beta} $.
+            \item The \textcolor{Blue}{Link function} that relates the mean of the distribution of $ Y_i $ to the linear
+                  predictor through:
+                  \[ g(\mu_i)=\eta_i=\Vector{x}_i^\top\Vector{\beta} \]
+      \end{itemize}
+\end{Regular}
+\subsection*{Topic Summary: Likelihood for Generalized Linear Models}
+\begin{enumerate}[1.]
+      \item Definition of the \textcolor{Blue}{Exponential Family}.
+            \begin{itemize}
+                  \item Derivation of general likelihood results for the Score and Information.
+                  \item Application of general results to the Exponential Family.
+                  \item Definition of the canonical link.
+                  \item Poisson example.
+            \end{itemize}
+      \item Definition of a \textcolor{Blue}{Generalized Linear Model}.
+\end{enumerate}
+\textcolor{Blue}{Next Topic: Estimation for Generalized Linear Models}.
+\begin{itemize}[label={}]
+      \item Estimation of $ \Vector{\beta} $ from a GLM through Iteratively Reweighted Least Squares
+            (IRWLS).
+\end{itemize}

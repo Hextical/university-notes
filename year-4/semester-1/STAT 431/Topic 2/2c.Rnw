@@ -1,0 +1,234 @@
+\section*{Topic 2c: Likelihood Ratio (Deviance) Tests}
+\addcontentsline{toc}{section}{Topic 2c: Likelihood Ratio (Deviance) Tests}
+\subsection*{Major Developments From Last Topic: Logistic Regression Models}
+\begin{Regular}{Binomial GLM / Logistic Regression Model}
+      $ Y_i \sim \BIN{m_i,\pi_i} $, $ i=1,\ldots,n $ independently with explanatory variables $ \Vector{x}_i $:
+      \[ \log*{\frac{\pi_i}{1-\pi_i}}=\Vector{x}_i^\top \Vector{\beta} \]
+\end{Regular}
+\begin{itemize}
+      \item \textcolor{Blue}{Estimation}: $ \hat{\Vector{\beta}} $ come from Fisher Scoring using R function \texttt{glm()}.
+      \item \textcolor{Blue}{Interpretation}: $ \beta_k $ have log OR interpretations ($ k>0 $).
+      \item \textcolor{Blue}{Hypothesis Tests} of $ \HN $: $ \beta_k=\beta_{k0} $ versus $ \HA $: $ \beta_k\ne \beta_{k0} $.
+      \item \textcolor{Blue}{Confidence Intervals}: $ \hat{\beta}_k\pm z_{1-\alpha/2}\se{\hat{\beta}_k} $ where $ \se{\hat{\beta}_k}=\sqrt{I^{kk}(\hat{\Vector{\beta}})} $.
+\end{itemize}
+\subsection*{Topic 2c: Logistic Regression: Likelihood Ratio (Deviance) Tests}
+\begin{enumerate}[1.]
+      \item Likelihood for Binary (Logistic) Regression:
+            \[ \ell(\Vector{\beta}\mid \Vector{y})=\sum_{i=1}^{n} \biggl(y_i(\Vector{x}_i^\top \Vector{\beta})-m_i\log[\big]{1+\exp{\Vector{x}_i^\top \Vector{\beta}}}\biggr) \]
+      \item Likelihood Ratio Tests:
+            \begin{align*}
+                  -2\log[\big]{R(\theta)}          & =-2r(\theta)                  \sim \chi^2_1 &  & \text{Scalar $\theta$}                      \\
+                  -2\log[\big]{R(\Vector{\theta})} & =-2r(\Vector{\theta})  \sim \chi^2_{n-p}    &  & \text{$ p $-dim Vector $ \Vector{\theta} $}
+            \end{align*}
+      \item Testing Nested Non-saturated Models:
+            \begin{center}
+                  $ \HN $: $ \beta_p=\cdots=\beta_{q-1}=0 $ vs $ \HA $: at least one of $ \beta_p,\ldots,\beta_{q-1}\ne 0 $
+            \end{center}
+\end{enumerate}
+\subsection*{2.5 Likelihood for Binary (Logistic) Regression}
+\addcontentsline{toc}{subsection}{Likelihood for Logistic Regression}
+\begin{itemize}
+      \item \textcolor{Blue}{Outcome/Response variable}: $ Y_i \sim \BIN{m_i,\pi_i} $, $ i=1,\ldots, n $.
+            \begin{align*}
+                  \mathcal{L}(\Vector{\pi}\mid \Vector{y}) & =\prod_{i=1}^n \pi_i^{y_i}(1-\pi_i)^{m_i-y_i}                     \\
+                  \ell(\Vector{\pi}\mid \Vector{y})        & =\sum_{i=1}^{n} \bigl(y_i\log{\pi_i}+(m_i-y_i)\log{1-\pi_i}\bigr)
+            \end{align*}
+      \item \textcolor{Blue}{Explanatory variables}: $ \Vector{x}_i=(x_{i0},x_{i1},\ldots,x_{i(p-1)})^\top $.
+      \item \textcolor{Blue}{Regression parameters}: $ \Vector{\beta}=(\beta_0,\beta_1,\ldots,\beta_{p-1})^\top $.
+      \item \textcolor{Blue}{Link function}: logistic link
+            \[ g(\pi_i)=\log*{\frac{\pi_i}{1-\pi_i}}=\Vector{x}_i^\top \Vector{\beta} \]
+\end{itemize}
+\subsection*{Likelihood for Logistic Regression}
+\begin{itemize}
+      \item Log likelihood for Binomial distribution:
+            \[ \ell(\Vector{\pi}\mid \Vector{y})=\sum_{i=1}^{n} \Biggl(y_i\log*{\frac{\pi_i}{1-\pi_i}}+m_i\log{1-\pi_i}\Biggr) \]
+      \item Using logit link we can reparameterize the log-likelihood in terms of $ \Vector{\beta} $:
+            \[ \log*{\frac{\pi_i}{1-\pi_i}}=\Vector{x}_i^\top \Vector{\beta},\qquad \pi_i=\frac{\exp{\Vector{x}_i^\top \Vector{\beta}}}{1+\exp{\Vector{x}_i^\top \Vector{\beta}}}   \]
+            \[ \log{1-\pi_i}=\log*{\frac{\exp{\Vector{x}_i^\top \Vector{\beta}}}{1+\exp{\Vector{x}_i^\top \Vector{\beta}}}}=\log*{\frac{1}{1+\exp{\Vector{x}_i^\top \Vector{\beta}}}}=-\log[\big]{1+\exp{\Vector{x}_i^\top \Vector{\beta}}} \]
+      \item Log likelihood for logistic regression:
+            \[ \ell(\Vector{\beta}\mid \Vector{y})=\sum_{i=1}^{n} \Bigl(y_i(\Vector{x}_i^\top \Vector{\beta})-m_i\log[\big]{1+\exp{\Vector{x}_i^\top \Vector{\beta}}}\Bigr) \]
+      \item If $ \dim(\Vector{\beta})=p<n $, the model is said to be \textcolor{Blue}{unsaturated}.
+      \item If $ p=n $, we have a \textcolor{Blue}{saturated} model.
+      \item Maximize $ \ell(\Vector{\beta}\mid \Vector{y}) $ to obtain the MLE's $ \hat{\Vector{\beta}} $ (i.e., using Fisher Scoring in R \texttt{glm()}).
+      \item Transform to get estimates $ \hat{\pi}_i=\expit{\Vector{x}_i^\top \hat{\Vector{\beta}}} $.
+      \item For a saturated model, $ \expit{\Vector{x}_i^\top \hat{\Vector{\beta}}} $ will equal the Binomial MLE $ y_i/m_i $, and we will have $ m_i\hat{\pi}_i=y_i $ (i.e., a perfect fit).
+\end{itemize}
+\subsection*{Hypothesis Tests for Logistic Regression}
+\begin{itemize}
+      \item We want to ask: \textcolor{Red}{how good is the model?}
+      \item How well do the $ m_i\hat{\pi}_i $ approximate the data $ y_i $?
+      \item How much worse is the fit of a particular unsaturated model versus the saturated
+            model?
+      \item \textcolor{Blue}{Previously}: Wald-based tests of:
+            \begin{center}
+                  $ \HN $: $ \beta_k=\beta_{k0} $ versus $ \HA $: $ \beta_k\ne \beta_{k0} $.
+            \end{center}
+      \item \textcolor{Blue}{Today}: Likelihood Ratio based tests for:
+            \begin{center}
+                  $ \HN $: $ \beta_k=\beta_{k+1}=0 $ versus $ \HA $: $ \beta_k\ne 0 $ or $ \beta_{k+1}\ne 0 $.
+            \end{center}
+      \item This will allow us to test the overall fit of \textcolor{Green}{nested models}.
+\end{itemize}
+\subsection*{Likelihood Ratio Tests --- General Setting}
+\addcontentsline{toc}{subsection}{Likelihood Ratio Tests}
+\begin{itemize}
+      \item Suppose $ \mathcal{L}(\Vector{\theta}) $ is the likelihood of a $ q $-dim parameter vector $ \Vector{\theta} $.
+            \begin{itemize}
+                  \item Let $ \tilde{\Vector{\theta}} $ be the $ q $-dim MLE (unconstrained/\textcolor{Blue}{saturated}, $ q=n $).
+                  \item Let $ \hat{\Vector{\theta}} $ be the $ p $-dim MLE (constrained/\textcolor{Blue}{unsaturated}, $ p<q $).
+            \end{itemize}
+      \item $ \HN $: the unsaturated $ p $-dim model is adequate.
+      \item $ \HA $: the $ p $-dim model is not adequate.
+      \item Recall the \textcolor{Blue}{Likelihood Ratio result}. Under $ \HN $,
+            \[ \textcolor{Blue}{-2\log[\big]{R(\Vector{\theta})}=-2\log*{\frac{\mathcal{L}(\hat{\Vector{\theta}})}{\mathcal{L}(\tilde{\Vector{\theta}})}}=-2\bigl(\ell(\hat{\Vector{\theta}})-\ell(\tilde{\Vector{\theta}})\bigr) \sim \chi^2_{q-p}} \]
+      \item This is often referred to as the \textcolor{Blue}{Deviance}: $ D=-2\log[\big]{R(\Vector{\theta})} $.
+      \item Reject $ \HN $ at significance level $ \theta $ if:
+            \[ \Prob[\Big]{\chi^2_{q-p}>-2\log[\big]{R(\Vector{\theta})}}<\alpha \]
+\end{itemize}
+\subsection*{Likelihood Ratio Tests --- Logistic Regression}
+\begin{itemize}
+      \item \textcolor{Blue}{Saturated} model MLEs: $ \tilde{\pi}_i=y_i/m_i $, $ i=1,\ldots,n $.
+      \item \textcolor{Blue}{Unsaturated} model MLEs: $ \hat{\pi}=\expit{\Vector{x}_i^\top \hat{\Vector{\beta}}} $.
+            \begin{itemize}
+                  \item Regression models are a way of imposing constraints on the estimation of $ \Vector{\pi} $ (through $ p $-dim $ \Vector{\beta} $).
+            \end{itemize}
+      \item $ \HN $: The $ p $-dim model $ \logit{\pi_i}=\Vector{x}_i^\top \Vector{\beta} $ is adequate.
+      \item $ \HA $: The $ p $-dim model is not adequate compared to the $n$-dim saturated model.
+      \item For the binomial with logit link the \textcolor{Blue}{LR/Deviance} test statistic is:
+            \begin{align*}
+                  D
+                   & =-2\bigl(\ell(\hat{\Vector{\pi}})-\ell(\tilde{\Vector{\pi}})\bigr)                                                                                                                      \\
+                   & =2\bigl(\ell(\tilde{\Vector{\pi}})-\ell(\hat{\Vector{\pi}})\bigr)                                                                                                                       \\
+                   & =2\biggl[\sum_{i=1}^{n} \bigl(y_i\log{\tilde{\pi}_i}+(m_i-y_i)\log{1-\tilde{\pi}_i}\bigr)-\sum_{i=1}^{n} \bigl(y_i\log{\hat{\pi}_i}+(m_i-y_i)\log{1-\hat{\pi}_i}\bigr) \biggr]          \\
+                   & =2\Biggl[\sum_{i=1}^{n} \Biggl(y_i\log*{\frac{y_i}{m_i}}+(m_i-y_i)\log*{\frac{m_i-y_i}{m_i}}\Biggr)-\sum_{i=1}^{n} \bigl(y_i\log{\hat{\pi}_i}+(m_i-y_i)\log{1-\hat{\pi}_i}\bigr)\Biggr] \\
+                   & =2\Biggl[\sum_{i=1}^{n} \Biggl(y_i\log*{\frac{y_i}{m_i\hat{\pi}_i}}+(m_i-y_i)\log*{\frac{m_i-y_i}{m_i(1-\hat{\pi}_i)}}\Biggr)\Biggr]
+            \end{align*}
+      \item \textcolor{Blue}{Aside}: Note that $ D $ has the general form: $ D=2\sum\sum O_{ij}\log*{\frac{O_{jj}}{E_{ij}}} $.
+\end{itemize}
+\subsection*{Likelihood Ratio Tests --- Logistic Regression}
+\begin{itemize}
+      \item We expect $ D \sim \chi^2_{n-p} $ under $ \HN $.
+            \begin{itemize}
+                  \item Unfortunately, this is not a good approximation.
+                  \item Approximation is much better for tested nested unsaturated models though.
+            \end{itemize}
+      \item In R, the $ D $ is reported as the \textcolor{Blue}{\texttt{Residual Deviance}}.
+            % \begin{noindent}
+            <<>>=
+            model3$deviance
+            model4$deviance
+            @
+            % \end{noindent}
+      \item $ \HN $: Model 4 is adequate, $ \HA $: Model 4 is not adequate compared to Model 3.
+            \[ p=\Prob{\chi^2_{2}>0.3148}=0.85 \]
+      \item Therefore do not reject the null hypothesis that Model 4 (Clinic only) is adequate.
+\end{itemize}
+\subsection*{Pearson Statistic --- Logistic Regression}
+\begin{itemize}
+      \item The \textcolor{Blue}{Pearson statistic} is another statistic one can use for assessing ``overall'' fit of a model.
+            \[ \textcolor{Blue}{P=\sum_{i=1}^{n} \frac{(y_i-m_i\hat{\pi}_i)^2}{m_i\hat{\pi}_i(1-\hat{\pi}_i)}}  \]
+      \item As with $ D $, $ P \sim \chi^2_{n-p} $ under $ \HN $: the model provides a reasonable fit to the data.
+      \item Note: $ P $ has the general form $ P=\sum \frac{(O_i-E_i)^2}{V_i} $.
+      \item The $ \chi^2 $ approximation is a bit better than for deviance statistics.
+      \item Both are poor if sample size ($ m_i $) are small though.
+\end{itemize}
+\subsection*{2.6 Testing Nested Non-saturated Models}
+\addcontentsline{toc}{subsection}{Testing Nested Models}
+\begin{itemize}
+      \item The previous LR/Deviance test was for an unsaturated model vs a saturated model.
+      \item Now consider two unsaturated models and one saturated model ($ p<q<n $).
+            \begin{align*}
+                  \logit{\pi_i} & =\beta_0+\beta_1x_{i1}+\cdots+\beta_{p-1}x_{i(p-1)}\tag*{(1)}\label{2.6M1}                                                           \\
+                  \logit{\pi_i} & =\beta_0+\beta_1x_{i1}+\cdots+\beta_{p-1}x_{i(p-1)}+\cdots+\beta_{q-1}x_{i(q-1)}\tag*{(2)}\label{2.6M2}                              \\
+                  \logit{\pi_i} & =\beta_0+\beta_1x_{i1}+\cdots+\beta_{p-1}x_{i(p-1)}+\cdots+\beta_{q-1}x_{i(q-1)}+\cdots+\beta_{n-1}x_{i(n-1)}\tag*{(3)}\label{2.6M3}
+            \end{align*}
+      \item Model~\ref{2.6M1} is \textcolor{Blue}{nested} within Model~\ref{2.6M2}.
+      \item $ \HN $: The $ p $-dim Model~\ref{2.6M1} fits the data as well as Model~\ref{2.6M2}.
+            \begin{itemize}
+                  \item $ \HN $: $ \beta_p=\cdots=\beta_{q-1}=0 $.
+            \end{itemize}
+      \item $ \HA $: Model~\ref{2.6M1} is inadequate compared to Model~\ref{2.6M2}.
+            \begin{itemize}
+                  \item $ \HA $: at least one of $ \beta_p,\ldots,\beta_{q-1}\ne 0 $.
+            \end{itemize}
+\end{itemize}
+\subsection*{Testing Nested Non-saturated Models}
+\begin{table}[!htbp]
+      \centering
+      \begin{NiceTabular}{lcc}
+            \textcolor{Blue}{Model} & \textcolor{Blue}{Dimension} & \textcolor{Blue}{MLEs}\\
+            \midrule
+            \ref{2.6M1} Reduced model & $ p $ & $ \hat{\pi}_i $\\
+            \ref{2.6M2} Full model & $ q $ & $ \tilde{\pi}_i $\\
+            \ref{2.6M3} Saturated model & $ n $ & $ \tilde{\tilde{\pi}_i} $\\
+            \bottomrule
+      \end{NiceTabular}
+\end{table}
+\begin{itemize}
+      \item Previously, found the LR/Deviance test vs saturated models.
+      \item LR/Deviance test of~\ref{2.6M1} vs~\ref{2.6M3}:
+            \[ \textcolor{Blue}{D_0=-2\bigl(\ell(\hat{\Vector{\pi}})-\ell(\tilde{\tilde{\Vector{\pi}}})\bigr)\sim \chi^2_{n-p}} \]
+      \item LR/Deviance test of~\ref{2.6M2} vs~\ref{2.6M3}:
+            \[ \textcolor{Blue}{D_\text{A}=-2\bigl(\ell(\tilde{\Vector{\pi}})-\ell(\tilde{\tilde{\Vector{\pi}}})\bigr)\sim \chi^2_{n-q}} \]
+      \item Now we wish to conduct an LR/Deviance test of~\ref{2.6M1} vs~\ref{2.6M2}:
+            \begin{align*}
+                  \Delta D
+                   & =-2\bigl(\ell(\hat{\Vector{\pi}})-\ell(\tilde{\Vector{\pi}})\bigr)                                                                                    \\
+                   & =-2\bigl(\ell(\hat{\Vector{\pi}})-\ell(\tilde{\tilde{\Vector{\pi}}})\bigr)+2\bigl(\ell(\tilde{\Vector{\pi}})-\ell(\tilde{\tilde{\Vector{\pi}}})\bigr) \\
+                   & =\textcolor{Blue}{D_0-D_\text{A}}
+            \end{align*}
+      \item Fact: If $ X_i \sim \chi^2_{r_i} $, then $ X_1+X_2 \sim \chi^2_{r_1+r_2} $.
+      \item Therefore, under $ \HN $: $ \Delta D \sim \chi^2_{q-p} $.
+            \begin{itemize}
+                  \item This approximation is much better than when testing an unsaturated model versus
+                        the saturated model.
+            \end{itemize}
+      \item If $ p=\Prob{\chi^2_{q-p}>\Delta D}<\alpha $ then reject $ \HN $: This implies:
+            \begin{itemize}
+                  \item Reduced model does not fit the data as well as Full model.
+                  \item One or more of $ x_{ip},\ldots,x_{i(q-1)} $ is important (i.e., associated with the outcome).
+            \end{itemize}
+\end{itemize}
+\subsection*{Testing Non-Saturated Models in Prenatal Care Example}
+\begin{itemize}
+      \item Summary of Deviance (``\texttt{Residual deviance}'') from R output:
+            \begin{table}[!htbp]
+                  \centering
+                  \begin{NiceTabular}{cllc}
+                        Model & Variables & Deviance & Parameters\\
+                        \midrule
+                        1 & \texttt{loc} & $10.81438$ & 2\\
+                        2 & \texttt{clinic + loc} & $0.1069281$ & 3\\
+                        3 & \texttt{clinic + loc + loc*clinic} & $\approx 0$ & 4\\
+                        4 & \texttt{clinic} & $0.3148411$ & 2
+                  \end{NiceTabular}
+            \end{table}
+      \item Is level of care associated with fetal mortality?
+            \begin{center}
+                  $ \HN $: $ \beta_2=0 $ versus $ \HA $: $ \beta_2\ne 0 $
+            \end{center}
+            % \begin{noindent}
+            <<>>=
+            # Deviance/LR test H_0: Model 4 is adequate compared to Model 2
+            model4$deviance - model2$deviance
+            1-pchisq(model4$deviance-model2$deviance,model4$df.residual-model2$df.residual)
+            # Reprint the fitted Model 2: Main Effects Only model
+            model2 <- glm(resp~clinic+loc,family=binomial(link=logit),data=prenatal.dat)
+            summary(model2)
+            @
+            % \end{noindent}
+\end{itemize}
+\subsection*{Summary: Likelihood Ratio (Deviance) Tests for Logistic Regression}
+\begin{itemize}
+      \item \textcolor{Blue}{(log) Relative Likelihood Result}: $ D=-2\log[\big]{R(\Vector{\theta})}=-2r(\Vector{\theta})\sim \chi^2_{n-p} $.
+      \item For the binomial with logit link the \textcolor{Blue}{LR/Deviance} test statistic is:
+            \[ D=2\Biggl[\sum_{i=1}^{n} \Biggl(y_i\log*{\frac{y_i}{m_i\hat{\pi}_i}}+(m_i-y_i)\log*{\frac{m_i-y_i}{m_i(1-\hat{\pi}_i)}}\Biggr)\Biggr] \]
+      \item This is reported as the ``\texttt{Residual Deviance}'' in R \texttt{glm} summary output.
+      \item Used to test the fit of nested non-saturated models $ (q>p) $:
+            \[ \logit{\pi_i} =\beta_0+\beta_1x_{i1}+\cdots+\beta_{p-1}x_{i(p-1)}+\cdots+\beta_{q-1}x_{i(q-1)} \]
+            \begin{itemize}
+                  \item $ \HN $: $ \beta_p=\cdots=\beta_{q-1}=0 $.
+                  \item $ \HA $: at least one of $ \beta_p,\ldots,\beta_{q-1}\ne 0 $.
+            \end{itemize}
+      \item Test statistic: $ \Delta D \sim \chi^2_{q-p} $ and $ p\text{-value}=\Prob{\chi^2_{q-p}>\Delta D} $.
+\end{itemize}

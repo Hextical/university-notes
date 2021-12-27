@@ -1,220 +1,169 @@
-\chapter{Basic methods for the Analysis of Binary Data}
-\section*{Topic 3a: Binary Data and Odds Ratios}
-\addcontentsline{toc}{section}{Topic 3a: Binary Data and Odds Ratios}
-\subsection*{Binary Data Set-up}
-\begin{itemize}
-      \item Consider the simplest case with two \emph{binary} variables:
+\section*{Topic 3a: Introduction to Poisson GLMs}
+\addcontentsline{toc}{section}{Topic 3a: Introduction to Poisson GLMs}
+\begin{enumerate}[1.]
+      \item \textcolor{Blue}{Setting up a Poisson GLM for Counts}.
             \begin{itemize}
-                  \item COVID-19: infected or not infected (response).
-                  \item Vaccination: yes or no (explanatory variable).
+                  \item Review of the Poisson distribution as a member of the exponential family.
+                  \item Specification of a Poisson GLM (i.e., Log Linear Regression Model).
+                  \item Derivation of Poisson deviance and deviance residuals.
             \end{itemize}
-      \item Use a $ 2\times 2 $ table to summarize the data:
-            \begin{table}[!htbp]
-                  \centering
-                  \begin{NiceTabular}{c|cc|c}
-                        & \multicolumn{2}{c}{\emph{COVID-19}}                                                 \\
-                        Vaccination & infected                            & not infected                                        \\
-                        \midrule
-                        yes & $ y_1 $                            & $ m_1-y_1 $                 & $ m_1 $         \\
-                        no   & $ y_2 $                            & $ m_2-y_2 $                 & $ m_2 $         \\
-                        \midrule
-                        Total& $ y_{\bullet} $                    & $ m_{\bullet}-y_{\bullet} $ & $ m_{\bullet} $
-                  \end{NiceTabular}
-            \end{table}
-      \item Treat $ m_1 $ and $ m_2 $ as fixed, assume $ Y_1 $ and $ Y_2 $ are independent binomial r.v.'s
-            \[ \textcolor{Red}{Y_k \sim \BIN{m_k,\pi_k},\qquad k=1,2,} \]
-            where $ \pi_k=\Prob{\text{infection}\given \text{group $ k $}} $.
-      \item How do we measure the associate between COVID-19 infection and vaccination?
-\end{itemize}
-
-\subsection*{Measures of Association}
-\begin{Regular}{Definition (Odds Ratio)}
-      The \textcolor{Red}{Odds Ratio} (OR) is the ratio of the odds of an event occurring in one
-      group to the odds of the event in another group (e.g., not vaccinated):
-      \[ \text{Odds Ratio}=\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)}. \]
-\end{Regular}
-Interpretation of OR:
-\[ \begin{array}{ccccc}
-            \pi_1=\pi_2 & \implies & \OR=1   & \implies & \text{equal risk (no association)} \\
-            \pi_1>\pi_2 & \implies & \OR>1   & \implies & \text{higher risk in group 1}      \\
-            \pi_1<\pi_2 & \implies & 0<\OR<1 & \implies & \text{higher risk in group 2}
-      \end{array} \]
-\begin{Regular}{Relative Risk (RR)}
-      The \textcolor{Red}{Relative Risk} (RR) is the ratio of the probability of an event occurring in one group versus another group:
-      \[ \text{Relative Risk}=\frac{\pi_1}{\pi_2} \]
-\end{Regular}
-In the case of a \textcolor{Red}{rare disease} (i.e., when $ \pi_1 $ and $ \pi_2 $ are very small),
-\[ \OR=\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)}=\frac{\pi_1}{\pi_2}\underbrace{\biggl(\frac{1-\pi_2}{1-\pi_1}\biggr)}_{\approx 1}\approx \frac{\pi_1}{\pi_2} =\RR,  \]
-then
-\[ \OR\approx\RR. \]
-\subsection*{Maximum Likelihood Estimation of Odds Ratio}
+      \item \textcolor{Blue}{Regression for Poisson Processes}.
+            \begin{itemize}
+                  \item Definition of a Poisson Process.
+                  \item Log Linear Regression Model for a Time Homogeneous Poisson Process.
+                  \item Introduction of the offset term.
+            \end{itemize}
+\end{enumerate}
+\subsection*{The Poisson Distribution}
+\addcontentsline{toc}{subsection}{Setting up a Poisson GLM}
 \begin{itemize}
-      \item Goal: Estimate odds ratio $ \psi=\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)} $ using likelihood method. Based
-            on ``grouped'' binomial data, $ \textcolor{Red}{Y_k \sim \BIN{m_k,\pi_k},\; k=1,2} $,
+      \item Recall for $ Y \sim \POI{\mu} $:
+            \[ f(y)=\frac{\mu^y e^{-\mu}}{y!}=\exp[\big]{y\log{\mu}-\mu-\log{y!}}\qquad y=0,1,2,\ldots  \]
+      \item The Poisson is a member of the exponential family with:
+            \[ \theta=\log{\mu},\qquad \phi=1,\qquad b(\theta)=e^{\theta}=\mu \]
+            \[ a(\phi)=1,\qquad c(y;\phi)=-\log{y!} \]
+      \item With mean and variance:
             \begin{align*}
-                  L(\pi_1,\pi_2)
-                   & =\binom{m_1}{y_1}\pi_1^{y_1}(1-\pi_1)^{m_1-y_1}\binom{m_2}{y_2}\pi_2^{y_2}(1-\pi_2)^{m_2-y_2}                                                        \\
-                   & \propto\biggl(\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)} \biggr)^{\!y_1}\biggl(\frac{\pi_2}{1-\pi_2}\biggr)^{\! y_2+y_1}(1-\pi_1)^{m_1}(1-\pi_2)^{m_2}.
+                  \E{Y}   & =b^\prime(\theta)=e^{\theta}=\mu        \\
+                  \Var{Y} & =b^{\prime\prime}a(\phi)=e^{\theta}=\mu
             \end{align*}
-      \item Note that $ \pi_1,\pi_2\in[0,1] $ and odds ratio $ \psi\in(0,\infty) $ are restricted, we consider re-parameterize:
-            \[ \theta_1=\log*{\frac{\pi_1/(1-\pi_1)}{\pi_2/(1-\pi_2)}}=\log{\psi},\qquad \theta_2=\log*{\frac{\pi_2}{1-\pi_2}}, \]
-            and now $ \theta_1,\theta_2\in(-\infty,\infty) $.
-      \item Our re-parameterization implies:
-            \[ \pi_1=\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}},\qquad \pi_2=\frac{\mathrm{e}^{\theta_2}}{1+\mathrm{e}^{\theta_2}}. \]
-            Now the likelihood becomes:
-            \begin{align*}
-                  L(\theta_1,\theta_2)    & =(\mathrm{e}^{\theta_1})^{y_1}(\mathrm{e}^{\theta_2})^{y_1+y_2}(1+\mathrm{e}^{\theta_1+\theta_2})^{m_1}(1+\mathrm{e}^{\theta_2})^{-m_2}, \\
-                  \ell(\theta_1,\theta_2) & =y_1\theta_1+(y_1+y_2)\theta_2-m_1\log{1+\mathrm{e}^{\theta_1+\theta_2}}-m_2\log{1+\mathrm{e}^{\theta_2}}.
-            \end{align*}
-      \item The score vector is:
-            \[ S(\theta_1,\theta_2)=\begin{pmatrix}
-                        \pdv{\ell}{\theta_1} \\
-                        \pdv{\ell}{\theta_2}
-                  \end{pmatrix}=\begin{pmatrix}
-                        y_1-m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}} \biggr) \\
-                        y_1+y_2-m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{1+\mathrm{e}^{\theta_1+\theta_2}} \biggr)-m_2\biggl(\frac{\mathrm{e}^{\theta_2}}{1+\mathrm{e}^{\theta_2}} \biggr)
-                  \end{pmatrix}. \]
-      \item Solving $ \Vector{S}(\theta_1,\theta_2)=\Vector{0} $ gives us the MLEs:
-            \[ \hat{\theta}_1=\log*{\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}},\qquad \hat{\theta}_2=\log*{\frac{y_2}{m_2-y_2}}. \]
-      \item So by the invariance property of MLEs, we have:
-            \[ \hat{\pi}_1=\frac{y_1}{m_1},\qquad \hat{\pi}_2=\frac{y_2}{m_2},\qquad\hat{\psi}=\frac{\hat{\pi}_1/(1-\hat{\pi}_1)}{\hat{\pi}_2/(1-\hat{\pi}_2)}=\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}.  \]
+      \item And \textcolor{Blue}{Canonical link}:
+            \[ \theta=\eta=g(\mu)\implies g(\mu)=\log{\mu} \]
 \end{itemize}
-\subsection*{Inference for Odds Ratio}
+\subsection*{Poisson Likelihood}
 \begin{itemize}
-      \item In order to do inference we will need the Information Matrix:
-            \[ \Matrix{I}(\theta_1,\theta_2)=\begin{bmatrix}
-                        I_{11} & I_{12} \\
-                        I_{21} & I_{22}
-                  \end{bmatrix}\qquad\text{where }I_{jk}=-\pdv*{\ell(\theta_1,\theta_2)}{\theta_j,\theta_k}. \]
-            Here, we have:
-            \begin{align*}
-                  I_{11}          & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr),                                                                             \\
-                  I_{12}  =I_{21} & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr),                                                                             \\
-                  I_{22}          & =m_1\biggl(\frac{\mathrm{e}^{\theta_1+\theta_2}}{(1+\mathrm{e}^{\theta_1+\theta_2})^2} \biggr)+m_2\biggl(\frac{\mathrm{e}^{\theta_2}}{(1+\mathrm{e}^{\theta_2})^2} \biggr).
-            \end{align*}
-      \item We are interested in doing inference on $ \theta_1=\log{\psi} $ (while $ \theta_2 $ is nuisance).
-      \item Recall the asymptotic distribution result of a \textcolor{Red}{Wald statistic}:
+      \item Now suppose we have a random sample of size $ n $:
+            \[ Y_i \sim \POI{\mu_i},\qquad i=1,2,\ldots,n \]
+      \item \textcolor{Blue}{Response vector}: $ \Vector{y}=(y_1,y_2,\ldots,y_n)^\top $.
+      \item \textcolor{Blue}{Mean vector}: $ \Vector{\mu}=(\mu_1,\mu_2,\ldots,\mu_n)^\top $.
+      \item The likelihood and log-likelihood are:
+            \[ L(\Vector{\mu})=\prod_{i=1}^n \frac{\mu_i^{y_i}e^{-\mu_i}}{y_i!}  \]
+            \[ \ell(\Vector{\mu},\Vector{y})=\sum_{i=1}^{n} \bigl(y_i\log{\mu_i}-\mu_i-\log{y_i!}\bigr) \]
 \end{itemize}
-\begin{Regular}{Wald Statistic}
-      For a vector $ \Vector{\theta}=(\theta_1,\theta_2)^\top $ where $ \theta_1=\log{\psi} $ is a scalar parameter of interest:
-      \[ (\hat{\theta}_1-\theta_1)^2\bigl(I^{11}(\hat{\theta}_1,\hat{\theta}_2)\bigr)^{-1}\sim \chi^2_{1},
-            \text{ or }(\hat{\theta}_1-\theta)/\sqrt{I^{11}} \sim \N{0,1}, \]
-      where $ I^{11} $ is the $ (1,1) $ element of $ \Matrix{I}^{-1} $ evaluated at MLE $ \hat{\theta}_1 $ and $ \hat{\theta}_2 $.
+\subsection*{Log Linear Regression}
+\begin{itemize}
+      \item \textcolor{Blue}{Explanatory variables}: $ \Vector{x}_i=(1,x_{i1},\ldots,x_{ip-1})^\top $, $ i=1,\ldots,n $.
+      \item \textcolor{Blue}{Regression parameters}: $ \Vector{\beta}=(\beta_0,\beta_1,\ldots,\beta_{p-1})^\top $.
+      \item Using the \textcolor{Blue}{Canonical link} (i.e., log link):
+            \[ \log{\mu_i}=\Vector{x}_i^\top \Vector{\beta}=\sum_{j=0}^{p-1} x_{ij}\beta_j \]
+      \item The use of the log link gives the term \textcolor{Red}{log linear regression}.
+      \item We can obtain the log-likelihood in terms of $ \Vector{\beta} $ by substitution:
+            \begin{align*}
+                  \ell(\Vector{\beta};\Vector{y})
+                   & =\sum_{i=1}^{n} \bigl(y_i\log{\mu}_i-\mu_i-\log{y_i!}\bigr)                                                        \\
+                   & =\sum_{i=1}^{n} \bigl(y_i \Vector{x}_i^\top \Vector{\beta}-\exp{\Vector{x_i}^\top \Vector{\beta}}-\log{y_i!}\bigr)
+            \end{align*}
+\end{itemize}
+\subsection*{Estimation of $ \Vector{\beta} $ from log linear regression}
+\begin{itemize}
+      \item The $ j^{\text{th}} $ contribution to the Score vector is:
+            \[ \pdv{\ell}{\beta_j}=\sum_{i=1}^{n}\bigl(y_i x_{ij}-x_{ij}\exp{\Vector{x}_i^\top \Vector{\beta}}\bigr) \]
+      \item The $ (j,k) $ element of the Information Matrix is:
+            \[ -\pdv{\ell}{\beta_j,\beta_k}=\sum_{i=1}^{n} \bigl(x_{ij}x_{ik}\exp{\Vector{x}_i^\top \Vector{\beta}}\bigr) \]
+      \item These can also be found using general exponential family results.
+      \item Use the above to estimate $ \hat{\Vector{\beta}} $ via Fisher Scoring.
+      \item Use \texttt{glm()} function in R with \texttt{family=poisson(link=log)}.
+\end{itemize}
+\subsection*{Inference for $ \Vector{\beta} $ from log linear regression: Wald Tests}
+\begin{center}
+      $ \HN $: $ \beta_k=\beta_{k0} $ versus $ \HA $: $ \beta_k\ne \beta_{k0} $
+\end{center}
+\begin{itemize}
+      \item The general \textcolor{Blue}{Wald Result} for scalar $ \beta_k $ is:
+            \[ (\hat{\beta}_k-\beta_{k0})^2\bigl(I^{kk}(\hat{\Vector{\beta}})\bigr)^{-1} \sim \chi^2_{(1)} \]
+            equivalently $ \dfrac{\hat{\beta}_k-\beta_{k0}}{\se{\hat{\beta}_k}}\sim \N{0,1} $ where $ \se{\hat{\beta}_k}=\sqrt{I^{kk}(\hat{\Vector{\beta}})} $.
+      \item And we can find the $ p $-value of the test using:
+            \[ p=2\Prob*{U>\frac{\abs{\hat{\beta}_k}-\beta_{k0}}{\se{\hat{\beta}_k}}}\qquad\text{where $U \sim \N{0,1}$} \]
+      \item The \texttt{summary()} output gives the test statistics and $p$-values for testing $ \HN $: $ \beta_k=0 $ vs $ \HA $: $ \beta_k\ne 0 $.
+\end{itemize}
+\subsection*{Poisson Deviance/Likelihood Ratio Tests}
+\begin{itemize}
+      \item Let $ \tilde{\mu}_i $ be the MLE under the \textcolor{Blue}{saturated model} (i.e., $ \tilde{\mu}_i=y_i $).
+      \item Let $ \hat{\mu}_i $ be the MLE under a $ p $-dimensional \textcolor{Blue}{constrained model}.
+      \item Recall the Likelihood Ratio or Deviance Statistic has the form:
+            \[ D=-2\log*{\frac{\mathcal{L}(\hat{\mu})}{\mathcal{L}(\tilde{\mu})}}=2\bigl(\ell(\tilde{\mu})-\ell(\hat{\mu})\bigr)\sim \chi^2_{(n-p)} \]
+            asymptotically under the assumption that the constrained model is appropriate.
+      \item For the Poisson we have:
+            \begin{align*}
+                  D
+                   & =2\bigl(\ell(\tilde{\mu})-\ell(\hat{\mu})\bigr)                                                                                                                   \\
+                   & =2\biggl(\sum_{i=1}^{n} \bigl(y_i\log{\tilde{\mu}_i}-\tilde{\mu}_i-\log{y_i!}\bigr)-\sum_{i=1}^{n} \bigl(y_i\log{\hat{\mu}_i}-\hat{\mu}_i-\log{y_i!}\bigr)\biggr) \\
+                   & =2 \sum_{i=1}^{n}\biggl(y_i\log*{\frac{y_i}{\hat{\mu}_i}}-(y_i-\hat{\mu}_i)\biggr)
+            \end{align*}
+      \item Note that the Deviance Statistic has the same form as in the Binomial case:
+            \[ D=2\sum O_i\log*{\frac{O_i}{E_i}} \]
+            provided an intercept is included in the model so that $ \sum (y_i-\hat{\mu}_i)=0 $.
+\end{itemize}
+\subsection*{Poisson Deviance/Likelihood Ratio Tests}
+\begin{itemize}
+      \item Use the Deviance to test nested models:
+            \begin{itemize}
+                  \item $ \HN $: the null model with $ p $ parameters is adequate versus
+                        \[ \log{\mu_i}=\beta_0+\beta_1x_{1i}+\cdots+\beta_{p-1}x_{1p-1} \]
+                  \item $ \HA $: the alternative model with $ q $ parameters ($ p<q $)
+                        \[ \log{\mu_i}=\beta_0+\beta_1x_{1i}+\cdots+\beta_{p-1}x_{1p-1}+\cdots+\beta_{q-1}x_{1q-1} \]
+                  \item With test statistic:
+                        \[ \Delta D=D_0-D_\text{A} \sim \chi^2_{(q-p)}\qquad\text{under $ \HN $} \]
+                  \item The $p$-value for the test is given by:
+                        \[ p\text{-value}=\Prob*{\chi^2_{(q-p)}>\Delta D} \]
+            \end{itemize}
+\end{itemize}
+\subsection*{Deviance Residuals}
+\begin{itemize}
+      \item We can write the Deviance as a sum:
+            \[ D=2 \sum_{i=1}^{n}\biggl(y_i\log*{\frac{y_i}{\hat{\mu}_i}}-(y_i-\hat{\mu}_i)\biggr)=\sum_{i=1}^{n} d_i \]
+      \item The \textcolor{Blue}{Deviance Residuals} are given by:
+            \[ r_i^D=\sign{y_i-\hat{\mu}_i}\sqrt{\abs{d_i}} \]
+            and are approximately $ \N{0,1} $ if $ \HN $ holds.
+\end{itemize}
+\subsection*{Regression for Poisson Processes}
+\addcontentsline{toc}{subsection}{Regression for Poisson Processes}
+\begin{Regular}{Counting Process $ N(t) $}
+      A counting process $ N(t) $ is any non-decreasing integer function of time such that
+      $ N(0)=0 $ and $ N(t) $ is the number of events occurring in $ (0,t] $.
 \end{Regular}
 \begin{itemize}
-      \item Calculation of $ I^{11} $ by using a general result:
-            \[ \Matrix{I}=\begin{pmatrix}
-                        I_{11} & I_{12} \\
-                        I_{21} & I_{22}
-                  \end{pmatrix},\qquad \Matrix{I}^{-1}=\begin{pmatrix}
-                        \textcolor{Red}{I^{11}} & I^{12} \\
-                        I^{21}                  & I^{22}
-                  \end{pmatrix},\qquad \textcolor{Red}{I^{11}}=\bigl(I_{11}-I_{12}I_{22}^{-1}I_{21}\bigr)^{-1}. \]
-      \item We can use the Wald result to find a confidence interval for $ \theta_1=\log{\psi} $.
+      \item \textcolor{Green}{Example}: Suppose events occurred at times $ (2,4,5,7) $:
+            <<echo=FALSE, fig.width=3, fig.height=2.5>>=
+            y <- c(0,1,2,3,4)
+            x <- c(0,2,4,5,7)
+            ggplot() + geom_point(aes(x,y)) + geom_step(aes(x,y))
+            @
 \end{itemize}
-\subsection*{Confidence Interval for Odds Ratio}
-Here, we obtain:
-\[ I^{11}(\hat{\theta}_1,\hat{\theta}_2)=\frac{1}{y_1} +\frac{1}{m_1-y_1}+\frac{1}{y_2}+\frac{1}{m_2-y_2}. \]
-Thus, a Wald-based \qty{95}{\percent} confidence interval for $ \theta_1=\log{\psi} $ is:
-\[ \hat{\theta}_1\pm 1.96\sqrt{\frac{1}{y_1} +\frac{1}{m_1-y_1} +\frac{1}{y_2} +\frac{1}{m_2-y_2}}=(\hat{\theta}_{1\text{L}},\hat{\theta}_{1\text{U}}). \]
-A \qty{95}{\percent} confidence interval for the Odds Ratio $ \psi $ is:
-\[ \bigl(\exp{\hat{\theta}_{1\text{L}}},\exp{\hat{\theta}_{1\text{U}}}\bigr). \]
-\subsection*{Example: Prenatal Care from Two Clinics}
-Consider the data below for the relationship between:
+\begin{Regular}{Poisson Process $ N(t) $}
+      A counting process $ N(t) $ is a Poisson process if it satisfies:
+      \begin{enumerate}[1.]
+            \item \textcolor{Blue}{Independent increments}: For $ s_1<t_1<s_2<t_2 $:
+                  \[ N(t_1)-N(s_1)=\text{\# events in $(s_1,t_1]$} \]
+                  is independent of
+                  \[ N(t_2)-N(s_2)=\text{\# events in $(s_2,t_2]$} \]
+            \item The distribution of $ N(t) $ the number of events occurring over $ (0,t] $ is given by:
+                  \[ \Prob[\big]{N(t)=n;\lambda}=\frac{(\lambda t)^n e^{-\lambda t}}{n!},\qquad (n=0,1,2,\ldots)  \]
+      \end{enumerate}
+\end{Regular}
+\subsection*{Regression for Poisson Processes $ N(t) $}
 \begin{itemize}
-      \item \textcolor{Blue}{Response}: Fetal Mortality.
-      \item \textcolor{Blue}{Explanatory variable}: Level of Care.
+      \item $ N(t) $ is a special kind of Poisson random variable with:
+            \[ \E[\big]{N(t)}=\mu(t)=\lambda t \]
+      \item Use the log link to do regression:
+            \[ \log[\big]{\mu(t)}=\log{\lambda t}=\log{\lambda}+\log{t} \]
+      \item $ \lambda= $ \textcolor{Blue}{Rate parameter}.
+      \item $ t= $ \textcolor{Blue}{Length of observation} (data).
+      \item Since $ \lambda $ is constant (not a function of $t$) we call this a \textcolor{Red}{time homogeneous poisson process}.
 \end{itemize}
-\begin{table}[!htbp]
-      \centering
-      \begin{NiceTabular}{l|cc|c}
-            & \multicolumn{2}{c}{\emph{Fetal Mortality}}                                                 \\
-            Level of Care & Died                            & Survived     & Total                                   \\
-            \midrule
-            Intensive & $ 20 $                            & $ 316 $                 & $ 336 $         \\
-            Regular   & $ 46 $                            & $ 373 $                 & $ 419 $         \\
-            \midrule
-            & $ 66 $                    & $ 689 $ & $ 755 $
-      \end{NiceTabular}
-\end{table}
+For each subject $ i=1,\ldots, n $ we observe:
 \begin{itemize}
-      \item Using the above data, we obtain MLE of odds ratio $ \psi $:
-            \[ \hat{\psi}=\frac{y_1/(m_1-y_1)}{y_2/(m_2-y_2)}=\frac{20/316}{46/373}=0.51. \]
-            $ \hat{\psi}=0.51<1 $, the risk of mortality is lower with intensive care.
-      \item A \qty{95}{\percent} CI for $ \theta_1=\log{\psi} $:
-            \[ \log{0.51}\pm 1.96\sqrt{\frac{1}{20}+\frac{1}{316}+\frac{1}{46}+\frac{1}{373}}=(-1.219,-0.127). \]
-      \item A \qty{95}{\percent} CI for odds ratio $ \psi $:
-            \[ \bigl(\exp{-1.219},\exp{-0.127}\bigr)=(0.30,0.89). \]
-            Note that the CI does not cover the value $ \psi=1 $ (no association), so we reject the null
-            hypothesis of no association between fetal mortality and level of care. In other words,
-            there is evidence of association.
+      \item $ N_i(t_i)= $ the number of events observed over $ (0,t_i] $.
+      \item Explanatory variables: $ \Vector{x}_i=(1,x_{i1},\ldots,x_{ip-1})^\top $.
 \end{itemize}
-\subsection*{Example: Prenatal Care from Two Clinics}
-There is an \textcolor{Blue}{additional explanatory variable}: Clinic (A vs B).
-\begin{Example}{Prenatal Care Data Stratified by Clinic}
-      \begin{center}
-            \begin{NiceTabular}{l|cc|c|cc|c}
-                  & \multicolumn{3}{c}{\emph{Clinic A}} & \multicolumn{3}{c}{\emph{Clinic B}} \\
-                  Level of Care & Died                            & Survived & Total    & Died & Survived & Total                                    \\
-                  \midrule
-                  Intensive & $ 16 $                            & $ 293 $                 & $ 309 $ & $ 4 $ & $ 23 $ & $ 27 $        \\
-                  Regular   & $ 12 $                            & $ 176 $                 & $ 188 $ & $ 34 $ & $ 197 $ & $ 231 $        \\
-                  \midrule
-                  & $ 28 $                    & $ 469 $ & $ 497 $ & $ 38 $ & $ 220 $ & $ 258 $
-            \end{NiceTabular}
-      \end{center}
-\end{Example}
+\begin{Regular}{Log Linear Regression Model for a Time Homogeneous Poisson Process}
+      \begin{align*}
+            \log[\big]{\mu_i(t_i)}
+             & =\log{\lambda_i}+\log{t_i}                  \\
+             & =\Vector{x}_i^\top \Vector{\beta}+\log{t_i}
+      \end{align*}
+\end{Regular}
 \begin{itemize}
-      \item $ \hat{\psi}_\text{A}=0.80\; (0.37,1.73) $ and $ \hat{\psi}_\text{B}=1.01\;(0.33,3.10) $.
-            These cover value $ 1 $, different from the results from the pooled analysis on the previous slide.
-      \item These results do NOT agree with the results from the pooled analysis on
-            the previous slide.
-\end{itemize}
-\begin{Example}{Association Between Clinic and Level of Care}
-      \begin{center}
-            \begin{NiceTabular}{l|cc|c}
-                  & A                            & B &                                         \\
-                  \midrule
-                  Intensive & $ 309 $                            & $ 27 $                 & $ 336 $         \\
-                  Regular   & $ 118 $                            & $ 231 $                 & $ 419 $         \\
-                  \midrule
-                  & $ 497 $                    & $ 258 $ & $ 755 $
-            \end{NiceTabular}
-      \end{center}
-\end{Example}
-\begin{itemize}
-      \item $ \hat{\psi}=14.06\;(9.12,21.76) $.
-\end{itemize}
-\begin{Example}{Association Between Clinic and Mortality}
-      \begin{center}
-            \begin{NiceTabular}{l|cc|c}
-                  & A                            & B &                                         \\
-                  \midrule
-                  Died & $ 28 $                            & $ 38 $                 & $ 66 $         \\
-                  Survived   & $ 469 $                            & $ 220 $                 & $ 689 $         \\
-                  \midrule
-                  & $ 497 $                    & $ 258 $ & $ 755 $
-            \end{NiceTabular}
-      \end{center}
-\end{Example}
-\begin{itemize}
-      \item $ \hat{\psi}=0.35\;(0.21,0.58) $.
-\end{itemize}
-\begin{itemize}
-      \item The initial strong association between Level of Care and Infant Morality
-            disappeared when we stratified by clinic.
-            \begin{figure}[!htbp]
-                  \centering
-                  \begin{tikzpicture}[thick]
-                        \node (1) at (0,1) {Clinic};
-                        \node (2) at (-2,0) {Level of Care};
-                        \node (3) at (2,0) {Mortality};
-                        \draw[<->] (1) to (2);
-                        \draw[<->] (1) to (3);
-                        \draw[->,Purple] (2) to (3) node[anchor=south,midway] {$?$};
-                  \end{tikzpicture}
-            \end{figure}
-      \item Instead of having to examine multiple $ 2\times 2 $ tables we'd like to estimate the $ \OR $
-            and compute associations using a multiple regression model.
-      \item One way to do this is by fitting a Binomial GLM to the data.
+      \item The term $ \log{t_i} $ is called an \textcolor{Red}{offset term}.
+      \item It \emph{explains} some variation in the event counts $ N_i $ across subjects due to differing lengths of observation $ t_i $.
 \end{itemize}

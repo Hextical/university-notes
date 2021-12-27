@@ -1,197 +1,445 @@
-\makeheading{Week 3}{\daterange{2021-09-20}{2021-09-24}}
-\section*{Topic 2b: Maximum Likelihood Estimation for Generalized Linear Models}
-\addcontentsline{toc}{section}{Topic 2a: Maximum Likelihood Estimation for Generalized Linear Models}
-\subsection*{Generalized Linear Models}
-Suppose for each subject $ i=1,\ldots,n $ in a random sample:
-\begin{itemize}
-    \item $ Y_i $ is the response variable.
-    \item $ x_{i1},\ldots,x_{ip} $ are explanatory variables associated with $ Y_i $.
-\end{itemize}
-We consider a \textcolor{Red}{Generalized Linear Model} (GLM) for the data, by definition the GLM
-is composed following three components:
-\begin{Regular}{}
-    \begin{enumerate}[label=\color{Blue}\protect\circled{\arabic*}]
-        \item \textcolor{Red}{Random Component}:
-              \[ Y_i \sim \text{exponential family,}\qquad Y_1,\ldots,Y_n\text{ are independent.} \]
-        \item \textcolor{Red}{Systematic Component} (or linear predictor):
-              \[ \eta_i=\Vector{x}_i^\top \Vector{\beta}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}. \]
-              \begin{itemize}
-                  \item $ \Vector{x}_i=(1,x_{i1},\ldots,x_{ip})^\top $ is a covariate vector.
-                  \item $ \Vector{\beta}=(\beta_0,\beta_1,\ldots,\beta_p)^\top $ is a vector of regression coefficients.
-              \end{itemize}
-        \item \textcolor{Red}{Link function}: a function $ g(\:\cdot\:) $ links $ \E{Y_i}=\mu_i $ to a linear prediction $ \eta_i $:
-              \[ g(\mu_i)=\eta_i=\Vector{x}_i^\top\Vector{\beta}. \]
-    \end{enumerate}
-\end{Regular}
-\subsection*{Example: A Poisson Regression Model}
-Suppose $ Y_i \ind\POI{\lambda_i} $ with mean $ \E{Y_i}=\lambda_i $, $ i=1,\ldots,n $:
-\[ f(y_i)=\frac{\mathrm{e}^{-\lambda_i}\lambda_i^{y_i}}{y_i!}=\exp[\big]{y_i\log{\lambda_i}-\lambda_i-\log{y_i!}}.  \]
-Poisson distribution is a member of exponential family with:
-\begin{itemize}
-    \item Canonical parameter: $ \theta_i=\log{\lambda_i} $.
-    \item Canonical link: $ \theta_i=\eta_i\textcolor{Red}{\implies}\log{\lambda_i}=\Vector{x}_i^\top \Vector{\beta} $ (log link).
-\end{itemize}
-A Poisson regression model with the canonical link takes the form:
-\[ \log{\lambda_i}=\Vector{x}_i^\top \Vector{\beta}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}\qquad \text{\textcolor{Red}{(log-linear model)}}. \]
-\subsection*{Example: A Normal Regression Model}
-Assume $ Y_i \ind \N{\mu_i,\sigma^2} $ and $ \sigma^2 $ is known, $ i=1,\ldots,n $:
-\begin{align*}
-    f(y_i)
-     & =(2\pi\sigma^2)^{-1/2}\exp*{-\frac{(y_i-\mu_i)^2}{2\sigma^2}}                                                   \\
-     & =\exp*{\frac{y_i\mu_i-\mu_i^2/2}{\sigma^2}-\frac{1}{2}\biggl(\frac{y_i^2}{\sigma^2}+\log{2\pi\sigma^2}\biggr)}.
-\end{align*}
-A Normal distribution ($ \sigma^2 $ known) is a member of exponential family with:
-\begin{itemize}
-    \item Canonical parameter: $ \theta_i=\mu_i $.
-    \item Canonical link: $ \theta_i=\eta_i \textcolor{Red}{\implies}\mu_i=\Vector{x}_i^\top \Vector{\beta} $ (identity link).
-\end{itemize}
-A Normal regression model with the canonical link takes the form:
-\[ \mu_i=\Vector{x}_i^\top \Vector{\beta}=\beta_0+\beta_1x_{i1}+\cdots+\beta_p x_{ip}\qquad \text{\textcolor{Red}{(linear model)}}. \]
-Linear regression model (STAT 331) is a Normal GLM using the canonical link!
-\subsection*{Likelihood for Generalized Linear Models}
-We wish to use likelihood methods for the estimation of the regression parameter $ \Vector{\beta} $ from the GLM: $ g(\mu_i)=\Vector{x}_i^\top \Vector{\beta} $.
-Consider the log-likelihood for a \emph{single} observation from the exponential family:
-\[ \ell(\theta,\phi;y)=\frac{y\theta-b(\theta)}{a(\phi)}+c(y;\phi). \]
-\begin{itemize}
-    \item $ \ell $ is a function of $ \textcolor{Red}{\theta} $ (assume that $ \phi $ is known).
-    \item $ \theta $ is related to $ \mu $ through the result:
-          \[ \textcolor{Red}{\mu=b^{\prime}(\theta)}. \]
-    \item $ \eta $ can be expressed in terms of $ \mu $ through the link function:
-          \[ \textcolor{Red}{g(\mu)=\eta}. \]
-    \item $ \Vector{\beta} $ can be expressed in terms of $ \eta $ through the linear predictor:
-          \[ \textcolor{Red}{\eta=\Vector{x}^\top \Vector{\beta}}. \]
-\end{itemize}
-\subsection*{Score Vector}
-To find the maximum likelihood estimator for $ \Vector{\beta} $, we must solve $ \Vector{S}(\Vector{\beta})=\pdv{\ell}{\Vector{\beta}}=\Vector{0} $.
-Consider taking derivative with respect to $ \beta_j $ using the chain rule:
-\[ \pdv{\ell}{\beta_j}=\pdv{\ell}{\theta}\pdv{\theta}{\mu}\pdv{\mu}{\eta}\pdv{\eta}{\beta_j}, \]
-where
-\begin{align*}
-    \pdv{\ell}{\theta}  & =\frac{y-b^{\prime}(\theta)}{a(\phi)},                                                                                                          \\
-    \pdv{\theta}{\mu}   & =\pdv{\mu}{\theta}^{\!-1}=\frac{1}{b^{\prime\prime}(\theta)} &  & \text{since $ \mu=b^\prime(\theta) $},                                        \\
-    \pdv{\mu}{\eta}     & =\pdv{\mu}{\eta},                                                                                                                               \\
-    \pdv{\eta}{\beta_j} & =x_j                                                         &  & \text{since $ \eta=\beta_0+\beta_1x_1+\cdots+\beta_jx_j+\cdots+\beta_px_p $}.
-\end{align*}
-Hence, we have:
-\begin{align*}
-    \pdv{\ell}{\beta_j}
-     & =\frac{y-b^{\prime}(\theta)}{a(\phi)}\frac{1}{b^{\prime\prime}(\theta)}\pdv{\mu}{\eta}x_j                                                                                           \\
-     & =\frac{y-\mu}{\Var{Y}}\pdv{\mu}{\eta}x_j                                                  &  & \text{since $ \mu=b^{\prime}(\theta) $, $ \Var{Y}=a(\phi)b^{\prime\prime}(\theta) $} \\
-     & =\frac{y-\mu}{\Var{Y}}\pdv{\mu}{\eta}^{\!2}\pdv{\eta}{\mu}x_j                             &  & \text{since $ \pdv{\mu}{\eta}\pdv{\eta}{\mu}=1 $}                                    \\
-     & =(y-\mu)\Biggl(\Var{Y}\pdv{\mu}{\eta}^{\!2}\Biggr)^{\!-1}\pdv{\eta}{\mu}x_j                                                                                                         \\
-     & =(y-\mu)W\pdv{\eta}{\mu}x_j,
-\end{align*}
-where $ W^{-1}=\Var{Y}\pdv{\eta}{\mu}^2 $. Note that generally $ \pdv{\eta}{\mu} $ is easier to calculate
-than $ \pdv{\mu}{\eta} $ since we define the link as $ \eta=g(\mu) $.
-
-For a random sample $ Y_1,\ldots,Y_n $ from exponential family and each $ Y_i $ has a probability density function
-\[ f(y_i;\theta,\phi)=\exp*{\frac{y_i\theta_i-b(\theta_i)}{a(\phi)}+c(y_i,\phi)}. \]
-We write likelihood and log-likelihood functions as:
-\begin{align*}
-    L    & =\prod_{i=1}^n f(y_i;\theta_i,\phi)=\prod_{i=1}^n\exp*{\frac{y_i\theta_i-b(\theta_i)}{a(\phi)}+c(y_i,\phi)}, \\
-    \ell & =\sum_{i=1}^{n} \ell_i=\sum_{i=1}^{n}\frac{y_i\theta_i-b(\theta_i)}{a(\phi)}+c(y_i,\phi).
-\end{align*}
-The \textcolor{Red}{element of the score vector} is:
-\[ \bigl[\Vector{S}(\Vector{\beta})\bigr]_j=\pdv{\ell}{\beta_j}=\sum_{i=1}^{n} \pdv{\ell_i}{\beta_j}=\sum_{i=1}^{n} (y_i-\mu_i)W_i\pdv{\eta_i}{\mu_i}x_{ij} \]
-where $  W_i^{-1}=\Var{Y_i}(\pdv{\eta_i}{\mu_i})^2 $, $ g(\mu_i)=\eta_i=\Vector{x}_i^\top \Vector{\beta} $. In vector and matrix form we can write:
-\[ \Vector{S}(\Vector{\beta})=\Matrix{X}\MatrixCal{W}\MatrixCal{A}(\Vector{y}-\Vector{\mu}), \]
-where
-\begin{itemize}
-    \item $ \Vector{y}=(y_1,\ldots,y_n)^\top $ and $ \Vector{\mu}=(\mu_1,\ldots,\mu_n)^\top $ are $ n\times 1 $ vectors,
-    \item $ \Matrix{X}=(\Vector{x}_1,\ldots,\Vector{x}_n) $ is a $ (p+1)\times n $ matrix,
-    \item $ \MatrixCal{W}=\diag{W_1,\ldots,W_n}=\begin{bmatrix}
-                  W_1    & 0      & \cdots & 0      \\
-                  \vdots & \ddots & \ddots & \vdots \\
-                  0      & \cdots & 0      & W_n
-              \end{bmatrix} $, and
-    \item $ \MatrixCal{A}=\diag*{\pdv{\eta_1}{\mu_1},\ldots,\pdv{\eta_n}{\mu_n}} $.
-\end{itemize}
-\subsection*{Example: Poisson Regression Model (Problem 1.4)}
-For a random sample from Poisson distribution, $ Y_i \sim \POI{\lambda_i} $, $ i=1,\ldots,n $,
-\[ \ell_i=\log[\big]{f(y_i;\lambda_i)}=\bigl(y_i\log{\lambda_i}-\lambda_i-\log{y_i!}\bigr). \]
-Poisson regression with a log-link:
-\[ \log{\lambda_i}=\eta_i=\Vector{x}_i^\top \Vector{\beta}. \]
-To write down the score vector for the regression coefficients $ \Vector{\beta} $, we may
-calculate the derivative using standard methods, i.e.,
-\begin{align*}
-    \bigl[\Vector{S}(\Vector{\beta})\bigr]_j
-     & =\sum_i \pdv{\ell_i}{\beta_j}                                                                                  \\
-     & =\sum_i \pdv*{\bigl(y_i \textcolor{Red}{\log{\lambda_i}}-\textcolor{Red}{\lambda_i}-\log{y_i!}\bigr)}{\beta_j} \\
-     & =\sum_i\bigl(y_i x_{ij}-\mathrm{e}^{\Vector{x}_i^\top \Vector{\beta}}x_{ij}\bigr).
-\end{align*}
-Or we can use the general results derived for the GLMs on the previous slides.
-\subsection*{Solving $ \Vector{S}(\Vector{\beta})=\Vector{0} $ for MLE}
-\begin{enumerate}[label=\color{Blue}\protect\circled{\arabic*}]
-    \item Newton Raphson update equation is:
-          \[ \hat{\Vector{\beta}}^{(r+1)}=\hat{\Vector{\beta}}^{(r)}+\Matrix{I}^{-1}(\hat{\Vector{\beta}}^{(r)})\Vector{S}(\hat{\Vector{\beta}}^{(r)}), \]
-          where $ \Matrix{I} $ is the observed information matrix.
-          \begin{itemize}
-              \item This requires us to find and repeatedly evaluate the information $ \Matrix{I} $ (possibly computationally intensive).
-              \item Fisher suggested using the expected information matrix $ \MatrixCal{I} $ rather than the observed information matrix.
-          \end{itemize}
-    \item Fisher Scoring update equation is:
-          \[ \hat{\Vector{\beta}}^{(r+1)}=\hat{\Vector{\beta}}^{(r)}+\MatrixCal{I}^{-1}(\hat{\Vector{\beta}}^{(r)})\Vector{S}(\hat{\Vector{\beta}}^{(r)}). \]
+\makeheading{Week 4}{\daterange{2021-09-27}{2021-10-01}}
+\section*{Topic 2b: Binomial (Logistic) Regression Models}
+\addcontentsline{toc}{section}{Topic 2b: Binomial (Logistic) Regression Models}
+\subsection*{2.4 Setting Up a Binomial Regression Model}
+\begin{enumerate}[1.]
+      \item Introduction and Notation.
+      \item Interpretation of $ \beta $ from logistic regression models as log odds ratios.
+      \item Logistic regression analysis of to the Prenatal Care example.
+            \begin{itemize}
+                  \item R Data and Code for fitting GLMs.
+                  \item Hypothesis tests for $ \beta_k $.
+                  \item Confidence Intervals for the OR $ \exp{\beta_k} $.
+            \end{itemize}
 \end{enumerate}
-\subsection*{Information Matrix}
-Consider the $(j, k)$ element of the Information matrix:
-\begin{align*}
-    \Matrix{I}_{jk} & =-\pdv{\ell}{\beta_j,\beta_k}                                                                                                                                                                                     \\
-                    & =-\pdv*{\pdv{\ell}{\beta_j}}{\beta_k}                                                                                                                                                                             \\
-                    & =\sum_i -\pdv*{\biggl[(y_i-\mu_i)W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}                                                                                                                      \\
-                    & =\sum_i -(y_i-\mu_i)\Biggl\{\pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}\Biggr\}-W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggl(\textcolor{Red}{\pdv*{(y_i-\mu_i)}{\beta_k}}\biggr) \\
-                    & =\sum_i -(y_i-\mu_i)\Biggl\{\pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}\Biggr\}+W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\textcolor{Red}{\pdv{\mu_i}{\eta_i}\pdv{\eta_i}{\beta_k}}  \\
-                    & =\sum_i -(y_i-\mu_i)\pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}+x_{ij}W_i x_{ik}.
-\end{align*}
-\subsection*{Fisher Information}
-To get an element of the Expected/Fisher Information matrix:
-\begin{align*}
-    \MatrixCal{I}_{jk}
-     & =\sum_i\E*{-\pdv{\ell}{\beta_j,\beta_k}}                                                                                                \\
-     & =\sum_i\E*{-(Y_i-\mu_i)\pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}+x_{ij}W_i x_{ik}}                       \\
-     & =\sum_i-\textcolor{Red}{\E[\big]{(Y_i-\mu_i)}}\pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}+x_{ij}W_i x_{ik} \\
-     & =\sum_i x_{ij}W_i x_{ik}.
-\end{align*}
-Therefore, we can write the $(j, k)$ element of the Fisher information as:
-\[ \MatrixCal{I}_{jk}=\sum_{i=1}^{n} x_{ij}W_i x_{ik}=[\Matrix{X}\Matrix{\MatrixCal{W}}\Matrix{X}^\top]_{jk} \]
-where again, $ \MatrixCal{W}=\diag{W_1,\ldots,W_n} $ and $ W_i^{-1}=\Var{Y_i}\pdv{\eta_i}{\mu_i}^2 $.
-\subsection*{When is Fisher Scoring Equivalent to Newton Raphson?}
-Recall information matrix:
-\[  \Matrix{I}_{jk}=\sum_i -(y_i-\mu_i)\pdv*{\biggl[\textcolor{Red}{W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}}\biggr]}{\beta_k}+x_{ij}W_i x_{ik}. \]
-Now examine:
-\begin{align*}
-    W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}
-     & =\Biggl(\Var{Y_i}\biggl(\pdv{\eta_i}{\mu_i}\biggr)^{\!2}\Biggr)^{\!-1}\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}                                                                                                        \\
-     & =\Biggl(a(\phi)b^{\prime\prime}(\theta_i)\pdv{\eta_i}{\mu_i}\Biggr)^{\!-1}x_{ij}                              &  & \text{since $\Var{Y_i}=a_i(\phi)b^{\prime\prime}(\theta_i)$}                                      \\
-     & =\Biggl(a(\phi)\pdv{\mu_i}{\theta_i}\pdv{\eta_i}{\mu_i} \Biggr)^{\!-1}x_{ij}                                  &  & \text{since $ b^{\prime}(\theta_i)=\mu_i $, $ b^{\prime\prime}(\theta_i)=\pdv{\mu_i}{\theta_i} $} \\
-     & =\bigl(a(\phi)\bigr)^{-1}x_{ij}                                                                               &  & \text{\textcolor{Red}{under the canonical link $\theta_i=\eta_i$.}}
-\end{align*}
-So under the \textcolor{Red}{canonical link},
-\[ \pdv*{\biggl[W_i\biggl(\pdv{\eta_i}{\mu_i}\biggr)x_{ij}\biggr]}{\beta_k}=\pdv*{\Bigl[\textcolor{Red}{\bigl(a(\phi)\bigr)^{-1}x_{ij}}\Bigr]}{\beta_k}=0, \]
-therefore information matrix is same as the Fisher information:
-\[ \Matrix{I}_{jk}=\sum_{i}x_{ij}W_i x_{ij}=\MatrixCal{I}_{jk}  \]
-and Fisher Scoring is equivalent to Newton Raphson.
-\subsection*{Iteratively Reweighted Least Squares}
-The Fisher Scoring is also called \textcolor{Red}{iteratively reweighted least squares} (IRWLS).
-The reason is that the update equation can be rewritten as:
-\[ \hat{\Vector{\beta}}^{(r+1)}=\Bigl(\Matrix{X}\MatrixCal{W}\bigl(\hat{\Vector{\beta}}^{(r)}\bigr)\Matrix{X}^\top\Bigr)^{\!-1}\Matrix{X}\MatrixCal{W}\bigl(\hat{\Vector{\beta}}^{(r)}\bigr)\RandomVector{Z}\bigl(\hat{\Vector{\beta}}^{(r)}\bigr) \]
-where $ \RandomVector{Z} $ is a transformation of the response vector $ \RandomVector{Y} $ such that:
-\[ \RandomVector{Z}=\Vector{\eta}+(\RandomVector{Y}-\Vector{\mu})\ast\pdv{\Vector{\eta}}{\Vector{\mu}} \]
+\subsection*{Introduction and Notation}
+\addcontentsline{toc}{subsection}{Introduction and Notation}
 \begin{itemize}
-    \item See manipulation in Section 1.2.3 of course notes.
-    \item Same form as the weighted LS estimate of $ \Vector{\beta} $ with dependent variable $ \RandomVector{Z} $
-          and weight matrix $ \MatrixCal{W} $.
-    \item $ \RandomVector{Z} $ and $ \MatrixCal{W} $ are updated at each iteration.
+      \item \textcolor{Blue}{Outcome/Response variable}: $ \textcolor{Red}{Y_i \sim \BIN{m_i,\pi_i}} $, $ \textcolor{Red}{i=1,2,\ldots,n} $ independently.
+      \item \textcolor{Blue}{Explanatory variables}: $ \Vector{x}_i=(x_{i0},x_{i1},\ldots,x_{i(p-1)})^\top $ with $ x_{i0}=1 $.
+      \item \textcolor{Blue}{Regression parameters}: $ \Vector{\beta}=(\beta_0,\beta_1,\ldots,\beta_{p-1})^\top $.
+      \item \textcolor{Blue}{Linear predictor}: $ \eta_i=\Vector{x}_i^\top \Vector{\beta}=\beta_0+\beta_1x_{i1}+\cdots+\beta_px_{i(p-1)} $.
+      \item Recall multiple linear regression ($ Y_i \sim \N{\mu_i,\sigma^2} $):
+            \[ \E{Y_i}=\mu_i=\eta_i=\Vector{x}_i^\top \Vector{\beta} \]
+      \item Now with the Binomial data this would suggest we use:
+            \[ \E*{\frac{Y_i}{m_i}}=\pi_i=\mu_i=\Vector{x}_i^\top \Vector{\beta} \]
+      \item But this is a bad idea because $ 0<\pi_i<1 $ and we'd have to do constrained maximization to find $ \hat{\pi}_i $.
+      \item We want a \textcolor{Blue}{link function}: $ g(\pi_i)=g(\mu_i)=\Vector{x}_i^\top \Vector{\beta} $ that maps:
+            \[ g\colon(0,1)\to(-\infty,\infty) \]
+      \item Here are some link functions we might consider:
+            \begin{table}[!htbp]
+                  \centering
+                  \begin{NiceTabular}{cl}
+                        \toprule
+                        Identity & $ g(\pi_i)=\pi_i $\\
+                        log-log & $ g(\pi_i)=\log[\big]{-\log{\pi_i}} $\\
+                        complementary log-log & $ g(\pi_i)=\log[\big]{-\log{1-\pi_i}} $\\
+                        $ \text{Probit}^{\dagger} $ & $ g(\pi_i)=\Phi^{-1}(\pi_i) $\\
+                        $ \text{Logit}^{\star} $ & $ g(\pi_i)=\log[\big]{\pi_i/(1-\pi_i)} $\\
+                        \bottomrule
+                        \multicolumn{2}{l}{\footnotesize{$ {}^\dagger $: $ \Phi $ is the cdf for a standard normal random variable.}}\\
+                        \multicolumn{2}{l}{\footnotesize{$ {}^\star $: the canonical link for the Binomial (see Chapter 1).}}
+                  \end{NiceTabular}
+            \end{table}
 \end{itemize}
-\subsection*{Topic Summary}
-2b Maximum Likelihood Estimation of Generalized Linear Models:
+\subsection*{Link Functions for the Binomial Distribution}
+% \begin{noindent}
+    <<fig.height=4, fig.width=4, echo = FALSE>>=
+    x <- seq(0,1,by=0.001)
+    plot(x,x,xlim=c(0,1),ylim=c(-6,6), type = "l", col = "red", lwd = 2) # identity
+    lines(x,log(-log(x)), type = "l", col = "darkgoldenrod1", lwd = 2) # log-log
+    lines(x,log(-log(1-x)), type = "l", col = "green", lwd = 2) # complementary log-log
+    lines(x,pnorm(x), type = "l", col = "blue", lwd = 2) # Probit
+    lines(x,log(x/(1-x)), type = "l", col = "purple", lwd = 2) # Logit
+    legend("topleft", legend = c("identity", "loglog", "cloglog", "probit", "logit"),
+lwd = 2, col = c("red","darkgoldenrod1","green","blue","purple"), bty = "n", cex = 0.5)
+    @
+% \end{noindent}
+\subsection*{The Logit Link and Odds Ratios}
+\addcontentsline{toc}{subsection}{The Logit Link and Odds Ratios}
 \begin{itemize}
-    \item When $ Y_i $ come from a distribution in the \textcolor{Red}{exponential family}, we can use
-          the theory of \textcolor{Red}{Generalized Linear Models} to fit the regression equations of
-          the form:
-          \[ g(\mu_i)=\Vector{x}_i^\top \Vector{\beta}. \]
-    \item The \textcolor{Red}{link function} $ g(\:\cdot\:) $ may be the canonical link, but its choice should
-          come from model interpretation and fit.
-    \item Can use Fisher Scoring (also known as IRWLS) to estimate the regression parameters $ \Vector{\beta} $ from any GLM based on general forms for $ \Matrix{I}(\Vector{\beta}) $
-          and $ \Vector{S}(\Vector{\beta}) $.
-    \item \textcolor{Blue}{\textsc{Practice}}: Chapter 1 review problems.
+      \item The \textcolor{Blue}{Logit link} is the canonical link for the Binomial (see Chapter 1).
+      \item This leads us to a \textcolor{Blue}{Logistic Regression Model}:
+            \[ \log*{\frac{\pi_i}{1-\pi_i}}=\Vector{x}_i^\top \Vector{\beta} \]
+      \item Aside: The inverse of the logit function is called the expit function:
+            \[ \logit{a}=\log*{\frac{a}{1-a}}=b\iff a=\frac{\exp{b}}{1+\exp{b}}=\expit{b} \]
+      \item Next: What is the interpretation of the $ \Vector{\beta} $ parameters in this model?
+\end{itemize}
+\subsection*{Simple Logistic Regression}
+\begin{itemize}
+      \item Consider a simple case of a binomial outcome $ Y_i \sim \BIN{m_i,\pi_i} $ for $ i=0,1 $ and a single binary explanatory variable:
+            \[ x_{i1}=\begin{cases*}
+                        0 & group 0 \\
+                        1 & group 1
+                  \end{cases*} \]
+      \item The simple logistic regression model equation is:
+            \[ \log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1} \]
+      \item When $ x_{i1}=0 $ for $ i=0 $, the model becomes:
+            \[ \log*{\frac{\pi_0}{1-\pi_0}}=\beta_0+\beta_1(0)=\beta_0 \]
+      \item \textcolor{Blue}{$ \beta_0 = $ log odds of response for subjects with $ x_{i1}=0 $}.
+      \item Now let's compare the model with $ x_{i1}=1 $ versus $ x_{i1}=0 $.
+            \begin{table}[!htbp]
+                  \centering
+                  \begin{NiceTabular}{ccrl}
+                        Group & $ (1,x_{i1})^\top $ & $ \eta_i $ & $ =\log[\big]{\pi_i/(1-\pi_i)} $\\
+                        \midrule
+                        1 & $ (1,1)^\top $ & $ \beta_0+\beta_1 $ & $ =\log[\big]{\pi_1/(1-\pi_1)} $\\
+                        0 & $ (1,0)^\top $ & $ \beta_0 $ & $ =\log[\big]{\pi_0/(1-\pi_0)} $\\
+                        \midrule
+                        &&$ \beta_1 $ & $ =\log*{\frac{\pi_1/(1-\pi_1)}{\pi_0/(1-\pi_0)}} $
+                  \end{NiceTabular}
+            \end{table}
+      \item We subtract line 2 from line 1 to isolate $ \beta_1 $ and find its interpretation.
+      \item \textcolor{Blue}{$ \beta_1= $ log odds ratio of response for subjects with $ x_{i1}=1 $ vs $ x_{i1}=0 $}.
+\end{itemize}
+\subsection*{Logistic Regression Models for Prenatal Care Example}
+\begin{itemize}
+      \item \textcolor{Blue}{Response} $ = $ Fetal mortality
+            \[ \textcolor{Blue}{Y_i \sim \BIN{m_i,\pi_i}}\qquad\text{$i=1,2,\ldots,n$ independently} \]
+      \item \textcolor{Blue}{Explanatory Variables}:
+            \begin{align*}
+                  x_{i1} & =\begin{cases*}
+                                  1 & Clinic A \\
+                                  0 & Clinic B
+                            \end{cases*}                                         \\
+                  x_{i2} & =\begin{cases*}
+                                  1 & Intensive level of care \\
+                                  0 & Regular level of care   \\
+                            \end{cases*}                           \\
+                  x_{i3} & =x_{i1}x_{i2}=\begin{cases*}
+                                               1 & Intensive level of care and Clinic A \\
+                                               0 & Otherwise
+                                         \end{cases*}
+            \end{align*}
+      \item We will use the context of this example to interpret regression parameters from
+            multiple logistic regression models.
+      \item See Section 2.4.2 for general interpretations.
+\end{itemize}
+\subsection*{Model 1: Clinic only model}
+\[ \textcolor{Green}{\log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}} \]
+\begin{table}[!htbp]
+      \centering
+      \begin{NiceTabular}{cccl}
+            Clinic & Level of Care & $ (1,x_{i1})^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $\\
+            \midrule
+            A & --- & $ (1,1)^\top $ & $ \beta_0+\beta_1 $\\
+            B & --- & $ (1,0)^\top $ & $ \beta_0 $
+      \end{NiceTabular}
+      \caption{Clinic only model}
+\end{table}
+\begin{itemize}
+      \item $ \beta_0 $ is the \textcolor{Blue}{log odds} of infant mortality for babies born to mothers treated at Clinic B.
+      \item $ \beta_1 $ is the \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated at Clinic A
+            versus Clinic B.
+\end{itemize}
+\subsection*{Model 2: Main effects model}
+\[ \textcolor{Green}{\log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}} \]
+\begin{table}[!htbp]
+      \centering
+      \begin{NiceTabular}{cccl}
+            Clinic & Level of Care & $ (1,x_{i1},x_{i2})^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $\\
+            \midrule
+            A & Intensive & $ (1,1,1)^\top $ & $ \beta_0+\beta_1+\beta_2 $\\
+            A & Regular & $ (1,1,0)^\top $ & $ \beta_0+\beta_1 $\\
+            B & Intensive & $ (1,0,1)^\top $ & $ \beta_0+\beta_2 $\\
+            B & Regular & $ (1,0,0)^\top $ & $ \beta_0 $
+      \end{NiceTabular}
+      \caption{Main effects model}
+\end{table}
+\begin{itemize}
+      \item $ \beta_0 $ is the \textcolor{Blue}{log odds} of infant mortality for babies born to mothers treated at Clinic
+            B with Regular care.
+      \item $ \beta_1 $ is the \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated at Clinic A
+            versus Clinic B at the same level of care.
+      \item $ \beta_2 $ is the \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated with
+            Intensive versus Regular care at the same clinic \textcolor{Red}{(*OR of interest*)}.
+\end{itemize}
+\subsection*{Model 3: Interaction model}
+\[ \textcolor{Green}{\log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}} \]
+\begin{table}[!htbp]
+      \centering
+      \begin{NiceTabular}{cccl}
+            Clinic & Level of Care & $ (1,x_{i1},x_{i2},x_{i3})^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $\\
+            \midrule
+            A & Intensive & $ (1,1,1,1)^\top $ & $ \beta_0+\beta_1+\beta_2+\beta_3 $\\
+            A & Regular & $ (1,1,0,0)^\top $ & $ \beta_0+\beta_1 $\\
+            B & Intensive & $ (1,0,1,0)^\top $ & $ \beta_0+\beta_2 $\\
+            B & Regular & $ (1,0,0,0)^\top $ & $ \beta_0 $
+      \end{NiceTabular}
+      \caption{Interaction model}
+\end{table}
+\begin{itemize}
+      \item $ \beta_1 $ is the \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated at Clinic A
+            versus Clinic B at Regular care.
+      \item $ \beta_1+\beta_3 $ is the \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated at
+            Clinic A versus Clinic B at Intensive care.
+      \item $ \beta_2 $ is the \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated with
+            Intensive versus Regular care at Clinic B.
+      \item $ \beta_2+\beta_3 $ is the \textcolor{Blue}{log odds ratio} of mortality for babies born to mothers treated with
+            Intensive versus Regular care at Clinic A.
+      \item $ \beta_3 $ is a \textcolor{Blue}{difference is log ratio odds}.
+      \item If $ \beta_3=0 $, then the association between mortality and level of care does not depend on Clinic.
+      \item Equivalently, if $ \beta_3 = 0 $, then the association between mortality and Clinic does not depend on level of care.
+\end{itemize}
+\subsection*{Prediction from Logistic Regression}
+\[ \logit{\pi_i}=\log*{\frac{\pi_i}{1-\pi_i}}=\eta_i\iff \pi_i=\frac{\exp{\eta_i}}{1+\exp{\eta_i}}=\expit{\eta_i} \]
+\begin{itemize}
+      \item Assume we have found $ \hat{\Vector{\beta}} $ using Fisher scoring (R \texttt{glm()} function).
+      \item The fitted value for the \textcolor{Blue}{probability of response} $ \pi_i=\E{Y_i/m_i} $ for explanatory
+            variable(s) $ \Vector{x}_i $ is:
+            \[ \hat{\pi}_i=\hat{\pi}(\Vector{x}_i)=\frac{\exp{\Vector{x}_i^\top \hat{\Vector{\beta}}}}{1+\exp{\Vector{x}_i^\top \hat{\Vector{\beta}}}}=\expit{\Vector{x}_i^\top \hat{\Vector{\beta}}}  \]
+      \item The \textcolor{Blue}{predicted number of responses} is: $ \hat{Y}_i=m_i\hat{\pi}_i $.
+\end{itemize}
+\subsection*{Logistic Regression Analysis of Prenatal Care Data}
+\addcontentsline{toc}{subsection}{Logistic Regression Analysis of Prenatal Care Data}
+\begin{itemize}
+      \item \textcolor{Blue}{Previously}: Analysis using likelihood for $ 2\times 2 $ tables:
+            \begin{table}[!htbp]
+                  \centering
+                  \begin{NiceTabular}{ll}
+                        Odds Ratio (outcome = mortality) & Estimate and \qty{95}{\percent} CI\\
+                        \midrule
+                        Intensive vs Regular & $ 0.51\; (0.30,0.89) $\\
+                        Intensive vs Regular at Clinic A & $ 0.80\; (0.37,1.73) $\\
+                        Intensive vs Regular at Clinic B & $ 1.01\; (0.33,3.10) $\\
+                        \midrule
+                  \end{NiceTabular}
+            \end{table}
+      \item \textcolor{Blue}{Now}:
+            \begin{enumerate}[1.]
+                  \item Use \texttt{glm()} function in R to fit logistic regression models and estimate $ \hat{\Vector{\beta}} $.
+                  \item Extract estimates $ \beta_k $ with $ \log{\text{OR}} $ interpretations.
+                  \item Conduct hypothesis tests for $ \HN $: $ \beta_k=\beta_{k0} $.
+                  \item Calculate \qty{95}{\percent} confidence intervals for $ \beta_k $ and $ \psi=\exp{\beta_k} $.
+                  \item Try to find best fitting model with fewest parameters.
+            \end{enumerate}
+\end{itemize}
+\subsection*{R Data and Code}
+\begin{Example}{Data file \texttt{prenatal.dat}}
+      <<echo=FALSE>>=
+      prenatal.dat = read.table("prenatal.dat", header = T)
+      prenatal.dat
+      @
+\end{Example}
+\begin{itemize}
+      \item The first line contains the variable names/labels.
+      \item We are using indicator variables for the explanatory variables.
+            \begin{itemize}
+                  \item $ x_{i1}=\texttt{clinic}=\Ind{\text{Clinic A}} $.
+                  \item $ x_{i2}=\texttt{loc}=\Ind{\text{Intensive care}} $.
+            \end{itemize}
+      \item The response variable \texttt{y} is the number of events (deaths).
+      \item \texttt{m} is the number of binomial trials (number of mothers).
+\end{itemize}
+% \begin{noindent}
+    <<results = 'hide'>>=
+    # R program for analysis of prenatal care data
+    prenatal.dat <- read.table("prenatal.dat", header = T)
+    # here we construct the response variable for the logistic regression analysis
+    prenatal.dat$resp <- cbind(prenatal.dat$y,prenatal.dat$m-prenatal.dat$y)
+    prenatal.dat
+    # now we fit the model using the glm function and store the result in "model 1"
+    # we indicate "resp" contains a binomial response and that we are using the
+    # logistic link function
+    model1 <- glm(resp~loc,family=binomial(link=logit),data=prenatal.dat)
+    summary(model1)
+    # the "names" function lists the contents of the object "model1" and following
+    # this statement we examine some of the contents of these objects (try it)
+    names(model1)
+    model1$family
+    model1$formula
+    model1$coefficients
+    model1$deviance
+    model1$fitted.values
+    model1$residuals
+    # now we fit a model to examine the relationship between level of care
+    # and mortality adjusting for clinic
+    model2 <- glm(resp~clinic+loc,family=binomial(link=logit),data=prenatal.dat)
+    summary(model2)
+    # here we examine whether the association between loc and mortality depends on
+    # the clinic
+    model3 <- glm(resp~loc+clinic+loc*clinic,family=binomial(link=logit),data=prenatal.dat)
+    summary(model3)
+    # now we examine the marginal relationship between mortality and clinic
+    model4 <- glm(resp~clinic,family=binomial(link=logit),data=prenatal.dat)
+    summary(model4)
+    @
+% \end{noindent}
+\subsection*{Selected R Output}
+Print the augmented dataframe to see what the \textcolor{Blue}{\texttt{resp} variable} $ (Y_i,m_i-Y_i) $ looks like:
+% \begin{noindent}
+    <<>>=
+    # here we construct the response variable for the logistic regression analysis
+    prenatal.dat$resp <- cbind(prenatal.dat$y,prenatal.dat$m-prenatal.dat$y)
+    prenatal.dat
+    @
+% \end{noindent}
+The \textcolor{Blue}{logistic regression} models are fit using the \texttt{glm} commands like:
+% \begin{noindent}
+    <<eval=FALSE>>=
+    # now we fit the model using the glm function and store the result in "model 1"
+    # we indicate "resp" contains a binomial response and that we are using the
+    # logistic link function
+    model1 <- glm(resp~loc,family=binomial(link=logit),data=prenatal.dat)
+    summary(model1)
+    @
+% \end{noindent}
+\subsection*{Fit of Model 1: Level of Care Model}
+\[ \log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_2x_{i2} \]
+% \begin{noindent}
+    <<>>=
+    model1 <- glm(resp~loc,family=binomial(link=logit),data=prenatal.dat)
+    summary(model1)$coefficients
+    @
+% \end{noindent}
+\subsection*{Components of the \texttt{summary()} output for \texttt{glm} objects}
+\begin{itemize}
+      \item \textcolor{Blue}{\texttt{Estimate}}: the maximum likelihood estimates of the regression coefficients $ \hat{\beta}_k $.
+      \item \textcolor{Blue}{\texttt{Std Error}}: estimated standard errors based on the inverse of the information.
+            \[ \se{\hat{\beta}_k}=\sqrt{\bigl(\Matrix{I}^{-1}(\hat{\Vector{\beta}})\bigr)_{kk}}=\sqrt{I^{kk}(\hat{\Vector{\beta}})} \]
+      \item \textcolor{Blue}{\texttt{z value}}: Wald-based test statistics for the hypothesis test:
+            \begin{center}
+                  $ \HN $: $ \beta_k=0 $ vs $ \HA $: $ \beta_k\ne 0 $.
+            \end{center}
+      \item \textcolor{Blue}{\texttt{Pr(>|z|)}}: $ p $-value for the above test.
+\end{itemize}
+\textcolor{Blue}{For this model}:
+\begin{itemize}
+      \item $ \beta_2 $ is the log odds ratio of mortality for babies born to mothers treated with
+            Intensive versus Regular care.
+            \[ \hat{\psi}=\exp{\hat{\beta}_2}=\exp{-0.6670729}=0.51 \]
+\end{itemize}
+\subsection*{Hypothesis test for $ \beta_k $}
+\begin{itemize}
+      \item We may wish to test:
+            \begin{center}
+                  $ \HN $: $ \beta_k=\beta_{k0} $ versus $ \HA $: $ \beta_k\ne \beta_{k0} $
+            \end{center}
+      \item The general \textcolor{Blue}{Wald Result} for scalar $ \beta_k $ is:
+            \[ (\hat{\beta}_k-\beta_{k0})^2\bigl(I^{kk}(\hat{\Vector{\beta}})\bigr)^{-1} \sim \chi^2_1 \]
+            equivalently $ \displaystyle \frac{\hat{\beta}_k-\beta_{k0}}{\se{\hat{\beta}_k}}\sim \N{0,1} $ where $ \se{\hat{\beta}_k}=\sqrt{I^{kk}(\hat{\Vector{\beta}})} $.
+      \item And we can find the $ p $-value of this test using
+            \[ p=2\Prob*{Z>\frac{\abs{\hat{\beta}_k-\beta_{k0}}}{\se{\hat{\beta}_k}}}\qquad\text{where $ Z \sim \N{0,1} $} \]
+      \item The \texttt{summary()} output gives the test statistics and $p$-values for testing
+            \begin{center}
+                  \begin{center}
+                        $ \HN $: $ \beta_k=0 $ vs $ \HA $: $ \beta_k\ne 0 $
+                  \end{center}
+            \end{center}
+\end{itemize}
+\subsection*{Hypothesis test for $ \beta_2 $ from Model 1: Level of Care Model}
+% \begin{noindent}
+            <<>>=
+            summary(model1)$coefficients
+            @
+          % \end{noindent}
+\begin{itemize}
+      \item We wish to test:
+            \begin{center}
+                  $ \HN $: $ \beta_2=0 $ vs $ \HA $: $ \beta_2\ne 0 $
+            \end{center}
+      \item The Wald-based test statistic is:
+            \[ z^\star=\frac{\hat{\beta}_2-0}{\se{\hat{\beta}_2}}=\frac{-0.6671}{0.2785}=-2.3949   \]
+      \item And we can find the $ p $-value of this test using:
+            \[ p=2\Prob{Z>\abs{-2.3949}}=0.0166<0.05 \]
+      \item Therefore, we reject the null hypothesis that $ \beta_2=0 $.
+      \item Equivalently, we reject the null hypothesis that $ \text{OR}=1 $.
+\end{itemize}
+\subsection*{Confidence Interval for the OR}
+\begin{itemize}
+      \item Calculate CI for $ \beta_k=\log{\psi} $ and then exponentiate.
+      \item Recall the \textcolor{Blue}{Wald-based} confidence interval:
+            \[ \hat{\beta}_k\pm 1.96\se{\hat{\beta}_k} \]
+      \item The \textcolor{Blue}{\texttt{Std Error}} from the \texttt{summary()} output is the square root of the diagonal of
+            the inverse of the Information matrix.
+            % \begin{noindent}
+        <<>>=
+        summary(model1)$coefficients
+        summary(model1)$cov.unscaled # The inverse of the Information Matrix
+        sqrt(diag(summary(model1)$cov.unscaled)) # The se of the betas
+        @
+    % \end{noindent}
+\end{itemize}
+\subsection*{Confidence Interval for $ \exp{\beta_2} $ from Model 1: Level of Care Model}
+% \begin{noindent}
+    <<>>=
+    summary(model1)$coefficients
+    @
+% \end{noindent}
+\begin{itemize}
+      \item The \qty{95}{\percent} confidence interval for the OR is:
+            \begin{align*}
+                  \exp[\big]{\hat{\beta}_k\pm 1.96\se{\hat{\beta}_k}}
+                   & =\exp{-0.6671\pm 1.96(0.2785)} \\
+                   & =(\exp{-1.2130},\exp{-0.1211}) \\
+                   & =(0.30,0.89)
+            \end{align*}
+      \item Note: The estimate and \qty{95}{\percent} confidence interval here match those found
+            previously from the $ 2\times 2 $ table analysis.
+\end{itemize}
+\subsection*{Fit of Model 2: Main Effects Model}
+\[ \textcolor{Green}{\log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}} \]
+% \begin{noindent}
+    <<>>=
+    model2 <- glm(resp~clinic+loc,family=binomial(link=logit),data=prenatal.dat)
+    summary(model2)$coefficients
+    @
+% \end{noindent}
+\begin{itemize}
+      \item \textcolor{Blue}{Odds Ratio for mortality for Intensive versus Regular care, controlling for clinic}:
+            \[ \exp{\hat{\beta}_2}=\exp{-0.1503}=0.860 \]
+\end{itemize}
+\subsection*{Fit of Model 3: Interaction Model}
+\[ \textcolor{Green}{\log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}} \]
+% \begin{noindent}
+    <<>>=
+    model3 <- glm(resp~loc+clinic+loc*clinic,family=binomial(link=logit),data=prenatal.dat)
+    summary(model3)$coefficients
+    @
+% \end{noindent}
+\subsection*{Interpretation of Model 3: Interaction Model}
+\begin{table}[!htbp]
+      \centering
+      \begin{NiceTabular}{cccl}
+            Clinic & Level of Care & $ (1,x_{i1},x_{i2},x_{i3})^\top $ & $ \log[\big]{\pi_i/(1-\pi_i)} $\\
+            \midrule
+            A & Intensive & $ (1,1,1,1)^\top $ & $ \beta_0+\beta_1+\beta_2+\beta_3 $\\
+            A & Regular & $ (1,1,0,0)^\top $ & $ \beta_0+\beta_1 $\\
+            B & Intensive & $ (1,0,1,0)^\top $ & $ \beta_0+\beta_2 $\\
+            B & Regular & $ (1,0,0,0)^\top $ & $ \beta_0 $
+      \end{NiceTabular}
+\end{table}
+\begin{itemize}
+      \item \textcolor{Blue}{Odds Ratio for mortality for Intensive vs Regular care, Clinic A}:
+            \[ \exp{\hat{\beta}_2+\hat{\beta}_3}=\exp{0.007643-0.229650}=0.80=\hat{\psi}_\text{A} \]
+      \item \textcolor{Blue}{Odds Ratio for mortality for Intensive vs Regular care, Clinic B}:
+            \[ \exp{\hat{\beta}_2}=\exp{0.007643}=1.01=\hat{\psi}_\text{B} \]
+\end{itemize}
+\subsection*{Fit of Model 4: Clinic Only Model}
+\[ \textcolor{Green}{\log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}} \]
+% \begin{noindent}
+    <<>>=
+    model4 <- glm(resp~clinic,family=binomial(link=logit),data=prenatal.dat)
+    summary(model4)$coefficients
+    @
+% \end{noindent}
+\begin{itemize}
+      \item \textcolor{Blue}{Odds Ratio for mortality in Clinic A versus Clinic B}:
+            \[ \exp{\hat{\beta}_1}=\exp{-1.0624}=0.35 \]
+\end{itemize}
+\subsection*{Prenatal Care Wrap-up}
+\begin{itemize}
+      \item Model 4 provides the best fit to the data with the fewest parameters.
+      \item However, the original research question was about the level of care therefore we
+            select \textcolor{Blue}{Model 2} as our final model.
+      \item Odds Ratio for mortality for Intensive versus Regular care, controlling for clinic:
+            \[ \exp{\hat{\beta}_2}=\exp{-0.1503}=0.860 \]
+      \item Exercises:
+            \begin{enumerate}[1.]
+                  \item Conduct a formal hypothesis test of $ \HN $: $ \beta_2=0 $ and confirm $ p $-value in the R output.
+                  \item Show that the \qty{95}{\percent} confidence interval for the OR is $ (0.450,1.643) $.
+                  \item Show that the Odds Ratio for mortality for Clinic B versus Clinic A, controlling for
+                        level of care is:
+                        \[ \exp{-\hat{\beta}_1}=\exp{0.9863}=2.68 \]
+            \end{enumerate}
 \end{itemize}

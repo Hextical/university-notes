@@ -1,0 +1,406 @@
+\section*{Topic 2e: Bioassay and Dose Response Models}
+\addcontentsline{toc}{section}{Topic 2e: Bioassay and Dose Response Models}
+\begin{itemize}
+    \item \textcolor{Blue}{Previously}: Logistic regression analysis of Binomial data with binary and
+          categorical explanatory variables.
+    \item \textcolor{Blue}{Today}: Explore different link functions and continuous explanatory variables.
+\end{itemize}
+\begin{enumerate}[1.]
+    \item Modelling the Dose Response Relationship.
+          \begin{itemize}
+              \item Tolerance distributions and their associated links.
+              \item Finding the median lethal/effective dose.
+          \end{itemize}
+    \item Beetle Mortality Example.
+\end{enumerate}
+\subsection*{2.10 Bioassay and Dose Response Models}
+\addcontentsline{toc}{subsection}{Modelling the Dose Response Relationship}
+\begin{itemize}
+    \item \textcolor{Blue}{Bioassay experiment}: Expose several groups of subjects to varying levels of a
+          toxin/drug and determine how many responses within a fixed period of time.
+    \item \textcolor{Blue}{Stimulus}: Each group is subjected to a particular dose of the toxin/drug:
+          \[ \textcolor{Green}{\text{dose}=\log{\text{concentration}}} \]
+    \item \textcolor{Blue}{Response}: As a result of the stimulus, subjects will manifest a binary response
+          (often of the form died/survived).
+    \item \textcolor{Blue}{Tolerance}: We assume that for each subject there is a certain dose level above
+          which the response will always occur.
+          \begin{itemize}
+              \item This level is called the tolerance or threshold.
+              \item The tolerance varies from one individual to another in the population and therefore
+                    from subject to subject in the sample.
+              \item We can therefore ascribe a distribution to it.
+          \end{itemize}
+\end{itemize}
+\subsection*{The Tolerance Distribution}
+\begin{itemize}
+    \item $ z =$ concentration of the stimulus (toxin/drug).
+    \item $ x=\log{z} =$ dose/intensity of the stimulus.
+    \item $ f(x)= $ pdf for the distribution of the tolerance in the population (\emph{i.e., the
+              distribution for the stimulus/dose at which response occurs}).
+    \item Suppose a dose of $ x_0 $ were applied to the population. What proportion would
+          respond?
+          \[ \pi_0=\int_{-\infty}^{x_0}f(s)\odif{s} \]
+    \item If $ x_0<x_1 $, then $ \pi_0<\pi_1 $.
+\end{itemize}
+\subsection*{Modelling the Dose Response Relationship}
+For each group $ j=1,\ldots,J $ let:
+\begin{itemize}
+    \item $ m_j= $ number of subjects in group $ j $.
+    \item $ x_j= $ dose applied to subjects in group $ j $.
+    \item $ y_j= $ the number of subjects with response in group $ j $.
+\end{itemize}
+\begin{table}[!htbp]
+    \centering
+    \begin{NiceTabular}{cccc}
+        \toprule
+        Dose & Responders & Total\\
+        $ x_j $ & $ y_j $ & $ m_j $ & $ y_j/m_j $\\
+        \midrule
+        $ 1.6907 $ & $ 6 $ & $ 59 $ & $ 0.10 $\\
+        $ 1.7242 $ & $ 13 $ & $ 60 $ & $ 0.22 $\\
+        $ 1.7552 $ & $ 18 $ & $ 62 $ & $ 0.29 $\\
+        \bottomrule
+    \end{NiceTabular}
+\end{table}
+Assume
+\[ \textcolor{Blue}{Y_j \sim \BIN{m_j,\pi_j},\qquad j=1,\ldots,J} \text{ independently} \]
+where $ \pi_j= $ probability of response in group $ j $ (i.e., at dose $ x_j $).
+\begin{itemize}
+    \item \textcolor{Blue}{Goal}: To model $ \pi_j=\pi_j(x_j) $ as a function of the continuous stimulus/dose covariate $ x_j $.
+    \item Since $ 0\le \pi\le 1 $, the usual setup is to model using:
+          \[ g(\pi)=\beta_0+\beta_1x=\eta \]
+          where $ g(\:\cdot\:) $ is a link function.
+    \item Then we have:
+          \[ \pi(x)=g^{-1}(\beta_0+\beta_1x) \]
+    \item What link function should we select?
+\end{itemize}
+\subsection*{Typical Dose Response Curve}
+TODO figure
+\begin{itemize}
+    \item This suggests selecting $ g(\:\cdot\:) $ such that $ g^{-1}(\:\cdot\:) $ is a cdf:
+          \[ \pi(x)=g^{-1}(\beta_0+\beta_1x)=F^*(\beta_0+\beta_1x) \]
+\end{itemize}
+\subsection*{The Link Function and the Tolerance Distribution}
+\begin{itemize}
+    \item Now we have an inverse link function that is a cdf:
+          \[ \pi(x)=g^{-1}(\beta_0+\beta_1x)=F^*(\beta_0+\beta_1x) \]
+    \item Recall our original definition of the \textcolor{Blue}{tolerance distribution}:
+          \[ \pi(x)=\int_{-\infty}^{x}f(s)\odif{s} \]
+    \item So if we select a tolerance distribution that will determine the link function
+          through:
+          \[ \textcolor{Blue}{\pi(x)=g^{-1}(\beta_0+\beta_1x)=F^*(\beta_0+\beta_1x)=\int_{-\infty}^{\infty}f(s)\odif{s}} \]
+    \item $ f(x) $ determines how the ``probability of a positive response'' changes with the value of the dose.
+          \[ \pdv{\pi(x)}{x}=(F^*)^\prime (\beta_0+\beta_1x)(\beta_1)=f(x) \]
+\end{itemize}
+\subsection*{Some Choices for the Tolerance Distribution}
+\begin{enumerate}[1.]
+    \item \textcolor{Red}{Normal Tolerance Distribution} ($ f(s) $ is Normal pdf):
+          \begin{align*}
+              \pi(x)
+               & =\int_{-\infty}^{x}f(s)\odif{s}                                                                                        \\
+               & =\int_{-\infty}^{x}\frac{1}{\sqrt{2\pi\sigma^2}} \exp*{-\frac{1}{2} \biggl(\frac{s-\mu}{\sigma} \biggr)^{\!2}}\odif{s} \\
+               & =\Phi\biggl(\frac{x-\mu}{\sigma}\biggr)
+          \end{align*}
+          where $ \Phi $ is the $ \N{0,1} $ cdf. This implies:
+          \begin{align*}
+              g^{-1}(\beta_0+\beta_1x)    & =\Phi\biggl(\frac{x-\mu}{\sigma}\biggr)                          \\
+              \pi(x)                      & =g^{-1}(\beta_0+\beta_1x)=\Phi\biggl(\frac{x-\mu}{\sigma}\biggr) \\
+              \Phi^{-1}\bigl(\pi(x)\bigr) & =\beta_0+\beta_1x=\frac{x-\mu}{\sigma}
+          \end{align*}
+          We call this the \textcolor{Blue}{Probit link} $ g(\:\cdot\:)=\Phi^{-1}(\:\cdot\:) $.
+\end{enumerate}
+\begin{enumerate}[1.]
+    \item How do we interpret $ \beta_0 $ and $ \beta_1 $?
+          \begin{itemize}
+              \item They are no longer log odds ratios (as with logistic link).
+              \item Interpretation is in terms of $ \mu $ and $ \sigma $ the parameters of the tolerance distribution.
+          \end{itemize}
+          \[ \pi(x)=g^{-1}(\beta_0+\beta_1x)=\Phi\biggl(\frac{x-\mu}{\sigma} \biggr)=\Phi\biggl(\frac{x}{\sigma} -\frac{\mu}{\sigma} \biggr) \]
+          \[ \beta_0=\frac{-\mu}{\sigma},\qquad \beta_1=\frac{1}{\sigma} \]
+\end{enumerate}
+\subsection*{Median lethal/effective dose}
+Let $ \delta $ be the \textcolor{Blue}{median lethal/effective dose}.
+\begin{itemize}
+    \item The dose $ \delta $ at which \qty{50}{\percent} of the population has the response i.e., $ \pi(\delta)=0.50 $.
+    \item Find an expression for $ \delta $ in terms of $ \beta_0 $ and $ \beta_1 $:
+          \begin{align*}
+              \Phi^{-1}\bigl(\pi(x)\bigr) & =\beta_0+\beta_1x         \\
+              \Phi^{-1}(0.50)             & =\beta_0+\beta_1\delta    \\
+              0                           & =\beta_0+\beta_1\delta    \\
+              \delta                      & =\frac{-\beta_0}{\beta_1}
+          \end{align*}
+    \item Can also find other quantiles of the tolerance distribution i.e., $ \pi(\delta_p)=p $, $ 0<p<1 $.
+\end{itemize}
+\begin{table}[!htbp]
+    \centering
+    \begin{NiceTabular}{ccc}
+        \toprule
+        \multicolumn{2}{c}{\textcolor{Blue}{Tolerance Distribution}} & \textcolor{Blue}{Link Function}\\
+        Name & $ \pi=g^{-1}(\eta) $ & $ \eta=g(\pi) $\\
+        \midrule
+        \textcolor{Red}{Normal} & $\begin{aligned}
+                \pi(x) & =\int_{-\infty}^{x}\frac{\beta_1}{\sqrt{2\pi}}\exp*{-\frac{1}{2}(\beta_0+\beta_1s)^2} \odif{s} \\
+                       & =\Phi(\beta_0+\beta_1x)                                                                        \\
+                       & =\Phi(\eta)
+            \end{aligned}$ & $\begin{array}{c}
+                \eta=\Phi^{-1}(\pi) \\
+                \textcolor{Red}{\text{probit}}
+            \end{array}$\\
+        \midrule
+        \textcolor{Red}{Logistic} & $\begin{aligned}
+                \pi(x) & =\int_{-\infty}^{x}\frac{\beta_1\exp{\beta_0+\beta_1s}}{(1+\exp{\beta_0+\beta_1s})^2} \odif{s} \\
+                       & =\frac{\exp*{\beta_0+\beta_1x}}{1+\exp{\beta_0+\beta_1x}}                                      \\
+                       & =\frac{\exp{\eta}}{1+\exp{\eta}}
+            \end{aligned}$ & $\begin{array}{c}
+                \eta=\log*{\frac{\pi}{1-\pi}} \\
+                \textcolor{Red}{\text{logistic}}
+            \end{array}$\\
+        \midrule
+        \textcolor{Red}{Extreme Value} & $\begin{aligned}
+                \pi(x) & =\int_{-\infty}^{x}\beta_1\exp[\big]{\beta_0+\beta_1s-\exp{\beta_0+\beta_1s}} \odif{s} \\
+                       & =\int_{-\infty}^{\eta}\exp[\big]{\nu-\exp{\nu}}\odif{\nu}                              \\
+                       & =1-\exp[\big]{-\exp{\eta}}
+            \end{aligned}$ & $\begin{array}{c}
+                \eta=\log[\big]{-\log{1-\pi}} \\
+                \textcolor{Red}{\text{complementary log-log}}
+            \end{array}$\\
+        \bottomrule
+    \end{NiceTabular}
+\end{table}
+\subsection*{A Dose Response Example}
+\addcontentsline{toc}{subsection}{A Dose Response Example}
+\begin{Example}{Beetle Mortality}
+    Consider an experiment by Bliss (Annals of Applied Biology, 1935) in which groups of
+    beetles were exposed to varying concentrations of carbon disulphide ($\text{CS}_2$) gas.
+    \begin{center}
+        \begin{NiceTabular}{cccc}
+            \toprule
+            &\text{\# of insects} & \text{\# of insects}\\
+            Dose ($ x_i $) & killed ($ x_i $) & $ m_i $ & $ y_j/m_i $\\
+            \midrule
+            $ 1.6907 $ & $ 6 $ & $ 59 $ & $ 0.10 $\\
+            $ 1.7242 $ & $ 13 $ & $ 60 $ & $ 0.22 $\\
+            $ 1.7552 $ & $ 18 $ & $ 62 $ & $ 0.29 $\\
+            $1.7842$ & $28$ & $56$ & $0.50$\\
+            $1.8113$ & $52$ & $63$ & $0.83$\\
+            $1.8369$ & $53$ & $59$ & $0.89$\\
+            $1.8610$ & $61$ & $62$ & $0.98$\\
+            $1.8839$ & $60$ & $60$ & $1.00$\\
+            \bottomrule
+        \end{NiceTabular}
+    \end{center}
+\end{Example}
+\subsection*{R Data and Code}
+\begin{Example}{Data file \texttt{beetle.dat}}
+    % \begin{noindent}
+      <<echo=FALSE>>=
+      beetle.dat = read.table("beetle.dat", header = T)
+      beetle.dat
+      @
+      % \end{noindent}
+\end{Example}
+\begin{itemize}
+    \item Recall we are interested in modelling the \textcolor{Blue}{dose-response relationship}:
+          \[ \pi(x)=g^{-1}(\beta_0+\beta_1x) \]
+          where $ x= $ dose.
+    \item We will fit several binomial regression
+          models to this data.
+    \item Use various link functions to find the best
+          model.
+\end{itemize}
+% \begin{noindent}
+    <<results = 'hide'>>=
+    # R program for analysis of dose-response data
+    beetle.dat = read.table("beetle.dat", header = T)
+
+    # here we construct the response variable for logistic regression
+    beetle.dat$resp = cbind(beetle.dat$y,beetle.dat$m-beetle.dat$y)
+    beetle.dat
+    
+    # here we fit a logistic model involving dose
+    model1 = glm(resp ~ dose, family=binomial(link=logit),data=beetle.dat)
+    summary(model1)
+
+    # here we record deviance residuals in rd1
+    rd1 = residuals.glm(model1,"deviance")
+    fv1 = model1$fitted.values
+
+    # plotting the deviance residuals by dose and by fitted values
+    pdf("beetle-residuals.pdf",width=10,height=8)
+    par(mfrow=c(3,2))
+    plot(beetle.dat$dose,rd1,ylim=c(-5,5), xlab="DOSE",ylab="DEVIANCE RESIDUALS")
+    abline(h=-2) ; abline(h= 2); title("Model 1 - logit link")
+    plot(fv1,rd1,ylim=c(-5,5), xlab = "FITTED VALUE",ylab="DEVIANCE RESIDUALS")
+    abline(h=-2) ; abline(h= 2); title("Model 1 - logit link")
+
+    # here we fit a probit model involving dose
+    model2 = glm(resp ~ dose, family=binomial(link=probit),data=beetle.dat)
+    summary(model2)
+    rd2 = residuals.glm(model2,"deviance")
+    fv2 = model2$fitted.values
+
+    # here we fit a complementary log-log model involving dose
+    model3 = glm(resp ~ dose, family=binomial(link=cloglog),data=beetle.dat)
+    summary(model3)
+    rd3 = residuals.glm(model3,"deviance")
+    fv3 = model3$fitted.values
+
+    plot(beetle.dat$dose,rd2,ylim=c(-5,5), xlab="DOSE",ylab="DEVIANCE RESIDUALS")
+    abline(h=-2) ; abline(h= 2); title("Model 2 - probit link")
+    plot(fv2,rd2,ylim=c(-5,5), xlab = "FITTED VALUE",ylab="DEVIANCE RESIDUALS")
+    abline(h=-2) ; abline(h= 2); title("Model 2 - probit link")
+
+    plot(beetle.dat$dose,rd3,ylim=c(-5,5), xlab="DOSE",ylab="DEVIANCE RESIDUALS")
+    abline(h=-2) ; abline(h= 2); title("Model 3 - log-log link")
+    plot(fv3,rd3,ylim=c(-5,5), xlab = "FITTED VALUE",ylab="DEVIANCE RESIDUALS")
+    abline(h=-2) ; abline(h= 2); title("Model 3 - log-log link")
+    @
+% \end{noindent}
+\subsection*{Selected R Output}
+Fit of the \textcolor{Red}{logistic link} model:
+% \begin{noindent}
+<<>>=
+summary(model1)
+@
+% \end{noindent}
+Fit of the \textcolor{Red}{probit link} model:
+% \begin{noindent}
+<<>>=
+summary(model2)
+@
+% \end{noindent}
+Fit of the \textcolor{Red}{complementary log-log link} model:
+% \begin{noindent}
+<<>>=
+summary(model3)
+@
+% \end{noindent}
+\subsection*{Deviance Residual Plots}
+% \begin{noindent}
+<<echo=FALSE, fig.width=8, fig.height=8>>=
+par(mfrow=c(3,2))
+plot(beetle.dat$dose,rd1,ylim=c(-5,5), xlab="DOSE",ylab="DEVIANCE RESIDUALS")
+abline(h=-2) ; abline(h= 2); title("Model 1 - logit link")
+plot(fv1,rd1,ylim=c(-5,5), xlab = "FITTED VALUE",ylab="DEVIANCE RESIDUALS")
+abline(h=-2) ; abline(h= 2); title("Model 1 - logit link")
+plot(beetle.dat$dose,rd2,ylim=c(-5,5), xlab="DOSE",ylab="DEVIANCE RESIDUALS")
+abline(h=-2) ; abline(h= 2); title("Model 2 - probit link")
+plot(fv2,rd2,ylim=c(-5,5), xlab = "FITTED VALUE",ylab="DEVIANCE RESIDUALS")
+abline(h=-2) ; abline(h= 2); title("Model 2 - probit link")
+plot(beetle.dat$dose,rd3,ylim=c(-5,5), xlab="DOSE",ylab="DEVIANCE RESIDUALS")
+abline(h=-2) ; abline(h= 2); title("Model 3 - log-log link")
+plot(fv3,rd3,ylim=c(-5,5), xlab = "FITTED VALUE",ylab="DEVIANCE RESIDUALS")
+abline(h=-2) ; abline(h= 2); title("Model 3 - log-log link")
+@
+% \end{noindent}
+We can plot the actual data (as $ y_i/m_i $) against dose $ x_i $, and see how well the
+dose-response curves $ \hat{\pi}(x)=g^{-1}(\hat{\beta}_0+\hat{\beta}_1) $ fit the data.
+\subsection*{Fitted Dose-Response Curves}
+% \begin{noindent}
+      <<>>=
+      # Plot the dose-response curves
+      plot(beetle.dat$dose, beetle.dat$y/beetle.dat$m,xlim=c(1.65,1.95),ylim=c(0,1),xlab="DOSE",ylab="PROBABILITY OF DEATH")
+
+      x = seq(1.65,1.95,by=0.001)
+      prob=as.vector(rep(1,length(x)))
+
+      beta=as.vector(model1$coefficients) # logistic model
+      for(i in 1:length(x)) { prob[i]=exp(beta[1]+beta[2]*x[i])/(1+exp(beta[1]+beta[2]*x[i])) }
+      lines(x,prob,lty=2)
+
+      beta = as.vector(model2$coefficients) # probit model
+      for(i in 1:length(x)) { prob[i]=pnorm(beta[1]+beta[2]*x[i]) }
+      lines(x,prob,lty=5)
+
+      beta = as.vector(model3$coefficients) # cloglog model
+      for(i in 1:length(x)) { prob[i]=1-exp(-exp(beta[1]+beta[2]*x[i])) }
+      lines(x,prob,lty=1)
+
+      legend(1.65,1,c("LOGIT","PROBIT","CLOGLOG"), lty=c(2,5,1), bty="n")
+      @
+% \end{noindent}
+The curve for the \textcolor{Blue}{complementary log-log link} fits the data better than the other two,
+as one would expect from the residual plots and the deviance statistics.
+\subsection*{Interpretation of Dose-Response Models: \texttt{Logistic} Link}
+\[ \textcolor{Blue}{\logit[\big]{\pi(x)}=\beta_0+\beta_1x} \]
+\begin{itemize}
+    \item $ \beta_0= $ log odds of response at dose of zero.
+    \item Now let's compare the model with $ x_1=1 $ versus $ x_1=0 $.
+          \begin{table}[!htbp]
+              \centering
+              \begin{NiceTabular}{ccrl}
+                  Dose & $ \Vector{x}_i $ & $ \eta_i $ & $ =\log[\big]{\pi_i/(1-\pi_i)} $\\
+                  \midrule
+                  $ x+1 $ & $ (1,x+1)^\top $ & $ \beta_0+\beta_1(x+1) $ & $ =\log[\big]{\pi_1/(1-\pi_1)} $\\
+                  $ x $ & $ (1,x)^\top $ & $ \beta_0+\beta_1x $ & $ =\log[\big]{\pi_0/(1-\pi_0)} $\\
+                  \midrule
+                  && $ \beta_1 $ & $ =\log*{\frac{\pi_1/(1-\pi_1)}{\pi_0/(1-\pi_0)}} $
+              \end{NiceTabular}
+          \end{table}
+    \item We subtract line 2 from line 1 to isolate $ \beta_1 $ and find its interpretation.
+    \item $ \beta_1 =$ log odds ratio for response associated with a \textcolor{Red}{one unit increase in dose}.
+\end{itemize}
+% \begin{noindent}
+      <<>>=
+      summary(model1)$coefficients
+      @
+% \end{noindent}
+\begin{itemize}
+    \item What is the OR of response associated with a $ 0.001 $ increase in dose?
+          \[ \widehat{\text{OR}}=\exp{0.001\hat{\beta}}=\exp{34.27/1000}=1.41 \]
+    \item An expression for the \textcolor{Blue}{median lethal/effective dose}:
+          \[ \pi(\delta)=0.50\implies\logit{0.5}=\beta_0+\beta_1\delta\implies \delta=-\beta_0/\beta_1 \]
+    \item Here $ \hat{\delta}=60.7175/34.2703=1.772 $.
+    \item Can also find an expression for the $ 100p $th percentile of the tolerance distribution ($ 0<p<1 $):
+          \[ \pi(\delta)=p\implies\logit{p}=\beta_0+\beta_1\delta_p \]
+\end{itemize}
+\subsection*{Interpretation of Dose-Response Models: \texttt{Probit} Link}
+\[ \textcolor{Blue}{\pi(x)=\Phi(\beta_0+\beta_1x)} \]
+where $ \Phi $ is the CDF of a $ \N{0,1} $ random variable.
+\begin{itemize}
+    \item Interpretation of $ \beta $ in terms of $ (\mu,\sigma) $ parameters of the tolerance distribution:
+          \[ \beta_0=\frac{-\mu}{\sigma},\qquad \beta_1=\frac{1}{\sigma} \implies \mu=\frac{-\beta_0}{\beta_1} ,\qquad \sigma=\frac{1}{\beta_1}  \]
+          % \begin{noindent}
+            <<>>=
+            summary(model2)$coefficients
+            @
+      % \end{noindent}
+    \item An expression for the \textcolor{Blue}{median lethal/effective dose}:
+          \[ \pi(\delta)=0.50\implies \delta=\frac{-\beta_0}{\beta_1} \]
+    \item Here $ \hat{\delta}=34.9353/19.7279 = 1.771 $.
+    \item Can also find an expression for the $ 100p $th percentile of the tolerance distribution:
+          \[ \Phi^{-1}(p)=\beta_0+\beta_1\delta_p\implies \delta_p=\frac{\Phi^{-1}(p)-\beta_0}{\beta_1} \]
+    \item \textcolor{Blue}{Exercise}: What are $ \delta_{0.25} $ and $ \delta_{0.75} $ the $ 25 $th and $ 75 $th percentiles
+          of the tolerance distribution from the probit model?
+          % \begin{noindent}
+            <<>>=
+            qnorm(0.25)
+            qnorm(0.75)
+            @
+      % \end{noindent}
+          \[ \hat{\delta}_{0.25}=\frac{-0.6745+34.9353}{19.7279}=1.737,\qquad \hat{\delta}_{0.75}=\frac{0.6745+34.9353}{19.7279}=1.805  \]
+\end{itemize}
+\subsection*{Interpretation of Dose-Response Models: \texttt{cloglog} Link}
+\[ \textcolor{Blue}{\log[\Big]{-\log[\big]{1-\pi(x)}}}=\beta_0+\beta_1x \]
+\begin{itemize}
+    \item Interpretation of $ \beta $ parameters is not as natural as in other two models:
+          \[ \beta_0=\log[\Big]{-\log[\big]{1-\pi(0)}},\qquad \beta_1=\log*{\frac{-\log[\big]{1-\pi(x+1)}}{-\log[\big]{1-\pi(x)}} } \]
+          % \begin{noindent}
+            <<>>=
+            summary(model3)$coefficients
+            @
+            % \end{noindent}
+    \item An expression for the \textcolor{Blue}{median lethal/effective dose}:
+          \[ \pi(\delta)=0.50\implies \delta=\frac{\log[\big]{-\log{1-0.5}}-\beta_0}{\beta_1}  \]
+    \item Here $ \hat{\delta}=(-0.3665 + 39.5723)/22.0412 = 1.779 $.
+\end{itemize}
+\subsection*{Dose-Response Models: Summary}
+\begin{itemize}
+    \item Comparison of models with different links must be done through plots of the
+          deviance residuals or fitted dose response curves.
+    \item Interpretation of regression parameters $ \beta_j $ depend on the link function.
+    \item Consider estimating $ \delta_p $ where $ \pi(\delta_p)=p $, $ 0<p<1 $ to learn about the underlying
+          tolerance distribution.
+    \item Prediction: $ \hat{\pi}(x)=g^{-1}(\hat{\beta}_0+\hat{\beta}_1) $.
+    \item Multiple explanatory variables can be included in dose response models.
+\end{itemize}

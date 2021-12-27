@@ -1,119 +1,294 @@
-\makeheading{Week 9}{\daterange{2021-11-01}{2021-11-05}}
-\section*{Topic 4c: Poisson Approximation to the Binomial Distribution}
-\addcontentsline{toc}{section}{Topic 4c: Poisson Approximation to the Binomial Distribution}
-\subsection*{Log Linear Models}
-Previously we used a Poisson GLM to model count data arising from a \textcolor{Blue}{time
-    homogeneous Poisson process}:
+\section*{Topic 4c: Binomial Overdispersion}
+\addcontentsline{toc}{section}{Topic 4c: Binomial Overdispersion}
+\subsection*{Origin of Overdispersion for Binomial Responses}
+\addcontentsline{toc}{subsection}{Clustered Binomial Data}
 \begin{itemize}
-    \item $ N_i(t_i)= $ the number of events observed over $ (0,t_i] $:
-          \[ \E[\big]{N_i(t_i)}=\mu_i(t_i)=\lambda_i t_i \]
-    \item Explanatory variables: $ \Vector{x}_i=(1,x_{i1},\ldots,x_{ip-1})^\top $.
-          \[ \log[\big]{\mu_i(t_i)}=\log{\lambda_i}+\log{t_i}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
+    \item Recall two methods of dealing with Poisson overdispersion:
+          \begin{itemize}
+              \item Ad hoc method,
+              \item Mixed model.
+          \end{itemize}
+    \item These can also be used to deal with overdispersion with Binomial data.
+    \item For example, extra binomial variation often arises due to unaccounted for
+          clustering in the population.
+    \item When sampling from populations with clustering present the assumptions
+          necessary for the binomial distribution are violated (i.e., independent and
+          identically distributed binary outcomes).
+    \item Examples of clusters: families, classes, neighbourhoods, litters, repeated measures
+          on individuals.
 \end{itemize}
-We will consider three other types of data we can analyse with a Poisson GLM:
-\begin{enumerate}[1.]
-    \item Approximating binomial data (topic 4c).
-    \item Time non-homogeneous Poisson processes (topic 4d).
-    \item Contingency tables/Multinomial data (topic 4e).
-\end{enumerate}
-\subsection*{Poisson Approximation to the Binomial}
-\addcontentsline{toc}{subsection}{Poisson Approx to Binomial}
+\subsubsection*{Clustered Binomial Data}
 \begin{itemize}
-    \item Suppose: \textcolor{Red}{$Y \sim \BIN{m,\pi}$} so that $ \E{Y}=m\pi $.
-    \item Set $ \mu=m\pi $ and examine pmf of $ Y $ in terms of $ \mu $:
+    \item Suppose a pop consists of a number of clusters each of size $k$.
+    \item Suppose $ m $ individuals are sampled from $ m/k $ clusters:
           \begin{align*}
-              f(y)
-               & =\begin{aligned}
-                      f(y) & =\binom{m}{y} \pi^{y}(1-\pi)^{m-y}                                                                                           \\
-                           & =\frac{(m)(m-1) \cdots(m-y)(m-y-1) \cdots(1)}{(m-y) ! y !}\biggl(\frac{\mu}{m}\biggr)^{y}\biggl(1-\frac{\mu}{m}\biggr)^{m-y} \\
-                           & =\underbrace{\frac{(m)(m-1) \cdots(m-(y-1))}{(m)(m) \cdots(m)}}_{\to 1 \text{ as } m \to \infty} \frac{\mu^{y}}{y !}
-                      \underbrace{\biggr(1-\frac{\mu}{m}\biggr)^{m}}_{\to e^{-\mu}} \underbrace{\biggl(1-\frac{\mu}{m}\biggr)^{-y}}_{\to 1}.
-                  \end{aligned}
+              Y_{ij}             & =1\text{ or }0                        &  & \text{$ j\textsuperscript{th} $ response in the $ i\textsuperscript{th} $ cluster} \\
+              Y_{i\bullet}       & =\sum_{j=1}^{k}Y_{ij}                 &  & \text{total responses in the $ i\textsuperscript{th} $ cluster}                    \\
+              Y_{\bullet\bullet} & =\sum_{i=1}^{m/k}\sum_{j=1}^{k}Y_{ij} &  & \text{grand total}
           \end{align*}
-    \item Recall:
-          \[ \lim\limits_{{n} \to {\infty}}\biggl(1+\frac{a}{n}\biggr)^{\!n}=e^a. \]
-    \item Therefore, as $ m\to\infty $ with $ \mu=m\pi $ fixed:
-          \[ f(y)\to \frac{\mu^y e^{-\mu}}{y!}\text{ the pmf of the Poisson.} \]
-    \item So for $ Y \sim \BIN{m,\pi} $, as $ m\to\infty $, $ \pi\to 0 $ with $ \E{Y}=\mu=m\pi $ fixed we have:
-          \[ \textcolor{Red}{Y \sim \POI{\mu=m\pi}}. \]
-    \item Using a Poisson GLM (with log link):
-          \[ \log{\mu}=\log{\pi}+\log{m}=\Vector{x}^\top \Vector{\beta}+\underbrace{\log{m}}_\text{offset}. \]
-    \item Use the Poisson distribution to model Binomial data.
-    \item Use with large population ($m$ large) and low event rate ($ \pi $).
-    \item Example: Today and Problem 3.1 in course notes.
+    \item \textcolor{Blue}{Overdispersion} is induced by assuming clusters have different response probabilities:
+          \begin{align*}
+              Y_{ij}\mid \pi_i       & \sim \BIN{1,\pi_i} &  & \text{independent observations $ j=1,\ldots,k $} \\
+              Y_{i\bullet}\mid \pi_i & \sim \BIN{k,\pi_i} &  & \text{independent clusters $ i=1,\ldots,m/k $}
+          \end{align*}
+    \item Consider a setting where:
+          \[ \E{\pi_i}=\pi,\qquad \Var{\pi_i}=\rho\pi(1-\pi),\qquad 0<\rho<1. \]
+    \item $ \pi_i $ is analogous to $ u_i $ in Poisson setting.
+    \item With $ \E{\pi_i}=\pi $ and $ \Var{\pi_i}=\rho\pi(1-\pi) $ examine the effect at three levels:
+          individual, cluster and grand/overall total.
 \end{itemize}
-\subsection*{Example: Poisson Approximation to the Binomial}
-\addcontentsline{toc}{subsection}{Example: Skin Cancer}
-\begin{Example}{Non Melanoma Skin Cancer}
-    Schwarz (2015) gives the incidence of non melanoma skin cancer among women in the early
-    1970s in Minneapolis-St Paul and Dallas-Fort Worth.
-    \begin{center}
-        \begin{tabular}{lllrr}
-            \toprule
-            City         & Age   & Count & Pop. Size \\
-            \midrule
-            \texttt{msp} & 15-25 & 1     & 172675    \\
-            \texttt{msp} & 25-34 & 16    & 123065    \\
-            \texttt{msp} & 35-44 & 30    & 96216     \\
-            \texttt{msp} & 45-54 & 71    & 92051     \\
-            \texttt{msp} & 55-64 & 102   & 72159     \\
-            \texttt{msp} & 65-74 & 130   & 54722     \\
-            \texttt{msp} & 75-84 & 133   & 32185     \\
-            \texttt{msp} & 85+   & 40    & 8328      \\
-            \texttt{dfw} & 15-25 & 4     & 181343    \\
-            \texttt{dfw} & 25-34 & 38    & 146207    \\
-            \texttt{dfw} & 35-44 & 119   & 121374    \\
-            \texttt{dfw} & 45-54 & 221   & 111353    \\
-            \texttt{dfw} & 55-64 & 259   & 83004     \\
-            \texttt{dfw} & 65-74 & 310   & 55932     \\
-            \texttt{dfw} & 75-84 & 226   & 29007     \\
-            \texttt{dfw} & 85+   & 65    & 7538      \\
-            \bottomrule
-        \end{tabular}
-    \end{center}
-\end{Example}
-\subsubsection*{Binomial and Poisson Models}
+\subsubsection*{1. Individual Level --- Clustered Binomial Data}
+\begin{align*}
+    \E{Y_{ij}}   & = \E[\big]{\E{Y_{ij}\given \pi_i}}=\E{\pi_i}=\pi.                      \\\\
+    \Var{Y_{ij}} & =\E[\big]{\Var{Y_{ij}\given \pi_i}}+\Var[\big]{\E{Y_{ij}\given \pi_i}} \\
+                 & =\E[\big]{\pi_i(1-\pi_i)}+\Var{\pi_i}                                  \\
+                 & =\E{\pi_i}-\E{\pi_i^2}+\E{\pi_i^2}-\E{\pi_i}^2                         \\
+                 & =\pi-\pi^2                                                             \\
+                 & =\pi(1-\pi),
+\end{align*}
+as expected for a Bernoulli random variable.
+\begin{align*}
+    \Cov{Y_{ij},Y_{ik}}
+     & =\E[\big]{\Cov{Y_{ij},Y_{ik}\given \pi_i}}+\Cov[\big]{\E{Y_{ij}\given \pi_i},\E{Y_{ik}\given \pi_i}} \\
+     & =\E{0}+\Cov{\pi_i,\pi_i}                                                                             \\
+     & =\Var{\pi_i}                                                                                         \\
+     & =\rho\pi(1-\pi).                                                                                     \\\\
+    \Corr{Y_{ij},Y_{ik}}
+     & =\frac{\Cov{Y_{ij},Y_{ik}}}{\sqrt{\Var{Y_{ij}}\Var{Y_{ik}}}}                                         \\
+     & =\frac{\rho\pi(1-\pi)}{\pi(1-\pi)}                                                                   \\
+     & =\rho.
+\end{align*}
 \begin{itemize}
-    \item Binomial model:
-          \[ \textcolor{Green}{\log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}+\beta_jx_{ij}}, \]
-          where $ x_{i1}=\Ind{\texttt{city=msp}} $, $ x_{i2}=\Ind{\texttt{agegroup }j} $, $ j=2,3,\ldots,8 $. $ \beta_1 $ and $ \beta_j $
-          have $ \log{\OR} $ interpretations.
-    \item Poisson model:
-          \[ \textcolor{Green}{\log{\mu_i}=\alpha_0+\alpha_1x_{i1}+\alpha_jx_{ij}+\log{m_i}}. \]
-          $ \alpha_1 $ and $ \alpha_j $ have $ \log{\RR} $ interpretations.
+    \item $ \rho= $ \textcolor{Blue}{intraclass correlation coefficient} (accounts for correlation within observations
+          from the same cluster).
 \end{itemize}
-\subsubsection*{Binomial Model}
-\[ \textcolor{Green}{\log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}+\beta_jx_{ij}},\; j=2,3,\ldots,8. \]
-%\begin{noindent}
-    <<>>=
-    melanoma <- read.table("melanoma.txt", header=T)
-    melanoma$resp=cbind(melanoma$Count, melanoma$Population-melanoma$Count)
-    fit.binomial =glm(resp~factor(City)+factor(Age),family=binomial,data=melanoma)
-    summary(fit.binomial)
-    @
-%\end{noindent}
-\subsubsection*{Poisson Model}
-\[ \textcolor{Green}{\log{\mu_i}=\alpha_0+\alpha_1x_{i1}+\alpha_jx_{ij}+\log{m_i}},\; j=2,3,\ldots,8. \]
-%\begin{noindent}
-    <<>>=
-    fit.poisson =glm(Count~factor(City)+factor(Age)+offset(log(Population)),family=poisson,data=melanoma)
-    summary(fit.poisson)
-    @
-%\end{noindent}
-\subsubsection*{Example: Non Melanoma Skin Cancer}
+\subsubsection*{2. Cluster Level --- Clustered Binomial Data}
+\begin{align*}
+    \E{Y_{i\bullet}} & =\E[\big]{\E{Y_{i\bullet}\given \pi_i}}=\E{k\pi_i}=k\pi.                           \\\\
+    \Var{Y_{i\bullet}}
+                     & =\E[\big]{\Var{Y_{i\bullet}\given \pi_i}}+\Var[\big]{\E{Y_{i\bullet}\given \pi_i}} \\
+                     & =\E[\big]{k\pi_i(1-\pi_i)}+\Var{k\pi_i}                                            \\
+                     & =k\E{\pi_i}-k\E{\pi_i^2}+k^2\Var{\pi_i}                                            \\
+                     & =k\E{\pi_i}-k\bigl(\Var{\pi_i}+\E{\pi_i}^2\bigr)+k^2\Var{\pi_i}                    \\
+                     & =k(k-1)\rho\pi(1-\pi)+k\pi-k\pi^2                                                  \\
+                     & =k(k-1)\rho\pi(1-\pi)+k\pi(1-\pi)                                                  \\
+                     & =k\pi(1-\pi)\bigl((k-1)\rho+1\bigr).
+\end{align*}
+\begin{itemize}
+    \item $ k\pi(1-\pi) $ is the standard variance for $ Y_{i\bullet}\sim \BIN{k,\pi} $.
+    \item \textcolor{Blue}{Dispersion parameter} $ \sigma^2=\bigl((k-1)\rho+1\bigr) $ accounts for overdispersion at the clustered level.
+\end{itemize}
+\subsubsection*{3. Grand Total Level --- Clustered Binomial Data}
+\begin{align*}
+    Y                        & =Y_{\bullet\bullet} =\sum_{i=1}^{m/k}\sum_{j=1}^{k}Y_{ij}=\sum_{i=1}^{m/k}Y_{i\bullet}. \\\\
+    \E{Y_{\bullet\bullet}}   & =\sum \E{Y_{i\bullet}}                                                                  \\
+                             & =\biggl(\frac{m}{k}\biggr)k\pi                                                          \\
+                             & =m\pi.                                                                                  \\\\
+    \Var{Y_{\bullet\bullet}} & =\sum\Var{Y_{i\bullet}}                                                                 \\
+                             & =\biggl(\frac{m}{k}\biggr)k\pi(1-\pi)\sigma^2                                           \\
+                             & =m\pi(1-\pi)\sigma^2.
+\end{align*}
+\begin{itemize}
+    \item \textcolor{Blue}{Dispersion parameter} $ \sigma^2=\bigl((k-1)\rho+1\bigr) $ also accounts for overdispersion at the
+          grand total level. It depends on:
+          \begin{itemize}
+              \item Cluster size $ k $, and the
+              \item Intraclass correlation coefficient $ \rho $.
+          \end{itemize}
+\end{itemize}
+\subsection*{Methods for Adjusting for Overdispersion}
+\addcontentsline{toc}{subsection}{Methods for Adjusting for Overdispersion}
 \begin{enumerate}[1.]
-    \item \textcolor{Green}{What is the OR and RR for developing non melanoma skin cancer for women in
-              Dallas-Forth Worth versus those in Minneapolis-St Paul, controlling for age?}
-          \[ \widehat{\OR}=\exp{-\hat{\beta}_1}=\exp{0.80692}=2.2410. \]
-          \[ \widehat{\RR}=\exp{-\hat{\alpha}_1}=\exp{0.80428}=2.2351. \]
-    \item \textcolor{Green}{What is the predicted number of skin cancer cases in Dallas-Fort Worth among
-              women age 25-34?}
-          \[ \hat{Y}_i=m_i\hat{\pi}_i=(146207)\expit{\hat{\beta}_0+\hat{\beta}_2}=39.25427. \]
-          \[ \hat{\mu}_i=m_i\hat{\pi}_i=(146207)\exp{\hat{\alpha}_0+\hat{\alpha}_2}=39.22713. \]
+    \item \textcolor{Blue}{Ad Hoc Method}.
+          \begin{itemize}
+              \item Try to use
+                    \[ \hat{\sigma}^2=\hat{\phi}=\frac{D}{n-p}, \]
+                    when $ \Var{Y_{\bullet\bullet}}\gg m\pi(1-\pi) $.
+              \item Recall $ \sigma^2=\bigl((k-1)\rho+1\bigr) $.
+              \item Scaling the variances by $ \hat{\sigma}^2 $ will be inefficient when clusters are of unequal size.
+              \item Instead, we prefer to use a mixture/random effects model to account for variation
+                    within the clusters.
+          \end{itemize}
+    \item \textcolor{Blue}{Binomial Mixture Model}.
+          \begin{itemize}
+              \item Recall we assumed $ \E{\pi_i}=\pi $ and $ \Var{\pi_i}=\rho\pi(1-\pi) $.
+              \item Note $ 0<\pi_i<1 $ which restricts our choice of distributions.
+              \item Let $ \textcolor{Blue}{\pi_i \sim \BetaDist{\gamma_1,\gamma_2}} $, where $ \gamma_1,\gamma_2>0 $ with pdf
+                    \[ g(\pi_i;\gamma_1,\gamma_2)=\frac{\Gamma(\gamma_1+\gamma_2)}{\Gamma(\gamma_1)\Gamma(\gamma_2)}\pi_i^{\gamma_1-1}(1-\pi_i)^{\gamma_2-1}. \]
+              \item Mean and Variance of the Beta are derived in the course notes:
+                    \[ \E{\pi_i}=\frac{\gamma_1}{\gamma_1+\gamma_2},\qquad \Var{\pi_i}=\frac{\gamma_1\gamma_2}{(\gamma_1+\gamma_2)^2(1+\gamma_1+\gamma_2)}. \]
+              \item So we select $ (\gamma_1,\gamma_2) $ such that:
+                    \[ \pi=\frac{\gamma_1}{\gamma_1+\gamma_2},\qquad \rho=\frac{1}{1+\gamma_1+\gamma_2}. \]
+              \item Derive the marginal distribution of the cluster counts $ Y_{i\bullet} $.
+              \item Relax the assumption that all clusters are equal sized, that is, let $ Y_{i\bullet}\mid \pi_i \sim \BIN{k_i,\pi_i} $.
+              \item Beta function: $ B(\gamma_1,\gamma_2)=\frac{\Gamma(\gamma_1)\Gamma(\gamma_2)}{\Gamma(\gamma_1+\gamma_2)} $.
+                    \begin{align*}
+                        \Prob{Y_{i\bullet}=y_{i\bullet}}
+                         & =\int_{0}^{1}\Prob{Y_{i\bullet}=y_{i\bullet}\given \pi_i}g(\pi_i;\gamma_1,\gamma_2)\odif{\pi_i}                                                                          \\
+                         & =\int_{0}^{1}\binom{k_i}{y_{i\bullet}}\pi_i^{y_{i\bullet}}(1-\pi_i)^{k_i-y_{i\bullet}}\frac{1}{B(\gamma_1,\gamma_2)}\pi_i^{\gamma_1-1}(1-\pi_i)^{\gamma_2-1}\odif{\pi_i} \\
+                         & =\binom{k_i}{y_{i\bullet}}\frac{1}{B(\gamma_1,\gamma_2)}\int_{0}^{1}\pi_i^{y_{i\bullet}+\gamma_1-1}(1-\pi_i)^{k_i-y_{i\bullet}+\gamma_2-1}\odif{\pi_i}                   \\
+                         & =\binom{k_i}{y_{i\bullet}}\frac{1}{B(\gamma_1,\gamma_2)}B(y_{i\bullet}+\gamma_1,k_i-y_{i\bullet}+\gamma_2).
+                    \end{align*}
+              \item This is called the \textcolor{Blue}{Beta-Binomial Distribution}.
+              \item It can be shown that for the Beta-Binomial:
+                    \begin{align*}
+                        \E{Y_{i\bullet}}   & = k_i\biggl(\frac{\gamma_1}{\gamma_1+\gamma_2}\biggr)                                                                                                                \\
+                                           & =k_i\pi,                                                                                                                                                             \\\\
+                        \Var{Y_{i\bullet}} & = k_i\biggl(\frac{\gamma_1}{\gamma_1+\gamma_2}\biggr)\biggl(\frac{\gamma_2}{\gamma_1+\gamma_2}\biggr)\biggl(\frac{k_i+\gamma_1+\gamma_2}{1+\gamma_1+\gamma_2}\biggr) \\
+                                           & =k_i\pi(1-\pi)\bigl(1+(k_i-1)\rho\bigr),
+                    \end{align*}
+                    where
+                    \[ \pi=\frac{\gamma_1}{\gamma_1+\gamma_2},\qquad \rho=\frac{1}{1+\gamma_1+\gamma_2}. \]
+              \item See notes for various derivations including
+                    \[ \Corr{Y_{ij},Y_{ik}}=\rho. \]
+              \item Reduces to Binomial variance $ \Var{Y_{i\bullet}}=k_i\pi(1-\pi) $ when
+                    \begin{itemize}
+                        \item $ \rho=0 $ (no correlation within observations from the same cluster), or
+                        \item $ k_i=1 $ (clusters of size $ 1 $).
+                    \end{itemize}
+              \item Could test $ \HN $: $ \rho=0 $ to test for overdispersion.
+              \item The Binomial is nested within the Beta-Binomial so could do so using a
+                    Deviance/LR Test.
+              \item It can be difficult to get the MLE's from the Beta-Binomial.
+                    \begin{itemize}
+                        \item The gamma function $ \Gamma(\:\cdot\:) $ is non-linear.
+                        \item R: \texttt{glm.binom.disp()} function in \texttt{library(dispmod)}.
+                        \item Iterative algorithm for estimating $ \rho $ and $ \beta $.
+                    \end{itemize}
+          \end{itemize}
 \end{enumerate}
+\subsection*{Application --- Pacific Cod Hatching Data}
+\addcontentsline{toc}{subsection}{Application - Pacific Cod}
+\begin{Example}{Hatching Data for Pacific Cod Eggs}
+    \begin{itemize}
+        \item To learn about the importance of salinity, temperature, and oxygen concentration
+              on the probability of hatching for eggs from Pacific cod fish, the following
+              experiment was conducted.
+              \begin{itemize}
+                  \item \textcolor{Green}{Salinity} (measured in \emph{ppt}), \textcolor{Green}{temperature} (measured in Celsius), and \textcolor{Green}{oxygen}
+                        concentration (measured in \emph{ppm}), were varied over ranges of practical relevance.
+                  \item A known number of eggs were then placed in each of four tanks controlled at each
+                        specified settings for these factors.
+                  \item The eggs were then observed to either hatch, or not hatch.
+                  \item The \textcolor{Green}{total number of eggs hatching} for each tank under each set of conditions was
+                        recorded.
+              \end{itemize}
+        \item This gave four binomial samples for each configuration.
+        \item The eggs in the same tank can not be considered independent.
+        \item See Problem 4.1 of course notes.
+    \end{itemize}
+\end{Example}
+\subsubsection*{R Code}
+%\begin{noindent}
+    <<results='hide',fig.show='hide'>>=
+    cod = read.table("cod.dat",header=T)
+    attach(cod)
+    # Fit a logistic regression model with all 2-way interactions
+    binom1 = glm(cbind(hatch,total-hatch)~salin*temp+temp*O2+salin*O2,family=binomial)
+    summary(binom1)
+    # Fit a beta binomial model to account for overdispersion
+    library(dispmod)
+    betabinom1 = glm.binomial.disp(binom1)
+    summary(betabinom1)
+    1-pchisq(binom1$deviance-betabinom1$deviance,1)
+    binom2 = glm(cbind(hatch,total-hatch)~temp*O2+salin*O2,family=binomial)
+    betabinom2 = glm.binomial.disp(binom2)
+    summary(betabinom2)
+    betabinom2$dispersion
+    # Constructing deviance residual plots
+    par(mfrow=c(1,3))
+    fv1 = binom1$fitted.values; rd1 = residuals.glm(binom1,"deviance")
+    fv2 = betabinom1$fitted.values; rd2 = residuals.glm(betabinom1,"deviance")
+    fv3 = betabinom2$fitted.values; rd3 = residuals.glm(betabinom2,"deviance")
+    plot(fv1,rd1, xlab="Fitted Values",ylab="Deviance Residuals",main="Binomial Model", ylim=c(-18,15))
+    abline(h=-2); abline(h=2)
+    plot(fv2,rd2, xlab="Fitted Values",ylab="Deviance Residuals",main="Beta-Binomial Model", ylim=c(-3,3))
+    abline(h=-2); abline(h= 2)
+    plot(fv3,rd3, xlab="Fitted Values",ylab="Deviance Residuals",main="Beta-Binomial2 Model", ylim=c(-3,3))
+    abline(h=-2); abline(h= 2)
+    @
+%\end{noindent}
+\subsubsection*{R Output --- Dataset}
+\begin{minipage}{0.4\textwidth}
+    %\begin{noindent}
+        <<>>=
+        print(cod[1:28,],row.names=F)
+        @
+    %\end{noindent}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+    %\begin{noindent}
+        <<>>=
+        print(cod[29:56,],row.names=F)
+        @
+    %\end{noindent}
+\end{minipage}
+\subsubsection*{R Output --- Logistic Regression Model}
+%\begin{noindent}
+    <<echo=FALSE>>=
+    summary(binom1)
+    @
+%\end{noindent}
+\subsubsection*{Logistic Regression Model}
 \begin{itemize}
-    \item $m$ (population size) is very large and $ \pi $ (probability of getting non melanoma skin
-          cancer) is very small so the Poisson approximation holds.
-    \item Inference from the two models is nearly identical.
-    \item We might prefer the RR interpretation over the OR interpretation.
+    \item All 2-way interaction terms are statistically significant (before ad hoc adjustment).
+    \item The 3-way interaction term is not statistically significant (model not shown).
+    \item \textcolor{Blue}{Ad Hoc Method}:
+          \[ \hat{\phi}=\frac{D}{n-p}=\frac{4308.2}{69}=62.44. \]
+    \item Examine the significance the \texttt{salin:temp} interaction term:
+          \[ \seadj{\hat{\beta}_4}=\sqrt{\hat{\phi}}\se{\hat{\beta}_4}=\sqrt{62.44}(0.001277)=0.01009072. \]
+          $ \HN $: $ \beta_4=0 $ versus $ \HA $: $ \beta_4\ne 0 $:
+          \[ p=2\Prob*{Z>\frac{\abs{\hat{\beta}_4-0}}{\seadj{\hat{\beta}_4}}}=2\Prob{Z>0.9224}=0.356. \]
+    \item The \texttt{salin:temp} interaction term is no longer statistically significant.
+\end{itemize}
+\subsubsection*{R Output --- Beta Binomial Regression Model}
+%\begin{noindent}
+    <<echo=FALSE>>=
+    summary(betabinom1)
+    @
+%\end{noindent}
+\subsubsection*{Beta Binomial Regression Model}
+\begin{itemize}
+    \item The \texttt{salin:temp} interaction term is not statistically significant.
+    \item Note $ \beta_j $'s from this model still have $ \log{\OR} $ interpretations.
+    \item The dispersion parameter is $ \hat{\rho}=0.198 $ (correlation coefficient).
+    \item Test for overdispersion using a Deviance Test: $ \HN $: $ \rho=0 $ (Binomial) versus $ \HA $: $ \rho\ne 0 $ (Beta-Binomial):
+          \[ \Delta D=D_0-D_A=4302.8-75.03=4227.77. \]
+          \[ p=\Prob{\chi^2_{1}>4227.77}<0.001. \]
+          Therefore, we reject the null hypothesis of no overdispersion.
+\end{itemize}
+\subsubsection*{R Output --- Beta Binomial 2 Regression Model}
+%\begin{noindent}
+    <<echo=FALSE>>=
+    summary(betabinom2)
+    @
+%\end{noindent}
+\subsubsection*{Residual Plots for Binomial and Beta-Binomial Models}
+%\begin{noindent}
+    <<echo=FALSE,fig.width=8.5,fig.height=4>>=
+    # Constructing deviance residual plots
+    par(mfrow=c(1,3))
+    fv1 = binom1$fitted.values; rd1 = residuals.glm(binom1,"deviance")
+    fv2 = betabinom1$fitted.values; rd2 = residuals.glm(betabinom1,"deviance")
+    fv3 = betabinom2$fitted.values; rd3 = residuals.glm(betabinom2,"deviance")
+    plot(fv1,rd1, xlab="Fitted Values",ylab="Deviance Residuals",main="Binomial Model", ylim=c(-18,15))
+    abline(h=-2); abline(h=2)
+    plot(fv2,rd2, xlab="Fitted Values",ylab="Deviance Residuals",main="Beta-Binomial Model", ylim=c(-3,3))
+    abline(h=-2); abline(h= 2)
+    plot(fv3,rd3, xlab="Fitted Values",ylab="Deviance Residuals",main="Beta-Binomial2 Model", ylim=c(-3,3))
+    abline(h=-2); abline(h= 2)
+    @
+%\end{noindent}
+\subsubsection*{Binomial Overdispersion Wrap-Up}
+\begin{itemize}
+    \item We would select \texttt{betabinom2} model as our final model.
+    \item Interpretation of $ \beta $'s is as in logistic regression ($ \log{\OR} $).
+    \item Here, we had no problems fitting the Beta Binomial models.
+    \item May not always be the case.
+    \item Chapter 5: introduction to \textcolor{Blue}{Quasi Likelihood} (\textcolor{Red}{not covered}).
+          \begin{itemize}
+              \item Relaxes parametric assumptions (Binomial, Poisson, Beta Binomial, Negative
+                    Binomial, Exponential, Gamma, etc).
+              \item Can be used in settings with overdispersion.
+          \end{itemize}
 \end{itemize}

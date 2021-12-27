@@ -1,0 +1,374 @@
+\makeheading{Week 6}{\daterange{2021-10-11}{2021-10-15}}
+Reading week.
+\makeheading{Week 7}{\daterange{2021-10-18}{2021-10-22}}
+\section*{Topic 2f: Topic 2f: Binomial Regression Wrap-Up}
+\addcontentsline{toc}{section}{Topic 2f: Binomial Regression Wrap-Up}
+\begin{enumerate}[1.]
+      \item Summary of Chapter 2.
+      \item Example: Birdkeeping and Lung Cancer.
+      \item Example: Birdkeeping and Lung Cancer (continued).
+\end{enumerate}
+\subsection*{Summary of Chapter 2}
+\addcontentsline{toc}{subsection}{Summary of Chapter 2}
+\begin{Regular}{Binomial GLM / Logistic Regression Model}
+      $ Y_i \sim \BIN{m_i,\pi_i} $, $ i=1,\ldots,n $ independently, with explanatory variables $ \Vector{x}_i $:
+      \[ \log*{\frac{\pi_i}{1-\pi_i}}=\Vector{x}_i^\top \Vector{\beta} \]
+\end{Regular}
+\begin{itemize}
+      \item \textcolor{Blue}{Estimation}: $ \hat{\Vector{\beta}} $ come from Fisher Scoring using R function \texttt{glm()}.
+      \item \textcolor{Blue}{Interpretation}: $ \beta_k $ have log OR interpretations ($ k>0 $).
+      \item Wald based \textcolor{Blue}{Hypothesis Tests} of $ \HN $: $ \beta_k=\beta_{k0} $ versus $ \HA $: $ \beta_k\ne \beta_{k0} $. Under $ \HN $:
+            \[ (\hat{\beta}_k-\beta_{k0})^2\bigl(I^{kk}(\hat{\Vector{\beta}})\bigr)^{-1} \sim \chi^2(1) \]
+            equivalently, $ \displaystyle \frac{\hat{\beta}_k-\beta_{k0}}{\se{\hat{\beta}_k}}\sim \N{0,1}  $ where $ \se{\hat{\beta}_k}=\sqrt{I^{kk}(\hat{\Vector{\beta}})} $.
+      \item \textcolor{Blue}{Confidence Interval} for a single $ \beta_k $:
+            \[ \hat{\beta}_k\pm z_{1-\alpha/2}\se{\hat{\beta}_k}\qquad\text{where $\se{\hat{\beta}_k}=\sqrt{I^{kk}(\hat{\Vector{\beta}})}$} \]
+      \item Deviance/LR based \textcolor{Blue}{Hypothesis Tests} for nested models:
+            \begin{center}
+                  $ \HN $: $ \beta_p=\cdots=\beta_{q-1}=0 $ vs $ \HA $: at least one of $ \beta_p,\ldots,\beta_{q-1}\ne 0 $
+            \end{center}
+            using
+            \[ \Delta D=D_0-D_\text{A} \sim \chi^2(q-p)\qquad\text{under $ \HN $} \]
+      \item \textcolor{Blue}{Deviance Residuals} (should be iid $ \N{0,1} $ for a well-fitting model):
+            \[ r_i^D=\sign{y_i-m_i\hat{\pi}_i}\sqrt{\abs{d_i}} \]
+            where
+            \[ \sum_{i=1}^{n} d_i=D(\hat{\Vector{\pi}})=
+                  2\Biggl[\sum_{i=1}^{n} \Biggl(y_i\log*{\frac{y_i}{m_i\hat{\pi}_i}}+(m_i-y_i)\log*{\frac{m_i-y_i}{m_i(1-\hat{\pi}_i)}}\Biggr)\Biggr] \]
+      \item \textcolor{Blue}{Confidence Intervals} for $ \eta_i=\Vector{x}_i^\top \Vector{\beta} $:
+            \[ \Vector{x}_i^\top \hat{\Vector{\beta}}\pm 1.96\sqrt{\Vector{x}_i^\top I^{-1}(\hat{\Vector{\beta}})\Vector{x}_i}=(\hat{\eta}_\text{L},\hat{\eta}_\text{U}) \]
+            then transform ends of the interval to get a CI for OR, $ \pi $, etc.
+      \item \textcolor{Blue}{Bioassay experiments}:
+            \begin{itemize}
+                  \item $ \beta $ interpretation depends on link function.
+                  \item Calculation of $ \delta_p $: dose that gives $p$th percentile of response.
+            \end{itemize}
+\end{itemize}
+\subsection*{The Model Fitting Process}
+\addcontentsline{toc}{subsection}{Example: Birdkeeping and Lung Cancer}
+\begin{Regular}{The Model Fitting Process}
+      \begin{enumerate}[start=0]
+            \item \textcolor{red}{Exploratory Data Analysis}.
+            \item \textcolor{red}{Model Specification} --- Select a probability distribution for the response variable
+                  and an equation linking the response to the explanatory variables.
+            \item \textcolor{red}{Estimation} of the parameters of the model.
+            \item \textcolor{red}{Model checking} --- How well does the model fit the data?
+            \item \textcolor{red}{Inference} --- Interpret the fitted model, calculate confidence intervals, conduct
+                  hypothesis tests.
+      \end{enumerate}
+\end{Regular}
+Let's apply this process to an example using logistic regression.
+\subsection*{Example: Birdkeeping and Lung Cancer}
+\begin{Example}{Birdkeeping and Lung Cancer}
+      A 1972 to 1981 health survey in The Hague, Netherlands, discovered an association
+      between keeping pet birds and increased risk of lung cancer. To investigate birdkeeping
+      as a risk factor, researchers conducted a case-control study of patients in 1985 at four
+      hospitals in The Hague (population 450,000). They identified 49 cases of lung cancer
+      among the patients who were registered with a general practice, who were age 65 or
+      younger and who had resided in the city since 1965. They also selected 98 controls
+      from a population of residents having the same general age structure.
+
+      \emph{From Ramsey, F.L. and Schafer, D.W. (2002). The Statistical Sleuth: A Course in Methods of Data Analysis
+            (2nd ed)}
+      \href{https://cran.r-project.org/web/packages/Sleuth3/Sleuth3.pdf}{https://cran.r-project.org/web/packages/Sleuth3/Sleuth3.pdf}
+\end{Example}
+\subsection*{Birdkeeping and Lung Cancer Dataset}
+\begin{table}[!htbp]
+      \centering
+      \begin{tabular}{lll}
+            \texttt{LC} & binary  & Whether subject has lung cancer (the response)     \\
+            \texttt{FM} & binary  & Sex of subject (Female or Male)                    \\
+            \texttt{SS} & binary  & Socioeconomic status (High or Low)                 \\
+            \texttt{BK} & binary  & Indicator for birdkeeping (Bird or NoBird)         \\
+            \texttt{AG} & integer & Age of subject (years)                             \\
+            \texttt{YR} & integer & Years of smoking prior to diagnosis or examination \\
+            \texttt{CD} & integer & Average rate of smoking (cigarettes per day)
+      \end{tabular}
+      \begin{tabular}{cllllccc}
+            \toprule
+            Subject & \texttt{LC} & \texttt{FM} & \texttt{SS} & \texttt{BK} & \texttt{AG} & \texttt{YR} & \texttt{CD} \\
+            \midrule
+            1       & LungCancer  & Male        & Low         & Bird        & 37          & 19          & 12          \\
+            2       & LungCancer  & Male        & Low         & Bird        & 41          & 22          & 15          \\
+            3       & LungCancer  & Male        & High        & NoBird      & 43          & 19          & 15          \\
+            4       & LungCancer  & Male        & Low         & Bird        & 46          & 24          & 15          \\
+            5       & LungCancer  & Male        & Low         & Bird        & 49          & 31          & 20          \\
+            \bottomrule
+      \end{tabular}
+\end{table}
+\subsection*{Exploratory Data Analysis}
+\begin{itemize}
+      \item \textcolor{Blue}{Primary Research Question}: Is there an association between birdkeeping and an
+            increased risk of lung cancer?
+            \begin{table}[!htbp]
+                  \centering
+                  \begin{tabular}{rrrr}
+                        \toprule
+                               & LungCancer & NoCancer & Total \\
+                        \midrule
+                        Bird   & 33         & 34       & 67    \\
+                        NoBird & 16         & 64       & 80    \\
+                        \midrule
+                        Total  & 49         & 98       & 147   \\
+                        \bottomrule
+                  \end{tabular}
+            \end{table}
+            % \begin{noindent}
+            <<fig.width=5,fig.height=3,echo=FALSE>>=
+            library(Sleuth3)
+            library(ggplot2)
+            attach(case2002)
+            # Reorder the levels so that the model is for log odds of cancer
+            LC <- factor(LC, levels=c("NoCancer","LungCancer"))
+            ggplot(case2002, aes(LC,fill=BK)) + geom_bar(position="fill") + ylim(0,1) + ylab("") + theme(legend.position = "none")
+            @
+          % \end{noindent}
+            \[ \widehat{\text{OR}}=\hat{\psi}=\frac{(33)(64)}{(16)(34)}=3.882353 \]
+      \item So there is the suggestion of an association, but we need to take other potentially
+            important explanatory variables into account.
+\end{itemize}
+\begin{center}
+      Proportion of Lung Cancer (top) versus No Cancer (bottom) for Binary Explanatory Variables\\
+      (BK = birdkeeping, FM = sex, SS = socioeconomic status)
+\end{center}
+% \begin{noindent}
+    <<fig.width=9,fig.height=3,echo=FALSE>>=
+    library(gridExtra)
+    par(mfrow=c(3,1))
+    gr1 <- ggplot(case2002, aes(BK,fill=LC)) + geom_bar(position="fill") + ylim(0,1) + ylab("") + theme(legend.position = "none")
+    gr2 <- ggplot(case2002, aes(FM,fill=LC)) + geom_bar(position="fill") + ylim(0,1) + ylab("") + theme(legend.position = "none")
+    gr3 <- ggplot(case2002, aes(SS,fill=LC)) + geom_bar(position="fill") + ylim(0,1) + ylab("") + theme(legend.position = "none")
+    grid.arrange(gr1, gr2, gr3, ncol=3)
+    @
+% \end{noindent}
+\begin{center}
+      Proportion of Lung Cancer (top) versus No Cancer (bottom) for Combinations of Binary Explanatory Variables\\
+      (BK = birdkeeping, FM = sex, SS = socioeconomic status)
+\end{center}
+% \begin{noindent}
+    <<fig.width=9,fig.height=3,echo=FALSE>>=
+    par(mfrow=c(3,1))
+    gr1 <- ggplot(case2002, aes(interaction(BK, FM),fill=LC)) + geom_bar(position="fill") + ylim(0,1) + ylab("") + theme(legend.position = "none")+ theme(axis.text.x=element_text(size=rel(0.6)))
+    gr2 <- ggplot(case2002, aes(interaction(BK, SS),fill=LC)) + geom_bar(position="fill") + ylim(0,1) + ylab("") + theme(legend.position = "none")+ theme(axis.text.x=element_text(size=rel(0.6)))
+    gr3 <- ggplot(case2002, aes(interaction(SS, FM),fill=LC)) + geom_bar(position="fill") + ylim(0,1) + ylab("") + theme(legend.position = "none")+ theme(axis.text.x=element_text(size=rel(0.6)))
+    grid.arrange(gr1, gr2, gr3, ncol=3)
+    @
+% \end{noindent}
+% \begin{noindent}
+    <<fig.width=8.5,fig.height=5,echo=FALSE>>=
+    # TODO plot
+    @
+% \end{noindent}
+\subsection*{Model Specification}
+\begin{itemize}
+      \item We will fit logistic regression models to the data using R
+      \item The full main effects model is:
+            \[ \textcolor{Blue}{\logit{\pi_i}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}+\beta_4x_{i4}+\beta_5x_{i5}+\beta_6x_{i6}} \]
+            where
+            \begin{align*}
+                  \pi_i  & =\Prob{\text{subject $i$ has lung cancer}}=\texttt{LC} \\
+                  x_{i1} & =\Ind{\text{Birdkeeper}}=\texttt{BK}                   \\
+                  x_{i2} & =\Ind{\text{Male}}=\texttt{FM}                         \\
+                  x_{i3} & =\Ind{\text{Low SES}}=\texttt{SS}                      \\
+                  x_{i4} & =\text{Age of subject (years)}=\texttt{YR}             \\
+                  x_{i5} & =\text{Years of smoking}=\texttt{AG}                   \\
+                  x_{i6} & =\text{Cigarettes per day}=\texttt{CD}                 \\
+            \end{align*}
+\end{itemize}
+\subsection*{Estimation and Model Checking}
+\textcolor{Blue}{Model Building Plan}
+\begin{itemize}
+      \item First, we will consider models that do not include the birdkeeping $ \texttt{BK}=x_{i1} $
+            explanatory variable.
+            \begin{itemize}
+                  \item i.e., look for associations between lung cancer and other explanatory variables.
+                  \item Find the best fitting model without birdkeeping.
+            \end{itemize}
+      \item Then find the best model that includes birdkeeping.
+      \item The model fitting process is iterative and can be somewhat subjective.
+      \item Unclear whether Age and Sex should be considered due to possible matching in
+            the design of the case control study.
+\end{itemize}
+\subsection*{myGlm1: Main Effects Model (no BK)}
+% \begin{noindent}
+    <<>>=
+    myGlm1 <- glm(LC ~ FM + SS + AG + YR + CD, family=binomial)
+    summary(myGlm1)
+    @
+% \end{noindent}
+\subsection*{Example of a Wald Test for a Single Parameter}
+\textcolor{Blue}{Is years of smoking associated with lung cancer?}
+\begin{center}
+      $ \HN $: $ \beta_4=0 $ versus $ \HA $: $ \beta_4\ne 0 $
+\end{center}
+Wald-based test statistic: ($ t \sim \N{0,1} $ under $ \HN $):
+\[ t=\frac{\hat{\beta}_4-0}{\se{\hat{\beta}_4}}=\frac{0.07955}{0.02636}=3.018   \]
+Now find the $ p $-value by comparing to $ Z \sim \N{0,1} $:
+\[ p=2\Prob{Z>\abs{t}}=2\Prob{Z>3.018}=0.0026 \]
+% \begin{noindent}
+    <<>>=
+    2*(1-pnorm(3.018))
+    @
+% \end{noindent}
+Therefore, reject the null hypothesis that smoking is not associated with lung cancer (after adjustment for sex, socioeconomic status, age, and cigarettes per day).
+\subsection*{myGlm2: Drop SS}
+% \begin{noindent}
+    <<>>=
+    myGlm2 <- update(myGlm1, ~ . - SS)
+    summary(myGlm2)
+    @
+% \end{noindent}
+\subsection*{myGlm3: Drop CD}
+% \begin{noindent}
+    <<>>=
+    myGlm3 <- update(myGlm2, ~ . - CD)
+    summary(myGlm3)
+    @
+% \end{noindent}
+\subsection*{myGlm4: Drop FM}
+% \begin{noindent}
+    <<>>=
+    myGlm4 <- update(myGlm3, ~ . - FM)
+    summary(myGlm4)
+    @
+% \end{noindent}
+\subsection*{myGlm5: Add BK (Birdkeeping)}
+% \begin{noindent}
+    <<>>=
+    BK <- factor(BK, levels=c("NoBird", "Bird")) # Make "no bird" the ref level
+    myGlm5 <- update(myGlm4, ~ . + BK) # Now add bird keeping
+    summary(myGlm5)
+    @
+% \end{noindent}
+\subsection*{myGlm6: Add YR:BK and AG:YR Interactions}
+% \begin{noindent}
+    <<>>=
+    myGlm6 <- update(myGlm5, ~ . + BK:YR + AG:YR) # Try interaction terms
+    summary(myGlm6)
+    @
+% \end{noindent}
+\subsection*{Example of a Deviance Test for Nested Models}
+\begin{center}
+      $ \HN $: Model 5 is adequate compared to model 6 versus $ \HA $: Model 5 is not adequate.
+      $ \HN $: $ \beta_{14}=\beta_{45}=0 $ versus $ \HA $: $ \beta_{14}\ne 0 $ or $ \beta_{45}\ne 0 $.
+\end{center}
+Deviance/LR test statistic ($ \Delta D \sim \chi^2(2) $ under $ \HN $):
+\[ \Delta D=D_0-D_\text{A}=D_5-D_6=156.22-154.60=1.62 \]
+Now find the $ p $-value by comparing to $ \chi^2(2) $:
+\[ p=\Prob[\big]{\chi^2(2)>1.62}=0.45 \]
+% \begin{noindent}
+    <<>>=
+    1-pchisq(1.62,2)
+    @
+% \end{noindent}
+Therefore we do not reject the null hypothesis that model 5 is adequate. We conclude
+that the interactions are not necessary.
+\subsection*{Summary of Deviance Tests}
+% \begin{noindent}
+    <<>>=
+    anova(myGlm5, myGlm6) # Test interaction terms jointly
+    1-pchisq(1.6163,2)
+    @
+% \end{noindent}
+\begin{itemize}
+      \item Do not reject the null hypothesis that \texttt{myGlm5} (no interactions) is adequate
+            compared to \texttt{myGlm6} (interactions)
+\end{itemize}
+% \begin{noindent}
+    <<>>=
+    anova(myGlm4, myGlm5) # Test for bird keeping effect
+    1-pchisq(12.612,1)
+    @
+% \end{noindent}
+\begin{itemize}
+      \item Reject the null hypothesis that \texttt{myGlm4} (no BK) is adequate compared to \texttt{myGlm5}.
+\end{itemize}
+\subsection*{myGLM5: Deviance Residuals}
+% \begin{noindent}
+    <<fig.width=9,fig.height=3,echo=FALSE>>=
+    par(mfrow=c(1,3))
+    rd = residuals.glm(myGlm5,"deviance")
+    plot(myGlm5$fitted.values,rstandard(myGlm5),ylim=c(-2.5,2.5), xlab = "eta",ylab="Deviance Residuals")
+    abline(h=-2,lty=2) ; abline(h=2,lty=2); abline(h=0,lty=3)
+    plot(AG,rd,ylim=c(-2.5,2.5), xlab="Age",ylab="Deviance Residuals")
+    abline(h=-2,lty=2) ; abline(h=2,lty=2); abline(h=0,lty=3)
+    qqnorm(rstandard(myGlm5));abline(0,1)
+    @
+% \end{noindent}
+\subsection*{Final Model: myGLM5b: BK + AG + YR}
+\begin{Regular}{}
+      \[ \logit{\pi_i}=\beta_0+\beta_1x_{i1}+\beta_4x_{i4}+\beta_5x_{i5} \]
+\end{Regular}
+% \begin{noindent}
+    <<>>=
+    # put explanatory variables in expected order
+    myGlm5b = glm(LC ~ BK + AG + YR, family=binomial)
+    summary(myGlm5b)$coefficients
+    summary(myGlm5b)$cov.unscaled
+    @
+% \end{noindent}
+\subsection*{Inference and Prediction}
+\textcolor{Blue}{Find and estimate and \qty{95}{\percent} confidence interval of the Odds Ratio of lung cancer in
+      birdkeepers versus non-birdkeepers.}
+
+Estimate:
+\[ \widehat{\text{OR}}=\exp{\hat{\beta}_1}=\exp{1.3766}=3.96 \]
+\qty{95}{\percent} Confidence Interval:
+\begin{align*}
+      \exp[\big]{\hat{\beta}_1\pm 1.96\se{\hat{\beta}_1}}
+       & =\exp[\big]{1.3766 \pm 1.96(0.4007)}    \\
+       & =\bigl(\exp{0.5912}, \exp{2.1620}\bigr) \\
+       & =(1.81, 8.69)
+\end{align*}
+\textcolor{Blue}{In this sample, what is the probability that a 50-year-old, non-smoking, non-birdkeeper
+      has lung cancer?}
+
+Estimate:
+\begin{align*}
+      \hat{\pi}_i
+       & =\expit{\hat{\beta}_0+50\hat{\beta}_4}   \\
+       & =\expit[\big]{-1.0336 + 50(-0.0461)}     \\
+       & =\expit{-3.3385}                         \\
+       & =0.03427\text{ or } \qty{3.43}{\percent}
+\end{align*}
+\qty{95}{\percent} Confidence Interval:
+\begin{align*}
+      \Var{\hat{\beta}_0+50\hat{\beta}_4}
+       & =\Var{\hat{\beta}_0}+50^2\Var{\hat{\beta}_4}+2(50)\Cov{\hat{\beta}_0,\hat{\beta}_4} \\
+       & =2.579 + 50^2 (0.001176) + 100(-0.05203)                                            \\
+       & =0.4949
+\end{align*}
+\[ \expit{-3.3385 \pm 1.96 \sqrt{0.4949}}=(0.008845, 0.1237) \text{ or }(\qty{0.88}{\percent}, \qty{12.37}{\percent}) \]
+% \begin{noindent}
+    <<>>=
+    # Inference and Prediction
+    exp(myGlm5b$coefficients) # Odds Ratios
+
+    # 95% CI, OR for lung cancer, birdkeepers vs non-birdkeepers, controlling for age and years of smoking
+    exp(myGlm5b$coef[2]+c(-1,1)*qnorm(.975)*sqrt(summary(myGlm5b)$cov.unscaled[2,2]))
+
+    # 95% CI, OR for lung cancer, one year increase in smoking, controlling for age and birdkeeping status
+    exp(myGlm5b$coef[4]+c(-1,1)*qnorm(.975)*sqrt(summary(myGlm5b)$cov.unscaled[4,4]))
+
+    expit=function(x){exp(x)/(1+exp(x))}
+    x=as.matrix(c(1,0,50,0),ncol=1) # 50-year-old non-smoker, non-birdkeeper
+    expit(t(x)%*%myGlm5b$coefficients)
+
+    v=summary(myGlm5b)$cov.unscaled
+    t(x)%*%v%*%x # Var(beta_0 + 50 beta_4)
+    
+    # 95% CI, predicted probability of lung cancer for 50-year-old non-smoker birdkeeper
+    expit(t(x)%*%myGlm5b$coefficients+c(-1,1)*qnorm(.975)*sqrt(t(x)%*%v%*%x))
+    @
+% \end{noindent}
+\subsection*{Inference}
+\begin{itemize}
+      \item Controlling for age and years of smoking, the odds ratio of getting lung cancer for
+            birdkeepers vs non-birdkeepers is $3.96\; (1.81, 8.69)$.
+      \item Controlling for age and birdkeeping, the odds ratio of getting lung cancer for each
+            additional year of smoking is $1.08\; (1.03, 1.13)$.
+\end{itemize}
+\textcolor{Blue}{Prediction}
+\begin{itemize}
+      \item In this study, the probability that a 50-year-old, non-smoking, non-birdkeeper has
+            developed lung cancer is $\qty{3.43}{\percent}\; (\qty{0.88}{\percent}, \qty{12.37}{\percent})$.
+      \item Does this estimate extend to the general population?
+\end{itemize}

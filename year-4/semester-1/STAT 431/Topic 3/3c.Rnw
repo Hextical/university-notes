@@ -1,246 +1,373 @@
-\section*{Topic 3c: Likelihood Ratio Test for Logistic Regression Models}
-\addcontentsline{toc}{section}{Topic 3c: Likelihood Ratio Test for Logistic Regression Models}
-\subsection*{Logistic Regression Models}
-Recall major developments of Binomial logistic regression from last topic 3b: $ Y_i \sim \BIN{m_i,\pi_i} $,
-$ i=1,\ldots,n $ independently, with covariate vector $ \Vector{x}_i $ and
-\[ \textcolor{Blue}{\log*{\frac{\pi_i}{1-\pi_i}}}=\Vector{x}_i^\top \Vector{\beta}. \]
+\makeheading{Week 9}{\daterange{2021-11-01}{2021-11-05}}
+\section*{Topic 3c: Log Linear Models}
+\addcontentsline{toc}{section}{Topic 3c: Log Linear Models}
+\subsection*{Log Linear Models}
+Previously we used a Poisson GLM to model count data arising from a \textcolor{Blue}{time
+    homogeneous Poisson process}:
 \begin{itemize}
-      \item Estimation: $ \hat{\Vector{\beta}} $ come from Fisher scoring using R function \texttt{glm()}.
-      \item Interpretation: $ \exp{\beta_j} $ has $ \OR $ interpretation.
-      \item Hypothesis tests of $ \HN $: $ \beta_j=0 $ using Wald statistic.
-      \item Confidence Intervals: $ \hat{\beta}_j\pm z_{1-\alpha/2}\se{\hat{\beta}_j} $.
+    \item $ N_i(t_i)= $ the number of events observed over $ (0,t_i] $:
+          \[ \E[\big]{N_i(t_i)}=\mu_i(t_i)=\lambda_i t_i \]
+    \item Explanatory variables: $ \Vector{x}_i=(1,x_{i1},\ldots,x_{ip-1})^\top $.
+          \[ \log[\big]{\mu_i(t_i)}=\log{\lambda_i}+\log{t_i}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
 \end{itemize}
-\subsection*{Likelihood for Logistic Regression Models}
+We will consider three other types of data we can analyse with a Poisson GLM:
+\begin{enumerate}[1.]
+    \item Approximating binomial data (topic 4c).
+    \item Time non-homogeneous Poisson processes (topic 4d).
+    \item Contingency tables/Multinomial data (topic 4e).
+\end{enumerate}
+\subsection*{Poisson Approximation to the Binomial}
+\addcontentsline{toc}{subsection}{Poisson Approx to Binomial}
 \begin{itemize}
-      \item Log-likelihood for Binomial Distribution:
-            \begin{align*}
-                  \ell
-                   & =\log[\bigg]{\prod_{i=1}^n \pi_i^{y_i}(1-\pi_i)^{m_i-y_i}}        \\
-                   & =\sum_{i=1}^{n} y_i\log*{\frac{\pi_i}{1-\pi_i}}+m_i\log{1-\pi_i}.
-            \end{align*}
-      \item Using logit link we can re-parameterize the log-likelihood in terms of $ \Vector{\beta} $:
-            \[ \log*{\frac{\pi_i}{1-\pi_i}}=\Vector{x}_i^\top \Vector{\beta},\qquad \pi_i=\frac{\exp{\Vector{x}_i^\top \Vector{\beta}}}{1+\exp{\Vector{x}_i^\top \Vector{\beta}}}. \]
-      \item Log likelihood for logistic regression:
-            \[ \ell=\sum_{i=1}^{n} y_i\Vector{x}_i^\top \Vector{\beta}-m_i\log[\big]{1+\exp{\Vector{x}_i^\top \Vector{\beta}}}. \]
-      \item Maximization of log-likelihood $ \ell(\Vector{\beta}) $ gives MLE $ \hat{\Vector{\beta}} $, and
-            \begin{itemize}
-                  \item estimated probability of response:
-                        \[ \hat{\pi}_i=\mathrm{e}^{\Vector{x}_i^\top \hat{\Vector{\beta}}}/(1+\mathrm{e}^{\Vector{x}_i^\top \hat{\Vector{\beta}}})=\expit{\Vector{x}_i^\top \hat{\Vector{\beta}}}, \]
-                  \item estimated number of responses: $ \hat{y}_i=m_i\hat{\pi}_i $.
-            \end{itemize}
-      \item Questions:
-            \begin{itemize}
-                  \item How good is the model? How well do the estimated number of events $ \hat{y}_i $ approximate the observed data $ y_i $? (\textcolor{Red}{goodness of fit}).
-                  \item How much worse is the fit of a model when several of the covariates are excluded? (\textcolor{Red}{nested models}):
-                        \begin{center}
-                              $ \HN $: $ \beta_k=\beta_{k+1}=0 $ vs $ \HA $: $ \beta_k\ne 0 $ or $ \beta_{k+1}\ne 0 $.
-                        \end{center}
-            \end{itemize}
+    \item Suppose: \textcolor{Red}{$Y \sim \BIN{m,\pi}$} so that $ \E{Y}=m\pi $.
+    \item Set $ \mu=m\pi $ and examine pmf of $ Y $ in terms of $ \mu $:
+          \begin{align*}
+              f(y)
+               & =\begin{aligned}
+                      f(y) & =\binom{m}{y} \pi^{y}(1-\pi)^{m-y}                                                                                           \\
+                           & =\frac{(m)(m-1) \cdots(m-y)(m-y-1) \cdots(1)}{(m-y) ! y !}\biggl(\frac{\mu}{m}\biggr)^{y}\biggl(1-\frac{\mu}{m}\biggr)^{m-y} \\
+                           & =\underbrace{\frac{(m)(m-1) \cdots(m-(y-1))}{(m)(m) \cdots(m)}}_{\to 1 \text{ as } m \to \infty} \frac{\mu^{y}}{y !}
+                      \underbrace{\biggr(1-\frac{\mu}{m}\biggr)^{m}}_{\to e^{-\mu}} \underbrace{\biggl(1-\frac{\mu}{m}\biggr)^{-y}}_{\to 1}.
+                  \end{aligned}
+          \end{align*}
+    \item Recall:
+          \[ \lim\limits_{{n} \to {\infty}}\biggl(1+\frac{a}{n}\biggr)^{\!n}=e^a. \]
+    \item Therefore, as $ m\to\infty $ with $ \mu=m\pi $ fixed:
+          \[ f(y)\to \frac{\mu^y e^{-\mu}}{y!}\text{ the pmf of the Poisson.} \]
+    \item So for $ Y \sim \BIN{m,\pi} $, as $ m\to\infty $, $ \pi\to 0 $ with $ \E{Y}=\mu=m\pi $ fixed we have:
+          \[ \textcolor{Red}{Y \sim \POI{\mu=m\pi}}. \]
+    \item Using a Poisson GLM (with log link):
+          \[ \log{\mu}=\log{\pi}+\log{m}=\Vector{x}^\top \Vector{\beta}+\underbrace{\log{m}}_\text{offset}. \]
+    \item Use the Poisson distribution to model Binomial data.
+    \item Use with large population ($m$ large) and low event rate ($ \pi $).
+    \item Example: Today and Problem 3.1 in course notes.
 \end{itemize}
-\subsection*{Likelihood Ratio Test (General Setting)}
-\begin{itemize}
-      \item Suppose $ \ell(\Vector{\theta}) $ is the likelihood for a $ q $-dimension parameter vector $ \Vector{\theta} $ and let
-            \begin{itemize}
-                  \item $ \tilde{\Vector{\theta}} $ be the $ q $-dim MLE of $ \Vector{\theta} $ (unconstrained/\textcolor{Blue}{saturated, $ q=n $}),
-                  \item $ \hat{\Vector{\theta}} $ be the $ p $-dim MLE of $ \Vector{\theta} $ (constrained/\textcolor{Blue}{unsaturated, $ p<q $}).
-            \end{itemize}
-      \item Hypotheses:
-            \begin{itemize}
-                  \item $ \HN $: the constrained model is adequate (i.e., as good as the unconstrained).
-                  \item $ \HA $: constrained model is not adequate.
-            \end{itemize}
-      \item Recall the Likelihood Ratio (LR) result:
-            \[ \text{Under $ \HN $:}\quad -2\log*{\frac{L(\hat{\Vector{\theta}})}{L(\tilde{\Vector{\theta}})}}
-                  =-2\bigl[\ell(\hat{\Vector{\theta}})-\ell(\tilde{\Vector{\theta}})\bigr]\sim \chi^2_{q-p}. \]
-      \item Reject $ \HN $ at $ \theta $ if
-            \[ p\text{-value}=\Prob[\Big]{\chi^2_{q-p}>-2\bigl[\ell(\hat{\Vector{\theta}})-\ell(\tilde{\Vector{\theta}})\bigr]}<\alpha. \]
-\end{itemize}
-\subsection*{Likelihood Ratio Test (Logistic Regression Model)}
-\begin{itemize}
-      \item \textcolor{Blue}{Saturated} (unconstrained) model MLEs:
-            \[ \textcolor{Red}{\tilde{\pi}_i=\frac{y_i}{m_i}},\; i=1,\ldots,n. \]
-            \begin{itemize}
-                  \item Binomial MLE without imposing any constraint.
-                  \item We will have $ \tilde{y}_i=m_i\tilde{\pi}_i=y_i $, \textcolor{Blue}{a perfect fit}!
-            \end{itemize}
-      \item \textcolor{Blue}{Unsaturated} (constrained) model MLEs:
-            \[ \textcolor{Red}{\hat{\pi}_i=\expit{\Vector{x}_i^\top \hat{\Vector{\beta}}}}. \]
-            \begin{itemize}
-                  \item Regression models are a way of imposing constraints on the estimation of $ \pi_i $ through $ p $-dim regression coefficients $ \Vector{\beta} $.
-                  \item We will have fitted number of responses $ \hat{y}_i=m_i\hat{\pi}_i=m_i\expit{\Vector{x}_i^\top \hat{\Vector{\beta}}} $.
-            \end{itemize}
-      \item \textcolor{Blue}{Hypotheses}:
-            \begin{itemize}
-                  \item $ \HN $: the $ p $-dim model, e.g., $ \logit{\pi_i}=\Vector{x}_i^\top \Vector{\beta} $ is adequate.
-                  \item $ \HA $: the $ p $-dim model, e.g., $ \logit{\pi_i}=\Vector{x}_i^\top \Vector{\beta} $ is not adequate \emph{compared
-                              to the $ n $-dim saturated model}.
-            \end{itemize}
-      \item \textcolor{Blue}{Likelihood Ratio Statistic} (also referred to as the \textcolor{Blue}{Deviance}):
-            \begin{align*}
-                  \textcolor{Blue}{D}
-                   & \textcolor{Blue}{=}\textcolor{Blue}{-2\bigl[\ell(\hat{\Vector{\pi}})-\ell(\tilde{\Vector{\pi}})\bigr]}                     \\
-                   & =-2\biggl(\sum_{i=1}^{n}\Bigl(y_i\log{\hat{\pi}_i}+(m_i-y_i)\log{1-\hat{\pi}_i}\Bigr)
-                  -\sum_{i=1}^{n}\Bigl(y_i\log{\tilde{\pi}_i}+(m_i-y_i)\log{1-\tilde{\pi}_i}\Bigr)\biggr)                                       \\
-                   & =-2 \sum_{i=1}^{n} \biggl(y_i\log*{\frac{y_i}{m_i\hat{\pi}_i}}+(m_i-y_i)\log*{\frac{m_i-y_i}{m_i(1-\hat{\pi}_i)} }\biggr).
-            \end{align*}
-      \item The \textcolor{Blue}{LR/Deviance} can also be written in a general form as:
-            \[ D=2 \sum_{i=1}^{n} \sum_{j=1}^{2} \biggl(O_{ij}\log*{\frac{O_{ij}}{E_{ij}}}\biggr). \]
-            \begin{itemize}
-                  \item $ O_{i1}=y_i $, $ E_{i1}=m_i\hat{\pi}_i $ (observed and expected \# of events).
-                  \item $ O_{i2}=m_i-y_i $, $ E_{i2}=m_i(1-\hat{\pi}_i) $ (observed and expected \# of non-events).
-            \end{itemize}
-      \item We expect $ D \sim \chi^2_{n-p} $ under $ \HN $, and reject $ \HN $ if $ \Prob{\chi^2_{n-p}>D}<\alpha $.
-            \begin{itemize}
-                  \item Unfortunately, this is not a great approximation.
-                  \item Approximation is much better for testing nested unsaturated models though.
-            \end{itemize}
-\end{itemize}
-\subsection*{Example: Prenatal Care Data}
-\begin{itemize}
-      \item Model 2: Main Effects Model,
-            \[ \logit{\pi_i}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}. \]
-            \begin{itemize}
-                  \item $ \HN $: Model 2 is adequate.
-                  \item $ \HA $: Model 2 is not adequate compared to the saturated model.
-            \end{itemize}
-      \item In R, the \texttt{summary()} output $ D $ is reported as the \textcolor{Red}{Residual Deviance}.
-            % \begin{noindent}
-            <<>>=
-            model2=glm(resp~loc + clinic, family=binomial(link=logit), data=prenatal.dat)
-            summary(model2)
-            @
-      % \end{noindent}
-            \begin{itemize}
-                  \item Deviance: $ D=0.10693 $.
-                  \item $ p $-value: $ \Prob{\chi^2_{n-p}>D}=\Prob{\chi^2_1>D}=0.7436689\gg 0.05 $.
-            \end{itemize}
-      \item Do not reject the null hypothesis that Model 2 is adequate.
-\end{itemize}
-\subsection*{Pearson Statistic}
-\begin{itemize}
-      \item The Pearson statistic is another statistic that can be used for assessing
-            ``overall'' fit (or goodness of fit) of a Binomial model:
-            \[ \textcolor{Blue}{P=\sum_{i=1}^{n} \frac{(y_i-m_i\hat{\pi}_i)^2}{m_i\hat{\pi}_i(1-\hat{\pi}_i)}}. \]
-            \begin{itemize}
-                  \item As with LR/Deviance statistic, $ P \sim \chi^2_{n-p} $ under $ \HN $: the model is adequate.
-                  \item Note that $ P $ has the general form:
-                        \[ P=\sum_{i}\frac{(O_i-E_i)^2}{V_i}.   \]
-                  \item The $ \chi^2 $ approximation is a bit better than for deviance statistic $ D $.
-                  \item Both are poor if the sample size ($ m_i $) is small though.
-            \end{itemize}
-\end{itemize}
-\subsection*{Testing Nested Non-saturated Models}
-\begin{itemize}
-      \item The previous LR/Deviance test was for an unsaturated model vs a saturated model.
-      \item Now consider two unsaturated models ($ p<q<n $).
-            \begin{align*}
-                  \logit{\pi_i} & =\beta_0+\beta_1x_{i1}+\cdots+\beta_{p-1}x_{ip-1}\tag*{(1)}\label{2.6M1}                            \\
-                  \logit{\pi_i} & =\beta_0+\beta_1x_{i1}+\cdots+\beta_{p-1}x_{ip-1}+\cdots+\beta_{q-1}x_{iq-1}\tag*{(2)}\label{2.6M2}
-            \end{align*}
-      \item Model~\ref{2.6M1} is \textcolor{Blue}{\emph{nested}} within Model~\ref{2.6M2}.
-      \item $ \HN $: Model~\ref{2.6M1} fits the data as well as Model~\ref{2.6M2}.
-            \begin{itemize}
-                  \item $ \HN $: $ \beta_p=\cdots=\beta_{q-1}=0 $.
-            \end{itemize}
-      \item $ \HA $: Model~\ref{2.6M1} is inadequate compared to Model~\ref{2.6M2}.
-            \begin{itemize}
-                  \item $ \HA $: at least one of $ \beta_p,\ldots,\beta_{q-1}\ne 0 $.
-            \end{itemize}
-\end{itemize}
-\begin{table}[!htbp]
-      \centering
-      \begin{tabular}{lcc}
-            \textcolor{Blue}{Model}   & \textcolor{Blue}{Dimension} & \textcolor{Blue}{MLEs}    \\
+\subsection*{Example: Poisson Approximation to the Binomial}
+\addcontentsline{toc}{subsection}{Example: Skin Cancer}
+\begin{Example}{Non Melanoma Skin Cancer}
+    Schwarz (2015) gives the incidence of non melanoma skin cancer among women in the early
+    1970s in Minneapolis-St Paul and Dallas-Fort Worth.
+    \begin{center}
+        \begin{tabular}{lllrr}
+            \toprule
+            City         & Age   & Count & Pop. Size \\
             \midrule
-            \ref{2.6M1} Reduced model & $ p $                       & $ \hat{\pi}_i $           \\
-            \ref{2.6M2} Full model    & $ q $                       & $ \tilde{\pi}_i $         \\
-            Saturated model           & $ n $                       & $ \tilde{\tilde{\pi}}_i $ \\
+            \texttt{msp} & 15-25 & 1     & 172675    \\
+            \texttt{msp} & 25-34 & 16    & 123065    \\
+            \texttt{msp} & 35-44 & 30    & 96216     \\
+            \texttt{msp} & 45-54 & 71    & 92051     \\
+            \texttt{msp} & 55-64 & 102   & 72159     \\
+            \texttt{msp} & 65-74 & 130   & 54722     \\
+            \texttt{msp} & 75-84 & 133   & 32185     \\
+            \texttt{msp} & 85+   & 40    & 8328      \\
+            \texttt{dfw} & 15-25 & 4     & 181343    \\
+            \texttt{dfw} & 25-34 & 38    & 146207    \\
+            \texttt{dfw} & 35-44 & 119   & 121374    \\
+            \texttt{dfw} & 45-54 & 221   & 111353    \\
+            \texttt{dfw} & 55-64 & 259   & 83004     \\
+            \texttt{dfw} & 65-74 & 310   & 55932     \\
+            \texttt{dfw} & 75-84 & 226   & 29007     \\
+            \texttt{dfw} & 85+   & 65    & 7538      \\
             \bottomrule
-      \end{tabular}
-\end{table}
+        \end{tabular}
+    \end{center}
+\end{Example}
+\subsubsection*{Binomial and Poisson Models}
 \begin{itemize}
-      \item LR/Deviance test of Model~\ref{2.6M1} vs Saturated Model:
-            \[ \textcolor{Blue}{D_0=-2\bigl(\ell(\hat{\Vector{\pi}})-\ell(\tilde{\tilde{\Vector{\pi}}})\bigr)}. \]
-      \item LR/Deviance test of Model~\ref{2.6M2} vs Saturated Model:
-            \[ \textcolor{Blue}{D_\text{A}=-2\bigl(\ell(\tilde{\Vector{\pi}})-\ell(\tilde{\tilde{\Vector{\pi}}})\bigr)}. \]
-      \item Now, we wish to conduct LR test of Model~\ref{2.6M1} vs Model~\ref{2.6M2}:
-            \[ \textcolor{Blue}{\Delta D} = \textcolor{Blue}{D_0-D_{\text{A}}}=-2\bigl(\ell(\hat{\Vector{\pi}})-\ell(\tilde{\Vector{\pi}})\bigr). \]
-      \item It can be shown that under $ \HN $: Model~\ref{2.6M1} is as adequate as Model~\ref{2.6M2},
-            \[ \Delta D \sim \chi^2_{q-p}. \]
-            \begin{itemize}
-                  \item This approximation is much better than when testing an unsaturated
-                        model vs the saturated model.
-            \end{itemize}
-      \item If $ p=\Prob{\chi^2_{q-p}>\Delta D}<\alpha $, reject $ \HN $.
-            \begin{itemize}
-                  \item Reduced model does not fit the data as well as Full model.
-                  \item One or more of covariates $ x_{ip},\ldots,x_{iq-1} $ is important (i.e., associated with the response).
-            \end{itemize}
+    \item Binomial model:
+          \[ \textcolor{Green}{\log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}+\beta_jx_{ij}}, \]
+          where $ x_{i1}=\Ind{\texttt{city=msp}} $, $ x_{i2}=\Ind{\texttt{agegroup }j} $, $ j=2,3,\ldots,8 $. $ \beta_1 $ and $ \beta_j $
+          have $ \log{\OR} $ interpretations.
+    \item Poisson model:
+          \[ \textcolor{Green}{\log{\mu_i}=\alpha_0+\alpha_1x_{i1}+\alpha_jx_{ij}+\log{m_i}}. \]
+          $ \alpha_1 $ and $ \alpha_j $ have $ \log{\RR} $ interpretations.
 \end{itemize}
-\subsection*{Example: Prenatal Care Data}
+\subsubsection*{Binomial Model}
+\[ \textcolor{Green}{\log*{\frac{\pi_i}{1-\pi_i}}=\beta_0+\beta_1x_{i1}+\beta_jx_{ij}},\; j=2,3,\ldots,8. \]
+%\begin{noindent}
+    <<>>=
+    melanoma <- read.table("melanoma.txt", header=T)
+    melanoma$resp=cbind(melanoma$Count, melanoma$Population-melanoma$Count)
+    fit.binomial =glm(resp~factor(City)+factor(Age),family=binomial,data=melanoma)
+    summary(fit.binomial)
+    @
+%\end{noindent}
+\subsubsection*{Poisson Model}
+\[ \textcolor{Green}{\log{\mu_i}=\alpha_0+\alpha_1x_{i1}+\alpha_jx_{ij}+\log{m_i}},\; j=2,3,\ldots,8. \]
+%\begin{noindent}
+    <<>>=
+    fit.poisson =glm(Count~factor(City)+factor(Age)+offset(log(Population)),family=poisson,data=melanoma)
+    summary(fit.poisson)
+    @
+%\end{noindent}
+\subsubsection*{Example: Non Melanoma Skin Cancer}
+\begin{enumerate}[1.]
+    \item \textcolor{Green}{What is the OR and RR for developing non melanoma skin cancer for women in
+              Dallas-Forth Worth versus those in Minneapolis-St Paul, controlling for age?}
+          \[ \widehat{\OR}=\exp{-\hat{\beta}_1}=\exp{0.80692}=2.2410. \]
+          \[ \widehat{\RR}=\exp{-\hat{\alpha}_1}=\exp{0.80428}=2.2351. \]
+    \item \textcolor{Green}{What is the predicted number of skin cancer cases in Dallas-Fort Worth among
+              women age 25-34?}
+          \[ \hat{Y}_i=m_i\hat{\pi}_i=(146207)\expit{\hat{\beta}_0+\hat{\beta}_2}=39.25427. \]
+          \[ \hat{\mu}_i=m_i\hat{\pi}_i=(146207)\exp{\hat{\alpha}_0+\hat{\alpha}_2}=39.22713. \]
+\end{enumerate}
 \begin{itemize}
-      \item Summary of Deviance (``\texttt{residual deviance}'') from R output:
-            \begin{table}[!htbp]
-                  \centering
-                  \begin{tabular}{clccc}
-                        \toprule
-                        Model & Covariates                         & Deviance  & Parameters & $ n-p $ \\
-                        \midrule
-                        1     & \texttt{loc}                       & 10.814378 & 2          & 2       \\
-                        2     & \texttt{loc + clinic}              & 0.106928  & 3          & 1       \\
-                        3     & \texttt{loc + clinic + loc*clinic} & 0         & 4          & 0       \\
-                        4     & \texttt{clinic}                    & 0.314841  & 2          & 2       \\
-                        \bottomrule
-                  \end{tabular}
-            \end{table}
-      \item Compare nested models:
-            \begin{itemize}
-                  \item Model 2: $ \logit{\pi_i}=\beta_0+\beta_1x_{i1}+\beta_2x_{i2} $.
-                  \item Model 4: $ \logit{\pi_i}=\beta_0+\beta_2x_{i2} $.
-            \end{itemize}
-      \item Is level of care associated with fetal mortality after accounting for clinic?
-            \begin{itemize}
-                  \item $ \HN $: Model 4 is as adequate as Model 2 (e.g., $ \beta_1=0 $).
-                  \item $ \HA $: Model 4 is inadequate compared to Model 2 (e.g., $ \beta_1\ne 0 $).
-            \end{itemize}
-      \item LR test for comparing Model 4 vs Model 2, or equivalently testing hypotheses:
-            \begin{center}
-                  $ \HN $: $ \beta_1=0 $ vs $ \HA $: $ \beta_1\ne 0 $.
-            \end{center}
-            \begin{itemize}
-                  \item We do not reject $ \HN $ of no association between level and care and fetal
-                        mortality after controlling for Clinic.
-                        % \begin{noindent}
-                  <<>>=
-                  model2 = glm(resp~loc+clinic, family=binomial, data=prenatal.dat)
-                  model4 = glm(resp~clinic, family=binomial, data=prenatal.dat)
-                  D = model4$deviance - model2$deviance
-                  1-pchisq(D,2-1)
-                  @
-            % \end{noindent}
-                  \item This implies that level of care is no longer important when clinic is
-                        included in the model.
-                  \item It also implies that Model 4 is as adequate compared to Model 2.
-            \end{itemize}
-      \item Finally, when testing a single parameter, e.g., $ \HN $: $ \beta_1=0 $, LR/Deviance
-            test result is consistent with the Wald test result provided in the R output:
-            % \begin{noindent}
-                  <<>>=
-                  model2 = glm(resp~loc+clinic, family=binomial, data=prenatal.dat)
-                  summary(model2)
-                  @
-            % \end{noindent}
+    \item $m$ (population size) is very large and $ \pi $ (probability of getting non melanoma skin
+          cancer) is very small so the Poisson approximation holds.
+    \item Inference from the two models is nearly identical.
+    \item We might prefer the RR interpretation over the OR interpretation.
 \end{itemize}
-\subsection*{Summary of LR/Deviance Test for Logistic Regression}
+\addcontentsline{toc}{subsection}{Time Non-Homogeneous Poisson Processes}
 \begin{itemize}
-      \item For Binomial GLM with logit link the LR/Deviance test statistic is:
-            \[ D=\sum_{i=1}^{n} 2\biggl(y_i\log*{\frac{y_i}{m_i\hat{\pi}_i}}+(m_i-y_i)\log*{\frac{m_i-y_i}{m_i(1-\hat{\pi}_i)}}\biggr). \]
-      \item This is reported as the ``\texttt{Residual Deviance}'' in R \texttt{glm} summary output.
-      \item Deviance statistic $ D $ can be used to:
-            \begin{itemize}
-                  \item Test adequacy/goodness of fit of a non-saturated logistic model:
-                        \[ D \stackrel{\HN}{\sim}\chi^2_{n-p}. \]
-                  \item Compare the fit of two nested-non saturated logistic models:
-                        \[ \Delta D=D_0-D_\text{A} \stackrel{\HN}{\sim}\chi^2_{q-p}. \]
-            \end{itemize}
+    \item Now consider
+          \[ \E[\big]{N(t)}=\mu(t)=\lambda(t)\qquad\text{(not $=\lambda t$)}. \]
+    \item The rate is now a \emph{\textcolor{Blue}{function}} of time.
+    \item Lots of possible ways to model the rate $ \lambda(t) $.
+          \begin{itemize}
+              \item Piecewise constant:
+                    \[ \lambda(t)=b_1\Ind{0<t<t_1}+b_2\Ind{t_1\le t<t_2}+\cdots. \]
+              \item Piecewise linear:
+                    \[ \lambda(t)=(m_1 t+b_1)\Ind{0<t<t_1}+(m_2 t+b_2)\Ind{t_1\le t<t_2}+\cdots. \]
+              \item Quadratic:
+                    \[ \lambda(t)=at^2+bt+c. \]
+              \item Splines, etc.
+          \end{itemize}
+\end{itemize}
+\subsection*{Example: Rat Tumour Data}
+\addcontentsline{toc}{subsection}{Example: Rat Tumours}
+\begin{Example}{Rat Tumour Data}
+    \begin{itemize}
+        \item Here we consider data from a study of the development of mammary tumours in
+              rats reported in Gail et al. (1980).
+        \item This study was a carcinogenicity experiment in which 48 rats were exposed to a
+              carcinogen,
+              \begin{itemize}
+                  \item 23 were then assigned to a treatment group where the treatment was designed to
+                        reduce the development of tumours,
+                  \item 25 were assigned to the control group.
+              \end{itemize}
+        \item The rats were carefully examined over 122 days for the development of new
+              tumours (multiple tumours could develop).
+        \item The day (time) of each tumour was recorded.
+        \item Our aim here is to estimate the expected number of tumours in the two groups and
+              make treatment comparisons.
+    \end{itemize}
+    We show the first 5 IDs for each group.
+    \begin{center}
+        $\text{Times to tumours in days}^{(\text{number of tumours detected})}$\\
+        \begin{NiceTabular}{clcl}
+            \toprule
+            \Block{1-2}{Treatment Group} &                          & \Block{1-2}{Control Group}                                               \\
+            \midrule
+            ID                           & Days of Tumour Detection & ID                         & Days of Tumour Detection                    \\
+            \midrule
+            1                            & $122$                    & 1                          & $3, 42, 59, 61^{(2)}, 112, 119$             \\
+            2                            & ---                      & 2                          & $28, 31, 35, 45, 52, 59^{(2)} , 77, 85, 107, 112$ \\
+            3                            & $3,88$                   & 3                          & $31, 38, 48, 52, 74, 77, 101^{(2)} , 119$         \\
+            4                            & $92$                     & 4                          & $ 11, 114  $                                \\
+            5                            & $70,74,85,92$            & 5                          & $35,45,74^{(2)},77,80,85,90^{(2)}$              \\
+            \bottomrule
+        \end{NiceTabular}
+    \end{center}
+\end{Example}
+\subsubsection*{Timeline plots for data from Gail et al. (1980)}
+
+\subsubsection*{R Code \& Rat Tumour Data Structure}
+%\begin{noindent}
+    <<results='hide'>>=
+    rats <- read.table("rats.dat", header=F)
+    dimnames(rats)[[2]] <- c("id","start","stop","status","enum","trt")
+    # function to covert data to the structure of one line per interval per subject
+    gd.pw.f <- function(indata) {
+    pid <- sort(unique(indata$id))
+    data <- matrix(0, nrow=(length(pid)*4), ncol=5)
+    for (i in 1:length(pid)) {
+    tmp <- indata[indata$id == pid[i], ]
+    etime <- floor( tmp$stop[tmp$status == 1] )
+    startpos <- 4*(i-1) + 1
+    stoppos <- 4*i
+    data[startpos:stoppos,1] <- rep(pid[i],4)
+    data[startpos:stoppos,2] <- c(1,2,3,4)
+    data[startpos:stoppos,3] <- c(sum((etime > 0) & (etime
+    <=
+    30)),
+    sum((etime > 30) & (etime
+    <=
+    60)),
+    sum((etime > 60) & (etime
+    <=
+    90)),
+    sum((etime > 90) & (etime
+    <=
+    122)))
+    data[startpos:stoppos,4] <- c(30,30,30,32)
+    data[startpos:stoppos,5] <- rep(unique(tmp$trt),4)
+    }
+    data <- data.frame(data)
+    dimnames(data)[[2]] <- c("id","interval","count","len","trt")
+    return(data)
+    }
+    rats.pw <- gd.pw.f(rats)
+    rats.pw[1:20,]
+    @
+    <<>>=
+    rats.pw[1:20,]
+    @
+%\end{noindent}
+\begin{itemize}
+    \item Consider four time intervals.
+    \item One line of data per interval.
+    \item \texttt{count} = number events in interval.
+    \item \texttt{len} = days spent in interval.
+    \item \texttt{trt} = treatment group.
+\end{itemize}
+\subsubsection*{1. Model Control Group Only (\texttt{pfitC})}
+\[ \log{\mu_{ik}}=\beta_0+\underbrace{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}}_{\text{interval}}+\texttt{offset}(\log{\texttt{len}_{ik}}). \]
+\begin{itemize}
+    \item To start, we fit a \textcolor{Blue}{piecewise constant model} for control rats:
+          \[ \log{\mu_i}=\Vector{x}_i^\top \Vector{\beta}+\log{t_i}. \]
+    \item \texttt{interval} is a categorical variable at 4 levels:
+          \[ x_{i1}=\Ind{\text{interval 2}},\quad x_{i2}=\Ind{\text{interval 3}},\quad x_{i3}=\Ind{\text{interval 4}}. \]
+    \item Include \texttt{offset(log(len))} to account for the fact that different intervals are of
+          different durations.
+\end{itemize}
+%\begin{noindent}
+    <<>>=
+    pfitC <- glm(count ~ factor(interval) + offset(log(len)), family=poisson(link=log), data=rats.pw, subset=(trt==0))
+    summary(pfitC)
+    @
+%\end{noindent}
+\subsubsection*{Plot of $\log[\big]{\lambda(t)}$ for \texttt{pfitC}}
+\begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[
+                xmin=0, xmax=130,
+                ymin=-3.5, ymax=-2.5,
+                xtick={30,60,90,122},
+                legend pos=north west,
+                ymajorgrids=false,
+                xmajorgrids=true,
+                grid style=dashed,
+            ]
+            \addplot[color=red] coordinates {(0,-3.09)(30,-3.09)} node [anchor=south,midway] (beta){$\hat{\beta}_0$} ;
+            \addplot[color=red] coordinates {(30,-2.93)(60,-2.93)} node [anchor=south,midway] (beta){$\hat{\beta}_0+\hat{\beta}_1$};
+            \addplot[color=red] coordinates {(60,-2.79)(90,-2.79)} node [anchor=south,midway] (beta){$\hat{\beta}_0+\hat{\beta}_2$};
+            \addplot[color=red] coordinates {(90,-3.25)(122,-3.25)} node [anchor=south,midway] (beta){$\hat{\beta}_0+\hat{\beta}_3$};
+        \end{axis}
+    \end{tikzpicture}
+\end{center}
+\begin{itemize}
+    \item $ \log{\hat{\lambda}_1}=\hat{\beta}_0=-3.09 $.
+    \item $ \log{\hat{\lambda}_2}=\hat{\beta}_0+\hat{\beta}_1=-3.09+0.16=-2.93 $.
+    \item $ \log{\hat{\lambda}_3}=\hat{\beta}_0+\hat{\beta}_2=-3.09+0.3=-2.79 $.
+    \item $ \log{\hat{\lambda}_4}=\hat{\beta}_0+\hat{\beta}_3=-3.09-0.16=-3.25 $.
+\end{itemize}
+\subsubsection*{Interpretation of \texttt{pfitC}}
+\[ \textcolor{Green}{\log{\mu_i}=\beta_0+\underbrace{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}}_{\text{interval}}+\log{t_i}} \]
+\begin{itemize}
+    \item Relative Rate of events in interval 2 versus interval 1:
+          \[ \exp{\beta_1}=\frac{\lambda(\text{interval 2})}{\lambda(\text{interval 1})}=\exp{0.16254}=1.176. \]
+    \item Notice none of $ \beta_1,\beta_2,\beta_3 $ are statistically significant.
+    \item There is a trend of a slightly higher rate in intervals 2 and 3 (versus interval 1) but
+          the event rate does not differ significantly across follow-up time in the control rats.
+\end{itemize}
+\subsubsection*{2. Model Control and Treatment Groups (\texttt{pfit})}
+\begin{itemize}
+    \item Now, fit a model to both the treatment and control groups.
+    \item $ x_{i4}=\Ind{\text{treatment group}} $.
+    \item Assume a piecewise constant baseline rate function.
+    \item Model is now:
+          \[ \textcolor{Green}{\log{\mu_i}=\beta_0+\underbrace{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}}_{\text{interval}}+\beta_4x_{i4}+\texttt{offset}(\log{t_i})}. \]
+    \item $ \exp{\beta_1} $ is now RR of events for interval 2 versus interval 1, for two rats of the
+          same treatment group.
+\end{itemize}
+%\begin{noindent}
+    <<>>=
+    pfit <- glm(count ~ factor(interval) + trt + offset(log(len)), family=poisson(link=log), data=rats.pw)
+    summary(pfit)
+    @
+%\end{noindent}
+\subsubsection*{Interpretation of \texttt{pfit}}
+\begin{itemize}
+    \item Relative Rate of events for treatment versus control rats:
+          \[ \exp{\beta_4}=\frac{\lambda(\text{treatment})}{\lambda(\text{control})}=\exp{-0.8230}=0.44. \]
+    \item Controlling for interval of follow-up, the rate of tumour development in treated rats
+          in $0.44$ times that of control rats.
+    \item That is, treatment looks beneficial.
+    \item Notice that $ \beta_4 $ is statistically significant.
+    \item $ \beta_1,\beta_2,\beta_3 $ are still not statistically significant.
+    \item Consider do we really need to use a time non-homogeneous model for this data?
+\end{itemize}
+\subsubsection*{3. Time Homogeneous Model (\texttt{fit})}
+\[ \textcolor{Green}{\log{\mu_i}=\beta_0+\beta_4x_{i4}+\log{t_i}}. \]
+\begin{itemize}
+    \item $ \beta_0= $ log rate of tumour development, per day, control group.
+    \item $ \beta_4= $ log Relative Rate (RR) of tumour development in treated vs control rats.
+    \item This model is nested within the time non-homogeneous model.
+    \item Consider \texttt{pfit} model with $ \beta_1=\beta_2=\beta_3=0 $.
+    \item We can carry out a likelihood ratio test
+\end{itemize}
+%\begin{noindent}
+    <<>>=
+    fit <- glm(count ~ trt + offset(log(len)), family=poisson(link=log), data=rats.pw)
+    summary(fit)
+    @
+%\end{noindent}
+\subsubsection*{Interpretation of \texttt{fit}}
+\begin{itemize}
+    \item Note $ \hat{\beta}_4=-0.8230 $ is almost unchanged versus model \texttt{fit}.
+    \item Likelihood Ratio/Deviance test of $ \HN $: $ \beta_1=\beta_2=\beta_3=0 $:
+          \[ \Delta D=D_0-D_A=269.060-266.323 \sim \chi^2_{3}\text{ under $\HN$}. \]
+          %\begin{noindent}
+        <<>>=
+        1-pchisq(fit$deviance-pfit$deviance,fit$df.residual-pfit$df.residual)
+        @
+    %\end{noindent}
+    \item Do not reject $ \HN $.
+    \item Conclude that the time homogeneous model (model 3) is probably OK in this case.
+    \item However, we retain it for generality and for the following analysis.
+\end{itemize}
+\subsubsection*{4. Time Non-Homogeneous Model with Treatment Interaction (\texttt{ifit})}
+\begin{itemize}
+    \item Q: Is the treatment effect constant over time?
+    \item Model with interaction:
+          \textcolor{Green}{\begin{align*}
+                  \log{\mu_i}
+                   & =\beta_0+\overbrace{\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}}^{\text{interval}}+\overbrace{\beta_4x_{i4}}^{\text{treatment}}+ \\
+                   & \quad +\underbrace{\beta_5x_{i1}x_{i4}+\beta_6x_{i2}x_{i4}+\beta_7x_{i3}x_{i4}}_{\text{interval$*$treatment}}+\log{t_i}
+              \end{align*}}
+    \item Model \texttt{pfit} (time non-homogeneous, without interaction) is nested within this
+          model (consider \texttt{ifit} with $ \beta_5=\beta_6=\beta_7=0 $).
+\end{itemize}
+%\begin{noindent}
+    <<>>=
+    ifit <- glm(count ~ offset(log(len))+factor(interval)*trt, family=poisson(link=log), data=rats.pw)
+    summary(ifit)
+    @
+%\end{noindent}
+\subsubsection*{Interpretation of \texttt{ifit}}
+\begin{itemize}
+    \item Note $ \hat{\beta}_4=-0.8038 $ is very similar to \texttt{pfit}.
+    \item Likelihood Ratio/Deviance test of $ \HN $: $ \beta_5=\beta_6=\beta_7=0 $:
+          \[ \Delta D=D_0-D_A=266.323-263.917 \sim \chi^2_{3}\text{ under $\HN$}. \]
+          %\begin{noindent}
+                <<>>=
+                1-pchisq(pfit$deviance-ifit$deviance,pfit$df.residual-ifit$df.residual)
+                @
+            %\end{noindent}
+    \item Do not reject $ \HN $.
+    \item We do not have evidence that the treatment effect varies across the time intervals.
+\end{itemize}
+\subsubsection*{Summary of Rat Tumour Data Analysis}
+\begin{itemize}
+    \item Looks like a piecewise constant rate function is not necessary.
+    \item The best model (of the ones we examined) is \texttt{fit}:
+          \[ \textcolor{Green}{\log{\mu_i}=\beta_0+\beta_4x_{i4}+\log{t_i}}. \]
+    \item \textcolor{Blue}{Interpretation}: The relative rate for tumour development in treated versus control
+          rats is:
+          \[ \exp{\hat{\beta}_4}=\exp{-0.822995}=0.439. \]
+    \item That is, treatment is beneficial (treated rates get fewer tumours).
+    \item \textcolor{Blue}{Prediction}: Expected number of tumours for a treated rat observed for 70 days?
+          \[ \log{\hat{\mu}}=\hat{\beta}_0+\hat{\beta}_4+\log{70}=-3.00562-0.82302+\log{70}=0.41986. \]
+          \[ \hat{\mu}=\exp{0.41986}=1.5217. \]
 \end{itemize}
