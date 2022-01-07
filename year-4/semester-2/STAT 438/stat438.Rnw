@@ -1,0 +1,181 @@
+\documentclass[oneside]{book}
+\usepackage[svgnames]{xcolor}
+\usepackage[british]{babel}
+\usepackage[protrusion,expansion,babel,final]{microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage[pdfversion=1.7]{hyperref}
+\usepackage[shortlabels]{enumitem}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{cleveref}
+\usepackage{booktabs}
+\usepackage{nicematrix}
+\usepackage{derivative}
+\usepackage{etoolbox}
+\usepackage{siunitx}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[scaled=.98]{XCharter}
+\usepackage[scaled=1.04,varqu,varl]{inconsolata}% inconsolata typewriter
+\usepackage{amssymb}
+\makeatletter
+\@namedef{T1/zi4/m/it}{<->ssub*lmr/m/it}
+\makeatother
+
+\usepackage{bm}
+\usepackage{tikz}
+\usepackage{float}
+
+% Functions
+\providecommand\given{} % just to make sure it exists
+\DeclarePairedDelimiterXPP{\E}[1]{\operatorname{\mathbb{E}}}[]{}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\V}[1]{\operatorname{\textsf{V}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\Var}[1]{\operatorname{\textsf{Var}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\Cov}[1]{\operatorname{\textsf{Cov}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\Corr}[1]{\operatorname{\textsf{Corr}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\Covadj}[1]{\operatorname{\textsf{Cov}_{\text{adj}}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP\Prob[1]{\operatorname{\mathbb{P}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP\Ind[1]{\operatorname{\mathbb{I}}}\{\}{}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\se}[1]{\operatorname{\textsf{se}}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\seadj}[1]{\operatorname{\textsf{se}_{\text{adj}}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\estseadj}[1]{\operatorname{\widehat{\textsf{se}}_{\text{adj}}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\estse}[1]{\widehat{\operatorname{\textsf{se}}}}(){}{%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\estV}[1]{\widehat{\operatorname{\textsf{V}}}}(){}{
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\estVar}[1]{\widehat{\operatorname{\textsf{Var}}}}(){}{
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\let\exp\relax%
+\let\log\relax%
+\let\ln\relax%
+\DeclarePairedDelimiterXPP{\exp}[1]{\operatorname{\textsf{exp}}}\{\}{}{#1}%
+\DeclarePairedDelimiterXPP{\log}[1]{\operatorname{\textsf{log}}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\ln}[1]{\operatorname{\textsf{ln}}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\diag}[1]{\operatorname{\textsf{diag}}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\sign}[1]{\operatorname{\textsf{sign}}}(){}{#1}%
+
+\DeclarePairedDelimiterXPP{\expit}[1]{\operatorname{\textsf{expit}}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\logit}[1]{\operatorname{\textsf{logit}}}(){}{#1}%
+\newcommand{\HN}{\textsl{H}_{\textsl{0}}}%
+\newcommand{\HA}{\textsl{H}_{\textsl{A}}}%
+
+% Distributions
+\DeclarePairedDelimiterXPP{\N}[1]{\mathcal{N}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\POI}[1]{\text{POI}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\BIN}[1]{\text{BIN}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\BERN}[1]{\text{BERN}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\MVN}[1]{\text{MVN}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\NB}[1]{\text{NB}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\GAM}[1]{\text{GAM}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\BetaDist}[1]{\text{Beta}}(){}{#1}%
+
+\newcommand{\iid}{\overset{\text{iid}}{\sim}}%
+\newcommand{\ind}{\overset{\text{ind}}{\sim}}%
+\newcommand{\OR}{\text{OR}}%
+\newcommand{\RR}{\text{RR}}%
+\newcommand{\cOR}{\text{cOR}}%
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+% can be useful to refer to this outside \Set
+\newcommand\SetSymbol[1][]{%
+    \nonscript\:#1\vert{}
+    \allowbreak\nonscript\:
+    \mathopen{}}
+\DeclarePairedDelimiterX\Set[1]\{\}{%
+    \renewcommand\given{:}
+    #1
+}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\arginf}{arg\,inf}
+\DeclareMathOperator*{\argsup}{arg\,sup}
+
+\providecommand{\RandomVector}[1]{\bm{#1}}% general vectors in bold italic
+\providecommand{\Vector}[1]{\bm{#1}}% general vectors in bold italic
+\providecommand{\Matrix}[1]{\bm{#1}}
+\providecommand{\MatrixCal}[1]{\bm{\mathcal{#1}}}
+\providecommand{\Field}[1]{\bm{#1}}
+
+\usepackage{stackengine}
+\usepackage[british]{isodate}
+\newcommand{\makeheading}[2]%
+{%
+\begin{center}%
+    \makebox[\linewidth]{\raisebox{-.5ex}[0cm][0cm]{\stackanchor{\textcolor{Gray}{\textsc{#1}}}{\scriptsize\itshape\printyearoff#2}\;}\color{Crimson!50}\hrulefill}%
+\end{center}%
+}%
+
+\usepackage[breakable]{tcolorbox}
+\tcbset{
+    regular/.style={
+        boxrule=0pt,
+        breakable,
+        sharp corners
+    }
+}
+
+\newtcolorbox{Example}[1]{regular,colframe=Green!20!white,colback=Green!10!white,coltitle=Green,title={#1}}%
+\newtcolorbox{Regular}[1]{regular,colframe=Navy!15!white,colback=Navy!5!white,coltitle=Navy,title={#1}}%
+\newtcolorbox{Result}[1]{regular,colframe=Red!15!white,colback=Red!5!white,coltitle=Red,title={#1}}%
+
+\hypersetup{colorlinks=true,%
+linkcolor=[rgb]{0,0.5,1},%
+pdftitle={Advanced Methods in Biostatistics (STAT 438)},%
+pdfauthor={Cameron Roopnarine, Yeying Zhu},%
+pdfsubject={Statistics},%
+pdfkeywords={University of Waterloo, Winter 2022 (1221)}}%
+
+\title{%
+\LARGE Advanced Methods in Biostatistics\\%
+\large STAT 438\\%
+\normalsize Winter 2022 (1221)\thanks{Online Course until January 27\textsuperscript{th}, 2022}}%
+\author{Cameron Roopnarine\thanks{\LaTeX{}er}\and Yeying Zhu\thanks{Instructor}}%
+\date{\today}%
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{petri,decorations.pathreplacing,calc}
+
+\begin{document}
+<<child='setup.Rnw'>>=
+@
+\maketitle
+\tableofcontents
+\input{wk_01.tex}
+\end{document}

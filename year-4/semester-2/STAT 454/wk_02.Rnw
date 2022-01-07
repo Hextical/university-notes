@@ -1,0 +1,228 @@
+\makeheading{Week 2}{\daterange{2022-01-10}{2022-01-14}}%chktex 8
+\textbf{Survey samples}:
+A survey sample, denoted as $S$, is a subset of the population
+$ U=\Set{1,2,\ldots,N} $. Sample size $ n=\abs{S} $ is the number
+of units in the sample:
+\[ S=\Set{i_1,i_2,\ldots,i_n}. \]
+We could simply use $ S=\Set{1,2,\ldots,n} $.
+
+\textbf{Non-probability samples versus probability samples}:
+Non-probability samples are selected by subjective or any
+convenient methods. Examples include
+\begin{itemize}
+    \item \emph{Quota sampling}: The sample is obtained by a number of
+          interviewers, each of whom is required to sample certain
+          numbers of units with certain types or characteristics. How to
+          select the units is completely left in the hands of the interviewers.
+    \item \emph{Judgement or purposive sampling}: The sample is selected based
+          on what the sampler believes to be ``typical'' or ``most
+          representative'' of the population.
+    \item \emph{Restricted sampling}: The sample is restricted to certain parts of
+          the population which are readily accessible.
+    \item \emph{Sample of convenience}: The sample is taken from those who are
+          easy to reach.
+    \item \emph{Sample of volunteers}: The sample consists of those who
+          volunteer to participate.
+    \item \emph{Web panels}: The sample is selected from a panel of people who
+          signed up to do surveys in order to receive cash or other
+          incentives.
+\end{itemize}
+The most serious issue with non-probability survey samples:
+
+
+Non-probability survey samples are not the focus of this course. But
+the topic is becoming important in recent years, since data from
+non-probability survey samples become useful sources.
+
+Yilin Chen's PhD thesis research is on statistical analysis with
+non-probability survey samples, to be introduced in the last lecture.
+
+Probability samples, theoretically speaking, are selected through a
+probability measure over a pool of candidate samples.
+Let
+\[ \Omega=\Set{S\given S\subseteq U} \]
+be the set of all possible subsets of the survey population $U$. Let $ \ProbM{} $ be
+a probability measure over $ \Omega $ such that
+\[ \ProbM{S}\ge 0 \]
+for an $ S\in \Omega $ and $ \sum_{S:S\in\Omega}\ProbM{S}=1 $.
+
+A probability sample $ S $ is selected based on the probability sampling
+design, $ \ProbM{} $.
+
+\begin{Example}{}
+    \textbf{Example 1.4}. $ N=3 $; $ U=\Set{1,2,3} $, $ n=1 $ or $ 2 $.
+\end{Example}
+\textbf{Sampling design $ \mathcal{P} $ with fixed sample size}: $ \ProbM{S}=0 $
+if $ \abs{S}\ne n $. The probability measure is defined over
+\[ \Omega_n=\Set{S\given S\subseteq U\text{ and }\abs{S}=n}. \]
+\textbf{The cumulative sum method for generating a discrete random
+    variable}:
+\[ X \sim f(x):\quad p_i=f(x_i)=\Prob{X=x_i},i=1,2,\ldots. \]
+\textbf{Survey variables and population parameters}:
+\begin{itemize}
+    \item $ y $: the response variable; $ \Vector{x} $
+          the vector of auxiliary variables.
+    \item $ (y_i;\Vector{x}_i) $: the values of $ (y,\Vector{x}) $
+          associated with unit $ i $, $ i=1,2,\ldots,N $.
+    \item A common assumption in survey sampling: the values $ (y_i,\Vector{x}_i) $
+          can be measured without error if $ i $ is selected in the sample.
+    \item Population totals:
+          \[ T_y=\sum_{i=1}^{N}y_i\text{ and }T_{\Vector{x}}=\sum_{i=1}^{N}\Vector{x}_i. \]
+    \item Population means:
+          \[ \mu_y=\frac{1}{N}\sum_{i=1}^{N}y_i\text{ and }\mu_{\Vector{x}}=\frac{1}{N}\sum_{i=1}^{N}\Vector{x}_i. \]
+    \item Population variance of $ y $:
+          \[ \sigma_y^2=\frac{1}{N-1}\sum_{i=1}^{N}(y_i-\mu_y)^2. \]
+\end{itemize}
+\textbf{An important special case: $y$ is a binary variable}:
+\[ y_i=\begin{cases}
+        1, & \text{if unit $ i $ has attribute ``$A$''}, \\
+        0, & \text{otherwise}.
+    \end{cases} \]
+$ N $: the total number of units in the population (population size).
+$ M $: the total number of units in the population having attribute ``$A$.''
+\textbf{Probability sampling and design-based inference}:
+\begin{itemize}
+    \item The survey population $ U=\Set{1,2,\ldots,N} $ is viewed as fixed.
+    \item The values $ y_i $ and $ \Vector{x}_i $ attached to unit $ i $
+          and the population parameters such as $ T_y $ and $ \mu_y $
+          are also viewed as fixed.
+    \item The values of the population parameters can be determined without error by conducting
+          a census.
+    \item The sample $ S $ is selected according to a probability sampling design $ \mathcal{P} $.
+    \item The sample $ S $ is a random set under $ \mathcal{P} $.
+    \item Each unit in the population has a probability to be included in the
+          sample.
+    \item Randomization is induced by the probability sampling design for
+          the selection of the survey sample.
+\end{itemize}
+\textbf{Basic sampling techniques and advanced topics}:
+\begin{itemize}
+    \item Basic sampling techniques and theory are developed for the
+          estimation of the population total $T_y$ and the population mean $ \mu_y $.\\
+          (Chapters 1--5 in the textbook)
+    \item The basic methods and theory can be extended to handle more
+          advanced topics, such as design-based regression analysis using
+          survey data.\\
+          (Chapters 6--11 in the textbook)
+\end{itemize}
+
+\chapter{Review of Simple Random Sampling}
+\section{Simple Random Sampling Without Replacement (SRSWOR)}
+The task: Select a sample of size $n$ from a population of size $N$ with
+equal probability among all candidate samples.
+
+The total number of candidate samples:
+
+The probability measure for the sampling design:
+
+\textbf{Sampling scheme or sampling procedure}:
+Select the survey sample through a sequential draw-by-draw method;
+select units from the sampling frame, one-at-a-time, until the final
+sample is chosen.
+
+\textbf{SRSWOR} is a sampling procedure to select a sample of size n with
+equal probability among all candidate samples.
+
+\textbf{The sampling frame for SRSWOR}:
+A complete list of N units in the population.
+
+\textbf{The SRSWOR sampling procedure}:
+\begin{enumerate}[(1)]
+    \item Select the first unit from the $N$ units on the sampling frame with
+          equal probabilities $1/N$; denote the selected unit as $i_1$;
+    \item Select the second unit from the remaining $ N-1 $ units on the
+          sampling frame with equal probabilities $ 1/(N-1) $; denote the
+          selected unit as $i_2$;
+    \item Continue the process and select the $n\textsuperscript{th}$ unit from the remaining
+          $ N-n+1 $ units on the sampling frame with equal probabilities
+          $ 1/(N-n+1) $; denote the selected unit as $ i_n $.
+\end{enumerate}
+\begin{Result}{}
+    \textbf{Theorem 2.1}. Under simple random sampling without replacement,
+    the selected sample satisfies the probability measure $ \mathcal{P} $ specified as
+    \[ \ProbM{S}=\begin{cases}
+            1/\binom{N}{n}, & \text{if $ \abs{S}=n $}, \\
+            0,              & \text{otherwise}.
+        \end{cases} \]
+    \tcblower{}
+\end{Result}
+\textbf{Sample mean and sample variance}:
+\[ \bar{y}=\frac{1}{n}\sum_{i\in S}y_i. \]
+\[ s_y^2=\frac{1}{n-1}\sum_{i\in S}(y_i-\bar{y})^2. \]
+\textbf{Remarks}:
+\begin{itemize}
+    \item The sample mean $ \bar{y} $ and $ s_y^2 $ are useful
+          statistics under simple random sampling, but not necessarily under
+          other sampling methods.
+    \item The notation $ \sum_{i\in S} $ is preferred over
+          $ \sum_{i=1}^{n} $.
+    \item The form of estimators for population parameters depends on the
+          sampling methods.
+    \item The combination of ``sampling design'' and ``estimation method''
+          is called a ``sampling strategy'' (Thompson, 1997; Rao, 2005).
+\end{itemize}
+\textbf{Expectation and variance under design-based inferences}:
+
+\textbf{Three fundamental results in survey sampling under SRSWOR}:
+\begin{enumerate}[(a)]
+    \item The sample mean $ \bar{y}=n^{-1}\sum_{i\in S}y_i $
+          is a design-unbiased estimator for the population
+          mean $ \mu_y=N^{-1}\sum_{i=1}^{N}y_i $: $ \boxed{\E{\bar{y}}=\mu_y} $.
+
+          There are three possible ways to prove (a), depending on how
+          the randomization under SRSWOR is handled.
+
+          Method 1.
+
+          Method 2.
+
+          Method 3.
+    \item The design-based variance of $ \bar{y} $
+          under SRSWOR is given by
+          \[ \V{\bar{y}}=\biggl(1-\frac{n}{N}\biggr)\frac{\sigma_y^2}{n}, \]
+          where $ \sigma_y^2 $ is the population variance. The term
+          $ (1-n/N) $ is called the \emph{finite population correction} (fpc)
+          factor; The ratio $ n/N $ is called the \emph{sampling fraction}.
+    \item The sample variance $ s_y^2 $ is an unbiased estimator for the
+          population variance $ \sigma_y^2 $ under SRSWOR, i.e.,
+          $ \boxed{\E{s_y^2}=\sigma_y^2} $.
+    \item An unbiased variance estimator for $ \bar{y} $ is given by
+          \[ v(\bar{y})=\biggl(1-\frac{n}{N}\biggr)\frac{s_y^2}{n}, \]
+          which satisfies
+          \[ \E{v(\bar{y})}=\V{\bar{y}}, \]
+          where
+          \[ \V{\bar{y}}=\biggl(1-\frac{n}{N}\biggr)\frac{\sigma_y^2}{n}. \]
+\end{enumerate}
+\textbf{Summary of the main theoretical results under SRSWOR}:
+\begin{itemize}
+    \item The population mean $ \mu_y $ and the population variance
+          $ \sigma_y^2 $ are fixed (but unknown) population parameters.
+    \item The sample mean $ \bar{y} $ and the sample variance $ s_y^2 $
+          are random variables under the survey design.
+    \item The $ \bar{y} $ is an unbiased estimator $ \mu_y $: $ \E{\bar{y}}=\mu_y $.
+    \item $ \V{\bar{y}}=\biggl(1-\frac{n}{N}\biggr)\frac{\sigma_y^2}{n} $
+          is the theoretical variance of $ \bar{y} $ and is a fixed, but unknown
+          quantity depending on the population variance $ \sigma_y^2 $.
+    \item $ v(\bar{y})=\biggl(1-\frac{n}{N}\biggr)\frac{s_y^2}{n} $
+          is unbiased estimator for $ \bar{y} $ (computable with the given sample data).
+    \item The population size $ N $ is known under SRSWOR\@. (As part of the sampling
+          frame information).
+\end{itemize}
+The R function for SRSWOR and SRSWR (next section) with
+specified $N$ and $n$: \texttt{sample(N,n)}
+%\begin{noindent}
+      <<>>=
+      N=10
+      n=4
+      sam=sample(N,n)
+      sam
+      sam=sample(N,n,replace=T)
+      sam
+      N=100
+      n=4
+      sam=sample(N,n)
+      sam
+      sam=sample(N,n,replace=T)
+      sam
+      @
+%\end{noindent}

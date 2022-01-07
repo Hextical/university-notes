@@ -6,6 +6,15 @@ All my university notes done in LaTeX.
 
 ## Year 4
 
+### Semester 2
+
+|                                               Course                                               | Completion |       Online       |
+| :------------------------------------------------------------------------------------------------: | :--------: | :----------------: |
+| [STAT 438](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20438/stat438.pdf)\* | Week 1/12  | :heavy_check_mark: |
+| [STAT 454](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20454/stat454.pdf)\* | Week 1/12  | :heavy_check_mark: |
+
+\* STAT 454 and STAT 854 have exactly the same lectures.
+
 ### Semester 1
 
 |                                               Course                                               | Completion |       Online       |
