@@ -353,8 +353,8 @@ pdfkeywords={University of Waterloo, Fall 2020 (1209)}}
 \title{
 \LARGE Applied Linear Models\\
 \large STAT 331\\
-\normalsize Fall 2020 (1209)}
-\author{\LaTeX{}er: \emph{Cameron Roopnarine}\\Instructor: \emph{Samuel Wong}}
+\normalsize Fall 2020 (1209)\thanks{Online Course}}
+\author{Cameron Roopnarine\thanks{\LaTeX{}er}\and Samuel Wong\thanks{Instructor}}%
 \date{\today}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
@@ -1897,12 +1897,22 @@ Misleading conclusion: \code{svl} and \code{length} are both irrelevant
 \end{verbatim}
 \begin{alltt}
 \hlkwd{library}\hlstd{(leaps)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in library(leaps): there is no package called 'leaps'}}\begin{alltt}
 \hlcom{# Exhaustive, brute-force search.}
 \hlstd{all_regs} \hlkwb{<-} \hlkwd{regsubsets}\hlstd{(Flavor} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= coffee,} \hlkwc{nvmax} \hlstd{=} \hlnum{10}\hlstd{,}
   \hlkwc{nbest} \hlstd{=} \hlnum{2}\hlopt{^}\hlnum{10}\hlstd{,} \hlkwc{really.big} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in regsubsets(Flavor \textasciitilde{} ., data = coffee, nvmax = 10, nbest = 2\textasciicircum{}10, : could not find function "{}regsubsets"{}}}\begin{alltt}
 \hlstd{all_regs_summ} \hlkwb{<-} \hlkwd{summary}\hlstd{(all_regs)}
 \end{alltt}
-\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in summary(all\_regs): object 'all\_regs' not found}}\end{kframe}
 \end{knitrout}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -1925,96 +1935,52 @@ Misleading conclusion: \code{svl} and \code{length} are both irrelevant
   \hlnum{9}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{10}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{10}\hlstd{)))}
 \hlkwd{boxplot}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{adjr2} \hlopt{~} \hlstd{k,} \hlkwc{xlab} \hlstd{=} \hlstr{"Number of predictors"}\hlstd{,}
   \hlkwc{ylab} \hlstd{=} \hlkwd{expression}\hlstd{(R[adj]}\hlopt{^}\hlnum{2}\hlstd{),} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1}\hlstd{))}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(predvars, data, env): object 'all\_regs\_summ' not found}}\begin{alltt}
 \hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1}\hlstd{),} \hlkwc{lty} \hlstd{=} \hlnum{2}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"red"}\hlstd{)}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-53-1} 
-
-}
 
 
-\begin{kframe}\begin{alltt}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in int\_abline(a = a, b = b, h = h, v = v, untf = untf, ...): plot.new has not been called yet}}\begin{alltt}
 \hlkwd{boxplot}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{bic} \hlopt{~} \hlstd{k,} \hlkwc{xlab} \hlstd{=} \hlstr{"Number of predictors"}\hlstd{,}
   \hlkwc{ylab} \hlstd{=} \hlstr{"BIC"}\hlstd{)}
 \end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-53-2} 
-
-}
 
 
-\begin{kframe}\begin{alltt}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(predvars, data, env): object 'all\_regs\_summ' not found}}\begin{alltt}
 \hlkwd{max}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{adjr2)}
 \end{alltt}
-\begin{verbatim}
-## [1] 0.8075027
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'all\_regs\_summ' not found}}\begin{alltt}
 \hlstd{bestR2adj} \hlkwb{<-} \hlkwd{which.max}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{adjr2)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in which.max(all\_regs\_summ\$adjr2): object 'all\_regs\_summ' not found}}\begin{alltt}
 \hlkwd{min}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{bic)}
 \end{alltt}
-\begin{verbatim}
-## [1] -1793.389
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'all\_regs\_summ' not found}}\begin{alltt}
 \hlstd{bestBIC} \hlkwb{<-} \hlkwd{which.min}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{bic)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in which.min(all\_regs\_summ\$bic): object 'all\_regs\_summ' not found}}\begin{alltt}
 \hlcom{# Find out which predictors in those models.}
 \hlstd{all_regs_summ}\hlopt{$}\hlstd{which[bestR2adj, ]}
 \end{alltt}
-\begin{verbatim}
-##                                (Intercept) 
-##                                       TRUE 
-## Processing.MethodSemi-washed / Semi-pulped 
-##                                      FALSE 
-##              Processing.MethodWashed / Wet 
-##                                       TRUE 
-##                                      Aroma 
-##                                       TRUE 
-##                                 Aftertaste 
-##                                       TRUE 
-##                                       Body 
-##                                       TRUE 
-##                                    Acidity 
-##                                       TRUE 
-##                                    Balance 
-##                                       TRUE 
-##                                  Sweetness 
-##                                       TRUE 
-##                                 Uniformity 
-##                                       TRUE 
-##                                   Moisture 
-##                                       TRUE
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'all\_regs\_summ' not found}}\begin{alltt}
 \hlstd{all_regs_summ}\hlopt{$}\hlstd{which[bestBIC, ]}
 \end{alltt}
-\begin{verbatim}
-##                                (Intercept) 
-##                                       TRUE 
-## Processing.MethodSemi-washed / Semi-pulped 
-##                                      FALSE 
-##              Processing.MethodWashed / Wet 
-##                                       TRUE 
-##                                      Aroma 
-##                                       TRUE 
-##                                 Aftertaste 
-##                                       TRUE 
-##                                       Body 
-##                                       TRUE 
-##                                    Acidity 
-##                                       TRUE 
-##                                    Balance 
-##                                      FALSE 
-##                                  Sweetness 
-##                                       TRUE 
-##                                 Uniformity 
-##                                      FALSE 
-##                                   Moisture 
-##                                      FALSE
-\end{verbatim}
-\begin{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'all\_regs\_summ' not found}}\begin{alltt}
 \hlstd{coffee}\hlopt{$}\hlstd{wet} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{"Washed / Wet"}\hlstd{,}
   \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}  \hlcom{# 1 = wet, 0 otherwise}
 \hlstd{coffee}\hlopt{$}\hlstd{semi} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{"Semi-washed / Semi-pulped"}\hlstd{,}

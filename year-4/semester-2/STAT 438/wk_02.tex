@@ -1,0 +1,338 @@
+% Chapter 1 Part 3
+\makeheading{Week 2}{\daterange{2022-01-10}{2022-01-14}}%chktex 8
+\section*{Statistics of Interest}
+\begin{itemize}
+    \item Relative Risk.
+    \item Excess Risk.
+    \item Odds Ratio.
+    \item Others: such as attributable risk, hazard ratio.
+\end{itemize}
+\section{Relative Risk}
+\begin{Regular}{}
+    The \textbf{relative risk} ($ \RR $) of an outcome (e.g., disease)
+    $ D $ associated with a binary risk factor $ E $ is:
+    \[ \RR=\frac{\Prob{D\given E}}{\Prob{D\given E^c}}, \]
+    where $ 0\le \RR<\infty $.
+    \tcblower{}
+    \underline{Remarks}:
+    \begin{enumerate}[(1)]
+        \item The upper limit in practice typically
+              will have a finite constraint. Noting that $ \Prob{D\given E}\le 1 $,
+              we have
+              \[ \RR\le \frac{1}{\Prob{D\given E^c}}<\infty, \]
+              assuming $ \Prob{D\given E^c}\ne 0 $.
+        \item If there exists absolutely no association between $ D $
+              and $ E $, this results in $ \RR=1 $, that is, this will happen
+              when $ \Prob{D\given E}=\Prob{D\given E^c} $.
+        \item If $ \RR>1 $, there is greater risk or probability
+              of $ D $ when $ E $ is present versus absent.
+        \item If $ \RR<1 $, there is lower risk or probability
+              of $ D $ when $ E $ is present versus absent.
+    \end{enumerate}
+\end{Regular}
+\subsubsection*{RR Calculation}
+\begin{Regular}{}
+    \begin{itemize}
+        \item Recall the table for a cohort study.
+              \begin{center}
+                  \begin{NiceTabular}{|c|cc|c|}
+                      \toprule
+                      &\multicolumn{2}{c}{\emph{Disease}}\\
+                      \emph{Risk Factor} & Present ($ D $)                            & Absent ($ D^c $) & Total                                        \\
+                      \midrule
+                      Present ($ E $) & $ a $                            & $ b $                 & $ n_1 $         \\
+                      Absent ($ E^c $)  & $ c $                            & $ d $                 & $ n_2 $         \\
+                      \bottomrule
+                  \end{NiceTabular}
+              \end{center}
+              Then,
+              \[ \widehat{\RR}=\frac{a/(a+b)}{c/(c+d)}=\frac{a/n_1}{c/n_2}. \]
+        \item To make inference, we have, approximately,
+              \[ \log{\widehat{\RR}}\sim \N[\Big]{\log{\RR},\Var[\big]{\log{\RR}}}, \]
+              where
+              \[ \Var[\big]{\log{\RR}}\approx \frac{1}{a}-\frac{1}{a+b}+\frac{1}{c}-\frac{1}{c+d}. \]
+        \item The (approximate) 95\% confidence interval for $ \log{\RR} $ is
+              \[ \log{\widehat{\RR}}\pm 1.96\sqrt{\estVar[\big]{\log{\widehat{\RR}}}}. \]
+        \item The (approximate) 95\% confidence interval for $ \RR $ is:
+              \[ \exp[\Big]{\log{\widehat{\RR}}\pm 1.96\sqrt{\estVar[\big]{\log{\widehat{\RR}}}}} \]
+    \end{itemize}
+\end{Regular}
+\begin{Result}{}
+    For $ \RR $, we have
+    \[ \Var[\big]{\log{\widehat{\RR}}}\approx \frac{1}{a}-\frac{1}{a+b}+\frac{1}{c}-\frac{1}{c+d}. \]
+    \tcblower{}
+    \textbf{Proof}: Define $ \hat{p}_a=\frac{a}{n_1} $ and $ \hat{p}_c=\frac{c}{n_2} $.
+    Assuming the exposed and unexposed groups are independent, we have
+    \begin{align*}
+        \Var[\big]{\log{\widehat{\RR}}}
+         & =\Var[\big]{\log{\hat{p}_a}-\log{\hat{p}_c}}              \\
+         & =\Var[\big]{\log{\hat{p}_a}}-\Var[\big]{\log{\hat{p}_c}}.
+    \end{align*}
+    Using, Taylor's approximation, we have
+    \begin{align*}
+        \log{\hat{p}_a}
+         & \approx \log{p_a}+\odv{\log{p_a}}{p_a}(\hat{p}_a-p_a) \\
+         & =\log{p_a}+\frac{(\hat{p}_a-p_a)}{p_a}.
+    \end{align*}
+    Since $ a \sim \BIN{n_1,p_a} $,
+    \begin{align*}
+        \Var[\big]{\log{\hat{p}_a}}
+         & \approx \frac{\Var{\hat{p}_a}}{p_a^2} \\
+         & =\frac{\Var*{\frac{a}{n_1}}}{p_a^2}   \\
+         & =\frac{n_1 p_a(1-p_a)}{n_1^2p_a^2}    \\
+         & =\frac{1-p_a}{n_1p_a}.
+    \end{align*}
+    Therefore,
+    \[ \estVar[\big]{\log{\hat{p}_a}}=\frac{1-\hat{p}_a}{n_1\hat{p}_a}=\frac{b}{a(a+b)}. \]
+    Similarly,
+    \[ \estVar[\big]{\log{\hat{p}_c}}=\frac{d}{c(c+d)}. \]
+    Therefore,
+    \begin{align*}
+        \estVar[\big]{\log{\widehat{\RR}}}
+         & =\frac{b}{a(a+b)}+\frac{d}{c(c+d)}                    \\
+         & =\frac{1}{a}-\frac{1}{a+b}+\frac{1}{c}-\frac{1}{c+d}.
+    \end{align*}
+\end{Result}
+\underline{Remarks}:
+\begin{enumerate}[(1)]
+    \item Relative risk (or sometimes called \textbf{risk ratio}) is a common
+          measure of the disease-exposure association from cohort studies.
+    \item In general, the relative risk is \emph{not} symmetric in the role of $ D $ and $ E $,
+          that is,
+          \[ \frac{\Prob{D\given E}}{\Prob{D\given E^c}}\ne \frac{\Prob{E\given D}}{\Prob{E\given D^c}}. \]
+\end{enumerate}
+\section{Excess Risk}
+While $ \RR $ is a relative measure of risk, it is sometimes of
+interest to look at absolute measures of risk. One such
+measure is \emph{excess risk}.
+\begin{Regular}{}
+    The \textbf{excess risk} ($ \ER $) is:
+    \[ \ER=\Prob{D\given E}-\Prob{D\given E^c}, \]
+    where $ -1\le \ER\le 1 $.
+    \tcblower{}
+    \underline{Remark}:
+    \begin{enumerate}[(1)]
+        \item $ \ER=0 $ means no excess risk (null value).
+        \item $ \ER>0 $ means greater risk of $ D $ for $ E $ versus $ E^c $.
+        \item $ \ER<0 $ means lower risk of $ D $ for $ E $ versus $ E^c $.
+    \end{enumerate}
+\end{Regular}
+\subsection*{ER Calculation}
+\begin{Regular}{}
+    \begin{itemize}
+        \item Recall the table for a cohort study.
+              \begin{center}
+                  \begin{NiceTabular}{|c|cc|c|}
+                      \toprule
+                      &\multicolumn{2}{c}{\emph{Disease}}\\
+                      \emph{Risk Factor} & Present ($ D $)                            & Absent ($ D^c $) & Total                                        \\
+                      \midrule
+                      Present ($ E $) & $ a $                            & $ b $                 & $ n_1 $         \\
+                      Absent ($ E^c $)  & $ c $                            & $ d $                 & $ n_2 $         \\
+                      \bottomrule
+                  \end{NiceTabular}
+              \end{center}
+              Then,
+              \[ \widehat{\ER}=\frac{a}{a+b}-\frac{c}{c+d}=\hat{p}_a-\hat{p}_c. \]
+        \item To make inference, we have, approximately,
+              \[ \widehat{\ER}\sim \N[\big]{\ER,\Var[\big]{\widehat{\ER}}}, \]
+              where
+              \[ \Var{\widehat{\ER}}\approx \frac{ab}{(a+b)^3}+\frac{cd}{(c+d)^3}. \]
+        \item The (approximate) 95\% confidence interval for $ \ER $ is:
+              \[ \widehat{\ER}\pm 1.96\sqrt{\estVar[\big]{\widehat{\ER}}}. \]
+    \end{itemize}
+\end{Regular}
+\begin{Result}{}
+    For $ \ER $, we have
+    \[ \Var{\widehat{\ER}}\approx \frac{ab}{(a+b)^3}+\frac{cd}{(c+d)^3}. \]
+    \tcblower{}
+    \textbf{Proof}: Define $ \hat{p}_a=\frac{a}{n_1} $ and $ \hat{p}_c=\frac{c}{n_2} $.
+    Note that $ a \sim \BIN{n_1,p_a} $ and $ c \sim \BIN{n_2,p_c} $. Hence,
+    \begin{align*}
+        \Var{\widehat{\ER}}
+         & =\Var{\hat{p}_a-\hat{p}_c}                      \\
+         & =\Var{\hat{p}_a}+\Var{\hat{p}_c}                \\
+         & =\Var*{\frac{a}{n_1}}+\Var*{\frac{c}{n_2}}      \\
+         & =\frac{p_a(1-p_a)}{n_1}+\frac{p_c(1-p_c)}{n_2}.
+    \end{align*}
+    Therefore,
+    \begin{align*}
+        \estVar{\widehat{\ER}}
+         & =\frac{\hat{p}_a(1-\hat{p}_a)}{n_1}+\frac{\hat{p}_c(1-\hat{p}_c)}{n_2} \\
+         & =\frac{ab}{(a+b)^3}+\frac{cd}{(c+d)^3}.
+    \end{align*}
+\end{Result}
+\section{Odds Ratio}
+\begin{Regular}{}
+    The \textbf{odds} of disease for the \emph{exposed group} is
+    \[ \frac{\Prob{D\given E}}{\Prob{D^c\given E}}=\frac{\Prob{D\given E}}{1-\Prob{D\given E}}. \]
+    The \textbf{odds} of disease for the \emph{unexposed group} is
+    \[ \frac{\Prob{D\given E^c}}{\Prob{D^c\given E^c}}=\frac{\Prob{D\given E^c}}{1-\Prob{D\given E^c}}. \]
+    The \textbf{odds ratio} for measuring the association of disease
+    with the exposed versus unexposed groups is
+    \[ \OR=\frac{\Prob{D\given E}/\Prob{D^c\given E}}{\Prob{D\given E^c}/\Prob{D^c\given E^c}}
+        =\frac{\Prob{D\given E}/[1-\Prob{D\given E}]}{\Prob{D\given E^c}/[1-\Prob{D\given E^c}]}. \]
+    \tcblower{}
+    \underline{Remarks}:
+    \begin{itemize}
+        \item $ \OR=1 $ means no association between $ D $ and $ E $.
+        \item $ \OR>1 $ means greater odds of disease when $ E $ is present.
+        \item $ \OR<1 $ means lower odds of disease when $ E $ is present.
+    \end{itemize}
+\end{Regular}
+\subsection*{OR Calculation}
+\begin{Regular}{}
+    \begin{itemize}
+        \item For general study with binary disease and exposure (risk
+              factor):
+              \begin{center}
+                  \begin{NiceTabular}{|c|cc|}
+                      \toprule
+                      &\multicolumn{2}{c}{\emph{Disease}}\\
+                      \emph{Risk Factor} & Present ($ D $)                            & Absent ($ D^c $) \\
+                      \midrule
+                      Present ($ E $) & $ a $                            & $ b $                        \\
+                      Absent ($ E^c $)  & $ c $                            & $ d $               \\
+                      \bottomrule
+                  \end{NiceTabular}
+              \end{center}
+              Here,
+              \[ \widehat{\OR}=\frac{\Prob{D\given E}/\Prob{D^c\given E}}{\Prob{D\given E^c}/\Prob{D^c\given E^c}}
+                  =\frac{\bigl(\frac{a}{a+b}\bigr)\big/\bigl(\frac{b}{a+b}\bigr)}{\bigl(\frac{c}{c+d}\bigr)\big/\bigl(\frac{d}{c+d}\bigr)}
+                  =\frac{ad}{bc}. \]
+        \item To make inference, we have approximately,
+              \[ \log{\widehat{\OR}} \sim \N[\big]{\log{\OR},\Var[\big]{\log{\widehat{\OR}}}}, \]
+              where
+              \[ \Var[\big]{\log{\widehat{\OR}}}\approx \frac{1}{a}+\frac{1}{b}+\frac{1}{c}+\frac{1}{d}. \]
+    \end{itemize}
+\end{Regular}
+\underline{Remark}: $\OR$ is symmetric in roles of $D$ and $E$:
+\[ \frac{\Prob{E\given D}/\Prob{E^c\given D}}{\Prob{E\given D^c}/\Prob{E^c\given D^c}}
+    =\frac{\bigl(\frac{a}{a+c}\bigr)\big/\bigl(\frac{c}{a+c}\bigr)}{\bigl(\frac{b}{b+d}\bigr)\big/\bigl(\frac{d}{b+d}\bigr)}
+    =\frac{ad}{bc}. \]
+Therefore, the $ \OR $ for $ D $ associated with $ E $ is equal to the $ \OR $
+for $ E $ associated with $ D $. It is this symmetry that makes $ \OR $
+a popular ``risk'' measure for case-control studies, where sampling is done
+on disease status, not risk factor status.
+\section{Comments}
+The various types of probabilities that may be of interest:
+\begin{itemize}
+    \item Joint probabilities: $ \Prob{D,E} $, $ \Prob{D,E^c} $, $ \Prob{D^c,E} $, and $ \Prob{D^c,E^c} $.
+    \item Marginal probabilities: $ \Prob{D} $, $ \Prob{E} $, $ \Prob{D^c} $, and $ \Prob{E^c} $.
+    \item Conditional probabilities: $ \Prob{D\given E} $, $ \Prob{D\given E^c} $, $ \Prob{E\given D} $, and $ \Prob{E\given D^c} $.
+\end{itemize}
+\textbf{Cross-sectional Study}:
+\begin{itemize}
+    \item All the above probabilities can be estimated by the observed
+          proportions if the sampling is simple random sampling.
+\end{itemize}
+\textbf{Cohort Study}:
+\begin{itemize}
+    \item $ \Prob{D\given E} $, $ \Prob{D^c\given E} $, $ \Prob{D\given E^c} $, and $ \Prob{D^c\given E^c} $
+          can be estimated.
+    \item Marginal probabilities $ \Prob{D} $, $ \Prob{E} $, and joint probabilities
+          such as $ \Prob{D,E} $ cannot be estimated.
+    \item $ \RR $, $ \ER $, and $ \OR $ can be estimated.
+\end{itemize}
+\textbf{Case-control Study}:
+\begin{itemize}
+    \item Only $ \Prob{E\given D} $, $ \Prob{E^c\given D} $, $ \Prob{E^c\given D^c} $, and $ \Prob{E\given D^c} $ can be estimated.
+    \item $ \RR $ and $ \ER $ cannot be estimated.
+    \item $ \OR $ can be estimated. Furthermore, $ \RR\approx \OR $ when the disease is rare.
+\end{itemize}
+\begin{Result}{}
+    If the disease is rare in a case-control study (i.e., $ \Prob{D}\approx 0 $), we have $ \RR\approx \OR $.
+    \tcblower{}
+    \textbf{Proof}:
+    \begin{align*}
+        \OR
+         & =\frac{\Prob{D\given E}/\Prob{D^c\given E}}{\Prob{D\given E^c}/\Prob{D^c\given E^c}}                                                         \\
+         & =\frac{\Prob{D\given E}}{\Prob{D\given E^c}}\frac{\overbrace{\Prob{D^c\given E^c}}^{\approx 1}}{\underbrace{\Prob{D^c\given E}}_{\approx 1}} \\
+         & \approx \frac{\Prob{D\given E}}{\Prob{D\given E^c}}                                                                                          \\
+         & =\RR.
+    \end{align*}
+\end{Result}
+% Chapter 1 Part 3
+\section{Regression Models}
+\begin{itemize}
+    \item Linear model.
+    \item Log-linear model.
+    \item Probit model.
+    \item Logistic regression model.
+\end{itemize}
+\underline{Notation}:
+\begin{itemize}
+    \item $ X $: exposure variable of interest.
+    \item $ D $: disease status.
+    \item $ P_x $: $ \Prob{D=1\given X=x} $, that is,
+          how the risk of disease changes according to the exposure variable.
+\end{itemize}
+\subsection{Linear Model}
+\begin{Regular}{}
+    \[ P_x=\Prob{D=1\given X=x}=\alpha+\beta x. \]
+    \begin{itemize}
+        \item $ \alpha=P_{x=0} $: the baseline risk.
+        \item $ \beta=P_{x+1}-P_x $: excess risk with $1$ unit increase in exposure.
+    \end{itemize}
+    \tcblower{}
+    \underline{Drawbacks}:
+    \begin{enumerate}[(1)]
+        \item Possible to produce $ \hat{P}_x<0 $ or $ \hat{P}_x>1 $.
+        \item Can't be directly applied to case-control data.
+    \end{enumerate}
+\end{Regular}
+\subsection{Log-Linear Model}
+\begin{Regular}{}
+    \[ \log{P_x}=\log[\big]{\Prob{D=1\given X=x}}=\alpha+\beta x. \]
+    \begin{itemize}
+        \item $ \alpha=\log{P_{x=0}} $: the log baseline risk.
+        \item $ \beta $: log relative risk associated with $1$ unit increase in exposure.
+    \end{itemize}
+    \tcblower{}
+    \underline{Drawbacks}:
+    \begin{enumerate}[(1)]
+        \item Possible to produce $ \hat{P}_x>1 $.
+        \item Can't be directly applied to case-control data.
+    \end{enumerate}
+\end{Regular}
+\subsection{Probit Model}
+\begin{Regular}{}
+    \[ P_x=\Prob{D=1\given X=x}=\Phi(\alpha+\beta x), \]
+    where $ \Phi(u) $ is the cdf of a standard normal distribution.
+    \begin{itemize}
+        \item $ \alpha=\Phi^{-1}(P_{x=0}) $.
+        \item $ \beta>0 $: the risk increases as $ X $ increases.\\
+              $ \beta<0 $: the risk increases as $ X $ decreases.
+    \end{itemize}
+    \tcblower{}
+    \underline{Drawbacks}:
+    \begin{enumerate}[(1)]
+        \item There is no natural interpretation of $ \alpha $ and $ \alpha $ in
+              terms of association.
+        \item Can't be directly applied to case-control data.
+    \end{enumerate}
+\end{Regular}
+\subsection{Logistic Regression Model}
+\begin{Regular}{}
+    \[ P_x=\Prob{D=1\given X=x}=\frac{1}{1+\exp[\big]{-(\alpha+\beta x)}}. \]
+    \begin{itemize}
+        \item $ \displaystyle \alpha=\log*{\frac{P_{x=0}}{1-P_{x=0}}} $: the log odds of disease at baseline.
+        \item $ \beta $: log odds ratio associated with $1$ unit increase in exposure.
+    \end{itemize}
+    \tcblower{}
+    \underline{Advantages}:
+    \begin{enumerate}[(1)]
+        \item $ 0<\hat{P}_x<1 $.
+        \item $ \exp{\beta} $: the odds ratio, which is symmetric with respect
+              to $ D $ and $ E $ if both are binary.
+        \item Can be applied to case-control data.
+    \end{enumerate}
+\end{Regular}
+\underline{Remarks}:
+\begin{enumerate}[(1)]
+    \item ``Correlation does not imply causation.''
+    \item Regression models tell us correlational/associational
+          relationship between the exposure and the disease outcome
+    \item \emph{Conclusion}: We need better tools to define causality
+    \item \emph{Solution}: Potential outcomes framework (Chapter 2).
+\end{enumerate}
