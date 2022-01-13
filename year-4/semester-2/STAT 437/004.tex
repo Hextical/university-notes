@@ -1,0 +1,77 @@
+\section{Notation for Longitudinal Data (Theory)}
+\subsection*{General Notation}
+\begin{itemize}
+      \item Random variables: $ X $, $ Y $, $ Z $.
+            \begin{itemize}
+                  \item Realizations of these random variables: $ x $, $ y $, $ z $.
+            \end{itemize}
+      \item Unknown parameters:
+            $ \theta $, $ \beta $, $ \alpha $.
+            \begin{itemize}
+                  \item Estimates of these parameters with ``hat:''
+                        $ \hat{\theta} $, $ \hat{\beta} $, $ \hat{\alpha} $.
+            \end{itemize}
+      \item Transpose of a matrix $ \Matrix{X} $: $ \Matrix{X}^\top $.
+\end{itemize}
+\subsection*{Individual Notation}
+\begin{itemize}
+      \item Individual outcome for individual
+            $ i $ at time $ j $: $ Y_{ij} $, where $ i=1,\ldots,n $
+            are the individuals, and $ j=1,\ldots,k_i $ are the time points.
+            We may also use $ Y_{it_j} $ to denote the outcome
+            for individual $ i $ at time $ t_j $ when more complex times are used.
+      \item Individual variate: $ X_{ijk} $, where $ i $ and $ j $
+            index over individuals and times, respectively, and $ k $ indexes over the
+            different variates of interest.
+            \begin{Example}{}
+                  Suppose for an individual that
+                  we measure age, treatment, and symptom status.
+                  We have $ k=3 $ since we have three variables.
+            \end{Example}
+      \item Usually, $ X_{ijk} $ will not change over time,
+            so we may write $ X_{ijk}=X_{ij^\prime k} $ for all $ j $
+            and $ j^\prime $. Usually $ X_{ij1}=1 $ to include the intercept
+            in our models. However, if a variate is time-changing, then
+            we need to be more careful about $ X_{ij1}=1 $.
+      \item For an individual, define
+            $\Matrix{Y}_i=\begin{bmatrix}
+                        Y_{i1} \\
+                        Y_{i2} \\
+                        \vdots \\
+                        Y_{ik_i}
+                  \end{bmatrix}_{\mathrlap{k_i\times 1}}\equiv
+                  (Y_{i1},Y_{i2},\ldots,Y_{ik_i})^\top$
+            to be a vector of outcomes.
+      \item For variates, take $ \Matrix{X}_{ij}=\begin{bmatrix}
+                        X_{ij1} &
+                        X_{ij2} &
+                        \cdots  &
+                        X_{ijp}
+                  \end{bmatrix}_{1\times p}\equiv(X_{ij1},X_{ij2},\ldots,X_{ijp}) $,
+            where $ p $ different variates are measured.
+      \item Define
+            $\Matrix{X}_i=\begin{bmatrix}
+                        \Matrix{X}_{i1} \\
+                        \Matrix{X}_{i2} \\
+                        \vdots          \\
+                        \Matrix{X}_{ik_i}
+                  \end{bmatrix}_{\mathrlap{p\times k_i}}$
+            to be a matrix containing of all the variates.
+      \item In certain contexts, we may write $ \Matrix{Y}_i $
+            as a row vector or to take the transpose of $ \Matrix{X}_i $.
+\end{itemize}
+\subsection{Notation and Considerations for Time}
+\begin{itemize}
+      \item Time for the $ i\textsuperscript{th} $
+            individual at the $ j\textsuperscript{th} $ measurement: $ t_{ij} $.
+            \begin{itemize}
+                  \item Sometimes, we take $ t_{ij}=j $, where $ j $ is an index of visits.
+                  \item If the scale of time is related to calendar time,
+                        we may have $ t_{i1}=0 $ and $ t_{i2}=14 $ to indicate the first visit and second
+                        visit are two weeks apart, where time is measured in days.
+            \end{itemize}
+      \item The design is \textbf{balanced} if $ t_{ij}=t_{i^\prime j} $
+            for all $ i $ and $ i^\prime $. In this case,
+            we drop subscript $ i $ from the times and write $ t_1,\ldots,t_k $.
+            We will often consider balanced designs, but this is not necessary.
+\end{itemize}

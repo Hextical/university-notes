@@ -1,54 +1,4 @@
-\documentclass[oneside]{book}\usepackage[]{graphicx}\usepackage[svgnames]{xcolor}
-% maxwidth is the original width if it is less than linewidth
-% otherwise use linewidth (to make sure the graphics do not exceed the margin)
-\makeatletter
-\def\maxwidth{ %
-  \ifdim\Gin@nat@width>\linewidth
-    \linewidth
-  \else
-    \Gin@nat@width
-  \fi
-}
-\makeatother
-
-\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
-\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
-\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
-\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
-\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
-\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
-\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
-\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
-\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
-\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
-\let\hlipl\hlkwb
-
-\usepackage{framed}
-\makeatletter
-\newenvironment{kframe}{%
- \def\at@end@of@kframe{}%
- \ifinner\ifhmode%
-  \def\at@end@of@kframe{\end{minipage}}%
-  \begin{minipage}{\columnwidth}%
- \fi\fi%
- \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
- \colorbox{shadecolor}{##1}\hskip-\fboxsep
-     % There is no \\@totalrightmargin, so:
-     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
- \MakeFramed {\advance\hsize-\width
-   \@totalleftmargin\z@ \linewidth\hsize
-   \@setminipage}}%
- {\par\unskip\endMakeFramed%
- \at@end@of@kframe}
-\makeatother
-
-\definecolor{shadecolor}{rgb}{.97, .97, .97}
-\definecolor{messagecolor}{rgb}{0, 0, 0}
-\definecolor{warningcolor}{rgb}{1, 0, 1}
-\definecolor{errorcolor}{rgb}{1, 0, 0}
-\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
-
-\usepackage{alltt}
+\documentclass[oneside]{book}
 \usepackage[svgnames]{xcolor}
 \usepackage[british]{babel}
 \usepackage[protrusion,expansion,babel,final]{microtype}
@@ -63,6 +13,7 @@
 \usepackage{derivative}
 \usepackage{etoolbox}
 \usepackage{siunitx}
+\sisetup{round-mode = places, round-precision = 3, round-pad = false, retain-explicit-plus}
 \usepackage{lmodern}
 \usepackage[T1]{fontenc}
 \usepackage[scaled=.98]{XCharter}
@@ -94,7 +45,7 @@
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\Corr}[1]{\operatorname{\textsf{Corr}}}(){}{%
+\DeclarePairedDelimiterXPP{\Cor}[1]{\operatorname{\textsf{Cor}}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
@@ -221,145 +172,17 @@ pdfkeywords={University of Waterloo, Winter 2022 (1221)}}%
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
 \usetikzlibrary{petri,decorations.pathreplacing,calc}
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\usepackage{framed}
+
 \begin{document}
-
-
 \maketitle
 \tableofcontents
 \input{002.tex}
-
 \section{Exploring Longitudinal Data (Application)}
-%\begin{noindent}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# Read in the TLC Data Note: This is stored for me at}
-\hlcom{# data/TLC/TLC.csv, you should update for yourself}
-\hlstd{TLC} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"data/TLC/TLC.csv"}\hlstd{)}
-\hlkwd{head}\hlstd{(TLC)}  \hlcom{# Outputs the first few rows of the data to take a look}
-\end{alltt}
-\begin{verbatim}
-  ID Treatment   W0   W1   W4   W6
-1  1         P 30.8 26.9 25.8 23.8
-2  2         A 26.5 14.8 19.5 21.0
-3  3         A 25.8 23.0 19.1 23.2
-4  4         P 24.7 24.5 22.0 22.5
-5  5         A 20.4  2.8  3.2  9.4
-6  6         A 20.4  5.4  4.5 11.9
-\end{verbatim}
-\begin{alltt}
-\hlcom{# Convert from 'wide' to 'long' and back again, using}
-\hlcom{# reshape.  If you're interested, you can also use}
-\hlcom{# `pivot_wider` and `pivot_longer` from the tidyverse (If}
-\hlcom{# that doesn't mean anything to you, feel free to ignore}
-\hlcom{# it!)}
-\hlstd{TLC_long} \hlkwb{<-} \hlkwd{reshape}\hlstd{(}\hlkwc{data} \hlstd{= TLC,} \hlkwc{varying} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"W0"}\hlstd{,} \hlstr{"W1"}\hlstd{,} \hlstr{"W4"}\hlstd{,}
-  \hlstr{"W6"}\hlstd{),} \hlkwc{timevar} \hlstd{=} \hlstr{"week"}\hlstd{,} \hlkwc{idvar} \hlstd{=} \hlstr{"ID"}\hlstd{,} \hlkwc{times} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{4}\hlstd{,}
-  \hlnum{6}\hlstd{),} \hlkwc{direction} \hlstd{=} \hlstr{"long"}\hlstd{,} \hlkwc{sep} \hlstd{=} \hlstr{""}\hlstd{)}
-\hlstd{TLC_wide} \hlkwb{<-} \hlkwd{reshape}\hlstd{(}\hlkwc{data} \hlstd{= TLC_long,} \hlkwc{timevar} \hlstd{=} \hlstr{"week"}\hlstd{,} \hlkwc{v.names} \hlstd{=} \hlstr{"W"}\hlstd{,}
-  \hlkwc{idvar} \hlstd{=} \hlstr{"ID"}\hlstd{,} \hlkwc{times} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{4}\hlstd{,} \hlnum{6}\hlstd{),} \hlkwc{direction} \hlstd{=} \hlstr{"wide"}\hlstd{,}
-  \hlkwc{sep} \hlstd{=} \hlstr{""}\hlstd{)}
-\hlcom{# Create a Basic Boxplot to get a Sense of the Data}
-\hlkwd{boxplot}\hlstd{(W} \hlopt{~} \hlstd{week} \hlopt{+} \hlstd{Treatment,} \hlkwc{data} \hlstd{= TLC_long)}
-\hlkwd{abline}\hlstd{(}\hlkwc{v} \hlstd{=} \hlnum{4.5}\hlstd{)}  \hlcom{# Abline v=... draws a vertical line at 4.5 }
-\hlcom{# Start with an xyplot This requires the package 'lattice'}
-\hlcom{# You can install using: install.packages('lattice')}
-\hlstd{lattice}\hlopt{::}\hlkwd{xyplot}\hlstd{(W} \hlopt{~} \hlstd{week} \hlopt{|} \hlstd{Treatment,} \hlkwc{data} \hlstd{= TLC_long,} \hlkwc{groups} \hlstd{= ID,}
-  \hlkwc{col} \hlstd{=} \hlstr{"black"}\hlstd{,} \hlkwc{type} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"l"}\hlstd{,} \hlstr{"p"}\hlstd{))}
-\end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-1} 
-
-}
-
-
-
-
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-2} 
-
-}
-
-
-\begin{kframe}\begin{alltt}
-\hlcom{# The plot is a mess, as-is, so instead we can subset!}
-\hlstd{plot_num} \hlkwb{<-} \hlnum{5}  \hlcom{# Select a fixed number}
-\hlcom{# This is Just Randomly Sampling from Each Group}
-\hlstd{random_samples_P} \hlkwb{<-} \hlkwd{sample}\hlstd{(}\hlkwd{unique}\hlstd{(TLC_long}\hlopt{$}\hlstd{ID[}\hlkwd{which}\hlstd{(TLC_long}\hlopt{$}\hlstd{Treatment} \hlopt{==}
-  \hlstr{"P"}\hlstd{)]),} \hlkwc{size} \hlstd{= plot_num,} \hlkwc{replace} \hlstd{=} \hlnum{FALSE}\hlstd{)}
-\hlstd{random_samples_A} \hlkwb{<-} \hlkwd{sample}\hlstd{(}\hlkwd{unique}\hlstd{(TLC_long}\hlopt{$}\hlstd{ID[}\hlkwd{which}\hlstd{(TLC_long}\hlopt{$}\hlstd{Treatment} \hlopt{==}
-  \hlstr{"A"}\hlstd{)]),} \hlkwc{size} \hlstd{= plot_num,} \hlkwc{replace} \hlstd{=} \hlnum{FALSE}\hlstd{)}
-\hlcom{## Actually Draw the Plots}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{))}
-\hlkwd{plot}\hlstd{(W} \hlopt{~} \hlstd{week,} \hlkwc{data} \hlstd{= TLC_long,} \hlkwc{subset} \hlstd{= (Treatment} \hlopt{==} \hlstr{"P"}\hlstd{))}
-\hlkwa{for} \hlstd{(rid} \hlkwa{in} \hlstd{random_samples_P) \{}
-  \hlcom{# Loop through the Random Points and Draw the}
-  \hlcom{# Corresponding Lines}
-  \hlkwd{lines}\hlstd{(W} \hlopt{~} \hlstd{week,} \hlkwc{data} \hlstd{= TLC_long,} \hlkwc{subset} \hlstd{= (ID} \hlopt{==} \hlstd{rid),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{)}
-\hlstd{\}}
-\hlcom{# Repeat it for Active Treatment}
-\hlkwd{plot}\hlstd{(W} \hlopt{~} \hlstd{week,} \hlkwc{data} \hlstd{= TLC_long,} \hlkwc{subset} \hlstd{= (Treatment} \hlopt{==} \hlstr{"A"}\hlstd{))}
-\hlkwa{for} \hlstd{(rid} \hlkwa{in} \hlstd{random_samples_A) \{}
-  \hlkwd{lines}\hlstd{(W} \hlopt{~} \hlstd{week,} \hlkwc{data} \hlstd{= TLC_long,} \hlkwc{subset} \hlstd{= (ID} \hlopt{==} \hlstd{rid),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{)}
-\hlstd{\}}
-\end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-3} 
-
-}
-
-
-\begin{kframe}\begin{alltt}
-\hlcom{### Is there Smarter way of plotting?  What if we ordered}
-\hlcom{### by the median observation?}
-\hlstd{TLC_wide}\hlopt{$}\hlstd{median} \hlkwb{<-} \hlkwd{apply}\hlstd{(TLC_wide[}\hlkwd{c}\hlstd{(}\hlstr{"W0"}\hlstd{,} \hlstr{"W1"}\hlstd{,} \hlstr{"W4"}\hlstd{,} \hlstr{"W6"}\hlstd{)],}
-  \hlkwc{MARGIN} \hlstd{=} \hlnum{1}\hlstd{,} \hlkwc{FUN} \hlstd{= median)}  \hlcom{# Generate the Medians}
-\hlstd{TLC_long} \hlkwb{<-} \hlkwd{reshape}\hlstd{(}\hlkwc{data} \hlstd{= TLC_wide,} \hlkwc{varying} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"W0"}\hlstd{,} \hlstr{"W1"}\hlstd{,}
-  \hlstr{"W4"}\hlstd{,} \hlstr{"W6"}\hlstd{),} \hlkwc{timevar} \hlstd{=} \hlstr{"week"}\hlstd{,} \hlkwc{idvar} \hlstd{=} \hlstr{"ID"}\hlstd{,} \hlkwc{times} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}
-  \hlnum{1}\hlstd{,} \hlnum{4}\hlstd{,} \hlnum{6}\hlstd{),} \hlkwc{direction} \hlstd{=} \hlstr{"long"}\hlstd{,} \hlkwc{sep} \hlstd{=} \hlstr{""}\hlstd{)}  \hlcom{# Reshape to long again, with the Median}
-\hlcom{# Sort the Data By The Medians}
-\hlstd{sorted_medians_P} \hlkwb{<-} \hlkwd{sort}\hlstd{(TLC_wide}\hlopt{$}\hlstd{median[}\hlkwd{which}\hlstd{(TLC_wide}\hlopt{$}\hlstd{Treatment} \hlopt{==}
-  \hlstr{"P"}\hlstd{)])}
-\hlstd{sorted_medians_A} \hlkwb{<-} \hlkwd{sort}\hlstd{(TLC_wide}\hlopt{$}\hlstd{median[}\hlkwd{which}\hlstd{(TLC_wide}\hlopt{$}\hlstd{Treatment} \hlopt{==}
-  \hlstr{"A"}\hlstd{)])}
-\hlkwd{plot}\hlstd{(W} \hlopt{~} \hlstd{week,} \hlkwc{data} \hlstd{= TLC_long,} \hlkwc{subset} \hlstd{= (Treatment} \hlopt{==} \hlstr{"P"}\hlstd{))}
-\hlkwa{for} \hlstd{(row_num} \hlkwa{in} \hlkwd{floor}\hlstd{(}\hlkwd{seq}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{50}\hlstd{,} \hlkwc{by} \hlstd{=} \hlnum{12.25}\hlstd{))) \{}
-  \hlcom{# Here we are looping over a sequence of (1,50) by 12.5}
-  \hlcom{# which selects out every 12.5-th individual from the}
-  \hlcom{# dataset There are 50 in each group so this is}
-  \hlcom{# essentially grabing the quantiles}
-  \hlstd{rid} \hlkwb{<-} \hlstd{TLC_wide}\hlopt{$}\hlstd{ID[}\hlkwd{which}\hlstd{(TLC_wide}\hlopt{$}\hlstd{median} \hlopt{==} \hlstd{sorted_medians_P[row_num])][}\hlnum{1}\hlstd{]}
-  \hlkwd{lines}\hlstd{(W} \hlopt{~} \hlstd{week,} \hlkwc{data} \hlstd{= TLC_long,} \hlkwc{subset} \hlstd{= (ID} \hlopt{==} \hlstd{rid),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{)}
-\hlstd{\}}
-\hlkwd{plot}\hlstd{(W} \hlopt{~} \hlstd{week,} \hlkwc{data} \hlstd{= TLC_long,} \hlkwc{subset} \hlstd{= (Treatment} \hlopt{==} \hlstr{"A"}\hlstd{))}
-\hlkwa{for} \hlstd{(row_num} \hlkwa{in} \hlkwd{floor}\hlstd{(}\hlkwd{seq}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{50}\hlstd{,} \hlkwc{by} \hlstd{=} \hlnum{12.25}\hlstd{))) \{}
-  \hlstd{rid} \hlkwb{<-} \hlstd{TLC_wide}\hlopt{$}\hlstd{ID[}\hlkwd{which}\hlstd{(TLC_wide}\hlopt{$}\hlstd{median} \hlopt{==} \hlstd{sorted_medians_A[row_num])][}\hlnum{1}\hlstd{]}
-  \hlkwd{lines}\hlstd{(W} \hlopt{~} \hlstd{week,} \hlkwc{data} \hlstd{= TLC_long,} \hlkwc{subset} \hlstd{= (ID} \hlopt{==} \hlstd{rid),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{)}
-\hlstd{\}}
-\end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-4} 
-
-}
-
-
-\begin{kframe}\begin{alltt}
-\hlcom{# This is a basic correlation plot It requires the}
-\hlcom{# 'corrplot' library, which can be installed with}
-\hlcom{# install.packages('corrplot')}
-\hlstd{corrplot}\hlopt{::}\hlkwd{corrplot.mixed}\hlstd{(}\hlkwd{cor}\hlstd{(TLC_wide[}\hlkwd{c}\hlstd{(}\hlstr{"W0"}\hlstd{,} \hlstr{"W1"}\hlstd{,} \hlstr{"W4"}\hlstd{,} \hlstr{"W6"}\hlstd{)]),}
-  \hlkwc{lower} \hlstd{=} \hlstr{"number"}\hlstd{,} \hlkwc{upper} \hlstd{=} \hlstr{"square"}\hlstd{)}
-\end{alltt}
-\end{kframe}
-
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-5} 
-
-}
-
-
-\end{knitrout}
-%\end{noindent}
+R Demo.
+%<<child='003.Rnw'>>=
+%@
+\input{004.tex}
+\input{005.tex}
+\input{006.tex}
 \end{document}

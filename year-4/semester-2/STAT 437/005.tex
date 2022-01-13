@@ -1,0 +1,43 @@
+\section{What is Linear Regression (Review/Theory)}
+\subsection*{The Ordinary Least Squares Estimators}
+\begin{itemize}
+    \item Suppose $ \Matrix{Y}_i $ are continuous, and we want to model $ \E{\Matrix{Y}_i\given \Matrix{X}_i} $.
+    \item A \textbf{linear regression model} takes
+          \[ \E{\Matrix{Y}_i\given \Matrix{X}_i}=\Matrix{X}_i\Vector{\beta}. \]
+    \item We take
+          \[ \hat{\Vector{\beta}}=(\Matrix{X}^\top \Matrix{X})^{-1}\Matrix{X}^\top\Matrix{Y}, \]
+          and we call these \textbf{ordinary least squares} (OLS) estimators.
+\end{itemize}
+\subsection*{OLS Estimators (Two Ways)}
+\begin{itemize}
+    \item If $ \Matrix{Y}_i\mid \Matrix{X}_i \sim \N{\Matrix{X}_i \Matrix{\beta},\sigma^2} $,
+          then the OLS estimators are the \textbf{maximum likelihood estimators}.
+    \item If we take $ \Matrix{Y}_i=\Matrix{X}_i \Matrix{\beta}+\Matrix{\varepsilon}_i $,
+          where $ \Matrix{\varepsilon}_i $ is non-normal, then the OLS estimators
+          are simply the best (in terms of \emph{mean squared error})
+          predictor of $ \Matrix{\beta} $.
+\end{itemize}
+\subsection*{Assumptions for OLS}
+\begin{enumerate}[1.]
+    \item The conditional mean is \textbf{linear} (in parameters).
+    \item All values of $ \Matrix{Y}_i $ have constant variance,
+          denoted $ \sigma^2 $ (conditionally).
+    \item The $ \Matrix{Y}_i $ are \textbf{independent}.
+\end{enumerate}
+\subsection*{Asymptotic Analysis}
+\begin{itemize}
+    \item As $ n\to \infty $, $ \hat{\Vector{\beta}}\sim\N[\big]{\Matrix{\beta},\Var{\hat{\Vector{\beta}}}} $,
+          where
+          \[ \Var{\hat{\Vector{\beta}}}=\sigma^2(\Matrix{X}^\top \Matrix{X})^{-1}. \]
+          We can use this result for \textbf{confidence intervals}
+          and \textbf{hypothesis tests}.
+\end{itemize}
+\subsection*{Summary}
+\begin{itemize}
+    \item Linear Regression allows us to estimate a functional form for the conditional mean
+          of a continuous outcome.
+    \item The OLS estimators are valid MLE-type estimators when normality is assumed, and
+          are LS estimators otherwise.
+    \item The asymptotic analysis is valid in large samples, regardless of distributional
+          assumptions, and can be used for Wald-type analysis.
+\end{itemize}
