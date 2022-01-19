@@ -146,7 +146,7 @@
 \begin{Regular}{}
       An important special case is when $y$ is an indicator variable:
       \[ y_i=\begin{cases}
-                  1, & \text{if unit $ i $ has attribute ``$A$''}, \\
+                  1, & \text{if unit $ i $ has attribute $A$}, \\
                   0, & \text{otherwise}.
             \end{cases} \]
       \begin{itemize}
@@ -265,10 +265,12 @@ Let $ S=\Set{i_1,i_2,\ldots,i_n} $ be the final sample.
       \item Survey sample data: $ \Set{(y_i,x_i),i\in S} $.
 \end{itemize}
 \begin{Regular}{}
-      The \textbf{sample mean} is defined by
-      \[ \bar{y}=\frac{1}{n}\sum_{i\in S}y_i. \]
-      The \textbf{sample variance} is defined by
-      \[ s_y^2=\frac{1}{n-1}\sum_{i\in S}(y_i-\bar{y})^2=\frac{1}{n-1}\biggl(\sum_{i\in S}y_i^2-n(\bar{y})^2\biggr). \]
+      \begin{itemize}
+            \item \textbf{Sample mean}:
+                  \[ \bar{y}=\frac{1}{n}\sum_{i\in S}y_i. \]
+            \item \textbf{Sample variance}
+                  \[ s_y^2=\frac{1}{n-1}\sum_{i\in S}(y_i-\bar{y})^2=\frac{1}{n-1}\biggl(\sum_{i\in S}y_i^2-n\bar{y}^2\biggr). \]
+      \end{itemize}
       \tcblower{}
       \underline{Remarks}:
       \begin{itemize}
@@ -303,7 +305,7 @@ Let $ S=\Set{i_1,i_2,\ldots,i_n} $ be the final sample.
       \end{itemize}
 \end{Regular}
 \begin{Result}{}
-      \textbf{Theorem 2.2} Under SRSWOR:
+      \textbf{Theorem 2.2}. Under SRSWOR\@:
       \begin{enumerate}[(a)]
             \item The sample mean $ \bar{y}=n^{-1}\sum_{i\in S}y_i $
                   is a design-unbiased estimator for the population
@@ -323,13 +325,7 @@ Let $ S=\Set{i_1,i_2,\ldots,i_n} $ be the final sample.
                   \[ \V{\bar{y}}=\biggl(1-\frac{n}{N}\biggr)\frac{\sigma_y^2}{n}. \]
                   Furthermore, the sample variance $ s_y^2 $ is an unbiased estimator for the
                   population variance $ \sigma_y^2 $ under SRSWOR, i.e.,
-                  $ \boxed{\E{s_y^2}=\sigma_y^2} $, where
-                  \begin{align*}
-                        s_y^2
-                         & =\frac{1}{n-1}\biggl(\sum_{i\in S}y_i^2-n(\bar{y})^2\biggr) \\
-                         & =\frac{n}{n-1}\biggl(\frac{1}{n}\sum_{i\in S}y_i^2\biggr)
-                        -\frac{n}{n-1}(\bar{y})^2.
-                  \end{align*}
+                  $ \boxed{\E{s_y^2}=\sigma_y^2} $.
       \end{enumerate}
       \tcblower{}
       \textbf{Proof}.
@@ -400,36 +396,34 @@ Let $ S=\Set{i_1,i_2,\ldots,i_n} $ be the final sample.
                               \end{align*}
                   \end{itemize}
             \item This result can be proved using different methods. Use the indicator variables:
-                  \begin{align*}
-                        \V{\bar{y}}
-                                      & =\V*{\frac{1}{n}\sum_{i=1}^{N}A_i y_i}                 \\
-                                      & =\frac{1}{n^2}\biggl[\sum_{i=1}^{N}y_i^2\V{A_i}+
-                        \sum_i\sum_j y_iy_j\Cov{A_i,A_j}\biggr]                                \\
-                        \V{A_i}       & =\frac{n}{N}\biggl(1-\frac{n}{N}\biggr).               \\
-                        \Cov{A_i,A_j} & =\E{A_iA_j}-\E{A_i}\E{A_j}.                            \\
-                        \E{A_iA_j}    & =\sum_i\sum_j a_ia_j \Prob{A_i=a_i}\Prob{A_j=a_j}      \\
-                                      & =\Prob{A_i=1,A_j=1}                                    \\
-                                      & =\Prob{i\in S,j\in S}                                  \\
-                                      & =\frac{1\times 1\times \binom{N-2}{n-2}}{\binom{N}{n}} \\
-                                      & =\frac{n(n-1)}{N(N-1)}.
-                  \end{align*}
+                  \begin{itemize}
+                        \item To find $ \Cov{A_i,A_j} $, we first need $ \E{A_i A_j} $:
+                              \begin{align*}
+                                    \E{A_i A_j} & =\sum_i\sum_j a_i a_j \Prob{A_i=a_i}\Prob{A_j=a_j}     \\
+                                                & =\Prob{A_i=1,A_j=1}                                    \\
+                                                & =\Prob{i\in S,j\in S}                                  \\
+                                                & =\frac{1\times 1\times \binom{N-2}{n-2}}{\binom{N}{n}} \\
+                                                & =\frac{n(n-1)}{N(N-1)}.
+                              \end{align*}
+                              Now, we find $ \Cov{A_i,A_j} $:
+                              \begin{align*}
+                                    \Cov{A_i,A_j} & =\E{A_i A_j}-\E{A_i}\E{A_j}                                                 \\
+                                                  & =\frac{n(n-1)}{N(N-1)}-\biggl(\frac{n}{N}\biggr)^2=\frac{n(n-N)}{N^2(N-1)}.
+                              \end{align*}
+                  \end{itemize}
                   Therefore,
-                  \[ \boxed{\Cov{A_i,A_j}=\frac{n(n-1)}{N(N-1)}-\biggl(\frac{n}{N}\biggr)^2=\frac{n(n-N)}{N^2(N-1)}}. \]
-                  \[ \boxed{\mu_y^2=\frac{1}{N^2}\biggl(\sum_{i=1}^{N}y_i\biggr)^2=\frac{1}{N^2}\sum_{i}\sum_{j}y_iy_j
-                              =\frac{1}{N^2}\biggl[\sum_{i=1}^{N}y_i^2+\sum_{i}\sum_{j}y_iy_j\biggr]}. \]
-                  \[ \boxed{\sigma_y^2=\frac{1}{N-1}\biggl(\sum_{i=1}^{N}y_i^2-N\mu_y^2\biggr)} \]
                   \begin{align*}
                         \V{\bar{y}}
-                         & =\V*{\frac{1}{n}\sum_{i=1}^{N}A_i y_i}                                                                                      \\
-                         & =\frac{1}{n^2}\Biggl(\sum_{i=1}^{N}y_i^2\V{A_i}+
-                        \sum_{i}\sum_{j}y_iy_j\Cov{A_i,A_j}\biggr)                                                                                     \\
+                         & =\V*{\frac{1}{n}\sum_{i=1}^{N}A_i y_i}                                                                                                    \\
+                         & =\frac{1}{n^2}\biggl(\sum_{i=1}^{N}y_i^2\V{A_i}+
+                        \mathop{\sum\sum}_{i\ne j}y_i y_j\Cov{A_i,A_j}\biggr)                                                                                        \\
                          & =\frac{1}{n^2}\Biggl(\sum_{i=1}^{N}y_i^2\frac{n}{N}\biggl(\overbrace{1-\frac{n}{N}}^{-\frac{n-N}{N}}\biggr)+
-                        \sum_{i}\sum_{j}y_iy_j\frac{n(n-N)}{N^2(N-1)}\biggr)                                                                           \\
-                         & =\frac{n-N}{n(N-1)N^2}\biggl(-N\sum_{i=1}^{N}y_i^2+\underbrace{\sum_{i=1}^{N}y_i^2+\sum_i\sum_j y_iy_j}_{N^2\mu_y^2}\biggr) \\
-                         & =\frac{n-N}{n(N-1)N^2}(-N)\underbrace{\biggl(\sum_{i=1}^{N}y_i^2-N\mu_y^2\biggr)}_{\sigma_y^2(N-1)}                         \\
-                         & =\frac{n-N}{n(N-1)N^2}(-N)\sigma_y^2(N-1)                                                                                   \\
-                         & =\frac{n-N}{N^2}(-N)\frac{\sigma_y^2}{n}                                                                                    \\
-                         & =\frac{N-n}{N}\frac{\sigma_y^2}{n}                                                                                          \\
+                        \mathop{\sum\sum}_{i\ne j}y_i y_j\frac{n(n-N)}{N^2(N-1)}\biggr)                                                                              \\
+                         & =\frac{n-N}{n(N-1)N^2}\biggl(-N\sum_{i=1}^{N}y_i^2+\underbrace{\sum_{i=1}^{N}y_i^2+\mathop{\sum\sum}_{i\ne j}y_i y_j}_{N^2\mu_y^2}\biggr) \\
+                         & =\frac{n-N}{n(N-1)N^2}(-N)\underbrace{\biggl(\sum_{i=1}^{N}y_i^2-N\mu_y^2\biggr)}_{\sigma_y^2(N-1)}                                       \\
+                         & =\frac{n-N}{n(N-1)N^2}(-N)\sigma_y^2(N-1)                                                                                                 \\
+                         & =\frac{n-N}{N^2}(-N)\frac{\sigma_y^2}{n}                                                                                                  \\
+                         & =\frac{N-n}{N}\frac{\sigma_y^2}{n}                                                                                                        \\
                          & =\biggl(1-\frac{n}{N}\biggr)\frac{\sigma_y^2}{n}.
                   \end{align*}
             \item Homework.
@@ -443,10 +437,10 @@ Let $ S=\Set{i_1,i_2,\ldots,i_n} $ be the final sample.
             \item The sample mean $ \bar{y} $ and the sample variance $ s_y^2 $
                   are random variables under the survey design.
             \item The $ \bar{y} $ is an unbiased estimator $ \mu_y $: $ \E{\bar{y}}=\mu_y $.
-            \item $ \V{\bar{y}}=\biggl(1-\frac{n}{N}\biggr)\frac{\sigma_y^2}{n} $
+            \item $ \V{\bar{y}}=\bigl(1-\frac{n}{N}\bigr)\frac{\sigma_y^2}{n} $
                   is the theoretical variance of $ \bar{y} $ and is a fixed, but unknown
                   quantity depending on the population variance $ \sigma_y^2 $.
-            \item $ v(\bar{y})=\biggl(1-\frac{n}{N}\biggr)\frac{s_y^2}{n} $
+            \item $ v(\bar{y})=\bigl(1-\frac{n}{N}\bigr)\frac{s_y^2}{n} $
                   is unbiased estimator for $ \bar{y} $ (computable with the given sample data).
             \item The population size $ N $ is known under SRSWOR\@. (As part of the sampling
                   frame information).
@@ -455,20 +449,18 @@ Let $ S=\Set{i_1,i_2,\ldots,i_n} $ be the final sample.
 \begin{Example}{}
       The R function for SRSWOR and SRSWR (next section) with
       specified $N$ and $n$: \texttt{sample(N,n)}
-      %\begin{noindent}
-      <<>>=
-      N=10
-      n=4
-      sam=sample(N,n)
-      sam
-      sam=sample(N,n,replace=T)
-      sam
-      N=100
-      n=4
-      sam=sample(N,n)
-      sam
-      sam=sample(N,n,replace=T)
-      sam
-      @
-%\end{noindent}
+      \begin{minted}{R}
+N=10
+n=4
+sam=sample(N,n)
+sam
+sam=sample(N,n,replace=T)
+sam
+N=100
+n=4
+sam=sample(N,n)
+sam
+sam=sample(N,n,replace=T)
+sam
+\end{minted}
 \end{Example}
