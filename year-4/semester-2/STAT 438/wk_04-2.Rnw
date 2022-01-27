@@ -1,0 +1,437 @@
+\subsection*{Example: Homelessness and Physical Health}
+Data Source: Kleinman, K and Horton, NJ. SAS and R: \emph{Data
+      Management, Statistical Analysis, and Graphics}. CRC Press.
+
+The HELP (Health Evaluation and Linkage to Primary Care) study
+was a clinical trial for adult patients recruited from a detoxification
+unit. Patients with no primary care physician were randomized to
+receive a multidisciplinary assessment and a brief motivational
+intervention or usual care, with the goal of linking them to primary
+medical care.
+
+\textbf{Secondary Analysis}: Does homelessness affect physical health?
+\url{http://sas-and-r.blogspot.com/2010/04/example-734-propensity-scores-and.html}
+
+Available data:
+\begin{itemize}
+      \item \texttt{pcs}: measure of physical health via 36 question questionnaire
+            (mean $48.05$, range $[14.07, 74.81]$).
+      \item \texttt{homeless}: binary indicator of homelessness ($46.14\%$ homeless).
+      \item \texttt{age}: in years (mean $35.65$, range $[19.00, 60.00]$).
+      \item \texttt{female}: indicator of female sex ($23.62\%$ female).
+      \item \texttt{i1}: alcohol intake per day (mean $17.9$, median $13.0$, range $[0,142]$).
+      \item \texttt{mcs}: mental component summary measure
+            (mean $31.68$, range $[6.76, 62.18]$).
+\end{itemize}
+\begin{itemize}
+      \item Linear model for the association between homelessness and
+            physical health:
+            %\begin{noindent}
+            <<>>=
+            ds <- read.csv("help.csv")
+            attach(ds)
+            summary(lm(pcs~homeless))
+            @
+      %\end{noindent}
+            Unadjusted analysis: significant association between homelessness
+            and physical health.
+\end{itemize}
+\subsection{Estimation}
+\begin{itemize}
+      \item Fit a logistic model for the propensity score
+            %\begin{noindent}
+            <<>>=
+            glm1 <-
+       glm(homeless ~ age + factor(female) + i1 + mcs ,
+      family=binomial)
+      PS <- glm1$fitted.values
+      summary(glm1)
+            @
+      %\end{noindent}
+      \item Which variables should be included in the PS model? Real
+            confounders and variables that are predictive of the outcome.
+            %\begin{noindent}
+            <<>>=
+            summary(lm(pcs~age))$coef
+            summary(lm(pcs~female))$coef
+            summary(lm(pcs~i1))$coef
+            summary(lm(pcs~mcs))$coef
+            @
+      %\end{noindent}
+      \item Check that there is a reasonable amount of overlap in the
+            propensity scores between the two groups:
+            %\begin{noindent}
+            <<>>=
+            summary(PS[homeless==0])
+            summary(PS[homeless==1])
+            @
+      %\end{noindent}
+            \begin{itemize}
+                  \item Mean propensity to homelessness is larger in the homeless
+                        group.
+                  \item There are no non-homeless subjects with a propensity score
+                        $> 0.8$.
+            \end{itemize}
+            %\begin{noindent}
+            <<fig.width=8.5,fig.height=7.5,echo=FALSE>>=
+            par(mfrow=c(2,1))
+            hist(PS[homeless==0],xlim=c(0,1))
+            hist(PS[homeless==1],xlim=c(0,1))
+            @
+      %\end{noindent}
+\end{itemize}
+\subsection{Matching}
+In R, the \texttt{Matching} library provides tools for matching and analysis.
+%\begin{noindent}
+      <<>>=
+      library(Matching)
+      rr <- Match(Y=pcs, Tr=homeless, X=PS, M=1, replace=TRUE, estimand="ATE")
+      summary(rr)
+      # average causal effect estimate
+      rr$est
+      # standard error of ACE estimate
+      rr$se
+      # p-value for testing ACE=0
+      pnorm(rr$est/rr$se)*2
+      @
+%\end{noindent}
+\begin{itemize}
+      \item The causal estimate of $-1.28$ in the matched comparison is
+            not statistically significant ($p=0.30$).
+      \item Note that the specific results depend on the particular options
+            that are selected for the matching.
+\end{itemize}
+\subsection{Stratification}
+We will stratify the dataset into four ($K=4$) approximately equally
+sized groups.
+%\begin{noindent}
+      <<>>=
+      breakvals <- fivenum(PS)
+      strata <- cut(PS, breaks=breakvals,
+      labels=c('bot quart', '2nd quart', '3rd quart', 'top quart'),
+      include.lowest=TRUE)
+      strata[1:5]
+      table(strata)
+      @
+%\end{noindent}
+Boxplots of the PCS scores for homeless and non-homeless by the
+four strata of propensity scores (\url{http://sas-and-r.blogspot.com/search?q=7.36}):
+%\begin{noindent}
+      <<echo=FALSE,fig.width=8.5>>=
+      topval = 82
+      botval = 15
+      cexval=.6
+      eps = 3
+      boxplot(pcs[homeless==0 & strata=='bot quart'], 
+      pcs[homeless==1 & strata=='bot quart'],
+      pcs[homeless==0 & strata=='2nd quart'],
+      pcs[homeless==1 & strata=='2nd quart'],
+      pcs[homeless==0 & strata=='3rd quart'],
+      pcs[homeless==1 & strata=='3rd quart'],
+      pcs[homeless==0 & strata=='top quart'], 
+      pcs[homeless==1 & strata=='top quart'], 
+      pcs[homeless==0], pcs[homeless==1], 
+      ylim=c(botval,topval), xaxt="n", ylab="PCS score")
+      abline(v=2.5)
+      abline(v=4.5)
+      abline(v=6.5)
+      abline(v=8.5, lwd=2)
+      text(1, topval, "not\nhomeless", cex=cexval)
+      text(2, topval, "homeless", cex=cexval)
+      text(3, topval, "not\nhomeless", cex=cexval)
+      text(4, topval, "homeless", cex=cexval)
+      text(5, topval, "not\nhomeless", cex=cexval)
+      text(6, topval, "homeless", cex=cexval)
+      text(7, topval, "not\nhomeless", cex=cexval)
+      text(8, topval, "homeless", cex=cexval)
+      text(9, topval, "not\nhomeless", cex=cexval)
+      text(10, topval, "homeless", cex=cexval)
+
+      text(1.5, botval+eps, "bot quart")
+      text(3.5, botval+eps, "2nd quart")
+      text(5.5, botval+eps, "3rd quart")
+      text(7.5, botval+eps, "top quart")
+      text(9.5, botval+eps, "overall")
+
+      text(1, topval-eps, paste("n=",sum(homeless==0 & strata=='bot quart', na.rm=TRUE),sep=""), cex=cexval)
+      text(2, topval-eps, paste("n=",sum(homeless==1 & strata=='bot quart', na.rm=TRUE),sep=""), cex=cexval)
+      text(3, topval-eps, paste("n=",sum(homeless==0 & strata=='2nd quart', na.rm=TRUE),sep=""), cex=cexval)
+      text(4, topval-eps, paste("n=",sum(homeless==1 & strata=='2nd quart', na.rm=TRUE),sep=""), cex=cexval)
+      text(5, topval-eps, paste("n=",sum(homeless==0 & strata=='3rd quart', na.rm=TRUE),sep=""), cex=cexval)
+      text(6, topval-eps, paste("n=",sum(homeless==1 & strata=='3rd quart', na.rm=TRUE),sep=""), cex=cexval)
+      text(7, topval-eps, paste("n=",sum(homeless==0 & strata=='top quart', na.rm=TRUE),sep=""), cex=cexval)
+      text(8, topval-eps, paste("n=",sum(homeless==1 & strata=='top quart', na.rm=TRUE),sep=""), cex=cexval)
+      text(9, topval-eps, paste("n=",sum(homeless==0, na.rm=TRUE),sep=""), cex=cexval)
+      text(10, topval-eps, paste("n=",sum(homeless==1, na.rm=TRUE),sep=""), cex=cexval)
+      @
+%\end{noindent}
+\begin{itemize}
+      \item The difference between the median PCS scores is smaller
+            within each of the quartiles of the propensity scores than the
+            difference between medians overall.
+      \item Proportion of subjects in the two groups varies by strata.
+      \item Use a $t$-test in each stratum to test whether difference in mean
+            PCS is significant between homeless and non-homeless
+            subjects.
+      \item Mean \texttt{pcs} is lower in 3 out of 4 strata but not statistically
+            significant.
+      \item Little credible evidence for a health cost ascribable to
+            homelessness.
+\end{itemize}
+%\begin{noindent}
+      <<>>=
+      stratdf <- data.frame(pcs, homeless, strata)
+      out = by(stratdf, strata,
+      function(mydataframe) {with(mydataframe,
+      t.test(pcs[homeless==0], pcs[homeless==1])) })
+      # bot quart:
+      # t = 0.80603, df = 58.564, p-value = 0.4235
+
+      # 2nd quart:
+      # t = -0.10106, df = 101.08, p-value = 0.9197
+
+      # 3rd quart:
+      # t = 0.82302, df = 110.92, p-value = 0.4123
+
+      # top quart:
+      # t = 0.92219, df = 74.798, p-value = 0.3594
+
+      lm(pcs~homeless,data=ds[strata=="bot quart",])$coef
+      lm(pcs~homeless,data=ds[strata=="2nd quart",])$coef
+      lm(pcs~homeless,data=ds[strata=="3rd quart",])$coef
+      lm(pcs~homeless,data=ds[strata=="top quart",])$coef
+      @
+%\end{noindent}
+\subsection{Inverse Probability Weighting}
+%\begin{noindent}
+      <<>>=
+      ACE.1 <- 1/length(PS) * ( sum( homeless*pcs/PS ) -
+      sum( (1-homeless)*pcs/(1-PS) ))
+      ACE.1
+      ACE.2 <- sum( homeless*pcs/PS )/sum( homeless/PS ) -
+      sum( (1-homeless)*pcs/(1-PS) )/sum( (1-homeless)/(1-PS))
+      ACE.2
+      @
+%\end{noindent}
+\subsubsection{Obtain Standard Error Using Bootstrap}
+%\begin{noindent}
+      <<eval=FALSE>>=
+      ACE.1=rep(NA,10000)
+      ACE.2=rep(NA,10000)
+      for (i in 1:10000){
+      select=sample(1:length(pcs),size=length(pcs),replace=TRUE)
+      ndata=ds[select,]
+      ndata$ps=glm(homeless ~ age + factor(female) + i1 + mcs,
+      data=ndata,family=binomial)$fitted.values
+      ACE.1[i] = 1/length(ndata$PS) * (sum( ndata$homeless*ndata$pcs/
+      ndata$PS) - sum( (1-ndata$homeless)*ndata$pcs/(1-ndata$PS) ))
+      ACE.2[i] = sum( ndata$homeless*ndata$pcs/ndata$PS ) / sum( ndata$homeless/ndata$PS ) - sum( (1-ndata$homeless)*ndata$pcs/(1-ndata$PS) )/sum((1-ndata$homeless)/(1-ndata$PS))
+      }
+      # sd(ACE.1) = 4.776752
+      # sd(ACE.2) = 1.067576
+      @
+%\end{noindent}
+\subsubsection{Equivalently: Calculating The Inverse Weights}
+%\begin{noindent}
+      <<>>=
+      IPTW <- rep(0,length(PS))
+      IPTW[homeless==1] <- 1/PS[homeless==1]
+      IPTW[homeless==0] <- 1/(1-PS[homeless==0])
+      boxplot(IPTW~homeless, main="IPTW")
+      @
+%\end{noindent}
+\subsubsection{Equivalently: Fit a Weighted Regression}
+%\begin{noindent}
+      <<>>=
+      library(survey)
+      design.ps <- svydesign(ids=~1, weights=~IPTW, data=ds)
+      msm1 <- svyglm(pcs~homeless,design=design.ps)
+      summary(msm1)$coef
+      @
+%\end{noindent}
+Note: the standard error from the survey package provides the
+robust standard error and correct $p$-value.
+\subsection{Double-Robust Estimation}
+\begin{enumerate}[1.]
+      \item Fit a logistic model for the propensity score.
+            %\begin{noindent}
+            <<>>=
+            glm1 <- glm(homeless ~ age + factor(female) + i1 + mcs, family=binomial)
+            PS <- glm1$fitted.values
+            summary(glm1)$coef
+            @
+      %\end{noindent}
+      \item Fit regression model for the outcome using data from the
+            treatment group only, predict for all subjects.
+            %\begin{noindent}
+            <<>>=
+            out1 <- lm(pcs~age + factor(female) + i1 + mcs,subset=(homeless==1))
+            m1 <- predict(out1, ds)
+            summary(out1)$coef
+            @
+      %\end{noindent}
+      \item Fit a regression model for the outcome (same form as above)
+            using data from the control group only, predict for all.
+            %\begin{noindent}
+            <<>>=
+            out0 <- lm(pcs~age + factor(female) + i1 + mcs,
+            subset=(homeless==0))
+            m0 <- predict(out0, ds)
+            summary(out0)$coef
+            @
+      %\end{noindent}
+      \item Plug in predicted values into the expression for $ \hat{\tau}_{\DR} $.
+            %\begin{noindent}
+            <<>>=
+            DR.est <- mean((homeless*pcs - (homeless-PS)*m1)/PS) -
+            mean(((1-homeless)*pcs + (homeless-PS)*m0)/(1-PS))
+            DR.est
+            @
+      %\end{noindent}
+      \item Use the same bootstrap technique to obtain standard error as in
+            IPW\@.
+\end{enumerate}
+\subsubsection{Summary}
+Recall estimates of the ACE from other approaches:
+\begin{itemize}
+      \item Naive unadjusted: $ -2.06\;(1.013) $.
+      \item Matching: $ -1.28\;(1.231) $.
+      \item Stratification: $ (-1.79,0.20,-1.67,-1.99) $ [average difference $ -1.31 $].
+      \item IPW\@: $ -1.30\;(1.075) $.
+      \item Double-Robust: $ -1.21\;(1.02) $.
+\end{itemize}
+\subsubsection{Checking Balance}
+How do we know if a propensity score based method did a good
+job or not?
+\begin{itemize}
+      \item Recall $ X\indep \bigl(A\mid \ps{X}\bigr) $. If the propensity score model is correct, it should balance the
+            covariates after matching/stratification/IPW.
+      \item Check balance. In IPW,
+            \[ w_i=\begin{dcases}
+                        \frac{1}{\estps{X_i}},   & \text{if $A_i=1$}, \\
+                        \frac{1}{1-\estps{X_i}}, & \text{if $A_i=0$}. \\
+                  \end{dcases} \]
+\end{itemize}
+\begin{Regular}{Absolute Standardized Mean Difference (ASMD)}
+      \[ \ASMD^{(j)}=\frac{\abs{\bar{X}_{j,1}^w-\bar{X}_{j,0}^w}}{\sd{X_{j,1}}},\; j=1,\ldots,p, \]
+      \[ \ASMD\text{ mean}=\sum_{j=1}^{p}\frac{\ASMD^{(j)}}{p}, \]
+      where
+      \begin{itemize}
+            \item $ \bar{X}_{j,1}^w=\frac{\sum w_i A_i X_{ij}}{\sum w_i A_i} $ is the weighted mean of $ X_j $ in the treatment group;
+            \item $ \bar{X}_{j,0}^w=\frac{\sum w_i(1-A_i)X_{ij}}{\sum w_i(1-A_i)} $ is the weighted mean of $ X_j $ in the control group;
+            \item $ \sd{X_{j,1}} $ is the unweighted standard deviation of $ X_j $ in the treatment group.
+      \end{itemize}
+      Instead, we can also look at
+      \[ \ASMD\text{ max}=\max_j \ASMD^{(j)}\quad\text{or}\quad\ASMD\text{ mean}=\mathop{\text{median}}_j\ASMD^{(j)}.  \]
+\end{Regular}
+\begin{Regular}{Kolmogorov-Smirnov (KS) Statistic}
+      \[ \text{KS}^{(j)}=\sup\abs*{F_{1,n_1}^w(X_{j,1})-F_{0,n_0}^w(X_{j,0})}, \]
+      \[ \text{KS mean}=\sum_{j=1}^{p}\frac{\text{KS}^{(j)}}{p}, \]
+      where
+      \begin{itemize}
+            \item $ F_{1,n_1}^w(X_{j,1}) $ is the weighted empirical cdf of $ X_j $ in the treatment group;
+            \item $ F_{0,n_0}^w(X_{j,0}) $ is the weighted empirical cdf of $ X_j $ in the control group.
+      \end{itemize}
+\end{Regular}
+%\begin{noindent}
+      <<echo=FALSE>>=
+      std.diff <- function(u,z,w) 
+      { 
+      # for variables other than unordered categorical variables compute mean differences 
+      # mean(u[z==1]) gives the mean of u for the treatment group 
+      # weighted.mean() is a function to calculate weighted mean 
+      # u[z==0],w[z==0] select values of u and the weights for the comparison group 
+      # weighted.mean(u[z==0],w[z==0],na.rm=TRUE): weighted mean for the comparison group 
+      # sd(u[z==1], na.rm=T) calculates the standard deviation for the treatment group 
+      
+      if(!is.factor(u)) 
+      { 
+      sd1 <- sd(u[z==1], na.rm=T) 
+      if(sd1 > 0) 
+      { 
+            result <- abs(mean(u[z==1],na.rm=TRUE)- 
+                        weighted.mean(u[z==0],w[z==0],na.rm=TRUE))/sd1 
+      } else 
+      { 
+            result <- 0 
+            warning("Covariate with standard deviation 0.") 
+      } 
+      } 
+      
+      # for factors compute differences in percentages in each category 
+      # for(u.level in levels(u) creates a loop that repeats for each level of  
+      #  the categorical variable 
+      # as.numeric(u==u.level) creates as 0-1 variable indicating u is equal to 
+      #  u.level the current level of the for loop 
+      # std.diff(as.numeric(u==u.level),z,w)) calculates the absolute  
+      #   standardized difference of the indicator variable 
+      else 
+      { 
+      result <- NULL 
+      for(u.level in levels(u)) 
+      { 
+            result <- c(result, std.diff(as.numeric(u==u.level),z,w)) 
+      } 
+      } 
+      return(result) 
+      } 
+      @
+%\end{noindent}
+\begin{itemize}
+      \item Usually, if $ \ASMD < 0.2 $ (or $0.1$), we say that the covariates
+            are balanced across treatment groups and conclude the
+            propensity score based method did a good job.
+      \item The \texttt{std.diff} function posted on LEARN computes ASMD for
+            each covariate. For categorical variables with $K$ levels, $K$
+            indicator variables will be generated for each level, and ASMD
+            values will be calculated for each level.
+      \item \texttt{std.diff(u,z,w)}:
+            \begin{itemize}
+                  \item \texttt{u}: the covariate;
+                  \item \texttt{z}: treatment indicator;
+                  \item \texttt{w}: weights to be applied.
+            \end{itemize}
+      \item Checking balance with the IPW approach:
+            %\begin{noindent}
+            <<>>=
+            std.diff(age,homeless,IPTW)
+            std.diff(factor(female),homeless,IPTW)
+            std.diff(i1,homeless,IPTW)
+            std.diff(mcs,homeless,IPTW)
+
+            # An equivalent way:
+            x=data.frame(age,factor(female),i1,mcs)
+            sapply(x,std.diff,homeless,IPTW)
+            @
+      %\end{noindent}
+      \item Checking balance with the matching approach:
+            %\begin{noindent}
+            <<>>=
+            match=c(rr$index.treated,rr$index.control)
+            x.matched=x[match,]
+            homeless.matched=homeless[match]
+            w=rep(1,length(match))
+            sapply(x.matched,std.diff,homeless.matched,w)
+            @
+      %\end{noindent}
+\end{itemize}
+\subsubsection{Summary}
+Steps in a propensity score analysis:
+\begin{enumerate}[1.]
+      \item Estimate the propensity score using data $ (A_i,X_i) $, $ i=1,\ldots,n $.
+      \item Select a method for propensity score adjustment:
+            \begin{itemize}
+                  \item Matching.
+                  \item Stratification.
+                  \item Inverse Probability Weighting (IPW).
+                  \item Double-Robust Estimation.
+            \end{itemize}
+      \item Assess the balance between the treated and control groups:
+            \begin{itemize}
+                  \item If the covariates are balanced, go to the final step.
+                  \item If the covariates are not balanced, the fitted propensity score
+                        model is not good enough; refine the model.
+            \end{itemize}
+      \item Fit an outcome model between the treatment and the
+            outcome variable using the estimated propensity scores.
+\end{enumerate}

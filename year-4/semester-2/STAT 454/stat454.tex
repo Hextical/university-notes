@@ -28,11 +28,16 @@
 
 % Functions
 \providecommand\given{} % just to make sure it exists
-\DeclarePairedDelimiterXPP{\E}[1]{\operatorname{\mathbb{E}}}[]{}{%
+\let\v\relax%
+\DeclarePairedDelimiterXPP{\E}[1]{\operatorname{\textsf{E}}}[]{}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\V}[1]{\operatorname{\mathbb{V}}}(){}{%
+\DeclarePairedDelimiterXPP{\V}[1]{\operatorname{\textsf{V}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\v}[1]{\operatorname{\textsf{v}}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
@@ -40,45 +45,18 @@
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\Corr}[1]{\operatorname{\textsf{Corr}}}(){}{%
+\DeclarePairedDelimiterXPP\Prob[1]{\operatorname{\textsf{P}}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\Covadj}[1]{\operatorname{\textsf{Cov}_{\text{adj}}}}(){}{%
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
-    \ifblank{#1}{\:\cdot\:}%
-    #1}%
-\DeclarePairedDelimiterXPP\Prob[1]{\operatorname{\mathbb{P}}}(){}{%
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
-    \ifblank{#1}{\:\cdot\:}%
-    #1}%
-\DeclarePairedDelimiterXPP\ProbM[1]{\operatorname{\mathcal{P}}}(){}{%
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
-    \ifblank{#1}{\:\cdot\:}%
-    #1}%
-\DeclarePairedDelimiterXPP\Ind[1]{\operatorname{\mathbb{I}}}\{\}{}{%
+\DeclarePairedDelimiterXPP\Ind[1]{\operatorname{\textsf{I}}}\{\}{}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
 \DeclarePairedDelimiterXPP{\se}[1]{\operatorname{\textsf{se}}}(){}{%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
-\DeclarePairedDelimiterXPP{\seadj}[1]{\operatorname{\textsf{se}_{\text{adj}}}}(){}{%
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
-    \ifblank{#1}{\:\cdot\:}%
-    #1}%
-\DeclarePairedDelimiterXPP{\estseadj}[1]{\operatorname{\widehat{\textsf{se}}_{\text{adj}}}}(){}{%
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
-    \ifblank{#1}{\:\cdot\:}%
-    #1}%
-\DeclarePairedDelimiterXPP{\estse}[1]{\widehat{\operatorname{\textsf{se}}}}(){}{%
-    \ifblank{#1}{\:\cdot\:}%
-    #1}%
-\DeclarePairedDelimiterXPP{\estV}[1]{\widehat{\operatorname{\textsf{V}}}}(){}{
-    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
-    \ifblank{#1}{\:\cdot\:}%
-    #1}%
-\DeclarePairedDelimiterXPP{\estVar}[1]{\widehat{\operatorname{\textsf{Var}}}}(){}{
+\DeclarePairedDelimiterXPP{\CV}[1]{\operatorname{\textsf{CV}}}(){}{
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
@@ -108,6 +86,8 @@
 
 \newcommand{\iid}{\overset{\text{iid}}{\sim}}%
 \newcommand{\ind}{\overset{\text{ind}}{\sim}}%
+\newcommand{\tod}{\xrightarrow[]{d}}%
+\newcommand{\inp}{\xrightarrow[]{p}}%
 \newcommand{\OR}{\text{OR}}%
 \newcommand{\RR}{\text{RR}}%
 \newcommand{\cOR}{\text{cOR}}%
@@ -138,7 +118,7 @@
 \newcommand{\makeheading}[2]%
 {%
 \begin{center}%
-    \makebox[\linewidth]{\raisebox{-.5ex}[0cm][0cm]{\stackanchor{\textcolor{Gray}{\textsc{#1}}}{\scriptsize\itshape\printyearoff#2}\;}\color{Crimson!50}\hrulefill}%
+    \makebox[\linewidth]{\raisebox{-.5ex}[0cm][0cm]{\stackanchor{\textcolor{Gray}{\textsc{#1}}}{\emph{\scriptsize\printyearoff#2}}\;}\color{Crimson!50}\hrulefill}%
 \end{center}%
 }%
 
@@ -165,17 +145,20 @@ pdfkeywords={University of Waterloo, Winter 2022 (1221)}}%
 \title{%
 \LARGE Sampling Theory and Practice\\%
 \large STAT 454\thanks{STAT 454$\equiv$ STAT 854}\\%
-\normalsize Winter 2022 (1221)\thanks{Online Course until January 27\textsuperscript{th}, 2022}}%
+\normalsize Winter 2022 (1221)\thanks{Online Course until February 7\textsuperscript{th}, 2022}}%
 \author{Cameron Roopnarine\thanks{\LaTeX{}er}\and Changbao Wu\thanks{Instructor}}%
 \date{\today}%
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
 \usetikzlibrary{petri,decorations.pathreplacing,calc}
 \usepackage{minted}
+\usepackage[parfill]{parskip}
 
 \begin{document}
 \maketitle
 \tableofcontents
 \input{wk_01.tex}
 \input{wk_02.tex}
+The remaining notes are private (for now).
+%\input{wk_03.tex}
 \end{document}

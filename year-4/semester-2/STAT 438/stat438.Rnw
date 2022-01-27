@@ -32,11 +32,19 @@
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
+\DeclarePairedDelimiterXPP{\estE}[1]{\operatorname{\widehat{\mathbb{E}}}}[]{}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
 \DeclarePairedDelimiterXPP{\V}[1]{\operatorname{\textsf{V}}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
 \DeclarePairedDelimiterXPP{\Var}[1]{\operatorname{\textsf{Var}}}(){}{%
+    \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
+    \ifblank{#1}{\:\cdot\:}%
+    #1}%
+\DeclarePairedDelimiterXPP{\sd}[1]{\operatorname{\textsf{sd}}}(){}{%
     \renewcommand\given{\nonscript\:\delimsize\vert\nonscript\:\mathopen{}}%
     \ifblank{#1}{\:\cdot\:}%
     #1}%
@@ -93,6 +101,9 @@
 
 \DeclarePairedDelimiterXPP{\expit}[1]{\operatorname{\textsf{expit}}}(){}{#1}%
 \DeclarePairedDelimiterXPP{\logit}[1]{\operatorname{\textsf{logit}}}(){}{#1}%
+
+\DeclarePairedDelimiterXPP{\ps}[1]{\operatorname{\textsf{ps}}}(){}{#1}%
+\DeclarePairedDelimiterXPP{\estps}[1]{\operatorname{\widehat{\textsf{ps}}}}(){}{#1}%
 \newcommand{\HN}{\textsl{H}_{\textsl{0}}}%
 \newcommand{\HA}{\textsl{H}_{\textsl{A}}}%
 
@@ -108,10 +119,16 @@
 
 \newcommand{\iid}{\overset{\text{iid}}{\sim}}%
 \newcommand{\ind}{\overset{\text{ind}}{\sim}}%
+\newcommand\indep{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
 \newcommand{\OR}{\text{OR}}%
 \newcommand{\RR}{\text{RR}}%
 \newcommand{\ER}{\text{ER}}%
 \newcommand{\cOR}{\text{cOR}}%
+\newcommand{\ACE}{\text{ACE}}%
+\newcommand{\IPW}{\text{IPW}}%
+\newcommand{\DR}{\text{DR}}%
+\newcommand{\ASMD}{\text{ASMD}}%
 
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}
 % can be useful to refer to this outside \Set
@@ -139,7 +156,7 @@
 \newcommand{\makeheading}[2]%
 {%
 \begin{center}%
-    \makebox[\linewidth]{\raisebox{-.5ex}[0cm][0cm]{\stackanchor{\textcolor{Gray}{\textsc{#1}}}{\scriptsize\itshape\printyearoff#2}\;}\color{Crimson!50}\hrulefill}%
+    \makebox[\linewidth]{\raisebox{-.5ex}[0cm][0cm]{\stackanchor{\textcolor{Gray}{\textsc{#1}}}{\emph{\scriptsize\printyearoff#2}}\;}\color{Crimson!50}\hrulefill}%
 \end{center}%
 }%
 
@@ -166,7 +183,7 @@ pdfkeywords={University of Waterloo, Winter 2022 (1221)}}%
 \title{%
 \LARGE Advanced Methods in Biostatistics\\%
 \large STAT 438\\%
-\normalsize Winter 2022 (1221)\thanks{Online Course until January 27\textsuperscript{th}, 2022}}%
+\normalsize Winter 2022 (1221)\thanks{Online Course until February 7\textsuperscript{th}, 2022}}%
 \author{Cameron Roopnarine\thanks{\LaTeX{}er}\and Yeying Zhu\thanks{Instructor}}%
 \date{\today}%
 \usepackage{pgfplots}
@@ -180,4 +197,8 @@ pdfkeywords={University of Waterloo, Winter 2022 (1221)}}%
 \tableofcontents
 \input{wk_01.tex}
 \input{wk_02.tex}
+\input{wk_03.tex}
+\input{wk_04.tex}
+<<child='wk_04-2.Rnw'>>=
+@
 \end{document}
