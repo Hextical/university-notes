@@ -14,7 +14,8 @@ All my university notes done in LaTeX.
 |  [STAT 438](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20438/stat438.pdf)  |   Week 4   | :heavy_check_mark: |
 | [STAT 454](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20454/stat454.pdf)\* |  Week 2**  | :heavy_check_mark: |
 
-\* STAT 454 and STAT 854 have exactly the same lectures, and will be updated later in the term. 
+\* STAT 454 and STAT 854 have exactly the same lectures.
+** Remaining notes will be updated later in the term.
 
 ### Semester 1
 
