@@ -367,12 +367,12 @@ See Dunn \& Smyth Chapters 2 \& 3 or your Stat 331 notes for a thorough review.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{# Input Dobson's Birthweight Data}
-\hlstd{age} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{40}\hlstd{,} \hlnum{38}\hlstd{,} \hlnum{40}\hlstd{,} \hlnum{35}\hlstd{,} \hlnum{36}\hlstd{,} \hlnum{37}\hlstd{,} \hlnum{41}\hlstd{,} \hlnum{40}\hlstd{,} \hlnum{37}\hlstd{,} \hlnum{38}\hlstd{,} \hlnum{40}\hlstd{,} \hlnum{38}\hlstd{,} \hlnum{40}\hlstd{,} \hlnum{36}\hlstd{,}
-  \hlnum{40}\hlstd{,} \hlnum{38}\hlstd{,} \hlnum{42}\hlstd{,} \hlnum{39}\hlstd{,} \hlnum{40}\hlstd{,} \hlnum{37}\hlstd{,} \hlnum{36}\hlstd{,} \hlnum{38}\hlstd{,} \hlnum{39}\hlstd{,} \hlnum{40}\hlstd{)}
-\hlstd{birthw} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{2968}\hlstd{,} \hlnum{2795}\hlstd{,} \hlnum{3163}\hlstd{,} \hlnum{2925}\hlstd{,} \hlnum{2625}\hlstd{,} \hlnum{2847}\hlstd{,} \hlnum{3292}\hlstd{,} \hlnum{3473}\hlstd{,} \hlnum{2628}\hlstd{,}
+\hlstd{age} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{40}\hlstd{,} \hlnum{38}\hlstd{,} \hlnum{40}\hlstd{,} \hlnum{35}\hlstd{,} \hlnum{36}\hlstd{,} \hlnum{37}\hlstd{,} \hlnum{41}\hlstd{,} \hlnum{40}\hlstd{,} \hlnum{37}\hlstd{,} \hlnum{38}\hlstd{,} \hlnum{40}\hlstd{,} \hlnum{38}\hlstd{,} \hlnum{40}\hlstd{,}
+  \hlnum{36}\hlstd{,} \hlnum{40}\hlstd{,} \hlnum{38}\hlstd{,} \hlnum{42}\hlstd{,} \hlnum{39}\hlstd{,} \hlnum{40}\hlstd{,} \hlnum{37}\hlstd{,} \hlnum{36}\hlstd{,} \hlnum{38}\hlstd{,} \hlnum{39}\hlstd{,} \hlnum{40}\hlstd{)}
+\hlstd{birthw} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{2968}\hlstd{,} \hlnum{2795}\hlstd{,} \hlnum{3163}\hlstd{,} \hlnum{2925}\hlstd{,} \hlnum{2625}\hlstd{,} \hlnum{2847}\hlstd{,} \hlnum{3292}\hlstd{,} \hlnum{3473}\hlstd{,} \hlnum{2628}\hlstd{,}
   \hlnum{3176}\hlstd{,} \hlnum{3421}\hlstd{,} \hlnum{2975}\hlstd{,} \hlnum{3317}\hlstd{,} \hlnum{2729}\hlstd{,} \hlnum{2935}\hlstd{,} \hlnum{2754}\hlstd{,} \hlnum{3210}\hlstd{,} \hlnum{2817}\hlstd{,} \hlnum{3126}\hlstd{,}
   \hlnum{2539}\hlstd{,} \hlnum{2412}\hlstd{,} \hlnum{2991}\hlstd{,} \hlnum{2875}\hlstd{,} \hlnum{3231}\hlstd{)}
-\hlstd{sex} \hlkwb{=} \hlkwd{as.factor}\hlstd{(}\hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlstr{"M"}\hlstd{,} \hlnum{12}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"F"}\hlstd{,} \hlnum{12}\hlstd{)))}
+\hlstd{sex} \hlkwb{<-} \hlkwd{as.factor}\hlstd{(}\hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlstr{"M"}\hlstd{,} \hlnum{12}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"F"}\hlstd{,} \hlnum{12}\hlstd{)))}
 \hlcom{# Exploratory Data Analysis}
 \hlkwd{plot}\hlstd{(age, birthw,} \hlkwc{pch} \hlstd{=} \hlnum{1} \hlopt{+} \hlnum{18} \hlopt{*} \hlkwd{as.numeric}\hlstd{(sex} \hlopt{==} \hlstr{"F"}\hlstd{),} \hlkwc{ylab} \hlstd{=} \hlstr{"Birthweight"}\hlstd{,}
   \hlkwc{xlab} \hlstd{=} \hlstr{"Gestational Age"}\hlstd{,} \hlkwc{main} \hlstd{=} \hlstr{"Dobson's Birthweight Data"}\hlstd{)}
@@ -381,7 +381,7 @@ See Dunn \& Smyth Chapters 2 \& 3 or your Stat 331 notes for a thorough review.
 \hlkwd{legend}\hlstd{(}\hlstr{"bottomright"}\hlstd{,} \hlkwc{legend} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"Male"}\hlstd{,} \hlstr{"Female"}\hlstd{),} \hlkwc{pch} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}
   \hlnum{19}\hlstd{),} \hlkwc{lty} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{))}
 \hlcom{# Model 1: Main Effects Linear Regression Model}
-\hlstd{m1} \hlkwb{=} \hlkwd{lm}\hlstd{(birthw} \hlopt{~} \hlstd{sex} \hlopt{+} \hlstd{age)}
+\hlstd{m1} \hlkwb{<-} \hlkwd{lm}\hlstd{(birthw} \hlopt{~} \hlstd{sex} \hlopt{+} \hlstd{age)}
 \hlkwd{summary}\hlstd{(m1)}
 \hlkwd{plot}\hlstd{(age, birthw,} \hlkwc{pch} \hlstd{=} \hlnum{1} \hlopt{+} \hlnum{18} \hlopt{*} \hlkwd{as.numeric}\hlstd{(sex} \hlopt{==} \hlstr{"F"}\hlstd{),} \hlkwc{ylab} \hlstd{=} \hlstr{"Birthweight"}\hlstd{,}
   \hlkwc{xlab} \hlstd{=} \hlstr{"Gestational's Birthweight Data"}\hlstd{,} \hlkwc{main} \hlstd{=} \hlstr{"Fitted Regression Lines (m1)"}\hlstd{)}
@@ -572,7 +572,7 @@ age           120.894     20.463   5.908    0.000
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{m2} \hlkwb{=} \hlkwd{lm}\hlstd{(birthw} \hlopt{~} \hlstd{sex} \hlopt{*} \hlstd{age)}
+\hlstd{m2} \hlkwb{<-} \hlkwd{lm}\hlstd{(birthw} \hlopt{~} \hlstd{sex} \hlopt{*} \hlstd{age)}
 \hlkwd{round}\hlstd{(}\hlkwd{summary}\hlstd{(m2)}\hlopt{$}\hlstd{coeff,} \hlnum{3}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
@@ -767,23 +767,23 @@ both of these issues.
 \begin{alltt}
 \hlcom{# Input the Cyclone data, define the score and information}
 \hlcom{# function}
-\hlstd{y} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{6}\hlstd{,} \hlnum{5}\hlstd{,} \hlnum{4}\hlstd{,} \hlnum{6}\hlstd{,} \hlnum{6}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{12}\hlstd{,} \hlnum{7}\hlstd{,} \hlnum{4}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{6}\hlstd{,} \hlnum{7}\hlstd{,} \hlnum{4}\hlstd{)}
-\hlstd{Score} \hlkwb{=} \hlkwa{function}\hlstd{(}\hlkwc{theta}\hlstd{,} \hlkwc{y}\hlstd{) \{}
+\hlstd{y} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{6}\hlstd{,} \hlnum{5}\hlstd{,} \hlnum{4}\hlstd{,} \hlnum{6}\hlstd{,} \hlnum{6}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{12}\hlstd{,} \hlnum{7}\hlstd{,} \hlnum{4}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{6}\hlstd{,} \hlnum{7}\hlstd{,} \hlnum{4}\hlstd{)}
+\hlstd{Score} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{theta}\hlstd{,} \hlkwc{y}\hlstd{) \{}
   \hlkwd{sum}\hlstd{(y)}\hlopt{/}\hlstd{theta} \hlopt{-} \hlkwd{length}\hlstd{(y)}
 \hlstd{\}}
-\hlstd{Info} \hlkwb{=} \hlkwa{function}\hlstd{(}\hlkwc{theta}\hlstd{,} \hlkwc{y}\hlstd{) \{}
+\hlstd{Info} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{theta}\hlstd{,} \hlkwc{y}\hlstd{) \{}
   \hlkwd{sum}\hlstd{(y)}\hlopt{/}\hlstd{(theta}\hlopt{^}\hlnum{2}\hlstd{)}
 \hlstd{\}}
 \hlcom{# Run one-parameter Newton Raphson algorithm (track each}
 \hlcom{# iteration)}
-\hlstd{theta.old} \hlkwb{=} \hlnum{0}
-\hlstd{theta.new} \hlkwb{=} \hlnum{5}
-\hlstd{track} \hlkwb{=} \hlkwd{c}\hlstd{(theta.new,} \hlkwd{Score}\hlstd{(theta.new, y))}
+\hlstd{theta.old} \hlkwb{<-} \hlnum{0}
+\hlstd{theta.new} \hlkwb{<-} \hlnum{5}
+\hlstd{track} \hlkwb{<-} \hlkwd{c}\hlstd{(theta.new,} \hlkwd{Score}\hlstd{(theta.new, y))}
 \hlkwa{while} \hlstd{((theta.new} \hlopt{-} \hlstd{theta.old)}\hlopt{^}\hlnum{2} \hlopt{>} \hlnum{10}\hlopt{^}\hlstd{(}\hlopt{-}\hlnum{3}\hlstd{)) \{}
-  \hlstd{theta.old} \hlkwb{=} \hlstd{theta.new}
-  \hlstd{theta.new} \hlkwb{=} \hlstd{theta.old} \hlopt{+} \hlkwd{Score}\hlstd{(theta.old, y)}\hlopt{/}\hlkwd{Info}\hlstd{(theta.old,}
+  \hlstd{theta.old} \hlkwb{<-} \hlstd{theta.new}
+  \hlstd{theta.new} \hlkwb{<-} \hlstd{theta.old} \hlopt{+} \hlkwd{Score}\hlstd{(theta.old, y)}\hlopt{/}\hlkwd{Info}\hlstd{(theta.old,}
     \hlstd{y)}
-  \hlstd{track} \hlkwb{=} \hlkwd{rbind}\hlstd{(track,} \hlkwd{c}\hlstd{(theta.new,} \hlkwd{Score}\hlstd{(theta.new, y)))}
+  \hlstd{track} \hlkwb{<-} \hlkwd{rbind}\hlstd{(track,} \hlkwd{c}\hlstd{(theta.new,} \hlkwd{Score}\hlstd{(theta.new, y)))}
 \hlstd{\}}
 \hlstd{track}
 \end{alltt}
@@ -851,9 +851,9 @@ Suppose we want a $ \SI[parse-numbers = false]{100(1-\alpha)}{\percent} $ confid
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{ybar} \hlkwb{=} \hlkwd{mean}\hlstd{(y)}
-\hlstd{n} \hlkwb{=} \hlkwd{length}\hlstd{(y)}
-\hlstd{LRest} \hlkwb{=} \hlkwa{function}\hlstd{(}\hlkwc{theta}\hlstd{,} \hlkwc{ybar}\hlstd{,} \hlkwc{n}\hlstd{) \{}
+\hlstd{ybar} \hlkwb{<-} \hlkwd{mean}\hlstd{(y)}
+\hlstd{n} \hlkwb{<-} \hlkwd{length}\hlstd{(y)}
+\hlstd{LRest} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{theta}\hlstd{,} \hlkwc{ybar}\hlstd{,} \hlkwc{n}\hlstd{) \{}
   \hlopt{-}\hlnum{2} \hlopt{*} \hlstd{(n} \hlopt{*} \hlstd{ybar} \hlopt{*} \hlkwd{log}\hlstd{(theta}\hlopt{/}\hlstd{ybar)} \hlopt{-} \hlstd{n} \hlopt{*} \hlstd{(theta} \hlopt{-} \hlstd{ybar))} \hlopt{-}
     \hlkwd{qchisq}\hlstd{(}\hlnum{0.95}\hlstd{,} \hlnum{1}\hlstd{)}
 \hlstd{\}}
@@ -2705,31 +2705,31 @@ As an initial look at the data, consider the marginal distributions.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{# Read in the Neuroblastoma dataset}
-\hlstd{neuro.dat} \hlkwb{=} \hlkwd{read.table}\hlstd{(}\hlstr{"neuro.dat"}\hlstd{,} \hlkwc{header} \hlstd{= T)}
+\hlstd{neuro.dat} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlstr{"neuro.dat"}\hlstd{,} \hlkwc{header} \hlstd{= T)}
 \hlcom{# here we create indicator variables for age and stage}
-\hlstd{neuro.dat}\hlopt{$}\hlstd{agef} \hlkwb{=} \hlkwd{factor}\hlstd{(neuro.dat}\hlopt{$}\hlstd{age)}
-\hlstd{neuro.dat}\hlopt{$}\hlstd{stagef} \hlkwb{=} \hlkwd{factor}\hlstd{(neuro.dat}\hlopt{$}\hlstd{stage)}
+\hlstd{neuro.dat}\hlopt{$}\hlstd{agef} \hlkwb{<-} \hlkwd{factor}\hlstd{(neuro.dat}\hlopt{$}\hlstd{age)}
+\hlstd{neuro.dat}\hlopt{$}\hlstd{stagef} \hlkwb{<-} \hlkwd{factor}\hlstd{(neuro.dat}\hlopt{$}\hlstd{stage)}
 \hlcom{# here we construct the response variable for logistic}
 \hlcom{# regression: (y, m-y)}
-\hlstd{neuro.dat}\hlopt{$}\hlstd{resp} \hlkwb{=} \hlkwd{cbind}\hlstd{(neuro.dat}\hlopt{$}\hlstd{y, neuro.dat}\hlopt{$}\hlstd{m} \hlopt{-} \hlstd{neuro.dat}\hlopt{$}\hlstd{y)}
+\hlstd{neuro.dat}\hlopt{$}\hlstd{resp} \hlkwb{<-} \hlkwd{cbind}\hlstd{(neuro.dat}\hlopt{$}\hlstd{y, neuro.dat}\hlopt{$}\hlstd{m} \hlopt{-} \hlstd{neuro.dat}\hlopt{$}\hlstd{y)}
 \hlstd{neuro.dat}
 \hlcom{# here we fit the model with age and stage and print out}
 \hlcom{# summary statistics}
-\hlstd{model1} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{agef} \hlopt{+} \hlstd{stagef,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
+\hlstd{model1} \hlkwb{<-} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{agef} \hlopt{+} \hlstd{stagef,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
   \hlkwc{data} \hlstd{= neuro.dat)}
 \hlkwd{summary}\hlstd{(model1)}
 \hlkwd{summary}\hlstd{(model1,} \hlkwc{corr} \hlstd{= T)}\hlopt{$}\hlstd{correlation}
 \hlcom{# record deviance residuals (rd1), linear predcitor (lp1),}
 \hlcom{# and fitted values (fv1)}
-\hlstd{rd1} \hlkwb{=} \hlkwd{residuals.glm}\hlstd{(model1,} \hlstr{"deviance"}\hlstd{)}
-\hlstd{lp1} \hlkwb{=} \hlstd{model1}\hlopt{$}\hlstd{linear.predictors}
-\hlstd{fv1} \hlkwb{=} \hlstd{model1}\hlopt{$}\hlstd{fitted.values}
+\hlstd{rd1} \hlkwb{<-} \hlkwd{residuals.glm}\hlstd{(model1,} \hlstr{"deviance"}\hlstd{)}
+\hlstd{lp1} \hlkwb{<-} \hlstd{model1}\hlopt{$}\hlstd{linear.predictors}
+\hlstd{fv1} \hlkwb{<-} \hlstd{model1}\hlopt{$}\hlstd{fitted.values}
 \hlcom{# here we compute the Pearson residual as an exercise}
-\hlstd{rp1} \hlkwb{=} \hlstd{(neuro.dat}\hlopt{$}\hlstd{y} \hlopt{-} \hlstd{neuro.dat}\hlopt{$}\hlstd{m} \hlopt{*} \hlstd{fv1)}\hlopt{/}\hlkwd{sqrt}\hlstd{(neuro.dat}\hlopt{$}\hlstd{m} \hlopt{*} \hlstd{fv1} \hlopt{*}
+\hlstd{rp1} \hlkwb{<-} \hlstd{(neuro.dat}\hlopt{$}\hlstd{y} \hlopt{-} \hlstd{neuro.dat}\hlopt{$}\hlstd{m} \hlopt{*} \hlstd{fv1)}\hlopt{/}\hlkwd{sqrt}\hlstd{(neuro.dat}\hlopt{$}\hlstd{m} \hlopt{*} \hlstd{fv1} \hlopt{*}
   \hlstd{(}\hlnum{1} \hlopt{-} \hlstd{fv1))}
 \hlcom{# here we verify that the fitted values agree with what we}
 \hlcom{# expect from the linear predictor}
-\hlstd{fv2} \hlkwb{=} \hlkwd{exp}\hlstd{(lp1)}\hlopt{/}\hlstd{(}\hlnum{1} \hlopt{+} \hlkwd{exp}\hlstd{(lp1))}
+\hlstd{fv2} \hlkwb{<-} \hlkwd{exp}\hlstd{(lp1)}\hlopt{/}\hlstd{(}\hlnum{1} \hlopt{+} \hlkwd{exp}\hlstd{(lp1))}
 \hlkwd{cbind}\hlstd{(rd1, rp1, lp1, fv1, fv2)}
 \hlcom{# plotting the deviance and Pearson residuals}
 \hlkwd{pdf}\hlstd{(}\hlstr{"neuro-residual.pdf"}\hlstd{,} \hlkwc{height} \hlstd{=} \hlnum{6}\hlstd{,} \hlkwc{width} \hlstd{=} \hlnum{8}\hlstd{)}
@@ -2743,9 +2743,9 @@ As an initial look at the data, consider the marginal distributions.
 \hlstd{dev.off}
 \hlcom{# here we fit two reduced models to enable us to test the}
 \hlcom{# importance of age and stage}
-\hlstd{model2} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{agef,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),} \hlkwc{data} \hlstd{= neuro.dat)}
+\hlstd{model2} \hlkwb{<-} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{agef,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),} \hlkwc{data} \hlstd{= neuro.dat)}
 \hlkwd{summary}\hlstd{(model2)}
-\hlstd{model3} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{stagef,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
+\hlstd{model3} \hlkwb{<-} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{stagef,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
   \hlkwc{data} \hlstd{= neuro.dat)}
 \hlkwd{summary}\hlstd{(model3)}
 \end{alltt}
@@ -2787,7 +2787,7 @@ Here is the summary of model 1 including both \textcolor{Green}{Age \& Stage}:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{model1} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{agef} \hlopt{+} \hlstd{stagef,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
+\hlstd{model1} \hlkwb{<-} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{agef} \hlopt{+} \hlstd{stagef,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
   \hlkwc{data} \hlstd{= neuro.dat)}
 \hlkwd{summary}\hlstd{(model1)}
 \end{alltt}
@@ -2830,12 +2830,12 @@ the data.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{rd1} \hlkwb{=} \hlkwd{residuals.glm}\hlstd{(model1,} \hlstr{"deviance"}\hlstd{)}
-\hlstd{rp1} \hlkwb{=} \hlstd{(neuro.dat}\hlopt{$}\hlstd{y} \hlopt{-} \hlstd{neuro.dat}\hlopt{$}\hlstd{m} \hlopt{*} \hlstd{fv1)}\hlopt{/}\hlkwd{sqrt}\hlstd{(neuro.dat}\hlopt{$}\hlstd{m} \hlopt{*} \hlstd{fv1} \hlopt{*}
+\hlstd{rd1} \hlkwb{<-} \hlkwd{residuals.glm}\hlstd{(model1,} \hlstr{"deviance"}\hlstd{)}
+\hlstd{rp1} \hlkwb{<-} \hlstd{(neuro.dat}\hlopt{$}\hlstd{y} \hlopt{-} \hlstd{neuro.dat}\hlopt{$}\hlstd{m} \hlopt{*} \hlstd{fv1)}\hlopt{/}\hlkwd{sqrt}\hlstd{(neuro.dat}\hlopt{$}\hlstd{m} \hlopt{*} \hlstd{fv1} \hlopt{*}
   \hlstd{(}\hlnum{1} \hlopt{-} \hlstd{fv1))}
-\hlstd{lp1} \hlkwb{=} \hlstd{model1}\hlopt{$}\hlstd{linear.predictors}
-\hlstd{fv1} \hlkwb{=} \hlstd{model1}\hlopt{$}\hlstd{fitted.values}
-\hlstd{fv2} \hlkwb{=} \hlkwd{exp}\hlstd{(lp1)}\hlopt{/}\hlstd{(}\hlnum{1} \hlopt{+} \hlkwd{exp}\hlstd{(lp1))}
+\hlstd{lp1} \hlkwb{<-} \hlstd{model1}\hlopt{$}\hlstd{linear.predictors}
+\hlstd{fv1} \hlkwb{<-} \hlstd{model1}\hlopt{$}\hlstd{fitted.values}
+\hlstd{fv2} \hlkwb{<-} \hlkwd{exp}\hlstd{(lp1)}\hlopt{/}\hlstd{(}\hlnum{1} \hlopt{+} \hlkwd{exp}\hlstd{(lp1))}
 \hlkwd{cbind}\hlstd{(rd1, rp1, lp1, fv1, fv2)}
 \end{alltt}
 \begin{verbatim}
@@ -2879,7 +2879,7 @@ of the fit that results from dropping the stage variable(s).
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{model2} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{agef,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),} \hlkwc{data} \hlstd{= neuro.dat)}
+\hlstd{model2} \hlkwb{<-} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{agef,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),} \hlkwc{data} \hlstd{= neuro.dat)}
 \hlkwd{summary}\hlstd{(model2)}
 \end{alltt}
 \begin{verbatim}
@@ -2917,7 +2917,7 @@ fit from model one (with age and stage).
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{model3} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{stagef,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
+\hlstd{model3} \hlkwb{<-} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{stagef,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
   \hlkwc{data} \hlstd{= neuro.dat)}
 \hlkwd{summary}\hlstd{(model3)}
 \end{alltt}
@@ -3042,7 +3042,7 @@ reference.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{model1} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{agef} \hlopt{+} \hlstd{stagef,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
+\hlstd{model1} \hlkwb{<-} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{agef} \hlopt{+} \hlstd{stagef,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),}
   \hlkwc{data} \hlstd{= neuro.dat)}
 \hlkwd{summary}\hlstd{(model1)}
 \end{alltt}
@@ -3190,16 +3190,16 @@ and
 \begin{alltt}
 \hlcom{# use the summary.glm function and store the result in the}
 \hlcom{# tmp object}
-\hlstd{tmp} \hlkwb{=} \hlkwd{summary.glm}\hlstd{(model1)}
+\hlstd{tmp} \hlkwb{<-} \hlkwd{summary.glm}\hlstd{(model1)}
 \hlcom{# examine the contents of the tmp objects and store the}
 \hlcom{# covariance matrix in v}
 \hlkwd{names}\hlstd{(tmp)}
-\hlstd{v} \hlkwb{=} \hlstd{tmp}\hlopt{$}\hlstd{cov.unscaled}
+\hlstd{v} \hlkwb{<-} \hlstd{tmp}\hlopt{$}\hlstd{cov.unscaled}
 \hlstd{v}
 \hlcom{# create x vector to get contrast of regression}
 \hlcom{# coefficients}
-\hlstd{x} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlopt{-}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{)}
-\hlstd{x} \hlkwb{=} \hlkwd{as.matrix}\hlstd{(x,} \hlnum{7}\hlstd{,} \hlnum{1}\hlstd{)}
+\hlstd{x} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlopt{-}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{)}
+\hlstd{x} \hlkwb{<-} \hlkwd{as.matrix}\hlstd{(x,} \hlnum{7}\hlstd{,} \hlnum{1}\hlstd{)}
 \hlkwd{dim}\hlstd{(x)}
 \hlcom{# compute the variance estimate of difference in estimates}
 \hlcom{# for age parameters}
@@ -3214,7 +3214,7 @@ and
 \begin{alltt}
 \hlcom{# use the summary.glm function and store the result in the}
 \hlcom{# tmp object}
-\hlstd{tmp} \hlkwb{=} \hlkwd{summary.glm}\hlstd{(model1)}
+\hlstd{tmp} \hlkwb{<-} \hlkwd{summary.glm}\hlstd{(model1)}
 \hlcom{# examine the contents of the tmp objects and store the}
 \hlcom{# covariance matrix in v}
 \hlkwd{names}\hlstd{(tmp)}
@@ -3227,7 +3227,7 @@ and
 [17] "cov.scaled"    
 \end{verbatim}
 \begin{alltt}
-\hlstd{v} \hlkwb{=} \hlstd{tmp}\hlopt{$}\hlstd{cov.unscaled}
+\hlstd{v} \hlkwb{<-} \hlstd{tmp}\hlopt{$}\hlstd{cov.unscaled}
 \hlstd{v}
 \end{alltt}
 \begin{verbatim}
@@ -3249,8 +3249,8 @@ stagef4      0.62439906  0.46920985
 stagef5      0.46920985  0.74722885
 \end{verbatim}
 \begin{alltt}
-\hlstd{x} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlopt{-}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{)}
-\hlstd{x} \hlkwb{=} \hlkwd{as.matrix}\hlstd{(x,} \hlnum{7}\hlstd{,} \hlnum{1}\hlstd{)}
+\hlstd{x} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlopt{-}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{)}
+\hlstd{x} \hlkwb{<-} \hlkwd{as.matrix}\hlstd{(x,} \hlnum{7}\hlstd{,} \hlnum{1}\hlstd{)}
 \hlkwd{dim}\hlstd{(x)}
 \end{alltt}
 \begin{verbatim}
@@ -3505,17 +3505,17 @@ Let $ \delta $ be the \textcolor{Blue}{median lethal/effective dose}.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{# R program for analysis of dose-response data}
-\hlstd{beetle.dat} \hlkwb{=} \hlkwd{read.table}\hlstd{(}\hlstr{"beetle.dat"}\hlstd{,} \hlkwc{header} \hlstd{= T)}
+\hlstd{beetle.dat} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlstr{"beetle.dat"}\hlstd{,} \hlkwc{header} \hlstd{= T)}
 \hlcom{# here we construct the response variable for logistic}
 \hlcom{# regression}
-\hlstd{beetle.dat}\hlopt{$}\hlstd{resp} \hlkwb{=} \hlkwd{cbind}\hlstd{(beetle.dat}\hlopt{$}\hlstd{y, beetle.dat}\hlopt{$}\hlstd{m} \hlopt{-} \hlstd{beetle.dat}\hlopt{$}\hlstd{y)}
+\hlstd{beetle.dat}\hlopt{$}\hlstd{resp} \hlkwb{<-} \hlkwd{cbind}\hlstd{(beetle.dat}\hlopt{$}\hlstd{y, beetle.dat}\hlopt{$}\hlstd{m} \hlopt{-} \hlstd{beetle.dat}\hlopt{$}\hlstd{y)}
 \hlstd{beetle.dat}
 \hlcom{# here we fit a logistic model involving dose}
-\hlstd{model1} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{dose,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),} \hlkwc{data} \hlstd{= beetle.dat)}
+\hlstd{model1} \hlkwb{<-} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{dose,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= logit),} \hlkwc{data} \hlstd{= beetle.dat)}
 \hlkwd{summary}\hlstd{(model1)}
 \hlcom{# here we record deviance residuals in rd1}
-\hlstd{rd1} \hlkwb{=} \hlkwd{residuals.glm}\hlstd{(model1,} \hlstr{"deviance"}\hlstd{)}
-\hlstd{fv1} \hlkwb{=} \hlstd{model1}\hlopt{$}\hlstd{fitted.values}
+\hlstd{rd1} \hlkwb{<-} \hlkwd{residuals.glm}\hlstd{(model1,} \hlstr{"deviance"}\hlstd{)}
+\hlstd{fv1} \hlkwb{<-} \hlstd{model1}\hlopt{$}\hlstd{fitted.values}
 \hlcom{# plotting the deviance residuals by dose and by fitted}
 \hlcom{# values}
 \hlkwd{pdf}\hlstd{(}\hlstr{"beetle-residuals.pdf"}\hlstd{,} \hlkwc{width} \hlstd{=} \hlnum{10}\hlstd{,} \hlkwc{height} \hlstd{=} \hlnum{8}\hlstd{)}
@@ -3529,16 +3529,17 @@ Let $ \delta $ be the \textcolor{Blue}{median lethal/effective dose}.
 \hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlnum{2}\hlstd{)}
 \hlkwd{title}\hlstd{(}\hlstr{"Model 1 - logit link"}\hlstd{)}
 \hlcom{# here we fit a probit model involving dose}
-\hlstd{model2} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{dose,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= probit),} \hlkwc{data} \hlstd{= beetle.dat)}
+\hlstd{model2} \hlkwb{<-} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{dose,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= probit),}
+  \hlkwc{data} \hlstd{= beetle.dat)}
 \hlkwd{summary}\hlstd{(model2)}
-\hlstd{rd2} \hlkwb{=} \hlkwd{residuals.glm}\hlstd{(model2,} \hlstr{"deviance"}\hlstd{)}
-\hlstd{fv2} \hlkwb{=} \hlstd{model2}\hlopt{$}\hlstd{fitted.values}
+\hlstd{rd2} \hlkwb{<-} \hlkwd{residuals.glm}\hlstd{(model2,} \hlstr{"deviance"}\hlstd{)}
+\hlstd{fv2} \hlkwb{<-} \hlstd{model2}\hlopt{$}\hlstd{fitted.values}
 \hlcom{# here we fit a complementary log-log model involving dose}
-\hlstd{model3} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{dose,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= cloglog),}
+\hlstd{model3} \hlkwb{<-} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlstd{dose,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{(}\hlkwc{link} \hlstd{= cloglog),}
   \hlkwc{data} \hlstd{= beetle.dat)}
 \hlkwd{summary}\hlstd{(model3)}
-\hlstd{rd3} \hlkwb{=} \hlkwd{residuals.glm}\hlstd{(model3,} \hlstr{"deviance"}\hlstd{)}
-\hlstd{fv3} \hlkwb{=} \hlstd{model3}\hlopt{$}\hlstd{fitted.values}
+\hlstd{rd3} \hlkwb{<-} \hlkwd{residuals.glm}\hlstd{(model3,} \hlstr{"deviance"}\hlstd{)}
+\hlstd{fv3} \hlkwb{<-} \hlstd{model3}\hlopt{$}\hlstd{fitted.values}
 \hlkwd{plot}\hlstd{(beetle.dat}\hlopt{$}\hlstd{dose, rd2,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{5}\hlstd{,} \hlnum{5}\hlstd{),} \hlkwc{xlab} \hlstd{=} \hlstr{"DOSE"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"DEVIANCE RESIDUALS"}\hlstd{)}
 \hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlopt{-}\hlnum{2}\hlstd{)}
 \hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlnum{2}\hlstd{)}
@@ -3686,22 +3687,22 @@ dose-response curves $ \hat{\pi}(x)=g^{-1}(\hat{\beta}_0+\hat{\beta}_1) $ fit th
 \hlcom{# Plot the dose-response curves}
 \hlkwd{plot}\hlstd{(beetle.dat}\hlopt{$}\hlstd{dose, beetle.dat}\hlopt{$}\hlstd{y}\hlopt{/}\hlstd{beetle.dat}\hlopt{$}\hlstd{m,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1.65}\hlstd{,}
   \hlnum{1.95}\hlstd{),} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1}\hlstd{),} \hlkwc{xlab} \hlstd{=} \hlstr{"DOSE"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"PROBABILITY OF DEATH"}\hlstd{)}
-\hlstd{x} \hlkwb{=} \hlkwd{seq}\hlstd{(}\hlnum{1.65}\hlstd{,} \hlnum{1.95}\hlstd{,} \hlkwc{by} \hlstd{=} \hlnum{0.001}\hlstd{)}
-\hlstd{prob} \hlkwb{=} \hlkwd{as.vector}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwd{length}\hlstd{(x)))}
-\hlstd{beta} \hlkwb{=} \hlkwd{as.vector}\hlstd{(model1}\hlopt{$}\hlstd{coefficients)}  \hlcom{# logistic model}
+\hlstd{x} \hlkwb{<-} \hlkwd{seq}\hlstd{(}\hlnum{1.65}\hlstd{,} \hlnum{1.95}\hlstd{,} \hlkwc{by} \hlstd{=} \hlnum{0.001}\hlstd{)}
+\hlstd{prob} \hlkwb{<-} \hlkwd{as.vector}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwd{length}\hlstd{(x)))}
+\hlstd{beta} \hlkwb{<-} \hlkwd{as.vector}\hlstd{(model1}\hlopt{$}\hlstd{coefficients)}  \hlcom{# logistic model}
 \hlkwa{for} \hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(x)) \{}
-  \hlstd{prob[i]} \hlkwb{=} \hlkwd{exp}\hlstd{(beta[}\hlnum{1}\hlstd{]} \hlopt{+} \hlstd{beta[}\hlnum{2}\hlstd{]} \hlopt{*} \hlstd{x[i])}\hlopt{/}\hlstd{(}\hlnum{1} \hlopt{+} \hlkwd{exp}\hlstd{(beta[}\hlnum{1}\hlstd{]} \hlopt{+}
+  \hlstd{prob[i]} \hlkwb{<-} \hlkwd{exp}\hlstd{(beta[}\hlnum{1}\hlstd{]} \hlopt{+} \hlstd{beta[}\hlnum{2}\hlstd{]} \hlopt{*} \hlstd{x[i])}\hlopt{/}\hlstd{(}\hlnum{1} \hlopt{+} \hlkwd{exp}\hlstd{(beta[}\hlnum{1}\hlstd{]} \hlopt{+}
     \hlstd{beta[}\hlnum{2}\hlstd{]} \hlopt{*} \hlstd{x[i]))}
 \hlstd{\}}
 \hlkwd{lines}\hlstd{(x, prob,} \hlkwc{lty} \hlstd{=} \hlnum{2}\hlstd{)}
-\hlstd{beta} \hlkwb{=} \hlkwd{as.vector}\hlstd{(model2}\hlopt{$}\hlstd{coefficients)}  \hlcom{# probit model}
+\hlstd{beta} \hlkwb{<-} \hlkwd{as.vector}\hlstd{(model2}\hlopt{$}\hlstd{coefficients)}  \hlcom{# probit model}
 \hlkwa{for} \hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(x)) \{}
-  \hlstd{prob[i]} \hlkwb{=} \hlkwd{pnorm}\hlstd{(beta[}\hlnum{1}\hlstd{]} \hlopt{+} \hlstd{beta[}\hlnum{2}\hlstd{]} \hlopt{*} \hlstd{x[i])}
+  \hlstd{prob[i]} \hlkwb{<-} \hlkwd{pnorm}\hlstd{(beta[}\hlnum{1}\hlstd{]} \hlopt{+} \hlstd{beta[}\hlnum{2}\hlstd{]} \hlopt{*} \hlstd{x[i])}
 \hlstd{\}}
 \hlkwd{lines}\hlstd{(x, prob,} \hlkwc{lty} \hlstd{=} \hlnum{5}\hlstd{)}
-\hlstd{beta} \hlkwb{=} \hlkwd{as.vector}\hlstd{(model3}\hlopt{$}\hlstd{coefficients)}  \hlcom{# cloglog model}
+\hlstd{beta} \hlkwb{<-} \hlkwd{as.vector}\hlstd{(model3}\hlopt{$}\hlstd{coefficients)}  \hlcom{# cloglog model}
 \hlkwa{for} \hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(x)) \{}
-  \hlstd{prob[i]} \hlkwb{=} \hlnum{1} \hlopt{-} \hlkwd{exp}\hlstd{(}\hlopt{-}\hlkwd{exp}\hlstd{(beta[}\hlnum{1}\hlstd{]} \hlopt{+} \hlstd{beta[}\hlnum{2}\hlstd{]} \hlopt{*} \hlstd{x[i]))}
+  \hlstd{prob[i]} \hlkwb{<-} \hlnum{1} \hlopt{-} \hlkwd{exp}\hlstd{(}\hlopt{-}\hlkwd{exp}\hlstd{(beta[}\hlnum{1}\hlstd{]} \hlopt{+} \hlstd{beta[}\hlnum{2}\hlstd{]} \hlopt{*} \hlstd{x[i]))}
 \hlstd{\}}
 \hlkwd{lines}\hlstd{(x, prob,} \hlkwc{lty} \hlstd{=} \hlnum{1}\hlstd{)}
 \hlkwd{legend}\hlstd{(}\hlnum{1.65}\hlstd{,} \hlnum{1}\hlstd{,} \hlkwd{c}\hlstd{(}\hlstr{"LOGIT"}\hlstd{,} \hlstr{"PROBIT"}\hlstd{,} \hlstr{"CLOGLOG"}\hlstd{),} \hlkwc{lty} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,} \hlnum{5}\hlstd{,}
@@ -4379,7 +4380,7 @@ Model 2: LC ~ AG + YR + BK
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{# put explanatory variables in expected order}
-\hlstd{myGlm5b} \hlkwb{=} \hlkwd{glm}\hlstd{(LC} \hlopt{~} \hlstd{BK} \hlopt{+} \hlstd{AG} \hlopt{+} \hlstd{YR,} \hlkwc{family} \hlstd{= binomial)}
+\hlstd{myGlm5b} \hlkwb{<-} \hlkwd{glm}\hlstd{(LC} \hlopt{~} \hlstd{BK} \hlopt{+} \hlstd{AG} \hlopt{+} \hlstd{YR,} \hlkwc{family} \hlstd{= binomial)}
 \hlkwd{summary}\hlstd{(myGlm5b)}\hlopt{$}\hlstd{coefficients}
 \end{alltt}
 \begin{verbatim}
@@ -4464,10 +4465,10 @@ Estimate:
 [1] 1.030312 1.127322
 \end{verbatim}
 \begin{alltt}
-\hlstd{expit} \hlkwb{=} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{) \{}
+\hlstd{expit} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{) \{}
   \hlkwd{exp}\hlstd{(x)}\hlopt{/}\hlstd{(}\hlnum{1} \hlopt{+} \hlkwd{exp}\hlstd{(x))}
 \hlstd{\}}
-\hlstd{x} \hlkwb{=} \hlkwd{as.matrix}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{50}\hlstd{,} \hlnum{0}\hlstd{),} \hlkwc{ncol} \hlstd{=} \hlnum{1}\hlstd{)}  \hlcom{# 50-year-old non-smoker, non-birdkeeper}
+\hlstd{x} \hlkwb{<-} \hlkwd{as.matrix}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{50}\hlstd{,} \hlnum{0}\hlstd{),} \hlkwc{ncol} \hlstd{=} \hlnum{1}\hlstd{)}  \hlcom{# 50-year-old non-smoker, non-birdkeeper}
 \hlkwd{expit}\hlstd{(}\hlkwd{t}\hlstd{(x)} \hlopt{%*%} \hlstd{myGlm5b}\hlopt{$}\hlstd{coefficients)}
 \end{alltt}
 \begin{verbatim}
@@ -4475,7 +4476,7 @@ Estimate:
 [1,] 0.03427361
 \end{verbatim}
 \begin{alltt}
-\hlstd{v} \hlkwb{=} \hlkwd{summary}\hlstd{(myGlm5b)}\hlopt{$}\hlstd{cov.unscaled}
+\hlstd{v} \hlkwb{<-} \hlkwd{summary}\hlstd{(myGlm5b)}\hlopt{$}\hlstd{cov.unscaled}
 \hlkwd{t}\hlstd{(x)} \hlopt{%*%} \hlstd{v} \hlopt{%*%} \hlstd{x}  \hlcom{# Var(beta_0 + 50 beta_4)}
 \end{alltt}
 \begin{verbatim}
@@ -5423,8 +5424,8 @@ type C. A 95\% confidence interval for this relative rate is $(1.04, 3.79)$.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{x} \hlkwb{=} \hlkwd{as.matrix}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlopt{-}\hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{),} \hlkwc{ncol} \hlstd{=} \hlnum{1}\hlstd{)}
-\hlstd{v} \hlkwb{=} \hlkwd{summary}\hlstd{(model1)}\hlopt{$}\hlstd{cov.unscaled}
+\hlstd{x} \hlkwb{<-} \hlkwd{as.matrix}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlopt{-}\hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{),} \hlkwc{ncol} \hlstd{=} \hlnum{1}\hlstd{)}
+\hlstd{v} \hlkwb{<-} \hlkwd{summary}\hlstd{(model1)}\hlopt{$}\hlstd{cov.unscaled}
 \hlkwd{sqrt}\hlstd{(}\hlkwd{t}\hlstd{(x)} \hlopt{%*%} \hlstd{v} \hlopt{%*%} \hlstd{x)}
 \end{alltt}
 \begin{verbatim}
@@ -5487,8 +5488,8 @@ type C. A 95\% confidence interval for this relative rate is $(1.04, 3.79)$.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{x} \hlkwb{=} \hlkwd{as.matrix}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{),} \hlkwc{ncol} \hlstd{=} \hlnum{1}\hlstd{)}
-\hlstd{v} \hlkwb{=} \hlkwd{summary}\hlstd{(model1)}\hlopt{$}\hlstd{cov.unscaled}
+\hlstd{x} \hlkwb{<-} \hlkwd{as.matrix}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{),} \hlkwc{ncol} \hlstd{=} \hlnum{1}\hlstd{)}
+\hlstd{v} \hlkwb{<-} \hlkwd{summary}\hlstd{(model1)}\hlopt{$}\hlstd{cov.unscaled}
 \hlkwd{t}\hlstd{(x)} \hlopt{%*%} \hlstd{model1}\hlopt{$}\hlstd{coeff}
 \end{alltt}
 \begin{verbatim}
@@ -5627,8 +5628,9 @@ We will consider three other types of data we can analyse with a Poisson GLM:
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{melanoma} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlstr{"melanoma.txt"}\hlstd{,} \hlkwc{header} \hlstd{= T)}
-\hlstd{melanoma}\hlopt{$}\hlstd{resp} \hlkwb{=} \hlkwd{cbind}\hlstd{(melanoma}\hlopt{$}\hlstd{Count, melanoma}\hlopt{$}\hlstd{Population} \hlopt{-} \hlstd{melanoma}\hlopt{$}\hlstd{Count)}
-\hlstd{fit.binomial} \hlkwb{=} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlkwd{factor}\hlstd{(City)} \hlopt{+} \hlkwd{factor}\hlstd{(Age),} \hlkwc{family} \hlstd{= binomial,}
+\hlstd{melanoma}\hlopt{$}\hlstd{resp} \hlkwb{<-} \hlkwd{cbind}\hlstd{(melanoma}\hlopt{$}\hlstd{Count, melanoma}\hlopt{$}\hlstd{Population} \hlopt{-}
+  \hlstd{melanoma}\hlopt{$}\hlstd{Count)}
+\hlstd{fit.binomial} \hlkwb{<-} \hlkwd{glm}\hlstd{(resp} \hlopt{~} \hlkwd{factor}\hlstd{(City)} \hlopt{+} \hlkwd{factor}\hlstd{(Age),} \hlkwc{family} \hlstd{= binomial,}
   \hlkwc{data} \hlstd{= melanoma)}
 \hlkwd{summary}\hlstd{(fit.binomial)}
 \end{alltt}
@@ -5673,7 +5675,7 @@ Number of Fisher Scoring iterations: 4
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{fit.poisson} \hlkwb{=} \hlkwd{glm}\hlstd{(Count} \hlopt{~} \hlkwd{factor}\hlstd{(City)} \hlopt{+} \hlkwd{factor}\hlstd{(Age)} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(Population)),}
+\hlstd{fit.poisson} \hlkwb{<-} \hlkwd{glm}\hlstd{(Count} \hlopt{~} \hlkwd{factor}\hlstd{(City)} \hlopt{+} \hlkwd{factor}\hlstd{(Age)} \hlopt{+} \hlkwd{offset}\hlstd{(}\hlkwd{log}\hlstd{(Population)),}
   \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= melanoma)}
 \hlkwd{summary}\hlstd{(fit.poisson)}
 \end{alltt}
@@ -6741,24 +6743,24 @@ Number of Fisher Scoring iterations: 5
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{derm.dat} \hlkwb{=} \hlkwd{read.table}\hlstd{(}\hlstr{"derm.dat"}\hlstd{,} \hlkwc{header} \hlstd{= T)}
-\hlstd{derm.dat}\hlopt{$}\hlstd{typef} \hlkwb{=} \hlkwd{factor}\hlstd{(derm.dat}\hlopt{$}\hlstd{type)}
-\hlstd{derm.dat}\hlopt{$}\hlstd{sitef} \hlkwb{=} \hlkwd{factor}\hlstd{(derm.dat}\hlopt{$}\hlstd{locat)}
+\hlstd{derm.dat} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlstr{"derm.dat"}\hlstd{,} \hlkwc{header} \hlstd{= T)}
+\hlstd{derm.dat}\hlopt{$}\hlstd{typef} \hlkwb{<-} \hlkwd{factor}\hlstd{(derm.dat}\hlopt{$}\hlstd{type)}
+\hlstd{derm.dat}\hlopt{$}\hlstd{sitef} \hlkwb{<-} \hlkwd{factor}\hlstd{(derm.dat}\hlopt{$}\hlstd{locat)}
 \hlstd{derm.dat}
 \hlcom{# fitting the model with both main effects}
-\hlstd{model1} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef} \hlopt{+} \hlstd{sitef,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= derm.dat)}
+\hlstd{model1} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef} \hlopt{+} \hlstd{sitef,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= derm.dat)}
 \hlkwd{summary}\hlstd{(model1)}
 \hlcom{# creating deviance residuals for diagnostic plots}
-\hlstd{derm.dat}\hlopt{$}\hlstd{fitted.values} \hlkwb{=} \hlstd{model1}\hlopt{$}\hlstd{fitted.values}
-\hlstd{derm.dat}\hlopt{$}\hlstd{rdeviance} \hlkwb{=} \hlkwd{residuals.glm}\hlstd{(model1,} \hlkwc{type} \hlstd{=} \hlstr{"deviance"}\hlstd{)}
+\hlstd{derm.dat}\hlopt{$}\hlstd{fitted.values} \hlkwb{<-} \hlstd{model1}\hlopt{$}\hlstd{fitted.values}
+\hlstd{derm.dat}\hlopt{$}\hlstd{rdeviance} \hlkwb{<-} \hlkwd{residuals.glm}\hlstd{(model1,} \hlkwc{type} \hlstd{=} \hlstr{"deviance"}\hlstd{)}
 \hlstd{derm.dat}
 \hlcom{# fitting the model with only the 'histological type' main}
 \hlcom{# effect}
-\hlstd{model2} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= derm.dat)}
+\hlstd{model2} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= derm.dat)}
 \hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model2}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{deviance, model2}\hlopt{$}\hlstd{df.residual} \hlopt{-}
   \hlstd{model1}\hlopt{$}\hlstd{df.residual)}
 \hlcom{# fitting the model with only the 'site' main effect}
-\hlstd{model3} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{sitef,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= derm.dat)}
+\hlstd{model3} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{sitef,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= derm.dat)}
 \hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model3}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{deviance, model3}\hlopt{$}\hlstd{df.residual} \hlopt{-}
   \hlstd{model1}\hlopt{$}\hlstd{df.residual)}
 \end{alltt}
@@ -6777,7 +6779,7 @@ Number of Fisher Scoring iterations: 5
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{model1} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef} \hlopt{+} \hlstd{sitef,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= derm.dat)}
+\hlstd{model1} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef} \hlopt{+} \hlstd{sitef,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= derm.dat)}
 \hlkwd{summary}\hlstd{(model1)}
 \end{alltt}
 \begin{verbatim}
@@ -6876,7 +6878,7 @@ Number of Fisher Scoring iterations: 5
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{model2} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= derm.dat)}
+\hlstd{model2} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{typef,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= derm.dat)}
 \hlkwd{summary}\hlstd{(model2)}
 \end{alltt}
 \begin{verbatim}
@@ -6936,7 +6938,7 @@ Number of Fisher Scoring iterations: 5
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{model3} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{sitef,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= derm.dat)}
+\hlstd{model3} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{sitef,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= derm.dat)}
 \hlkwd{summary}\hlstd{(model3)}
 \end{alltt}
 \begin{verbatim}
@@ -7042,17 +7044,17 @@ Number of Fisher Scoring iterations: 5
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{# Breast Self-Examination Contingency Table Analysis}
-\hlstd{y} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{91}\hlstd{,} \hlnum{90}\hlstd{,} \hlnum{51}\hlstd{,} \hlnum{150}\hlstd{,} \hlnum{200}\hlstd{,} \hlnum{155}\hlstd{,} \hlnum{109}\hlstd{,} \hlnum{198}\hlstd{,} \hlnum{172}\hlstd{)}
-\hlstd{Age} \hlkwb{=} \hlkwd{as.factor}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{3}\hlstd{))}
-\hlstd{Freq} \hlkwb{=} \hlkwd{as.factor}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{))}
-\hlstd{Exam} \hlkwb{=} \hlkwd{data.frame}\hlstd{(Age, Freq, y)}
+\hlstd{y} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{91}\hlstd{,} \hlnum{90}\hlstd{,} \hlnum{51}\hlstd{,} \hlnum{150}\hlstd{,} \hlnum{200}\hlstd{,} \hlnum{155}\hlstd{,} \hlnum{109}\hlstd{,} \hlnum{198}\hlstd{,} \hlnum{172}\hlstd{)}
+\hlstd{Age} \hlkwb{<-} \hlkwd{as.factor}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{3}\hlstd{))}
+\hlstd{Freq} \hlkwb{<-} \hlkwd{as.factor}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{))}
+\hlstd{Exam} \hlkwb{<-} \hlkwd{data.frame}\hlstd{(Age, Freq, y)}
 \hlcom{# Fit main effects log linear model}
-\hlstd{model1} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{Age} \hlopt{+} \hlstd{Freq,} \hlkwc{family} \hlstd{= poisson)}
+\hlstd{model1} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{Age} \hlopt{+} \hlstd{Freq,} \hlkwc{family} \hlstd{= poisson)}
 \hlkwd{summary}\hlstd{(model1)}
 \hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model1}\hlopt{$}\hlstd{deviance, model1}\hlopt{$}\hlstd{df.residual)}
 \hlcom{# Examine fitted values and deviance residuals}
-\hlstd{Exam}\hlopt{$}\hlstd{fv} \hlkwb{=} \hlstd{model1}\hlopt{$}\hlstd{fitted.values}
-\hlstd{Exam}\hlopt{$}\hlstd{rd} \hlkwb{=} \hlkwd{residuals.glm}\hlstd{(model1,} \hlkwc{type} \hlstd{=} \hlstr{"deviance"}\hlstd{)}
+\hlstd{Exam}\hlopt{$}\hlstd{fv} \hlkwb{<-} \hlstd{model1}\hlopt{$}\hlstd{fitted.values}
+\hlstd{Exam}\hlopt{$}\hlstd{rd} \hlkwb{<-} \hlkwd{residuals.glm}\hlstd{(model1,} \hlkwc{type} \hlstd{=} \hlstr{"deviance"}\hlstd{)}
 \hlstd{Exam}
 \end{alltt}
 \end{kframe}
@@ -7064,7 +7066,7 @@ Number of Fisher Scoring iterations: 5
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{# Fit main effects log linear model}
-\hlstd{model1} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{Age} \hlopt{+} \hlstd{Freq,} \hlkwc{family} \hlstd{= poisson)}
+\hlstd{model1} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{Age} \hlopt{+} \hlstd{Freq,} \hlkwc{family} \hlstd{= poisson)}
 \hlkwd{summary}\hlstd{(model1)}
 \end{alltt}
 \begin{verbatim}
@@ -7103,8 +7105,8 @@ Number of Fisher Scoring iterations: 4
 [1] 4.602407e-05
 \end{verbatim}
 \begin{alltt}
-\hlstd{Exam}\hlopt{$}\hlstd{fv} \hlkwb{=} \hlstd{model1}\hlopt{$}\hlstd{fitted.values}
-\hlstd{Exam}\hlopt{$}\hlstd{rd} \hlkwb{=} \hlkwd{residuals.glm}\hlstd{(model1,} \hlkwc{type} \hlstd{=} \hlstr{"deviance"}\hlstd{)}
+\hlstd{Exam}\hlopt{$}\hlstd{fv} \hlkwb{<-} \hlstd{model1}\hlopt{$}\hlstd{fitted.values}
+\hlstd{Exam}\hlopt{$}\hlstd{rd} \hlkwb{<-} \hlkwd{residuals.glm}\hlstd{(model1,} \hlkwc{type} \hlstd{=} \hlstr{"deviance"}\hlstd{)}
 \hlstd{Exam}
 \end{alltt}
 \begin{verbatim}
@@ -7360,21 +7362,21 @@ These are called \textcolor{Blue}{hierarchical} log-linear models:
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{## Input the data for the 5 x 7 x 2 contingency table}
-\hlstd{freq} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{32}\hlstd{,} \hlnum{67}\hlstd{,} \hlnum{12}\hlstd{,} \hlnum{23}\hlstd{,} \hlnum{16}\hlstd{,} \hlnum{20}\hlstd{,} \hlnum{85}\hlstd{,} \hlnum{14}\hlstd{,} \hlnum{21}\hlstd{,} \hlnum{9}\hlstd{,} \hlnum{18}\hlstd{,} \hlnum{63}\hlstd{,} \hlnum{6}\hlstd{,} \hlnum{29}\hlstd{,}
+\hlstd{freq} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{32}\hlstd{,} \hlnum{67}\hlstd{,} \hlnum{12}\hlstd{,} \hlnum{23}\hlstd{,} \hlnum{16}\hlstd{,} \hlnum{20}\hlstd{,} \hlnum{85}\hlstd{,} \hlnum{14}\hlstd{,} \hlnum{21}\hlstd{,} \hlnum{9}\hlstd{,} \hlnum{18}\hlstd{,} \hlnum{63}\hlstd{,} \hlnum{6}\hlstd{,} \hlnum{29}\hlstd{,}
   \hlnum{12}\hlstd{,} \hlnum{29}\hlstd{,} \hlnum{68}\hlstd{,} \hlnum{9}\hlstd{,} \hlnum{20}\hlstd{,} \hlnum{13}\hlstd{,} \hlnum{11}\hlstd{,} \hlnum{48}\hlstd{,} \hlnum{13}\hlstd{,} \hlnum{19}\hlstd{,} \hlnum{7}\hlstd{,} \hlnum{12}\hlstd{,} \hlnum{65}\hlstd{,} \hlnum{17}\hlstd{,} \hlnum{32}\hlstd{,}
   \hlnum{14}\hlstd{,} \hlnum{9}\hlstd{,} \hlnum{44}\hlstd{,} \hlnum{6}\hlstd{,} \hlnum{20}\hlstd{,} \hlnum{13}\hlstd{,} \hlnum{31}\hlstd{,} \hlnum{118}\hlstd{,} \hlnum{20}\hlstd{,} \hlnum{33}\hlstd{,} \hlnum{38}\hlstd{,} \hlnum{25}\hlstd{,} \hlnum{98}\hlstd{,} \hlnum{16}\hlstd{,} \hlnum{23}\hlstd{,}
   \hlnum{20}\hlstd{,} \hlnum{16}\hlstd{,} \hlnum{69}\hlstd{,} \hlnum{13}\hlstd{,} \hlnum{28}\hlstd{,} \hlnum{8}\hlstd{,} \hlnum{58}\hlstd{,} \hlnum{88}\hlstd{,} \hlnum{13}\hlstd{,} \hlnum{11}\hlstd{,} \hlnum{13}\hlstd{,} \hlnum{8}\hlstd{,} \hlnum{30}\hlstd{,} \hlnum{7}\hlstd{,} \hlnum{16}\hlstd{,}
   \hlnum{3}\hlstd{,} \hlnum{8}\hlstd{,} \hlnum{82}\hlstd{,} \hlnum{16}\hlstd{,} \hlnum{44}\hlstd{,} \hlnum{13}\hlstd{,} \hlnum{16}\hlstd{,} \hlnum{54}\hlstd{,} \hlnum{7}\hlstd{,} \hlnum{23}\hlstd{,} \hlnum{9}\hlstd{)}
-\hlstd{names} \hlkwb{=} \hlkwd{list}\hlstd{(}\hlkwc{D} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"LT HSc"}\hlstd{,} \hlstr{"HSc"}\hlstd{,} \hlstr{"JunCol"}\hlstd{,} \hlstr{"Bachelor"}\hlstd{,} \hlstr{"Graduate"}\hlstd{),}
+\hlstd{names} \hlkwb{<-} \hlkwd{list}\hlstd{(}\hlkwc{D} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"LT HSc"}\hlstd{,} \hlstr{"HSc"}\hlstd{,} \hlstr{"JunCol"}\hlstd{,} \hlstr{"Bachelor"}\hlstd{,} \hlstr{"Graduate"}\hlstd{),}
   \hlkwc{P} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"1"}\hlstd{,} \hlstr{"2"}\hlstd{,} \hlstr{"3"}\hlstd{,} \hlstr{"4"}\hlstd{,} \hlstr{"5"}\hlstd{,} \hlstr{"6"}\hlstd{,} \hlstr{"7"}\hlstd{),} \hlkwc{G} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"male"}\hlstd{,} \hlstr{"female"}\hlstd{))}
-\hlstd{party.3D} \hlkwb{=} \hlkwd{array}\hlstd{(freq,} \hlkwd{c}\hlstd{(}\hlnum{5}\hlstd{,} \hlnum{7}\hlstd{,} \hlnum{2}\hlstd{),} \hlkwc{dimnames} \hlstd{= names)}
+\hlstd{party.3D} \hlkwb{<-} \hlkwd{array}\hlstd{(freq,} \hlkwd{c}\hlstd{(}\hlnum{5}\hlstd{,} \hlnum{7}\hlstd{,} \hlnum{2}\hlstd{),} \hlkwc{dimnames} \hlstd{= names)}
 \hlcom{## Flattened contingency table}
 \hlkwd{library}\hlstd{(plyr)}
-\hlstd{party} \hlkwb{=} \hlkwd{count}\hlstd{(}\hlkwd{as.table}\hlstd{(party.3D))}
-\hlstd{party} \hlkwb{=} \hlstd{party[,} \hlnum{1}\hlopt{:}\hlnum{4}\hlstd{]}
-\hlkwd{names}\hlstd{(party)} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlstr{"D"}\hlstd{,} \hlstr{"P"}\hlstd{,} \hlstr{"G"}\hlstd{,} \hlstr{"Y"}\hlstd{)}
+\hlstd{party} \hlkwb{<-} \hlkwd{count}\hlstd{(}\hlkwd{as.table}\hlstd{(party.3D))}
+\hlstd{party} \hlkwb{<-} \hlstd{party[,} \hlnum{1}\hlopt{:}\hlnum{4}\hlstd{]}
+\hlkwd{names}\hlstd{(party)} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"D"}\hlstd{,} \hlstr{"P"}\hlstd{,} \hlstr{"G"}\hlstd{,} \hlstr{"Y"}\hlstd{)}
 \hlcom{# Fit the saturated model}
-\hlstd{model1} \hlkwb{=} \hlkwd{glm}\hlstd{(Y} \hlopt{~} \hlstd{G} \hlopt{*} \hlstd{D} \hlopt{*} \hlstd{P,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= party)}
+\hlstd{model1} \hlkwb{<-} \hlkwd{glm}\hlstd{(Y} \hlopt{~} \hlstd{G} \hlopt{*} \hlstd{D} \hlopt{*} \hlstd{P,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= party)}
 \hlstd{model1}\hlopt{$}\hlstd{df.residual}
 \hlstd{model1}\hlopt{$}\hlstd{deviance}
 \hlcom{# Fit the homogeneous association model}
@@ -7421,7 +7423,7 @@ These are called \textcolor{Blue}{hierarchical} log-linear models:
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{# Fit the saturated model}
-\hlstd{model1} \hlkwb{=} \hlkwd{glm}\hlstd{(Y} \hlopt{~} \hlstd{G} \hlopt{*} \hlstd{D} \hlopt{*} \hlstd{P,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= party)}
+\hlstd{model1} \hlkwb{<-} \hlkwd{glm}\hlstd{(Y} \hlopt{~} \hlstd{G} \hlopt{*} \hlstd{D} \hlopt{*} \hlstd{P,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= party)}
 \hlstd{model1}\hlopt{$}\hlstd{df.residual}
 \end{alltt}
 \begin{verbatim}
@@ -7695,37 +7697,37 @@ We now consider the special case of a $ 2\times 2\times 2 $ table.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{acc.dat}\hlopt{$}\hlstd{s} \hlkwb{=} \hlkwd{factor}\hlstd{(acc.dat}\hlopt{$}\hlstd{s)}
-\hlstd{acc.dat}\hlopt{$}\hlstd{e} \hlkwb{=} \hlkwd{factor}\hlstd{(acc.dat}\hlopt{$}\hlstd{e)}
-\hlstd{acc.dat}\hlopt{$}\hlstd{i} \hlkwb{=} \hlkwd{factor}\hlstd{(acc.dat}\hlopt{$}\hlstd{i)}
+\hlstd{acc.dat}\hlopt{$}\hlstd{s} \hlkwb{<-} \hlkwd{factor}\hlstd{(acc.dat}\hlopt{$}\hlstd{s)}
+\hlstd{acc.dat}\hlopt{$}\hlstd{e} \hlkwb{<-} \hlkwd{factor}\hlstd{(acc.dat}\hlopt{$}\hlstd{e)}
+\hlstd{acc.dat}\hlopt{$}\hlstd{i} \hlkwb{<-} \hlkwd{factor}\hlstd{(acc.dat}\hlopt{$}\hlstd{i)}
 \hlcom{# Model 1: (VWZ) Saturated}
-\hlstd{model1} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{e} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
+\hlstd{model1} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{e} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
 \hlkwd{summary}\hlstd{(model1)}
 \hlcom{# Model 2 (VW,VZ,WZ) Homogeneous Association (test vs Model}
 \hlcom{# 1)}
-\hlstd{model2} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{e} \hlopt{+} \hlstd{s} \hlopt{*} \hlstd{i} \hlopt{+} \hlstd{e} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
+\hlstd{model2} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{e} \hlopt{+} \hlstd{s} \hlopt{*} \hlstd{i} \hlopt{+} \hlstd{e} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
 \hlkwd{summary}\hlstd{(model2)}
 \hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model2}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model1}\hlopt{$}\hlstd{deviance, model2}\hlopt{$}\hlstd{df.residual} \hlopt{-}
   \hlstd{model1}\hlopt{$}\hlstd{df.residual)}
-\hlstd{acc.dat}\hlopt{$}\hlstd{fv} \hlkwb{=} \hlstd{model2}\hlopt{$}\hlstd{fitted.values}
+\hlstd{acc.dat}\hlopt{$}\hlstd{fv} \hlkwb{<-} \hlstd{model2}\hlopt{$}\hlstd{fitted.values}
 \hlstd{acc.dat}
 \hlcom{# Model 3: (VW, VZ) Conditional Independence Model (test vs}
 \hlcom{# Model 2)}
-\hlstd{model3} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{e} \hlopt{+} \hlstd{s} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
+\hlstd{model3} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{e} \hlopt{+} \hlstd{s} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
 \hlstd{model3}\hlopt{$}\hlstd{df.residual}
 \hlstd{model3}\hlopt{$}\hlstd{deviance}
 \hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model3}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model2}\hlopt{$}\hlstd{deviance, model3}\hlopt{$}\hlstd{df.residual} \hlopt{-}
   \hlstd{model2}\hlopt{$}\hlstd{df.residual)}
 \hlcom{# Model 4: (VW, WZ) Conditional Independence Model (test vs}
 \hlcom{# Model 2)}
-\hlstd{model4} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{e} \hlopt{+} \hlstd{e} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
+\hlstd{model4} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{e} \hlopt{+} \hlstd{e} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
 \hlstd{model4}\hlopt{$}\hlstd{df.residual}
 \hlstd{model4}\hlopt{$}\hlstd{deviance}
 \hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model4}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model2}\hlopt{$}\hlstd{deviance, model4}\hlopt{$}\hlstd{df.residual} \hlopt{-}
   \hlstd{model2}\hlopt{$}\hlstd{df.residual)}
 \hlcom{# Model 5: (VZ, WZ) Conditional Independence Model (test vs}
 \hlcom{# Model 2)}
-\hlstd{model5} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{i} \hlopt{+} \hlstd{e} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
+\hlstd{model5} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{i} \hlopt{+} \hlstd{e} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
 \hlstd{model5}\hlopt{$}\hlstd{df.residual}
 \hlstd{model5}\hlopt{$}\hlstd{deviance}
 \hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(model5}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{model2}\hlopt{$}\hlstd{deviance, model5}\hlopt{$}\hlstd{df.residual} \hlopt{-}
@@ -7817,7 +7819,7 @@ Number of Fisher Scoring iterations: 3
 [1] 0.09114565
 \end{verbatim}
 \begin{alltt}
-\hlstd{acc.dat}\hlopt{$}\hlstd{fv} \hlkwb{=} \hlstd{model2}\hlopt{$}\hlstd{fitted.values}
+\hlstd{acc.dat}\hlopt{$}\hlstd{fv} \hlkwb{<-} \hlstd{model2}\hlopt{$}\hlstd{fitted.values}
 \hlstd{acc.dat}
 \end{alltt}
 \begin{verbatim}
@@ -7847,7 +7849,7 @@ Number of Fisher Scoring iterations: 3
 \begin{alltt}
 \hlcom{# Model 3: (VW, VZ) Conditional Independence Model (test vs}
 \hlcom{# Model 2)}
-\hlstd{model3} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{e} \hlopt{+} \hlstd{s} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
+\hlstd{model3} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{e} \hlopt{+} \hlstd{s} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
 \hlstd{model3}\hlopt{$}\hlstd{df.residual}
 \end{alltt}
 \begin{verbatim}
@@ -7869,7 +7871,7 @@ Number of Fisher Scoring iterations: 3
 \begin{alltt}
 \hlcom{# Model 4: (VW, WZ) Conditional Independence Model (test vs}
 \hlcom{# Model 2)}
-\hlstd{model4} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{e} \hlopt{+} \hlstd{e} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
+\hlstd{model4} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{e} \hlopt{+} \hlstd{e} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
 \hlstd{model4}\hlopt{$}\hlstd{df.residual}
 \end{alltt}
 \begin{verbatim}
@@ -7891,7 +7893,7 @@ Number of Fisher Scoring iterations: 3
 \begin{alltt}
 \hlcom{# Model 5: (VZ, WZ) Conditional Independence Model (test vs}
 \hlcom{# Model 2)}
-\hlstd{model5} \hlkwb{=} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{i} \hlopt{+} \hlstd{e} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
+\hlstd{model5} \hlkwb{<-} \hlkwd{glm}\hlstd{(y} \hlopt{~} \hlstd{s} \hlopt{*} \hlstd{i} \hlopt{+} \hlstd{e} \hlopt{*} \hlstd{i,} \hlkwc{family} \hlstd{= poisson,} \hlkwc{data} \hlstd{= acc.dat)}
 \hlstd{model5}\hlopt{$}\hlstd{df.residual}
 \end{alltt}
 \begin{verbatim}
@@ -8686,95 +8688,76 @@ Number of Fisher Scoring iterations: 5
 \subsection*{Methods for Handling Overdispersion}
 \addcontentsline{toc}{subsection}{Overdispersion}
 \begin{enumerate}[1.]
-    \item \textcolor{Blue}{Ad hoc Method}:
-          \begin{enumerate}[1.]
-              \item Fit the usual GLM to the data and find the best fitting model.
-              \item Check for evidence of overdispersion (i.e., $ D\gg n-p $).
-              \item If overdispersion is present, estimate
-                    \[ \hat{\phi}=\frac{D}{n-p}. \]
-              \item Adjusted covariance matrix and standard error estimates
-                    \[ \Covadj{\hat{\Vector{\beta}}}\simeq \hat{\phi}\Cov{\hat{\Vector{\beta}}}=\hat{\phi}\mathcal{I}^{-1},
-                        \qquad \seadj{\hat{\beta}_j}=\sqrt{\hat{\phi}}\se{\hat{\beta}_j}. \]
-          \end{enumerate}
-    \item \textcolor{Blue}{Mixed Model Method}:
-          \begin{itemize}
-              \item For a Poisson model, let $ Y_i\mid u_i \sim \POI{u_i\lambda} $.
-              \item Introduce \textcolor{Blue}{dispersion factor} $ u_i \sim \GAM{\alpha=1/\phi,\beta=\phi} $.
-              \item Then, $ Y_i \sim \NB{a=1/\phi,b=\lambda\phi} $ with $ \E{Y_i}=\lambda_i $ and $ \Var{Y_i}=\lambda_i(1+\lambda_i\phi) $.
-          \end{itemize}
+      \item \textcolor{Blue}{Ad hoc Method}:
+            \begin{enumerate}[1.]
+                  \item Fit the usual GLM to the data and find the best fitting model.
+                  \item Check for evidence of overdispersion (i.e., $ D\gg n-p $).
+                  \item If overdispersion is present, estimate
+                        \[ \hat{\phi}=\frac{D}{n-p}. \]
+                  \item Adjusted covariance matrix and standard error estimates
+                        \[ \Covadj{\hat{\Vector{\beta}}}\simeq \hat{\phi}\Cov{\hat{\Vector{\beta}}}=\hat{\phi}\mathcal{I}^{-1},
+                              \qquad \seadj{\hat{\beta}_j}=\sqrt{\hat{\phi}}\se{\hat{\beta}_j}. \]
+            \end{enumerate}
+      \item \textcolor{Blue}{Mixed Model Method}:
+            \begin{itemize}
+                  \item For a Poisson model, let $ Y_i\mid u_i \sim \POI{u_i\lambda} $.
+                  \item Introduce \textcolor{Blue}{dispersion factor} $ u_i \sim \GAM{\alpha=1/\phi,\beta=\phi} $.
+                  \item Then, $ Y_i \sim \NB{a=1/\phi,b=\lambda\phi} $ with $ \E{Y_i}=\lambda_i $ and $ \Var{Y_i}=\lambda_i(1+\lambda_i\phi) $.
+            \end{itemize}
 \end{enumerate}
 \subsection*{Application: Analysis of an Epilepsy Trial}
 \addcontentsline{toc}{subsection}{Application: Analysis of an Epilepsy Trial}
 \begin{itemize}
-    \item Clinical trial was conducted involving $59$ patients with epilepsy.
-    \item Patients were randomized to one of two treatments, a \textcolor{Blue}{standard therapy} or a \textcolor{Blue}{new drug}
-          designed to reduce the number of epileptic attacks experienced.
-    \item The primary response is the number of attacks experienced during the first two
-          weeks after randomization.
-    \item The data are given on the next slide where:
-          \begin{itemize}
-              \item $ Y_k= $ number attacks in $ k\textsuperscript{th} $ period after randomization.
-              \item \texttt{treat} is the treatment indicator variable with \texttt{treat=1} for the experimental treatment
-                    and \texttt{treat=0} otherwise.
-              \item \texttt{prior} records the number of epileptic attacks experience for the month prior to entry into the study.
-              \item \texttt{age} is a patient age at randomization in years.
-          \end{itemize}
+      \item Clinical trial was conducted involving $59$ patients with epilepsy.
+      \item Patients were randomized to one of two treatments, a \textcolor{Blue}{standard therapy} or a \textcolor{Blue}{new drug}
+            designed to reduce the number of epileptic attacks experienced.
+      \item The primary response is the number of attacks experienced during the first two
+            weeks after randomization.
+      \item The data are given on the next slide where:
+            \begin{itemize}
+                  \item $ Y_k= $ number attacks in $ k\textsuperscript{th} $ period after randomization.
+                  \item \texttt{treat} is the treatment indicator variable with \texttt{treat=1} for the experimental treatment
+                        and \texttt{treat=0} otherwise.
+                  \item \texttt{prior} records the number of epileptic attacks experience for the month prior to entry into the study.
+                  \item \texttt{age} is a patient age at randomization in years.
+            \end{itemize}
 \end{itemize}
 \subsubsection*{Univariate Analyses}
 \begin{itemize}
-    \item First consider analyses based on the data from the first two week period after
-          randomization, that is, $ Y_{i1} $, $ i=1,2,\ldots,n $.
-    \item \textcolor{Blue}{Poisson Model}, that is, $ Y_i \sim \POI{\mu_i} $:
-          \[ \log{\mu_i}=\Vector{x}_i^\top \Vector{\beta}. \]
-    \item \textcolor{Blue}{Negative Binomial Model}, that is, $ Y_{i1}\mid u_i \sim \POI{u_i\lambda_i} $ and $ u_i \sim \GAM{1/\phi,\phi} $. Regression:
-          \begin{align*}
-              \mu_i       & =\E{Y_{i1}\given u_i}                       \\
-              \mu_i       & =u_i\lambda_i                               \\
-              \log{\mu_i} & =\log{u_i}+\log{\lambda_i}                  \\
-              \log{\mu_i} & =\alpha_i+\Vector{x}_i^\top \Vector{\beta}.
-          \end{align*}
-    \item $ \alpha_i= $ log gamma random variable called a ``\textcolor{Blue}{random effect}'', $ \E{\alpha_i}=0 $.
+      \item First consider analyses based on the data from the first two week period after
+            randomization, that is, $ Y_{i1} $, $ i=1,2,\ldots,n $.
+      \item \textcolor{Blue}{Poisson Model}, that is, $ Y_i \sim \POI{\mu_i} $:
+            \[ \log{\mu_i}=\Vector{x}_i^\top \Vector{\beta}. \]
+      \item \textcolor{Blue}{Negative Binomial Model}, that is, $ Y_{i1}\mid u_i \sim \POI{u_i\lambda_i} $ and $ u_i \sim \GAM{1/\phi,\phi} $. Regression:
+            \begin{align*}
+                  \mu_i       & =\E{Y_{i1}\given u_i}                       \\
+                  \mu_i       & =u_i\lambda_i                               \\
+                  \log{\mu_i} & =\log{u_i}+\log{\lambda_i}                  \\
+                  \log{\mu_i} & =\alpha_i+\Vector{x}_i^\top \Vector{\beta}.
+            \end{align*}
+      \item $ \alpha_i= $ log gamma random variable called a ``\textcolor{Blue}{random effect}'', $ \E{\alpha_i}=0 $.
 \end{itemize}
 \subsubsection*{R Program}
 %\begin{noindent}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{epi.dat} \hlkwb{=} \hlkwd{read.table}\hlstd{(}\hlstr{"epi.dat"}\hlstd{,} \hlkwc{header} \hlstd{= T)}
-\hlstd{epi.dat}\hlopt{$}\hlstd{treatf} \hlkwb{=} \hlkwd{factor}\hlstd{(epi.dat}\hlopt{$}\hlstd{treat)}
+\hlstd{epi.dat} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlstr{"epi.dat"}\hlstd{,} \hlkwc{header} \hlstd{= T)}
+\hlstd{epi.dat}\hlopt{$}\hlstd{treatf} \hlkwb{<-} \hlkwd{factor}\hlstd{(epi.dat}\hlopt{$}\hlstd{treat)}
 \hlkwd{attach}\hlstd{(epi.dat)}
 \hlkwd{library}\hlstd{(MASS)}
 \hlcom{# contrast findings from Poisson and negative binomial}
 \hlcom{# regression}
-\hlstd{poisson1} \hlkwb{=} \hlkwd{glm}\hlstd{(yi1} \hlopt{~} \hlstd{treatf} \hlopt{+} \hlstd{prior} \hlopt{+} \hlstd{age,} \hlkwc{family} \hlstd{= poisson)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{Error in model.frame.default(formula = yi1 \textasciitilde{} treatf + prior + age, drop.unused.levels = TRUE): variable lengths differ (found for 'age')}}\begin{alltt}
+\hlstd{poisson1} \hlkwb{<-} \hlkwd{glm}\hlstd{(yi1} \hlopt{~} \hlstd{treatf} \hlopt{+} \hlstd{prior} \hlopt{+} \hlstd{age,} \hlkwc{family} \hlstd{= poisson,}
+  \hlkwc{data} \hlstd{= epi.dat)}
 \hlkwd{summary}\hlstd{(poisson1)}
-\hlstd{epi.dat}\hlopt{$}\hlstd{rdeviance1} \hlkwb{=} \hlkwd{residuals.glm}\hlstd{(poisson1,} \hlkwc{type} \hlstd{=} \hlstr{"deviance"}\hlstd{)}
-\hlstd{epi.dat}\hlopt{$}\hlstd{fitted.values1} \hlkwb{=} \hlstd{poisson1}\hlopt{$}\hlstd{fitted.values}
-\hlstd{negbin2} \hlkwb{=} \hlkwd{glm.nb}\hlstd{(yi1} \hlopt{~} \hlstd{treatf} \hlopt{+} \hlstd{prior} \hlopt{+} \hlstd{age,} \hlkwc{link} \hlstd{= log,} \hlkwc{init.theta} \hlstd{=} \hlnum{1}\hlstd{,}
-  \hlkwc{trace} \hlstd{= T)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{Error in model.frame.default(formula = yi1 \textasciitilde{} treatf + prior + age, drop.unused.levels = TRUE): variable lengths differ (found for 'age')}}\begin{alltt}
+\hlstd{epi.dat}\hlopt{$}\hlstd{rdeviance1} \hlkwb{<-} \hlkwd{residuals.glm}\hlstd{(poisson1,} \hlkwc{type} \hlstd{=} \hlstr{"deviance"}\hlstd{)}
+\hlstd{epi.dat}\hlopt{$}\hlstd{fitted.values1} \hlkwb{<-} \hlstd{poisson1}\hlopt{$}\hlstd{fitted.values}
+\hlstd{negbin2} \hlkwb{<-} \hlkwd{glm.nb}\hlstd{(yi1} \hlopt{~} \hlstd{treatf} \hlopt{+} \hlstd{prior} \hlopt{+} \hlstd{age,} \hlkwc{link} \hlstd{= log,} \hlkwc{init.theta} \hlstd{=} \hlnum{1}\hlstd{,}
+  \hlkwc{trace} \hlstd{= T,} \hlkwc{data} \hlstd{= epi.dat)}
 \hlkwd{summary}\hlstd{(negbin2)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{Error in summary(negbin2): object 'negbin2' not found}}\begin{alltt}
-\hlstd{epi.dat}\hlopt{$}\hlstd{rdeviance2} \hlkwb{=} \hlkwd{residuals.glm}\hlstd{(negbin2,} \hlkwc{type} \hlstd{=} \hlstr{"deviance"}\hlstd{)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{Error in residuals.glm(negbin2, type = "{}deviance"{}): object 'negbin2' not found}}\begin{alltt}
-\hlstd{epi.dat}\hlopt{$}\hlstd{fitted.values2} \hlkwb{=} \hlstd{negbin2}\hlopt{$}\hlstd{fitted.values}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{Error in eval(expr, envir, enclos): object 'negbin2' not found}}\begin{alltt}
+\hlstd{epi.dat}\hlopt{$}\hlstd{rdeviance2} \hlkwb{<-} \hlkwd{residuals.glm}\hlstd{(negbin2,} \hlkwc{type} \hlstd{=} \hlstr{"deviance"}\hlstd{)}
+\hlstd{epi.dat}\hlopt{$}\hlstd{fitted.values2} \hlkwb{<-} \hlstd{negbin2}\hlopt{$}\hlstd{fitted.values}
 \hlstd{epi.dat}
 \hlcom{# Constructing deviance residual plots}
 \hlkwd{plot}\hlstd{(}\hlkwd{log}\hlstd{(epi.dat}\hlopt{$}\hlstd{fitted.values1), epi.dat}\hlopt{$}\hlstd{rdeviance1,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{5}\hlstd{,}
@@ -8785,14 +8768,10 @@ Number of Fisher Scoring iterations: 5
 \hlkwd{plot}\hlstd{(}\hlkwd{log}\hlstd{(epi.dat}\hlopt{$}\hlstd{fitted.values2), epi.dat}\hlopt{$}\hlstd{rdeviance2,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{5}\hlstd{,}
   \hlnum{5}\hlstd{),} \hlkwc{xlab} \hlstd{=} \hlstr{"LOG FITTED VALUES"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"DEVIANCE RESIDUALS"}\hlstd{,}
   \hlkwc{main} \hlstd{=} \hlstr{"NEG BIN MODEL"}\hlstd{)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{Error in log(epi.dat\$fitted.values2): non-numeric argument to mathematical function}}\begin{alltt}
 \hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlopt{-}\hlnum{2}\hlstd{,} \hlkwc{lty} \hlstd{=} \hlnum{2}\hlstd{)}
 \hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlnum{2}\hlstd{,} \hlkwc{lty} \hlstd{=} \hlnum{2}\hlstd{)}
 \hlcom{# Fitting some additional negative binomial models}
-\hlstd{negbin3} \hlkwb{=} \hlkwd{glm.nb}\hlstd{(yi1} \hlopt{~} \hlstd{treatf,} \hlkwc{link} \hlstd{= log,} \hlkwc{init.theta} \hlstd{=} \hlnum{1}\hlstd{,} \hlkwc{trace} \hlstd{= T)}
+\hlstd{negbin3} \hlkwb{<-} \hlkwd{glm.nb}\hlstd{(yi1} \hlopt{~} \hlstd{treatf,} \hlkwc{link} \hlstd{= log,} \hlkwc{init.theta} \hlstd{=} \hlnum{1}\hlstd{,} \hlkwc{trace} \hlstd{= T)}
 \hlkwd{summary}\hlstd{(negbin3)}
 \end{alltt}
 \end{kframe}
@@ -8805,8 +8784,7 @@ Number of Fisher Scoring iterations: 5
 \begin{verbatim}
 
 Call:
-glm(formula = yi1 ~ treatft + prior + age, family = poisson, 
-    data = epi.dat)
+glm(formula = yi1 ~ treatf + prior + age, family = poisson, data = epi.dat)
 
 Deviance Residuals: 
     Min       1Q   Median       3Q      Max  
@@ -8815,7 +8793,7 @@ Deviance Residuals:
 Coefficients:
               Estimate Std. Error z value Pr(>|z|)    
 (Intercept)  0.2049069  0.2269314   0.903   0.3666    
-treatft1    -0.2046787  0.0895007  -2.287   0.0222 *  
+treatf1     -0.2046787  0.0895007  -2.287   0.0222 *  
 prior        0.0253958  0.0009733  26.092  < 2e-16 ***
 age          0.0324881  0.0063375   5.126 2.95e-07 ***
 ---
@@ -8834,76 +8812,104 @@ Number of Fisher Scoring iterations: 5
 %\end{noindent}
 \subsubsection*{Results of Fitted Poisson Model}
 \begin{itemize}
-    \item Estimated relative rate of seizures in treatment versus control:
-          \[ \widehat{\RR}=\exp{\hat{\beta}_1}=\exp{-0.2047}=0.815. \]
-    \item Ad hoc estimate of dispersion factor and adjusted standard error for $ \hat{\beta}_1 $:
-          \[ \hat{\phi}=\frac{D}{n-p}=\frac{197.61}{59-4}=3.593. \]
-          \[ \estseadj{\hat{\beta}_1}=\sqrt{\hat{\phi}}\estse{\hat{\beta}_1}\sqrt{3.593}(0.0895)=0.1696. \]
-    \item Adjusted Wald-based hypothesis test of $ \HN $: $ \beta_1=0 $ versus $ \HA $: $ \beta_1\ne 0 $:
-          \[ p=\Prob*{\abs{Z}>\frac{\abs{-0.2047}}{0.1696}}=0.23. \]
-    \item Adjusted 95\% confidence interval for the relative rate:
-          \[ \exp{\hat{\beta}_1\pm z_{0.975}\estseadj{\hat{\beta}_1}}=\exp{-0.2047\pm 1.96(0.1696)}=(0.58,1.14). \]
+      \item Estimated relative rate of seizures in treatment versus control:
+            \[ \widehat{\RR}=\exp{\hat{\beta}_1}=\exp{-0.2047}=0.815. \]
+      \item Ad hoc estimate of dispersion factor and adjusted standard error for $ \hat{\beta}_1 $:
+            \[ \hat{\phi}=\frac{D}{n-p}=\frac{197.61}{59-4}=3.593. \]
+            \[ \estseadj{\hat{\beta}_1}=\sqrt{\hat{\phi}}\estse{\hat{\beta}_1}\sqrt{3.593}(0.0895)=0.1696. \]
+      \item Adjusted Wald-based hypothesis test of $ \HN $: $ \beta_1=0 $ versus $ \HA $: $ \beta_1\ne 0 $:
+            \[ p=\Prob*{\abs{Z}>\frac{\abs{-0.2047}}{0.1696}}=0.23. \]
+      \item Adjusted 95\% confidence interval for the relative rate:
+            \[ \exp{\hat{\beta}_1\pm z_{0.975}\estseadj{\hat{\beta}_1}}=\exp{-0.2047\pm 1.96(0.1696)}=(0.58,1.14). \]
 \end{itemize}
 \subsubsection*{R Output: Negative Binomial Model}
 %\begin{noindent}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+Call:
+glm.nb(formula = yi1 ~ treatf + prior + age, data = epi.dat, 
+    trace = T, init.theta = 3.078568736, link = log)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.4126  -0.7686  -0.2725   0.2993   2.7605  
+
+Coefficients:
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  0.282960   0.423819   0.668   0.5044    
+treatf1     -0.330196   0.185378  -1.781   0.0749 .  
+prior        0.028080   0.003171   8.855   <2e-16 ***
+age          0.028195   0.012390   2.276   0.0229 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for Negative Binomial(3.0786) family taken to be 1)
+
+    Null deviance: 172.151  on 58  degrees of freedom
+Residual deviance:  63.831  on 55  degrees of freedom
+AIC: 333.51
+
+Number of Fisher Scoring iterations: 1
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{Error in summary(negbin2): object 'negbin2' not found}}\end{kframe}
+              Theta:  3.079 
+          Std. Err.:  0.875 
+
+ 2 x log-likelihood:  -323.513 
+\end{verbatim}
+\end{kframe}
 \end{knitrout}
 %\end{noindent}
 \subsubsection*{Results of Fitted Models}
 \begin{table}[H]
-    \centering
-    \begin{tabular}{lcccc}
-        Model             & Parameter   & Estimate    & $ \widehat{\text{se}} $ & $ \widehat{\text{se}}_{\text{adj}} $ \\
-        \midrule
-        \texttt{poisson1} & $ \beta_1 $ & $ -0.2047 $ & $ 0.0895 $              & $0.1696$                             \\
-                          & $ \phi $    & $3.593$                                                                      \\
-        \texttt{negbin2}  & $ \beta_1 $ & $ -0.3302 $ & $ 0.1854 $                                                     \\
-                          & $ \theta $  & $3.079$     & $0.875$                                                        \\
-        \bottomrule
-    \end{tabular}
+      \centering
+      \begin{tabular}{lcccc}
+            Model             & Parameter   & Estimate    & $ \widehat{\text{se}} $ & $ \widehat{\text{se}}_{\text{adj}} $ \\
+            \midrule
+            \texttt{poisson1} & $ \beta_1 $ & $ -0.2047 $ & $ 0.0895 $              & $0.1696$                             \\
+                              & $ \phi $    & $3.593$                                                                      \\
+            \texttt{negbin2}  & $ \beta_1 $ & $ -0.3302 $ & $ 0.1854 $                                                     \\
+                              & $ \theta $  & $3.079$     & $0.875$                                                        \\
+            \bottomrule
+      \end{tabular}
 \end{table}
 \begin{itemize}
-    \item For R Negative Binomial Model, $ \theta=\phi^{-1} $, so
-          \[ \Var{Y_i}=\lambda_i(1+\lambda_i\phi)=\lambda_i(1+\lambda_i/\theta). \]
-    \item Note: $ \phi $ from Poisson is not the same as $ \phi $ in Negative Binomial.
-          \begin{itemize}
-              \item Poisson: $ \estseadj{\hat{\beta}_j}=\sqrt{\hat{\phi}}\estse{\hat{\beta}_j} $.
-              \item Negative Binomial: $ \phi=\theta^{-1} $ already incorporated into standard error estimates.
-          \end{itemize}
-    \item $ \widehat{\text{se}} $ Negative Binomial is larger than naive Poisson $ \widehat{\text{se}} $
-          because the Negative Binomial model accounts for the overdispersion.
-    \item $ \widehat{\text{se}}_{\text{adj}} $ from the Poisson is comparable to $ \widehat{\text{se}} $ from Negative Binomial.
+      \item For R Negative Binomial Model, $ \theta=\phi^{-1} $, so
+            \[ \Var{Y_i}=\lambda_i(1+\lambda_i\phi)=\lambda_i(1+\lambda_i/\theta). \]
+      \item Note: $ \phi $ from Poisson is not the same as $ \phi $ in Negative Binomial.
+            \begin{itemize}
+                  \item Poisson: $ \estseadj{\hat{\beta}_j}=\sqrt{\hat{\phi}}\estse{\hat{\beta}_j} $.
+                  \item Negative Binomial: $ \phi=\theta^{-1} $ already incorporated into standard error estimates.
+            \end{itemize}
+      \item $ \widehat{\text{se}} $ Negative Binomial is larger than naive Poisson $ \widehat{\text{se}} $
+            because the Negative Binomial model accounts for the overdispersion.
+      \item $ \widehat{\text{se}}_{\text{adj}} $ from the Poisson is comparable to $ \widehat{\text{se}} $ from Negative Binomial.
 \end{itemize}
 \subsubsection*{Results of Fitted Negative Binomial Model}
 \begin{itemize}
-    \item Estimated relative rate of seizures in treatment versus control:
-          \[ \widehat{\RR}=\exp{\hat{\beta}_1}=\exp{-0.3302}=0.719. \]
-    \item Wald-based hypothesis test of $ \HN $: $ \beta_1=0 $ versus $ \HA $: $ \beta_1\ne 0 $:
-          \[ p=\Prob*{\abs{Z}>\frac{\abs{-0.3302}}{0.1854}}=0.0749. \]
-    \item 95\% confidence interval for the relative rate:
-          \[ \exp{\hat{\beta}_1\pm z_{0.975}\estseadj{\hat{\beta}_1}}=\exp{-0.3302\pm 1.96(0.1854)}=(0.50,1.03). \]
+      \item Estimated relative rate of seizures in treatment versus control:
+            \[ \widehat{\RR}=\exp{\hat{\beta}_1}=\exp{-0.3302}=0.719. \]
+      \item Wald-based hypothesis test of $ \HN $: $ \beta_1=0 $ versus $ \HA $: $ \beta_1\ne 0 $:
+            \[ p=\Prob*{\abs{Z}>\frac{\abs{-0.3302}}{0.1854}}=0.0749. \]
+      \item 95\% confidence interval for the relative rate:
+            \[ \exp{\hat{\beta}_1\pm z_{0.975}\estseadj{\hat{\beta}_1}}=\exp{-0.3302\pm 1.96(0.1854)}=(0.50,1.03). \]
 \end{itemize}
 \subsubsection*{Poisson and Negative Binomial Models --- Remarks}
 \begin{itemize}
-    \item The estimates and standard errors are different in the Poisson and Negative
-          Binomial models.
-    \item The estimates are different in part because the observations are weighted
-          differently for the Poisson and Negative Binomial estimating equations.
-    \item The standard errors are larger with the Negative Binomial model because it
-          accounts for more variability in the data (which is needed here).
-    \item Notice the \texttt{treat} variable is only statistically significant in the Poisson model.
+      \item The estimates and standard errors are different in the Poisson and Negative
+            Binomial models.
+      \item The estimates are different in part because the observations are weighted
+            differently for the Poisson and Negative Binomial estimating equations.
+      \item The standard errors are larger with the Negative Binomial model because it
+            accounts for more variability in the data (which is needed here).
+      \item Notice the \texttt{treat} variable is only statistically significant in the Poisson model.
 \end{itemize}
 \subsubsection*{Residual Plots for Poisson and Negative Binomial Models}
 %\begin{noindent}
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{Error in log(epi.dat\$fitted.values2): non-numeric argument to mathematical function}}\end{kframe}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
 {\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-146-1} 
 
@@ -8952,101 +8958,101 @@ Number of Fisher Scoring iterations: 1
 %\end{noindent}
 \subsubsection*{Results of Fitted Models}
 \begin{table}[H]
-    \centering
-    \begin{tabular}{lcccc}
-        Model             & Parameter   & Estimate    & $ \widehat{\text{se}} $ & $ \widehat{\text{se}}_{\text{adj}} $ \\
-        \midrule
-        \texttt{poisson1} & $ \beta_1 $ & $ -0.2047 $ & $ 0.0895 $              & $0.1696$                             \\
-                          & $ \phi $    & $3.593$                                                                      \\
-        \texttt{negbin2}  & $ \beta_1 $ & $ -0.3302 $ & $ 0.1854 $                                                     \\
-                          & $ \theta $  & $3.079$     & $0.875$                                                        \\
-        \texttt{negbin3}  & $ \beta_1 $ & $ -0.0866 $ & $ 0.2922 $                                                     \\
-                          & $ \theta $  & $0.874$     & $0.166$                                                        \\
-        \bottomrule
-    \end{tabular}
+      \centering
+      \begin{tabular}{lcccc}
+            Model             & Parameter   & Estimate    & $ \widehat{\text{se}} $ & $ \widehat{\text{se}}_{\text{adj}} $ \\
+            \midrule
+            \texttt{poisson1} & $ \beta_1 $ & $ -0.2047 $ & $ 0.0895 $              & $0.1696$                             \\
+                              & $ \phi $    & $3.593$                                                                      \\
+            \texttt{negbin2}  & $ \beta_1 $ & $ -0.3302 $ & $ 0.1854 $                                                     \\
+                              & $ \theta $  & $3.079$     & $0.875$                                                        \\
+            \texttt{negbin3}  & $ \beta_1 $ & $ -0.0866 $ & $ 0.2922 $                                                     \\
+                              & $ \theta $  & $0.874$     & $0.166$                                                        \\
+            \bottomrule
+      \end{tabular}
 \end{table}
 \begin{itemize}
-    \item Recall for the Negative Binomial that $ \Var{Y_i}=\lambda_i(1+\lambda_i\phi)=\lambda_i(1+\lambda_i/\theta) $.
-    \item Compare the $ \theta $ estimates from the two Negative Binomial Models:
-          \[ \hat{\phi}_2=\theta_2^{-1}=(3.079)^{-1}=0.325. \]
-          \[ \hat{\phi}_3=\theta_3^{-1}=(0.874)^{-1}=1.144, \]
+      \item Recall for the Negative Binomial that $ \Var{Y_i}=\lambda_i(1+\lambda_i\phi)=\lambda_i(1+\lambda_i/\theta) $.
+      \item Compare the $ \theta $ estimates from the two Negative Binomial Models:
+            \[ \hat{\phi}_2=\theta_2^{-1}=(3.079)^{-1}=0.325. \]
+            \[ \hat{\phi}_3=\theta_3^{-1}=(0.874)^{-1}=1.144, \]
 \end{itemize}
 \subsubsection*{Univariate Analyses --- Final Remarks}
 \begin{itemize}
-    \item $ \hat{\phi}_3 $ is much larger than $ \hat{\phi}_2 $ because the \texttt{negbin3} model excludes the \texttt{prior} count
-          and \texttt{age} variables.
-    \item This makes sense since they explain much of the variability between the subjects
-          for the rate of events.
-    \item For Negative Binomial: $ \phi=0 $ would imply no overdispersion in the data.
-    \item To get $ \Var{\phi} $ use the $ \delta $-method ($ \Var{\theta^{-1}}\ne 1/\Var{\theta} $).
-    \item Note that \textcolor{Blue}{Overdispersion} can be caused by a number of factors including:
-          \begin{itemize}
-              \item Missing important explanatory variables.
-              \item Excess variation that can not be explained by Poisson model.
-              \item Non-independent observations (e.g., clustered data).
-          \end{itemize}
+      \item $ \hat{\phi}_3 $ is much larger than $ \hat{\phi}_2 $ because the \texttt{negbin3} model excludes the \texttt{prior} count
+            and \texttt{age} variables.
+      \item This makes sense since they explain much of the variability between the subjects
+            for the rate of events.
+      \item For Negative Binomial: $ \phi=0 $ would imply no overdispersion in the data.
+      \item To get $ \Var{\phi} $ use the $ \delta $-method ($ \Var{\theta^{-1}}\ne 1/\Var{\theta} $).
+      \item Note that \textcolor{Blue}{Overdispersion} can be caused by a number of factors including:
+            \begin{itemize}
+                  \item Missing important explanatory variables.
+                  \item Excess variation that can not be explained by Poisson model.
+                  \item Non-independent observations (e.g., clustered data).
+            \end{itemize}
 \end{itemize}
 \subsection*{Adaptation to Clustered Count Data}
 \addcontentsline{toc}{subsection}{Clustered Count Data}
 \begin{itemize}
-    \item Up to now we have always assumed responses $ Y_i $ are \textcolor{Blue}{iid}.
-    \item Now consider the following data structure:
-          \[ \begin{matrix}
-                  y_{11} & \cdots & y_{1n_1}   \\
-                  y_{21} & \cdots & y_{2n_2}   \\
-                  \vdots & \ddots & \vdots     \\
-                  y_{K1} & \cdots & y_{K n_K},
-              \end{matrix} \]
-          where $ i=1,\ldots,K $ are clusters, and $ j=1,\ldots,n_i $ are observations per cluster.
-    \item $ Y_{ij}= $ response for observation $ j $ of cluster $ i $.
-    \item Expect observations within the same cluster to be correlated.
-    \item For example, cluster = families, litters, schools, etc.
-    \item Assume $ Y_{ij}\mid u_i \sim \POI{u_i\lambda} $ independently.
-          \begin{itemize}
-              \item Observation from same cluster are independent given $ u_i $.
-              \item Observation from different clusters are independent.
-          \end{itemize}
-    \item Assume $ \E{u_i}=1 $ and $ \Var{u_i}=\phi $.
-    \item Then, $ \E{Y_{ij}}=\lambda $ and $ \Var{Y_{ij}}=\lambda(1+\lambda\phi) $ as before.
-    \item Correlation within clusters?
-          \begin{align*}
-              \Cov{Y_{ij},Y_{ik}}
-               & =\Cov[\big]{ \E{Y_{ij}\given u_i},\E{Y_{ik}\given u_i} } + \E[\big]{\Cov{Y_{ij},Y_{ik}\given u_i}} \\
-               & =\Cov{u_i\lambda,u_i\lambda}+\E{0}                                                                 \\
-               & =\lambda^2\Var{u_i}                                                                                \\
-               & =\lambda^2\phi.
-          \end{align*}
-          \[ \Corr{Y_{ij},Y_{ik}}=\frac{\Cov{Y_{ij},Y_{ik}}}{\sqrt{\Var{Y_{ij}}\Var{Y_{ik}} }}=\frac{\lambda^2\phi}{\lambda(1+\lambda\phi)}=\frac{\lambda\phi}{1+\lambda\phi}. \]
-    \item We have a model which accommodates a correlation of responses within clusters.
+      \item Up to now we have always assumed responses $ Y_i $ are \textcolor{Blue}{iid}.
+      \item Now consider the following data structure:
+            \[ \begin{matrix}
+                        y_{11} & \cdots & y_{1n_1}   \\
+                        y_{21} & \cdots & y_{2n_2}   \\
+                        \vdots & \ddots & \vdots     \\
+                        y_{K1} & \cdots & y_{K n_K},
+                  \end{matrix} \]
+            where $ i=1,\ldots,K $ are clusters, and $ j=1,\ldots,n_i $ are observations per cluster.
+      \item $ Y_{ij}= $ response for observation $ j $ of cluster $ i $.
+      \item Expect observations within the same cluster to be correlated.
+      \item For example, cluster = families, litters, schools, etc.
+      \item Assume $ Y_{ij}\mid u_i \sim \POI{u_i\lambda} $ independently.
+            \begin{itemize}
+                  \item Observation from same cluster are independent given $ u_i $.
+                  \item Observation from different clusters are independent.
+            \end{itemize}
+      \item Assume $ \E{u_i}=1 $ and $ \Var{u_i}=\phi $.
+      \item Then, $ \E{Y_{ij}}=\lambda $ and $ \Var{Y_{ij}}=\lambda(1+\lambda\phi) $ as before.
+      \item Correlation within clusters?
+            \begin{align*}
+                  \Cov{Y_{ij},Y_{ik}}
+                   & =\Cov[\big]{ \E{Y_{ij}\given u_i},\E{Y_{ik}\given u_i} } + \E[\big]{\Cov{Y_{ij},Y_{ik}\given u_i}} \\
+                   & =\Cov{u_i\lambda,u_i\lambda}+\E{0}                                                                 \\
+                   & =\lambda^2\Var{u_i}                                                                                \\
+                   & =\lambda^2\phi.
+            \end{align*}
+            \[ \Corr{Y_{ij},Y_{ik}}=\frac{\Cov{Y_{ij},Y_{ik}}}{\sqrt{\Var{Y_{ij}}\Var{Y_{ik}} }}=\frac{\lambda^2\phi}{\lambda(1+\lambda\phi)}=\frac{\lambda\phi}{1+\lambda\phi}. \]
+      \item We have a model which accommodates a correlation of responses within clusters.
 \end{itemize}
 \subsection*{Application: Joint Analyses of an Epilepsy Trial}
 \addcontentsline{toc}{subsection}{Joint Analyses}
 \begin{itemize}
-    \item We now consider analyses based on the full 8 weeks of follow-up data.
-    \item Four responses per subject: $ Y_{i1},Y_{i2},Y_{i3},Y_{i4} $.
-    \item Consider the total seizure count: $ Y_{i\bullet}=\sum_{j=1}^{4}Y_{ij} $.
-    \item Assume $ Y_{ij}\mid u_i \sim \POI{u_i\lambda_i} $ independently.
-    \item This implies \textcolor{Blue}{$ Y_{i\bullet}\mid u_i \sim \POI{4u_i\lambda_i} $}.
-    \item Can show that $ Y_{i\bullet} $ has an (almost) Negative Binomial distribution (Problem 4.3).
+      \item We now consider analyses based on the full 8 weeks of follow-up data.
+      \item Four responses per subject: $ Y_{i1},Y_{i2},Y_{i3},Y_{i4} $.
+      \item Consider the total seizure count: $ Y_{i\bullet}=\sum_{j=1}^{4}Y_{ij} $.
+      \item Assume $ Y_{ij}\mid u_i \sim \POI{u_i\lambda_i} $ independently.
+      \item This implies \textcolor{Blue}{$ Y_{i\bullet}\mid u_i \sim \POI{4u_i\lambda_i} $}.
+      \item Can show that $ Y_{i\bullet} $ has an (almost) Negative Binomial distribution (Problem 4.3).
 \end{itemize}
 \subsubsection*{Problem 4.3}
 \begin{align*}
-    \Prob{Y_{i1},\ldots,Y_{i4}}
-     & =\int_{0}^{\infty}\prod_{j=1}^4\underbrace{p(y_{ij}\mid u_i\lambda_i)}_{\POI{u_i\lambda_i}}\underbrace{f(u_i;\phi)}_{\GAM{\alpha,\beta}}\odif{u_i}                                                   \\
-     & \vdotswithin{=}                                                                                                                                                                                      \\
-     & \propto \frac{\Gamma(y_{i\bullet}+\alpha)}{\Gamma(\alpha)\prod y_{ij}!}\biggl(\frac{4\lambda_i\beta}{1+4\lambda_i\beta}\biggr)^{\!y_{i\bullet}}\biggl(\frac{1}{1+4\lambda_i\beta}\biggr)^{\!\alpha}.
+      \Prob{Y_{i1},\ldots,Y_{i4}}
+       & =\int_{0}^{\infty}\prod_{j=1}^4\underbrace{p(y_{ij}\mid u_i\lambda_i)}_{\POI{u_i\lambda_i}}\underbrace{f(u_i;\phi)}_{\GAM{\alpha,\beta}}\odif{u_i}                                                   \\
+       & \vdotswithin{=}                                                                                                                                                                                      \\
+       & \propto \frac{\Gamma(y_{i\bullet}+\alpha)}{\Gamma(\alpha)\prod y_{ij}!}\biggl(\frac{4\lambda_i\beta}{1+4\lambda_i\beta}\biggr)^{\!y_{i\bullet}}\biggl(\frac{1}{1+4\lambda_i\beta}\biggr)^{\!\alpha}.
 \end{align*}
 \begin{itemize}
-    \item This is proportional to a Negative Binomial distribution.
-    \item $ Y_{i\bullet} $ is \textcolor{Blue}{sufficient} for the joint distribution of $ Y_{i1},Y_{i2},Y_{i3},Y_{i4} $.
-          \begin{itemize}
-              \item Factorization Theorem: If you can write $ p(x)=h(x)g\bigl(\theta,T(x)\bigr) $, then $ T(x) $ is a sufficient statistic.
-          \end{itemize}
+      \item This is proportional to a Negative Binomial distribution.
+      \item $ Y_{i\bullet} $ is \textcolor{Blue}{sufficient} for the joint distribution of $ Y_{i1},Y_{i2},Y_{i3},Y_{i4} $.
+            \begin{itemize}
+                  \item Factorization Theorem: If you can write $ p(x)=h(x)g\bigl(\theta,T(x)\bigr) $, then $ T(x) $ is a sufficient statistic.
+            \end{itemize}
 \end{itemize}
 \subsubsection*{Epilepsy Trial Joint Analysis Data}
 \begin{Example}{}
-    We show the first 5 rows.
-    %\begin{noindent}
+      We show the first 5 rows.
+      %\begin{noindent}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
@@ -9062,26 +9068,26 @@ Number of Fisher Scoring iterations: 1
       %\end{noindent}
 \end{Example}
 \begin{itemize}
-    \item \texttt{yidot} is the sum of the seizure counts for each of the four counts obtained every two weeks.
-    \item Explanatory variables:
-          \begin{align*}
-              x_{i1} & =\Ind{\texttt{treat=1}}, \\
-              x_{i2} & =\Ind{\texttt{prior}},   \\
-              x_{i3} & =\Ind{\texttt{age}}.
-          \end{align*}
-    \item We are primarily interested in the \textcolor{Blue}{treatment effect} $ \beta_1 $.
+      \item \texttt{yidot} is the sum of the seizure counts for each of the four counts obtained every two weeks.
+      \item Explanatory variables:
+            \begin{align*}
+                  x_{i1} & =\Ind{\texttt{treat=1}}, \\
+                  x_{i2} & =\Ind{\texttt{prior}},   \\
+                  x_{i3} & =\Ind{\texttt{age}}.
+            \end{align*}
+      \item We are primarily interested in the \textcolor{Blue}{treatment effect} $ \beta_1 $.
 \end{itemize}
 \subsubsection*{Negative Binomial Model}
 \begin{align*}
-    \mu_i       & =\E{Y_{i\bullet}\given u_i}                                  \\
-    \mu_i       & =4u_i\lambda_i                                               \\
-    \log{\mu_i} & =\log{u_i}+\log{4}+\log{\lambda_i}                           \\
-    \log{\mu_i} & =\alpha_i+\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}.
+      \mu_i       & =\E{Y_{i\bullet}\given u_i}                                  \\
+      \mu_i       & =4u_i\lambda_i                                               \\
+      \log{\mu_i} & =\log{u_i}+\log{4}+\log{\lambda_i}                           \\
+      \log{\mu_i} & =\alpha_i+\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\beta_3x_{i3}.
 \end{align*}
 \begin{itemize}
-    \item $ \alpha_i $ is an unobservable random effect, $ \E{\alpha_i}=0 $.
-    \item We could include $ \log{4} $ as an offset or let it be absorbed into the intercept term:
-          \[ \beta_0=\beta_0^\star +\log{4}. \]
+      \item $ \alpha_i $ is an unobservable random effect, $ \E{\alpha_i}=0 $.
+      \item We could include $ \log{4} $ as an offset or let it be absorbed into the intercept term:
+            \[ \beta_0=\beta_0^\star +\log{4}. \]
 \end{itemize}
 \subsubsection*{R Program}
 %\begin{noindent}
@@ -9093,7 +9099,7 @@ Number of Fisher Scoring iterations: 1
 \hlstd{epi.dat}
 \hlcom{# fitting the negative binomial model for clustered count}
 \hlcom{# data}
-\hlstd{joint} \hlkwb{=} \hlkwd{glm.nb}\hlstd{(yidot} \hlopt{~} \hlstd{treatf} \hlopt{+} \hlstd{prior} \hlopt{+} \hlstd{age,} \hlkwc{link} \hlstd{= log,} \hlkwc{init.theta} \hlstd{=} \hlnum{1}\hlstd{,}
+\hlstd{joint} \hlkwb{<-} \hlkwd{glm.nb}\hlstd{(yidot} \hlopt{~} \hlstd{treatf} \hlopt{+} \hlstd{prior} \hlopt{+} \hlstd{age,} \hlkwc{link} \hlstd{= log,} \hlkwc{init.theta} \hlstd{=} \hlnum{1}\hlstd{,}
   \hlkwc{trace} \hlstd{= T,} \hlkwc{data} \hlstd{= epi8.dat)}
 \hlkwd{summary}\hlstd{(joint)}
 \end{alltt}
@@ -9142,43 +9148,43 @@ Number of Fisher Scoring iterations: 1
 %\end{noindent}
 \subsubsection*{Joint Negative Binomial Model}
 \begin{table}[H]
-    \centering
-    \begin{tabular}{lcccc}
-        Model          & Parameter   & Estimate    & $ \widehat{\text{se}} $ & $ \widehat{\text{se}}_{\text{adj}} $ \\
-        \midrule
-        \texttt{joint} & $ \beta_1 $ & $ -0.2124 $ & $ 0.1534 $              &                                      \\
-                       & $ \theta $  & $3.357$     & $ 0.709 $                                                      \\
-                       & $ \phi $    & $0.2979$                                                                     \\
-        \bottomrule
-    \end{tabular}
+      \centering
+      \begin{tabular}{lcccc}
+            Model          & Parameter   & Estimate    & $ \widehat{\text{se}} $ & $ \widehat{\text{se}}_{\text{adj}} $ \\
+            \midrule
+            \texttt{joint} & $ \beta_1 $ & $ -0.2124 $ & $ 0.1534 $              &                                      \\
+                           & $ \theta $  & $3.357$     & $ 0.709 $                                                      \\
+                           & $ \phi $    & $0.2979$                                                                     \\
+            \bottomrule
+      \end{tabular}
 \end{table}
 \begin{Example}{}
-    \textbf{Q1}: Based on the joint model give an estimate and 95\% confidence interval for the
-    relative rate (over 8 weeks) of epileptic attacks for treated versus control subjects.
+      \textbf{Q1}: Based on the joint model give an estimate and 95\% confidence interval for the
+      relative rate (over 8 weeks) of epileptic attacks for treated versus control subjects.
 \end{Example}
 \begin{itemize}
-    \item Estimated relative rate of seizures in treatment versus control:
-          \[ \widehat{\RR}=\exp{\hat{\beta}_1}=\exp{-0.2124}=0.809. \]
-    \item 95\% confidence interval for the relative rate:
-          \[ \exp{\hat{\beta}_1\pm z_{0.975}\estse{\hat{\beta}_1}}=\exp{-0.2124\pm 1.96(0.1534)}=(0.60,1.09). \]
+      \item Estimated relative rate of seizures in treatment versus control:
+            \[ \widehat{\RR}=\exp{\hat{\beta}_1}=\exp{-0.2124}=0.809. \]
+      \item 95\% confidence interval for the relative rate:
+            \[ \exp{\hat{\beta}_1\pm z_{0.975}\estse{\hat{\beta}_1}}=\exp{-0.2124\pm 1.96(0.1534)}=(0.60,1.09). \]
 \end{itemize}
 \begin{Example}{}
-    \textbf{Q2}: Based on the joint model estimate the correlation between the first and third
-    responses $(Y_{i1}\;\&\;Y_{i3})$ for an untreated subject with a prior seizure count of $11$, age 31.
+      \textbf{Q2}: Based on the joint model estimate the correlation between the first and third
+      responses $(Y_{i1}\;\&\;Y_{i3})$ for an untreated subject with a prior seizure count of $11$, age 31.
 \end{Example}
 \begin{itemize}
-    \item First, we need an estimate of $ \hat{\lambda}_i $ for this subject:
-          \begin{align*}
-              \log{4}+\log{\hat{\lambda}_i}
-                              & =\hat{\beta}_0+\hat{\beta}_1(0)+\hat{\beta}_2(11)+\hat{\beta}_3(31) \\
-              \hat{\lambda}_i & =\exp{2.0601+0.0275(11)+0.0127(31)}/4                               \\
-                              & =\exp{2.756}/4                                                      \\
-                              & =3.936.
-          \end{align*}
-    \item Now, find the Correlation:
-          \[ \hat{\rho}=\frac{\hat{\lambda}_i\hat{\phi}}{1+\hat{\lambda}_i\hat{\phi}}=\frac{3.936(1/3.357)}{1+3.936(1/3.357)}=0.54. \]
-    \item Moderate positive correlation between seizure counts within the same subject
-          across time periods.
+      \item First, we need an estimate of $ \hat{\lambda}_i $ for this subject:
+            \begin{align*}
+                  \log{4}+\log{\hat{\lambda}_i}
+                                  & =\hat{\beta}_0+\hat{\beta}_1(0)+\hat{\beta}_2(11)+\hat{\beta}_3(31) \\
+                  \hat{\lambda}_i & =\exp{2.0601+0.0275(11)+0.0127(31)}/4                               \\
+                                  & =\exp{2.756}/4                                                      \\
+                                  & =3.936.
+            \end{align*}
+      \item Now, find the Correlation:
+            \[ \hat{\rho}=\frac{\hat{\lambda}_i\hat{\phi}}{1+\hat{\lambda}_i\hat{\phi}}=\frac{3.936(1/3.357)}{1+3.936(1/3.357)}=0.54. \]
+      \item Moderate positive correlation between seizure counts within the same subject
+            across time periods.
 \end{itemize}
 
 \section*{Topic 4c: Binomial Overdispersion}
@@ -9366,31 +9372,31 @@ as expected for a Bernoulli random variable.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{cod} \hlkwb{=} \hlkwd{read.table}\hlstd{(}\hlstr{"cod.dat"}\hlstd{,} \hlkwc{header} \hlstd{= T)}
+\hlstd{cod} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlstr{"cod.dat"}\hlstd{,} \hlkwc{header} \hlstd{= T)}
 \hlkwd{attach}\hlstd{(cod)}
 \hlcom{# Fit a logistic regression model with all 2-way}
 \hlcom{# interactions}
-\hlstd{binom1} \hlkwb{=} \hlkwd{glm}\hlstd{(}\hlkwd{cbind}\hlstd{(hatch, total} \hlopt{-} \hlstd{hatch)} \hlopt{~} \hlstd{salin} \hlopt{*} \hlstd{temp} \hlopt{+} \hlstd{temp} \hlopt{*}
+\hlstd{binom1} \hlkwb{<-} \hlkwd{glm}\hlstd{(}\hlkwd{cbind}\hlstd{(hatch, total} \hlopt{-} \hlstd{hatch)} \hlopt{~} \hlstd{salin} \hlopt{*} \hlstd{temp} \hlopt{+} \hlstd{temp} \hlopt{*}
   \hlstd{O2} \hlopt{+} \hlstd{salin} \hlopt{*} \hlstd{O2,} \hlkwc{family} \hlstd{= binomial)}
 \hlkwd{summary}\hlstd{(binom1)}
 \hlcom{# Fit a beta binomial model to account for overdispersion}
 \hlkwd{library}\hlstd{(dispmod)}
-\hlstd{betabinom1} \hlkwb{=} \hlkwd{glm.binomial.disp}\hlstd{(binom1)}
+\hlstd{betabinom1} \hlkwb{<-} \hlkwd{glm.binomial.disp}\hlstd{(binom1)}
 \hlkwd{summary}\hlstd{(betabinom1)}
 \hlnum{1} \hlopt{-} \hlkwd{pchisq}\hlstd{(binom1}\hlopt{$}\hlstd{deviance} \hlopt{-} \hlstd{betabinom1}\hlopt{$}\hlstd{deviance,} \hlnum{1}\hlstd{)}
-\hlstd{binom2} \hlkwb{=} \hlkwd{glm}\hlstd{(}\hlkwd{cbind}\hlstd{(hatch, total} \hlopt{-} \hlstd{hatch)} \hlopt{~} \hlstd{temp} \hlopt{*} \hlstd{O2} \hlopt{+} \hlstd{salin} \hlopt{*}
+\hlstd{binom2} \hlkwb{<-} \hlkwd{glm}\hlstd{(}\hlkwd{cbind}\hlstd{(hatch, total} \hlopt{-} \hlstd{hatch)} \hlopt{~} \hlstd{temp} \hlopt{*} \hlstd{O2} \hlopt{+} \hlstd{salin} \hlopt{*}
   \hlstd{O2,} \hlkwc{family} \hlstd{= binomial)}
-\hlstd{betabinom2} \hlkwb{=} \hlkwd{glm.binomial.disp}\hlstd{(binom2)}
+\hlstd{betabinom2} \hlkwb{<-} \hlkwd{glm.binomial.disp}\hlstd{(binom2)}
 \hlkwd{summary}\hlstd{(betabinom2)}
 \hlstd{betabinom2}\hlopt{$}\hlstd{dispersion}
 \hlcom{# Constructing deviance residual plots}
 \hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{3}\hlstd{))}
-\hlstd{fv1} \hlkwb{=} \hlstd{binom1}\hlopt{$}\hlstd{fitted.values}
-\hlstd{rd1} \hlkwb{=} \hlkwd{residuals.glm}\hlstd{(binom1,} \hlstr{"deviance"}\hlstd{)}
-\hlstd{fv2} \hlkwb{=} \hlstd{betabinom1}\hlopt{$}\hlstd{fitted.values}
-\hlstd{rd2} \hlkwb{=} \hlkwd{residuals.glm}\hlstd{(betabinom1,} \hlstr{"deviance"}\hlstd{)}
-\hlstd{fv3} \hlkwb{=} \hlstd{betabinom2}\hlopt{$}\hlstd{fitted.values}
-\hlstd{rd3} \hlkwb{=} \hlkwd{residuals.glm}\hlstd{(betabinom2,} \hlstr{"deviance"}\hlstd{)}
+\hlstd{fv1} \hlkwb{<-} \hlstd{binom1}\hlopt{$}\hlstd{fitted.values}
+\hlstd{rd1} \hlkwb{<-} \hlkwd{residuals.glm}\hlstd{(binom1,} \hlstr{"deviance"}\hlstd{)}
+\hlstd{fv2} \hlkwb{<-} \hlstd{betabinom1}\hlopt{$}\hlstd{fitted.values}
+\hlstd{rd2} \hlkwb{<-} \hlkwd{residuals.glm}\hlstd{(betabinom1,} \hlstr{"deviance"}\hlstd{)}
+\hlstd{fv3} \hlkwb{<-} \hlstd{betabinom2}\hlopt{$}\hlstd{fitted.values}
+\hlstd{rd3} \hlkwb{<-} \hlkwd{residuals.glm}\hlstd{(betabinom2,} \hlstr{"deviance"}\hlstd{)}
 \hlkwd{plot}\hlstd{(fv1, rd1,} \hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"Deviance Residuals"}\hlstd{,}
   \hlkwc{main} \hlstd{=} \hlstr{"Binomial Model"}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{18}\hlstd{,} \hlnum{15}\hlstd{))}
 \hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlopt{-}\hlnum{2}\hlstd{)}
