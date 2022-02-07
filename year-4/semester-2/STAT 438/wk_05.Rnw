@@ -1,0 +1,240 @@
+\chapter{Marginal Structural Models}
+\makeheading{Week 5}{\daterange{2022-01-31}{2022-02-04}}%chktex 8
+Reference: Robins, James M., Miguel Angel Hernan, and Babette
+Brumback. ``Marginal structural models and causal inference in
+epidemiology.'' (2000): 550-560.
+\section{MSM}
+\subsection*{Definition}
+\begin{itemize}
+    \item In regression models, we assume
+          \[ \E{Y\given A=a}=\beta_0+\beta_1a. \]
+          LHS represents ``average'' response in members of the population who actually received treatment $ a $.
+    \item In MSMs, we assume
+          \[ \E{Y^a}=\beta_0^*+\beta_1^*a. \]
+          LHS represents ``average'' response under treatment $a$ in the
+          entire population; MSMs model the potential outcomes
+          directly.
+    \item If $ A $ is unconfounded, $ \beta_1^*=\beta_1 $ because
+          \[ \E{Y\given A=a}=\E{Y^a\given A=a}=\E{Y^a}. \]
+    \item If $ A $ is confounded, $ \beta_1^*\ne \beta_1 $.
+          \begin{itemize}
+              \item $\beta_1^*$ cannot be directly estimated.
+              \item Idea: use inverse probability weighting (IPW) to create a
+                    pseudo-population in which $A$ is unconfounded.
+          \end{itemize}
+\end{itemize}
+\subsection*{Parameters of Interest}
+If both $A$ and $Y$ are binary, recall
+\begin{itemize}
+    \item \textbf{Crude excess risk}:
+          \[ \Prob{Y=1\given A=1}-\Prob{Y=1\given A=0}. \]
+    \item \textbf{Crude relative risk}:
+          \[ \frac{\Prob{Y=1\given A=1}}{\Prob{Y=1\given A=0}}. \]
+    \item \textbf{Crude odds ratio}:
+          \[ \frac{\Prob{Y=1\given A=1}/\Prob{Y=0\given A=1}}{\Prob{Y=1\given A=0}/\Prob{Y=0\given A=0}}. \]
+\end{itemize}
+For comparison,
+\begin{itemize}
+    \item \textbf{Crude excess risk}:
+          \[ \Prob{Y=1\given A=1}-\Prob{Y=1\given A=0}. \]
+    \item \textbf{Causal relative risk}:
+          \[ \frac{\Prob{Y^1=1}}{\Prob{Y^0=1}}. \]
+    \item \textbf{Causal odds ratio}:
+          \[ \frac{\Prob{Y^1=1}/\Prob{Y^1=0}}{\Prob{Y^0=1}/\Prob{Y^0=0}}. \]
+\end{itemize}
+Causal ER, RR and OR can be expressed in terms of parameters of
+the following MSMs:
+\begin{itemize}
+    \item $ \Prob{Y^a=1}=\psi_0+\psi_1 a\implies\text{Causal ER}=\psi_1 $.
+    \item $ \log[\big]{\Prob{Y^a=1}}=\theta_0+\beta_1a\implies\text{Causal RR}=e^{\theta_1} $.
+    \item $ \logit[\big]{\Prob{Y^a=1}}=\beta_0+\beta_1a\implies\text{Causal OR}=e^{\beta_1} $.
+\end{itemize}
+\subsection*{Causal Diagram}
+TODO
+\subsection*{Inverse Probability Weighting}
+The causal quantities can be consistently estimated in (b)--(c) by
+fitting the corresponding regression model ($Y \sim A$) with IPW
+weights:
+\[ w_i=\frac{1}{\Prob{A=A_i\given X=X_i}}. \]
+\[ \hat{w}_i=\begin{dcases}
+        \frac{1}{\estps{X_i}},   & A_i=1, \\
+        \frac{1}{1-\estps{X_i}}, & A_i=0.
+    \end{dcases} \]
+To avoid extreme weights, we may use stabilized weights:
+\[ sw_i=\frac{\Prob{A=A_i}}{\Prob{A=A_i\given X=X_i}}. \]
+\begin{itemize}
+    \item If we have a binary treatment and a binary outcome with a
+          single time point, unstabilized and stabilized weights yield the
+          same estimates;
+    \item Otherwise, stabilized weights yield more efficient estimates.
+\end{itemize}
+\section{Example 1: Why does IPW work?}
+\[ \begin{array}{ccccc}
+        \toprule
+                     & \multicolumn{2}{c}{X=1} & \multicolumn{2}{c}{X=0}             \\
+                     & A=1                     & A=0                     & A=1 & A=0 \\
+        Y=1          & 108                     & 24                      & 20  & 40  \\
+        Y=0          & 252                     & 16                      & 30  & 10  \\
+        \text{Total} & 360                     & 40                      & 50  & 50  \\
+        \bottomrule
+    \end{array} \]
+\begin{itemize}
+    \item $ \Prob{A=1\given X=1}=0.9 $ and $ \Prob{A=1\given X=0}=0.5 $ both imply
+          $ X $ and $ A $ are confounded.
+\end{itemize}
+Aggregated Data:
+\[ \begin{array}{lcc}
+        \toprule
+                     & A=1 & A=0 \\
+        Y=1          & 128 & 64  \\
+        Y=0          & 282 & 26  \\
+        \text{Total} & 410 & 90  \\
+        \bottomrule
+    \end{array} \]
+\begin{itemize}
+    \item Crude relative risk $ =\Prob{Y=1\given A=1}/\Prob{Y=1\given A=0}=\frac{128/410}{64/90}=0.44 $.
+\end{itemize}
+We can calculate causal relative risk by conditioning on $X$
+(assuming the ignorability assumption holds):
+\begin{align*}
+    \Prob{Y^1=1}
+     & =\Prob{Y=1\given A=1,X=1}\Prob{X=1}+\Prob{Y=1\given A=1,X=0}\Prob{X=0} \\
+     & =\frac{108}{360}\frac{4}{5}+\frac{20}{50}\frac{1}{5}                   \\
+     & =0.32.
+\end{align*}
+Similarly,
+\begin{align*}
+    \Prob{Y^0=1}
+     & =\Prob{Y=1\given A=0,X=1}\Prob{X=1}+\Prob{Y=1\given A=0,X=0}\Prob{X=0} \\
+     & =\frac{24}{40}\frac{4}{5}+\frac{40}{50}\frac{1}{5}                     \\
+     & =0.64.
+\end{align*}
+Therefore, Causal Relative Risk $=\Prob{Y^1=1}/\Prob{Y^0=1}=0.32/0.64=0.5$.
+
+Another approach is performing Inverse Probability Weighting:
+\[ \begin{array}{ccccccc}
+        \toprule
+        X & A & Y & n~\text{(observed)} & \Prob{A\given X} & w    & N~\text{(pseudo)} \\
+        1 & 1 & 1 & 108                 & 0.9              & 1.11 & 120               \\
+        1 & 1 & 0 & 252                 & 0.9              & 1.11 & 280               \\
+        1 & 0 & 1 & 24                  & 0.1              & 10   & 240               \\
+        1 & 0 & 0 & 16                  & 0.1              & 10   & 160               \\
+        0 & 1 & 1 & 20                  & 0.5              & 2    & 40                \\
+        0 & 1 & 0 & 30                  & 0.5              & 2    & 60                \\
+        0 & 0 & 1 & 40                  & 0.5              & 2    & 80                \\
+        0 & 0 & 0 & 10                  & 0.5              & 2    & 20                \\
+        \bottomrule
+    \end{array} \]
+Pseudopopulation Created by IPW with Binary $A$ Stratified by the
+Confounder $X$:
+\[ \begin{array}{ccccc}
+        \toprule
+                     & \multicolumn{2}{c}{X=1} & \multicolumn{2}{c}{X=0}             \\
+                     & A=1                     & A=0                     & A=1 & A=0 \\
+        Y=1          & 120                     & 240                     & 40  & 80  \\
+        Y=0          & 280                     & 160                     & 60  & 20  \\
+        \text{Total} & 400                     & 400                     & 100 & 100 \\
+        \bottomrule
+    \end{array} \]
+\begin{itemize}
+    \item $ \Prob{A=1\given X=1}= \Prob{A=1\given X=0}=0.5 $ imply $ X $ and $ A $ are confounded.
+\end{itemize}
+Aggregated Data from the Pseudopopulation:
+\[ \begin{array}{lcc}
+        \toprule
+                     & A=1 & A=0 \\
+        Y=1          & 160 & 320 \\
+        Y=0          & 340 & 180 \\
+        \text{Total} & 500 & 500 \\
+        \bottomrule
+    \end{array} \]
+\begin{itemize}
+    \item Crude relative risk $ =\Prob{Y=1\given A=1}/\Prob{Y=1\given A=0}=\frac{160/500}{320/500}=0.5 $.
+\end{itemize}
+\section{Example 2: Fit MSM for Continuous Treatments}
+Early Dieting in Girls Study: a longitudinal study that aims to examine
+parental influences on daughters' growth and development from ages 5--15.
+\begin{itemize}
+    \item Reference: Zhu, Y., Coffman, D. L., Ghosh, D. (2015). A boosting algorithm for estimating generalized propensity
+          scores with continuous treatments. Journal of causal inference, 3(1), 25-40.
+\end{itemize}
+\begin{itemize}
+    \item Treatment (M2WTCON):
+          \begin{itemize}
+              \item mother's overall weight concern, calculated as the average
+                    score of five likert-scale (1-5) questions
+              \item measured at girls' age 7
+              \item which can be regarded as a continuous treatment variable
+          \end{itemize}
+    \item Outcome (earlydiet): whether the daughter diets between
+          ages 7 and 11, which is binary.
+    \item Baseline confounders (50 covariates in total):
+          \begin{itemize}
+              \item family history of diabetes and obesity, family income, etc
+              \item daughter's disinhibition, daughter's body esteem, etc
+              \item mother's perception of mother's current size and mother's
+                    satisfaction with daughter's current body, etc.
+          \end{itemize}
+\end{itemize}
+The following is one sample question in the weight concern
+questionnaire:
+\begin{enumerate}
+    \item How afraid are you of gaining 3 pounds:
+          \begin{enumerate}[(1)]
+              \item Not afraid
+              \item Slightly afraid
+              \item Moderately afraid
+              \item Very afraid
+              \item Terrified
+          \end{enumerate}
+\end{enumerate}
+\begin{itemize}
+    \item Fit a marginal structural model
+          \[ \logit[\big]{\Prob{Y^a=1}}=\beta_0^*+\beta_1^*a, \]
+          where $ a\in[a_1,a_2] $ and $ \beta_1^* $ is the causal log odds ratio for $1$
+          unit increase in the treatment (dosage) $A$.
+    \item The causal effect $ \beta_1^* $ can be consistently estimated by fitting
+          the corresponding regression model
+          \[ \logit[\big]{\Prob{Y=1}}=\beta_0+\beta_1a, \]
+          using IPW where
+          \[ sw_i=\frac{f(A_i)}{f(A_i\mid X_i)},\; i=1,\ldots,n, \]
+          where $f(\:\cdot\:)$is the unconditional density and  $f(\:\cdot\:\mid\:\cdot\:)$ is the
+          conditional density.
+    \item Problem: when $X$ is of even moderate dimension, estimate the
+          conditional density is challenging.
+    \item Solution: use normal approximation to estimate the
+          unconditional and conditional density.
+    \item Using normal density, we can estimate $f (A_i )$ by:
+          \[ \hat{f}(A_i)=\frac{1}{\sqrt{2\pi}\hat{\sigma}}\exp*{-\frac{(A_i-\hat{\mu})^2}{2\hat{\sigma}^2}}, \]
+          where $ \hat{\mu} $ and $ \hat{\sigma} $ are the sample mean and SD of $ A_1,\ldots,A_n $.
+    \item Assume
+          \[ A_i=X_i^\top \beta+\varepsilon_i, \]
+          where $ \varepsilon_i \sim \N{0,\sigma^2} $.
+    \item Let $ r_i=A_i-X_i^\top \hat{\beta} $, we can approximate $ f(A_i\mid X_i) $ by $ \hat{f}(r_i\mid X_i) $:
+          \[ \hat{f}(A_i\mid X_i)=\hat{f}(r_i\mid X_i)=\frac{1}{\sqrt{2\pi}\tilde{\sigma}}\exp*{-\frac{(A_i-X_i\hat{\beta})^2}{2\tilde{\sigma}^2}}, \]
+          where $ \tilde{\sigma}^2 $ is the mean-squared error (MSE).
+\end{itemize}
+%\begin{noindent}
+    <<>>=
+    # Check the normal assumption for mother's weight concern:
+    mydata=read.csv("data/diet.csv",sep=",")
+    mydata[1:5,]
+    hist(mydata$M2WTCON)
+    qqnorm(mydata$M2WTCON)
+    qqline(mydata$M2WTCON)
+
+    # Calculate the numerator and the denominator for the weights
+    ps.num=dnorm(mydata$M2WTCON, mean(mydata$M2WTCON), sd(mydata$M2WTCON))
+    model.den=lm(M2WTCON~.,data=mydata[,-1])
+    ps.den=dnorm(mydata$M2WTCON, model.den$fitted, (summary(model.den))$sigma)
+    wts=ps.num/ps.den
+    boxplot(wts)
+    # Fit the MSM and obtain the robust standard error
+    mydata$wts=wts
+    design <- svydesign(ids=~1, weights=~wts, data=mydata)
+    svyglm(earlydiet ~ M2WTCON , design=design,family=quasibinomial())
+    @
+%\end{noindent}
+Conclusion: for $1 $ unit increase in mother's weight concern, the
+odds of the daughter dieting between ages 7 and 11 increases by
+$\exp{0.9370} = 2.55$ times. The causal effect is significant.
