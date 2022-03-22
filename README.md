@@ -15,7 +15,9 @@ All my university notes done in LaTeX.
 | [STAT 454](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20454/stat454.pdf)* | Week 2***  | :heavy_check_mark: |
 
 \* STAT 437 has a lot of content, but it's interesting. Therefore, I may consider typing this during the summer.
+
 ** STAT 454 and STAT 854 have exactly the same lectures.
+
 *** STAT 454: I don't like this class that much, but
 I may consider still releasing my unformatted notes by the end of the term.
 
