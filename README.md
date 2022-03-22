@@ -8,15 +8,16 @@ All my university notes done in LaTeX.
 
 ### Semester 2
 
-|                                               Course                                               | Completion |       Online       |
-| :------------------------------------------------------------------------------------------------: | :--------: | :----------------: |
-|  [STAT 437](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20437/stat437.pdf)  |   Week 1   | :heavy_check_mark: |
-|  [STAT 438](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20438/stat438.pdf)  |  Week 11   | :heavy_check_mark: |
-| [STAT 454](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20454/stat454.pdf)\* |  Week 2**  | :heavy_check_mark: |
+|                                              Course                                               | Completion |       Online       |
+| :-----------------------------------------------------------------------------------------------: | :--------: | :----------------: |
+| [STAT 437](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20437/stat437.pdf)  |  Week 1*   | :heavy_check_mark: |
+| [STAT 438](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20438/stat438.pdf)  |  Week 11   | :heavy_check_mark: |
+| [STAT 454](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20454/stat454.pdf)* | Week 2***  | :heavy_check_mark: |
 
-\* STAT 454 and STAT 854 have exactly the same lectures.
-** Remaining notes might be updated later in the term. I don't like this class that much, but
-I might consider still releasing my unformatted notes soon.
+\* STAT 437 has a lot of content, but it's interesting. Therefore, I may consider typing this during the summer.
+** STAT 454 and STAT 854 have exactly the same lectures.
+*** STAT 454: I don't like this class that much, but
+I may consider still releasing my unformatted notes by the end of the term.
 
 ### Semester 1
 
