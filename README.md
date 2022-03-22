@@ -11,11 +11,12 @@ All my university notes done in LaTeX.
 |                                               Course                                               | Completion |       Online       |
 | :------------------------------------------------------------------------------------------------: | :--------: | :----------------: |
 |  [STAT 437](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20437/stat437.pdf)  |   Week 1   | :heavy_check_mark: |
-|  [STAT 438](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20438/stat438.pdf)  |   Week 5   | :heavy_check_mark: |
+|  [STAT 438](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20438/stat438.pdf)  |  Week 11   | :heavy_check_mark: |
 | [STAT 454](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20454/stat454.pdf)\* |  Week 2**  | :heavy_check_mark: |
 
 \* STAT 454 and STAT 854 have exactly the same lectures.
-** Remaining notes will be updated later in the term.
+** Remaining notes might be updated later in the term. I don't like this class that much, but
+I might consider still releasing my unformatted notes soon.
 
 ### Semester 1
 

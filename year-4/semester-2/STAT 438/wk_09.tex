@@ -1,0 +1,45 @@
+\makeheading{Week 9 | Monday}{\printdate{2022-03-07}}%chktex 8
+\section*{Midterm Project}
+\begin{itemize}
+    \item Binary $ Y $:
+          $ \ACE_2 $ is the coefficient for $ A $ in
+          \texttt{lm(Y\~{}A,weights=IPTW)} which gives the causal excess risk.
+    \item Binary $ Y $: \texttt{glm(Y\~{}A,weights=IPTW,family=binomial)} gives the causal log odds ratio (coefficient for $ A $).
+    \item Count $ Y $: use the \texttt{poisson} family, which gives causal log relative risk (coefficient for $ A $).
+    \item DR estimator log odds ratio is the coefficient for $ A $:
+          \texttt{glm(Y\~{}A+X,weights=IPTW,family=binomial)}, which is consistent
+          if either this glm is correctly specified or if the PS model is correctly specified.
+\end{itemize}
+\section*{Case Study III\@: Mediation Analysis}
+\begin{Regular}{Slide 12}
+    \begin{align*}
+        sw_i
+         & =sw_i(1)\times sw_i                                                       \\
+         & =\underbrace{\frac{\Prob{A=A_i}}{\Prob{A=A_i\given X=X_i}}}_{\texttt{w1}}
+        \underbrace{\frac{\Prob{M=M_i\given A=A_i}}{\Prob{M=M_i\given A=A_i,X=X_i}}}_{\texttt{w2}}.
+    \end{align*}
+    For example, in the slides \texttt{w1.num} gives $ \Prob{A=A_i} $. We talk about
+    categorical $ M $, but if $ M $ is continuous, we replace the probability by the
+    density (similar to A2).
+\end{Regular}
+\section*{Chapter 7 Part I}
+Covered slides 1--23.
+
+\makeheading{Week 9 | Wednesday}{\printdate{2022-03-09}}%chktex 8
+\section*{Chapter 7 Part I}
+Suppose we are interested in evaluating Yeying. Some examples of missingness:
+\begin{itemize}
+    \item MCAR\@: student forgot to come to class;
+    \item MAR\@: student did not come to class because the weather was bad;
+    \item MNAR\@: student did not come to class because he thinks
+          that the professor is bad at teaching.
+\end{itemize}
+\section*{Chapter 7 Part II}
+\begin{Regular}{Slide 10}
+    Suppose that $ Y $ has missing values. For
+    \[ \frac{\Cov{X,Y}}{\Cov{X,X}}, \]
+    we can calculate $ \Cov{X,X} $ because there is no missingness in $ X $.
+    However, we have an unknown sample size for $ Y $, so pairwise
+    deletion might not be appropriate.
+\end{Regular}
+Covered slide up to and including 29.

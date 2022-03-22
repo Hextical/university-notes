@@ -1,0 +1,96 @@
+\makeheading{Week 7 | Monday}{\printdate{2022-02-14} $\heartsuit$}%chktex 8
+\section*{Chapter 5 Part II}
+\begin{Regular}{Slide 3}
+    Under the assumption $ \E{v^2}=\sigma^2 $, we can derive the variance of $ \hat{\beta}_1 $:
+    \[ \Var{\hat{\beta}_1}=\frac{\sigma^2}{\sum_{i=1}^{n}(A_i-\bar{A})}\times\frac{1}{R^2_{AZ}}, \]
+    where $ R^2_{AZ} $ is the \emph{coefficient of determination} in a regression of $ A $ on $ Z $. Similarly,
+    \[ \Var{\hat{\beta}_{1,\OLS}}=\frac{\sigma^2}{\sum_{i=1}^{n}(A_i-\bar{A})}. \]
+    \tcblower{}
+    \underline{Remarks}:
+    \begin{enumerate}[(1)]
+        \item $ \Var{\hat{\beta}_1}>\Var{\hat{\beta}_{1,\OLS}} $ since $ 0<R^2_{AZ}<1 $, so two stage least squares (TSLS)
+              is less efficient than ordinary least squares (OLS).
+        \item If $ Z $ is a weak instrument, then $ R^2_{AZ} $ is very small and $ \hat{\beta}_1 $ is highly inefficient.
+    \end{enumerate}
+\end{Regular}
+\begin{Regular}{Slide 4--5}
+    Why does TSLS work?
+    \begin{enumerate}[(1)]
+        \item $ \hat{A} $ is the projection of $ A $ onto the space spanned by $ Z $, and $ Z\indep v $,
+              implies $ \hat{A}\indep v $;
+        \item $ Y_i=\beta_0+\beta_1\hat{A}_i+\eta_i $, where $ \hat{A}_i\indep \eta_i $ implies OLS can be applied in the second stage.
+    \end{enumerate}
+\end{Regular}
+\begin{Regular}{Slide 6}
+    \begin{enumerate}[(1)]
+        \item \textbf{Bootstrap approach}.
+              \begin{enumerate}[(i)]
+                  \item Sample $ b=1,\ldots,B $ datasets of size $ n $ with replacement.
+                  \item Apply TSLS to the bootstrapped sample, estimate $ \hat{\beta}_1^{(b)} $, $ b=1,\ldots,B $.
+                  \item Hence, the variance is given by
+                        \[ \Var{\hat{\beta}_1}=\frac{1}{B-1}\sum_{i=1}^{B}(\hat{\beta}_1^{(b)}-\bar{\hat{\beta}}_1)^2, \]
+                        where $ \bar{\hat{\beta}}_1=\frac{1}{B}\sum_{b=1}^{B}\hat{\beta}_1^{(b)} $.
+              \end{enumerate}
+        \item \textbf{Derive the theoretical standard error}.
+
+              In matrix form, we have
+              \[ Y=\begin{bmatrix}
+                      Y_1 \\\vdots\\Y_n
+                  \end{bmatrix},\quad A=\begin{bmatrix}
+                      1      & A_1    \\
+                      \vdots & \vdots \\
+                      1      & A_n
+                  \end{bmatrix},\quad
+                  Z=\begin{bmatrix}
+                      1      & Z_1^\top \\
+                      \vdots & \vdots   \\
+                      1      & Z_n^\top
+                  \end{bmatrix},\quad
+                  \beta=\begin{bmatrix}
+                      \beta_0 \\
+                      \beta_1
+                  \end{bmatrix},\quad
+                  \gamma=\begin{bmatrix}
+                      \gamma_0 \\
+                      \gamma_1
+                  \end{bmatrix}. \]
+              Hence,
+              \[ \hat{\beta}_{\TSLS}=(\hat{A}^\top \hat{A})^{-1}\hat{A}^\top Y, \]
+              where $ \hat{A}=P_Z A=Z(Z^\top Z)^{-1}Z^\top A $. Note that $ P_Z $ is often called a \emph{projection matrix}.
+              Therefore,
+              \[ \estVar{\hat{\beta}_{\TSLS}}=\hat{\sigma}^2(\hat{A}^\top \hat{A})^{-1}, \]
+              where the \textbf{theoretical standard variance} is given by
+              \[ \hat{\sigma}^2=\frac{(Y-A^\top\hat{\beta}_{\TSLS})^\top(Y-A^\top\hat{\beta}_{\TSLS})}{n-2}. \]
+    \end{enumerate}
+\end{Regular}
+\begin{Regular}{Slide 14}
+    \begin{itemize}
+        \item $ \HN $: $ A $ is exogenous, that is, $ \Cov{A,v}=0 $.
+        \item If $ A $ is endogenous, that is, $ \Cov{v_i,\varepsilon_i}\ne 0 $.
+        \item If $ Z $ is a valid instrument, a consistent estimator of $ \varepsilon_i $ is $ \hat{\varepsilon}_i $, which
+              implies $ \Cov{v_i,\hat{\varepsilon}_i}\ne 0 $, that is, $ \Cov{Y_i,\hat{\varepsilon}_i}\ne 0 $.
+    \end{itemize}
+\end{Regular}
+\makeheading{Week 7 | Wednesday}{\printdate{2022-02-16}}%chktex 8
+\section*{Case Study IV Analysis}
+\begin{Regular}{Slide 22}
+    \begin{align*}
+        \hat{\beta}_{\text{IVW}}
+         & =\frac{\sum_{k=1}^{K}A_k Y_k/\sigma_{Yk}^2}{\sum_{k=1}^{K}A_k^2/\sigma_{Yk}^2}                                                           \\
+         & =\frac{\displaystyle \sum_{k=1}^{K}\frac{Y_k}{A_k}\frac{A_k^2}{\sigma_{Yk}^2}}{\displaystyle \sum_{k=1}^{K}\frac{A_k^2}{\sigma_{Yk}^2}}.
+    \end{align*}
+    \tcblower{}
+    \underline{Remarks}:
+    \begin{itemize}
+        \item The $ Y_k/A_k $ is known as the \emph{Wald estimator},
+              \begin{align*}
+                  \frac{Y_k}{A_k}
+                   & =\frac{\estCov{Y,Z_k}/\estCov{Z_k,Z_k}}{\estCov{A,Z_k}/\estCov{Z_k,Z_k}} \\
+                   & =\frac{\estCov{Y,Z_k}}{\estCov{A,Z_k}}.
+              \end{align*}
+        \item The $ A_k^2/\sigma_{Yk}^2 $ is derived by
+              \[ \estVar*{\frac{Y_k}{A_k}}=\frac{\sigma_{Yk}^2}{A_k^2}. \]
+        \item In the simple case (one genetic), we get
+              \[ \hat{\beta}_{\text{IVW}}=\frac{Y_k}{A_k}. \]
+    \end{itemize}
+\end{Regular}

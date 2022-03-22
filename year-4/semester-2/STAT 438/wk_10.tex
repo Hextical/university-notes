@@ -1,0 +1,189 @@
+\makeheading{Week 10 | Monday}{\printdate{2022-03-14}}%chktex 8
+\section*{Chapter 7 Part II}
+Finished the module.
+\section*{Chapter 7 Part III}
+\begin{Regular}{Slide 8}
+      $ \tilde{\gamma}\sim \MVN{\hat{\gamma},V} $.
+\end{Regular}
+Covered all the slides.
+\section*{Theoretical Part}
+Notations:
+\begin{itemize}
+      \item $ Y $: disease status;
+      \item $ A $: exposure status;
+      \item $ X $: a single covariate (for simplicity);
+      \item Missing indicator:
+            \[ R=\begin{cases}
+                        1, & \text{if $ X $ is missing},  \\
+                        0, & \text{if $ X $ is observed};
+                  \end{cases} \]
+      \item Missing mechanism:
+            \[ q(y,a,x)=\Prob{R=1\given Y=y,A=a,X=x}. \]
+            \begin{itemize}
+                  \item If $ q $ does not depend on $ x $ or $ y $, we have missing completely at random (MCAR).
+                  \item If $ q $ does not depend on $ x $, we have missing at random (MAR).
+                  \item Otherwise, we have missing not at random (MN AR).
+            \end{itemize}
+      \item Fit logistic regression with missing data. Given
+            \[ \Prob{Y=1\given A=a,X=x}=f(\beta_0+\beta_A a+\beta_X x), \]
+            where $ f(t)=\expit{t}=\exp{t}/\bigl(1+\exp{t}\bigr) $.
+            We can show that
+            \begin{equation}\label{M1}\tag*{(1)}
+                  \Prob{Y=1\given A=a,X=x,R=0}=f\biggl(\beta_0+\log*{\frac{1-q(1,a,x)}{1-q(0,a,x)}}+\beta_A a+\beta_X x\biggr).
+            \end{equation}
+            Our missing data equation is:
+            \[ \Prob{Y=1\given A=a,X=x,R=1}=f\biggl(\beta_0+\log*{\frac{q(1,a,x)}{q(0,a,x)}}+\beta_A a+\beta_X x\biggr). \]
+            Hence, for the missing data, our model is
+            \begin{equation}\label{M2}\tag*{(2)}
+                  \Prob{Y=1\given A=a,R=1}=\int_{x}f\biggl(\beta_0+\log*{\frac{q(1,a,x)}{q(0,a,x)}}+\beta_A a+\beta_X x\biggr)\odif{F(x\mid A=a\text{$,$ }R=1)}.
+            \end{equation}
+\end{itemize}
+\begin{enumerate}
+      \item Complete data analysis:
+            \begin{itemize}
+                  \item If MCAR, $ q(1,a,x)=q(0,a,x) $. Hence,
+                        \[ \Prob{Y=1\given A=a,X=x}=\Prob{Y=1\given A=a,X=x,R=0}. \]
+                        In other words, the model we get for the missing data is consistent for the true data.
+                  \item If $ q(y,a,x)=q(a,x) $ (in other words, the missingness does not depend on the disease outcome), then
+                        \[ \Prob{Y=1\given A=a,X=x}=\Prob{Y=1\given A=a,X=x,R=0}. \]
+                        Note: in case-control studies, the missingness often depends on the disease outcome.
+                        In cohort studies, the missingness does not depend on the disease outcome.
+                  \item If $ q(y,a,x)=q(y)q(a,x) $ (i.e., the missingness does not jointly depend on $Y$ and $(X,A)$),
+                        one can still get valid (consistent) estimates of $ \beta_A $ and $ \beta_X $. However,
+                        the intercept will change to
+                        \[ \beta_0^\star=\log*{\frac{q(1)}{q(0)}}. \]
+            \end{itemize}
+      \item Missing indicator approach:
+            \begin{itemize}
+                  \item Add the missing indicator $ R $ to the regression model.
+                  \item This approach does not work in the general case even when
+                        MCAR\@. Why? Suppose for a contradiction we assume MCAR, that is,
+                        $ q(y,a,x)=q $. Then,
+                        \begin{equation}\label{inda}\tag*{(a)}
+                              \Prob{Y=1\given A=a,X,R=0}=f(\beta_0+\beta_A a+\beta_X x+\beta_R 0)=
+                              f(\beta_0+\beta_A a+\beta_X x).
+                        \end{equation}
+                        The missing values are given by
+                        \begin{equation}\label{indb}\tag*{(b)}
+                              \Prob{Y=1\given A=a,X=c,R=1}=f(\beta_0+\beta_A a+\beta_X c+\beta_R)=f(\beta_0^\star+\beta_A a),
+                        \end{equation}
+                        where $ \beta_0^\star =\beta_0+\beta_X c+\beta_R $.
+                        \begin{itemize}
+                              \item $ \beta_A $ in~\ref{inda} corresponds to the adjusted OR of the exposure variable.
+                              \item $ \beta_A $ in~\ref{indb} corresponds to the unadjusted OR of the exposure variable.
+                              \item $ \exp{\hat{\beta}_A} $ obtained from this approach lies between the adjusted and unadjusted
+                                    odds ratios. Therefore, $ \beta_A $ is an \emph{inconsistent} estimator of the odds ratio.
+                        \end{itemize}
+            \end{itemize}
+\end{enumerate}
+Next time, we will prove~\ref{M1}.
+\makeheading{Week 10 | Wednesday}{\printdate{2022-03-16}}%chktex 8
+\section*{Theoretical Part}
+No slides today, writing for 1h 20min. Recall that
+\[ q(y,a,x)=\Prob{R=1\given Y=y,A=a,X=x}. \]
+Given
+\[ \Prob{Y=1\given A=a,X=x}=f(\beta_0+\beta_a+\beta_X x)
+      =f(\beta_0+\beta_A a+\beta_X x) \]
+where $ f(t)=\expit{t} $, we can show~\ref{M1}:
+\begin{align*}
+       & \Prob{Y=1\given A=a,X=x,R=0}                                                                                                                                             \\
+       & =\frac{\Prob{R=0,Y=1\given A=a,X=x}}{\Prob{R=0\given A=a,X=x}}                                                                                                           \\
+       & =\frac{\Prob{R=0\given Y=1, A=a,X=x}\Prob{Y=1\given A=a,X=x}}{\Prob{R=0,Y=1\given A=a,X=x}+\Prob{R=0,Y=0\given A=a,X=x}}                                                 \\
+       & =\frac{\Prob{R=0\given Y=1, A=a,X=x}\Prob{Y=1\given A=a,X=x}}{\Prob{R=0\given Y=1,A=a,X=x}\Prob{Y=1\given A=a,X=x}+\Prob{R=0\given Y=0,A=a,X=x}\Prob{Y=0\given A=a,X=x}} \\
+       & =\frac{[1-q(1,a,x)]f(\beta_0+\beta_A a+\beta_X x)}{[1-q(1,a,x)]f(\beta_0+\beta_A a+\beta_X x)+[1-q(0,a,x)][1-f(\beta_0+\beta_A a+\beta_X x)]}                            \\                                                                                     \\
+       & =f\biggl(\beta_0+\log*{\frac{1-q(1,a,x)}{1-q(0,a,x)}}+\beta_A a+\beta_X x\biggr).
+\end{align*}
+\begin{enumerate}
+      \item Complete data analysis.
+      \item Missing indicator approach.
+      \item Single imputation method.
+            \begin{itemize}
+                  \item Replace each missing value by $ \bar{X} $.
+                  \item A better way is to replace the missing value by $ \bar{X}\mid A $, that is,
+                        the mean of the observed $ X $ given $ A $.
+                  \item Why? For simplicity, assume $ q(y,a,x)=q(a) $. By~\ref{M1}, we have
+                        \[ \Prob{Y=1\given A=a,X=x,R=0}=\Prob{Y=1\given A=a,X=x}. \]
+                        By~\ref{M2}, we have
+                        \begin{align*}
+                              \Prob{Y=1\given A=a,R=1}
+                               & =\int_{x}f(\beta_0+\beta_A a+\beta_X x)\odif{F(x\mid A=a\text{$,$ }R=1)}                                            \\
+                               & =\int_{x}f(\beta_0+\beta_A a+\beta_X x)\odif{F(x\mid A=a)}\text{ since $R\indep X\mid A$}                           \\
+                               & =f\biggl(\beta_0+\beta_A a+\int_{x}\beta_X x\odif{F(x\mid A=a)}\biggr)\text{ if $f$ as an approx.\ linear function} \\
+                               & =f\bigl(\beta_0+\beta_A a+\beta_X\E{X\given A=a}\bigr)
+                        \end{align*}
+            \end{itemize}
+      \item Inverse probability weighting.
+            \begin{itemize}
+                  \item Weigh each subject with complete data by
+                        \[ \frac{1}{1-\hat{q}(y_i,a_i,x_i)},\; i=1,\ldots,n,\, R_i=0. \]
+                  \item For logistic regression, the score function for MLE is
+                        \[ S_n(\beta)=\frac{1}{n}\sum_{i=1}^{n}S_\beta(y_i,a_i,x_i), \]
+                        where
+                        \[ S_\beta(y,a,x)=\pdv*{\Set*{y\log{f_\beta(a,x)}+(1-y)\log{1-f_\beta(a,x)}}}{\beta}. \]
+                  \item For incomplete data, $ S_\beta(y_i,a_i,x_i) $ is unknown for any subject with $ R_i=1 $.
+                  \item We use the Horvitz-Thompson Estimator: solve $ \beta $ by letting
+                        $ \tilde{S}_n(\beta)=0 $, where
+                        \begin{align*}
+                              \tilde{S}_n(\beta)
+                               & =\frac{1}{n}\sum_{i=1,R_i=0}^{n}\frac{S_\beta(y_i,a_i,x_i)}{1-\hat{q}(y_i,a_i,x_i)}   \\
+                               & =\frac{1}{n}\sum_{i=1}^{n}\frac{S_\beta(y_i,a_i,x_i)(1-R_i)}{1-\hat{q}(y_i,a_i,x_i)}.
+                        \end{align*}
+                  \item Works well if MAR and $ q $ is properly modelled (i.e., use $ q $ instead of
+                        $ \hat{q} $). Why? We will show that
+                        \[ \E*{\frac{S_\beta(Y,A,X)(1-R)}{1-q(Y,A,X)}}=\E[\big]{S_\beta(Y,A,X)}, \]
+                        that is, we will have a consistent estimator. Note that MAR implies
+                        \begin{itemize}
+                              \item $ q $ does not depend on $ X $;
+                              \item $ R\indep X\mid Y,A $.
+                        \end{itemize}
+                        \begin{align*}
+                              \E*{\frac{S_\beta(Y,A,X)(1-R)}{1-q(Y,A,X)}}
+                               & =\E*{\E*{\frac{S_\beta(Y,A,X)(1-R)}{1-q(Y,A)}\given Y,A}}\text{ since $ R\indep X\mid Y,A $}                      \\
+                               & =\E*{\E[\big]{S_\beta(Y,A,X\mid Y,A)}\frac{\E[\big]{(1-R)\given Y,A}}{1-q(Y,A)}}\text{ since $R\indep X\mid Y,A$} \\
+                               & =\E*{\E[\big]{S_\beta(Y,A,X\mid Y,A)}\frac{1-q(Y,A)}{1-q(Y,A)}}                                                   \\
+                               & =\E[\big]{S_\beta(Y,A,X)}.
+                        \end{align*}
+            \end{itemize}
+      \item Multiple imputation.
+            \begin{itemize}
+                  \item Perform imputation $ m $ times.
+                  \item Rubin's rule gives
+                        \[ \hat{\beta}=\frac{1}{m}\sum_{j=1}^{m}\hat{\beta}_j, \]
+                        \begin{align*}
+                              \estVar{\hat{\beta}}
+                               & =\frac{1}{m}\sum_{j=1}^{m}s_j^2+\biggl(1+\frac{1}{m}\biggr)\frac{1}{m-1}\sum_{j=1}^{m}(\hat{\beta}_k-\hat{\beta})^2                                                                                                 \\
+                               & =\underbrace{\frac{1}{m}\sum_{j=1}^{m}s_j^2}_{\bar{U}}+\underbrace{\frac{1}{m-1}\sum_{j=1}^{m}(\hat{\beta}_j-\hat{\beta})^2}_{B}+\underbrace{\frac{1}{m(m-1)}\sum_{j=1}^{m}(\hat{\beta}_j-\hat{\beta})^2}_{(1/m)B}.
+                        \end{align*}
+                        \begin{itemize}
+                              \item $ \bar{U} $: within imputation variance;
+                              \item $ B $: between imputation variance;
+                              \item $ (1/m)B $: simulation error (i.e., extra variability as a consequence of imputing the
+                                    missing data using a finite number of imputations instead of an infinite number
+                                    of times).
+                        \end{itemize}
+                  \item Define
+                        \[ T = \bar{U}+\biggl(1+\frac{1}{m}\biggr)B,\qquad \lambda=\frac{B+B/m}{T}, \]
+                        where $ \lambda $ is known as the proportion of variation attributed to the missing data.
+                        Furthermore,
+                        \[ r=\frac{B+B/m}{\bar{U}}, \]
+                        where $ r $ is known as the relative increase in variance due to the missing data.
+                  \item $ \nu $: degrees of freedom.
+                        \begin{itemize}
+                              \item Rubin (1978):
+                                    \[ \nu_{\text{old}}=(m-1)\biggl(1+\frac{1}{r^2}\biggr)=\frac{m-1}{\lambda^2}. \]
+                                    Problem: If $ \lambda=0 $ (i.e., we have complete data), then $ \nu_{\text{old}} $ is indeterminate
+                                    (which is clearly inappropriate).
+                              \item Banard and Rubin (1999) (used in the mice package):
+                                    \[ \nu_{\text{com}}=n-k, \]
+                                    where $ n $ is the sample size, and $ k $ is the number of parameters. Also,
+                                    \[ \nu_{\text{obs}}=\frac{\nu_{\text{com}}}{\nu_{\text{com}}+3}\nu_{\text{com}}(1-\lambda). \]
+                              \item The newly proposed degrees of freedom is then given by
+                                    \[ \nu_{\text{new}}=\frac{\nu_{\text{old}}\nu_{\text{obs}}}{\nu_{\text{old}}+\nu_{\text{obs}}}, \]
+                                    where we see that $ \nu_{\text{new}}\le \nu_{\text{com}} $, and if $ \lambda=0 $, then $ \nu_{\text{new}}=\nu_{\text{com}} $.
+                              \item $ \HN $: $ \beta=\beta_0 $, $ \HA $: $ \beta\ne \beta_a $:
+                                    \[ T=\frac{\hat{\beta}-\beta_0}{\sqrt{\estVar{\beta}}}\stackrel{\cdot}{\sim}t(\nu_{\text{new}}),  \]
+                                    under $ \HN $. Furthermore, $ T^2 \sim F(1,\nu_{\text{new}}) $ under $ \HN $
+                                    (which is equivalent, but used in some software).
+                        \end{itemize}
+            \end{itemize}
+\end{enumerate}

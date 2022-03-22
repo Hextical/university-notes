@@ -1,0 +1,167 @@
+\makeheading{Week 11 | Monday}{\printdate{2022-03-21}}%chktex 8
+\begin{Regular}{6. Maximum Likelihood Estimation}
+    \begin{itemize}
+        \item Assume $ (X_i,Y_i) $, $ i=1,\ldots,n $.
+    \end{itemize}
+    \begin{enumerate}[(1)]
+        \item $ Y $ is fully observed; the first $ m $
+              components of $ X $ are observed, but the last $ (n-m) $
+              components of $ X $ are missing.
+        \item The joint pdf/pmf of $ (X,Y) $ is $ f(x,y) $.
+        \item The parameter(s) of interest is $ \theta $.
+    \end{enumerate}
+    \underline{Research Question}: We want to estimate some
+    (or all) components of $ \theta $.
+    \begin{itemize}
+        \item Then, the joint (observed) likelihood for $ \theta $ is based on
+              the observed data is:
+              \begin{equation}
+                  \mathcal{L}(x,y;\theta)
+                  =\prod_{i=1}^{m}f(x_i,y_i;\theta)
+                  \prod_{j=m+1}^{n}g(y_i;\theta),
+              \end{equation}
+              where $ g(y_i;\theta)=\sum_x f(x,y;\theta) $
+              if $ X $ is discrete, or
+              $ g(y_i)=\int_{x}f(x,y;\theta)\odif{x} $ if $ X $ is
+              continouous.
+        \item $ \theta $ is solved by maximizing the joint likelihood
+              $ \mathcal{L}(x,y;\theta) $.
+    \end{itemize}
+\end{Regular}
+\begin{Example}{Missing Data for Contingency Table (MLE)}
+    Suppose we have a cross-sectional study with the focus on
+    the association between mother's marital status and
+    babies low birthweight status.
+    \begin{center}
+        \begin{NiceTabular}{l|cc|c}
+            & \multicolumn{2}{c}{\emph{Birthweight ($ Y $)}}                                                 \\
+            \emph{Martial Status ($ X $)} & Low                            & Normal                                        \\
+            \midrule
+            Unmarried & $ 12 $ ($ p_{11} $)                            & $ 68 $ ($ p_{12} $)                 & $ 80 $         \\
+            Married   & $ 5 $ ($ p_{21} $)                           & $ 95 $ ($ p_{22} $)                & $ 100 $         \\
+            \midrule
+            & $ 17 $                    & $ 163 $ & $ 180 $
+        \end{NiceTabular}
+    \end{center}
+    \begin{itemize}
+        \item We further assume the babies birthweight is missing for $ 5 $
+              married mothers, and $ 15 $ unmarried mothers.
+        \item If a complete case analysis is conducted,
+              then the likelihood is:
+              \[ \mathcal{L}=p_{11}^{12}p_{12}^{68}p_{21}^{5}p_{22}^{95}, \]
+              under the constraint $ p_{11}+p_{12}+p_{21}+p_{22}=1 $. We get
+              \[ \hat{p}_{ij}=\frac{n_{ij}}{n^\star}, \]
+              where $ n^\star=\sum_i\sum_j n_{ij} $. Hence,
+              \[ \hat{p}_{11}=\frac{12}{180}=0.063,\quad
+                  \hat{p}_{12}=0.378,\quad
+                  \hat{p}_{21}=0.028,\quad
+                  \hat{p}_{22}=0.533. \]
+        \item If the information is missing completely at random,
+              then we have a simple random sample, and by
+              maximizing our likelihood we will have an asymptotically
+              unbiased estimator by the properties
+              of the likelihood function. By maximizing the likelihood,
+              the MLE of $ \theta=(p_{11},\ldots,p_{22}) $ is
+              biased if the missing mechanism is not MCAR\@.
+        \item If we also consider modelling the missing outcome,
+              then we know that
+              \[ p_{11}=\Prob{\text{unmarried},\text{low}}, \]
+              \[ p_{12}=\Prob{\text{unmarried},\text{normal}}, \]
+              so that $ \Prob{\text{unmarried}}=p_{11}+p_{12} $.
+              Therefore, our new likelihood is:
+              \[ \mathcal{L}=
+                  p_{11}^{12}p_{12}^{65}p_{21}^{5}p_{22}^{95}
+                  (p_{11}+p_{12})^{15}
+                  (p_{21}+p_{22})^{5}, \]
+              subject to $ p_{11}+p_{12}+p_{21}+p_{22}=1 $.
+              By maximizing this likelihood,
+              under regularity conditions of MLE and MAR assumption, the
+              MLE of $ \theta $ is asymptotically unbiased (consistent),
+              efficient and normally distributed. Maximizing
+              this likelihood is not easy, and requires a Newton Raphson
+              method. We will try sequentially.
+              \[ \hat{p}_{ij}=
+                  \estProb{X=i,Y=j}
+                  =\estProb{X=i}
+                  \estProb{Y=j\given X=i}. \]
+              That is,
+              \[ \hat{p}_{11}=\estProb{X=1,Y=1}
+                  =\estProb{X=1}\estProb{Y=1\given X=1}
+                  =\frac{80+15}{200}\times \frac{12}{80}=0.071. \]
+              Similarly,
+              \[ \hat{p}_{12}=\estProb{X=1}
+                  \estProb{Y=2\given X=1}=
+                  \frac{80+15}{200}\times \frac{68}{80}=0.404. \]
+              \[ \hat{p}_{21}=\estProb{X=2}
+                  \estProb{Y=1\given X=2}=\frac{100+5}{200}\times \frac{5}{100}=0.026. \]
+              \[ \hat{p}_{22}=\estProb{X=2}
+                  \estProb{Y=2\given X=2}=\frac{100+5}{200}\times \frac{95}{100}=0.499. \]
+    \end{itemize}
+\end{Example}
+\begin{Regular}{Expectation-Maximization (EM) Algorithm}
+    The EM algorithm is a general iterative approach
+    to getting maximum likelihood estimates with missing data.
+    It always follows (next lecture we do it in \texttt{R}):
+    \begin{enumerate}[(1)]
+        \item Fill in the missing values by their estimated values.
+              Now, we have complete data.
+        \item Estimate the parameters for this ``complete''
+              dataset.
+        \item Use the estimated parameters to re-estmate
+              the missing values (called an E-step). We fill in
+              the missing values with their \emph{expected} values, given
+              the observed data (\textbf{E}xpectation-step).
+        \item Re-estimate the parameters from this updated
+              ``complete'' dataset (M-step). We \emph{maximize} the likelihood
+              to estimate the parameters (\textbf{M}aximization-step).
+    \end{enumerate}
+    Iterate between steps (3) and (4) until convergence
+    of the parameter estimates.
+\end{Regular}
+\begin{Example}{Expectation-Maximization (Bivariate Normal Data)}
+    Consider
+    \[ \begin{bmatrix}
+            Y \\
+            X
+        \end{bmatrix}
+        \sim \text{BVN}(\mu,\Sigma), \]
+    where
+    \[ \mu=\begin{bmatrix}
+            \mu_1 \\
+            \mu_2
+        \end{bmatrix},\qquad
+        \Sigma=\begin{bmatrix}
+            \sigma_{11}^2 & \sigma_{12}   \\
+            \sigma_{12}   & \sigma_{22}^2
+        \end{bmatrix}, \]
+    where $ \Sigma $ is a symmetric matrix. We observe
+    $ (y_1,\ldots,y_n) $ and $ (x_1,\ldots,x_m) $,
+    where $ m<n $. The goal is to estimate the mean $ \mu $
+    with two approaches:
+    \begin{enumerate}[(1)]
+        \item Direct computation of MLE\@;
+        \item EM algorithm.
+    \end{enumerate}
+    In the BVN example, these two approaches are equivalent.
+    Some properties from STAT 330: If $ \begin{bmatrix}
+            Y \\
+            X
+        \end{bmatrix}\sim \text{BVN}(\mu,\Sigma) $, then
+    \begin{itemize}
+        \item $ Y \sim \N{\mu_1,\sigma_{11}^2} $ and $ X \sim \N{\mu_2,\sigma_{22}^2} $;
+        \item Conditional distribution:
+              \[ X\mid Y=y \sim \N*{\mu_2+
+                      \frac{\sigma_{12}}{\sigma_{11}}(y-\mu_1),
+                      \sigma_{22}^2-\frac{\sigma_{12}^2}{\sigma_{11}^2}}. \]
+
+    \end{itemize}
+    \underline{Approach 1} (Direct computation of MLE):
+    \begin{align*}
+        \mathcal{L}(x,y;\theta)
+         & =\prod_{i=1}^m \underbrace{f(x_i,y_i;\theta)}_{g(y_i;\theta)h(x_i\mid y_i;\theta)}
+        \prod_{i=m+1}^{n}g(y_i;\theta)                                                        \\
+         & =\prod_{i=1}^n g(y_i;\theta)\prod_{i=1}^{m}h(x_i\mid y_i;\theta)                   \\
+         & =\prod_{i=1}^n g(y_i;\mu_1,\sigma_{11}^2)
+        \prod_{i=1}^m h(x_i\mid y_i;\mu,\Sigma).
+    \end{align*}
+\end{Example}

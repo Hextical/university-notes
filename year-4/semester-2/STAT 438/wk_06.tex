@@ -1,0 +1,49 @@
+\makeheading{Week 6 | Monday}{\printdate{2022-02-07}}%chktex 8
+Review of chapters 1--4.
+\makeheading{Week 6 | Wednesday}{\printdate{2022-02-09}}%chktex 8
+\section*{Chapter 5 Part I}
+\begin{Regular}{Slide 8}
+    \begin{align*}
+        \Cov{Y,Z}
+         & =\Cov{\beta_0+\beta_1A+v,Z}                 \\
+         & =\Cov{\beta_0,Z}+\Cov{\beta_1A,Z}+\Cov{v,Z} \\
+         & =\Cov{\beta_1A,Z}                           \\
+         & =\beta_1\Cov{A,Z},
+    \end{align*}
+    where $ \Cov{\beta_0,Z}=0 $ since $ \beta_0 $ is a scalar, and $ \Cov{v,Z}=0 $ by the exogeneity assumption.
+    Re-arranging,
+    \begin{align*}
+        \hat{\beta}_1
+         & =\frac{\estCov{Y,Z}}{\estCov{A,Z}}                                                         \\
+         & =\frac{\sum_{i=1}^{n}(Y_i-\bar{Y})(Z_i-\bar{Z})}{\sum_{i=1}^{n}(A_i-\bar{A})(Z_i-\bar{Z})}
+    \end{align*}
+    \textbf{Bias of $ \hat{\beta} $}: By the Weak Law of Large Numbers (WLLN),
+    \[ \hat{\beta}_1\xrightarrow[n\to\infty]{\mathbb{P}}\frac{\Cov{Y,Z}}{\Cov{A,Z}}. \]
+    RHS\@:
+    \begin{align*}
+        \frac{\Cov{\beta_0+\beta_1A+v,Z}}{\Cov{A,Z}}
+         & =\frac{\beta_1\Cov{A,Z}+\Cov{v,Z}}{\Cov{A,Z}}                                                 \\
+         & =\beta_1+\frac{\Cov{v,Z}}{\Cov{A,Z}}                                                          \\
+         & =\beta_1+\frac{\Corr{v,Z}\sigma_v\sigma_Z}{\Corr{A,Z}\sigma_A\sigma_Z}                        \\
+         & =\beta_1+\underbrace{\frac{\Corr{v,Z}\sigma_v}{\Corr{A,Z}\sigma_A}}_{\text{asymptotic bias}}.
+    \end{align*}
+    If $ Z $ is a valid instrument, then $ \Corr{v,Z}=0 $, and so
+    \[ \hat{\beta}_1\xrightarrow[n\to\infty]{\mathbb{P}}\beta_1. \]
+    \begin{itemize}
+        \item $ \Corr{v,Z} $ shows how bad the instrument is; we want this to be small.
+        \item $ \Corr{A,Z} $ shows us how weak the instrument is; we want this to be large.
+    \end{itemize}
+    Note that if OLS is used here ($ Y \sim A $),
+    \[ \hat{\beta}_{1,\OLS}=\frac{\estCov{Y,A}}{\hat{\sigma}_A^2}\xrightarrow[n\to\infty]{\mathbb{P}}\frac{\Cov{Y,A}}{\sigma_A^2}. \]
+    RHS\@:
+    \begin{align*}
+        \frac{\Cov{\beta_0+\beta_1A+v,A}}{\sigma_A^2}
+         & =\frac{\beta_1\Cov{A,A}+\Cov{v,A}}{\sigma_A^2}                                      \\
+         & =\beta_1+\frac{\Cov{v,A}}{\sigma_A^2}                                               \\
+         & =\beta_1+\underbrace{\frac{\Corr{v,A}\sigma_V}{\sigma_A}}_{\text{asymptotic bias}}.
+    \end{align*}
+    If $ \Corr{v,A}\ne 0 $, then $ \hat{\beta}_{1,\OLS}\not\xrightarrow{\mathbb{P}}\beta_1 $.
+    If
+    \[ \frac{\Corr{v,Z}}{\Corr{Z,A}}<\Corr{v,A}, \]
+    then two-stage least squares (TSLS) is better than OLS (less asymptotic bias).
+\end{Regular}
