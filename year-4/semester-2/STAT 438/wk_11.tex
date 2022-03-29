@@ -150,18 +150,10 @@
     \begin{itemize}
         \item $ Y \sim \N{\mu_1,\sigma_{11}^2} $ and $ X \sim \N{\mu_2,\sigma_{22}^2} $;
         \item Conditional distribution:
-              \[ X\mid Y=y \sim \N*{\mu_2+
-                      \frac{\sigma_{12}}{\sigma_{11}}(y-\mu_1),
-                      \sigma_{22}^2-\frac{\sigma_{12}^2}{\sigma_{11}^2}}. \]
+              \[ X\mid Y=y \sim \N[\bigg]{
+                      \underbrace{\mu_2+
+                          \frac{\sigma_{12}}{\sigma_{11}}(y-\mu_1)}_{\E{x_i\given y_i}},
+                      \underbrace{\sigma_{22}^2-\frac{\sigma_{12}^2}{\sigma_{11}^2}}_{\E{x_i^2\given y_i}-\E{x_i\given y_i}^2}}. \]
 
     \end{itemize}
-    \underline{Approach 1} (Direct computation of MLE):
-    \begin{align*}
-        \mathcal{L}(x,y;\theta)
-         & =\prod_{i=1}^m \underbrace{f(x_i,y_i;\theta)}_{g(y_i;\theta)h(x_i\mid y_i;\theta)}
-        \prod_{i=m+1}^{n}g(y_i;\theta)                                                        \\
-         & =\prod_{i=1}^n g(y_i;\theta)\prod_{i=1}^{m}h(x_i\mid y_i;\theta)                   \\
-         & =\prod_{i=1}^n g(y_i;\mu_1,\sigma_{11}^2)
-        \prod_{i=1}^m h(x_i\mid y_i;\mu,\Sigma).
-    \end{align*}
 \end{Example}

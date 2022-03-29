@@ -1,0 +1,105 @@
+\makeheading{Week 12 | Monday}{\printdate{2022-03-28}}%chktex 8
+\begin{Example}{Direct Computation of MLE}
+    \begin{align*}
+        \mathcal{L}(x,y;\theta)
+         & =\prod_{i=1}^m \underbrace{f(x_i,y_i;\theta)}_{g(y_i;\theta)h(x_i\mid y_i;\theta)}
+        \prod_{i=m+1}^{n}g(y_i;\theta)                                                        \\
+         & =\prod_{i=1}^n g(y_i;\theta)\prod_{i=1}^{m}h(x_i\mid y_i;\theta)                   \\
+         & =\prod_{i=1}^n g(y_i;\mu_1,\sigma_{11}^2)
+        \prod_{i=1}^m h(x_i\mid y_i;\mu,\Sigma)                                               \\
+         & =\biggl(\frac{1}{\sqrt{2\pi\sigma_{11}^2}}\biggr)^{\!n}
+        \exp*{-\frac{\sum_{i=1}^{n}(y_i-\mu_1)^2}{2\sigma_{11}^2}}
+        \Biggl(\frac{1}{\sqrt{2\pi(\sigma_{22}^2-\frac{\sigma_{12}^2}{\sigma_{11}^2})}}\Biggr)^{\!m}
+        \exp*{-\frac{\sum_{i=1}^{m}(x_i-\mu_2-\frac{\sigma_{12}}{\sigma_{11}}(y_i-\mu_1))^2}{2(\sigma_{22}^2-\frac{\sigma_{12}^2}{\sigma_{11}^2})}}.
+    \end{align*}
+    Ignoring constants, we have:
+    \begin{equation}\label{obslik}\tag*{(3)}
+        \ell(x,y;\mu,\Sigma)
+        =-\frac{n}{2}\log{\sigma_{11}^2}-\frac{1}{2}\sum_{i=1}^{n}\frac{(y_i-\mu_1)^2}{\sigma_{11}^2}
+        -\frac{m}{2}\log*{\sigma_{22}^2-\frac{\sigma_{12}^2}{\sigma_{11}^2}}
+        -\frac{1}{2}\sum_{i=1}^{m}\frac{[x_i-\mu_2-\frac{\sigma_{12}}{\sigma_{11}}(y_i-\mu_1)]^2}{\sigma_{22}^2-\frac{\sigma_{12}^2}{\sigma_{11}^2}}.
+    \end{equation}
+    Solving MLE, we obtain
+    \begin{align*}
+        \hat{\mu}_1 & =\frac{1}{n}\sum_{i=1}^{n}y_i.           \\
+        \hat{\mu}_2 & =\hat{\beta}_0+\hat{\beta}_1\hat{\mu}_1,
+    \end{align*}
+    where
+    \begin{align*}
+        \hat{\beta}_1 & =\frac{\sum_{i=1}^{m}(y_i-\bar{y}^*)(x_i-\bar{x}^*)}{
+        \sum_{i=1}^{m}(y_i-\bar{y}^*)^2},                                     \\
+        \hat{\beta}_0 & =\bar{x}^*-\hat{\beta}_1\bar{y}^*.
+    \end{align*}
+    where the $*$ is for complete data, that is,
+    \begin{align*}
+        \bar{x}^* & =\frac{1}{m}\sum_{i=1}^{m}x_i, \\
+        \bar{y}^* & =\frac{1}{m}\sum_{i=1}^{m}y_i.
+    \end{align*}
+\end{Example}
+\begin{Example}{EM Algorithm}
+    Idea: sometimes, maximizing the ``observed'' likelihood~\ref{obslik}
+    is not easy and it's easier to maximize the ``complete''
+    likelihood if we can fill in the missing values first. Under bivariate normal
+    assumption,
+    \begin{align*}
+        L_C(x,y;\mu,\Sigma)
+         & =\prod_{i=1}^n f(x_i,y_i;\mu,\Sigma). \\
+        \ell_C(x,y;\mu,\Sigma)
+         & =-\frac{n}{2}\log*{\det{\Sigma}}
+        -\frac{1}{2}
+        \sum_{i=1}^{n}\biggl(\begin{bmatrix}
+                                     y_i \\
+                                     x_i
+                                 \end{bmatrix}-\begin{bmatrix}
+                                                   \mu_1 \\
+                                                   \mu_2
+                                               \end{bmatrix}\biggr)
+        \Sigma^{-1}
+        \biggl(\begin{bmatrix}
+                       y_i \\
+                       x_i
+                   \end{bmatrix}-
+        \begin{bmatrix}
+                \mu_1 \\
+                \mu_2
+            \end{bmatrix}\biggr).
+    \end{align*}
+    \textbf{E-step}: the sufficient statistic(s) for bivariate normal is given by
+    \[ S_1=\sum_{i=1}^{n}y_i,\qquad S_2=\sum_{i=1}^{n}x_i,
+        \qquad S_{11}=\sum_{i=1}^{n}y_i^2,\qquad
+        S_{22}=\sum_{i=1}^{n}x_i^2,\qquad
+        S_{12}=\sum_{i=1}^{n}x_i y_i. \]
+    We can impute the values by computing
+    \begin{align*}
+        \E{x_i\given y_i;\mu,\Sigma}
+         & =\beta_0+\beta_1 y_i,      \\
+        \E{x_i^2\given y_i;\mu,\Sigma}
+         & =(\beta_0+\beta_1 y_i)^2+
+        \sigma_{22\cdot 1},           \\
+        \E{x_i y_i\given y_i;\mu,\Sigma}
+         & =(\beta_0+\beta_1 y_i)y_i.
+    \end{align*}
+    where
+    \[ \beta_0=\mu_2-\frac{\sigma_{12}}{\sigma_{11}}\mu_1,\qquad
+        \beta_1=\frac{\sigma_{12}}{\sigma_{11}},\qquad
+        \sigma_{22\cdot 1}=\sigma_{22}^2-\frac{\sigma_{12}^2}{\sigma_{11}^2}. \]
+    Given the input of $ \mu,\Sigma $, we can obtain $ \hat{\beta}_0,\hat{\beta}_1,\hat{\sigma}_{22\cdot 1} $.
+
+    \textbf{M-step}:
+    \begin{align*}
+        \hat{\mu}_1
+         & =\frac{S_1}{n}=\frac{\sum_{i=1}^{n}y_i}{n}, \\
+        \hat{\mu}_2
+         & =\frac{S_2}{n}=\frac{\sum_{i=1}^{n}x_i}{n}, \\
+        \hat{\sigma}_{11}^2
+         & =\frac{S_{11}}{n}-\hat{\mu}_1^2
+        =\frac{\sum_{i=1}^{n}(y_i-\bar{y})^2}{n},      \\
+        \hat{\sigma}_{22}^2
+         & =\frac{S_{22}}{n}-\hat{\mu}_2^2
+        =\frac{\sum_{i=1}^{n}(x_i-\bar{x})^2}{n},      \\
+        \hat{\sigma}_{12}
+         & =\frac{S_{12}}{n}-\hat{\mu}_1\hat{\mu}_2
+        =\frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{n}.
+    \end{align*}
+    Repeat the E-step and M-step until all the parameter estimates converge.
+\end{Example}
