@@ -43,7 +43,7 @@ by definition of our $ \beta_0 $ estimate.
   whenever $ \hat{\sigma}^2 $ is viewed as a random variable.
 \end{Remark}
 \begin{Theorem}{Linear Combination of Independent Normal Random Variables}{lc_norm}
-  If $ Y_i \sim \N{\mu_i,\sigma^2} $, $ i=1,\ldots,n $
+  If $ Y_i \sim \N{\mu_i,\sigma_i^2} $, $ i=1,\ldots,n $
   independently, then
   \[ \sum_{i=1}^{n} a_i Y_i \sim N
     \biggl( \sum_{i=1}^{n} a_i\mu_i,\sum_{i=1}^{n} a_i^2\sigma_i^2 \biggr) \]
@@ -103,13 +103,21 @@ and viewing $ \hat{\beta}_0 $ as a random variable:
   \beta_1\bar{x}=\beta_0+\beta_1\bar{x}-\beta_1\bar{x}=\beta_0
 \]
 Now, we calculate the variance of $ \hat{\beta}_0 $:
-\[
-  \Var{\hat{\beta}_1}
-  =\Var{\bar{Y}-\beta_1\bar{x}}
-  =\Var{\bar{Y}}+(-\bar{x})^2\Var{\beta_1}
-  =\Var*{\frac{\sum_{i=1}^{n} Y_i}{n}}+\bar{x}^2\biggl( \frac{\sigma^2}{S_{xx}} \biggr)
-  =\frac{n\sigma^2}{n^2}+\frac{\sigma^2 x^2}{S_{xx}}
-\]
+\begin{align*}
+  \Var{\hat{\beta}_0}
+   & =\Var{\bar{Y}-\hat{\beta}_1\bar{x}}                                                                            \\
+   & =\Var{\bar{Y}}+(-\bar{x})^2\Var{\hat{\beta}_1}+2(1)(-1)(\bar{x})\underbracket{\Cov{\bar{Y},\hat{\beta}_1}}_{0} \\
+   & =\Var*{\frac{\sum_{i=1}^{n} Y_i}{n}}+\bar{x}^2\biggl( \frac{\sigma^2}{S_{xx}} \biggr)                          \\
+   & =\frac{n\sigma^2}{n^2}+\frac{\sigma^2 x^2}{S_{xx}},
+\end{align*}
+where we used the fact that $ \Cov{\:\cdot\:,\:\cdot\:} $ is linear to get
+\begin{align*}
+  \Cov{\bar{Y},\hat{\beta}_1}
+   & =\Cov*{\frac{1}{n}\sum_{i=1}^{n}Y_i,\sum_{i=1}^{n}a_i Y_i}             \\
+   & =\frac{1}{n}\sum_{i=1}^{n}a_i\underbracket{\Cov*{Y_i,Y_i}}_{\Var{Y_i}} \\
+   & =\frac{\sigma^2}{n}\sum_{i=1}^{n}a_i                                   \\
+   & =0.
+\end{align*}
 Also, since $ \hat{\beta}_1 $ and $ \hat{\beta}_0 $
 are linear combination of Normal random variables,
 they follow a Normal distribution. Therefore, we get the following theorem.
