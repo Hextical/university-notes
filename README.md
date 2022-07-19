@@ -11,8 +11,10 @@ All my university notes done in LaTeX. I will probably not update these anymore.
 |                                              Course                                               | Completion |       Online       |
 | :-----------------------------------------------------------------------------------------------: | :--------: | :----------------: |
 | [STAT 437](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20437/stat437.pdf)  |  Week 1*   | :heavy_check_mark: |
-| [STAT 438](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20438/stat438.pdf)  |  Week 11.5   | :heavy_check_mark: |
-| [STAT 454](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20454/stat454.pdf)** | Week 2***  | :heavy_check_mark: |
+| [STAT 438](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20438/stat438.pdf)  |  Week 11.5   | :heavy_exclamation_mark: |
+| [STAT 454](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20454/stat454.pdf)** | Week 2***  | :heavy_exclamation_mark: |
+
+:heavy_exclamation_mark: COVID-19 caused the first month of the term to be online.
 
 ### Semester 1
 
