@@ -2,6 +2,10 @@
 
 All my university notes done in LaTeX. I will probably not update these anymore.
 
+Some statistics (yes, statistics not Statistics):
+- 20 PDFs of courses, some of which are incomplete.
+- 1359 pages of LaTeX after combining those 20 PDFs.
+
 # [View Notes Here!](https://hextical.github.io/university-notes/)
 
 ## Year 4
