@@ -17,35 +17,38 @@ of the random variable for the mean of $ Y_0 $. For the variance
 of $ \hat{Y}_0 $ we write
 \begin{align*}
   \hat{Y}_0
-   & =
-  \hat{\beta}_0+\hat{\beta}_1x_0=\bar{Y}-\hat{\beta}_1\bar{x}+
-  \hat{\beta}_1x_0                                                                          \\
-   & =\bar{Y}+\hat{\beta}_1(x_0-\bar{x})                                                    \\
+   & =\hat{\beta}_0+\hat{\beta}_1x_0                                                                            \\
+   & =\underbrace{\bar{Y}-\hat{\beta}_1\bar{x}}_{\hat{\beta}_0}+\hat{\beta}_1x_0                                \\
+   & =\bar{Y}+\hat{\beta}_1(x_0-\bar{x})                                                                        \\
+   & =\bar{Y}+\underbrace{\frac{\sum_{i=1}^{n}(x_i-\bar{x})(Y_i-\bar{Y})}{S_{xx}}}_{\hat{\beta}_1}(x_0-\bar{x}) \\
    & =\sum_{i=1}^{n} \biggl[ \frac{Y_i}{n} +(x_0-\bar{x})
-  \biggl( \frac{(x_i-\bar{x})(Y_i-\bar{Y})}{S_{xx}} \biggr)  \biggr]                        \\
+  \frac{(x_i-\bar{x})(Y_i-\bar{Y})}{S_{xx}}  \biggr]                                                            \\
    & =\sum_{i=1}^{n} \biggl[ \frac{Y_i}{n} +(x_0-\bar{x})
-  \biggl( \frac{(x_i-\bar{x})Y_i}{S_{xx}} \biggr)  \biggr]                                  \\
+  \frac{(x_i-\bar{x})Y_i}{S_{xx}} \biggr]                                                                       \\
    & =\sum_{i=1}^{n} \biggl[ \frac{1}{n} +\frac{(x_0-\bar{x})(x_i-\bar{x})}{S_{xx}} \biggr]
-  Y_i                                                                                       \\
+  Y_i                                                                                                           \\
    & =\sum_{i=1}^{n} a_i Y_i
 \end{align*}
 where $ \displaystyle  a_i=\frac{1}{n} +\frac{(x_0-\bar{x})(x_i-\bar{x})}{S_{xx}} $.
-Therefore,
+Therefore, we have
 \begin{align*}
-  \Var{Y_0}
+  \Var{\hat{Y}_0}
+   & =\Var*{\sum_{i=1}^{n}a_i Y_i}                                    \\
+   & =\sum_{i=1}^{n}a_i^2\Var{Y_i}+\sum_{i\ne j}a_i a_j\Cov{Y_i,Y_j}  \\
    & =\sum_{i=1}^{n} \biggl[ \frac{1}{n} +
-  \frac{(x_0-\bar{x})(x_i-\bar{x})}{S_{xx}} \biggr]^2                \\
-   & = \sum_{i=1}^{n} \biggl[ \frac{1}{n^2}+
+  \frac{(x_0-\bar{x})(x_i-\bar{x})}{S_{xx}} \biggr]^2\sigma^2+0       \\
+   & = \sigma^2\sum_{i=1}^{n} \biggl[ \frac{1}{n^2}+
     \frac{2(x_0-\bar{x})(x_i-\bar{x})}{nS_{xx}}+
-  \frac{(x_0-\bar{x})^2(x_i-\bar{x})^2}{(S_{xx})^2}  \biggr]         \\
-   & =\sum_{i=1}^{n} \biggl[ \frac{1}{n^2}  \biggr]+
-  \frac{2(x_0-\bar{x})}{n S_{xx}}\sum_{i=1}^{n} (x_i-\bar{x})
-  +\frac{(x_0-\bar{x})^2}{(S_{xx})^2} \sum_{i=1}^{n} (x_i-\bar{x})^2 \\
-   & =\frac{1}{n} +\frac{2(x_0-\bar{x})}{S_{xx}}(0)+
-  \frac{(x_0-\bar{x})^2}{(S_{xx})^2}(S_{xx})                         \\
-   & =\frac{1}{n}+\frac{(x_0-\bar{x})^2}{S_{xx}}
+  \frac{(x_0-\bar{x})^2(x_i-\bar{x})^2}{(S_{xx})^2}  \biggr]          \\
+   & =\sigma^2\Set*{\sum_{i=1}^{n} \frac{1}{n^2}+
+    \frac{2(x_0-\bar{x})}{n S_{xx}}\sum_{i=1}^{n} (x_i-\bar{x})
+  +\frac{(x_0-\bar{x})^2}{(S_{xx})^2} \sum_{i=1}^{n} (x_i-\bar{x})^2} \\
+   & =\sigma^2\Set*{\frac{1}{n} +\frac{2(x_0-\bar{x})}{S_{xx}}(0)+
+  \frac{(x_0-\bar{x})^2}{(S_{xx})^2}(S_{xx})}                         \\
+   & =\sigma^2\Set*{\frac{1}{n}+\frac{(x_0-\bar{x})^2}{S_{xx}}},
 \end{align*}
-We proved the following theorem.
+noting that $ \Cov{Y_i,Y_j}=0 $ for all $ i\ne j $ since $ \varepsilon_i\indep \varepsilon_j $ for all $ i\ne j $. Hence,
+we proved the following theorem.
 \begin{Theorem}{Distribution of Prediction}{}
   The distribution of the prediction random variable is given by
   \[ \hat{Y}_0 \sim \N*{\beta_0+\beta_1x_0,
