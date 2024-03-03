@@ -374,11 +374,12 @@ pdfkeywords={University of Waterloo, Fall 2020 (1209)}}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{# Read data from florange.csv and input it into the dat vector.}
+\hlcom{# Read data from florange.csv and input it into the dat}
+\hlcom{# vector.}
 \hlstd{dat} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/florange.csv"}\hlstd{)}
 \hlcom{# Done to make the predict function work well.}
 \hlstd{x} \hlkwb{<-} \hlstd{dat}\hlopt{$}\hlstd{acres}
-    \hlstd{y} \hlkwb{<-} \hlstd{dat}\hlopt{$}\hlstd{boxes}
+\hlstd{y} \hlkwb{<-} \hlstd{dat}\hlopt{$}\hlstd{boxes}
 \hlcom{# Output the first 6 rows in dat.}
 \hlkwd{head}\hlstd{(dat)}
 \end{alltt}
@@ -392,12 +393,13 @@ pdfkeywords={University of Waterloo, Fall 2020 (1209)}}
 ## 6    Hardee  5306 43126
 \end{verbatim}
 \begin{alltt}
-\hlcom{# Draw a scatterplot with x-axis as 'acres' and y-axis as 'boxes'.}
+\hlcom{# Draw a scatterplot with x-axis as 'acres' and y-axis as}
+\hlcom{# 'boxes'.}
 \hlkwd{plot}\hlstd{(x, y)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-12-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-14-1} 
 
 }
 
@@ -422,7 +424,7 @@ $\bar{x}=16132.64$, and $\bar{y}= 1797.56$.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{# Compute some common variables manually.}
-\hlstd{Sxx} \hlkwb{<-} \hlkwd{sum}\hlstd{((x} \hlopt{-} \hlstd{xbar)} \hlopt{^} \hlnum{2}\hlstd{)}
+\hlstd{Sxx} \hlkwb{<-} \hlkwd{sum}\hlstd{((x} \hlopt{-} \hlstd{xbar)}\hlopt{^}\hlnum{2}\hlstd{)}
 \hlstd{Sxy} \hlkwb{<-} \hlkwd{sum}\hlstd{((x} \hlopt{-} \hlstd{xbar)} \hlopt{*} \hlstd{(y} \hlopt{-} \hlstd{ybar))}
 \hlkwd{cat}\hlstd{(}\hlstr{"Sxx: "}\hlstd{, Sxx,} \hlstr{"Sxy: "}\hlstd{, Sxy)}
 \end{alltt}
@@ -477,14 +479,14 @@ $\hat{\sigma}=754.4$.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{# Sum Squared Fitted Values}
-\hlkwd{sum}\hlstd{(lm.1}\hlopt{$}\hlstd{fitted.values} \hlopt{^} \hlnum{2}\hlstd{)}
+\hlkwd{sum}\hlstd{(lm.1}\hlopt{$}\hlstd{fitted.values}\hlopt{^}\hlnum{2}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 250385207
 \end{verbatim}
 \begin{alltt}
-    \hlcom{# Sum Squared Residuals}
-    \hlkwd{sum}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals} \hlopt{^} \hlnum{2}\hlstd{)}
+\hlcom{# Sum Squared Residuals}
+\hlkwd{sum}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals}\hlopt{^}\hlnum{2}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 13089860
@@ -498,7 +500,7 @@ Therefore, $\SS{\text{Res}}=\sum_{i=1}^n e_i^2=13089860=1.31\times10^7$.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{# Manual calculation of sigma^2 estimate}
-\hlkwd{sum}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals}\hlopt{^}\hlnum{2}\hlstd{)} \hlopt{/} \hlnum{23}
+\hlkwd{sum}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals}\hlopt{^}\hlnum{2}\hlstd{)}\hlopt{/}\hlnum{23}
 \end{alltt}
 \begin{verbatim}
 ## [1] 569124.3
@@ -512,7 +514,7 @@ Therefore, $\SS{\text{Res}}=\sum_{i=1}^n e_i^2=13089860=1.31\times10^7$.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{# Manual calculation of sigma estimate}
-\hlkwd{sqrt}\hlstd{(}\hlkwd{sum}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals} \hlopt{^} \hlnum{2}\hlstd{)} \hlopt{/} \hlnum{23}\hlstd{)}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{sum}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals}\hlopt{^}\hlnum{2}\hlstd{)}\hlopt{/}\hlnum{23}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 754.4033
@@ -548,7 +550,8 @@ Therefore, $c=2.07$.
 ## x              0.1027305   0.1307034
 \end{verbatim}
 \begin{alltt}
-\hlcom{# 95% prediction interval with predicted boxes if we had 10000 acres}
+\hlcom{# 95% prediction interval with predicted boxes if we had}
+\hlcom{# 10000 acres}
 \hlkwd{predict}\hlstd{(lm.1,} \hlkwd{data.frame}\hlstd{(}\hlkwc{x} \hlstd{=} \hlnum{10000}\hlstd{),} \hlkwc{interval} \hlstd{=} \hlstr{"prediction"}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
@@ -586,11 +589,10 @@ at play when two counties are geographically close.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{## NASA rocket data example}
-
-\hlcom{## From: R.S. Jankovsky, T.D. Smith, A.J. Pavli (1999). "High-Area-Ratio Rocket}
-\hlcom{## Nozzle at High Combustion Chamber Pressure-Experimental and Analytical}
-\hlcom{## Validation".}
-
+\hlcom{## From: R.S. Jankovsky, T.D. Smith, A.J. Pavli (1999).}
+\hlcom{## 'High-Area-Ratio Rocket Nozzle at High Combustion}
+\hlcom{## Chamber Pressure-Experimental and Analytical}
+\hlcom{## Validation'.}
 \hlcom{# setwd(...) first if your CSV file is somewhere else}
 \hlstd{rocket} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/rocket.csv"}\hlstd{)}
 \hlcom{# output all data in rocket vector}
@@ -622,20 +624,15 @@ as 1 if it's large.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{# Scatter plots where mfrow is used to put multiple plots on one image}
+\hlcom{# Scatter plots where mfrow is used to put multiple plots}
+\hlcom{# on one image}
 \hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{))}
-\hlkwd{plot}\hlstd{(rocket}\hlopt{$}\hlstd{nozzle,}
-  \hlstd{rocket}\hlopt{$}\hlstd{thrust,}
-\hlkwc{ylab} \hlstd{=} \hlstr{"Thrust"}\hlstd{,}
-\hlkwc{xlab} \hlstd{=} \hlstr{"Nozzle size (1 = large)"}\hlstd{)}
-\hlkwd{plot}\hlstd{(rocket}\hlopt{$}\hlstd{propratio,}
-  \hlstd{rocket}\hlopt{$}\hlstd{thrust,}
-\hlkwc{ylab} \hlstd{=} \hlstr{"Thrust"}\hlstd{,}
-\hlkwc{xlab} \hlstd{=} \hlstr{"Propellant to fuel ratio"}\hlstd{)}
+\hlkwd{plot}\hlstd{(rocket}\hlopt{$}\hlstd{nozzle, rocket}\hlopt{$}\hlstd{thrust,} \hlkwc{ylab} \hlstd{=} \hlstr{"Thrust"}\hlstd{,} \hlkwc{xlab} \hlstd{=} \hlstr{"Nozzle size (1 = large)"}\hlstd{)}
+\hlkwd{plot}\hlstd{(rocket}\hlopt{$}\hlstd{propratio, rocket}\hlopt{$}\hlstd{thrust,} \hlkwc{ylab} \hlstd{=} \hlstr{"Thrust"}\hlstd{,} \hlkwc{xlab} \hlstd{=} \hlstr{"Propellant to fuel ratio"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-21-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-33-1} 
 
 }
 
@@ -721,11 +718,12 @@ $\hat{\symbf{\beta}}=(473.6039, 16.7383,-1.0948)^\top$.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{# Manual beta estimates where rep is used to make the columns of 1s}
-\hlstd{X} \hlkwb{<-} \hlkwd{cbind}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{12}\hlstd{), rocket}\hlopt{$}\hlstd{nozzle, rocket}\hlopt{$}\hlstd{propratio)} \hlcom{# X matrix}
-\hlstd{y} \hlkwb{<-} \hlkwd{matrix}\hlstd{(rocket}\hlopt{$}\hlstd{thrust,} \hlkwc{ncol} \hlstd{=} \hlnum{1}\hlstd{)} \hlcom{# response vector}
-  \hlstd{beta_hat} \hlkwb{<-} \hlkwd{solve}\hlstd{(}\hlkwd{t}\hlstd{(X)} \hlopt{%*%} \hlstd{X)} \hlopt{%*%} \hlkwd{t}\hlstd{(X)} \hlopt{%*%} \hlstd{y}
-  \hlstd{beta_hat}
+\hlcom{# Manual beta estimates where rep is used to make the}
+\hlcom{# columns of 1s}
+\hlstd{X} \hlkwb{<-} \hlkwd{cbind}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{12}\hlstd{), rocket}\hlopt{$}\hlstd{nozzle, rocket}\hlopt{$}\hlstd{propratio)}  \hlcom{# X matrix}
+\hlstd{y} \hlkwb{<-} \hlkwd{matrix}\hlstd{(rocket}\hlopt{$}\hlstd{thrust,} \hlkwc{ncol} \hlstd{=} \hlnum{1}\hlstd{)}  \hlcom{# response vector}
+\hlstd{beta_hat} \hlkwb{<-} \hlkwd{solve}\hlstd{(}\hlkwd{t}\hlstd{(X)} \hlopt{%*%} \hlstd{X)} \hlopt{%*%} \hlkwd{t}\hlstd{(X)} \hlopt{%*%} \hlstd{y}
+\hlstd{beta_hat}
 \end{alltt}
 \begin{verbatim}
 ##            [,1]
@@ -744,9 +742,9 @@ $\hat{\symbf{\beta}}=(473.6039, 16.7383,-1.0948)^\top$.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{# Manual sigma estimate}
-\hlstd{mu_hat} \hlkwb{<-} \hlstd{X} \hlopt{%*%} \hlstd{beta_hat} \hlcom{# fitted values}
-\hlstd{e} \hlkwb{<-} \hlstd{y} \hlopt{-} \hlstd{mu_hat} \hlcom{# residuals}
-\hlstd{sigma_hat} \hlkwb{<-} \hlkwd{sqrt}\hlstd{((}\hlkwd{t}\hlstd{(e)} \hlopt{%*%} \hlstd{e)} \hlopt{/} \hlnum{9}\hlstd{)} \hlcom{# Note n-p-1 = 12-2-1 = 9}
+\hlstd{mu_hat} \hlkwb{<-} \hlstd{X} \hlopt{%*%} \hlstd{beta_hat}  \hlcom{# fitted values}
+\hlstd{e} \hlkwb{<-} \hlstd{y} \hlopt{-} \hlstd{mu_hat}  \hlcom{# residuals}
+\hlstd{sigma_hat} \hlkwb{<-} \hlkwd{sqrt}\hlstd{((}\hlkwd{t}\hlstd{(e)} \hlopt{%*%} \hlstd{e)}\hlopt{/}\hlnum{9}\hlstd{)}  \hlcom{# Note n-p-1 = 12-2-1 = 9}
 \hlstd{sigma_hat}
 \end{alltt}
 \begin{verbatim}
@@ -754,7 +752,7 @@ $\hat{\symbf{\beta}}=(473.6039, 16.7383,-1.0948)^\top$.
 ## [1,] 2.6545
 \end{verbatim}
 \begin{alltt}
-\hlstd{sigma_hat} \hlkwb{<-} \hlkwd{sqrt}\hlstd{(}\hlkwd{sum}\hlstd{(e} \hlopt{^} \hlnum{2}\hlstd{)} \hlopt{/} \hlnum{9}\hlstd{)} \hlcom{# equivalent}
+\hlstd{sigma_hat} \hlkwb{<-} \hlkwd{sqrt}\hlstd{(}\hlkwd{sum}\hlstd{(e}\hlopt{^}\hlnum{2}\hlstd{)}\hlopt{/}\hlnum{9}\hlstd{)}  \hlcom{# equivalent}
 \hlstd{sigma_hat}
 \end{alltt}
 \begin{verbatim}
@@ -781,7 +779,7 @@ $\hat{\symbf{\beta}}=(473.6039, 16.7383,-1.0948)^\top$.
 ## propratio     -4.320806 -0.03102117  0.88631920
 \end{verbatim}
 \begin{alltt}
-\hlkwd{sqrt}\hlstd{(}\hlkwd{diag}\hlstd{(}\hlkwd{vcov}\hlstd{(m1)))} \hlcom{# SEs of individual betas}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{diag}\hlstd{(}\hlkwd{vcov}\hlstd{(m1)))}  \hlcom{# SEs of individual betas}
 \end{alltt}
 \begin{verbatim}
 ## (Intercept)      nozzle   propratio 
@@ -805,14 +803,10 @@ $\hat{\symbf{\beta}}=(473.6039, 16.7383,-1.0948)^\top$.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{# Estimate the mean response for units with small nozzle and propellant ratio 5.5}
-\hlcom{# include a 95% CI}
-\hlkwd{predict}\hlstd{(}
-\hlkwc{object} \hlstd{= m1,}
-\hlkwc{newdata} \hlstd{=} \hlkwd{data.frame}\hlstd{(}\hlkwc{nozzle} \hlstd{=} \hlnum{0}\hlstd{,} \hlkwc{propratio} \hlstd{=} \hlnum{5.5}\hlstd{),}
-\hlkwc{interval} \hlstd{=} \hlstr{"confidence"}\hlstd{,}
-\hlkwc{level} \hlstd{=} \hlnum{0.95}
-\hlstd{)}
+\hlcom{# Estimate the mean response for units with small nozzle}
+\hlcom{# and propellant ratio 5.5 include a 95% CI}
+\hlkwd{predict}\hlstd{(}\hlkwc{object} \hlstd{= m1,} \hlkwc{newdata} \hlstd{=} \hlkwd{data.frame}\hlstd{(}\hlkwc{nozzle} \hlstd{=} \hlnum{0}\hlstd{,} \hlkwc{propratio} \hlstd{=} \hlnum{5.5}\hlstd{),}
+  \hlkwc{interval} \hlstd{=} \hlstr{"confidence"}\hlstd{,} \hlkwc{level} \hlstd{=} \hlnum{0.95}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ##        fit      lwr      upr
@@ -869,14 +863,10 @@ $\hat{\symbf{\beta}}=(473.6039, 16.7383,-1.0948)^\top$.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{# Predict the value of the response for a unit with small nozzle and propellant ratio 5.5}
-\hlcom{# include a 95% PI}
-\hlkwd{predict}\hlstd{(}
-\hlkwc{object} \hlstd{= m1,}
-\hlkwc{newdata} \hlstd{=} \hlkwd{data.frame}\hlstd{(}\hlkwc{nozzle} \hlstd{=} \hlnum{0}\hlstd{,} \hlkwc{propratio} \hlstd{=} \hlnum{5.5}\hlstd{),}
-\hlkwc{interval} \hlstd{=} \hlstr{"prediction"}\hlstd{,}
-\hlkwc{level} \hlstd{=} \hlnum{0.95}
-\hlstd{)}
+\hlcom{# Predict the value of the response for a unit with small}
+\hlcom{# nozzle and propellant ratio 5.5 include a 95% PI}
+\hlkwd{predict}\hlstd{(}\hlkwc{object} \hlstd{= m1,} \hlkwc{newdata} \hlstd{=} \hlkwd{data.frame}\hlstd{(}\hlkwc{nozzle} \hlstd{=} \hlnum{0}\hlstd{,} \hlkwc{propratio} \hlstd{=} \hlnum{5.5}\hlstd{),}
+  \hlkwc{interval} \hlstd{=} \hlstr{"prediction"}\hlstd{,} \hlkwc{level} \hlstd{=} \hlnum{0.95}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ##        fit      lwr      upr
@@ -925,9 +915,9 @@ $\hat{\symbf{\beta}}=(473.6039, 16.7383,-1.0948)^\top$.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## R demo for Oct 19}
-\hlcom{## Plotting functions and histograms, F distribution,}
-\hlcom{## ANOVA tables, F tests, MLR with categorical variables}
+\hlcom{## R demo for Oct 19 Plotting functions and histograms, F}
+\hlcom{## distribution, ANOVA tables, F tests, MLR with}
+\hlcom{## categorical variables}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -944,7 +934,8 @@ Evaluate the function at many $x$ values, then plot it.
 ## [1] -4.00 -3.99 -3.98 -3.97 -3.96 -3.95
 \end{verbatim}
 \begin{alltt}
-\hlcom{# Normal probability density function with mean 0, and standard deviation 1.}
+\hlcom{# Normal probability density function with mean 0, and}
+\hlcom{# standard deviation 1.}
 \hlstd{y} \hlkwb{<-} \hlkwd{dnorm}\hlstd{(x,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{)}
 \end{alltt}
 \end{kframe}
@@ -959,7 +950,7 @@ Evaluate the function at many $x$ values, then plot it.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-32-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-56-1} 
 
 }
 
@@ -972,12 +963,12 @@ We can also plot $y=x^2$ for example.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{y} \hlkwb{<-} \hlstd{x} \hlopt{^} \hlnum{2}
+\hlstd{y} \hlkwb{<-} \hlstd{x}\hlopt{^}\hlnum{2}
 \hlkwd{plot}\hlstd{(x, y,} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-33-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-57-1} 
 
 }
 
@@ -989,98 +980,50 @@ We can also plot $y=x^2$ for example.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{x} \hlkwb{<-} \hlkwd{seq}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{5}\hlstd{,}\hlnum{0.01}\hlstd{)}
+\hlstd{x} \hlkwb{<-} \hlkwd{seq}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{5}\hlstd{,} \hlnum{0.01}\hlstd{)}
 \hlkwd{head}\hlstd{(x)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 0.00 0.01 0.02 0.03 0.04 0.05
 \end{verbatim}
 \begin{alltt}
-\hlcom{# df is degrees of freedom.}
-\hlcom{# type = "l" is for a smooth curve}
-\hlkwd{plot}\hlstd{(}
-\hlstd{x,}
-\hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{1}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{1}\hlstd{),}
-\hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,}
-\hlkwc{xlab} \hlstd{=} \hlstr{"x"}\hlstd{,}
-\hlkwc{ylab} \hlstd{=} \hlstr{"density"}
-\hlstd{)}
+\hlcom{# df is degrees of freedom.  type = 'l' is for a smooth}
+\hlcom{# curve}
+\hlkwd{plot}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{1}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{1}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{xlab} \hlstd{=} \hlstr{"x"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"density"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-34-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-58-1} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
-\hlcom{# ylim is for the y-axis limits}
-\hlcom{# lwd is for line width}
-\hlkwd{plot}\hlstd{(}
-\hlstd{x,}
-\hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{1}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{1}\hlstd{),}
-\hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,}
-\hlkwc{col} \hlstd{=} \hlstr{"black"}\hlstd{,}
-\hlkwc{xlab} \hlstd{=} \hlstr{"x"}\hlstd{,}
-\hlkwc{ylab} \hlstd{=} \hlstr{"density"}\hlstd{,}
-\hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{2.5}\hlstd{),}
-\hlkwc{lwd} \hlstd{=} \hlnum{2}
-\hlstd{)}
+\hlcom{# ylim is for the y-axis limits lwd is for line width}
+\hlkwd{plot}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{1}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{1}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"black"}\hlstd{,}
+  \hlkwc{xlab} \hlstd{=} \hlstr{"x"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"density"}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{2.5}\hlstd{),} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
 \hlcom{# Add lines to the existing plot.}
-\hlkwd{lines}\hlstd{(}
-\hlstd{x,}
-\hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{1}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{100}\hlstd{),}
-\hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,}
-\hlkwc{col} \hlstd{=} \hlstr{"green"}\hlstd{,}
-\hlkwc{lwd} \hlstd{=} \hlnum{2}
-\hlstd{)}
-\hlkwd{lines}\hlstd{(}
-\hlstd{x,}
-\hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{5}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{1}\hlstd{),}
-\hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,}
-\hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,}
-\hlkwc{lwd} \hlstd{=} \hlnum{2}
-\hlstd{)}
-\hlkwd{lines}\hlstd{(}
-\hlstd{x,}
-\hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{5}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{100}\hlstd{),}
-\hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,}
-\hlkwc{col} \hlstd{=} \hlstr{"purple"}\hlstd{,}
-\hlkwc{lwd} \hlstd{=} \hlnum{2}
-\hlstd{)}
-\hlkwd{lines}\hlstd{(}
-\hlstd{x,}
-\hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{10}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{1}\hlstd{),}
-\hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,}
-\hlkwc{col} \hlstd{=} \hlstr{"red"}\hlstd{,}
-\hlkwc{lwd} \hlstd{=} \hlnum{2}
-\hlstd{)}
-\hlkwd{lines}\hlstd{(}
-\hlstd{x,}
-\hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{10}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{100}\hlstd{),}
-\hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,}
-\hlkwc{col} \hlstd{=} \hlstr{"orange"}\hlstd{,}
-\hlkwc{lwd} \hlstd{=} \hlnum{2}
-\hlstd{)}
-\hlcom{# Add a legend to the top-right.}
-\hlcom{# lty = 1 is for a straight solid line.}
-\hlkwd{legend}\hlstd{(}
-\hlstr{"topright"}\hlstd{,}
-\hlkwc{legend} \hlstd{=} \hlkwd{c}\hlstd{(}
-\hlstr{"df1=1, df2=1"}\hlstd{,}
-\hlstr{"df1=1, df2=100"}\hlstd{,}
-\hlstr{"df1=5, df2=1"}\hlstd{,}
-\hlstr{"df1=5, df2=100"}\hlstd{,}
-\hlstr{"df1=10, df2=1"}\hlstd{,}
-\hlstr{"df1=10, df2=100"}
-\hlstd{),}
-\hlkwc{lty} \hlstd{=} \hlnum{1}\hlstd{,}
-\hlkwc{col} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"black"}\hlstd{,} \hlstr{"green"}\hlstd{,} \hlstr{"blue"}\hlstd{,} \hlstr{"purple"}\hlstd{,} \hlstr{"red"}\hlstd{,} \hlstr{"orange"}\hlstd{)}
-\hlstd{)}
+\hlkwd{lines}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{1}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{100}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"green"}\hlstd{,}
+  \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{lines}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{5}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{1}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,}
+  \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{lines}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{5}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{100}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"purple"}\hlstd{,}
+  \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{lines}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{10}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{1}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"red"}\hlstd{,}
+  \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{lines}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{10}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{100}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"orange"}\hlstd{,}
+  \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlcom{# Add a legend to the top-right.  lty = 1 is for a straight}
+\hlcom{# solid line.}
+\hlkwd{legend}\hlstd{(}\hlstr{"topright"}\hlstd{,} \hlkwc{legend} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"df1=1, df2=1"}\hlstd{,} \hlstr{"df1=1, df2=100"}\hlstd{,}
+  \hlstr{"df1=5, df2=1"}\hlstd{,} \hlstr{"df1=5, df2=100"}\hlstd{,} \hlstr{"df1=10, df2=1"}\hlstd{,} \hlstr{"df1=10, df2=100"}\hlstd{),}
+  \hlkwc{lty} \hlstd{=} \hlnum{1}\hlstd{,} \hlkwc{col} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"black"}\hlstd{,} \hlstr{"green"}\hlstd{,} \hlstr{"blue"}\hlstd{,} \hlstr{"purple"}\hlstd{,} \hlstr{"red"}\hlstd{,}
+    \hlstr{"orange"}\hlstd{))}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-34-2} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-58-2} 
 
 }
 
@@ -1100,70 +1043,52 @@ We can also plot $y=x^2$ for example.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-35-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-59-1} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
-\hlcom{# Generate histogram for the random numbers with relative frequency.}
-\hlcom{# This is normalized, so we can superimpose an F-distribution to it.}
+\hlcom{# Generate histogram for the random numbers with relative}
+\hlcom{# frequency.  This is normalized, so we can superimpose an}
+\hlcom{# F-distribution to it.}
 \hlkwd{hist}\hlstd{(randF,} \hlkwc{freq} \hlstd{=} \hlnum{FALSE}\hlstd{)}
 \hlcom{# Superimpose an F-distribution on the histogram.}
-\hlkwd{lines}\hlstd{(}
-\hlstd{x,}
-\hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{5}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{100}\hlstd{),}
-\hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,}
-\hlkwc{col} \hlstd{=} \hlstr{"purple"}\hlstd{,}
-\hlkwc{lwd} \hlstd{=} \hlnum{2}
-\hlstd{)}
+\hlkwd{lines}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{5}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{100}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"purple"}\hlstd{,}
+  \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-35-2} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-59-2} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
-\hlcom{# Set y-axis limits and more detailed histogram bins using 'breaks = 25'}
-\hlkwd{hist}\hlstd{(randF,}
-\hlkwc{freq} \hlstd{=} \hlnum{FALSE}\hlstd{,}
-\hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{0.8}\hlstd{),}
-\hlkwc{breaks} \hlstd{=} \hlnum{25}\hlstd{)}
-\hlkwd{lines}\hlstd{(}
-\hlstd{x,}
-\hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{5}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{100}\hlstd{),}
-\hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,}
-\hlkwc{col} \hlstd{=} \hlstr{"purple"}\hlstd{,}
-\hlkwc{lwd} \hlstd{=} \hlnum{2}
-\hlstd{)}
+\hlcom{# Set y-axis limits and more detailed histogram bins using}
+\hlcom{# 'breaks = 25'}
+\hlkwd{hist}\hlstd{(randF,} \hlkwc{freq} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{0.8}\hlstd{),} \hlkwc{breaks} \hlstd{=} \hlnum{25}\hlstd{)}
+\hlkwd{lines}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{5}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{100}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"purple"}\hlstd{,}
+  \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-35-3} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-59-3} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
-\hlcom{# Generate more random F-distributions to get closer to the 'true' density.}
+\hlcom{# Generate more random F-distributions to get closer to the}
+\hlcom{# 'true' density.}
 \hlstd{randF} \hlkwb{<-} \hlkwd{rf}\hlstd{(}\hlnum{10000}\hlstd{,} \hlnum{5}\hlstd{,} \hlnum{100}\hlstd{)}
-\hlkwd{hist}\hlstd{(randF,}
-\hlkwc{freq} \hlstd{=} \hlnum{FALSE}\hlstd{,}
-\hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{0.8}\hlstd{),}
-\hlkwc{breaks} \hlstd{=} \hlnum{25}\hlstd{)}
-\hlkwd{lines}\hlstd{(}
-\hlstd{x,}
-\hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{5}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{100}\hlstd{),}
-\hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,}
-\hlkwc{col} \hlstd{=} \hlstr{"purple"}\hlstd{,}
-\hlkwc{lwd} \hlstd{=} \hlnum{2}
-\hlstd{)}
+\hlkwd{hist}\hlstd{(randF,} \hlkwc{freq} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{0.8}\hlstd{),} \hlkwc{breaks} \hlstd{=} \hlnum{25}\hlstd{)}
+\hlkwd{lines}\hlstd{(x,} \hlkwc{y} \hlstd{=} \hlkwd{df}\hlstd{(x,} \hlkwc{df1} \hlstd{=} \hlnum{5}\hlstd{,} \hlkwc{df2} \hlstd{=} \hlnum{100}\hlstd{),} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"purple"}\hlstd{,}
+  \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-35-4} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-59-4} 
 
 }
 
@@ -1222,17 +1147,16 @@ We can also plot $y=x^2$ for example.
 ## [1] 836.670000   9.529332  63.417335
 \end{verbatim}
 \begin{alltt}
-    \hlkwd{sum}\hlstd{(}\hlkwd{anova}\hlstd{(m1)}\hlopt{$}\hlstd{`Sum Sq`[}\hlnum{1}\hlopt{:}\hlnum{2}\hlstd{])}
+\hlkwd{sum}\hlstd{(}\hlkwd{anova}\hlstd{(m1)}\hlopt{$}\hlstd{`Sum Sq`[}\hlnum{1}\hlopt{:}\hlnum{2}\hlstd{])}
 \end{alltt}
 \begin{verbatim}
 ## [1] 846.1993
 \end{verbatim}
 \begin{alltt}
 \hlstd{SSRes} \hlkwb{<-} \hlkwd{anova}\hlstd{(m1)}\hlopt{$}\hlstd{`Sum Sq`[}\hlnum{3}\hlstd{]}
-
-    \hlcom{# Test of overall significance.}
-    \hlstd{m_red} \hlkwb{<-} \hlkwd{lm}\hlstd{(thrust} \hlopt{~} \hlnum{1}\hlstd{,} \hlkwc{data} \hlstd{= rocket)}
-    \hlkwd{summary}\hlstd{(m_red)}
+\hlcom{# Test of overall significance.}
+\hlstd{m_red} \hlkwb{<-} \hlkwd{lm}\hlstd{(thrust} \hlopt{~} \hlnum{1}\hlstd{,} \hlkwc{data} \hlstd{= rocket)}
+\hlkwd{summary}\hlstd{(m_red)}
 \end{alltt}
 \begin{verbatim}
 ## 
@@ -1252,7 +1176,7 @@ We can also plot $y=x^2$ for example.
 ## Residual standard error: 9.094 on 11 degrees of freedom
 \end{verbatim}
 \begin{alltt}
-    \hlkwd{anova}\hlstd{(m_red)}
+\hlkwd{anova}\hlstd{(m_red)}
 \end{alltt}
 \begin{verbatim}
 ## Analysis of Variance Table
@@ -1262,13 +1186,12 @@ We can also plot $y=x^2$ for example.
 ## Residuals 11 909.62  82.692
 \end{verbatim}
 \begin{alltt}
-    \hlstd{SSRes_A} \hlkwb{<-} \hlkwd{anova}\hlstd{(m_red)}\hlopt{$}\hlstd{`Sum Sq`[}\hlnum{1}\hlstd{]}
-
+\hlstd{SSRes_A} \hlkwb{<-} \hlkwd{anova}\hlstd{(m_red)}\hlopt{$}\hlstd{`Sum Sq`[}\hlnum{1}\hlstd{]}
 \hlcom{# Manually calculate F-statistic.}
 \hlstd{l} \hlkwb{<-} \hlnum{2}
 \hlstd{n} \hlkwb{<-} \hlkwd{nrow}\hlstd{(rocket)}
 \hlstd{p} \hlkwb{<-} \hlnum{2}
-\hlstd{Fstat} \hlkwb{<-} \hlstd{((SSRes_A} \hlopt{-} \hlstd{SSRes)} \hlopt{/} \hlstd{l)} \hlopt{/} \hlstd{(SSRes} \hlopt{/} \hlstd{(n} \hlopt{-} \hlstd{p} \hlopt{-} \hlnum{1}\hlstd{))}
+\hlstd{Fstat} \hlkwb{<-} \hlstd{((SSRes_A} \hlopt{-} \hlstd{SSRes)}\hlopt{/}\hlstd{l)}\hlopt{/}\hlstd{(SSRes}\hlopt{/}\hlstd{(n} \hlopt{-} \hlstd{p} \hlopt{-} \hlnum{1}\hlstd{))}
 \hlstd{Fstat}
 \end{alltt}
 \begin{verbatim}
@@ -1297,13 +1220,9 @@ We can also plot $y=x^2$ for example.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlstd{coffee} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/coffee_arabica.csv"}\hlstd{)}
-
-\hlstd{mfull} \hlkwb{<-}
-\hlkwd{lm}\hlstd{(}
-\hlstd{Flavor} \hlopt{~} \hlkwd{factor}\hlstd{(Processing.Method)} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+}
-\hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,}
-\hlkwc{dat} \hlstd{= coffee}
-\hlstd{)}
+\hlstd{mfull} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlkwd{factor}\hlstd{(Processing.Method)} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+}
+  \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,}
+  \hlkwc{dat} \hlstd{= coffee)}
 \hlkwd{summary}\hlstd{(mfull)}
 \end{alltt}
 \begin{verbatim}
@@ -1372,14 +1291,10 @@ We can also plot $y=x^2$ for example.
 \end{verbatim}
 \begin{alltt}
 \hlstd{SSRes} \hlkwb{<-} \hlkwd{anova}\hlstd{(mfull)}\hlopt{$}\hlstd{`Sum Sq`[}\hlnum{10}\hlstd{]}
-
-\hlcom{# Reduced model without Uniformity and Moisture (beta9=beta10=0):}
-\hlstd{m_red} \hlkwb{<-}
-\hlkwd{lm}\hlstd{(}
-\hlstd{Flavor} \hlopt{~} \hlkwd{factor}\hlstd{(Processing.Method)} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+}
-\hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness,}
-\hlkwc{dat} \hlstd{= coffee}
-\hlstd{)}
+\hlcom{# Reduced model without Uniformity and Moisture}
+\hlcom{# (beta9=beta10=0):}
+\hlstd{m_red} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlkwd{factor}\hlstd{(Processing.Method)} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+}
+  \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness,} \hlkwc{dat} \hlstd{= coffee)}
 \hlkwd{summary}\hlstd{(m_red)}
 \end{alltt}
 \begin{verbatim}
@@ -1441,12 +1356,11 @@ We can also plot $y=x^2$ for example.
 \end{verbatim}
 \begin{alltt}
 \hlstd{SSRes_A} \hlkwb{<-} \hlkwd{anova}\hlstd{(m_red)}\hlopt{$}\hlstd{`Sum Sq`[}\hlnum{8}\hlstd{]}
-
 \hlcom{# Manually calculate F-statistic.}
 \hlstd{l} \hlkwb{<-} \hlnum{2}
 \hlstd{n} \hlkwb{<-} \hlkwd{nrow}\hlstd{(coffee)}
 \hlstd{p} \hlkwb{<-} \hlnum{10}
-\hlstd{Fstat} \hlkwb{<-} \hlstd{((SSRes_A} \hlopt{-} \hlstd{SSRes)} \hlopt{/} \hlstd{l)} \hlopt{/} \hlstd{(SSRes} \hlopt{/} \hlstd{(n} \hlopt{-} \hlstd{p} \hlopt{-} \hlnum{1}\hlstd{))}
+\hlstd{Fstat} \hlkwb{<-} \hlstd{((SSRes_A} \hlopt{-} \hlstd{SSRes)}\hlopt{/}\hlstd{l)}\hlopt{/}\hlstd{(SSRes}\hlopt{/}\hlstd{(n} \hlopt{-} \hlstd{p} \hlopt{-} \hlnum{1}\hlstd{))}
 \hlstd{Fstat}
 \end{alltt}
 \begin{verbatim}
@@ -1467,20 +1381,16 @@ We can also plot $y=x^2$ for example.
 ## [1] 2.81769
 \end{verbatim}
 \begin{alltt}
-\hlcom{# Reduced model without Uniformity and Moisture and}
-\hlcom{# setting effect of Dry = Semi (beta1=beta9=beta10=0)}
-\hlcom{# 1 = wet, 0 otherwise}
-\hlstd{coffee}\hlopt{$}\hlstd{method2} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{%in%}
-\hlkwd{c}\hlstd{(}\hlstr{'Natural / Dry'}\hlstd{,} \hlstr{'Semi-washed / Semi-pulped'}\hlstd{),}
-\hlnum{0}\hlstd{,}
-\hlnum{1}\hlstd{)}
+\hlcom{# Reduced model without Uniformity and Moisture and setting}
+\hlcom{# effect of Dry = Semi (beta1=beta9=beta10=0) 1 = wet, 0}
+\hlcom{# otherwise}
+\hlstd{coffee}\hlopt{$}\hlstd{method2} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{%in%} \hlkwd{c}\hlstd{(}\hlstr{"Natural / Dry"}\hlstd{,}
+  \hlstr{"Semi-washed / Semi-pulped"}\hlstd{),} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{)}
 \hlcom{# 1 = semi/dry, 0 o.w}
-\hlstd{coffee}\hlopt{$}\hlstd{wet} \hlkwb{<-}
-\hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{'Washed / Wet'}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{)}
-
-\hlstd{m_red2} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{method2} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+}
-\hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness,}
-\hlkwc{dat} \hlstd{= coffee)}
+\hlstd{coffee}\hlopt{$}\hlstd{wet} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{"Washed / Wet"}\hlstd{,}
+  \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{)}
+\hlstd{m_red2} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{method2} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+}
+  \hlstd{Balance} \hlopt{+} \hlstd{Sweetness,} \hlkwc{dat} \hlstd{= coffee)}
 \hlkwd{summary}\hlstd{(m_red2)}
 \end{alltt}
 \begin{verbatim}
@@ -1531,12 +1441,11 @@ We can also plot $y=x^2$ for example.
 \end{verbatim}
 \begin{alltt}
 \hlstd{SSRes_A} \hlkwb{<-} \hlkwd{anova}\hlstd{(m_red2)}\hlopt{$}\hlstd{`Sum Sq`[}\hlnum{8}\hlstd{]}
-
 \hlcom{## Manually calculate F-statistic.}
 \hlstd{l} \hlkwb{<-} \hlnum{3}
 \hlstd{n} \hlkwb{<-} \hlkwd{nrow}\hlstd{(coffee)}
 \hlstd{p} \hlkwb{<-} \hlnum{10}
-\hlstd{Fstat} \hlkwb{<-} \hlstd{((SSRes_A} \hlopt{-} \hlstd{SSRes)} \hlopt{/} \hlstd{l)} \hlopt{/} \hlstd{(SSRes} \hlopt{/} \hlstd{(n} \hlopt{-} \hlstd{p} \hlopt{-} \hlnum{1}\hlstd{))}
+\hlstd{Fstat} \hlkwb{<-} \hlstd{((SSRes_A} \hlopt{-} \hlstd{SSRes)}\hlopt{/}\hlstd{l)}\hlopt{/}\hlstd{(SSRes}\hlopt{/}\hlstd{(n} \hlopt{-} \hlstd{p} \hlopt{-} \hlnum{1}\hlstd{))}
 \hlstd{Fstat}
 \end{alltt}
 \begin{verbatim}
@@ -1564,11 +1473,12 @@ We can also plot $y=x^2$ for example.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Coffee example (Coffee Quality Institute, 2018) continued}
+\hlcom{## Coffee example (Coffee Quality Institute, 2018)}
+\hlcom{## continued}
 \hlstd{coffee} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/coffee_arabica.csv"}\hlstd{)}
-
-\hlcom{# cor(coffee) doesn't work as there's a categorical variable.}
-\hlkwd{cor}\hlstd{(coffee[,} \hlopt{-}\hlnum{1}\hlstd{])} \hlcom{# e.g., remove first column}
+\hlcom{# cor(coffee) doesn't work as there's a categorical}
+\hlcom{# variable.}
+\hlkwd{cor}\hlstd{(coffee[,} \hlopt{-}\hlnum{1}\hlstd{])}  \hlcom{# e.g., remove first column}
 \end{alltt}
 \begin{verbatim}
 ##                  Aroma     Flavor Aftertaste        Body     Acidity    Balance
@@ -1600,11 +1510,8 @@ Plot the pairs (disabled due to loading time on PDF).
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{pairs}\hlstd{(}
-\hlopt{~} \hlstd{Flavor} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+}
-\hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,}
-\hlkwc{data} \hlstd{= coffee}
-\hlstd{)}
+\hlkwd{pairs}\hlstd{(}\hlopt{~}\hlstd{Flavor} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+}
+  \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,} \hlkwc{data} \hlstd{= coffee)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -1612,14 +1519,13 @@ Plot the pairs (disabled due to loading time on PDF).
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{# Code our own indicators, so that we can more easily interpret VIFs.}
-\hlcom{# 1 = wet, 0 otherwise}
-\hlstd{coffee}\hlopt{$}\hlstd{wet} \hlkwb{<-}
-    \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{'Washed / Wet'}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}
+\hlcom{# Code our own indicators, so that we can more easily}
+\hlcom{# interpret VIFs.  1 = wet, 0 otherwise}
+\hlstd{coffee}\hlopt{$}\hlstd{wet} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{"Washed / Wet"}\hlstd{,}
+  \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}
 \hlcom{# 1 = semi/dry, 0 otherwise}
-\hlstd{coffee}\hlopt{$}\hlstd{semi} \hlkwb{<-}
-    \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{'Semi-washed / Semi-pulped'}\hlstd{,}
-\hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}
+\hlstd{coffee}\hlopt{$}\hlstd{semi} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{"Semi-washed / Semi-pulped"}\hlstd{,}
+  \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -1647,11 +1553,8 @@ where
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{# Full MLR with our manually coded indicators.}
-\hlstd{mfull} \hlkwb{<-} \hlkwd{lm}\hlstd{(}
-\hlstd{Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{semi} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+}
-\hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,}
-\hlkwc{dat} \hlstd{= coffee}
-\hlstd{)}
+\hlstd{mfull} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{semi} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+}
+  \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,} \hlkwc{dat} \hlstd{= coffee)}
 \hlkwd{summary}\hlstd{(mfull)}
 \end{alltt}
 \begin{verbatim}
@@ -1686,12 +1589,9 @@ where
 \end{verbatim}
 \begin{alltt}
 \hlcom{# Full MLR alternative, using the factor command.}
-\hlstd{mfull_alternative} \hlkwb{<-}
-\hlkwd{lm}\hlstd{(}
-\hlstd{Flavor} \hlopt{~} \hlkwd{factor}\hlstd{(Processing.Method)} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+}
-\hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,}
-\hlkwc{dat} \hlstd{= coffee}
-\hlstd{)}
+\hlstd{mfull_alternative} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlkwd{factor}\hlstd{(Processing.Method)} \hlopt{+}
+  \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+}
+  \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,} \hlkwc{dat} \hlstd{= coffee)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -1705,12 +1605,8 @@ $$x_{i1}=\alpha_0+\alpha_2x_{i2}+\alpha_3x_{i3}+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{wet_reg} \hlkwb{<-}
-\hlkwd{lm}\hlstd{(}
-\hlstd{wet} \hlopt{~} \hlstd{semi} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+}
-\hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,}
-\hlkwc{dat} \hlstd{= coffee}
-\hlstd{)}
+\hlstd{wet_reg} \hlkwb{<-} \hlkwd{lm}\hlstd{(wet} \hlopt{~} \hlstd{semi} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+}
+  \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,} \hlkwc{dat} \hlstd{= coffee)}
 \hlkwd{summary}\hlstd{(wet_reg)}
 \end{alltt}
 \begin{verbatim}
@@ -1744,7 +1640,7 @@ $$x_{i1}=\alpha_0+\alpha_2x_{i2}+\alpha_3x_{i3}+
 \end{verbatim}
 \begin{alltt}
 \hlstd{r2_wet} \hlkwb{<-} \hlkwd{summary}\hlstd{(wet_reg)}\hlopt{$}\hlstd{r.squared}
-    \hlstd{r2_wet}
+\hlstd{r2_wet}
 \end{alltt}
 \begin{verbatim}
 ## [1] 0.191077
@@ -1757,7 +1653,7 @@ $R_j$: In our case, $R_1=0.191077$.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{VIF_wet} \hlkwb{<-} \hlnum{1} \hlopt{/} \hlstd{(}\hlnum{1} \hlopt{-} \hlstd{r2_wet)}
+\hlstd{VIF_wet} \hlkwb{<-} \hlnum{1}\hlopt{/}\hlstd{(}\hlnum{1} \hlopt{-} \hlstd{r2_wet)}
 \hlstd{VIF_wet}
 \end{alltt}
 \begin{verbatim}
@@ -1777,11 +1673,8 @@ $\text{VIF}_{j}$: $\text{VIF}_1=1.236212$.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{Aroma_reg} \hlkwb{<-} \hlkwd{lm}\hlstd{(}
-\hlstd{Aroma} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{semi} \hlopt{+} \hlstd{Aftertaste} \hlopt{+}
-\hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,}
-\hlkwc{dat} \hlstd{= coffee}
-\hlstd{)}
+\hlstd{Aroma_reg} \hlkwb{<-} \hlkwd{lm}\hlstd{(Aroma} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{semi} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+}
+  \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,} \hlkwc{dat} \hlstd{= coffee)}
 \hlstd{r2_Aroma} \hlkwb{<-} \hlkwd{summary}\hlstd{(Aroma_reg)}\hlopt{$}\hlstd{r.squared}
 \hlstd{r2_Aroma}
 \end{alltt}
@@ -1789,7 +1682,7 @@ $\text{VIF}_{j}$: $\text{VIF}_1=1.236212$.
 ## [1] 0.5204716
 \end{verbatim}
 \begin{alltt}
-\hlstd{VIF_Aroma} \hlkwb{<-} \hlnum{1} \hlopt{/} \hlstd{(}\hlnum{1} \hlopt{-} \hlstd{r2_Aroma)}
+\hlstd{VIF_Aroma} \hlkwb{<-} \hlnum{1}\hlopt{/}\hlstd{(}\hlnum{1} \hlopt{-} \hlstd{r2_Aroma)}
 \hlstd{VIF_Aroma}
 \end{alltt}
 \begin{verbatim}
@@ -1803,20 +1696,17 @@ $R_3=0.5204716$, $\text{VIF}_3=2.085382$.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{Aftertaste_reg} \hlkwb{<-} \hlkwd{lm}\hlstd{(}
-\hlstd{Aftertaste} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{semi} \hlopt{+} \hlstd{Aroma} \hlopt{+}
-\hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,}
-\hlkwc{dat} \hlstd{= coffee}
-\hlstd{)}
+\hlstd{Aftertaste_reg} \hlkwb{<-} \hlkwd{lm}\hlstd{(Aftertaste} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{semi} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Body} \hlopt{+}
+  \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,} \hlkwc{dat} \hlstd{= coffee)}
 \hlstd{r2_Aftertaste} \hlkwb{<-} \hlkwd{summary}\hlstd{(Aftertaste_reg)}\hlopt{$}\hlstd{r.squared}
-    \hlstd{r2_Aftertaste}
+\hlstd{r2_Aftertaste}
 \end{alltt}
 \begin{verbatim}
 ## [1] 0.7101012
 \end{verbatim}
 \begin{alltt}
-    \hlstd{VIF_Aftertaste} \hlkwb{<-} \hlnum{1} \hlopt{/} \hlstd{(}\hlnum{1} \hlopt{-} \hlstd{r2_Aftertaste)}
-    \hlstd{VIF_Aftertaste}
+\hlstd{VIF_Aftertaste} \hlkwb{<-} \hlnum{1}\hlopt{/}\hlstd{(}\hlnum{1} \hlopt{-} \hlstd{r2_Aftertaste)}
+\hlstd{VIF_Aftertaste}
 \end{alltt}
 \begin{verbatim}
 ## [1] 3.449479
@@ -1827,17 +1717,18 @@ $R_3=0.5204716$, $\text{VIF}_3=2.085382$.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{# Load car library for automatic VIF calculation using vif()}
+\hlcom{# Load car library for automatic VIF calculation using}
+\hlcom{# vif()}
 \hlkwd{library}\hlstd{(car)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in library(car): there is no package called 'car'}}\begin{alltt}
 \hlkwd{vif}\hlstd{(mfull)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in vif(mfull): could not find function "{}vif"{}}}\end{kframe}
+\begin{verbatim}
+##        wet       semi      Aroma Aftertaste       Body    Acidity    Balance 
+##   1.236212   1.178004   2.085382   3.449479   2.317728   2.232210   3.002813 
+##  Sweetness Uniformity   Moisture 
+##   1.159602   1.209901   1.086101
+\end{verbatim}
+\end{kframe}
 \end{knitrout}
 
     No serious signs of inflation, all VIFs are less than 10.
@@ -1845,10 +1736,10 @@ $R_3=0.5204716$, $\text{VIF}_3=2.085382$.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Python in FL everglades example (2017)}
-\hlcom{## Sex, length, total mass, fat mass, and specimen condition data for}
-\hlcom{## 248 Burmese pythons (Python bivittatus) collected in the Florida Everglades}
-
+\hlcom{## Python in FL everglades example (2017) Sex, length,}
+\hlcom{## total mass, fat mass, and specimen condition data for}
+\hlcom{## 248 Burmese pythons (Python bivittatus) collected in the}
+\hlcom{## Florida Everglades}
 \hlstd{python} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/FLpython.csv"}\hlstd{)}
 \hlkwd{head}\hlstd{(python)}
 \end{alltt}
@@ -1862,8 +1753,7 @@ $R_3=0.5204716$, $\text{VIF}_3=2.085382$.
 ## 6   M 93.5  605  104.6 18.959
 \end{verbatim}
 \begin{alltt}
-\hlstd{python}\hlopt{$}\hlstd{male} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(python}\hlopt{$}\hlstd{sex} \hlopt{==} \hlstr{'M'}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)} \hlcom{# 1 = M, 0 =F}
-
+\hlstd{python}\hlopt{$}\hlstd{male} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(python}\hlopt{$}\hlstd{sex} \hlopt{==} \hlstr{"M"}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}  \hlcom{# 1 = M, 0 =F}
 \hlkwd{cor}\hlstd{(python[,} \hlopt{-}\hlnum{1}\hlstd{])}
 \end{alltt}
 \begin{verbatim}
@@ -1917,11 +1807,13 @@ $R_3=0.5204716$, $\text{VIF}_3=2.085382$.
 \begin{alltt}
 \hlkwd{vif}\hlstd{(mpf)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in vif(mpf): could not find function "{}vif"{}}}\begin{alltt}
+\begin{verbatim}
+##        male         svl        mass      length 
+##    1.058699  994.546545    4.813078 1007.484200
+\end{verbatim}
+\begin{alltt}
 \hlstd{mpf_l} \hlkwb{<-} \hlkwd{lm}\hlstd{(length} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{svl} \hlopt{+} \hlstd{mass,} \hlkwc{data} \hlstd{= python)}
-\hlnum{1} \hlopt{/} \hlstd{(}\hlnum{1} \hlopt{-} \hlkwd{summary}\hlstd{(mpf_l)}\hlopt{$}\hlstd{r.squared)}
+\hlnum{1}\hlopt{/}\hlstd{(}\hlnum{1} \hlopt{-} \hlkwd{summary}\hlstd{(mpf_l)}\hlopt{$}\hlstd{r.squared)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 1007.484
@@ -1935,7 +1827,7 @@ Misleading conclusion: \code{svl} and \code{length} are both irrelevant
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{# remove "length" based on VIF}
+\hlcom{# remove 'length' based on VIF}
 \hlstd{mpf2} \hlkwb{<-} \hlkwd{lm}\hlstd{(fat} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{mass} \hlopt{+} \hlstd{svl,} \hlkwc{data} \hlstd{= python)}
 \hlkwd{summary}\hlstd{(mpf2)}\hlopt{$}\hlstd{adj}
 \end{alltt}
@@ -1943,12 +1835,14 @@ Misleading conclusion: \code{svl} and \code{length} are both irrelevant
 ## [1] 0.8957164
 \end{verbatim}
 \begin{alltt}
-    \hlkwd{vif}\hlstd{(mpf2)}
+\hlkwd{vif}\hlstd{(mpf2)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in vif(mpf2): could not find function "{}vif"{}}}\begin{alltt}
-    \hlkwd{anova}\hlstd{(mpf2)}
+\begin{verbatim}
+##     male     mass      svl 
+## 1.056139 4.720065 4.611903
+\end{verbatim}
+\begin{alltt}
+\hlkwd{anova}\hlstd{(mpf2)}
 \end{alltt}
 \begin{verbatim}
 ## Analysis of Variance Table
@@ -1963,7 +1857,7 @@ Misleading conclusion: \code{svl} and \code{length} are both irrelevant
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{verbatim}
 \begin{alltt}
-    \hlkwd{AIC}\hlstd{(mpf2)}
+\hlkwd{AIC}\hlstd{(mpf2)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 3629.527
@@ -1978,56 +1872,37 @@ Misleading conclusion: \code{svl} and \code{length} are both irrelevant
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Coffee example (Coffee Quality Institute, 2018) continued.}
+\hlcom{## Coffee example (Coffee Quality Institute, 2018)}
+\hlcom{## continued.}
 \hlstd{coffee} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/coffee_arabica.csv"}\hlstd{)}
-
-\hlstd{mfull} \hlkwb{<-}
-\hlkwd{lm}\hlstd{(}
-\hlstd{Flavor} \hlopt{~} \hlkwd{factor}\hlstd{(Processing.Method)} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+}
-\hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,}
-\hlkwc{dat} \hlstd{= coffee}
-\hlstd{)}
+\hlstd{mfull} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlkwd{factor}\hlstd{(Processing.Method)} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+}
+  \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,}
+  \hlkwc{dat} \hlstd{= coffee)}
 \hlkwd{summary}\hlstd{(mfull)}\hlopt{$}\hlstd{adj.r.squared}
 \end{alltt}
 \begin{verbatim}
 ## [1] 0.8073297
 \end{verbatim}
 \begin{alltt}
-    \hlkwd{AIC}\hlstd{(mfull)}
+\hlkwd{AIC}\hlstd{(mfull)}
 \end{alltt}
 \begin{verbatim}
 ## [1] -1087.524
 \end{verbatim}
 \begin{alltt}
-    \hlkwd{BIC}\hlstd{(mfull)}
+\hlkwd{BIC}\hlstd{(mfull)}
 \end{alltt}
 \begin{verbatim}
 ## [1] -1027.282
 \end{verbatim}
 \begin{alltt}
-    \hlkwd{library}\hlstd{(leaps)}
+\hlkwd{library}\hlstd{(leaps)}
+\hlcom{# Exhaustive, brute-force search.}
+\hlstd{all_regs} \hlkwb{<-} \hlkwd{regsubsets}\hlstd{(Flavor} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= coffee,} \hlkwc{nvmax} \hlstd{=} \hlnum{10}\hlstd{,}
+  \hlkwc{nbest} \hlstd{=} \hlnum{2}\hlopt{^}\hlnum{10}\hlstd{,} \hlkwc{really.big} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{all_regs_summ} \hlkwb{<-} \hlkwd{summary}\hlstd{(all_regs)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in library(leaps): there is no package called 'leaps'}}\begin{alltt}
-    \hlcom{# Exhaustive, brute-force search.}
-    \hlstd{all_regs} \hlkwb{<-}
-    \hlkwd{regsubsets}\hlstd{(}
-    \hlstd{Flavor} \hlopt{~} \hlstd{.,}
-    \hlkwc{data} \hlstd{= coffee,}
-    \hlkwc{nvmax} \hlstd{=} \hlnum{10}\hlstd{,}
-    \hlkwc{nbest} \hlstd{=} \hlnum{2} \hlopt{^} \hlnum{10}\hlstd{,}
-    \hlkwc{really.big} \hlstd{=} \hlnum{TRUE}
-    \hlstd{)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in regsubsets(Flavor \textasciitilde{} ., data = coffee, nvmax = 10, nbest = 2\textasciicircum{}10, : could not find function "{}regsubsets"{}}}\begin{alltt}
-    \hlstd{all_regs_summ} \hlkwb{<-} \hlkwd{summary}\hlstd{(all_regs)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in summary(all\_regs): object 'all\_regs' not found}}\end{kframe}
+\end{kframe}
 \end{knitrout}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -2041,84 +1916,112 @@ Misleading conclusion: \code{svl} and \code{length} are both irrelevant
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{# Organize results according to number of variables in model.}
+\hlcom{# Organize results according to number of variables in}
+\hlcom{# model.}
 \hlstd{p} \hlkwb{<-} \hlnum{10}
-\hlstd{k} \hlkwb{<-} \hlkwd{c}\hlstd{(}
-\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{1}\hlstd{)),}
-\hlkwd{rep}\hlstd{(}\hlnum{2}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{2}\hlstd{)),}
-\hlkwd{rep}\hlstd{(}\hlnum{3}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{3}\hlstd{)),}
-\hlkwd{rep}\hlstd{(}\hlnum{4}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{4}\hlstd{)),}
-\hlkwd{rep}\hlstd{(}\hlnum{5}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{5}\hlstd{)),}
-\hlkwd{rep}\hlstd{(}\hlnum{6}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{6}\hlstd{)),}
-\hlkwd{rep}\hlstd{(}\hlnum{7}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{7}\hlstd{)),}
-\hlkwd{rep}\hlstd{(}\hlnum{8}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{8}\hlstd{)),}
-\hlkwd{rep}\hlstd{(}\hlnum{9}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{9}\hlstd{)),}
-\hlkwd{rep}\hlstd{(}\hlnum{10}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{10}\hlstd{))}
-\hlstd{)}
-\hlkwd{boxplot}\hlstd{(}
-\hlstd{all_regs_summ}\hlopt{$}\hlstd{adjr2} \hlopt{~} \hlstd{k,}
-    \hlkwc{xlab} \hlstd{=} \hlstr{"Number of predictors"}\hlstd{,}
-    \hlkwc{ylab} \hlstd{=}
-    \hlkwd{expression}\hlstd{(R[adj]} \hlopt{^} \hlnum{2}\hlstd{),}
-    \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1}\hlstd{)}
-    \hlstd{)}
+\hlstd{k} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{1}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{2}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{2}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{3}\hlstd{,} \hlkwd{choose}\hlstd{(p,}
+  \hlnum{3}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{4}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{4}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{5}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{5}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{6}\hlstd{,} \hlkwd{choose}\hlstd{(p,}
+  \hlnum{6}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{7}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{7}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{8}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{8}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{9}\hlstd{,} \hlkwd{choose}\hlstd{(p,}
+  \hlnum{9}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{10}\hlstd{,} \hlkwd{choose}\hlstd{(p,} \hlnum{10}\hlstd{)))}
+\hlkwd{boxplot}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{adjr2} \hlopt{~} \hlstd{k,} \hlkwc{xlab} \hlstd{=} \hlstr{"Number of predictors"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlkwd{expression}\hlstd{(R[adj]}\hlopt{^}\hlnum{2}\hlstd{),} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1}\hlstd{))}
+\hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1}\hlstd{),} \hlkwc{lty} \hlstd{=} \hlnum{2}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"red"}\hlstd{)}
 \end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-101-1} 
+
+}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(predvars, data, env): object 'all\_regs\_summ' not found}}\begin{alltt}
-    \hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1}\hlstd{),} \hlkwc{lty} \hlstd{=} \hlnum{2}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"red"}\hlstd{)}
+\begin{kframe}\begin{alltt}
+\hlkwd{boxplot}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{bic} \hlopt{~} \hlstd{k,} \hlkwc{xlab} \hlstd{=} \hlstr{"Number of predictors"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"BIC"}\hlstd{)}
 \end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-101-2} 
+
+}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in int\_abline(a = a, b = b, h = h, v = v, untf = untf, ...): plot.new has not been called yet}}\begin{alltt}
-    \hlkwd{boxplot}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{bic} \hlopt{~} \hlstd{k,} \hlkwc{xlab} \hlstd{=} \hlstr{"Number of predictors"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"BIC"}\hlstd{)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(predvars, data, env): object 'all\_regs\_summ' not found}}\begin{alltt}
+\begin{kframe}\begin{alltt}
 \hlkwd{max}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{adjr2)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'all\_regs\_summ' not found}}\begin{alltt}
-    \hlstd{bestR2adj} \hlkwb{<-} \hlkwd{which.max}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{adjr2)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in which.max(all\_regs\_summ\$adjr2): object 'all\_regs\_summ' not found}}\begin{alltt}
+\begin{verbatim}
+## [1] 0.8075027
+\end{verbatim}
+\begin{alltt}
+\hlstd{bestR2adj} \hlkwb{<-} \hlkwd{which.max}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{adjr2)}
 \hlkwd{min}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{bic)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'all\_regs\_summ' not found}}\begin{alltt}
-    \hlstd{bestBIC} \hlkwb{<-} \hlkwd{which.min}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{bic)}
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in which.min(all\_regs\_summ\$bic): object 'all\_regs\_summ' not found}}\begin{alltt}
+\begin{verbatim}
+## [1] -1793.389
+\end{verbatim}
+\begin{alltt}
+\hlstd{bestBIC} \hlkwb{<-} \hlkwd{which.min}\hlstd{(all_regs_summ}\hlopt{$}\hlstd{bic)}
 \hlcom{# Find out which predictors in those models.}
-\hlstd{all_regs_summ}\hlopt{$}\hlstd{which[bestR2adj,]}
+\hlstd{all_regs_summ}\hlopt{$}\hlstd{which[bestR2adj, ]}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'all\_regs\_summ' not found}}\begin{alltt}
-    \hlstd{all_regs_summ}\hlopt{$}\hlstd{which[bestBIC,]}
+\begin{verbatim}
+##                                (Intercept) 
+##                                       TRUE 
+## Processing.MethodSemi-washed / Semi-pulped 
+##                                      FALSE 
+##              Processing.MethodWashed / Wet 
+##                                       TRUE 
+##                                      Aroma 
+##                                       TRUE 
+##                                 Aftertaste 
+##                                       TRUE 
+##                                       Body 
+##                                       TRUE 
+##                                    Acidity 
+##                                       TRUE 
+##                                    Balance 
+##                                       TRUE 
+##                                  Sweetness 
+##                                       TRUE 
+##                                 Uniformity 
+##                                       TRUE 
+##                                   Moisture 
+##                                       TRUE
+\end{verbatim}
+\begin{alltt}
+\hlstd{all_regs_summ}\hlopt{$}\hlstd{which[bestBIC, ]}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'all\_regs\_summ' not found}}\begin{alltt}
-\hlstd{coffee}\hlopt{$}\hlstd{wet} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{'Washed / Wet'}\hlstd{,} \hlnum{1}\hlstd{,}
-\hlnum{0}\hlstd{)} \hlcom{# 1 = wet, 0 otherwise}
-\hlstd{coffee}\hlopt{$}\hlstd{semi} \hlkwb{<-}
-    \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{'Semi-washed / Semi-pulped'}\hlstd{,}
-\hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)} \hlcom{# 1 = semi/dry, 0 otherwise}
+\begin{verbatim}
+##                                (Intercept) 
+##                                       TRUE 
+## Processing.MethodSemi-washed / Semi-pulped 
+##                                      FALSE 
+##              Processing.MethodWashed / Wet 
+##                                       TRUE 
+##                                      Aroma 
+##                                       TRUE 
+##                                 Aftertaste 
+##                                       TRUE 
+##                                       Body 
+##                                       TRUE 
+##                                    Acidity 
+##                                       TRUE 
+##                                    Balance 
+##                                      FALSE 
+##                                  Sweetness 
+##                                       TRUE 
+##                                 Uniformity 
+##                                      FALSE 
+##                                   Moisture 
+##                                      FALSE
+\end{verbatim}
+\begin{alltt}
+\hlstd{coffee}\hlopt{$}\hlstd{wet} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{"Washed / Wet"}\hlstd{,}
+  \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}  \hlcom{# 1 = wet, 0 otherwise}
+\hlstd{coffee}\hlopt{$}\hlstd{semi} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{"Semi-washed / Semi-pulped"}\hlstd{,}
+  \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}  \hlcom{# 1 = semi/dry, 0 otherwise}
 \hlstd{coffee}\hlopt{$}\hlstd{Processing.Method} \hlkwb{<-} \hlkwa{NULL}
-
-\hlstd{m_bestr2adj} \hlkwb{<-} \hlkwd{lm}\hlstd{(}
-\hlstd{Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+}
-\hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,}
-\hlkwc{dat} \hlstd{= coffee}
-\hlstd{)}
+\hlstd{m_bestr2adj} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+}
+  \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,} \hlkwc{dat} \hlstd{= coffee)}
 \hlkwd{summary}\hlstd{(m_bestr2adj)}
 \end{alltt}
 \begin{verbatim}
@@ -2163,8 +2066,8 @@ Misleading conclusion: \code{svl} and \code{length} are both irrelevant
 ## [1] -1034.298
 \end{verbatim}
 \begin{alltt}
-\hlstd{m_bestBIC} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+}
-\hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Sweetness ,} \hlkwc{dat} \hlstd{= coffee)}
+\hlstd{m_bestBIC} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+}
+  \hlstd{Sweetness,} \hlkwc{dat} \hlstd{= coffee)}
 \hlkwd{summary}\hlstd{(m_bestBIC)}
 \end{alltt}
 \begin{verbatim}
@@ -2208,30 +2111,16 @@ Misleading conclusion: \code{svl} and \code{length} are both irrelevant
 \begin{alltt}
 \hlcom{# Let's also try stepwise methods.}
 \hlkwd{library}\hlstd{(MASS)}
-
 \hlcom{# Full model and empty model with just intercept.}
 \hlstd{full} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= coffee)}
 \hlstd{empty} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlnum{1}\hlstd{,} \hlkwc{data} \hlstd{= coffee)}
-
 \hlcom{# Default stepAIC uses AIC criterion.}
-\hlstd{m_f_AIC} \hlkwb{<-} \hlkwd{stepAIC}\hlstd{(}
-\hlkwc{object} \hlstd{= empty,}
-\hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,} \hlkwc{lower} \hlstd{= empty),}
-\hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,}
-\hlkwc{trace} \hlstd{=} \hlnum{0}
-\hlstd{)}
-
-\hlcom{# Let's get stepAIC to use BIC by specifying the penalty k = log(n).}
-\hlcom{# Add 'trace = 0' to hide the output.}
-\hlcom{# Forward.}
-\hlstd{m_f} \hlkwb{<-}
-\hlkwd{stepAIC}\hlstd{(}
-\hlkwc{object} \hlstd{= empty,}
-\hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,} \hlkwc{lower} \hlstd{= empty),}
-\hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,}
-\hlkwc{trace} \hlstd{=} \hlnum{0}\hlstd{,}
-\hlkwc{k} \hlstd{=} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(coffee))}
-\hlstd{)}
+\hlstd{m_f_AIC} \hlkwb{<-} \hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,}
+  \hlkwc{lower} \hlstd{= empty),} \hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,} \hlkwc{trace} \hlstd{=} \hlnum{0}\hlstd{)}
+\hlcom{# Let's get stepAIC to use BIC by specifying the penalty k}
+\hlcom{# = log(n).  Add 'trace = 0' to hide the output.  Forward.}
+\hlstd{m_f} \hlkwb{<-} \hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,} \hlkwc{lower} \hlstd{= empty),}
+  \hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,} \hlkwc{trace} \hlstd{=} \hlnum{0}\hlstd{,} \hlkwc{k} \hlstd{=} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(coffee)))}
 \hlkwd{summary}\hlstd{(m_f)}
 \end{alltt}
 \begin{verbatim}
@@ -2262,14 +2151,8 @@ Misleading conclusion: \code{svl} and \code{length} are both irrelevant
 \end{verbatim}
 \begin{alltt}
 \hlcom{# Backward.}
-\hlstd{m_b} \hlkwb{<-}
-\hlkwd{stepAIC}\hlstd{(}
-\hlkwc{object} \hlstd{= full,}
-\hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,} \hlkwc{lower} \hlstd{= empty),}
-\hlkwc{direction} \hlstd{=} \hlstr{"backward"}\hlstd{,}
-\hlkwc{trace} \hlstd{=} \hlnum{0}\hlstd{,}
-\hlkwc{k} \hlstd{=} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(coffee))}
-\hlstd{)}
+\hlstd{m_b} \hlkwb{<-} \hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= full,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,} \hlkwc{lower} \hlstd{= empty),}
+  \hlkwc{direction} \hlstd{=} \hlstr{"backward"}\hlstd{,} \hlkwc{trace} \hlstd{=} \hlnum{0}\hlstd{,} \hlkwc{k} \hlstd{=} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(coffee)))}
 \hlkwd{summary}\hlstd{(m_b)}
 \end{alltt}
 \begin{verbatim}
@@ -2300,14 +2183,8 @@ Misleading conclusion: \code{svl} and \code{length} are both irrelevant
 \end{verbatim}
 \begin{alltt}
 \hlcom{# Forward-backward.}
-\hlstd{m_h} \hlkwb{<-}
-\hlkwd{stepAIC}\hlstd{(}
-\hlkwc{object} \hlstd{= empty,}
-\hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,} \hlkwc{lower} \hlstd{= empty),}
-\hlkwc{direction} \hlstd{=} \hlstr{"both"}\hlstd{,}
-\hlkwc{trace} \hlstd{=} \hlnum{0}\hlstd{,}
-\hlkwc{k} \hlstd{=} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(coffee))}
-\hlstd{)}
+\hlstd{m_h} \hlkwb{<-} \hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,} \hlkwc{lower} \hlstd{= empty),}
+  \hlkwc{direction} \hlstd{=} \hlstr{"both"}\hlstd{,} \hlkwc{trace} \hlstd{=} \hlnum{0}\hlstd{,} \hlkwc{k} \hlstd{=} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(coffee)))}
 \hlkwd{summary}\hlstd{(m_h)}
 \end{alltt}
 \begin{verbatim}
@@ -2349,14 +2226,13 @@ the exhaustive search.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{### Residual plots/diagnostics demo.}
-
 \hlcom{## Florida oranges revisited.}
 \hlstd{dat} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/florange.csv"}\hlstd{)}
 \hlkwd{plot}\hlstd{(dat}\hlopt{$}\hlstd{acres, dat}\hlopt{$}\hlstd{boxes)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-105-1} 
 
 }
 
@@ -2387,14 +2263,12 @@ the exhaustive search.
 \end{verbatim}
 \begin{alltt}
 \hlcom{# Residual plot: vs fitted values.}
-\hlkwd{plot}\hlstd{(lm.1}\hlopt{$}\hlstd{fitted.values,}
-    \hlstd{lm.1}\hlopt{$}\hlstd{residuals,}
-\hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
-\hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\hlkwd{plot}\hlstd{(lm.1}\hlopt{$}\hlstd{fitted.values, lm.1}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-2} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-105-2} 
 
 }
 
@@ -2405,29 +2279,30 @@ the exhaustive search.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-3} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-105-3} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
-\hlcom{# Residual plot: vs i (just to demo plot; no time/space ordering here).}
+\hlcom{# Residual plot: vs i (just to demo plot; no time/space}
+\hlcom{# ordering here).}
 \hlkwd{plot}\hlstd{(}\hlnum{1}\hlopt{:}\hlkwd{nrow}\hlstd{(dat), lm.1}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Index"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-4} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-105-4} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
-    \hlcom{# Histogram of residuals.}
-    \hlkwd{hist}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals)}
+\hlcom{# Histogram of residuals.}
+\hlkwd{hist}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-5} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-105-5} 
 
 }
 
@@ -2435,11 +2310,11 @@ the exhaustive search.
 \begin{kframe}\begin{alltt}
 \hlcom{# QQ plot of residuals.}
 \hlkwd{qqnorm}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals)}
-    \hlkwd{qqline}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{qqline}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-6} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-105-6} 
 
 }
 
@@ -2473,14 +2348,12 @@ the exhaustive search.
 \end{verbatim}
 \begin{alltt}
 \hlcom{# Residual plot: vs fitted values.}
-\hlkwd{plot}\hlstd{(mr}\hlopt{$}\hlstd{fitted.values,}
-    \hlstd{mr}\hlopt{$}\hlstd{residuals,}
-\hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
-\hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\hlkwd{plot}\hlstd{(mr}\hlopt{$}\hlstd{fitted.values, mr}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-7} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-105-7} 
 
 }
 
@@ -2488,24 +2361,22 @@ the exhaustive search.
 \begin{kframe}\begin{alltt}
 \hlcom{# Residual plot: vs predictors.}
 \hlkwd{plot}\hlstd{(rocket}\hlopt{$}\hlstd{nozzle, mr}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Nozzle (1 = large)"}\hlstd{,}
-\hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-8} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-105-8} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
-\hlkwd{plot}\hlstd{(rocket}\hlopt{$}\hlstd{propratio,}
-    \hlstd{mr}\hlopt{$}\hlstd{residuals,}
-\hlkwc{xlab} \hlstd{=} \hlstr{"Propellant to fuel ratio"}\hlstd{,}
-\hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\hlkwd{plot}\hlstd{(rocket}\hlopt{$}\hlstd{propratio, mr}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Propellant to fuel ratio"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-9} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-105-9} 
 
 }
 
@@ -2516,19 +2387,19 @@ the exhaustive search.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-10} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-105-10} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
-    \hlcom{# QQ plot of residuals,}
-    \hlkwd{qqnorm}\hlstd{(mr}\hlopt{$}\hlstd{residuals)}
+\hlcom{# QQ plot of residuals,}
+\hlkwd{qqnorm}\hlstd{(mr}\hlopt{$}\hlstd{residuals)}
 \hlkwd{qqline}\hlstd{(mr}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-11} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-105-11} 
 
 }
 
@@ -2542,7 +2413,6 @@ the exhaustive search.
 \begin{alltt}
 \hlkwd{library}\hlstd{(MASS)}
 \hlcom{## Demo for transformations and interactions}
-
 \hlcom{## Florida oranges revisited}
 \hlstd{dat} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/florange.csv"}\hlstd{)}
 \hlstd{lm.1} \hlkwb{<-} \hlkwd{lm}\hlstd{(dat}\hlopt{$}\hlstd{boxes} \hlopt{~} \hlstd{dat}\hlopt{$}\hlstd{acres)}
@@ -2569,27 +2439,25 @@ the exhaustive search.
 ## F-statistic:   298 on 1 and 23 DF,  p-value: 1.164e-14
 \end{verbatim}
 \begin{alltt}
-\hlcom{# Recall: residuals had non-constant variance}
-\hlcom{#  (variance increases with fitted values)}
-\hlkwd{plot}\hlstd{(lm.1}\hlopt{$}\hlstd{fitted.values,}
-      \hlstd{lm.1}\hlopt{$}\hlstd{residuals,}
-\hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
-\hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\hlcom{# Recall: residuals had non-constant variance (variance}
+\hlcom{# increases with fitted values)}
+\hlkwd{plot}\hlstd{(lm.1}\hlopt{$}\hlstd{fitted.values, lm.1}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-108-1} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
 \hlkwd{qqnorm}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals)}
-      \hlkwd{qqline}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{qqline}\hlstd{(lm.1}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-2} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-108-2} 
 
 }
 
@@ -2620,14 +2488,12 @@ the exhaustive search.
 ## F-statistic: 58.69 on 1 and 23 DF,  p-value: 8.948e-08
 \end{verbatim}
 \begin{alltt}
-\hlkwd{plot}\hlstd{(lm.log}\hlopt{$}\hlstd{fitted.values,}
-      \hlstd{lm.log}\hlopt{$}\hlstd{residuals,}
-\hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
-\hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\hlkwd{plot}\hlstd{(lm.log}\hlopt{$}\hlstd{fitted.values, lm.log}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-3} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-108-3} 
 
 }
 
@@ -2637,41 +2503,41 @@ the exhaustive search.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-4} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-108-4} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
 \hlkwd{qqnorm}\hlstd{(lm.log}\hlopt{$}\hlstd{residuals)}
-      \hlkwd{qqline}\hlstd{(lm.log}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{qqline}\hlstd{(lm.log}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-5} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-108-5} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
-\hlcom{# Does the plot of residuals vs x suggest a problem}
-\hlcom{# Let's take a closer look}
-\hlkwd{plot}\hlstd{(dat}\hlopt{$}\hlstd{acres,} \hlkwd{log}\hlstd{(dat}\hlopt{$}\hlstd{boxes))} \hlcom{# evidently not linear!}
+\hlcom{# Does the plot of residuals vs x suggest a problem Let's}
+\hlcom{# take a closer look}
+\hlkwd{plot}\hlstd{(dat}\hlopt{$}\hlstd{acres,} \hlkwd{log}\hlstd{(dat}\hlopt{$}\hlstd{boxes))}  \hlcom{# evidently not linear!}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-6} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-108-6} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
 \hlcom{# Log-transform x as well}
-\hlkwd{plot}\hlstd{(}\hlkwd{log}\hlstd{(dat}\hlopt{$}\hlstd{acres),} \hlkwd{log}\hlstd{(dat}\hlopt{$}\hlstd{boxes))} \hlcom{# looks much more linear!}
+\hlkwd{plot}\hlstd{(}\hlkwd{log}\hlstd{(dat}\hlopt{$}\hlstd{acres),} \hlkwd{log}\hlstd{(dat}\hlopt{$}\hlstd{boxes))}  \hlcom{# looks much more linear!}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-7} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-108-7} 
 
 }
 
@@ -2679,37 +2545,33 @@ the exhaustive search.
 \begin{kframe}\begin{alltt}
 \hlstd{lm.loglog} \hlkwb{<-} \hlkwd{lm}\hlstd{(}\hlkwd{log}\hlstd{(dat}\hlopt{$}\hlstd{boxes)} \hlopt{~} \hlkwd{log}\hlstd{(dat}\hlopt{$}\hlstd{acres))}
 \hlkwd{qqnorm}\hlstd{(lm.loglog}\hlopt{$}\hlstd{residuals)}
-      \hlkwd{qqline}\hlstd{(lm.loglog}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{qqline}\hlstd{(lm.loglog}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-8} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-108-8} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
-\hlkwd{plot}\hlstd{(lm.loglog}\hlopt{$}\hlstd{fitted.values,}
-      \hlstd{lm.loglog}\hlopt{$}\hlstd{residuals,}
-\hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
-\hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\hlkwd{plot}\hlstd{(lm.loglog}\hlopt{$}\hlstd{fitted.values, lm.loglog}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-9} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-108-9} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
-\hlkwd{plot}\hlstd{(}\hlkwd{log}\hlstd{(dat}\hlopt{$}\hlstd{acres),}
-      \hlstd{lm.loglog}\hlopt{$}\hlstd{residuals,}
-\hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
-\hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\hlkwd{plot}\hlstd{(}\hlkwd{log}\hlstd{(dat}\hlopt{$}\hlstd{acres), lm.loglog}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-10} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-108-10} 
 
 }
 
@@ -2717,7 +2579,7 @@ the exhaustive search.
 \begin{kframe}\begin{alltt}
 \hlcom{## Python data revisited}
 \hlstd{python} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/FLpython.csv"}\hlstd{)}
-\hlstd{python}\hlopt{$}\hlstd{male} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(python}\hlopt{$}\hlstd{sex} \hlopt{==} \hlstr{'M'}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)} \hlcom{# 1 = M, 0 =F}
+\hlstd{python}\hlopt{$}\hlstd{male} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(python}\hlopt{$}\hlstd{sex} \hlopt{==} \hlstr{"M"}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}  \hlcom{# 1 = M, 0 =F}
 \hlstd{mpf2} \hlkwb{<-} \hlkwd{lm}\hlstd{(fat} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{mass} \hlopt{+} \hlstd{svl,} \hlkwc{data} \hlstd{= python)}
 \hlkwd{summary}\hlstd{(mpf2)}
 \end{alltt}
@@ -2745,14 +2607,12 @@ the exhaustive search.
 \end{verbatim}
 \begin{alltt}
 \hlcom{# Residual plot: vs fitted values}
-\hlkwd{plot}\hlstd{(mpf2}\hlopt{$}\hlstd{fitted.values,}
-      \hlstd{mpf2}\hlopt{$}\hlstd{residuals,}
-\hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
-\hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+\hlkwd{plot}\hlstd{(mpf2}\hlopt{$}\hlstd{fitted.values, mpf2}\hlopt{$}\hlstd{residuals,} \hlkwc{xlab} \hlstd{=} \hlstr{"Fitted Values"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-11} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-108-11} 
 
 }
 
@@ -2760,11 +2620,11 @@ the exhaustive search.
 \begin{kframe}\begin{alltt}
 \hlcom{## QQ plot of residuals}
 \hlkwd{qqnorm}\hlstd{(mpf2}\hlopt{$}\hlstd{residuals)}
-      \hlkwd{qqline}\hlstd{(mpf2}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{qqline}\hlstd{(mpf2}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-12} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-108-12} 
 
 }
 
@@ -2775,15 +2635,15 @@ the exhaustive search.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-13} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-108-13} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
 \hlstd{lambda} \hlkwb{<-} \hlstd{bc}\hlopt{$}\hlstd{x[}\hlkwd{which.max}\hlstd{(bc}\hlopt{$}\hlstd{y)]}
-      \hlstd{mpf3} \hlkwb{<-} \hlkwd{lm}\hlstd{((fat} \hlopt{^} \hlstd{lambda} \hlopt{-} \hlnum{1}\hlstd{)} \hlopt{/} \hlstd{lambda} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{mass} \hlopt{+} \hlstd{svl,} \hlkwc{data} \hlstd{= python)}
-      \hlkwd{summary}\hlstd{(mpf3)}
+\hlstd{mpf3} \hlkwb{<-} \hlkwd{lm}\hlstd{((fat}\hlopt{^}\hlstd{lambda} \hlopt{-} \hlnum{1}\hlstd{)}\hlopt{/}\hlstd{lambda} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{mass} \hlopt{+} \hlstd{svl,} \hlkwc{data} \hlstd{= python)}
+\hlkwd{summary}\hlstd{(mpf3)}
 \end{alltt}
 \begin{verbatim}
 ## 
@@ -2808,42 +2668,42 @@ the exhaustive search.
 ## F-statistic: 413.5 on 3 and 244 DF,  p-value: < 2.2e-16
 \end{verbatim}
 \begin{alltt}
-      \hlkwd{plot}\hlstd{(mpf3}\hlopt{$}\hlstd{fitted.values, mpf3}\hlopt{$}\hlstd{residuals)}
+\hlkwd{plot}\hlstd{(mpf3}\hlopt{$}\hlstd{fitted.values, mpf3}\hlopt{$}\hlstd{residuals)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-14} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-108-14} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
-      \hlkwd{plot}\hlstd{(python}\hlopt{$}\hlstd{mass, mpf3}\hlopt{$}\hlstd{residuals)}
+\hlkwd{plot}\hlstd{(python}\hlopt{$}\hlstd{mass, mpf3}\hlopt{$}\hlstd{residuals)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-15} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-108-15} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
-      \hlkwd{plot}\hlstd{(python}\hlopt{$}\hlstd{svl, mpf3}\hlopt{$}\hlstd{residuals)}
+\hlkwd{plot}\hlstd{(python}\hlopt{$}\hlstd{svl, mpf3}\hlopt{$}\hlstd{residuals)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-16} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-108-16} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
-      \hlkwd{qqnorm}\hlstd{(mpf3}\hlopt{$}\hlstd{residuals)}
+\hlkwd{qqnorm}\hlstd{(mpf3}\hlopt{$}\hlstd{residuals)}
 \hlkwd{qqline}\hlstd{(mpf3}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-17} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-108-17} 
 
 }
 
@@ -2861,27 +2721,25 @@ the exhaustive search.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{## Effect of individual observations}
-
 \hlcom{## Python data revisited}
 \hlstd{python} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/FLpython.csv"}\hlstd{)}
-\hlstd{python}\hlopt{$}\hlstd{male} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(python}\hlopt{$}\hlstd{sex} \hlopt{==} \hlstr{'M'}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)} \hlcom{# 1 = M, 0 =F}
+\hlstd{python}\hlopt{$}\hlstd{male} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(python}\hlopt{$}\hlstd{sex} \hlopt{==} \hlstr{"M"}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}  \hlcom{# 1 = M, 0 =F}
 \hlstd{mpf2} \hlkwb{<-} \hlkwd{lm}\hlstd{(fat} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{mass} \hlopt{+} \hlstd{svl,} \hlkwc{data} \hlstd{= python)}
-
 \hlcom{# Last time we used a Box-Cox transformation}
 \hlkwd{library}\hlstd{(MASS)}
 \hlstd{bc} \hlkwb{<-} \hlkwd{boxcox}\hlstd{(mpf2)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-56-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-111-1} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
 \hlstd{lambda} \hlkwb{<-} \hlstd{bc}\hlopt{$}\hlstd{x[}\hlkwd{which.max}\hlstd{(bc}\hlopt{$}\hlstd{y)]}
-      \hlstd{mpf3} \hlkwb{<-} \hlkwd{lm}\hlstd{((fat} \hlopt{^} \hlstd{lambda} \hlopt{-} \hlnum{1}\hlstd{)} \hlopt{/} \hlstd{lambda} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{mass} \hlopt{+} \hlstd{svl,} \hlkwc{data} \hlstd{= python)}
-      \hlkwd{summary}\hlstd{(mpf3)}
+\hlstd{mpf3} \hlkwb{<-} \hlkwd{lm}\hlstd{((fat}\hlopt{^}\hlstd{lambda} \hlopt{-} \hlnum{1}\hlstd{)}\hlopt{/}\hlstd{lambda} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{mass} \hlopt{+} \hlstd{svl,} \hlkwc{data} \hlstd{= python)}
+\hlkwd{summary}\hlstd{(mpf3)}
 \end{alltt}
 \begin{verbatim}
 ## 
@@ -2906,22 +2764,22 @@ the exhaustive search.
 ## F-statistic: 413.5 on 3 and 244 DF,  p-value: < 2.2e-16
 \end{verbatim}
 \begin{alltt}
-      \hlkwd{plot}\hlstd{(mpf3}\hlopt{$}\hlstd{fitted.values, mpf3}\hlopt{$}\hlstd{residuals)}
+\hlkwd{plot}\hlstd{(mpf3}\hlopt{$}\hlstd{fitted.values, mpf3}\hlopt{$}\hlstd{residuals)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-56-2} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-111-2} 
 
 }
 
 
 \begin{kframe}\begin{alltt}
-      \hlkwd{qqnorm}\hlstd{(mpf3}\hlopt{$}\hlstd{residuals)}
+\hlkwd{qqnorm}\hlstd{(mpf3}\hlopt{$}\hlstd{residuals)}
 \hlkwd{qqline}\hlstd{(mpf3}\hlopt{$}\hlstd{residuals,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-56-3} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-111-3} 
 
 }
 
@@ -2932,8 +2790,8 @@ the exhaustive search.
 \begin{alltt}
 \hlcom{# Quantities for individual observations}
 \hlkwd{studres}\hlstd{(mpf3)}  \hlcom{# studentized residuals}
-\hlkwd{hatvalues}\hlstd{(mpf3)} \hlcom{# leverage}
-\hlkwd{cooks.distance}\hlstd{(mpf3)} \hlcom{# Cook's distance}
+\hlkwd{hatvalues}\hlstd{(mpf3)}  \hlcom{# leverage}
+\hlkwd{cooks.distance}\hlstd{(mpf3)}  \hlcom{# Cook's distance}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -2941,15 +2799,13 @@ the exhaustive search.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{# Residual plots with studentized residuals}
-\hlkwd{plot}\hlstd{(mpf3}\hlopt{$}\hlstd{fitted.values,}
-\hlkwd{studres}\hlstd{(mpf3),}
-\hlkwc{xlab} \hlstd{=} \hlstr{"Fitted values"}\hlstd{,}
-\hlkwc{ylab} \hlstd{=} \hlstr{"Studentized residuals"}\hlstd{)}
+\hlkwd{plot}\hlstd{(mpf3}\hlopt{$}\hlstd{fitted.values,} \hlkwd{studres}\hlstd{(mpf3),} \hlkwc{xlab} \hlstd{=} \hlstr{"Fitted values"}\hlstd{,}
+  \hlkwc{ylab} \hlstd{=} \hlstr{"Studentized residuals"}\hlstd{)}
 \hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{3}\hlstd{,} \hlopt{-}\hlnum{3}\hlstd{),} \hlkwc{col} \hlstd{=} \hlstr{"red"}\hlstd{,} \hlkwc{lty} \hlstd{=} \hlnum{2}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-58-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-113-1} 
 
 }
 
@@ -2967,7 +2823,7 @@ the exhaustive search.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-58-2} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-113-2} 
 
 }
 
@@ -2975,13 +2831,11 @@ the exhaustive search.
 \begin{kframe}\begin{alltt}
 \hlcom{# Leverage}
 \hlkwd{plot}\hlstd{(}\hlkwd{hatvalues}\hlstd{(mpf3),} \hlkwc{ylab} \hlstd{=} \hlstr{"Leverage"}\hlstd{)}
-\hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlnum{2} \hlopt{*} \hlkwd{mean}\hlstd{(}\hlkwd{hatvalues}\hlstd{(mpf3)),}
-\hlkwc{col} \hlstd{=} \hlstr{"red"}\hlstd{,}
-\hlkwc{lty} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlnum{2} \hlopt{*} \hlkwd{mean}\hlstd{(}\hlkwd{hatvalues}\hlstd{(mpf3)),} \hlkwc{col} \hlstd{=} \hlstr{"red"}\hlstd{,} \hlkwc{lty} \hlstd{=} \hlnum{2}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-58-3} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-113-3} 
 
 }
 
@@ -3023,7 +2877,7 @@ the exhaustive search.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-58-4} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-113-4} 
 
 }
 
@@ -3037,7 +2891,7 @@ the exhaustive search.
 \end{verbatim}
 \begin{alltt}
 \hlcom{# Let's look at actual changes in beta estimates}
-\hlstd{mpf3}\hlopt{$}\hlstd{coefficients} \hlcom{# with all the data}
+\hlstd{mpf3}\hlopt{$}\hlstd{coefficients}  \hlcom{# with all the data}
 \end{alltt}
 \begin{verbatim}
 ##   (Intercept)          male          mass           svl 
@@ -3045,8 +2899,8 @@ the exhaustive search.
 \end{verbatim}
 \begin{alltt}
 \hlcom{# e.g., fit without obs 248}
-\hlstd{mpf4} \hlkwb{<-}
-\hlkwd{lm}\hlstd{((fat} \hlopt{^} \hlstd{lambda} \hlopt{-} \hlnum{1}\hlstd{)} \hlopt{/} \hlstd{lambda} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{mass} \hlopt{+} \hlstd{svl,} \hlkwc{data} \hlstd{= python[}\hlopt{-}\hlnum{248}\hlstd{, ])}
+\hlstd{mpf4} \hlkwb{<-} \hlkwd{lm}\hlstd{((fat}\hlopt{^}\hlstd{lambda} \hlopt{-} \hlnum{1}\hlstd{)}\hlopt{/}\hlstd{lambda} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{mass} \hlopt{+} \hlstd{svl,} \hlkwc{data} \hlstd{= python[}\hlopt{-}\hlnum{248}\hlstd{,}
+  \hlstd{])}
 \hlstd{mpf4}\hlopt{$}\hlstd{coefficients}
 \end{alltt}
 \begin{verbatim}
@@ -3055,8 +2909,8 @@ the exhaustive search.
 \end{verbatim}
 \begin{alltt}
 \hlcom{# e.g., fit without obs 50}
-\hlstd{mpf5} \hlkwb{<-}
-\hlkwd{lm}\hlstd{((fat} \hlopt{^} \hlstd{lambda} \hlopt{-} \hlnum{1}\hlstd{)} \hlopt{/} \hlstd{lambda} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{mass} \hlopt{+} \hlstd{svl,} \hlkwc{data} \hlstd{= python[}\hlopt{-}\hlnum{50}\hlstd{, ])}
+\hlstd{mpf5} \hlkwb{<-} \hlkwd{lm}\hlstd{((fat}\hlopt{^}\hlstd{lambda} \hlopt{-} \hlnum{1}\hlstd{)}\hlopt{/}\hlstd{lambda} \hlopt{~} \hlstd{male} \hlopt{+} \hlstd{mass} \hlopt{+} \hlstd{svl,} \hlkwc{data} \hlstd{= python[}\hlopt{-}\hlnum{50}\hlstd{,}
+  \hlstd{])}
 \hlstd{mpf5}\hlopt{$}\hlstd{coefficients}
 \end{alltt}
 \begin{verbatim}
@@ -3072,48 +2926,42 @@ the exhaustive search.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{## Cross-validation}
-
-\hlcom{## Coffee example  (Coffee Quality Institute, 2018) continued}
+\hlcom{## Coffee example (Coffee Quality Institute, 2018)}
+\hlcom{## continued}
 \hlstd{coffee} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"csv/coffee_arabica.csv"}\hlstd{)}
 \hlcom{# 1 = wet, 0 otherwise}
-\hlstd{coffee}\hlopt{$}\hlstd{wet} \hlkwb{<-}
-      \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{'Washed / Wet'}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}
+\hlstd{coffee}\hlopt{$}\hlstd{wet} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{"Washed / Wet"}\hlstd{,}
+  \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}
 \hlcom{# 1 = semi/dry, 0 otherwise}
-\hlstd{coffee}\hlopt{$}\hlstd{semi} \hlkwb{<-}
-      \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{'Semi-washed / Semi-pulped'}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}
+\hlstd{coffee}\hlopt{$}\hlstd{semi} \hlkwb{<-} \hlkwd{ifelse}\hlstd{(coffee}\hlopt{$}\hlstd{Processing.Method} \hlopt{==} \hlstr{"Semi-washed / Semi-pulped"}\hlstd{,}
+  \hlnum{1}\hlstd{,} \hlnum{0}\hlstd{)}
 \hlstd{coffee}\hlopt{$}\hlstd{Processing.Method} \hlkwb{<-} \hlkwa{NULL}
-
-      \hlstd{N} \hlkwb{<-} \hlkwd{nrow}\hlstd{(coffee)}
-
-      \hlcom{## Train and validation set split}
-      \hlkwd{set.seed}\hlstd{(}\hlnum{12345678}\hlstd{)}
-      \hlstd{trainInd} \hlkwb{<-} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlstd{N,} \hlkwd{round}\hlstd{(N} \hlopt{*} \hlnum{0.8}\hlstd{),} \hlkwc{replace} \hlstd{= F)}
-      \hlstd{trainSet} \hlkwb{<-} \hlstd{coffee[trainInd,]}
-      \hlstd{validSet} \hlkwb{<-} \hlstd{coffee[}\hlopt{-}\hlstd{trainInd,]}
-
-      \hlcom{# Calculate RMSE on three models each with different variables included}
-      \hlstd{m1} \hlkwb{<-}
-      \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{semi} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body,} \hlkwc{dat} \hlstd{= trainSet)}
-      \hlstd{pred1} \hlkwb{<-} \hlkwd{predict}\hlstd{(m1,} \hlkwc{newdata} \hlstd{= validSet)}
-      \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred1)} \hlopt{^} \hlnum{2}\hlstd{))} \hlcom{# RMSE}
+\hlstd{N} \hlkwb{<-} \hlkwd{nrow}\hlstd{(coffee)}
+\hlcom{## Train and validation set split}
+\hlkwd{set.seed}\hlstd{(}\hlnum{12345678}\hlstd{)}
+\hlstd{trainInd} \hlkwb{<-} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlstd{N,} \hlkwd{round}\hlstd{(N} \hlopt{*} \hlnum{0.8}\hlstd{),} \hlkwc{replace} \hlstd{= F)}
+\hlstd{trainSet} \hlkwb{<-} \hlstd{coffee[trainInd, ]}
+\hlstd{validSet} \hlkwb{<-} \hlstd{coffee[}\hlopt{-}\hlstd{trainInd, ]}
+\hlcom{# Calculate RMSE on three models each with different}
+\hlcom{# variables included}
+\hlstd{m1} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{semi} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body,} \hlkwc{dat} \hlstd{= trainSet)}
+\hlstd{pred1} \hlkwb{<-} \hlkwd{predict}\hlstd{(m1,} \hlkwc{newdata} \hlstd{= validSet)}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred1)}\hlopt{^}\hlnum{2}\hlstd{))}  \hlcom{# RMSE}
 \end{alltt}
 \begin{verbatim}
 ## [1] 0.1577479
 \end{verbatim}
 \begin{alltt}
-\hlkwd{mean}\hlstd{(}\hlkwd{abs}\hlstd{(validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred1))} \hlcom{# MAE}
+\hlkwd{mean}\hlstd{(}\hlkwd{abs}\hlstd{(validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred1))}  \hlcom{# MAE}
 \end{alltt}
 \begin{verbatim}
 ## [1] 0.113643
 \end{verbatim}
 \begin{alltt}
-      \hlstd{m2} \hlkwb{<-} \hlkwd{lm}\hlstd{(}
-      \hlstd{Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+}
-      \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,}
-      \hlkwc{dat} \hlstd{= trainSet}
-      \hlstd{)}
-      \hlstd{pred2} \hlkwb{<-} \hlkwd{predict}\hlstd{(m2,} \hlkwc{newdata} \hlstd{= validSet)}
-      \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred2)} \hlopt{^} \hlnum{2}\hlstd{))}
+\hlstd{m2} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+}
+  \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,} \hlkwc{dat} \hlstd{= trainSet)}
+\hlstd{pred2} \hlkwb{<-} \hlkwd{predict}\hlstd{(m2,} \hlkwc{newdata} \hlstd{= validSet)}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred2)}\hlopt{^}\hlnum{2}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
 ## [1] 0.1426565
@@ -3121,7 +2969,7 @@ the exhaustive search.
 \begin{alltt}
 \hlstd{m3} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste,} \hlkwc{dat} \hlstd{= trainSet)}
 \hlstd{pred3} \hlkwb{<-} \hlkwd{predict}\hlstd{(m3,} \hlkwc{newdata} \hlstd{= validSet)}
-\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred3)} \hlopt{^} \hlnum{2}\hlstd{))}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred3)}\hlopt{^}\hlnum{2}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
 ## [1] 0.1615385
@@ -3129,32 +2977,25 @@ the exhaustive search.
 \begin{alltt}
 \hlcom{# K fold cross validation}
 \hlstd{K} \hlkwb{<-} \hlnum{5}
-\hlstd{validSetSplits} \hlkwb{<-} \hlkwd{sample}\hlstd{((}\hlnum{1}\hlopt{:}\hlstd{N)} \hlopt{%%} \hlstd{K} \hlopt{+} \hlnum{1}\hlstd{)}
+\hlstd{validSetSplits} \hlkwb{<-} \hlkwd{sample}\hlstd{((}\hlnum{1}\hlopt{:}\hlstd{N)}\hlopt{%%}\hlstd{K} \hlopt{+} \hlnum{1}\hlstd{)}
 \hlstd{RMSE1} \hlkwb{<-} \hlkwd{c}\hlstd{()}
 \hlstd{RMSE2} \hlkwb{<-} \hlkwd{c}\hlstd{()}
 \hlstd{RMSE3} \hlkwb{<-} \hlkwd{c}\hlstd{()}
 \hlkwa{for} \hlstd{(k} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{K) \{}
-            \hlstd{validSet} \hlkwb{<-} \hlstd{coffee[validSetSplits} \hlopt{==} \hlstd{k,]}
-            \hlstd{trainSet} \hlkwb{<-} \hlstd{coffee[validSetSplits} \hlopt{!=} \hlstd{k,]}
-
-            \hlstd{m1} \hlkwb{<-}
-            \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{semi} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body,} \hlkwc{dat} \hlstd{= trainSet)}
-            \hlstd{pred1} \hlkwb{<-} \hlkwd{predict}\hlstd{(m1,} \hlkwc{newdata} \hlstd{= validSet)}
-            \hlstd{RMSE1[k]} \hlkwb{<-} \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred1)} \hlopt{^} \hlnum{2}\hlstd{))}
-
-                  \hlstd{m2} \hlkwb{<-} \hlkwd{lm}\hlstd{(}
-                  \hlstd{Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+}
-                  \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+} \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,}
-                  \hlkwc{dat} \hlstd{= trainSet}
-                  \hlstd{)}
-                  \hlstd{pred2} \hlkwb{<-} \hlkwd{predict}\hlstd{(m2,} \hlkwc{newdata} \hlstd{= validSet)}
-                  \hlstd{RMSE2[k]} \hlkwb{<-} \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred2)} \hlopt{^} \hlnum{2}\hlstd{))}
-
-            \hlstd{m3} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste,} \hlkwc{dat} \hlstd{= trainSet)}
-            \hlstd{pred3} \hlkwb{<-} \hlkwd{predict}\hlstd{(m3,} \hlkwc{newdata} \hlstd{= validSet)}
-            \hlstd{RMSE3[k]} \hlkwb{<-} \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred3)} \hlopt{^} \hlnum{2}\hlstd{))}
-      \hlstd{\}}
-
+  \hlstd{validSet} \hlkwb{<-} \hlstd{coffee[validSetSplits} \hlopt{==} \hlstd{k, ]}
+  \hlstd{trainSet} \hlkwb{<-} \hlstd{coffee[validSetSplits} \hlopt{!=} \hlstd{k, ]}
+  \hlstd{m1} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{semi} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body,}
+    \hlkwc{dat} \hlstd{= trainSet)}
+  \hlstd{pred1} \hlkwb{<-} \hlkwd{predict}\hlstd{(m1,} \hlkwc{newdata} \hlstd{= validSet)}
+  \hlstd{RMSE1[k]} \hlkwb{<-} \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred1)}\hlopt{^}\hlnum{2}\hlstd{))}
+  \hlstd{m2} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{wet} \hlopt{+} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste} \hlopt{+} \hlstd{Body} \hlopt{+} \hlstd{Acidity} \hlopt{+}
+    \hlstd{Balance} \hlopt{+} \hlstd{Sweetness} \hlopt{+} \hlstd{Uniformity} \hlopt{+} \hlstd{Moisture,} \hlkwc{dat} \hlstd{= trainSet)}
+  \hlstd{pred2} \hlkwb{<-} \hlkwd{predict}\hlstd{(m2,} \hlkwc{newdata} \hlstd{= validSet)}
+  \hlstd{RMSE2[k]} \hlkwb{<-} \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred2)}\hlopt{^}\hlnum{2}\hlstd{))}
+  \hlstd{m3} \hlkwb{<-} \hlkwd{lm}\hlstd{(Flavor} \hlopt{~} \hlstd{Aroma} \hlopt{+} \hlstd{Aftertaste,} \hlkwc{dat} \hlstd{= trainSet)}
+  \hlstd{pred3} \hlkwb{<-} \hlkwd{predict}\hlstd{(m3,} \hlkwc{newdata} \hlstd{= validSet)}
+  \hlstd{RMSE3[k]} \hlkwb{<-} \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{Flavor} \hlopt{-} \hlstd{pred3)}\hlopt{^}\hlnum{2}\hlstd{))}
+\hlstd{\}}
 \hlstd{RMSE1}
 \end{alltt}
 \begin{verbatim}
@@ -3199,119 +3040,111 @@ the exhaustive search.
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{## Cross-validation with model selection}
-
-\hlcom{# Dataset from paper "Where does Haydn end and Mozart begin?}
-\hlcom{# Composer classification of string quartets"}
+\hlcom{# Dataset from paper 'Where does Haydn end and Mozart}
+\hlcom{# begin?  Composer classification of string quartets'}
 \hlcom{# (Journal of New Music Research, vol 49, 457-476)}
 \hlstd{HM} \hlkwb{<-} \hlkwd{read.csv}\hlstd{(}\hlstr{"haydn-mozart.csv"}\hlstd{)}
-\hlstd{HM[,}\hlnum{1}\hlstd{]} \hlkwb{<-} \hlkwa{NULL} \hlcom{# first col is just name of quartet, remove it}
-\hlkwd{dim}\hlstd{(HM)} \hlcom{# 285 observations, 1116 columns}
-
-\hlcom{# Let's treat "number of notes in violin part" as the response}
-\hlcom{# That's variable name "count_pitch_1" and column 683 of data matrix}
-\hlcom{# So we have 1115 possible predictors}
-
-\hlcom{# More model selection, for clarity start with one train/validation split}
+\hlstd{HM[,} \hlnum{1}\hlstd{]} \hlkwb{<-} \hlkwa{NULL}  \hlcom{# first col is just name of quartet, remove it}
+\hlkwd{dim}\hlstd{(HM)}  \hlcom{# 285 observations, 1116 columns}
+\hlcom{# Let's treat 'number of notes in violin part' as the}
+\hlcom{# response That's variable name 'count_pitch_1' and column}
+\hlcom{# 683 of data matrix So we have 1115 possible predictors}
+\hlcom{# More model selection, for clarity start with one}
+\hlcom{# train/validation split}
 \hlstd{N} \hlkwb{<-} \hlkwd{nrow}\hlstd{(HM)}
 \hlkwd{set.seed}\hlstd{(}\hlnum{12345678}\hlstd{)}
-\hlstd{trainInd} \hlkwb{<-} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlstd{N,} \hlkwd{round}\hlstd{(N}\hlopt{*}\hlnum{0.8}\hlstd{),} \hlkwc{replace}\hlstd{=F)}
-\hlstd{trainSet} \hlkwb{<-} \hlstd{HM[trainInd,]}
-\hlstd{validSet} \hlkwb{<-} \hlstd{HM[}\hlopt{-}\hlstd{trainInd,]}
-
+\hlstd{trainInd} \hlkwb{<-} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlstd{N,} \hlkwd{round}\hlstd{(N} \hlopt{*} \hlnum{0.8}\hlstd{),} \hlkwc{replace} \hlstd{= F)}
+\hlstd{trainSet} \hlkwb{<-} \hlstd{HM[trainInd, ]}
+\hlstd{validSet} \hlkwb{<-} \hlstd{HM[}\hlopt{-}\hlstd{trainInd, ]}
 \hlkwd{library}\hlstd{(MASS)}
 \hlcom{# Full model and empty model with just intercept}
 \hlstd{full} \hlkwb{<-} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= trainSet)}
-\hlstd{empty} \hlkwb{<-} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlnum{1}\hlstd{,} \hlkwc{data} \hlstd{=trainSet)}
-
+\hlstd{empty} \hlkwb{<-} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlnum{1}\hlstd{,} \hlkwc{data} \hlstd{= trainSet)}
 \hlcom{# Stepwise forward with BIC}
-\hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,} \hlkwc{lower} \hlstd{= empty),} \hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,} \hlkwc{k} \hlstd{=} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
+\hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,} \hlkwc{lower} \hlstd{= empty),}
+  \hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,} \hlkwc{k} \hlstd{=} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
 \hlstd{m1} \hlkwb{<-} \hlkwd{lm}\hlstd{(}\hlkwc{formula} \hlstd{= count_pitch_1} \hlopt{~} \hlstd{Prop_m3_num_0_8.1} \hlopt{+} \hlstd{count_pitch_3} \hlopt{+}
-\hlstd{Prop_m3_num_0_8.3} \hlopt{+} \hlstd{Prop_m3_mean_8.1} \hlopt{+} \hlstd{count_pitch_4} \hlopt{+} \hlstd{Dev_count_8_thresh4.393.1} \hlopt{+}
-\hlstd{Prop_m3_mean_8.3} \hlopt{+} \hlstd{mean_time_3} \hlopt{+} \hlstd{Dev_count_t_14_thresh0.216.3} \hlopt{+}
-\hlstd{voicepair_int_dist_6_1.2} \hlopt{+} \hlstd{Prop_m3_sd_8.3} \hlopt{+} \hlstd{Prop_m3_sd_8.1} \hlopt{+}
-\hlstd{Prop_m3_num_.6_8.1} \hlopt{+} \hlstd{simult_rest_perc} \hlopt{+} \hlstd{Dev_perc_t_14.1} \hlopt{+}
-\hlstd{count_pitch_2} \hlopt{+} \hlstd{Prop_m3_num_0_8.2} \hlopt{+} \hlstd{Prop_m3_mean_8.2} \hlopt{+} \hlstd{Dev_count_8_thresh4.024.2} \hlopt{+}
-\hlstd{Dev_count_18_thresh3.899.2} \hlopt{+} \hlstd{Expo_t_count_14.thresh0.7.1} \hlopt{+}
-\hlstd{Prop_m3_num_0_12.1} \hlopt{+} \hlstd{Expo_acc_8.1} \hlopt{+} \hlstd{Expo_perc_8.2} \hlopt{+} \hlstd{Prop_m3_num_0_12.2} \hlopt{+}
-\hlstd{Dev_count_t_8_thresh0.247.1} \hlopt{+} \hlstd{Expo_t_count_8.thresh0.7.1} \hlopt{+}
-\hlstd{voicepair_int_dist_1_1.3} \hlopt{+} \hlstd{Expo_perc_12.3} \hlopt{+} \hlstd{Pairwise_voice_int_mean.1.3} \hlopt{+}
-\hlstd{Expo_t_count_18.thresh0.7.3} \hlopt{+} \hlstd{Prop_m3_q3_16.2} \hlopt{+} \hlstd{Dev_perc_t_14.4} \hlopt{+}
-\hlstd{Prop_m3_q3_14.4} \hlopt{+} \hlstd{Dev_count_t_14_thresh0.187.3,} \hlkwc{data} \hlstd{= trainSet)}
-
-\hlcom{# we can use the AIC function with our own k for the L0 penalty}
+  \hlstd{Prop_m3_num_0_8.3} \hlopt{+} \hlstd{Prop_m3_mean_8.1} \hlopt{+} \hlstd{count_pitch_4} \hlopt{+} \hlstd{Dev_count_8_thresh4.393.1} \hlopt{+}
+  \hlstd{Prop_m3_mean_8.3} \hlopt{+} \hlstd{mean_time_3} \hlopt{+} \hlstd{Dev_count_t_14_thresh0.216.3} \hlopt{+}
+  \hlstd{voicepair_int_dist_6_1.2} \hlopt{+} \hlstd{Prop_m3_sd_8.3} \hlopt{+} \hlstd{Prop_m3_sd_8.1} \hlopt{+}
+  \hlstd{Prop_m3_num_.6_8.1} \hlopt{+} \hlstd{simult_rest_perc} \hlopt{+} \hlstd{Dev_perc_t_14.1} \hlopt{+}
+  \hlstd{count_pitch_2} \hlopt{+} \hlstd{Prop_m3_num_0_8.2} \hlopt{+} \hlstd{Prop_m3_mean_8.2} \hlopt{+} \hlstd{Dev_count_8_thresh4.024.2} \hlopt{+}
+  \hlstd{Dev_count_18_thresh3.899.2} \hlopt{+} \hlstd{Expo_t_count_14.thresh0.7.1} \hlopt{+}
+  \hlstd{Prop_m3_num_0_12.1} \hlopt{+} \hlstd{Expo_acc_8.1} \hlopt{+} \hlstd{Expo_perc_8.2} \hlopt{+} \hlstd{Prop_m3_num_0_12.2} \hlopt{+}
+  \hlstd{Dev_count_t_8_thresh0.247.1} \hlopt{+} \hlstd{Expo_t_count_8.thresh0.7.1} \hlopt{+}
+  \hlstd{voicepair_int_dist_1_1.3} \hlopt{+} \hlstd{Expo_perc_12.3} \hlopt{+} \hlstd{Pairwise_voice_int_mean.1.3} \hlopt{+}
+  \hlstd{Expo_t_count_18.thresh0.7.3} \hlopt{+} \hlstd{Prop_m3_q3_16.2} \hlopt{+} \hlstd{Dev_perc_t_14.4} \hlopt{+}
+  \hlstd{Prop_m3_q3_14.4} \hlopt{+} \hlstd{Dev_count_t_14_thresh0.187.3,} \hlkwc{data} \hlstd{= trainSet)}
+\hlcom{# we can use the AIC function with our own k for the L0}
+\hlcom{# penalty}
 \hlkwd{AIC}\hlstd{(m1,} \hlkwc{k} \hlstd{=} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
-\hlkwd{BIC}\hlstd{(m1)} \hlcom{# in this case matches BIC as we expect (1977.6)}
-
+\hlkwd{BIC}\hlstd{(m1)}  \hlcom{# in this case matches BIC as we expect (1977.6)}
 \hlstd{pred1} \hlkwb{<-} \hlkwd{predict}\hlstd{(m1,} \hlkwc{newdata} \hlstd{= validSet)}
-\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{count_pitch_1} \hlopt{-} \hlstd{pred1)}\hlopt{^}\hlnum{2}\hlstd{))} \hlcom{# RMSE on validation}
-      \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{(m1}\hlopt{$}\hlstd{residuals}\hlopt{^}\hlnum{2}\hlstd{))} \hlcom{# RMSE on train}
-
-\hlcom{# Try ICM to search for a model with a potentially better BIC}
-\hlcom{# than the one found with stepwise}
-\hlstd{pen} \hlkwb{<-} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet))} \hlcom{#}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{count_pitch_1} \hlopt{-} \hlstd{pred1)}\hlopt{^}\hlnum{2}\hlstd{))}  \hlcom{# RMSE on validation}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{(m1}\hlopt{$}\hlstd{residuals}\hlopt{^}\hlnum{2}\hlstd{))}  \hlcom{# RMSE on train}
+\hlcom{# Try ICM to search for a model with a potentially better}
+\hlcom{# BIC than the one found with stepwise}
+\hlstd{pen} \hlkwb{<-} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet))}  \hlcom{#}
 \hlstd{varlist} \hlkwb{=} \hlkwd{c}\hlstd{()}
 \hlstd{varnames} \hlkwb{=} \hlkwd{names}\hlstd{(trainSet)}
 \hlstd{n} \hlkwb{=} \hlkwd{nrow}\hlstd{(trainSet)}
-\hlstd{varorder} \hlkwb{<-} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlkwd{ncol}\hlstd{(trainSet))} \hlcom{# random order of variables}
+\hlstd{varorder} \hlkwb{<-} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlkwd{ncol}\hlstd{(trainSet))}  \hlcom{# random order of variables}
 \hlstd{minCrit} \hlkwb{=} \hlnum{Inf}
 \hlstd{noChange} \hlkwb{=} \hlstd{F}
 \hlkwa{while} \hlstd{(}\hlopt{!}\hlstd{noChange) \{}
-            \hlstd{noChange} \hlkwb{=} \hlstd{T}
-            \hlkwa{for} \hlstd{(i} \hlkwa{in} \hlstd{varorder) \{}
-                        \hlkwa{if} \hlstd{(i} \hlopt{==} \hlnum{683}\hlstd{)}
-                        \hlkwa{next}
-
-                        \hlkwa{if} \hlstd{(i} \hlopt{%in%} \hlstd{varlist} \hlopt{&} \hlkwd{length}\hlstd{(varlist)} \hlopt{>} \hlnum{1}\hlstd{) \{}
-                        \hlstd{index} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{683}\hlstd{, varlist[varlist} \hlopt{!=} \hlstd{i])}
-                        \hlstd{trainVars} \hlkwb{=} \hlstd{trainSet[, index]}
-
-                        \hlstd{fit} \hlkwb{=} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= trainVars)}
-
-                        \hlkwa{if} \hlstd{(}\hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)} \hlopt{<} \hlstd{minCrit) \{}
-                                    \hlstd{minCrit} \hlkwb{=} \hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)}
-                                    \hlstd{varlist} \hlkwb{=} \hlstd{varlist[varlist} \hlopt{!=} \hlstd{i]}
-                                    \hlkwd{print}\hlstd{(}\hlkwd{paste0}\hlstd{(}\hlstr{"Criterion: "}\hlstd{,} \hlkwd{round}\hlstd{(minCrit,} \hlnum{1}\hlstd{),} \hlstr{", variables: "}\hlstd{,} \hlkwd{paste0}\hlstd{(varnames[varlist],} \hlkwc{collapse} \hlstd{=} \hlstr{" "}\hlstd{)))}
-                                    \hlstd{best.model} \hlkwb{=} \hlstd{fit}
-                                    \hlstd{noChange} \hlkwb{=} \hlstd{F}
-                              \hlstd{\}}
-
-                  \hlstd{\}} \hlkwa{else if} \hlstd{(}\hlopt{!}\hlstd{i} \hlopt{%in%} \hlstd{varlist) \{}
-            \hlstd{index} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{683}\hlstd{, varlist, i)}
-            \hlstd{trainVars} \hlkwb{=} \hlstd{trainSet[, index]}
-
-            \hlstd{fit} \hlkwb{=} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= trainVars)}
-
-            \hlkwa{if} \hlstd{(}\hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)} \hlopt{<} \hlstd{minCrit) \{}
-                        \hlstd{minCrit} \hlkwb{=} \hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)}
-                        \hlstd{varlist} \hlkwb{=} \hlkwd{c}\hlstd{(varlist, i)}
-                        \hlkwd{print}\hlstd{(}\hlkwd{paste0}\hlstd{(}\hlstr{"Criterion: "}\hlstd{,} \hlkwd{round}\hlstd{(minCrit,} \hlnum{1}\hlstd{),} \hlstr{", variables: "}\hlstd{,} \hlkwd{paste0}\hlstd{(varnames[varlist],} \hlkwc{collapse} \hlstd{=} \hlstr{" "}\hlstd{)))}
-                        \hlstd{best.model} \hlkwb{=} \hlstd{fit}
-                        \hlstd{noChange} \hlkwb{=} \hlstd{F}
-                  \hlstd{\}}
+  \hlstd{noChange} \hlkwb{=} \hlstd{T}
+  \hlkwa{for} \hlstd{(i} \hlkwa{in} \hlstd{varorder) \{}
+    \hlkwa{if} \hlstd{(i} \hlopt{==} \hlnum{683}\hlstd{)}
+      \hlkwa{next}
+    \hlkwa{if} \hlstd{(i} \hlopt{%in%} \hlstd{varlist} \hlopt{&} \hlkwd{length}\hlstd{(varlist)} \hlopt{>} \hlnum{1}\hlstd{) \{}
+      \hlstd{index} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{683}\hlstd{, varlist[varlist} \hlopt{!=} \hlstd{i])}
+      \hlstd{trainVars} \hlkwb{=} \hlstd{trainSet[, index]}
+      \hlstd{fit} \hlkwb{=} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= trainVars)}
+      \hlkwa{if} \hlstd{(}\hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)} \hlopt{<} \hlstd{minCrit) \{}
+        \hlstd{minCrit} \hlkwb{=} \hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)}
+        \hlstd{varlist} \hlkwb{=} \hlstd{varlist[varlist} \hlopt{!=} \hlstd{i]}
+        \hlkwd{print}\hlstd{(}\hlkwd{paste0}\hlstd{(}\hlstr{"Criterion: "}\hlstd{,} \hlkwd{round}\hlstd{(minCrit,} \hlnum{1}\hlstd{),}
+          \hlstr{", variables: "}\hlstd{,} \hlkwd{paste0}\hlstd{(varnames[varlist],}
+          \hlkwc{collapse} \hlstd{=} \hlstr{" "}\hlstd{)))}
+        \hlstd{best.model} \hlkwb{=} \hlstd{fit}
+        \hlstd{noChange} \hlkwb{=} \hlstd{F}
       \hlstd{\}}
+    \hlstd{\}} \hlkwa{else if} \hlstd{(}\hlopt{!}\hlstd{i} \hlopt{%in%} \hlstd{varlist) \{}
+      \hlstd{index} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{683}\hlstd{, varlist, i)}
+      \hlstd{trainVars} \hlkwb{=} \hlstd{trainSet[, index]}
+      \hlstd{fit} \hlkwb{=} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= trainVars)}
+      \hlkwa{if} \hlstd{(}\hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)} \hlopt{<} \hlstd{minCrit) \{}
+        \hlstd{minCrit} \hlkwb{=} \hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)}
+        \hlstd{varlist} \hlkwb{=} \hlkwd{c}\hlstd{(varlist, i)}
+        \hlkwd{print}\hlstd{(}\hlkwd{paste0}\hlstd{(}\hlstr{"Criterion: "}\hlstd{,} \hlkwd{round}\hlstd{(minCrit,} \hlnum{1}\hlstd{),}
+          \hlstr{", variables: "}\hlstd{,} \hlkwd{paste0}\hlstd{(varnames[varlist],}
+          \hlkwc{collapse} \hlstd{=} \hlstr{" "}\hlstd{)))}
+        \hlstd{best.model} \hlkwb{=} \hlstd{fit}
+        \hlstd{noChange} \hlkwb{=} \hlstd{F}
+      \hlstd{\}}
+    \hlstd{\}}
+  \hlstd{\}}
 \hlstd{\}}
-\hlstd{\}}
-
 \hlkwd{summary}\hlstd{(best.model)}
 \hlstd{predICM} \hlkwb{<-} \hlkwd{predict}\hlstd{(best.model,} \hlkwc{newdata} \hlstd{= validSet)}
-\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{count_pitch_1} \hlopt{-} \hlstd{predICM)}\hlopt{^}\hlnum{2}\hlstd{))} \hlcom{# RMSE on validation}
-      \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{(best.model}\hlopt{$}\hlstd{residuals}\hlopt{^}\hlnum{2}\hlstd{))} \hlcom{# RMSE on train}
-
-
-\hlcom{# Try stepwise again, with a larger L0 penalty (e.g., twice the usual BIC penalty)}
-\hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,} \hlkwc{lower} \hlstd{= empty),} \hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,} \hlkwc{k} \hlstd{=} \hlnum{2}\hlopt{*}\hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{count_pitch_1} \hlopt{-} \hlstd{predICM)}\hlopt{^}\hlnum{2}\hlstd{))}  \hlcom{# RMSE on validation}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{(best.model}\hlopt{$}\hlstd{residuals}\hlopt{^}\hlnum{2}\hlstd{))}  \hlcom{# RMSE on train}
+\hlcom{# Try stepwise again, with a larger L0 penalty (e.g., twice}
+\hlcom{# the usual BIC penalty)}
+\hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,} \hlkwc{lower} \hlstd{= empty),}
+  \hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,} \hlkwc{k} \hlstd{=} \hlnum{2} \hlopt{*} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
 \hlstd{m2} \hlkwb{<-} \hlkwd{lm}\hlstd{(}\hlkwc{formula} \hlstd{= count_pitch_1} \hlopt{~} \hlstd{Prop_m3_num_0_8.1} \hlopt{+} \hlstd{count_pitch_3} \hlopt{+}
-\hlstd{Prop_m3_num_0_8.3} \hlopt{+} \hlstd{Prop_m3_mean_8.1} \hlopt{+} \hlstd{count_pitch_4} \hlopt{+} \hlstd{Dev_count_8_thresh4.393.1} \hlopt{+}
-\hlstd{Prop_m3_mean_8.3} \hlopt{+} \hlstd{mean_time_3} \hlopt{+} \hlstd{Dev_count_t_14_thresh0.216.3,}
-\hlkwc{data} \hlstd{= trainSet)}
-\hlkwd{AIC}\hlstd{(m2,} \hlkwc{k} \hlstd{=} \hlnum{2}\hlopt{*}\hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
-\hlcom{# calculate the value of criterion based on this larger L0 penalty}
+  \hlstd{Prop_m3_num_0_8.3} \hlopt{+} \hlstd{Prop_m3_mean_8.1} \hlopt{+} \hlstd{count_pitch_4} \hlopt{+} \hlstd{Dev_count_8_thresh4.393.1} \hlopt{+}
+  \hlstd{Prop_m3_mean_8.3} \hlopt{+} \hlstd{mean_time_3} \hlopt{+} \hlstd{Dev_count_t_14_thresh0.216.3,}
+  \hlkwc{data} \hlstd{= trainSet)}
+\hlkwd{AIC}\hlstd{(m2,} \hlkwc{k} \hlstd{=} \hlnum{2} \hlopt{*} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
+\hlcom{# calculate the value of criterion based on this larger L0}
+\hlcom{# penalty}
 \hlstd{pred2} \hlkwb{<-} \hlkwd{predict}\hlstd{(m2,} \hlkwc{newdata} \hlstd{= validSet)}
-\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{count_pitch_1} \hlopt{-} \hlstd{pred2)}\hlopt{^}\hlnum{2}\hlstd{))} \hlcom{# RMSE on validation}
-      \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{(m2}\hlopt{$}\hlstd{residuals}\hlopt{^}\hlnum{2}\hlstd{))} \hlcom{# RMSE on train}
-
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{count_pitch_1} \hlopt{-} \hlstd{pred2)}\hlopt{^}\hlnum{2}\hlstd{))}  \hlcom{# RMSE on validation}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{(m2}\hlopt{$}\hlstd{residuals}\hlopt{^}\hlnum{2}\hlstd{))}  \hlcom{# RMSE on train}
 \hlcom{# Try ICM as well with this penalty}
-\hlstd{pen} \hlkwb{<-} \hlnum{2}\hlopt{*}\hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet))}
+\hlstd{pen} \hlkwb{<-} \hlnum{2} \hlopt{*} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet))}
 \hlstd{varlist} \hlkwb{=} \hlkwd{c}\hlstd{()}
 \hlstd{varnames} \hlkwb{=} \hlkwd{names}\hlstd{(trainSet)}
 \hlstd{n} \hlkwb{=} \hlkwd{nrow}\hlstd{(trainSet)}
@@ -3319,85 +3152,74 @@ the exhaustive search.
 \hlstd{minCrit} \hlkwb{=} \hlnum{Inf}
 \hlstd{noChange} \hlkwb{=} \hlstd{F}
 \hlkwa{while} \hlstd{(}\hlopt{!}\hlstd{noChange) \{}
-            \hlstd{noChange} \hlkwb{=} \hlstd{T}
-            \hlkwa{for} \hlstd{(i} \hlkwa{in} \hlstd{varorder) \{}
-                        \hlkwa{if} \hlstd{(i} \hlopt{==} \hlnum{683}\hlstd{)}
-                        \hlkwa{next}
-
-                        \hlkwa{if} \hlstd{(i} \hlopt{%in%} \hlstd{varlist} \hlopt{&} \hlkwd{length}\hlstd{(varlist)} \hlopt{>} \hlnum{1}\hlstd{) \{}
-                        \hlstd{index} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{683}\hlstd{, varlist[varlist} \hlopt{!=} \hlstd{i])}
-                        \hlstd{trainVars} \hlkwb{=} \hlstd{trainSet[, index]}
-
-                        \hlstd{fit} \hlkwb{=} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= trainVars)}
-
-                        \hlkwa{if} \hlstd{(}\hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)} \hlopt{<} \hlstd{minCrit) \{}
-                                    \hlstd{minCrit} \hlkwb{=} \hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)}
-                                    \hlstd{varlist} \hlkwb{=} \hlstd{varlist[varlist} \hlopt{!=} \hlstd{i]}
-                                    \hlkwd{print}\hlstd{(}\hlkwd{paste0}\hlstd{(}\hlstr{"Criterion: "}\hlstd{,} \hlkwd{round}\hlstd{(minCrit,} \hlnum{1}\hlstd{),} \hlstr{", variables: "}\hlstd{,} \hlkwd{paste0}\hlstd{(varnames[varlist],} \hlkwc{collapse} \hlstd{=} \hlstr{" "}\hlstd{)))}
-                                    \hlstd{best.model} \hlkwb{=} \hlstd{fit}
-                                    \hlstd{noChange} \hlkwb{=} \hlstd{F}
-                              \hlstd{\}}
-
-                  \hlstd{\}} \hlkwa{else if} \hlstd{(}\hlopt{!}\hlstd{i} \hlopt{%in%} \hlstd{varlist) \{}
-            \hlstd{index} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{683}\hlstd{, varlist, i)}
-            \hlstd{trainVars} \hlkwb{=} \hlstd{trainSet[, index]}
-
-            \hlstd{fit} \hlkwb{=} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= trainVars)}
-
-            \hlkwa{if} \hlstd{(}\hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)} \hlopt{<} \hlstd{minCrit) \{}
-                        \hlstd{minCrit} \hlkwb{=} \hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)}
-                        \hlstd{varlist} \hlkwb{=} \hlkwd{c}\hlstd{(varlist, i)}
-                        \hlkwd{print}\hlstd{(}\hlkwd{paste0}\hlstd{(}\hlstr{"Criterion: "}\hlstd{,} \hlkwd{round}\hlstd{(minCrit,} \hlnum{1}\hlstd{),} \hlstr{", variables: "}\hlstd{,} \hlkwd{paste0}\hlstd{(varnames[varlist],} \hlkwc{collapse} \hlstd{=} \hlstr{" "}\hlstd{)))}
-                        \hlstd{best.model} \hlkwb{=} \hlstd{fit}
-                        \hlstd{noChange} \hlkwb{=} \hlstd{F}
-                  \hlstd{\}}
+  \hlstd{noChange} \hlkwb{=} \hlstd{T}
+  \hlkwa{for} \hlstd{(i} \hlkwa{in} \hlstd{varorder) \{}
+    \hlkwa{if} \hlstd{(i} \hlopt{==} \hlnum{683}\hlstd{)}
+      \hlkwa{next}
+    \hlkwa{if} \hlstd{(i} \hlopt{%in%} \hlstd{varlist} \hlopt{&} \hlkwd{length}\hlstd{(varlist)} \hlopt{>} \hlnum{1}\hlstd{) \{}
+      \hlstd{index} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{683}\hlstd{, varlist[varlist} \hlopt{!=} \hlstd{i])}
+      \hlstd{trainVars} \hlkwb{=} \hlstd{trainSet[, index]}
+      \hlstd{fit} \hlkwb{=} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= trainVars)}
+      \hlkwa{if} \hlstd{(}\hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)} \hlopt{<} \hlstd{minCrit) \{}
+        \hlstd{minCrit} \hlkwb{=} \hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)}
+        \hlstd{varlist} \hlkwb{=} \hlstd{varlist[varlist} \hlopt{!=} \hlstd{i]}
+        \hlkwd{print}\hlstd{(}\hlkwd{paste0}\hlstd{(}\hlstr{"Criterion: "}\hlstd{,} \hlkwd{round}\hlstd{(minCrit,} \hlnum{1}\hlstd{),}
+          \hlstr{", variables: "}\hlstd{,} \hlkwd{paste0}\hlstd{(varnames[varlist],}
+          \hlkwc{collapse} \hlstd{=} \hlstr{" "}\hlstd{)))}
+        \hlstd{best.model} \hlkwb{=} \hlstd{fit}
+        \hlstd{noChange} \hlkwb{=} \hlstd{F}
       \hlstd{\}}
+    \hlstd{\}} \hlkwa{else if} \hlstd{(}\hlopt{!}\hlstd{i} \hlopt{%in%} \hlstd{varlist) \{}
+      \hlstd{index} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{683}\hlstd{, varlist, i)}
+      \hlstd{trainVars} \hlkwb{=} \hlstd{trainSet[, index]}
+      \hlstd{fit} \hlkwb{=} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= trainVars)}
+      \hlkwa{if} \hlstd{(}\hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)} \hlopt{<} \hlstd{minCrit) \{}
+        \hlstd{minCrit} \hlkwb{=} \hlkwd{AIC}\hlstd{(fit,} \hlkwc{k} \hlstd{= pen)}
+        \hlstd{varlist} \hlkwb{=} \hlkwd{c}\hlstd{(varlist, i)}
+        \hlkwd{print}\hlstd{(}\hlkwd{paste0}\hlstd{(}\hlstr{"Criterion: "}\hlstd{,} \hlkwd{round}\hlstd{(minCrit,} \hlnum{1}\hlstd{),}
+          \hlstr{", variables: "}\hlstd{,} \hlkwd{paste0}\hlstd{(varnames[varlist],}
+          \hlkwc{collapse} \hlstd{=} \hlstr{" "}\hlstd{)))}
+        \hlstd{best.model} \hlkwb{=} \hlstd{fit}
+        \hlstd{noChange} \hlkwb{=} \hlstd{F}
+      \hlstd{\}}
+    \hlstd{\}}
+  \hlstd{\}}
 \hlstd{\}}
-\hlstd{\}}
-
 \hlstd{predICM} \hlkwb{<-} \hlkwd{predict}\hlstd{(best.model,} \hlkwc{newdata} \hlstd{= validSet)}
-\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{count_pitch_1} \hlopt{-} \hlstd{predICM)}\hlopt{^}\hlnum{2}\hlstd{))} \hlcom{# RMSE on validation}
-      \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{(best.model}\hlopt{$}\hlstd{residuals}\hlopt{^}\hlnum{2}\hlstd{))} \hlcom{# RMSE on train}
-
-
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{count_pitch_1} \hlopt{-} \hlstd{predICM)}\hlopt{^}\hlnum{2}\hlstd{))}  \hlcom{# RMSE on validation}
+\hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{(best.model}\hlopt{$}\hlstd{residuals}\hlopt{^}\hlnum{2}\hlstd{))}  \hlcom{# RMSE on train}
 \hlcom{# K fold cross validation to choose model selection method}
 \hlstd{K} \hlkwb{<-} \hlnum{5}
 \hlstd{validSetSplits} \hlkwb{<-} \hlkwd{sample}\hlstd{((}\hlnum{1}\hlopt{:}\hlstd{N)}\hlopt{%%}\hlstd{K} \hlopt{+} \hlnum{1}\hlstd{)}
 \hlstd{RMSE1} \hlkwb{<-} \hlkwd{c}\hlstd{()}
 \hlstd{RMSE2} \hlkwb{<-} \hlkwd{c}\hlstd{()}
 \hlkwa{for} \hlstd{(k} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{K) \{}
-            \hlstd{validSet} \hlkwb{<-} \hlstd{HM[validSetSplits}\hlopt{==}\hlstd{k,]}
-            \hlstd{trainSet} \hlkwb{<-} \hlstd{HM[validSetSplits}\hlopt{!=}\hlstd{k,]}
-
-            \hlstd{full} \hlkwb{<-} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= trainSet)}
-            \hlstd{empty} \hlkwb{<-} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlnum{1}\hlstd{,} \hlkwc{data} \hlstd{= trainSet)}
-
-            \hlstd{m1} \hlkwb{<-} \hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,} \hlkwc{lower} \hlstd{= empty),}
-            \hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,} \hlkwc{k} \hlstd{=} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
-            \hlstd{pred1} \hlkwb{<-} \hlkwd{predict}\hlstd{(m1,} \hlkwc{newdata} \hlstd{= validSet)}
-            \hlstd{RMSE1[k]} \hlkwb{<-} \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{count_pitch_1} \hlopt{-} \hlstd{pred1)}\hlopt{^}\hlnum{2}\hlstd{))}
-
-                  \hlstd{m2} \hlkwb{<-} \hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,} \hlkwc{lower} \hlstd{= empty),}
-                  \hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,} \hlkwc{k} \hlstd{=} \hlnum{2} \hlopt{*} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
-                  \hlstd{pred2} \hlkwb{<-} \hlkwd{predict}\hlstd{(m2,} \hlkwc{newdata} \hlstd{= validSet)}
-                  \hlstd{RMSE2[k]} \hlkwb{<-} \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{count_pitch_1} \hlopt{-} \hlstd{pred2)}\hlopt{^}\hlnum{2}\hlstd{))}
-
-      \hlstd{\}}
-
+  \hlstd{validSet} \hlkwb{<-} \hlstd{HM[validSetSplits} \hlopt{==} \hlstd{k, ]}
+  \hlstd{trainSet} \hlkwb{<-} \hlstd{HM[validSetSplits} \hlopt{!=} \hlstd{k, ]}
+  \hlstd{full} \hlkwb{<-} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= trainSet)}
+  \hlstd{empty} \hlkwb{<-} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlnum{1}\hlstd{,} \hlkwc{data} \hlstd{= trainSet)}
+  \hlstd{m1} \hlkwb{<-} \hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,}
+    \hlkwc{lower} \hlstd{= empty),} \hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,} \hlkwc{k} \hlstd{=} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
+  \hlstd{pred1} \hlkwb{<-} \hlkwd{predict}\hlstd{(m1,} \hlkwc{newdata} \hlstd{= validSet)}
+  \hlstd{RMSE1[k]} \hlkwb{<-} \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{count_pitch_1} \hlopt{-} \hlstd{pred1)}\hlopt{^}\hlnum{2}\hlstd{))}
+  \hlstd{m2} \hlkwb{<-} \hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,}
+    \hlkwc{lower} \hlstd{= empty),} \hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,} \hlkwc{k} \hlstd{=} \hlnum{2} \hlopt{*} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
+  \hlstd{pred2} \hlkwb{<-} \hlkwd{predict}\hlstd{(m2,} \hlkwc{newdata} \hlstd{= validSet)}
+  \hlstd{RMSE2[k]} \hlkwb{<-} \hlkwd{sqrt}\hlstd{(}\hlkwd{mean}\hlstd{((validSet}\hlopt{$}\hlstd{count_pitch_1} \hlopt{-} \hlstd{pred2)}\hlopt{^}\hlnum{2}\hlstd{))}
+\hlstd{\}}
 \hlstd{RMSE1}
 \hlstd{RMSE2}
 \hlkwd{mean}\hlstd{(RMSE1)}
 \hlkwd{mean}\hlstd{(RMSE2)}
-
-\hlcom{# turns out m2 is indeed the better procedure among these two based on CV prediction error}
-\hlcom{# if we decide on procedure m2, we can apply procedure m2 to the entire 285 observations}
-\hlcom{# to get a final model for future prediction}
+\hlcom{# turns out m2 is indeed the better procedure among these}
+\hlcom{# two based on CV prediction error if we decide on}
+\hlcom{# procedure m2, we can apply procedure m2 to the entire 285}
+\hlcom{# observations to get a final model for future prediction}
 \hlcom{# e.g.,}
 \hlstd{full} \hlkwb{<-} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= HM)}
 \hlstd{empty} \hlkwb{<-} \hlkwd{lm}\hlstd{(count_pitch_1} \hlopt{~} \hlnum{1}\hlstd{,} \hlkwc{data} \hlstd{= HM)}
-
-\hlstd{mfinal} \hlkwb{<-} \hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,} \hlkwc{lower} \hlstd{= empty),}
-\hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,} \hlkwc{k} \hlstd{=} \hlnum{2} \hlopt{*} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
+\hlstd{mfinal} \hlkwb{<-} \hlkwd{stepAIC}\hlstd{(}\hlkwc{object} \hlstd{= empty,} \hlkwc{scope} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwc{upper} \hlstd{= full,}
+  \hlkwc{lower} \hlstd{= empty),} \hlkwc{direction} \hlstd{=} \hlstr{"forward"}\hlstd{,} \hlkwc{k} \hlstd{=} \hlnum{2} \hlopt{*} \hlkwd{log}\hlstd{(}\hlkwd{nrow}\hlstd{(trainSet)))}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
