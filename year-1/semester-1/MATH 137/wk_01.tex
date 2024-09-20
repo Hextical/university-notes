@@ -1,0 +1,99 @@
+\chapter{Sequences and Convergence}
+\section{Absolute Values}
+What is an absolute value? We commonly think of it as an operation that removes negative signs.
+\begin{Example}{}{}
+    $ \abs{-2}=2 $, $ \abs{-17}=17 $, $ \abs{3}=3 $, etc.
+\end{Example}
+So, is $ \abs{-x}=x $ for all $ x\in\R$? Not always! Let's give the definition to avoid ambiguity.
+\begin{Definition}{}{}
+    \[ \abs{x}=\begin{cases}
+            x,  & x\ge 0, \\
+            -x, & x<0.
+        \end{cases} \]
+    Clearly, $ \abs{-x}=\abs{x} $.
+\end{Definition}
+This also tells us the distance from $ x $ to $ 0 $, or the \underline{magnitude} (size of $ x $).
+\begin{Example}{}{}
+    How do we get the distance between two arbitrary numbers using absolute values? For example, what is
+    the distance from $ 3 $ to $ 7 $? $ 4 $ units. Also, $ \abs{7-3}=4=\abs{3-7} $.
+\end{Example}
+So, the distance from $ a $ to $ b $ is $ \abs{b-a} $ for all $ a,b\in\R $. Also,
+$ \abs{b-a}=\abs{a-b} $, which makes sense since the distance from $ a $ to $ b $ should be the same as
+the distance from $ b $ to $ a $.
+\subsection{Inequalities Involving Absolute Values}
+The main focus of this course is \textbf{approximation}. We will seek ways to approximate
+roots, curves, limits, etc., but if we make an approximation it will be useless unless we can talk
+about how close it is to the actual object! So, we will look for ways to determine the maximum
+size of the \underline{\textbf{error}}. Before we do this, we will need to examine \underline{\textbf{inequalities}}.
+Let's start with the triangle inequality.
+\begin{Theorem}{Triangle Inequality}{}
+    For $ x,y,z\in\R $, $ \abs{x-y}\le \abs{x-z}+\abs{z-y} $.
+    \tcblower{}
+    \textbf{Proof}:
+    Since $ \abs{x-y}=\abs{y-x} $, we can assume without loss of generality (WLOG) that $ x\le y $.
+    Hence, we consider three cases.
+
+    \underline{Case 1} ($ z<x $): Clearly, $ \abs{x-y}\le \abs{z-y} $, which means
+    $ \abs{x-y}\le \abs{x-z}+\abs{z-y} $.
+
+    \underline{Case 2} ($ x\le z\le y $): In this case, $ \abs{x-y}=\abs{x-z}+\abs{z-y} $, which means
+    $ \abs{x-y}=\abs{x-z}+\abs{z-y} $, as desired.
+
+    \underline{Case 3} ($ y<z $): This time, $ \abs{x-y}\le \abs{x-z} $, so $ \abs{x-y}\le \abs{x-z}+\abs{z-y} $.
+\end{Theorem}
+We consider a useful variant of the triangle inequality.
+\begin{Corollary}{}{}
+    For $ x,y\in\R $, $ \abs{x+y}\le \abs{x}+\abs{y} $.
+    \tcblower{}
+    \textbf{Proof}:
+    \begin{align*}
+        \abs{x+y}
+         & =\abs{x-(-y)}                                                           \\
+         & \le \abs{x-0}+\abs{0-(-y)} &  & \text{triangle inequality with $ z=0 $} \\
+         & =\abs{x}+\abs{y}.
+    \end{align*}
+\end{Corollary}
+If we want to prove $ \abs{x}<\delta $, we just need to prove $ x<\delta $ and $ x>-\delta $, that is,
+$ -\delta<x<\delta $. So, what do the inequalities of the form $ \abs{x-a}<\delta $ for
+$ a,\delta\in\R $ look like? What set does this represent? Well, it's the set of all
+$ x\in\R $ that are less than $ \delta $ units away from $ a $. So, starting at $ a $,
+we move $ \delta $-units to the left and right, which means
+\[ \abs{x-a}<\delta\iff -\delta<x-a<\delta\iff a-\delta<x<a+\delta. \]
+So, it is the interval $ (a-\delta,a+\delta) $, where we do not include the endpoints as the inequality is strict.
+
+What about $ \abs{x-a}\le \delta $? In this case,
+\[ \abs{x-a}\le \delta\iff -\delta\le x-a\le \delta\iff a-\delta\le x\le a+\delta. \]
+So, it is the interval $ [a-\delta,a+\delta] $.
+
+What about $ 0<\abs{x-a}<\delta $? Now, the distance can't be zero which means $ x\ne a $. So,
+it translates to $ (a-\delta,a+\delta)\setminus\{a\} $ or $ (a-\delta,a)\cup (a,a+\delta) $.
+
+\begin{Example}{}{}
+    Find the corresponding sets for the inequalities.
+    \begin{enumerate}[(1)]
+        \item $ \abs{x-4}<3 $.
+        \item $ 2\le \abs{x-4}<4 $.
+        \item $ \abs{x-1}+\abs{x+2}\ge 4 $.
+    \end{enumerate}
+    \tcblower{}
+    \textbf{Solution}.
+    \begin{enumerate}[(1)]
+        \item $ \abs{x-4}<3\iff -3<x-4<3\iff 1<x<7 $, so $ (1,7) $ is the corresponding interval.
+        \item $ 2\le \abs{x-4}<4 $ means $ 2\le \abs{x-4} $ and $ \abs{x-4}<4 $, so
+              \[ (2\le x-4)\lor (x-4)\le -2\iff (6\le x)\lor (x\le 2) \]
+              and
+              \[ -4<x-4<4\iff 0<x<8. \]
+              Putting these together, we get $ 0<x\le 2 $ or $ 6\le x<8 $, so $ (0,2]\cup [6,8) $ is the corresponding interval.
+        \item We consider three cases.
+              \begin{enumerate}[(i)]
+                  \item If $ x> 1 $, then both $ x-1> 0 $ and $ x+2> 0 $, then
+                        \[ x-1+x+2> 4\iff 2x+1> 4\iff 2x> 3\iff x< 3/2. \]
+                  \item If $ -2\le x\le 1 $, then $ \abs{x-1}=1-x $, but $ \abs{x+2}=x+2 $, so we get
+                        \[ 1-x+x+2\ge 4\iff 3\ge 4, \] which is not true for \underline{any} $ x $.
+                  \item If $ x<-2 $, then $ \abs{x-1}=1-x $ and $ \abs{x+2}=-x-2 $, then
+                        \[ 1-x+(-x-2)\ge 4\iff -1-2x\ge 4\iff -5\ge 2x\iff -5/2\ge x. \]
+              \end{enumerate}
+              Putting it all together, we get $ x\ge 3/2 $ or $ x\le -5/2 $, that is,
+              $ (-\infty,-5/2]\cup (3/2,\infty) $.
+    \end{enumerate}
+\end{Example}
