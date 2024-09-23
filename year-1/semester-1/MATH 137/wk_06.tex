@@ -1,0 +1,286 @@
+\section{The Derivative Function}
+\begin{Definition}{}{}
+    We say that $ f $ is \textbf{differentiable} on an interval $ I $ if $ f'(a) $ exists
+    for each $ a\in I $. In this case, we define the \textbf{derivative function} as
+    \[ f'(x)=\lim\limits_{{h} \to {0}}\frac{f(x+h)-f(x)}{h},\; x\in I. \]
+    Alternative (Leibniz) notation:
+    \[ f'(x)=\odv{f}{x}=\odv*{(f)}{x}, \]
+    where ``$\odv{}{x}$'' is called a \textbf{differential operator}.
+
+    If $ y=f(x) $, write $ \odv{y}{x} $. For $ f'(a) $, write $ \odv{f}{x}_{x=a} $.
+\end{Definition}
+Let's look at some examples!
+\begin{Example}{}{}
+    For $ f(x)=7 $, find $ f'(x) $ for $ x\in\R $.
+    \tcblower{}
+    \textbf{Solution}.
+    \[ f'(x)=\lim\limits_{{h} \to {0}}\frac{f(x+h)-f(x)}{h}=\lim\limits_{{h} \to {0}}\frac{7-7}{h}=0. \]
+    Therefore, $ f'(x)=0 $ for all $ x\in\R $.
+\end{Example}
+\begin{Example}{}{}
+    Find the equation of the tangent line to $ f(x)=x^2+3x+2 $ at $ x=2 $.
+    \tcblower{}
+    \textbf{Solution}. First, what is the $ y $-coordinate?
+    \[ f(2)=2^2+3(2)+2=12, \]
+    so the point is $ (2,12) $. Next,
+    \begin{align*}
+        f'(x)
+         & =\lim\limits_{{h} \to {0}}\frac{f(x+h)-f(x)}{h}               \\
+         & =\lim\limits_{{h} \to {0}}\frac{(x+h)^2+3(x+h)+2-x^2-3x-2}{h} \\
+         & =\lim\limits_{{h} \to {0}}\frac{x^2+2xh+h^2+3x+3h-x^2-3x}{h}  \\
+         & =\lim\limits_{{h} \to {0}}\frac{2xh+h^2+3h}{h}                \\
+         & =\lim\limits_{{h} \to {0}}(2x+h+3)                            \\
+         & =2x+3.
+    \end{align*}
+    At $ x=2 $, $ \odv{f}{x}_{x=2}=2(2)+3=7 $. Therefore,
+    $ y=7x-2 $. What about at $ x=3 $?
+    \[ f(3)=3^2+3(3)+2=20 \]
+    and $ f'(3)=2(3)+3=9 $, so $ y-20=9(x-3)\implies y=9x-7 $.
+\end{Example}
+\begin{Remark}{}{}
+    \begin{itemize}
+        \item Much faster than computing $ f'(a) $ each time!
+        \item We will soon learn ways to find $ f'(x) $ \underline{much faster}, but if asked to use the
+              \underline{definition}, then you must use the formula
+              \[ f'(x)=\lim\limits_{{h} \to {0}}\frac{f(x+h)-f(x)}{h}. \]
+    \end{itemize}
+\end{Remark}
+\begin{Example}{}{}
+    Using the definition, find $ f'(x) $ where
+    \begin{enumerate}[(1)]
+        \item $ f(x)=x $;
+        \item $ f(x)=x^2 $;
+        \item $ f(x)=x^3 $;
+        \item $ f(x)=\sqrt{x} $.
+    \end{enumerate}
+    \tcblower{}
+    \textbf{Solution}.
+    \begin{enumerate}[(1)]
+        \item $ \begin{aligned}[t]
+                      f'(x)
+                       & =\lim\limits_{{h} \to {0}}\frac{f(x+h)-f(x)}{h} \\
+                       & =\lim\limits_{{h} \to {0}}\frac{x+h-x}{h}       \\
+                       & =\lim\limits_{{h} \to {0}}\frac{h}{h}           \\
+                       & =1.
+                  \end{aligned} $
+        \item $ \begin{aligned}[t]
+                      f'(x)
+                       & =\lim\limits_{{h} \to {0}}\frac{f(x+h)-f(x)}{h}     \\
+                       & =\lim\limits_{{h} \to {0}}\frac{(x+h)^2-x^2}{h}     \\
+                       & =\lim\limits_{{h} \to {0}}\frac{x^2+2xh+h^2-x^2}{h} \\
+                       & =\lim\limits_{{h} \to {0}}\frac{2xh+h^2}{h}         \\
+                       & =\lim\limits_{{h} \to {0}}(2x+h)                    \\
+                       & =2x.
+                  \end{aligned} $
+        \item $ \begin{aligned}[t]
+                      f'(x)
+                       & =\lim\limits_{{h} \to {0}}\frac{f(x+h)-f(x)}{h}             \\
+                       & =\lim\limits_{{h} \to {0}}\frac{(x+h)^3-x^3}{h}             \\
+                       & =\lim\limits_{{h} \to {0}}\frac{x^3+3x^2h+3xh^2+h^3-x^3}{h} \\
+                       & =\lim\limits_{{h} \to {0}}\frac{3x^2h+3xh^2+h^3}{h}         \\
+                       & =\lim\limits_{{h} \to {0}}(3x^2+3xh+h^2)                    \\
+                       & =3x^2.
+                  \end{aligned} $
+        \item $ \begin{aligned}[t]
+                      f'(x)
+                       & =\lim\limits_{{h} \to {0}}\frac{f(x+h)-f(x)}{h}                                                              \\
+                       & =\lim\limits_{{h} \to {0}}\frac{\sqrt{x+h}-\sqrt{x}}{h}\cdot \frac{\sqrt{x+h}+\sqrt{x}}{\sqrt{x+h}+\sqrt{x}} \\
+                       & =\lim\limits_{{h} \to {0}}\frac{x+h-x}{h(\sqrt{x+h}+\sqrt{x})}                                               \\
+                       & =\lim\limits_{{h} \to {0}}\frac{h}{h(\sqrt{x+h}+\sqrt{x})}                                                   \\
+                       & =\lim\limits_{{h} \to {0}}\frac{1}{\sqrt{x+h}+\sqrt{x}}                                                      \\
+                       & =\frac{1}{2\sqrt{x}}.
+                  \end{aligned} $
+    \end{enumerate}
+\end{Example}
+\subsection{Higher-Order Derivatives}
+\begin{Definition}{}{}
+    If $ f $ is differentiable with derivative $ f' $ and $ f' $ is also
+    differentiable, then we call $ \odv*{(f')}{x} $ the \textbf{second derivative} of $ f $,
+    denoted $ f''(x) $ or $ f^{(2)}(x) $, or $ \odv[order=2]{f}{x} $.
+
+    In general, $ f^{(n+1)}(x)=\odv*{(f^{(n)}(x))}{x} $, where $ f^{(n)} $ is the $ n\textsuperscript{th} $ derivative.
+\end{Definition}
+\begin{Exercise}{}{}
+    Prove the following with the limit definition, where $ f(x)=x^4 $.
+    \begin{itemize}
+        \item $ f'(x)=4x^3 $.
+        \item $ f''(x)=12x^2 $.
+        \item $ f'''(x)=24x $.
+        \item $ f^{(4)}=24 $.
+        \item $ f^{(5)}=0 $.
+    \end{itemize}
+\end{Exercise}
+Note that using the limit definition is very inefficient (not to mention awful and ugly). So, let's develop some rules
+to help us calculate derivatives more quickly!
+\subsection{Derivatives of Elementary Functions}
+Now that we know the definition of the derivative, let's work on finding
+derivatives of elementary functions to speed up the process.
+\begin{itemize}
+    \item \textbf{Constants}: If $ f(x)=c $ where $ c\in\R $, then $ f'(x)=0 $.
+    \item \textbf{Lines}: If $ f(x)=mx+b $ where $ m,b\in\R $, then $ f'(x)=m $.
+    \item \textbf{Quadratics}: If $ f(x)=ax^2+bx+c $ where $ a,b,c\in\R $ and $ a\ne 0 $, then $ f'(x)=2ax+b $.
+    \item \textbf{Sine and Cosine}: First, we need to prove a different claim.
+
+          \underline{Claim}: $ \displaystyle \lim\limits_{{x} \to {0}}\frac{\cos(x)-1}{x}=0 $.
+          \begin{align*}
+              \lim\limits_{{x} \to {0}} \frac{\cos(x)-1}{x}\cdot \frac{\cos(x)+1}{\cos(x)+1}
+               & =\lim\limits_{{x} \to {0}}\frac{\cos^2(x)-1}{x(\cos(x)+1)}                  \\
+               & =\lim\limits_{{x} \to {0}}\frac{-\sin^2(x)}{x(\cos(x+1))}                   \\
+               & =\lim\limits_{{x} \to {0}}\frac{\sin(x)}{x}\cdot \frac{-\sin(x)}{\cos(x)+1} \\
+               & =1\cdot 0                                                                   \\
+               & =0,
+          \end{align*}
+          using the fundamental trigonometry limit. Now, we can compute $ (\sin(x))' $.
+          \begin{align*}
+              (\sin(x))'
+               & =\lim\limits_{{h} \to {0}}\frac{\sin(x+h)-\sin(x)}{h}                                       \\
+               & =\lim\limits_{{h} \to {0}}\frac{\sin(x)\cos(h)+\cos(x)\sin(h)-\sin(x)}{h}                   \\
+               & =\lim\limits_{{h} \to {0}}\frac{\sin(h)}{h}\cos(x)+\biggl(\frac{\cos(h)-1}{h}\biggr)\sin(x) \\
+               & =1\cdot \cos(x)+0\cdot \sin(x)                                                              \\
+               & =\cos(x).
+          \end{align*}
+          \begin{Exercise}{}{}
+              Show that $ (\cos(x))'=-\sin(x) $.
+          \end{Exercise}
+    \item $ e^x $: First, what is the number $ e $? There are lots of ways to define it, for example:
+          $ \lim\limits_{{x} \to {\infty}}(1+\frac{1}{x})^{x}=e $ or $ \sum_{n=0}^{\infty}\frac{1}{n!}=e $.
+          But for us, we will define $ e $ to be the unique number $ a\in\R $ such that the tangent line to $ a^x $
+          has slope $ 1 $ at $ x=0 $. That is,
+          \[ \lim\limits_{{h} \to {0}}\frac{e^h-e^0}{h}=1\implies \lim\limits_{{h} \to {0}}\frac{e^h-1}{h}=1. \]
+          So, we get $ (e^x)'=\lim\limits_{{h} \to {0}}\frac{e^{x+h}-e^x}{h}=\lim\limits_{{h} \to {0}}e^x(\frac{e^h-1}{h})=e^x $.
+          So, $ (e^x)'=e^x $.
+\end{itemize}
+\subsection{Arithmetic Rules for Differentiation}
+Now that we know how to find the derivatives of certain basic functions,
+let us look at some rules that tell us how to differentiate combinations
+of functions.
+\begin{Theorem}{Arithmetic Rules for Differentiation}{}
+    Suppose $ f $ and $ g $ are differentiable at $ x=a $.
+    \begin{enumerate}[(1)]
+        \item \textbf{Constant Multiple Rule}. Let $ h(x)=cf(x) $. Then $ h $ is differentiable at $ x=a $ and
+              \[ h'(a)=c f'(a). \]
+        \item \textbf{Sum Rule}. Let $ h(x)=f(x)+g(x) $. Then $ h $ is differentiable at $ x=a $ and
+              \[ h'(a)=f'(a)+g'(a). \]
+        \item \textbf{Product Rule}. Let $ h(x)=f(x)g(x) $. Then $ h $ is differentiable at $ x=a $ and
+              \[ h'(a)=f'(a)g(a)+f(a)g'(a). \]
+        \item \textbf{Reciprocal Rule}. Let $ h(x)=\frac{1}{g(x)} $. If $ g(a)\ne 0 $, then $ h $ is differentiable at $ x=a $ and
+              \[ h'(a)=-\frac{g'(a)}{[g(a)]^2}. \]
+        \item \textbf{Quotient Rule}: Let $ h(x)=\frac{f(x)}{g(x)} $. If $ g(a)\ne 0 $, then $ h $ is differentiable at $ x=a $ and
+              \[ h'(a)=\frac{f'(a)g(a)-f(a)g'(a)}{[g(a)]^2}. \]
+    \end{enumerate}
+    \tcblower{}
+    \textbf{Proof}:
+    \begin{enumerate}[(1)]
+        \item Easy exercise.
+        \item Easy exercise.
+        \item $ \begin{aligned}[t]
+                      (fg)'(a)
+                       & =\lim\limits_{{h} \to {0}}\frac{f(a+h)g(a+h)-f(a)g(a)}{h}                        \\
+                       & =\lim\limits_{{h} \to {0}}\frac{f(a+h)g(a+h)-f(a+h)g(a)+f(a+h)g(a)-f(a)g(a)}{h}  \\
+                       & =\lim\limits_{{h} \to {0}}f(a+h)\frac{g(a+h)-g(a)}{h}+g(a) \frac{f(a+h)-f(a)}{h} \\
+                       & =f(a)g'(a)+g(a)f'(a).
+                  \end{aligned} $
+        \item $ \begin{aligned}[t]
+                      \biggl(\frac{1}{f}\biggr)'(a)
+                       & =\lim\limits_{{h} \to {0}}\frac{\frac{1}{f(a+h)}-\frac{1}{f(a)}}{h}    \\
+                       & =\lim\limits_{{h} \to {0}}\frac{f(a)-f(a+h)}{h f(a+h)f(a)}             \\
+                       & =\lim\limits_{{h} \to {0}}\frac{-(f(a+h)-f(a))}{h}\frac{1}{f(a+h)f(a)} \\
+                       & =\frac{-f'(a)}{[f(a)]^2}.
+                  \end{aligned} $
+        \item We can combine the product and reciprocal rules!
+              $ \begin{aligned}[t]
+                      \biggl(\frac{f}{g}\biggr)'(a)
+                       & =\biggl(f \frac{1}{g}\biggr)'(a)                       \\
+                       & =f'(a)\frac{1}{g(a)}+f(a)\biggl(\frac{1}{g}\biggr)'(a) \\
+                       & =\frac{f'(a)}{g(a)}-\frac{f(a)g'(a)}{[g(a)]^2}         \\
+                       & =\frac{f'(a)g(a)-f(a)g'(a)}{[g(a)]^2}.
+                  \end{aligned} $
+    \end{enumerate}
+\end{Theorem}
+\begin{Theorem}{The Power Rule for Differentiation}{}
+    Assume that $ \alpha\in\R $, $ \alpha\ne 0 $, and $ f(x)=x^{\alpha} $. Then $ f $ is differentiable and
+    \[ f'(a)=\alpha x^{\alpha-1}, \]
+    where $ x^{\alpha-1} $ is defined.
+\end{Theorem}
+In general, the proof is difficult. If $ \alpha\in\N $, then it is a simple application of the Binomial Theorem.
+For $ \alpha\in\mathbf{Q} $, it is possible with more tools (chain rule and inverse function theorem). But for general
+$ \alpha\in\R $, we would need more tools, and it outside the scope of this course. So, we omit the proof. Let's look at some examples!
+\begin{Example}{}{}
+    \begin{enumerate}[(1)]
+        \item $ f(x)=x^2\sin(x) $.
+              \[ f'(x)=(x^2)'\sin(x)+x^2(\sin(x))'=2x\sin(x)+x^2\cos(x). \]
+        \item $ f(x)=\frac{x^4-1}{x-7} $.
+              \[ f'(x)=\frac{(x-7)(x^4+1)'-(x^4+1)(x-7)'}{(x-7)^2}=\frac{(x-7)(4x^3)-(x^4+1)(1)}{(x-7)^2}. \]
+        \item $ f(x)=\sec(x)=\frac{1}{\cos(x)} $.
+              \[ f'(x)=\frac{-(\cos(x))'}{\cos^2(x)}=\frac{\sin(x)}{\cos^2(x)}=\frac{\sin(x)}{\cos(x)}\frac{1}{\cos(x)}=\tan(x)\sec(x). \]
+        \item $ f(x)=e^x\cos(x) $.
+              \[ f'(x)=e^x\cos(x)-e^x\sin(x). \]
+        \item $ f(x)=3x^5 $.
+              \[ f'(x)=15x^4,\; f''(x)=60x^3,\; f^{(3)}(x)=180x^2,\; f^{(4)}(x)=360x,\; f^{(5)}(x)=360,\; f^{(\ge 6)}(x)=0. \]
+    \end{enumerate}
+\end{Example}
+\subsection{The Chain Rule}
+\begin{Theorem}{}{}
+    Assume that $ y=f(x) $ is differentiable at $ x=a $ and $ z=g(y) $ is differentiable at $ y=f(a) $. Then $ h(x)=g\circ f(x)=g(f(x)) $ is differentiable at $ x=a $
+    and
+    \[ h'(a)=g'(f(a))f'(a). \]
+    In Leibniz notation, if $ z=g(y) $ and $ y=f(x) $, then
+    \[ \odv{z}{x}=\odv{z}{y}\odv{y}{x}. \]
+    \tcblower{}
+    The proof is quite involved, for a geometric argument see the course notes.
+\end{Theorem}
+\begin{Corollary}{Generalized Power Rule}{}
+    If $ g(x)=f(x)^\alpha $ for $ \alpha\in\R\setminus \{0\} $, then
+    \[ g'(x)=\alpha f(x)^{\alpha-1}f'(x). \]
+\end{Corollary}
+\begin{Example}{}{}
+    Find $ f'(x) $.
+    \begin{enumerate}[(1)]
+        \item $ f(x)=(3x^2+2x+7)^{19} $.
+        \item $ f(x)=\sin(e^x+x^e) $.
+        \item $ f(x)=e^{\sin(x^2)} $.
+    \end{enumerate}
+    \tcblower{}
+    \textbf{Solution}.
+    \begin{enumerate}[(1)]
+        \item $ f'(x)=38(3x+1)(3x^2+2x+7)^{18} $.
+        \item $ f'(x)=\cos(e^x+x^e)(e^x+e xe^{e-1}) $.
+        \item $ f'(x)=e^{\sin(x^2)}(\sin(x^2))'=e^{\sin(x^2)}\cos(x^2)(x^2)'=e^{\sin(x^2)}\cos(x^2)(2x) $.
+    \end{enumerate}
+\end{Example}
+Also, with the chain rule and the derivative of $ e^x $, we can get the derivative of $ a^x $ for $ a>0 $.
+\[ a^x=e^{x\ln(a)}\implies (a^x)'=(e^{x\ln(a)})'=e^{x\ln(a)}(x\ln(a))'=a^x\ln(a).  \]
+\begin{Example}{}{}
+    $ f(x)=2^{3x}+5^{\cos(x)} $. $ f'(x)=2^{3x}\ln(2)(3)+5^{\cos(x)}\ln(5)(-\sin(x)) $.
+\end{Example}
+\subsection{Derivatives of Other Trig. Functions}
+So far, we've seen:
+\begin{align*}
+    (\sin(x))' & =\cos(x)         \\
+    (\cos(x))' & =-\sin(x)        \\
+    (\sec(x))' & =\sec(x)\tan(x).
+\end{align*}
+\begin{Example}{}{}
+    \begin{align*}
+        (\tan(x))'
+         & =\biggl(\frac{\sin(x)}{\cos(x)}\biggr)'
+         & =\frac{\cos(x)(\sin(x))'-\sin(x)(\cos(x))'}{\cos^2(x)} \\
+         & =\frac{\cos^2(x)+\sin^2(x)}{\cos^2(x)}                 \\
+         & =\frac{1}{\cos^2(x)}                                   \\
+         & =\sec^2(x).
+    \end{align*}
+\end{Example}
+\begin{Exercise}{}{}
+    Prove that $ (\cot(x))'=-\csc^2(x) $ and $ (\csc(x))'=-\csc(x)\cot(x) $.
+\end{Exercise}
+Recap:
+\[ \begin{array}{cc}
+        f(x)    & f'(x)           \\
+        \midrule
+        \sin(x) & \cos(x)         \\
+        \cos(x) & -\sin(x)        \\
+        \tan(x) & \sec^2(x)       \\
+        \cot(x) & -\csc^2(x)      \\
+        \sec(x) & \sec(x)\tan(x)  \\
+        \csc(x) & -\csc(x)\cot(x) \\
+    \end{array} \]

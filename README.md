@@ -84,7 +84,7 @@ Some statistics:
 ### Semester 1
 |                                                                 Course                                                                  | Completion | Online |
 | :-------------------------------------------------------------------------------------------------------------------------------------: | :--------: | :----: |
-| [MATH 137 *(Calculus 1 for Honours Mathematics)*](https://hextical.github.io/university-notes/year-1/semester-1/MATH%20137/math137.pdf) |  ≈2/12  |  :x:   |
+| [MATH 137 *(Calculus 1 for Honours Mathematics)*](https://hextical.github.io/university-notes/year-1/semester-1/MATH%20137/math137.pdf) |  ≈4/12  |  :x:   |
 
 ### Semester 2
 
