@@ -1,4 +1,5 @@
 \section{Sequences and Their Limits}
+\subsection{Introduction to Subsequences}
 \begin{Definition}{}{}
     An infinite sequence of numbers is a list of numbers in a definite order, e.g.,
     \[ a_1,a_2,a_3,a_4,\ldots,a_n,\; a_i\in\R. \]
@@ -12,6 +13,7 @@ Sequences can be defined explicitly (in terms of $ n $) or recursively (in terms
         \item $ \Set{(-1)^n}_{n=1}^\infty $: $ -1,1,-1,1,\ldots $.
     \end{itemize}
 \end{Example}
+\subsection{Recursively Defined Sequences}
 \begin{Example}{Recursive Sequences}{}
     \begin{itemize}
         \item $ a_1=1 $, $ a_{n+1}=\sqrt{1+a_n} $, so $ a_1=1 $, $ a_2=\sqrt{2} $, $ a_3=\sqrt{1+\sqrt{2}} $, and so on for $ n\ge 1 $.
@@ -31,7 +33,6 @@ for $ a_n=1/2 $ we would write $ f(n)=1/2 $.
 Our goal now will be to determine how to find the limit of a sequence, that is, find what the value of the terms of the sequence
 are approaching (if it exists).
 
-\subsection{Sequences and Tails}
 We may want to build new sequences out of old ones or only discuss what happens to a sequence eventually, that is, after a certain index.
 \begin{Example}{}{}
     For $ \Set{\frac{1}{n}}_{n=1}^{\infty} $, if we consider only the odd terms, we get $ 1,1/3,1/5 $, or the $ k\textsuperscript{th} $
@@ -40,16 +41,17 @@ We may want to build new sequences out of old ones or only discuss what happens 
     for $ k\in\N $.
     This is called a subsequence.
 \end{Example}
+\subsection{Subsequences and Tails}
 \begin{Definition}{Subsequence}{}
     If $ \Set{a_n} $ is a sequence and $ {n_1,n_2,\ldots} $ is a sequence of natural numbers, where
     $ n_1<n_2<n_3<\cdots $, then the sequence
     \[ \Set{a_{n_1},a_{n_2},\ldots}=\Set{a_{n_k}} \]
-    is a subsequence of $ \Set{a_n} $.
+    is a \textbf{subsequence} of $ \Set{a_n} $.
 \end{Definition}
 One particular subsequence is $ \Set{a_k,a_{k+1},a_{k+2}} $ for some $ k\in\N $.
 This is called the tail of $ \Set{a_n} $ with cut-off $ k $.
 
-\subsubsection{Limits of Sequences}
+\subsection{Limits of Sequences}
 We are going to see lots of different limits this term, but we will start with sequences.
 \begin{Example}{}{}
     $ \Set{\frac{1}{n}} $ seems like it converges to $ 0 $, or that $ 0 $ is the limit of the sequence.
@@ -64,16 +66,15 @@ is \underline{the} limit! What makes it different? Well, the sequence gets infin
 unlike the other numbers! Let's try to define this again: ``the limit of $ \Set{a_n} $ is $ L $
 if, as $ n $ gets infinitely large, $ a_n $ gets infinitely close to $ L $.'' This is much better!
 But how can we formalize the idea of ``infinitely close?''
-\begin{Definition}{Formal Definition of a Limit}{}
-    $ L\in R $ is the limit of $ \Set{a_n} $ if:
-
-    For all $ \varepsilon>0 $, there exists $ N\in \N $ such that if $ n\ge N $, then
-    \[ \abs{a_n-L}<\varepsilon. \]
-    If such an $ L $ exists, we can say that $ \Set{a_n} $ converges and write $ \lim\limits_{{n} \to {\infty}}a_n=L $ (or $ a_n\to L $).
-    If no such $ L $ exists, then we say that $ \Set{a_n} $ diverges.
+\begin{Definition}{Formal Definition of the Limit of a Sequence I}{}
+    Let $ \seq $ be a sequence in $ \R $. For $ L\in\R $, we say that the sequence $ \seq $ \textbf{converges} to $ L $
+    (or that the \textbf{limit} of $ \seq $ is equal to $ L $), and we write $ a_n\to L $ (as $ n\to\infty $), or we write
+    $ \lim\limits_{{n} \to {\infty}}a_k=L $, when
+    \[ \forall \varepsilon\in\R_{>0}\; \exists N\in \N\; \forall n\in\N\;\bigl(n\ge N\implies \abs{a_n-L}<\varepsilon\bigr). \]
+    We say that the sequence $ \seq $ \textbf{diverges to infinity}
+    (in $ \R $) when there exists $ L\in \R $ such that $ \seq $ converges to $ L $.
+    We say that the sequence \textbf{diverges} (in $ \R $) when it does not converge (to any $ L\in\R $).
 \end{Definition}
-Here, if $ n\ge N $, then $ \abs{a_n-L}<\varepsilon $ (or $ a_n\in(L-\varepsilon,L+\varepsilon) $). Let's take a look at some examples.
-
 \begin{Example}{}{}
     Consider $ a_n=\frac{1}{n^2} $. We'd guess that the limit is $ 0 $. Say $ \varepsilon=\frac{1}{100} $, can we find a large enough $ n\in N $
     so that $ \abs*{\frac{1}{n^2}-0}<\frac{1}{100}  $ if $ n\ge N $? Well, we need
@@ -159,7 +160,7 @@ $ L $ also contains a tail of $ \Set{a_n} $. Let's collect all of these alternat
 \end{Example}
 A similar argument can be used to prove limits are unique.
 \begin{Theorem}{}{}
-    Let $ \Set{a_n} $ be a sequence. If it has a limit $ L $, then the limit is unique.
+    Let $ \seq $ be a sequence in $ \R $. If $ \seq $ has a limit (finite or infinite), then the limit is unique.
     \tcblower{}
     \textbf{Proof}: Suppose for a contradiction that $ L $ and $ M $
     are both limits of $ \Set{a_n} $ and $ L\ne M $ and WLOG that $ L<M $. Consider two intervals:
@@ -167,6 +168,8 @@ A similar argument can be used to prove limits are unique.
     This means, by definition, only finitely many terms of the sequence are not in the first interval and only finitely
     many terms are not in the second interval. But the sequence has infinitely many terms! So, at least one term is in both intervals
     which is impossible. This is a contradiction, so $ L=M $.
+
+    \underline{Note}: This does not cover the cases where the limit is infinite.
 \end{Theorem}
 \begin{Remark}{A Remark on Possible Limits}{}
     If $ a_n\ge 0 $ for all $ n $, then $ \Set{a_n} $ can't converge to a negative number! If it did, say to $ L<0 $,
@@ -186,14 +189,17 @@ Consider $ a_n=n $. It is clear that the sequence is getting larger without boun
 does not exist. That is, $ \Set{a_n} $ diverges. But we can say more! Since it does not get infinitely large,
 we can make a definition to capture this.
 \begin{Definition}{}{}
-    $ \lim\limits_{{n} \to {\infty}}a_n=\infty $ if for all $ M>0 $, we can find $ N\in\N $ so that if $ n\ge N $,
-    then $ a_n>M $.
-
-    Equivalently, any interval of the form $ (M,\infty) $ contains a tail of $ \Set{a_n} $.
-    \tcblower{}
-    It does look strange to write ``$ =\infty $'' but with the above definition we know it means ``does not exist but gets infinitely large.''
-
-    Similarly, if $ \lim\limits_{{n} \to {\infty}}a_n=-\infty $ for all $ M<0 $, there is $ N\in\N $ so that if $ n\ge N $, then $ a_n<M $.
+    \begin{itemize}
+        \item We say that $ \seq $ \textbf{diverges to $ \infty $}, or that the limit of $ \seq $ is equal to \textbf{infinity}, and we write
+              $ a_n\to \infty $ (as $ n\to\infty $), or we write $ \lim\limits_{{n} \to {\infty}}a_n=\infty $, when
+              \[ \forall M\in\R_{>0}\; \exists N\in\N\;\forall n\in \N\; \bigl(n\ge N\implies a_n>M\bigr). \]
+              Equivalently, any interval of the form $ (M,\infty) $ contains a tail of $ \Set{a_n} $.
+        \item We say that $ \seq $ \textbf{diverges to $ -\infty $}, or that the limit of $ \seq $ is equal to
+              \textbf{negative infinity}, and we write
+              $ a_n\to -\infty $ (as $ n\to\infty $), or we write $ \lim\limits_{{n} \to {\infty}}a_n=-\infty $, when
+              \[ \forall M\in\R_{<0}\; \exists N\in\N\;\forall n\in \N\; \bigl(n\ge N\implies a_n<M\bigr). \]
+              Equivalently, any interval of the form $ (-\infty,M) $ contains a tail of $ \Set{a_n} $.
+    \end{itemize}
 \end{Definition}
 \begin{Example}{}{}
     Show $ \lim\limits_{{n} \to {\infty}}(1-n)=-\infty $.

@@ -1,12 +1,10 @@
 # university-notes
 
-All my university notes done in LaTeX. I will probably not update these anymore.
-
-Some statistics:
-- 20 PDFs of courses, some of which are incomplete.
-- 1359 pages of LaTeX after combining those 20 PDFs.
+All my university notes done in LaTeX.
 
 # [View Notes Here!](https://hextical.github.io/university-notes/)
+
+Incomplete notes and graduate notes can be found [here](https://github.com/Hextical/other-notes).
 
 ## Year 4
 
@@ -14,9 +12,7 @@ Some statistics:
 
 |                                                                       Course                                                                       | Completion |          Online          |
 | :------------------------------------------------------------------------------------------------------------------------------------------------: | :--------: | :----------------------: |
-| [STAT 437 *(Statistical Methods for Life History Analysis)*](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20437/stat437.pdf) |  Week 1*   |    :heavy_check_mark:    |
 |       [STAT 438 *(Advanced Methods in Biostatistics)*](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20438/stat438.pdf)       |  Complete  | :heavy_exclamation_mark: |
-|        [STAT 454 *(Sampling Theory and Practice)*](https://hextical.github.io/university-notes/year-4/semester-2/STAT%20454/stat454.pdf)**         | Week 2***  | :heavy_exclamation_mark: |
 
 :heavy_exclamation_mark: COVID-19 caused the first month of the term to be online.
 
@@ -25,7 +21,6 @@ Some statistics:
 |                                                                         Course                                                                          |   Completion    |       Online       |
 | :-----------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------: | :----------------: |
 |               [STAT 333 *(Stochastic Processes 1)*](https://hextical.github.io/university-notes/year-4/semester-1/STAT%20333/stat333.pdf)               |    Complete     | :heavy_check_mark: |
-|           [STAT 337 *(Introduction to Biostatistics)*](https://hextical.github.io/university-notes/year-4/semester-1/STAT%20337/stat337.pdf)            | Barely Anything | :heavy_check_mark: |
 | [STAT 431 *(Generalized Linear Models and their Applications)*](https://hextical.github.io/university-notes/year-4/semester-1/STAT%20431/stat431.pdf)\* |    Complete     | :heavy_check_mark: |
 
 \* STAT 431 and STAT 831 have exactly the same lectures.
@@ -46,16 +41,13 @@ Some statistics:
 
 |                                                                Course                                                                 | Completion |       Online       |
 | :-----------------------------------------------------------------------------------------------------------------------------------: | :--------: | :----------------: |
-|          [CO 487 *(Applied Cryptography)*](https://hextical.github.io/university-notes/year-3/semester-2/CO%20487/co487.pdf)          | ETA: Never | :heavy_check_mark: |
 | [STAT 332 *(Sampling and Experimental Design)*](https://hextical.github.io/university-notes/year-3/semester-2/STAT%20332/stat332.pdf) |  Complete  | :heavy_check_mark: |
 |           [STAT 443 *(Forecasting)*](https://hextical.github.io/university-notes/year-3/semester-2/STAT%20443/stat443.pdf)            |  Complete  | :heavy_check_mark: |
-|                                                                                                                                       |
 
 ### Semester 1
 
 |                                                               Course                                                                | Completion |       Online       |
 | :---------------------------------------------------------------------------------------------------------------------------------: | :--------: | :----------------: |
-| [AMATH/PMATH 331 *(Applied Real Analysis)*](https://hextical.github.io/university-notes/year-3/semester-1/PMATH%20331/pmath331.pdf) | ETA: Never | :heavy_check_mark: |
 |    [STAT 330 *(Mathematical Statistics)*](https://hextical.github.io/university-notes/year-3/semester-1/STAT%20330/stat330.pdf)     |  Complete  | :heavy_check_mark: |
 |     [STAT 331 *(Applied Linear Models)*](https://hextical.github.io/university-notes/year-3/semester-1/STAT%20331/stat331.pdf)      |  Complete  | :heavy_check_mark: |
 
