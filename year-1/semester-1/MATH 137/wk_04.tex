@@ -1,0 +1,205 @@
+\chapter{Limits and Continuity}
+\section{Introduction to Function Limits}
+Let's examine $ \lim\limits_{{x} \to {a}}f(x)=L $ for $ a,L\in\R $.
+Intuitively, this means that $ f(x) $ gets infinitely close to $ L $
+as $ x $ gets infinitely close to $ a $ (but $ x\ne a $). Let's translate this
+into a more precise definition.
+\begin{Definition}{Limit of Real Function}{}
+    Let $ A\subseteq\R $ and let $ f\colon A\to \R $. When $ a\in\R $ is a limit point of $ A $,
+    and $ L\in\R $, we say that the \textbf{limit} of $ f(x) $ as $ x $ tends to $ a $ is equal to $ L $,
+    and we write $ \lim\limits_{{x} \to {a}}f(x)=L $ or we write $ f(x)\to L $ as $ x\to a $, when
+    \[ \forall \varepsilon\in\R_{>0}:\exists \delta\in\R_{>0}:\forall x\in A: 0<\abs{x-a}<\delta\implies \abs{f(x)-L}<\varepsilon. \]
+\end{Definition}
+\begin{Remark}{}{}
+    \begin{enumerate}[(1)]
+        \item The limit is not affected by what happens at $ x=a $.
+        \item For the limit to exist, the function needs to approach $ L $ from \underline{both sides}.
+    \end{enumerate}
+\end{Remark}
+\begin{Example}{}{}
+    \begin{enumerate}[(1)]
+        \item Prove $ \lim\limits_{{x} \to {2}}5x+1=11 $.
+        \item Prove $ \lim\limits_{{x} \to {5}}x^2=25 $.
+    \end{enumerate}
+    \tcblower{}
+    \textbf{Solution}.
+    \begin{enumerate}[(1)]
+        \item Let $ \varepsilon>0 $. Choose $ \delta=\varepsilon/5 $. If $ 0<\abs{x-2}<\delta $, then
+              \[ \abs{f(x)-L}=\abs{(5x+1)-11}=\abs{5x-10}=5\abs{x-2}<5\delta=\frac{5\varepsilon}{5}=\varepsilon. \]
+        \item Let $ \varepsilon>0 $. Choose $ \delta=\min(1,\varepsilon/11) $. If $ 0<\abs{x-5}<\delta $, then
+              since $ \abs{x-5}<\delta\le 1 $, we have $ 4<x<6 $, so that
+              $ \abs{x+5}\le \abs{6+5}=11 $.
+              \[ \abs{x^2-25}=\abs{(x-5)(x+5)}=\abs{x-5}\abs{x+5}\le 11\abs{x-5}<11\delta\le \frac{11\varepsilon}{11}=\varepsilon. \]
+    \end{enumerate}
+\end{Example}
+As before, it is tricky to work with the formal definition. We will strive to establish some better techniques!
+
+\begin{Remark}{Some Comments}{}
+    \begin{enumerate}[(1)]
+        \item For $ \lim\limits_{{x} \to {a}}f(x) $ to exist, $ f $ must be defined in an open interval $ (\alpha,\beta) $, containing
+              $ a $ (except possibly at $ x=a $).
+        \item $ f(a) $ does not affect $ \lim\limits_{{x} \to {a}}f(x) $.
+        \item If $ f(x)=g(x) $, except possibly at $ x=a $, then $ \lim\limits_{{x} \to {a}}f(x)=\lim\limits_{{x} \to {a}}g(x) $.
+    \end{enumerate}
+\end{Remark}
+\section{Sequential Characterization of Limits}
+We define $ \ER=R\cup\Set{-\infty,\infty} $.
+\begin{Theorem}{The Sequential Characterization of Limits of Functions}{}
+    Let $ A\subseteq \R $ be open, let $ f\colon A\to\R $, let $ L\in\ER $, and let $ a\in A $
+    be a limit point of $ A $.
+    \[ \lim\limits_{{x} \to {a}}f(x)=L  \]
+    if and only if
+    \[ \text{for all real sequences $ \Set{x_n} $ in $A\setminus \Set{a}$ with $ x_n\to a $ we have $ f(x_n)\to L $}. \]
+    \tcblower{}
+    \begin{itemize}
+        \item ($ \implies $) Suppose $ \lim\limits_{{x} \to {a}}f(x)=L $. Let $ \varepsilon>0 $.
+              Since $ \lim\limits_{{x} \to {a}}f(x)=L $, we can choose $ \delta>0 $ so that $ 0<\abs{x-a}<\delta\implies \abs{f(x)-b}<\varepsilon $.
+              Since $ x_n\to a $, we can choose $ N\in\N $ so that $ n\ge N\implies \abs{x_n-a}<\delta $. Then for $ n\ge N $,
+              we have $ \abs{x_n-a}<\delta $ and we have $ x_n\ne a $
+              (since $ \Set{x_k} $ is in the set $ A\setminus \Set{a} $) and hence $ \abs{f(x_n)-L}<\varepsilon $. This shows that $ f(x_n)\to L $.
+        \item ($ \impliedby $) Tricky exercise to think about.
+    \end{itemize}
+\end{Theorem}
+Since we know sequences can only have one limit, we immediately get the following theorem.
+\begin{Theorem}{Uniqueness of Limits}{}
+    Let $ A\subseteq\R $, let $ a $ be a limit point, and let $ f\colon A\to \R $.
+    For $ L,M\in\ER $, if $ \lim\limits_{{x} \to {a}}f(x)=L $ and $ \lim\limits_{{x} \to {a}}f(x)=M $, then
+    $ L=M $. Similar results hold for limits $ x\to a^{\pm} $ and $ x\to \pm\infty $.
+\end{Theorem}
+The sequential characterization can help us prove a limit does not exist.
+\subsection*{Strategy [Showing Limits Do Not Exist]}
+\begin{enumerate}
+    \item Find a sequence $ \Set{x_n} $ with $ x_n\to a $, $ x_n\ne a $ for which $ \lim\limits_{{n} \to {\infty}}f(x_n) $ does not exist.
+    \item Find two sequences $ (x_n) $ and $ (y_n) $ with $ x_n\to a $, $ y_n\to a $, $ x_n,y_n\ne a $ for which
+          $ \lim\limits_{{n} \to {\infty}}f(x_n)\ne \lim\limits_{{n} \to {\infty}}f(y_n)=M $
+\end{enumerate}
+\begin{Example}{}{}
+    Prove that $ \displaystyle \lim\limits_{{x} \to {0}}\frac{\abs{x}}{x} $ does not exist.
+    \tcblower{}
+    \textbf{Solution}. Let $ x_n=1/n $ and $ y_n=-1/n $. Clearly, $ x_n\to 0 $, $ y_n\to 0 $, and $ x_n,y_n\ne 0 $.
+    Since $ x_n>0 $ and $ y_n<0 $ for all $ n $, we have
+    $ \abs{x_n}/x_n=1 $ and $ \abs{y_n}/y_n=-1 $ for all $ n $. Therefore,
+    \[ \lim\limits_{{n} \to {\infty}}\frac{\abs{x_n}}{x_n}=1\ne -1=\lim\limits_{{n} \to {\infty}}\frac{\abs{y_n}}{y_n}. \]
+    Therefore, $ \displaystyle \lim\limits_{{x} \to {0}}\frac{\abs{x}}{x} $ does not exist.
+\end{Example}
+\section{Arithmetic Rules for limits of functions}
+\begin{Theorem}{Combination Theorem for Limits of Functions}{}
+    Let $ f,g $ be real functions defined on an open subset $ A\subseteq \R $, except
+    possibly at a point $ a\in A $. Let $ \lim\limits_{{x} \to {a}}f(x)=L\in\R $
+    and $ \lim\limits_{{x} \to {a}}g(x)=M\in\R $.
+    \begin{enumerate}[(1)]
+        \item $ \forall x\in \R:f(x)=c \implies L=c $.
+        \item \textbf{Multiple Rule}.
+              \[ \displaystyle \lim\limits_{{x} \to {a}}c f(x)=cL. \]
+        \item \textbf{Sum Rule}.
+              \[ \lim\limits_{{x} \to {a}} f(x)+g(x)=L+M. \]
+        \item \textbf{Product Rule}.
+              \[ \lim\limits_{{x} \to {a}}f(x)g(x)=LM. \]
+        \item \textbf{Quotient Rule}.
+              \[ \lim\limits_{{x} \to {a}}\frac{f(x)}{g(x)}=\frac{L}{M}\text{ provided that $ M\ne 0 $}. \]
+        \item \textbf{Power Rule}.
+              \[ \forall \alpha>0:\lim\limits_{{x} \to {a}}(f(x))^\alpha=L^\alpha . \]
+        \item If $ M=0 $, and $ \lim\limits_{{x} \to {a}}\frac{f(x)}{g(x)} $ exists, then $ L=0 $.
+    \end{enumerate}
+\end{Theorem}
+\begin{Theorem}{Limits of Polynomials}{}
+    If $ p(x)=\alpha_0+\alpha_1 x+\alpha_2 x^2+\cdots+\alpha_n x^n $ is any \emph{polynomial}, then
+    \[ \lim\limits_{{x} \to {a}}p(x)=p(a). \]
+    \tcblower{}
+    \textbf{Proof}: Exercise.
+\end{Theorem}
+\subsection*{Limits of Rational Functions}
+Consider $ \frac{P(x)}{Q(x)} $, where $ P,Q $ are polynomials.
+\begin{itemize}
+    \item Case 1: If $ Q(a)\ne 0 $, then
+          \[ \lim\limits_{{x} \to {a}}\frac{P(x)}{Q(x)}=\frac{P(a)}{Q(a)}. \]
+    \item Case 2: If $ \lim\limits_{{x} \to {a}}Q(x)=0 $ and $ \lim\limits_{{x} \to {a}}P(x)\ne 0 $, then
+          \[ \lim\limits_{{x} \to {a}}\frac{P(x)}{Q(x)} \]
+          does not exist.
+    \item Case 3: If $ \lim\limits_{{x} \to {a}}Q(x)=Q(a)=0=P(a)=\lim\limits_{{x} \to {a}}P(x) $, then
+          $ (x-a) $ is a factor of both $ P(x) $ and $ Q(x) $, so we can write
+          $ P(x)=(x-a)P^*(x) $ and $ Q(x)=(x-a)Q^*(x) $. Therefore,
+          \[ \lim\limits_{{x} \to {a}}\frac{P(x)}{Q(x)}=\lim\limits_{{x} \to {a}}\frac{(x-a)P^*(x)}{(x-a)Q^*(x)}
+              =\lim\limits_{{x} \to {a}}\frac{P^*(x)}{Q^*(x)} \]
+          and return to step 1!
+\end{itemize}
+\begin{Example}{}{}
+    \begin{enumerate}[(1)]
+        \item $ \displaystyle \lim\limits_{{x} \to {2}}\frac{x^2-4}{x^2+3x+1}=\frac{0}{11}=0 $.
+        \item $ \displaystyle \lim\limits_{{x} \to {2}}\frac{x^2-4}{x^2-x-2}=\lim\limits_{{x} \to {2}}\frac{(x-2)(x+2)}{(x-2)(x+1)}
+                  =\lim\limits_{{x} \to {2}}\frac{x+2}{x+1}=\frac{4}{3} $.
+    \end{enumerate}
+\end{Example}
+\section{One-Sided Limits}
+We may want to examine the behaviour of a function at a point but only
+from one side, instead of both sides at the same time. Let's see how to
+do that, and what the behaviour means for the overall limit.
+\begin{Definition}{One-Sided Limits}{}
+    Let $ A=(a,b) $ be an open real interval, let $ f\colon A\to \R $, and let $ L\in\R $.
+    \begin{itemize}
+        \item \emph{Limit from Right}.
+              \[ \lim\limits_{{x} \to {a^+}}f(x)=L\iff
+                  \forall \varepsilon\in\R_{>0}:\exists \delta\in\R_{>0}:\forall x\in A: a<x<a+\delta\implies \abs{f(x)-L}<\varepsilon. \]
+        \item \emph{Limit from Left}.
+              \[ \lim\limits_{{x} \to {b^-}}f(x)=L\iff
+                  \forall \varepsilon\in\R_{>0}:\exists \delta\in\R_{>0}:\forall x\in A: b-\delta<x<b\implies \abs{f(x)-L}<\varepsilon. \]
+    \end{itemize}
+\end{Definition}
+\begin{Example}{}{}
+    If $ \displaystyle  f(x)=\frac{\abs{x}}{x}=\begin{cases}
+            1,  & x>0, \\
+            -1, & x<0,
+        \end{cases} $ then $\lim\limits_{{x} \to {0^+}}f(x)=1$ and $\lim\limits_{{x} \to {0^-}}f(x)=-1$
+\end{Example}
+\begin{Example}{}{}
+    If $ \displaystyle  f(x)=\begin{cases}
+            -100,  & x\le 0,   \\
+            0,     & 0<x\le 1, \\
+            x^2+1, & x>1,
+        \end{cases} $ then $ \lim\limits_{{x} \to {1^+}}f(x)=1^2+1=2 $, $ \lim\limits_{{x} \to {1^-}}f(x)=0 $,
+    $ \lim\limits_{{x} \to {0^+}}f(x)=0 $ and $ \lim\limits_{{x} \to {0^-}}f(x)=-100 $.
+\end{Example}
+\begin{Theorem}{One-sided versus Two-sided Limits}{}
+    Let $ A $ be a function defined on an open real interval, let $ f\colon A\to \R $, and let
+    $ a\in A $.
+    \[ \text{$\lim\limits_{{x} \to {a}}f(x)$ exists and equals L} \]
+    if and only if both one-sided limits exist and
+    \[ \lim\limits_{{x} \to {a^-}}f(x) =L=\lim\limits_{{x} \to {a^+}}f(x). \]
+\end{Theorem}
+\begin{Remark}{}{}
+    All arithmetic rules and sequential characterization hold for one-sided limits as well.
+\end{Remark}
+\section{The Squeeze Theorem}
+There is an analogue of the Squeeze Theorem for Sequences for functions!
+\begin{Theorem}{Squeeze Theorem}{}
+    Let $ a $ be a point on an open real interval $ A $, and let $ f,g,h\colon A\to R $. If
+    \begin{align*}
+         & \forall x\ne a\in A:g(x)\le f(x)\le h(x)                      \\
+         & \lim\limits_{{x} \to {a}}g(x)=\lim\limits_{{x} \to {a}}h(x)=L
+    \end{align*}
+    then
+    \[ \lim\limits_{{x} \to {a}}f(x)=L. \]
+\end{Theorem}
+\begin{Example}{}{}
+    Find the following limits.
+    \begin{enumerate}[(1)]
+        \item $ \lim\limits_{{x} \to {0}}x^2\cos(e^x+7) $.
+        \item $ \lim\limits_{{x} \to {0}}\frac{\sin x}{x} $.
+    \end{enumerate}
+    \tcblower{}
+    \textbf{Solution}.
+    \begin{enumerate}[(1)]
+        \item We know that $ -1\le \cos(e^x+7)\le 1 $, so $ -x^2\le \cos(e^x+7)\le x^2 $. Also,
+              $\lim\limits_{{x} \to {0}}-x^2=0=\lim\limits_{{x} \to {0}}x^2$, so by the Squeeze Theorem,
+              $ \lim\limits_{{x} \to {0}}x^2\cos(e^x+7)=0 $
+        \item If $ 0<x<\pi/2 $, then $ \sin x\le x\le \tan x $, so $ \abs{\sin x}\le \abs{x}\le \abs{\tan x} $ if $ -\pi/2<x<\pi/2 $.
+              So,
+              \[ 1\le \frac{\abs{x}}{\abs{\sin x}}\le \frac{\abs{\tan x}}{\abs{\sin x}}=\frac{1}{\abs{\cos x}}\text{ if $ -\frac{\pi}{2}<x<\frac{\pi}{2} $, $x\ne 0$}. \]
+              Therefore,
+              \[ 1\ge \abs*{\frac{\sin x}{x}}\ge \abs{\cos x}, \]
+              but $ \displaystyle \frac{\sin x}{x}\ge 0 $ and $ \cos x>0 $ on $ (-\pi/2,\pi/2) $, so
+              \[ 1\ge \frac{\sin x}{x}\ge \cos x. \]
+              Also, $ \lim\limits_{{x} \to {0}}1=1=\lim\limits_{{x} \to {0}}\cos x $, so by the Squeeze Theorem,
+              $ \lim\limits_{{x} \to {0}}\frac{\sin x}{x}=0 $.
+    \end{enumerate}
+\end{Example}

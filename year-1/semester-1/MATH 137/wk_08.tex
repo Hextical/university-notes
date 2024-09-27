@@ -1,0 +1,147 @@
+\section{Implicit Differentiation}
+So far, we have examined derivatives of explicitly-defined functions (e.g., $ y=f(x) $), but what about implicitly-defined functions?
+\begin{Example}{}{}
+    If $ x^2+y^2=1 $, then this isn't even a function (as it does not pass the vertical line test). But, if we divide
+    up the curve into positive and negative parts on the $ y $-axis then it can be a function. Then,
+    we could find the derivative of each piece! The good news is that it doesn't matter if we break it up first!
+    We can differentiate both sides of an implicit equation using the chain rule and solve for $ y $. We do need to assume
+    that the equation defines an implicit function though, more on this later.
+\end{Example}
+\begin{Example}{}{}
+    Find $ y' $ if $ 3x^3 y^3+x^2 y+13x=12 $.
+    \tcblower{}
+    \textbf{Solution}. We let $ y=y(x) $, take the derivative with respect to $ x $ on both sides, and then solve for $ y'(x) $:
+    \begin{align*}
+        \odv*{[3x^3 y(x)^3+x^2 y(x)+13x]}{x}                                           & =\odv*{[12]}{x}                               \\
+        \odv*{[3x^3 y(x)^3]}{x}+\odv*{[x^2 y(x)]}{x}+\odv*{[13x]}{x}                   & =0                                            \\
+        3\bigl( 3x^2y(x)^3+3x^3(3)y(x)^2 y'(x) \bigr) +\bigl(2xy(x)+x^2 y'(x)\bigr)+13 & =0                                            \\
+        9 x^2 y(x)^3 + 9 x^3 y(x)^2 y'(x) + 2 x y(x)+ x^2 y'(x) + 13                   & =0                                            \\
+        9 x^3 y(x)^2 y'(x)+x^2 y'(x)                                                   & =-13-9 x^2 y(x)^3-2 x y(x)                    \\
+        y'(x)\bigl( 9 x^3+x^2\bigr)                                                    & =-13-9 x^2 y(x)^3-2 x y(x)                    \\
+        y'(x)                                                                          & =\frac{-13-9 x^2 y(x)^3-2 x y(x)}{9 x^3+x^2}.
+    \end{align*}
+    Therefore,
+    \[ y'=\frac{-13-9 x^2 y^3-2 x y}{9 x^3+x^2}. \]
+\end{Example}
+\begin{Remark}{}{}
+    We can't always find the derivative of both sides of an equation unless we have a function!
+\end{Remark}
+\begin{Example}{}{}
+    If $ x^2+y^2+1 $, we can show that $ y'=-\frac{x}{y} $, but for which $ (x,y)\in\R^2 $ is this valid for? None!
+    $ x^2+y^2+1\ne 0 $ for \underline{any} $ (x,y)\in \R^2 $, so we differentiated nothing! Another example is
+    if $ 2x=x $, we would differentiate to get $ 2=1 $ (nonsense). The issue is
+    $ 2x=x $ is only true if $ x=0 $, so we can't compute the derivative as we can't take a limit! So be careful, use this power wisely!
+\end{Example}
+\subsection*{Logarithmic Differentiation}
+We can use implicit differentiation to find the derivative of functions of the form
+\[ y=(f(x))^{g(x)},\; f(x)>0 \]
+by taking the ``$ \ln $'' of both sides.
+\begin{Example}{}{}
+    Let $ y=(\ln x)^{\sin x} $ for $ x>1 $. Find $ y' $.
+    \tcblower{}
+    \textbf{Solution}. Let $ y=y(x) $ so that $ y(x)=(\ln x)^{\sin x} $.
+    Taking the logarithm (and then the derivative with respect to $ x $) on both sides gives
+    \begin{align*}
+        \ln y(x)             & =(\sin x) \ln(\ln x)                                                      \\
+        \odv*{[\ln y(x)]}{x} & =\odv*{[(\sin x) \ln(\ln x)]}{x}                                          \\
+        \frac{y'(x)}{y(x)}   & =(\cos x)\ln(\ln x)+\sin x \frac{1}{\ln x}\frac{1}{x}                     \\
+        \implies y'(x)       & =y(x)\biggl[(\cos x)\ln(\ln x)+ \frac{\sin x}{x\ln x}\biggr]              \\
+        \implies y'(x)       & =(\ln x)^{\sin x}\biggl[(\cos x)\ln(\ln x)+ \frac{\sin x}{x\ln x}\biggr].
+    \end{align*}
+\end{Example}
+\begin{Example}{}{}
+    Let $ y=x^{\arctan x} $. Find $ y' $.
+    \tcblower{}
+    \textbf{Solution}. Let $ y=y(x) $ so that $ y(x)=x^{\arctan x} $.
+    Taking the logarithm (and then the derivative with respect to $ x $) on both sides gives
+    \begin{align*}
+        \ln y(x)             & =\arctan(x)\ln x                                                     \\
+        \odv*{[\ln y(x)]}{x} & =\odv*{[\arctan(x)\ln x]}{x}                                         \\
+        \frac{y'(x)}{y(x)}   & =\frac{1}{1+x^2}\ln x+\arctan(x) \frac{1}{x}                         \\
+        \implies y'(x)       & =y(x)\biggl[\frac{\ln x}{1+x^2}+\frac{\arctan x}{x}\biggr]           \\
+        \implies y'(x)       & =x^{\arctan x}\biggl[\frac{\ln x}{1+x^2}+\frac{\arctan x}{x}\biggr]. \\
+    \end{align*}
+\end{Example}
+\section{Local Extrema}
+\begin{Definition}{Local Maximum, Local Minimum}{}
+    Let $ A\subseteq\R $ be open, let $ f\colon A\to\R $, and let $ a\in A $. Then $ f $
+    has a \textbf{local maximum} at $ a $ if and only if
+    \[ \forall x\in A: f(x)\le f(a). \]
+    Similarly, we say $ f $ has a \textbf{local minimum} at $ a $ if and only if
+    \[ \forall x\in A: f(x)\ge f(a). \]
+\end{Definition}
+We also present an equivalent definition.
+\begin{Definition}{Local Maximum, Local Minimum}{}
+    Let $ A\subseteq\R $ be open, let $ f\colon A\to\R $, and let $ a\in A $. Then $ f $
+    has a \textbf{local maximum} at $ a $ if and only if
+    \[ \exists \delta>0:\forall x\in A: \abs{x-a}\le \delta\implies f(x)\le f(a). \]
+    Similarly, we say $ f $ has a \textbf{local minimum} at $ a $ if and only if
+    \[ \exists \delta>0:\forall x\in A: \abs{x-a}\le \delta\implies f(x)\ge f(a). \]
+\end{Definition}
+\begin{Remark}{}{}
+    Local maximum/minimum means max/min \underline{nearby} a point (i.e., in a small neighbourhood).
+    Global max/min means max/min over the entire interval in question. So, global max/mins that occur inside the interval
+    are also local max/mins.
+\end{Remark}
+How do we find local extrema? We will use the following theorem.
+\subsection{The Local Extrema Theorem}
+\begin{Theorem}{Fermat's Theorem/Local Extrema Theorem}{}
+    Let $ A\subseteq \R $ be open, let $ f\colon A\to\R $, and let $ a\in A $. Suppose that $ f $
+    is differentiable at $ a $ and that $ f $ has a local maximum or minimum value at $ a $. Then
+    $ f'(a)=0 $.
+    \tcblower{}
+    \textbf{Proof}: We suppose that $ f $ has a local maximum value at $ a $ (the case that $ f $ has a local minimum
+    value at $ a $ is similar). Choose $ \delta>0 $ so that $ \abs{x-a}\le \delta\implies f(x)\le f(a) $. For
+    $ x\in A $ with $ a<x<a+\delta $, since $ x>a $ and $ f(x)\ge a $ we have $\frac{f(x)-f(a)}{x-a}\ge 0$,
+    and so
+    \[ f'(a)=\lim\limits_{{x} \to {a^+}}\frac{f(x)-f(a)}{x-a}\ge 0 \]
+    by the Comparison Theorem. Similarly, for $ x\in A $ with $ a-\delta\le x<a $, since $ x<a $
+    and $ f(x)\ge f(a) $ we have $ \frac{f(x)-f(a)}{x-a}\le 0 $, and so
+    \[ f'(a)=\lim\limits_{{x} \to {a^-}}\frac{f(x)-f(a)}{x-a}\le 0. \]
+\end{Theorem}
+\begin{itemize}
+    \item Q\@: Is the converse true?
+    \item A\@: No! $ f(x)=x^3 $ has a critical point at $ x=0 $, but $ 0 $ is neither a local max nor a local min.
+    \item Q\@: If $ c $ is a local max/min, then is $ f'(c)=0 $?
+    \item A\@: No! $ f(x)=\abs{x} $ has a local min at $ x=0 $, but $ f'(0) $ does not exist.
+\end{itemize}
+\subsection*{Finding Global Extrema}
+We just saw that if we want to find a local extrema, we should look at points where $ f'=0 $ or $ f' $ does not exist.
+Let's give a name to points like this.
+\begin{Definition}{Critical Point}{}
+    A point $c$ in the domain of a function $f$ is called a \textbf{critical point} for $f$ if either
+    $ f'(c)=0 $ or $ f'(c) $ does not exist.
+\end{Definition}
+Now, the EVT guarantees a continuous function
+has a global max/min on a closed interval. Either these are at the endpoints or they are inside, and therefore local max/mins,
+and hence critical points!
+
+So here is the algorithm for finding the global max/min
+of a continuous function $ f(x) $ on $ [a,b] $.
+\begin{enumerate}[(i)]
+    \item Find all critical points of $ f $ in $ [a,b] $.
+    \item Evaluate $ f(a) $, $ f(b) $, and $ f(c) $, where $ c $ are all the critical points.
+    \item The largest value tells you where the global maximum is, and the smallest tells you what the global minimum is.
+\end{enumerate}
+\begin{Example}{}{}
+    Find the global maximum and minimum for $ f(x)=x^3-3x+2 $ on $ [-3,3] $.
+    \tcblower{}
+    \textbf{Solution}. $ f'(x)=3x^2-3=3(x-1)(x+1)=0 $ if $ x=\pm 1 $.
+    These critical points are both inside $ [-3,3] $. Now, we check
+    $ f(-3)=-16 $, $ f(-1)=4 $, $ f(1)=0 $, $ f(3)=20 $. Therefore, the global maximum is at $ (3,20) $ and
+    the global minimum is at $ (-3,-16) $.
+\end{Example}
+\begin{Example}{}{}
+    Find the global maximum and minimum for $ f(x)=1/x $ on $ [3,7] $.
+    \tcblower{}
+    \textbf{Solution}. $ f'(x)=-1/x^2 $ and $ f'(x) $ does not exist if $ x=0 $.
+    However, $ 0 $ is not a critical point of $ f $ since $ 0\notin [3,7] $.
+    So, $ f $ has no critical points. Now, $ f(3)=1/3 $ and $ f(7)=1/7 $, so
+    the global maximum is at $ (3,1/3) $ and the global minimum is at $ (7,1/7) $.
+\end{Example}
+We will re-visit this when we discuss curve sketching.
+
+\chapter{The Mean Value Theorem}
+\section{The Mean Value Theorem}
+\section{Applications of the Mean Value Theorem}
+\subsection{Antiderivatives}

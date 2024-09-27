@@ -73,11 +73,6 @@ Incomplete notes and graduate notes can be found [here](https://github.com/Hexti
 
 ## Year 1
 
-### Semester 1
-|                                                                 Course                                                                  | Completion | Online |
-| :-------------------------------------------------------------------------------------------------------------------------------------: | :--------: | :----: |
-| [MATH 137 *(Calculus 1 for Honours Mathematics)*](https://hextical.github.io/university-notes/year-1/semester-1/MATH%20137/math137.pdf) |  ≈4/12  |  :x:   |
-
 ### Semester 2
 
 |                                                                 Course                                                                  | Completion | Online |
@@ -85,5 +80,6 @@ Incomplete notes and graduate notes can be found [here](https://github.com/Hexti
 | [MATH 138 *(Calculus 2 for Honours Mathematics)*](https://hextical.github.io/university-notes/year-1/semester-2/MATH%20138/math138.pdf) |  Complete  |  :x:   |
 
 ### Semester 1
-
-N/A
+|                                                                 Course                                                                  | Completion | Online |
+| :-------------------------------------------------------------------------------------------------------------------------------------: | :--------: | :----: |
+| [MATH 137 *(Calculus 1 for Honours Mathematics)*](https://hextical.github.io/university-notes/year-1/semester-1/MATH%20137/math137.pdf) |  Roughly 50%  |  :x:   |

@@ -1,5 +1,5 @@
 \section{The Derivative Function}
-\begin{Definition}{}{}
+\begin{Definition}{The Derivative Function}{}
     We say that $ f $ is \textbf{differentiable} on an interval $ I $ if $ f'(a) $ exists
     for each $ a\in I $. In this case, we define the \textbf{derivative function} as
     \[ f'(x)=\lim\limits_{{h} \to {0}}\frac{f(x+h)-f(x)}{h},\; x\in I. \]
@@ -20,9 +20,8 @@ Let's look at some examples!
 \begin{Example}{}{}
     Find the equation of the tangent line to $ f(x)=x^2+3x+2 $ at $ x=2 $.
     \tcblower{}
-    \textbf{Solution}. First, what is the $ y $-coordinate?
-    \[ f(2)=2^2+3(2)+2=12, \]
-    so the point is $ (2,12) $. Next,
+    \textbf{Solution}. The tangent line passes through $ (a,f(a))=(2,f(2))=(2,12) $ since
+    $ f(2)=2^2+3(2)+2=12 $. Next,
     \begin{align*}
         f'(x)
          & =\lim\limits_{{h} \to {0}}\frac{f(x+h)-f(x)}{h}               \\
@@ -30,12 +29,10 @@ Let's look at some examples!
          & =\lim\limits_{{h} \to {0}}\frac{x^2+2xh+h^2+3x+3h-x^2-3x}{h}  \\
          & =\lim\limits_{{h} \to {0}}\frac{2xh+h^2+3h}{h}                \\
          & =\lim\limits_{{h} \to {0}}(2x+h+3)                            \\
-         & =2x+3.
+         & =2x+3,
     \end{align*}
-    At $ x=2 $, $ \odv{f}{x}_{x=2}=2(2)+3=7 $. Therefore,
-    $ y=7x-2 $. What about at $ x=3 $?
-    \[ f(3)=3^2+3(3)+2=20 \]
-    and $ f'(3)=2(3)+3=9 $, so $ y-20=9(x-3)\implies y=9x-7 $.
+    which gives $ f'(2)=2(2)=3=7 $. Therefore, the tangent line to $ f $ at $ x=2 $ is
+    \[ y=f(2)+f'(2)(x-2)=12+7(x-2)=12+7x-14=7x-2. \]
 \end{Example}
 \begin{Remark}{}{}
     \begin{itemize}
@@ -92,7 +89,7 @@ Let's look at some examples!
                   \end{aligned} $
     \end{enumerate}
 \end{Example}
-\subsection{Higher-Order Derivatives}
+\subsection*{Higher-Order Derivatives}
 \begin{Definition}{}{}
     If $ f $ is differentiable with derivative $ f' $ and $ f' $ is also
     differentiable, then we call $ \odv*{(f')}{x} $ the \textbf{second derivative} of $ f $,
@@ -112,45 +109,48 @@ Let's look at some examples!
 \end{Exercise}
 Note that using the limit definition is very inefficient (not to mention awful and ugly). So, let's develop some rules
 to help us calculate derivatives more quickly!
-\subsection{Derivatives of Elementary Functions}
+\section{Derivatives of Elementary Functions}
 Now that we know the definition of the derivative, let's work on finding
 derivatives of elementary functions to speed up the process.
 \begin{itemize}
     \item \textbf{Constants}: If $ f(x)=c $ where $ c\in\R $, then $ f'(x)=0 $.
     \item \textbf{Lines}: If $ f(x)=mx+b $ where $ m,b\in\R $, then $ f'(x)=m $.
     \item \textbf{Quadratics}: If $ f(x)=ax^2+bx+c $ where $ a,b,c\in\R $ and $ a\ne 0 $, then $ f'(x)=2ax+b $.
-    \item \textbf{Sine and Cosine}: First, we need to prove a different claim.
-
-          \underline{Claim}: $ \displaystyle \lim\limits_{{x} \to {0}}\frac{\cos(x)-1}{x}=0 $.
-          \begin{align*}
-              \lim\limits_{{x} \to {0}} \frac{\cos(x)-1}{x}\cdot \frac{\cos(x)+1}{\cos(x)+1}
-               & =\lim\limits_{{x} \to {0}}\frac{\cos^2(x)-1}{x(\cos(x)+1)}                  \\
-               & =\lim\limits_{{x} \to {0}}\frac{-\sin^2(x)}{x(\cos(x+1))}                   \\
-               & =\lim\limits_{{x} \to {0}}\frac{\sin(x)}{x}\cdot \frac{-\sin(x)}{\cos(x)+1} \\
-               & =1\cdot 0                                                                   \\
-               & =0,
-          \end{align*}
-          using the fundamental trigonometry limit. Now, we can compute $ (\sin(x))' $.
-          \begin{align*}
-              (\sin(x))'
-               & =\lim\limits_{{h} \to {0}}\frac{\sin(x+h)-\sin(x)}{h}                                       \\
-               & =\lim\limits_{{h} \to {0}}\frac{\sin(x)\cos(h)+\cos(x)\sin(h)-\sin(x)}{h}                   \\
-               & =\lim\limits_{{h} \to {0}}\frac{\sin(h)}{h}\cos(x)+\biggl(\frac{\cos(h)-1}{h}\biggr)\sin(x) \\
-               & =1\cdot \cos(x)+0\cdot \sin(x)                                                              \\
-               & =\cos(x).
-          \end{align*}
-          \begin{Exercise}{}{}
-              Show that $ (\cos(x))'=-\sin(x) $.
-          \end{Exercise}
-    \item $ e^x $: First, what is the number $ e $? There are lots of ways to define it, for example:
-          $ \lim\limits_{{x} \to {\infty}}(1+\frac{1}{x})^{x}=e $ or $ \sum_{n=0}^{\infty}\frac{1}{n!}=e $.
-          But for us, we will define $ e $ to be the unique number $ a\in\R $ such that the tangent line to $ a^x $
-          has slope $ 1 $ at $ x=0 $. That is,
-          \[ \lim\limits_{{h} \to {0}}\frac{e^h-e^0}{h}=1\implies \lim\limits_{{h} \to {0}}\frac{e^h-1}{h}=1. \]
-          So, we get $ (e^x)'=\lim\limits_{{h} \to {0}}\frac{e^{x+h}-e^x}{h}=\lim\limits_{{h} \to {0}}e^x(\frac{e^h-1}{h})=e^x $.
-          So, $ (e^x)'=e^x $.
 \end{itemize}
-\subsection{Arithmetic Rules for Differentiation}
+\subsection{The Derivative of $ \sin x $ and $ \cos x $}
+First, we need to prove a different claim:
+\[ \displaystyle \lim\limits_{{x} \to {0}}\frac{\cos x-1}{x}=0. \]
+\begin{align*}
+    \lim\limits_{{x} \to {0}} \frac{\cos x-1}{x}\cdot \frac{\cos x+1}{\cos x+1}
+     & =\lim\limits_{{x} \to {0}}\frac{\cos^2 x-1}{x(\cos x+1)}                 \\
+     & =\lim\limits_{{x} \to {0}}\frac{-\sin^2 x}{x(\cos(x+1))}                 \\
+     & =\lim\limits_{{x} \to {0}}\frac{\sin x}{x}\cdot \frac{-\sin x}{\cos x+1} \\
+     & =1\cdot 0                                                                \\
+     & =0,
+\end{align*}
+using the fundamental trigonometry limit. Now, we can compute $ (\sin x)' $.
+\begin{align*}
+    (\sin x)'
+     & =\lim\limits_{{h} \to {0}}\frac{\sin(x+h)-\sin x}{h}                                      \\
+     & =\lim\limits_{{h} \to {0}}\frac{\sin x\cos(h)+\cos x\sin(h)-\sin x}{h}                    \\
+     & =\lim\limits_{{h} \to {0}}\frac{\sin(h)}{h}\cos x+\biggl(\frac{\cos(h)-1}{h}\biggr)\sin x \\
+     & =1\cdot \cos x+0\cdot \sin x                                                              \\
+     & =\cos x.
+\end{align*}
+\begin{Exercise}{}{}
+    Show that $ (\cos x)'=-\sin x $.
+\end{Exercise}
+\subsection{The Derivative of $ e^x $}
+First, what is the number $ e $? There are lots of ways to define it, for example:
+$ \lim\limits_{{x} \to {\infty}}(1+\frac{1}{x})^{x}=e $ or $ \sum_{n=0}^{\infty}\frac{1}{n!}=e $.
+But for us, we will define $ e $ to be the unique number $ a\in\R $ such that the tangent line to $ a^x $
+has slope $ 1 $ at $ x=0 $. That is,
+\[ \lim\limits_{{h} \to {0}}\frac{e^h-e^0}{h}=1\implies \lim\limits_{{h} \to {0}}\frac{e^h-1}{h}=1. \]
+So, we get $ (e^x)'=\lim\limits_{{h} \to {0}}\frac{e^{x+h}-e^x}{h}=\lim\limits_{{h} \to {0}}e^x(\frac{e^h-1}{h})=e^x $.
+So, $ (e^x)'=e^x $.
+
+\setcounter{section}{6}
+\section{Arithmetic Rules for Differentiation}
 Now that we know how to find the derivatives of certain basic functions,
 let us look at some rules that tell us how to differentiate combinations
 of functions.
@@ -207,22 +207,23 @@ For $ \alpha\in\mathbf{Q} $, it is possible with more tools (chain rule and inve
 $ \alpha\in\R $, we would need more tools, and it outside the scope of this course. So, we omit the proof. Let's look at some examples!
 \begin{Example}{}{}
     \begin{enumerate}[(1)]
-        \item $ f(x)=x^2\sin(x) $.
-              \[ f'(x)=(x^2)'\sin(x)+x^2(\sin(x))'=2x\sin(x)+x^2\cos(x). \]
+        \item $ f(x)=x^2\sin x $.
+              \[ f'(x)=(x^2)'\sin x+x^2(\sin x)'=2x\sin x+x^2\cos x. \]
         \item $ f(x)=\frac{x^4-1}{x-7} $.
               \[ f'(x)=\frac{(x-7)(x^4+1)'-(x^4+1)(x-7)'}{(x-7)^2}=\frac{(x-7)(4x^3)-(x^4+1)(1)}{(x-7)^2}. \]
-        \item $ f(x)=\sec(x)=\frac{1}{\cos(x)} $.
-              \[ f'(x)=\frac{-(\cos(x))'}{\cos^2(x)}=\frac{\sin(x)}{\cos^2(x)}=\frac{\sin(x)}{\cos(x)}\frac{1}{\cos(x)}=\tan(x)\sec(x). \]
-        \item $ f(x)=e^x\cos(x) $.
-              \[ f'(x)=e^x\cos(x)-e^x\sin(x). \]
+        \item $ f(x)=\sec x=\frac{1}{\cos x} $.
+              \[ f'(x)=\frac{-(\cos x)'}{\cos^2 x}=\frac{\sin x}{\cos^2 x}=\frac{\sin x}{\cos x}\frac{1}{\cos x}=\tan x\sec x. \]
+        \item $ f(x)=e^x\cos x $.
+              \[ f'(x)=e^x\cos x-e^x\sin x. \]
         \item $ f(x)=3x^5 $.
               \[ f'(x)=15x^4,\; f''(x)=60x^3,\; f^{(3)}(x)=180x^2,\; f^{(4)}(x)=360x,\; f^{(5)}(x)=360,\; f^{(\ge 6)}(x)=0. \]
     \end{enumerate}
 \end{Example}
-\subsection{The Chain Rule}
-\begin{Theorem}{}{}
-    Assume that $ y=f(x) $ is differentiable at $ x=a $ and $ z=g(y) $ is differentiable at $ y=f(a) $. Then $ h(x)=g\circ f(x)=g(f(x)) $ is differentiable at $ x=a $
-    and
+\section{The Chain Rule}
+\begin{Theorem}{Chain Rule}{}
+    Let $ A,B\subseteq \R $ be open, let $ f\colon A\to \R $, let $ g\colon B\to \R $, and let
+    $ h=g\circ f\colon C\to \R $, where $ C=A\cap f^{-1}(B) $. Let $ a\in C $ and let $ b=f(a)\in B $. Suppose
+    that $ f $ is differentiable at $ a $ and $ g $ is differentiable at $ b $. Then $ h $ is differentiable at $ a $ with
     \[ h'(a)=g'(f(a))f'(a). \]
     In Leibniz notation, if $ z=g(y) $ and $ y=f(x) $, then
     \[ \odv{z}{x}=\odv{z}{y}\odv{y}{x}. \]
@@ -251,36 +252,36 @@ $ \alpha\in\R $, we would need more tools, and it outside the scope of this cour
 Also, with the chain rule and the derivative of $ e^x $, we can get the derivative of $ a^x $ for $ a>0 $.
 \[ a^x=e^{x\ln(a)}\implies (a^x)'=(e^{x\ln(a)})'=e^{x\ln(a)}(x\ln(a))'=a^x\ln(a).  \]
 \begin{Example}{}{}
-    $ f(x)=2^{3x}+5^{\cos(x)} $. $ f'(x)=2^{3x}\ln(2)(3)+5^{\cos(x)}\ln(5)(-\sin(x)) $.
+    $ f(x)=2^{3x}+5^{\cos x} $. $ f'(x)=2^{3x}\ln(2)(3)+5^{\cos x}\ln(5)(-\sin x) $.
 \end{Example}
-\subsection{Derivatives of Other Trig. Functions}
+\section{Derivatives of Other Trigonometric Functions}
 So far, we've seen:
 \begin{align*}
-    (\sin(x))' & =\cos(x)         \\
-    (\cos(x))' & =-\sin(x)        \\
-    (\sec(x))' & =\sec(x)\tan(x).
+    (\sin x)' & =\cos x        \\
+    (\cos x)' & =-\sin x       \\
+    (\sec x)' & =\sec x\tan x.
 \end{align*}
 \begin{Example}{}{}
     \begin{align*}
-        (\tan(x))'
-         & =\biggl(\frac{\sin(x)}{\cos(x)}\biggr)'
-         & =\frac{\cos(x)(\sin(x))'-\sin(x)(\cos(x))'}{\cos^2(x)} \\
-         & =\frac{\cos^2(x)+\sin^2(x)}{\cos^2(x)}                 \\
-         & =\frac{1}{\cos^2(x)}                                   \\
-         & =\sec^2(x).
+        (\tan x)'
+         & =\biggl(\frac{\sin x}{\cos x}\biggr)'
+         & =\frac{\cos x(\sin x)'-\sin x(\cos x)'}{\cos^2 x} \\
+         & =\frac{\cos^2 x+\sin^2 x}{\cos^2 x}               \\
+         & =\frac{1}{\cos^2 x}                               \\
+         & =\sec^2 x .
     \end{align*}
 \end{Example}
 \begin{Exercise}{}{}
-    Prove that $ (\cot(x))'=-\csc^2(x) $ and $ (\csc(x))'=-\csc(x)\cot(x) $.
+    Prove that $ (\cot x)'=-\csc^2 x $ and $ (\csc x)'=-\csc x\cot x $.
 \end{Exercise}
 Recap:
 \[ \begin{array}{cc}
-        f(x)    & f'(x)           \\
+        f(x)   & f'(x)         \\
         \midrule
-        \sin(x) & \cos(x)         \\
-        \cos(x) & -\sin(x)        \\
-        \tan(x) & \sec^2(x)       \\
-        \cot(x) & -\csc^2(x)      \\
-        \sec(x) & \sec(x)\tan(x)  \\
-        \csc(x) & -\csc(x)\cot(x) \\
+        \sin x & \cos x        \\
+        \cos x & -\sin x       \\
+        \tan x & \sec^2 x      \\
+        \cot x & -\csc^2 x     \\
+        \sec x & \sec x\tan x  \\
+        \csc x & -\csc x\cot x \\
     \end{array} \]

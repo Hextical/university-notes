@@ -1,0 +1,220 @@
+\setcounter{section}{4}
+\section{Tangent Lines and Linear Approximation} % 3.5
+The main idea of this section is: general functions are hard to understand, while
+lines are easy to understand. So, let's develop a way to approximate a function
+with a line!
+
+More precisely, for a differentiable function $ f $, we want to find a linear function
+$ h(x) $ so that $ f(a)=h(a) $, $ f'(a)=h'(a) $, and if $ x $ is close to $ a $,
+then $ f(x) $ is close to $ h(x) $. How do we find $ h(x) $? Well,
+if $ f $ is differentiable, then
+\[ \lim\limits_{{x} \to {a}}\frac{f(x)-f(a)}{x-a}=f'(a). \]
+So, if $ x $ is close to $ a $, then
+\[ \frac{f(x)-f(a)}{x-a}\approx f'(a). \]
+Solving for $ f(x) $, we get
+\[ f(x)\approx f(a)+f'(a)(x-a). \]
+Hence, let's define
+\[ l(x)=f(a)+f'(a)(x-a). \]
+This is a good choice for $ h(x) $. Note that $ l(x) $ is the tangent
+line to $ f(x) $ at $ (a,f(a)) $, which leads us to the following definition.
+\begin{Definition}{Linearization, Tangent Line}{}
+    When $ f\colon A\to \R $ is differentiable at $ x=a $ with derivative $ f'(a) $, the function
+    \[ l(x)=f(a)+f'(a)(x-a) \]
+    is called the \textbf{linearization} (\textbf{linear approximation}) of $ f $ at $ x=a $. Note that the graph $ y=l(x) $
+    of the linearization is the line through the point $ (a,f(a)) $ with slope $ f'(a) $.
+    This line is called the \textbf{tangent line} to the graph $ y=f(x) $ at the point $ (a,f(a)) $.
+\end{Definition}
+\begin{Example}{}{}
+    For $ f(x)=\sqrt{x} $, find the linearization at $ x=4 $. Use this to approximate $ \sqrt{3.98} $ and $ \sqrt{4.05} $.
+    \tcblower{}
+    \textbf{Solution}.
+    $ f(4)=2 $, $ f'(x)=\frac{1}{2\sqrt{x}} $, so $ f'(4)=\frac{1}{4} $. Hence, the linearization of $ f $ at $ x=4 $ is
+    \[ l(x)=2+\frac{1}{4}(x-4)=\frac{x}{4}+1. \]
+    Then, $ \sqrt{3.98}\approx l(3.98)=1+3.98/4=1.995 $ and $ \sqrt{4.05}\approx l(4.05)=1+4.05/4=2.0125 $.
+    These values are fairly close to the ``exact'' values: $ \sqrt{3.98}= 1.994993734326\ldots $ and
+    $ \sqrt{4.05}= 2.0124611797498106\ldots $.
+\end{Example}
+Q\@: From the graph of $ f(x) $, how can we tell if these are over- or under-estimates? They are overestimates since the line is above the graph (TODO image).
+\begin{Remark}{}{}
+    Note that this is only a good approximation \underline{nearby} $ x=4 $. If we try to approximate $ \sqrt{9} $,
+    we get $ \sqrt{9}=l(9)=1+9/4=3.25 $. The exact value is $ \sqrt{9}=3 $ (obviously).
+\end{Remark}
+\subsection{Error in Linear Approximation}
+Without an upper bound on the error, an approximation is useless! Note that
+\[ \abs{\text{error}}=\abs{f(x)-l(x)}, \]
+i.e., the distance from $ f(x) $ to $ l(x) $.
+\begin{itemize}
+    \item Q\@: What factors affect the size of the error?
+    \item A\@: First, the farther we go from $ x=a $, the larger the error gets!
+          Also, how \underline{curved} the graph is also affects it. Of course, if we don't fully understand $ f(x) $,
+          we can't calculate the error exactly, but we can approximate it! How do we quantify
+          ``more curved?'' Well, we can say the slopes of the tangent lines are changing faster on the more curved graph.
+
+          Hence, the rate of change of $ f'(x) $ is measured by $ f''(x) $, so $ \abs{f''(x)} $ being larger means a larger error.
+\end{itemize}
+\begin{Theorem}{The Error in Linear Approximation}{}
+    Assume $ f $ is such that $ \abs{f''(x)}\le M $ for each $ x $ in an interval $ I $ containing a point $ a $. Then
+    \[ \abs[\big]{f(x)-l(x)}\le \frac{M}{2}(x-a)^2 \]
+    for each $ x\in I $.
+    \tcblower{}
+    This is a special case of Taylor's Inequality which we will discuss later.
+\end{Theorem}
+\begin{Example}{}{}
+    Find an upper bound on the error using $ l(x) $ at $ x=4 $ to approximate $ \sqrt{x} $ on $ [1,6] $.
+    \tcblower{}
+    \textbf{Solution}. We know that $ f'(x)=\frac{1}{2\sqrt{x}} $, so $ f''(x)=-\frac{1}{4x^{3/2}} $. So, if
+    $ x\in[1,6] $, we have
+    \[ \abs{f''(x)}= \abs*{-\frac{1}{4x^{3/2}}}\le \frac{1}{4}=M. \]
+    Hence,
+    \[ \abs{\text{error}}=\abs{l(x)-f(x)}\le \frac{M}{2}(x-4)^2\le \frac{1}{8}(1-4)^2=\frac{9}{8}, \]
+    where we note that the maximum of $ \abs{x-4} $ is $ 3 $, so we let $ x=1 $ in the final inequality.
+\end{Example}
+\subsection{Applications of Linear Approximation}
+We will explore one application: estimating change. (Qualitative analysis is another that we will discuss later).
+
+Suppose we are looking at $ f(x) $ near $ x=a $. We want to know how much it could change if we move to a point
+$ x_1 $ near $ x=a $. That is, we want to know $ \Delta y=f(x_1)-f(a) $ if we change the input by $ \Delta x=x_1-a $.
+Then, using $ f(x)\approx l(x) $, we get
+\[ \Delta y=f(x_1)-f(a)\approx l(x_1)-f(a)=f'(a)(x_1-a)=f'(a)\Delta x. \]
+So, $ \Delta y=f'(a)\Delta x $.
+\begin{Example}{}{}
+    Suppose you are inflating a giant spherical balloon and it currently has a radius of $20$cm. You exhale once and it goes up to $20.01$m.
+    Then, the change in volume would be
+    \[ \Delta V=V'(20)\Delta r, \]
+    where $ V(r)=\frac{4}{3}\pi r^3 $. So, $ V'(r)=4\pi r^2 $ and $ V'(20)=1600\pi $. Therefore,
+    \[ \Delta V=1600\pi(0.01)=16\pi, \]
+    so the volume would increase by approximately $ 16\pi\text{m}^3 $.
+\end{Example}
+\begin{Remark}{}{}
+    For a qualitative analysis, we will explore it more when we discuss Taylor polynomials.
+\end{Remark}
+\section{Newton's Method}
+We have a method for finding zeros of a function already: The Bisection Algorithm. Another way is
+using \underline{Newton's Method}, which converges much faster but has its own issues as we will see!
+
+Idea: to solve $ f(x)=0 $, start with an initial guess, call it $ x_1 $. To get the next $ x $-value,
+find the intersection of the tangent line $ l(x) $ at $ x=x_1 $ and the $ x $-axis. The numbers
+$ x_1,x_2,x_3,\ldots $ converge to a root (hopefully)! Let's find a formula for $ x_2,x_3,\ldots $.
+
+Given $ x_1 $, the tangent line is
+\[ l(x)=f(x_1)+f'(x_1)(x-x_1). \]
+Find the intersection with the $ x $-axis:
+\[ 0=f(x_1)+f'(x_1)(x-x_1)\implies x=x_1-\frac{f(x_1)}{f'(x_1)}. \]
+Repeating this, we get the \textbf{Newton's Iterative Procedure}:
+\[ x_{n+1}=x_n-\frac{f(x_n)}{f'(x_n)}. \]
+\begin{Example}{}{}
+    Find the positive root of $ 3x^4+15x^3-125x-1500=0 $ with error at most $ 10^{-5} $. Use $ x_1=4 $.
+    \tcblower{}
+    \textbf{Solution}. We can check that $ f(4)<0 $ and $ f(5)>0 $, so there is a root between $ x=4 $ and $ x=5 $.
+    \[ x_{n+1}=x_n-\frac{f(x_n)}{f'(x_n)}=x_n-\frac{3x_n^4+15x_n^3-125x_n-1500}{12x_n^3+45x_n^2-125}. \]
+    \begin{align*}
+        x_1 & =4,                                                                      \\
+        x_2 & =4-\frac{3(4)^4+15(4)^3-125(4)-1500}{12(4)^3+45(4)^2-125}\approx 4.19956 \\
+        x_3 & \approx 4.187268                                                         \\
+        x_4 & \approx 4.1872187                                                        \\
+        x_5 & \approx 4.1872187
+    \end{align*}
+    To 5 decimal places, this is $ 4.18722 $. Check that $ f(4.187621)<0 $ and $ f(4.18723)>0 $, so IVT
+    says there is a root between!
+\end{Example}
+\subsection*{Some Problems with Newton's Method}
+This method only works on differentiable functions, but more importantly it only works
+if $ x_1 $ is chosen ``close enough'' to a root! What is ``close enough?'' It depends!
+Sometimes any $ x_1 $ works, sometimes most don't.
+
+\begin{Example}{}{}
+    Consider $ f(x)=x^3-3x+1 $, pick $ x_1=1 $. Then
+    \[ x_2=x_1-\frac{x_1^3-3x_1+1}{3x_1^2-3}=1-\frac{1-3+1}{0}? \]
+    Actually, at $ x=1 $, $ f $ has a \underline{horizontal tangent} that never intersects the
+    $ x $-axis, so we can't find $ x_2 $. Also, if we pick $ x_1=2 $, we will find a different root
+    than if we pick $ x_1=-2 $. So, pick a good starting point! A bad choice could make Newton's method diverge.
+\end{Example}
+\setcounter{section}{9}
+\section{Derivatives of Inverse Functions} % 3.10
+Suppose we want to find the derivative of an inverse function, how could we proceed? Let's
+start with the tangent line to $ f(x) $ at $ x=a $ and assume $ f $ is invertible.
+\[ l(x)=f(a)+f'(a)(x-a). \]
+What would the tangent line to $ f^{-1}(x) $ be at $ x=f(a) $? $ (l)^{-1}(x) $.
+
+\begin{Exercise}{}{}
+    If $ L_a^f(x)=f(a)+f'(a)(x-a) $, show that
+    \[ (L_a^f(x))^{-1}=a+\frac{1}{f'(a)}(x-f(a)). \]
+\end{Exercise}
+So, if $ f(a)=b $, then $ a=f^{-1}(b) $, and the tangent line to $ f^{-1}(x) $ at $ x=b $ is
+\[ L_b^{f^{-1}}(x)=f^{-1}(b)+\frac{1}{f'(a)}(x-b)=f^{-1}(b)+\frac{1}{f'(f^{-1}(b))}(x-b). \]
+But
+\[ L_b^{f^{-1}}(x)=f^{-1}(b)+(f^{-1})'(b)(x-b)\implies (f^{-1})'=\frac{1}{f'(f^{-1}(b))}. \]
+This leads us to the following theorem.
+
+\begin{Theorem}{Inverse Function Theorem (IFT)}{}
+    Let $ I $ be an interval in $ \R $, let $ f\colon I\to \R $, and let $ a $ be a point in $ I $ which is not an endpoint.
+    If $ f $ is bijective and continuous, and $ f $ is differentiable at $ a $ with $ f'(a)\ne 0 $, then its inverse $ f^{-1} $
+    is differentiable at $ b=f(a) $ with
+    \[ (f^{-1})'(b)=\frac{1}{f'(a)}=\frac{1}{f'(f^{-1}(b))}. \]
+    Moreover, $ L_a^f $ is invertible and $ (L_a^f)^{-1}=L_{f(a)}^{f^{-1}}=L_b^{f^{-1}} $.
+\end{Theorem}
+\begin{Example}{}{}
+    Let $ f(x)=x^3 $ so that $ f^{-1}(x)=x^{1/3} $. Find $ (f^{-1})'(3) $.
+    \tcblower{}
+    \textbf{Solution 1}. Direct computation yields
+    \[ (f^{-1})'(x)=\frac{1}{x}x^{-2/3}\implies (f^{-1})'(3)=\frac{1}{3}3^{2/3}=\frac{1}{3(3^{2/3})}. \]
+    \textbf{Solution 2}. Use the IFT\@:
+    \[ (f^{-1})'(3)=\frac{1}{f'(f^{-1}(3))}. \]
+    Note that $ f'(x)=3x^2 $ and $ f^{-1}(3)=3^{1/3} $, so
+    \[ (f^{-1})'=\frac{1}{f'(f^{-3}(3))}=\frac{1}{3(3^{1/3})^2}=\frac{1}{3(3^{2/3})}. \]
+\end{Example}
+This example is somewhat silly since we could compute $ (f^{-1})' $ directly. An important application of the IFT
+is that it allows us to find derivatives of inverse functions if we don't know them already!
+\begin{Example}{}{}
+    Find $ (\ln x)' $.
+    \tcblower{}
+    \textbf{Solution}. Let $ f(x)=e^x $, so that $ f^{-1}(x)=\ln x $ for $ x>0 $. So,
+    \[ (f^{-1})'(x)=\frac{1}{f'(f^{-1}(x))}=\frac{1}{e^{\ln x}}=\frac{1}{x} \]
+    Therefore,
+    \[ (\ln x)'=\frac{1}{x}. \]
+\end{Example}
+\begin{Remark}{}{}
+    We can prove IFT by using the chain rule: Suppose $ f $ and $ f^{-1} $ are differentiable, we get
+    \[ f(f^{-1}(x))=x. \]
+    Differentiate both sides with chain rule:
+    \[ f'(f^{-1}(x))(f^{-1})'(x)=1\implies (f^{-1})'(x)=\frac{1}{f'(f^{-1}(x))}. \]
+\end{Remark}
+\section{Derivatives of Inverse Trigonometric Functions} %3.11
+Let's use the IFT (or just the chain rule) to find $ (\arcsin x)' $. We know $ \sin(\arcsin x)=x $ for $ x\in[-1,1] $.
+Differentiating, we get
+\[ (\cos(\arcsin x))(\arcsin x)'=1\implies (\arcsin x)'=\frac{1}{\cos(\arcsin x)}. \]
+Can we simplify $ \cos(\arcsin x) $? Yes! Let $ \theta=\arcsin x $, then $ \sin \theta=x $.
+Visualizing a triangle, we get the hypotenuse as $ 1 $, height as $ x $ so that the base $ \sqrt{1-x^2} $. Hence,
+$ \cos \theta=\sqrt{1-x^2} $. Therefore,
+\[ (\arcsin x)'=\frac{1}{\sqrt{1-x^2}}. \]
+\begin{itemize}
+    \item Q\@: Wait a minute, how do we know $ \arcsin x $ is differentiable?
+    \item A\@: IFT says so! Since $ \sin x $ is differentiable for $ x\in(-1,1) $, $ \arcsin x $ is too.
+\end{itemize}
+\begin{Exercise}{}{}
+    Prove that
+    \begin{itemize}
+        \item $ \displaystyle (\arccos x)'=\frac{-1}{\sqrt{1-x^2}} $, and
+        \item $ \displaystyle (\arctan x)=\frac{1}{1+x^2} $.
+    \end{itemize}
+\end{Exercise}
+\begin{Example}{}{}
+    Find $ f'(x) $, where
+    \begin{enumerate}
+        \item $ f(x)=\arctan(e^{\sin x}) $,
+        \item $ f(x)=\arcsin x+\arccos x $, and
+        \item $ f(x)=\ln(\arctan x) $.
+    \end{enumerate}
+    \tcblower{}
+    \textbf{Solution}.
+    \begin{enumerate}
+        \item $ \begin{aligned}[t]
+                      f'(x)
+                       & =\frac{1}{1+(e^{\sin x})^2}(e^{\sin x})'    \\
+                       & =\frac{1}{1+e^{2\sin x}}e^{\sin x}(\sin x)' \\
+                       & =\frac{e^{\sin x}\cos x}{1+e^{2\sin x}}.
+                  \end{aligned} $
+        \item $ f'(x)=\frac{1}{\sqrt{1-x^2}}-\frac{1}{\sqrt{1-x^2}}=0 $.
+        \item $ f'(x)=\frac{1}{\arctan x}\frac{1}{1+x^2}=\frac{1}{(\arctan x)(1+x^2)} $.
+    \end{enumerate}
+\end{Example}
