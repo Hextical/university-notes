@@ -1,0 +1,301 @@
+\section{The Fundamental Trigonometric Limit}
+We have already seen that $ \lim\limits_{{x} \to {0}}\frac{\sin x}{x}=1 $.
+The proof relied on a geometric argument that $ x\le \tan x $ for $ x\in(0,\pi/2) $.
+Let's look at another argument that uses areas! Proof that $ \lim\limits_{{x} \to {0}}\frac{\sin x}{x}=1 $:
+\[ \text{Area of small triangle}=\frac{1}{2}\sin(x)\cos(x). \]
+\[ \text{Area of pie piece}=\frac{x}{2\pi}\pi=\frac{x}{2}. \]
+\[ \text{Area of large triangle}=\frac{1}{2}\tan x. \]
+So,
+\[ \frac{1}{2}\sin(x)\cos(x)\le \frac{x}{2}\le \frac{\tan x}{2}\implies \cos x\le \frac{x}{\sin x}\le \frac{1}{\cos x}. \]
+So,
+\[ \frac{1}{\cos x}\ge \frac{\sin x}{x}\ge \cos x\; \text{for }x\in(0,\pi/2). \]
+\[ \lim\limits_{{x} \to {0}}=1=\lim\limits_{{x} \to {0}}\cos x, \]
+so by the Squeeze Theorem,
+\[ \lim\limits_{{x} \to {0^+}}\frac{\sin x}{x}=1. \]
+Similar arguments can show $ \lim\limits_{{x} \to {0^-}}\frac{\sin x}{x}=1 $,
+so $ \lim\limits_{{x} \to {0}}\frac{\sin x}{x}=1 $.
+
+Now that we have this limit, we can solve similar limits!
+\begin{Example}{}{}
+    \begin{enumerate}[(1)]
+        \item $\displaystyle \lim\limits_{{x} \to {0}}\frac{\sin(5x)}{\sin(2x)}
+                  =\lim\limits_{{x} \to {0}}\frac{\sin(5x)}{5x}\frac{2x}{\sin(2x)}\frac{5x}{2x}=(1)(1)(5/2)=5/2 $,
+              noting that $ \lim\limits_{{x} \to {0}}\frac{\sin(ax)}{ax}=1 $ for $ a\in\R $.
+        \item $ \displaystyle \lim\limits_{{x} \to {0}}\frac{\tan(3x)}{\sin(x)}
+                  =\lim\limits_{{x} \to {0}}\frac{x}{\sin x}\frac{\sin(3x)}{3x}\frac{1}{\cos(3x)}\frac{3x}{x}=(1)(1)(1)(3)=3 $.
+    \end{enumerate}
+\end{Example}
+\begin{Exercise}{}{}
+    Let $ a,b\in\R\setminus \Set{0} $. Prove that
+    \begin{enumerate}[(i)]
+        \item $ \displaystyle \lim\limits_{{x} \to {0}}\frac{\sin(ax)}{\sin(bx)}=\frac{a}{b} $,
+        \item $ \displaystyle \lim\limits_{{x} \to {0}}\frac{\tan(ax)}{\tan(bx)}=\frac{a}{b} $, and
+        \item $ \displaystyle \lim\limits_{{x} \to {0}}\frac{\tan(ax)}{\sin(bx)}=\frac{a}{b} $.
+    \end{enumerate}
+\end{Exercise}
+\section{Limits at infinity and Asymptotes}
+We want to extend the concept of limit in two ways:
+\begin{enumerate}[(1)]
+    \item Limits at infinity ($ x\to\pm\infty $) $ \to $ horizontal asymptotes,
+    \item Infinite limits ($ f(x)\to\pm\infty $) $ \to $ vertical asymptotes.
+\end{enumerate}
+\underline{Recall}: When we say a limit $ =\infty $, we mean it does not exist and gets infinitely large.
+\subsection{Asymptotes and Limits at Infinity}
+Let's mimic the definition of sequence limit to define a limit as $ x\pm\infty $.
+\begin{Definition}{}{}
+    \[ \lim\limits_{{x} \to {\infty}}f(x)=L\iff
+        \forall \varepsilon\in\R_{>0}:\exists N\in\R:\forall x\in A:x>N\implies \abs{f(x)-L}<\varepsilon. \]
+    \[ \lim\limits_{{x} \to {-\infty}}f(x)=L\iff
+        \forall \varepsilon\in\R_{>0}:\exists N\in\R:\forall x\in A:x<N\implies \abs{f(x)-L}<\varepsilon \]
+\end{Definition}
+\begin{Example}{}{}
+    $\lim\limits_{{x} \to {\infty}}e^{-x}=0$ we can see that $ e^{-x} $ approaches $ 0 $
+    as $ x $ gets large.
+\end{Example}
+We can see that $ \lim\limits_{{x} \to {\infty}}f(x)=L $ means the graph of $ f(x) $ approaches
+the line $ y=L $ as $ x $ gets large. We have a name for such lines.
+\begin{Definition}{}{}
+    The horizontal line $ y=L $ is a \textbf{horizontal asymptote} of the graph of a real function $ f $
+    if and only if either of the following limits exist:
+    \begin{enumerate}[(i)]
+        \item $ \lim\limits_{{x} \to {\infty}}f(x)=L_1 $,
+        \item $ \lim\limits_{{x} \to {-\infty}}f(x)=L_2 $.
+    \end{enumerate}
+\end{Definition}
+This will be useful when we explore curve sketching later in the course. We can also define what it means for $ f(x) $
+to diverge to $ \pm \infty $ as $ x\to\pm\infty $.
+\begin{Definition}{}{}
+    \[ \lim\limits_{{x} \to {\infty}}f(x)=\infty\iff
+        \forall M\in\R_{>0}:\exists N\in\R:\forall x\in A:x>N\implies f(x)>M. \]
+    Similarly, we can define $ \lim\limits_{{x} \to {\infty}}f(x)=-\infty $ and $ \lim\limits_{{x} \to {-\infty}}f(x)=\pm \infty $.
+\end{Definition}
+The Squeeze Theorem also still holds in these cases!
+\begin{Theorem}{}{}
+    If $ g(x)\le f(x)\le h(x) $ for all $ x\ge N $ for some $ N\in\R $, and if $ \lim\limits_{{x} \to {\infty}}g(x)=L=\lim\limits_{{x} \to {\infty}}h(x) $,
+    then $ \lim\limits_{{x} \to {\infty}}f(x)=L $ as well. We can also let $ x\to-\infty $ here also!
+\end{Theorem}
+Let's do some examples!
+\begin{Example}{}{}
+    \begin{enumerate}[(1)]
+        \item $ \displaystyle \lim\limits_{{x} \to {\infty}}\frac{2x^2-3x+7}{x^2-4x+5}=\lim\limits_{{x} \to {\infty}}\frac{x^2(2-3/x+7/x^2)}{x^2(1-4/x+5/x^2)}=\frac{2}{1}=2 $.
+        \item $ \displaystyle \lim\limits_{{x} \to {-\infty}}\frac{x^2+2x+1}{x-7}=\lim\limits_{{x} \to {-\infty}}\frac{x+2+1/x}{1-7/x}=-\infty $.
+              In general, for $ f(x)=\frac{a_n x^n+\cdots+a_1 x+a_0}{b_m x^m+\cdots+b_1x+b_0} $,
+              \[ \lim\limits_{{x} \to {\pm\infty}}f(x)=\begin{cases}
+                      \frac{a_n}{b_m}, & n=m, \\
+                      0,               & m>n, \\
+                      \text{DNE},      & m<n.
+                  \end{cases} \]
+        \item $ \displaystyle \lim\limits_{{x} \to {\infty}}\frac{\sin(3x^2+7)}{x} $. Note that
+              \[ -1\le \sin(3x^2+7)\le 1\implies -\frac{1}{x}\le \frac{\sin(3x^2+7)}{x}\le \frac{1}{x}\text{ for $x>0$}. \]
+              Taking the limit of both sides as $ x\to\infty $ yields $ \lim\limits_{{x} \to {\infty}}\frac{\sin(3x^2+7)}{x}=0 $
+              by the Squeeze Theorem.
+    \end{enumerate}
+\end{Example}
+\begin{Exercise}{}{}
+    \[ \lim\limits_{{x} \to {-\infty}}\frac{\cos(3x+2)+2}{x^3+1}. \]
+\end{Exercise}
+\subsection{The Fundamental Log Limit}
+Our goal here is to use the Squeeze Theorem to prove that $ \lim\limits_{{x} \to {\infty}}\frac{\ln x}{x}=0 $. First,
+if we look at the graphs of $ y=x $ and $ y=\ln x $, we see that $ \ln x<x $ for all $ x>0 $. So,
+\[ \frac{\ln x}{x}\le 1\text{ for $x>0$}. \]
+Since $ x\to\infty $, we may assume that $ x\ge 1 $. Then $ \ln x\ge 0 $, so we get
+\[ \frac{\ln x}{x}\ge 0. \]
+For the upper bound, there's a trick!
+\[ 0\le \frac{\ln x}{x}=\frac{\ln(\sqrt{x}^2)}{\sqrt{x}\sqrt{x}}=\frac{2}{\sqrt{x}}\frac{\ln(\sqrt{x})}{\sqrt{x}}\le \frac{2}{\sqrt{x}}\text{ since }\frac{\ln(\sqrt{x})}{\sqrt{x}}\le 1. \]
+So,
+\[ 0\le \frac{\ln x}{x}\le \frac{2}{\sqrt{x}} \]
+and applying the Squeeze Theorem yields the result. This tells us that $ x $ grows \underline{much faster} than $ \ln x $. What about other powers of $ x $? Let's see!
+\begin{Example}{}{}
+    \[ \lim\limits_{{x} \to {\infty}}\frac{\ln x}{x^{1/50}}=\lim\limits_{{x} \to {\infty}}\frac{50\ln(x^{1/50})}{x^{1/50}}=(50)(0)=0. \]
+    In fact,
+    \[ \lim\limits_{{x} \to {\infty}}\frac{\ln x}{x^p}=0\text{ for any }p>0. \]
+\end{Example}
+\begin{Example}{}{}
+    \[ \lim\limits_{{x} \to {\infty}}\frac{\ln (x^p)}{x}=\lim\limits_{{x} \to {\infty}}\frac{p \ln x}{x}=(p)(0)=0. \]
+    \[ \lim\limits_{{x} \to {\infty}}\frac{\ln (x^{100})}{\sqrt{x}}=\lim\limits_{{x} \to {\infty}}\frac{100\ln x}{\sqrt{x}}=(100)(0)=0. \]
+\end{Example}
+What about exponential functions?
+\begin{Example}{}{}
+    Let $ p\in\R_{>0} $. Let $ u=e^x $ so that $ x=\ln u $ and
+    \[ \lim\limits_{{x} \to {\infty}}\frac{x^p}{e^x}=\lim\limits_{{u} \to {\infty}}\frac{(\ln u)^p}{u}=
+        \lim\limits_{{u} \to {\infty}}\biggl(\frac{\ln u}{u^{1/p}}\biggr)^{\!p}=0^p=0. \]
+\end{Example}
+We can also get results when $ x\to 0^+ $.
+\begin{Example}{}{}
+    Let $ u=1/x $ or $ x=1/u $, so $ x\to 0^+\implies u\to \infty $ and
+    \[ \lim\limits_{{x} \to {0^+}}x^p\ln x=\lim\limits_{{u} \to {\infty}}\frac{\ln(1/u)}{u^p}
+        =\lim\limits_{{u} \to {\infty}}\frac{-\ln u}{u^p}=0. \]
+\end{Example}
+This shows that $ x^p\to 0 $ faster than $ \ln x\to-\infty $. To summarize, $ \ln x $ grows an \underline{order of magnitude}
+slower than $ x^p $, and $ x^p $ grows an order of magnitude slower than $ p^x $. For $ p>0 $, as $ x\to\infty $, we can write
+\[ (\ln x)^p\ll x^p\ll p^x\ll x^x, \]
+where $ \ll $ is the \textbf{much less than} symbol.
+\subsection{Vertical Asymptotes and Infinite Limits}
+If we examine a function near a point, one or both sided limits could go to $ \pm\infty $.
+\begin{Definition}{}{}
+    \[ \lim\limits_{{x} \to {a^+}}f(x)=\infty\iff
+        \forall M\in\R_{>0}:\exists \delta\in\R_{>0}:\forall x\in A: a<x<a+\delta\implies f(x)>M. \]
+    \[ \lim\limits_{{x} \to {b^-}}f(x)=\infty\iff
+        \forall M\in\R_{>0}:\exists \delta\in\R_{>0}:\forall x\in A: b-\delta<x<b\implies f(x)>M. \]
+    Finally, we say $ \lim\limits_{{x} \to {a}}f(x)=\infty $ if
+    $ \lim\limits_{{x} \to {a^+}}f(x)=\infty=\lim\limits_{{x} \to {a^-}}f(x) $.
+    If $ \lim\limits_{{x} \to {a^\pm}}=\pm\infty $, then we say the line $ x=a $ is a \textbf{vertical asymptote} of $ f $.
+\end{Definition}
+\begin{Remark}{}{}
+    Reminder: Saying $ =\infty $ means the limit does not exist and gets infinitely large.
+\end{Remark}
+\begin{Example}{}{}
+    \begin{enumerate}[(1)]
+        \item $ \displaystyle \lim\limits_{{x} \to {1^-}}\frac{x^2+1}{x-1} $. We know it is $ \pm\infty $ since it is of the form $ \#/0 $, but is it positive or negative?
+              If $ x\to 1^- $, then $ x\to 1 $ and $ x<1 $ so $ x^2+1>0 $, $ x-1<0 $, which means the whole function is negative. Therefore,
+              the limit is $ -\infty $.
+        \item $ \displaystyle \lim\limits_{{x} \to {3^+}}\frac{(x+1)(x-7)}{(x-3)(x-1)}=-\infty $. We can do a quick check ``$ \frac{(4)(-4)}{0^+(2)} $'' is negative.
+    \end{enumerate}
+\end{Example}
+\begin{Example}{}{}
+    Find all vertical/horizontal asymptotes for $ f(x)=\frac{x-3}{x+1} $.
+    \tcblower{}
+    \textbf{Solution}. Since $ \lim\limits_{{x} \to {\pm\infty}}\frac{x-3}{x+1}=1 $, $ f $ has a horizontal asymptote at $ y=1 $. Also,
+    $ \lim\limits_{{x} \to {-1^+}}\frac{x-3}{x+1}=-\infty $, so $ x=-1 $ is a vertical asymptote.
+\end{Example}
+\section{Continuity}
+\begin{Definition}{Continuity at a Point \#1}{}
+    $ f $ is continuous at $ x=a $ if and only if the limit $ \lim\limits_{{x} \to {a}}f(x) $ exists and
+    $ \lim\limits_{{x} \to {a}}f(x)=f(a) $.
+    \tcblower{}
+    Otherwise, we say $ f $ is discontinuous at $ x=a $ or that $ x=a $ is a point of discontinuity for $ f $.
+\end{Definition}
+Intuitively, a function is continuous at $ x=a $ if its behaviour at $ x=a $ is determined by its behaviour near $ x=a $. We can also define
+continuity in terms of $ \varepsilon-\delta $'s.
+\begin{Definition}{Continuity at a Point \#2}{}
+    \[ \forall \varepsilon\in\R_{>0}:\exists \delta\in\R_{>0}:\abs{x-a}<\delta\implies \abs{f(x)-f(a)}<\varepsilon. \]
+\end{Definition}
+\begin{Theorem}{The Sequential Characterization of Continuity}{}
+    Let $ A\subseteq\R $, let $ a\in A $, and let $ f\colon A\to \R $. Then $ f $
+    is continuous at $ a $ if and only if for every sequence $ (x_n) $ in $ A $ with $ x_n\to a $, we have $ f(x_n)\to f(a) $.
+\end{Theorem}
+\begin{Remark}{Useful Observation}{}
+    When we look at $ \lim\limits_{{x} \to {a}}f(x) $ and assume $ x\ne a $,
+    we can write $ x=a+h $ for some $ h\in\R\setminus\{0\} $. Then $ x\to a\iff  h\to 0  $. So we can say that $ f $
+    is continuous at $ x=a $ if $ \lim\limits_{{h} \to {0}}f(a+h)=f(a) $.
+\end{Remark}
+\begin{Example}{}{}
+    \begin{itemize}
+        \item Is $ f(x)=\frac{x+1}{x-7} $ continuous at $ x=1 $? Well,
+              \[ \lim\limits_{{x} \to {1}}\frac{x+1}{x-7}=\frac{2}{-6}=\frac{-1}{3} \]
+              and $ f(1)=2/6=-1/3 $, so yes.
+        \item Is $ f(x)=\abs{x} $ continuous at $ x=0 $? Well,
+              \[ \lim\limits_{{x} \to {0^+}}x=\lim\limits_{{x} \to {0^+}}x=0, \]
+              \[ \lim\limits_{{x} \to {0^-}}\abs{x}=\lim\limits_{{x} \to {0^-}}(-x)=0, \]
+              so $ \lim\limits_{{x} \to {0}}\abs{x}=0=\abs{0}=f(0) $, so yes.
+        \item Is $ f(x)=\frac{1}{x} $ continuous at $ x=0 $? Well,
+              \[ \lim\limits_{{x} \to {0}}\frac{1}{x} \]
+              does not exist, so no.
+    \end{itemize}
+\end{Example}
+
+\subsection{Continuity of Certain Functions}
+Let's look at some functions that we know are continuous.
+\begin{itemize}
+    \item \textbf{Polynomials}. We already know that if $ P $ is a polynomial, then $ \lim\limits_{{x} \to {a}}P(x)=P(a) $,
+          so polynomials are continuous at all $ a\in\R $.
+    \item $ \sin x $. First, let's show that $ \lim\limits_{{x} \to {0}}\sin x=\sin 0=0 $.
+          For $ 0<x<\pi/2 $, $ 0<\sin x<x $. Since $ \lim\limits_{{x} \to {0^+}}0=0=\lim\limits_{{x} \to {0^+}}x $,
+          we have $ \lim\limits_{{x} \to {0}}\sin x=0 $ by the Squeeze Theorem. Next, we know $ \sin(-x)=-\sin x $, and if $ x\to 0^- $,
+          then $ -x\to 0^+ $, so
+          \[ \lim\limits_{{x} \to {0^-}}=\lim\limits_{{x} \to {0^-}}-\sin(-x)=\lim\limits_{{-x} \to {0^+}}-\sin(-x)=(-1)(0)=0. \]
+          So we get $ \lim\limits_{{x} \to {0}}\sin x=0 $.
+    \item $ \cos x $. $ \lim\limits_{{x} \to {0}}\cos x=\lim\limits_{{x} \to {0}}\sqrt{1-\sin^2 x} $ for $ x\in(-\pi/2,\pi/2)=\sqrt{1-0}=1=\cos 0 $.
+\end{itemize}
+Therefore, both $ \sin x $ and $ \cos x $ are continuous at $ x=0 $. Let $ a\in\R $ be given. Let's prove that $ \lim\limits_{{x} \to {a}}\sin x=\sin a $.
+\begin{align*}
+    \lim\limits_{{x} \to {a}}\sin x
+     & =\lim\limits_{{h} \to {0}}\sin(a+h)                     \\
+     & =\lim\limits_{{h} \to {0}}\sin(a)\cos(h)+\sin(h)\cos(a) \\
+     & =\sin(a)(1)+(0)\cos(a)                                  \\
+     & =\sin(a).
+\end{align*}
+\begin{Exercise}{}{}
+    Show that $ \lim\limits_{{x} \to {a}}\cos x=\cos a $.
+\end{Exercise}
+\begin{itemize}
+    \item $ e^x $. This one is surprisingly hard to prove! We would need more info about $ e^x $, like Power/Taylor series from MATH 138, but we can
+          do it with the following.
+
+          Fact: $ e^x $ is continuous at $ x=0 $, i.e., $ \lim\limits_{{x} \to {0}}e^x=1 $.
+
+          Claim: For all $ a\in\R $, $ \lim\limits_{{x} \to {a}}e^x=e^a $.
+
+          Proof: We know $ \lim\limits_{{x} \to {0}}e^x=e^0=1 $, so let $ a\ne 0 $ and
+          \[ \lim\limits_{{x} \to {a}}e^x=\lim\limits_{{h} \to {0}}e^{a+h}=\lim\limits_{{h} \to {0}}e^a e^h=(e^a)(1)=e^a. \]
+    \item $ \ln x $. To prove $ \ln x $ is continuous on its domain, let's use a more general theorem.
+          \begin{Theorem}{}{}
+              If $ f(x) $ is invertible, $ f(a)=b $ and $ f $ is continuous at $ x=a $, then $ f^{-1} $ is continuous at $ x=b $.
+          \end{Theorem}
+          Proof Idea: To get the graph of $ f^{-1}(x) $, we reflect the graph of $ f(x) $ over the line $ y=x $. So,
+          if $ f(x) $ is continuous, reflecting it won't create any discontinuities! So, we can conclude that $ \ln x $ is continuous
+          since it is the inverse of $ e^x $.
+\end{itemize}
+\subsection{Arithmetic Rules for Continuity}
+\begin{Theorem}{Operations on Continuous Functions}{}
+    Let $ A\subseteq\R $, let $ f,g\colon A\to\R $, let $ a\in A $, and let $ c\in\R $. Suppose that $ f $
+    and $ g $ are continuous at $ a $. Then the functions $ cf $, $ f+g $, $ f-g $, and $ fg $ are all continuous at $ a $,
+    and $ f/g $ is continuous at $ a $ provided that $ g(a)\ne 0 $.
+    \tcblower{}
+    \textbf{Proof}: Easy consequences of the corresponding limit rules.
+\end{Theorem}
+\begin{Example}{}{}
+    Consider $ f(x)=\frac{x^2+x-2}{x^2-4x+3}=\frac{(x-1)(x+2)}{(x-1)(x-3)} $. All component functions are continuous,
+    so the only possible discontinuities are at $ x=1 $ and $ x=3 $.
+
+    $ x=1 $: $ \lim\limits_{{x} \to {1}}f(x)=\lim\limits_{{x} \to {1}}\frac{(x-1)(x+2)}{(x-1)(x-3)}=\lim\limits_{{x} \to {1}}\frac{x+2}{x-3}=\frac{-3}{2} $ exists,
+    but $ f(1) $ does not exist, so $ f $ is not continuous at $ x=1 $.
+
+    $ x=3 $: $ \lim\limits_{{x} \to {3^+}}=\infty $, so $ f $ is not continuous at $ x=3 $. Therefore,
+    $ f $ is continuous on $ (-\infty,1)\cup(1,3)\cup(3,\infty) $. If we defined $ f(1)=-3/2 $, then $ f $
+    would be continuous at $ x=1 $.
+\end{Example}
+\begin{Theorem}{Composition of Continuous Functions}{}
+    Let $ A,B\subseteq\R $, let $ f\colon A\to\R $, let $ g\colon B\to\R $, and let $ h=g\circ f\colon C\to \R $ where $ C=A\cap f^{-1}(B) $.
+    \begin{enumerate}[(1)]
+        \item If $ f $ is continuous at $ a\in C $ and $ g $ is continuous at $ f(a) $, then $ h $ is continuous at $ a $.
+        \item If $ f $ is continuous (on $ A $) and $ g $ is continuous (on $ B $), then $ h $ is continuous (on $ C $).
+    \end{enumerate}
+    \tcblower{}
+    \textbf{Proof}: Note that (2) follows immediately from (1), so it suffices to prove (1). Suppose $ f $
+    is continuous at $ a\in A $ and $ g $ is continuous at $ b=f(a)\in B $. Let $ (x_n) $ be a sequence in $ C $
+    with $ x_n\to a $. Since $ f $ is continuous at $ a $, we have $ f(x_n)\to f(a)=b $ by the Sequential Characterization of Continuity.
+    Since $ (f(x_n)) $ is a sequence in $ B $ with $ f(x_n)\to b $ and since $ g $ is continuous at $ b $,
+    we have $ g(f(x_n))\to g(b) $ by the Sequential
+    Characterization of Continuity. Thus, we have $ h(x_n)=g(f(x_n))\to g(b)=g(f(a))=h(a) $.
+    We have shown that for every sequence $ (x_n) $ in $ C $ with $ x_n\to a $ we have $ h(x_n)\to h(a) $.
+    Thus, $h$ is continuous at a by the Sequential Characterization of Continuity.
+\end{Theorem}
+\begin{Example}{}{}
+    $ \cos(e^{x^2}) $ is continuous at each $ a\in\R $ since $ x^2 $, $ e^x $, and $ \cos x $ are continuous by the Composition of Continuous Functions.
+\end{Example}
+\subsection{Continuity On An Interval}
+We should make it clear what we mean by `continuous on an interval.'
+We will need to treat open and closed intervals separately.
+\begin{Definition}{Continuity on an Interval (Open)}{}
+    Let $ f $ be a real function defined on an open interval $ (a,b) $.
+    $ f $ is \textbf{continuous on $ (a,b) $} if and only if it is
+    continuous at every point of $ (a,b) $.
+\end{Definition}
+What about closed intervals? The problem is that at the endpoints, $ f $ may not be defined outside!
+\begin{Example}{}{}
+    $ f(x)=\sqrt{x} $, the domain is $ [0,\infty) $. Technically, $ \lim\limits_{{x} \to {0}}\sqrt{x} $ does not exist
+    since $ \lim\limits_{{x} \to {0^-}}\sqrt{x} $ is not defined. But we would still like to say $ \sqrt{x} $
+    is continuous at $ x=0 $. Just ignore $ x<0 $.
+\end{Example}
+\begin{Definition}{Continuity on an Interval (Closed)}{}
+    Let $ f $ be a real function defined on a closed interval $ [a,b] $.
+    $ f $ is \textbf{continuous on $ [a,b] $} if and only if it is:
+    \begin{enumerate}[(i)]
+        \item $ f $ is continuous on $ (a,b) $,
+        \item $ \lim\limits_{{x} \to {a^+}}f(x) $ exists and $\lim\limits_{{x} \to {a^+}}f(x)=f(a) $, and
+        \item $ \lim\limits_{{x} \to {b^-}}f(x) $ exists and $\lim\limits_{{x} \to {b^-}}f(x)=f(b) $.
+    \end{enumerate}
+\end{Definition}
+In other words, we only consider continuity (and limits) as we approach from \underline{inside} the interval in question. So,
+we can say that $ \sqrt{x} $ is continuous on $ [0,\infty) $.

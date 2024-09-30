@@ -142,6 +142,142 @@ of a continuous function $ f(x) $ on $ [a,b] $.
 We will re-visit this when we discuss curve sketching.
 
 \chapter{The Mean Value Theorem}
+As we will see, the MVT has \underline{lots} of applications! But first we should prove it! Let's start with:
+\begin{Theorem}{Rolle's Theorem}{}
+    Let $ f $ be a real function which is continuous on a closed interval
+    $ [a,b] $ and differentiable on the open interval $ (a,b) $.\smallskip
+    Then:
+    \[ \exists c\in(a,b):f'(c)=0. \]
+    \tcblower{}
+    \textbf{Proof}: We consider 3 cases:
+    \begin{itemize}
+        \item Case 1: $ f(x)=0 $ for all $ x\in[a,b] $. Then $ f'(x)=0 $ for all $ x\in(a,b) $,
+              so there are lots of choices for $ c\in(a,b) $ where $ f'(c)=0 $.
+        \item Case 2: There exists a point $ x_0\in(a,b) $ such that $ f(x_0)>0 $. By EVT, $ f $
+              attains its global max on $ [a,b] $ and since $ f(x_0)>0 $, while $ f(a)=f(b)=0 $,
+              we can see that the global max will occur at $ c\in(a,b) $. This means $ c $
+              is a critical point of $ f $, and since $ f'(c) $ exists, it must be the case that $ f'(c)=0 $.
+        \item Case 3: There exists a point $ x_0\in(a,b) $ such that $ f(x_0)<0 $. The proof is left
+              as an exercise (similar to case 2, but use minimum).
+    \end{itemize}
+\end{Theorem}
 \section{The Mean Value Theorem}
+\begin{Theorem}{}{}
+    Let $ f $ be a real function which is continuous on a closed interval
+    $ [a,b] $ and differentiable on the open interval $ (a,b) $.\smallskip
+    Then:
+    \[ \exists c\in(a,b):f'(c)=\frac{f(b)-f(a)}{b-a}. \]
+    \tcblower{}
+    \textbf{Proof}: Define
+    \[ h(x)=f(x)-f(a)-\frac{f(b)-f(a)}{b-a}(x-a). \]
+    Since $ f $ is continuous on $ [a,b] $, so is $ h $. Also,
+    \[ h'(x)=f'(x)-\frac{f(b)-f(a)}{b-a}, \]
+    so $ h'(x) $ exists for $ x\in(a,b) $. Lastly,
+    $ h(a)=h(b)=0 $. Rolle's theorem says there exists $ c\in(a,b) $
+    such that $ h'(c)=0 $. So,
+    \[ 0=f'(c)-\frac{f(b)-f(a)}{b-a}\implies f'(c)=\frac{f(b)-f(a)}{b-a}. \]
+\end{Theorem}
+\begin{Example}{}{}
+    Let $ f(x)=x^2+2x+1 $ and $ x\in[1,2] $. Find the $ c $'s that satisfy the MVT\@.
+    \tcblower{}
+    \textbf{Solution}. Note that
+    \[ \frac{f(2)-f(1)}{2-1}=\frac{(4+4+1)-(1+2+1)}{1}=5. \]
+    Need $ f'(c)=5\implies f'(c)=2c+2\implies 2c+2=5\implies c=3/2 $.
+\end{Example}
+\begin{Remark}{}{}
+    Why do we need continuity at the endpoints?
+    Consider $ f(x)=x $ where $ f(a)=f(b)=0 $, but $ f'(x)\ne 0 $ for any $ x\in(a,b) $.
+\end{Remark}
+\begin{Example}{}{}
+    Can MVT be applied to $ f(x) $?
+    \begin{enumerate}[(1)]
+        \item $ f(x)=\abs{x} $ where $ x\in[-1,1] $. No! $ f'(x) $ DNE at $ x=0 $.
+        \item $ f(x)=\frac{x+1}{x+3} $ where $ x\in[-4,0] $. No! $ f(x) $ is not continuous at $ x=-3 $.
+        \item $ f(x)=e^{-x} $ where $ x\in[-1,1] $. Yes!
+        \item $ f(x)=\sec x $ where $ x\in[0,\pi] $. No! $ \sec x $ is not continuous at $ x=\pi/2 $.
+    \end{enumerate}
+\end{Example}
 \section{Applications of the Mean Value Theorem}
+We will see that the MVT has LOTS of applications!
 \subsection{Antiderivatives}
+\begin{Definition}{Antiderivative (Primitive) of Real Function}{}
+    Let $ F $ be a real function which is continuous on $ [a,b] $ and differentiable on $ (a,b) $.\smallskip
+
+    Let $ f $ be a real function which is continuous on $ (a,b) $.\bigskip
+
+    Let
+    \[ \forall x\in(a,b):F'(x)=f(x), \]
+    where $ F' $ denotes the derivative of $ F $ with respect to $ x $.\bigskip
+
+    Then $ F $ is a \textbf{antiderivative} of $ f $, and is denoted:
+    \[ F=\int f(x)\odif{x}. \]
+    We call $ \int f(x)\odif{x} $ the \textbf{indefinite integral} of $ f $,
+    where $ f(x) $ is the \textbf{integrand}.
+\end{Definition}
+\begin{Example}{}{}
+    $ F(x)=\frac{x^2}{2} $ is an antiderivative of $ f(x)=x $ since $ F'(x)=x $.
+\end{Example}
+\begin{itemize}
+    \item Q\@: Are antiderivatives unique?
+    \item A\@: No! $ \frac{x^2}{2},\frac{x^2}{2}+7,\frac{x^2}{2}-e $ are all antiderivatives of $ f(x)=x $.
+    \item Q\@: Do different antiderivatives differ by a constant?
+    \item A\@: Yes! Let's work towards showing this.
+\end{itemize}
+\begin{Theorem}{Zero Derivative implies Constant Function}{zeroderiv_implies_constant}
+    Let $ f $ be a real function which is continuous on $ [a,b] $
+    and differentiable on $ (a,b) $.\smallskip
+
+    Suppose that:
+    \[ \forall x\in(a,b):f'(x)=0. \]
+    Then $ f $ is constant on $ [a,b] $.
+    \tcblower{}
+    \textbf{Proof}: By MVT,
+    \[ \exists c\in(a,x):f'(c)=\frac{f(x)-f(a)}{x-a}. \]
+    But by our supposition:
+    \[ \forall x\in(a,b):f'(x)=0 \]
+    which means:
+    \[ \forall x\in(a,b):f(x)-f(a)=0 \]
+    and hence:
+    \[ \forall x\in(a,b):f(x)=f(a). \]
+\end{Theorem}
+This tells us that the family of antiderivatives for the function $ f(x)=0 $
+is all the constant functions $ f(x)=c\in\R $.
+
+\begin{Theorem}{Antiderivative Theorem}{}
+    If $ f'(x)=g'(x) $ for all $ x\in I $, then there exists $ \alpha\in\R $
+    such that $ f(x)=g(x)+\alpha $ for all $ x\in I $.
+    \tcblower{}
+    \textbf{Proof}: Suppose $ f'(x)=g'(x) $ for all $ x\in I $. Define $ h(x)=f(x)-g(x) $.
+    Then $ h'(x)=f'(x)-g'(x)=0 $
+    for all $ x\in I $.
+    By~\Cref{thm:zeroderiv_implies_constant},
+    there exists $ \alpha\in\R $ such that $ h(x)=\alpha $ for all $ x\in I $.
+    Therefore, $ f(x)-g(x)=\alpha\implies f(x)=g(x)+\alpha $ for all $ x\in I $.
+\end{Theorem}
+\subsubsection*{Additional Notes on Antiderivatives}
+\begin{Example}{}{}
+    $ \int x\odif{x}=x^2/2+C $, $ \int x^2\odif{x}=x^3/3+C $.
+\end{Example}
+\begin{Theorem}{Integral of Power}{}
+    \[ \forall n\in\R_{\ne -1}: \int x^n\odif{x}=\frac{x^{n+1}}{n+1}+C. \]
+    \tcblower{}
+    \textbf{Proof}: Easy exercise (just differentiate the RHS).
+\end{Theorem}
+Also, if $ F $ is an antiderivative of $ f $ and $ G $
+is an antiderivative of $ g $, then $ \alpha F+\beta G $
+is an antiderivative of $ \alpha f+\beta g $
+since
+\[ \odif*{\bigl(\alpha F(x)+\beta G(x)\bigr)}=\alpha f(x)+\beta g(x). \]
+More generally,
+\[ \int \alpha_1f_1(x)+\cdots+\alpha_n f_n(x)\odif{x}=\alpha_1 \int f_1(x)\odif{x}+\cdots+\alpha_n \int f_n(x)\odif{x}. \]
+\subsubsection*{Some Basic Indefinite Integrals}
+\begin{itemize}
+    \item $ \int \frac{1}{x}\odif{x}=\ln\abs{x}+C $.
+    \item $ \int e^x\odif{x}=e^x+C $.
+    \item $ \int \sin x\odif{x}=-\cos (x)+C $.
+    \item $ \int \cos x\odif{x}=\sin(x)+C $.
+    \item $ \int \sec^2 x\odif{x}=\tan x+C $.
+    \item $ \int \frac{1}{1+x^2}\odif{x}=\arctan(x)+C $.
+    \item $ \int \frac{1}{\sqrt{1-x^2}}\odif{x}=\arcsin(x)+C $.
+    \item $ \int \frac{-1}{\sqrt{1-x^2}}\odif{x}=\arccos(x)+C $.
+\end{itemize}

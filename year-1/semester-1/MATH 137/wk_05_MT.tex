@@ -1,0 +1,247 @@
+\section{The Intermediate Value Theorem}
+One important tool we can use if we know a function is continuous is:
+\begin{Theorem}{Intermediate Value Theorem (IVT)}{}
+    Let $ A=[a,b]\subseteq \R $ be a real interval, $ f\colon A\to\R $
+    be continuous on $ A $, and let $ \alpha\in\R $ lie between $ f(a) $
+    and $ f(b) $. That is, either $ f(a)<\alpha<f(b) $ or $ f(b)<\alpha<f(a) $.
+    Then $ \exists c\in(a,b) $ such that $ f(c)=\alpha $.
+    \tcblower{}
+    The proof is beyond the scope of the course, but it is intuitively clear! If $ f $ is above $ \alpha $
+    at one point and below at another, then somewhere in between $ f(x)=\alpha $, as long as $ f $
+    is ``nice'' (i.e., continuous).
+\end{Theorem}
+\begin{Example}{}{}
+    Prove that $ f(x)=x^5-2x^3-2 $ has a root between $ 0 $ and $ 2 $.
+    \tcblower{}
+    \textbf{Solution}. Note that $ f $ is a polynomial, so it is continuous on $ [0,2] $. Also,
+    $ f(0)=-2<0 $, $ f(2)=14>0 $, so by the IVT, there exists $ c\in(0,2) $ such that $ f(c)=0 $.
+\end{Example}
+\begin{Example}{}{}
+    Prove that there exists a point $ c\in(0,1) $ such that $ \cos(c)=c $.
+    \tcblower{}
+    \textbf{Solution}. Let's look at the function $ f(x)=\cos x-x $ and prove it equals zero for some $ c\in(0,1) $.
+    First, $ f $ is continuous since both $ \cos x $ and $ x $ are. Also, $ f(0)=\cos(0)-0=1>0 $, $ f(1)=\cos(1)-1<0 $
+    since $ \cos(1)<1 $. Therefore, by the IVT, there exists a point $ c\in(0,1) $ so that $ f(c)=0\implies \cos(c)-c=0\implies\cos(c)=c $.
+\end{Example}
+\begin{Remark}{}{}
+    The issue with the IVT is that it doesn't give us any indication of what $ c $ is! It also doesn't say that $ c $
+    is unique! However, we can use the IVT to estimate solutions.
+\end{Remark}
+\subsection{Approximating Solutions to Equations}
+Let's start with polynomials!
+\begin{itemize}
+    \item If $ P(x) $ is a polynomial of degree $ 1 $,
+          how can we solve $ P(x)=0 $? Easy! $ ax+b=0\implies x=-b/a $.
+    \item Degree 2? Quadratic Formula!
+    \item Degree 3 or 4? There are also formulas for these.
+    \item Degree 5 or higher? No formula exists! But we can use the IVT to approximate solutions!
+\end{itemize}
+\begin{Example}{}{}
+    Recall we showed $ P(x)=x^5-2x^3-2 $ has a root in $ (0,2) $. Can we narrow it down further?
+    Well, $ P(1)=1^5-2(1)^3-2=-3<0 $, so $ P(2)>0 $, $ P(1)<0 $, and so there is a root somewhere between $ x=1 $
+    and $ x=2 $.
+
+    Check the new midpoint! $ P(3/2)=-37/32<0 $, so there is a root between $ x=3/2 $ and $ x=2 $.
+
+    New midpoint is $ 7/4 $, $ P(7/4)-3.694>0 $, so the root is between $ x=3/2 $ and $ x=7/4 $.
+    We could keep going or use a computer!
+
+    The method is great because each additional step cuts the potential error in half! Also,
+    since $ 1/2^4=1/16<1/10 $, every four iterations give us another decimal place of accuracy.
+    $ 1/2^{10}<1/1000 $, so every 10 iterations gives 3 decimal places of accuracy.
+\end{Example}
+\begin{Remark}{}{}
+    We can use this method on functions that aren't polynomials too! It is explored in the next section.
+\end{Remark}
+\subsection{The Bisection Method}
+\begin{Definition}{Bisection Method}{}
+    Let $ f $ be a real function such that:
+    \begin{description}
+        \item $ f $ is continuous over a closed interval $ [a,b] $
+        \item $ f(a) $ and $ f(b) $ are of opposite sign.\bigskip
+    \end{description}
+    The \textbf{bisection method} is an iterative technique for finding an approximation to at
+    least one solution to the equation $f(x)=0$ to any desired accuracy.\bigskip
+
+    So, we assume that $ f(a)f(b)<0 $ and that $ a<b $.
+
+    \begin{description}
+        \item We evaluate $ c=\dfrac{a+b}{2} $, thereby bisecting $ [a,b] $.
+        \item We evaluate $ f(c) $.
+        \item If $ f(c)=0 $, then we have a solution to $ f(x)=0 $.
+        \item Otherwise, $ f(c) $ is of opposite sign to either $ f(a) $ or $ f(b) $.
+              \begin{description}
+                  \item If $ f(c) $ is of opposite sign to $ f(a) $, then there exists a solution to $ f(x)=0 $ in $ [a,c] $.
+                  \item If $ f(c) $ is of opposite sign to $ f(b) $, then there exists a solution to $ f(x)=0 $ in $ [c,b] $.
+              \end{description}
+              In either case, a closed interval has been constructed of half the length of $ [a,b] $.
+    \end{description}
+
+    \bigskip
+    This process can be repeated until the interval of interest is arbitrarily small, enabling the solution to be known to whatever accuracy is required.
+\end{Definition}
+\begin{Remark}{}{}
+    The bisection method is good, but later we will see Newton's Method which is more efficient.
+\end{Remark}
+\section{The Extreme Value Theorem}
+It turns out that continuity on a closed interval is different from continuity
+on an open interval: we can say more about a function on a closed interval!
+But first, we need some definitions.
+\begin{Definition}{}{}
+    Suppose $ f\colon I\to \R $, where $ I $ is an interval.
+    \begin{itemize}
+        \item $ c $ is a \textbf{global maximum} for $ f $ on $ I $
+              if and only if
+              \[ \exists c\in I:\forall x\in I:f(x)\le f(c). \]
+        \item $ c $ is a \textbf{global minimum} for $ f $ on $ I $
+              if and only if
+              \[ \exists c\in I:\forall x\in I:f(x)\ge f(c). \]
+        \item $ c $ is a \textbf{global extremum} for $ f $ on $ I $
+              if it is either a global maximum or a global minimum.
+    \end{itemize}
+\end{Definition}
+\begin{Remark}{}{}
+    Global max/mins are also called absolute max/mins.
+\end{Remark}
+\begin{itemize}
+    \item If $ f $ is defined on an interval $ I $, does $ f $
+          achieve both its global max and global min?
+    \item No! Consider $ f(x)=x $ on $ (0,1) $. $ f $
+          has neither a global max nor a global min!
+
+          The max/min look like they should be at $ x=1 $ and $ x=0 $, but these aren't in the interval!
+\end{itemize}
+\begin{Example}{}{}
+    $ f(x)=x^2 $ on $ (-1,1) $. $ f $ has a global min at $ x=0 $, but no global max again!
+    Okay, but let's include the endpoints! Is that enough? No, unfortunately.
+\end{Example}
+\begin{Example}{}{}
+    $ f(x)=\frac{1}{x} $ on $ [-1,1] $. No global max/min again!
+    $ f $ goes to $ \pm\infty $ as $ x\to 0^{\pm} $.
+\end{Example}
+So what conditions do we need to guarantee that $ f $ has a global max/min?
+It turns out that we need the interval to be \underline{closed}
+and for $ f $ to be \underline{continuous}.
+
+\begin{Theorem}{Extreme Value Theorem for a Real Function (EVT)}{}
+    Let $ f $ be a real function which is continuous in a closed real interval $ [a,b] $.
+
+    Then:
+    \[ \exists c_1,c_2\in[a,b]:\forall x\in[a,b]: f(c_1)\le f(x)\le f(c_2). \]
+\end{Theorem}
+The issue we face now is how to actually \underline{find} the global extrema.
+The EVT doesn't tell us how! Also, as we saw in the $ f(x)=x^2 $
+example, they aren't always at the endpoints.
+
+We will return to this when we have more tools, in a few weeks.
+
+\chapter{Derivatives}
+\section{Instantaneous Velocity}
+Suppose you are driving down a highway. Every 30 minutes you record your distance:
+\begin{center}
+    \begin{tabular}{cccccccc}
+        Time (min)    & 0 & 30 & 60  & 90  & 120 & 150 & 180 \\
+        \midrule
+        Distance (km) & 0 & 55 & 100 & 130 & 200 & 250 & 300
+    \end{tabular}
+\end{center}
+\begin{itemize}
+    \item What was your average speed in these three hours?
+          \[ \text{Average speed}=\frac{\text{distance}}{\text{time}}=\frac{300\text{ km}}{1.5\text{ h}}=100\text{ km/h}. \]
+    \item First 1.5 hours?
+          \[ \frac{130}{1.5}\approx 86.6\text{ km/h}. \]
+    \item Last 1.5 hours?
+          \[ \frac{300-130}{1.5}\approx 113\text{ km/h}. \]
+\end{itemize}
+In general, the formula for the \textbf{average velocity}, $ V_{\text{ave}} $ from $ t=t_0 $ to $ t=t_1 $ is
+\[ V_{\text{ave}}=\frac{s(t_1)-s(t_0)}{t_1-t_0}, \]
+where $ s(t) $ is the distance at time $ t $. To get the instantaneous velocity, we need to use limits!
+The instantaneous velocity at $ t=t_0 $ is
+\[ \lim\limits_{{t} \to {t_0}}\frac{s(t)-s(t_0)}{t-t_0} \]
+or
+\[ \lim\limits_{{h} \to {0}}\frac{s(t_0+h)-s(t_0)}{h}. \]
+\begin{Example}{}{}
+    Find the instantaneous velocity for $ s(t)=t^2+3t $ at $ t=1 $, $ t=2 $, and $ t_0\in\R $.
+    \tcblower{}
+    \textbf{Solution}.
+    \begin{itemize}
+        \item $\begin{aligned}[t]
+                      \lim\limits_{{h} \to {0}}\frac{s(1+h)-s(1)}{h}
+                       & =\lim\limits_{{h} \to {0}}\frac{(1+h)^2+3(1+h)-(1^2+3(1))}{h} \\
+                       & =\lim\limits_{{h} \to {0}}\frac{5h+h^2}{h}                    \\
+                       & =\lim\limits_{{h} \to {0}}(5+h)                               \\
+                       & =5.
+                  \end{aligned}$
+        \item $\begin{aligned}[t]
+                      \lim\limits_{{h} \to {0}}\frac{(2+h)^2+3(2+h)-(2^3+3(2))}{h}
+                       & =\lim\limits_{{h} \to {0}}\frac{7h+h^2}{h} \\
+                       & =7.
+                  \end{aligned}$
+        \item $\begin{aligned}
+                      \lim\limits_{{h} \to {0}}\frac{(t_0+h)^2+3(t_0+h)-(t_0^2+3t_0)}{h}
+                       & =\lim\limits_{{h} \to {0}}(2 t_0+3+h) \\
+                       & =2t_0+3.
+                  \end{aligned}$
+    \end{itemize}
+    The instantaneous velocity is a special case of a derivative!
+\end{Example}
+\section{Definition of the Derivative}
+We can perform the same analysis that we did on $ s(t) $ in the previous section on any function!
+\begin{Definition}{}{}
+    The \textbf{average rate of change of $ f(x) $} from $ x=a $ to $ x=b $ is
+    \[ f_{\text{ave}}=\frac{f(b)-f(a)}{b-a}. \]
+\end{Definition}
+\begin{Definition}{}{}
+    The \textbf{instantaneous rate of change of $ f(x) $} at $ x=a $, or the derivative of $ f(x) $ at $ x=a $, denoted $ f'(a) $
+    is defined as
+    \[ f'(a)=\lim\limits_{{h} \to {0}}\frac{f(a+h)-f(a)}{h}=\lim\limits_{{x} \to {a}}\frac{f(x)-f(a)}{x-a}. \]
+    If this limit exists, we say that $ f $ is \textbf{differentiable} at $ x=a $.
+\end{Definition}
+\subsection{The Tangent Line}
+\begin{Definition}{}{}
+    The \textbf{tangent line} to the graph of $ f $ at $ x=a $ is the line passing through $ (a,f(a)) $ with slope $ m=f'(a) $.
+    It follows that the equation of the tangent line is
+    \[ y=f(a)+f'(a)(x-a). \]
+\end{Definition}
+\begin{Example}{}{}
+    Find the equation of the tangent line to $ f(x)=x^2+x+1 $ at $ x=3 $.
+    \tcblower{}
+    \textbf{Solution}. First, we should compute $ f'(3) $:
+    \begin{align*}
+        f'(3)
+         & =\lim\limits_{{h} \to {0}}\frac{f(3+h)-f(3)}{h}               \\
+         & =\lim\limits_{{h} \to {0}}\frac{(3+h)^2+(3+h)+1-(3^2+3+1)}{h} \\
+         & =\lim\limits_{{h} \to {0}}\frac{9+6h+h^2+3+h+1-9-3-1}{h}      \\
+         & =\lim\limits_{{h} \to {0}}\frac{7h+h^2}{h}                    \\
+         & =\lim\limits_{{h} \to {0}}(7+h)                               \\
+         & =7.
+    \end{align*}
+    So, $ f'(3)=7 $. The point on the graph is $ (3,f(3))=(3,13) $. So, the tangent line is
+    \[ y=13+7(x-3)=13+7x-21=7x-8. \]
+\end{Example}
+\begin{Remark}{}{}
+    Can't define the derivative as the slope of the tangent line! Without knowing what the derivative is first, we can't
+    even define the tangent line!
+\end{Remark}
+\subsection{Differentiability versus Continuity}
+\begin{itemize}
+    \item Q\@: Does continuity imply differentiability?
+    \item A\@: No! Consider $ f(x)=\abs{x} $ at $ x=0 $. Clearly,
+          \[ \lim\limits_{{x} \to {0}}\abs{x}=0=\abs{0}, \]
+          so $ f $ is continuous at $ x=0 $, but
+          \[ \lim\limits_{{h} \to {0}}\frac{f(0+h)-f(0)}{h}=\lim\limits_{{h} \to {0}}\frac{\abs{h}}{h} \]
+          does not exist. Therefore, $ f $ is not differentiable at $ x=0 $. Therefore,
+          continuity \underline{does not} imply differentiability.
+    \item Q\@: Does differentiability imply continuity?
+    \item A\@: Yes!
+\end{itemize}
+\begin{Theorem}{Differentiability Implies Continuity}{}
+    Let $ A\subseteq \R $ be open, let $ f\colon A\to\R $ and let $ a\in A $. If $ f $
+    is differentiable at $ a $, then $ f $ is continuous at $ a $.
+    \tcblower{}
+    \textbf{Proof}: We have
+    \[ f(x)-f(a)=\frac{f(x)-f(a)}{x-a}(x-a)\to f'(a)\cdot 0=0\text{ as $ x\to a $} \]
+    and so
+    \[ f(x)=\bigl(f(x)-f(a)\bigr)+f(a)\to 0+f(a)=f(a)\text{ as $ x\to a $}. \]
+    This proves that $ f $ is continuous at $ a $.
+\end{Theorem}
