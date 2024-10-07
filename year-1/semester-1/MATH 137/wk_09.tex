@@ -1,4 +1,265 @@
 \subsection{Increasing Function Theorem}
+The sign of $ f'(x) $ gives us more info about $ f(x) $!
+% https://proofwiki.org/wiki/Derivative_of_Monotone_Function
+\begin{Theorem}{Derivative of Monotone Function}{}
+    Let $ f $ be a real function which is continuous on $ [a,b] $ and differentiable on $ (a,b) $.
+    \begin{align*}
+         & \forall x\in(a,b):f'(x)> 0\implies f\text{ is strictly increasing on }[a,b]. \\
+         & \forall x\in(a,b):f'(x)\ge 0\implies f\text{ is non-decreasing on }[a,b].    \\
+         & \forall x\in(a,b):f'(x)< 0\implies f\text{ is strictly decreasing on }[a,b]. \\
+         & \forall x\in(a,b):f'(x)\le 0\implies f\text{ is non-increasing on }[a,b].
+    \end{align*}
+    \tcblower{}
+    \textbf{Proof}: We prove the first one, noting that the rest are similar.
+    Let $ c,d\in[a,b] $ with $ c<d $. Then $ f $ satisfies the conditions of the MVT on $ [c,d] $. Hence:
+    \[ \exists \xi\in(c,d):f'(\xi)=\frac{f(d)-f(c)}{d-c} \]
+    Let $ f $ be such that
+    \[ \forall x\in(a,b):f'(x)> 0.\]
+    Then:
+    \[ f'(\xi)>0 \]
+    and hence:
+    \[ f(d)>f(c) \]
+    Thus $ f $ is strictly increasing $ [a,b] $.
+\end{Theorem}
+We will use this theorem when we look at curve sketching.
+\begin{itemize}
+    \item Q\@: Is the converse true?
+    \item A\@: Not always: $ f(x)=x^3 $ is increasing everywhere, but $ f'(0)=0 $. Also, $ f' $ may not exist!
+          So all we can guarantee is that $ f'(x)\ge 0 $ (when it exists).
+\end{itemize}
 \subsection{Functions with Bounded Derivatives}
+What can we say about a function $ f $ if all we know are the bounds on its derivative?
+
+Say $ m\le f'(x)\le M $ for $ x\in(a,b) $ and say $ f $ is continuous on $ [a,b] $, so we can apply MVT\@.
+Pick $ x\in[a,b] $. Then apply MVT to $ f $ on $ [a,x] $: $ \exists c\in(a,x) $ such that
+\[ f'(c)=\frac{f(x)-f(a)}{x-a}, \]
+but $ f'(c)\in[m,M] $, so
+\begin{align*}
+     & \phantom{{}\leadsto{}} m\le \frac{f(x)-f(a)}{x-a}\le M \\
+     & \leadsto m(x-a)\le f(x)-f(a)\le M(x-a)                 \\
+     & \leadsto f(a)+m(x-a)\le f(x)\le f(a)+M(x-a).
+\end{align*}
+So the graph of $ f $ lies between the lines $ f(a)+m(x-a) $ and $ f(a)+M(x-a) $. This leads us to the following theorem.
+\begin{Theorem}{Bounded Derivative Theorem (BDT)}{}
+    Let $ f $ be a real function which is continuous on $ [a,b] $ and differentiable on $ (a,b) $.
+
+    Suppose $ \forall x\in(a,b):m\le f'(x)\le M $. Then:
+    \[ \forall x\in[a,b]:f(a)+m(x-a)\le f(x)\le f(a)+M(x-a). \]
+\end{Theorem}
+\begin{Example}{}{}
+    Prove $ \sqrt{66}\in(8+1/9,8+1/8) $.
+    \tcblower{}
+    \textbf{Solution}. Let $ f(x)=\sqrt{x} $ so $ f'(x)=\frac{1}{2\sqrt{x}} $. Note that $ f $
+    is continuous on $ [64,66] $ and differentiable on $ (64,66) $. Also,
+    if $ x\in[64,66] $, it is clear that $ 64\le x\le 81 $, so
+    \[ f'(x)=\frac{1}{2\sqrt{x}}\in\biggl[\frac{1}{18},\frac{1}{16}\biggr]. \]
+    By the BDT, we get:
+    \[ \sqrt{64}+\frac{1}{18}(x-64)\le \sqrt{x}\le \sqrt{64}+\frac{1}{16}(x-64). \]
+    So, at $ x=66 $:
+    \[ \sqrt{64}+\frac{1}{18}(2)\le \sqrt{66}\le \sqrt{64}+\frac{1}{16}(2)\leadsto 8+\frac{1}{9}\le \sqrt{66}\le 8+\frac{1}{8}. \]
+\end{Example}
+\begin{Example}{}{}
+    If $ f(12)=2 $ and $ 1\le f'(x)\le 3 $ for all $ x\in\R $, find an interval for $ f(20) $.
+    \tcblower{}
+    \textbf{Solution}. BDT says $ f(12)+1(x-12)\le f(x)\le f(12)+3(x-12) $. So, at $ x=20 $:
+    \[ 2+8\le f(20)\le 2+24\leadsto 10\le f(20)\le 26. \]
+\end{Example}
 \subsection{Comparing Functions Using Their Derivatives}
-\section{L'Hopital's Rule}
+If we know the relative sizes of two functions' derivatives, we can also compare the sizes of the functions!
+\begin{Theorem}{}{}
+    Assume $ f,g $ are continuous at $ x=a $ with $ f(a)=g(a) $.
+    \begin{enumerate}[(1)]
+        \item If both $ f,g $ are differentiable for $ x>a $, and if $ f'(x)\le g'(x) $, then
+              \[ \forall x>a: f(x)\le g(x). \]
+        \item If both $ f,g $ are differentiable for $ x<a $ and if $ f'(x)\le g'(x) $, then
+              \[ \forall x<a:f(x)\ge g(x). \]
+    \end{enumerate}
+    \tcblower{}
+    \textbf{Proof} of (1): Suppose $ f,g $ are continuous at $ x=a $ and differentiable for $ x>a $,
+    and $ f'(x)\le g'(x) $ for all $ x>a $.
+
+    Define $ h(x)=g(x)-f(x) $, then $ h $ is also continuous at $ x=a $ and differentiable for $ x>a $. Also,
+    \[ \forall x>a:h'(x)=g'(x)-f'(x)\ge 0. \]
+    So, by MVT, we can find $ c\in(a,x) $ such that
+    \[ 0\le h'(c)=\frac{h(x)-h(a)}{x-a}. \]
+    But $ h(a)=0 $ and $ x-a>0 $, so $ h(x)\ge 0 $ too; that is,
+    \[ h(x)=g(x)-f(x)\ge 0\leadsto g(x)\ge f(x) \]
+    for all $ x>a $.
+\end{Theorem}
+\begin{Remark}{}{}
+    Note that if $ f'(x)<g'(x) $, then we get $ f(x)<g(x) $ for $ x>a $.
+\end{Remark}
+\begin{Example}{}{}
+    Prove that $ \forall x\in\R_{>0}: x-\frac{1}{2}x^2<\ln(1+x)<x $.
+    \tcblower{}
+    \textbf{Proof}: Let $ f(x)=x-\frac{1}{2}x^2 $, $ g(x)=\ln(1+x) $, and $ h(x)=x $. Then $ f(0)=g(0)=h(0)=0 $
+    and
+    \[ f'(x)=1-x,\quad g'(x)=\frac{1}{1+x},\quad h'(x)=1.\]
+    If $ x>0 $, then $ g'(x)=\frac{1}{1+x}<1=h'(x) $.
+
+    Also, if $ x>0 $, then
+    \begin{align*}
+         & \phantom{{}\leadsto{}}1-x^2<1 \\
+         & \leadsto (1+x)(1-x)<1         \\
+         & \leadsto 1-x<\frac{1}{1+x}    \\
+         & \leadsto f'(x)<g'(x).
+    \end{align*}
+    Therefore, for $ x>0 $, $ f'(x)<g'(x)<h'(x) $. Apply the theorem twice (with strict inequalities) to get
+    \[ \forall x\in\R_{>0}:x-\frac{1}{2}x^2<\ln(1+x)<x. \]
+\end{Example}
+\begin{Exercise}{}{}
+    By comparing derivatives and Squeeze Theorem, prove that
+    \[ \lim\limits_{{n} \to {\infty}}\biggl(1+\frac{1}{n}\biggr)^{\!n}=e. \]
+\end{Exercise}
+\section{L'Hôpital's Rule}
+First, we worked with \underline{limits}. Then, we used limits to define \underline{derivatives}. Now,
+we come full-circle and show how derivatives can be used to help solve limits!
+
+Recall: the first thing we do when solving limits is to check where each of the component functions go. If
+we get a number, $ \pm \infty $, or DNE, we are done! (May also need the Squeeze Theorem).
+
+But, if we get an indeterminate form:
+\[ \frac{0}{0},\pm \frac{\infty}{\infty},0\cdot \infty,\infty-\infty,1^{\infty},\infty^0,0^0, \]
+we need to do more work. Let's see how L'Hôpital's Rule can help us in each case!
+\begin{Theorem}{L'Hôpital's Rule (LHR)}{}
+    Let $ f $ and $ g $ be real functions which are differentiable on an open interval $ I $, and let $ a\in\ER $.
+
+    Let:
+    \[ \forall x\in I:g'(x)\ne 0. \]
+    Let:
+    \[ \lim\limits_{{x} \to {a}}\frac{f(x)}{g(x)}\text{ be of type $\frac{0}{0}$ or $ \pm \frac{\infty}{\infty} $}. \]
+    Let:
+    \[ \lim\limits_{{x} \to {a}}\frac{f(x)}{g(x)}=L\in\ER. \]
+    Then:
+    \[ \lim\limits_{{x} \to {a}}\frac{f(x)}{g(x)}=L. \]
+\end{Theorem}
+\begin{Remark}{}{}
+    \begin{enumerate}[(a)]
+        \item The rule applies to $ a\in\ER $, i.e., $ a\in\R $ and $ a=\pm\infty $, and one-sided limits.
+        \item You can apply the rule multiple times, but make sure after each application that you verify your limit is of type $ 0/0 $
+              or $ \pm\infty/\infty $.
+        \item We will use $ \LHR $ to denote a step which we apply l'Hôpital's Rule.
+    \end{enumerate}
+\end{Remark}
+Let's examine the various types!
+\subsection*{Type $ 0/0 $ or $ \pm\infty/\infty $}
+Apply LHR directly!
+\begin{Example}{}{}
+    \begin{itemize}
+        \item $ \begin{aligned}[t]
+                       & \lim\limits_{{x} \to {2}}\frac{2-x}{\sqrt{2}-\sqrt{x}}        &  & \text{type }\frac{0}{0} \\
+                       & \LHR \lim\limits_{{x} \to {2}}\frac{-1}{-\frac{1}{2\sqrt{x}}}                              \\
+                       & =\lim\limits_{{x} \to {2}}2\sqrt{x}                                                        \\
+                       & =2\sqrt{2}.
+                  \end{aligned} $
+        \item $ \begin{aligned}[t]
+                       & \lim\limits_{{x} \to {\infty}}\frac{x^3-2x+7}{3x^3+x^2+x+1} &  & \text{type }\frac{\infty}{\infty} \\
+                       & \LHR \lim\limits_{{x} \to {\infty}}\frac{3x^2-2}{9x^2+2x+1} &  & \text{type }\frac{\infty}{\infty} \\
+                       & \LHR \lim\limits_{{x} \to {\infty}}\frac{6x}{18x+2}         &  & \text{type }\frac{\infty}{\infty} \\
+                       & =\lim\limits_{{x} \to {\infty}}\frac{6}{18}                                                        \\
+                       & =\frac{1}{3}.
+                  \end{aligned} $
+        \item $ \begin{aligned}[t]
+                       & \lim\limits_{{x} \to {0}}\frac{\tan x}{x}        &  & \text{type }\frac{0}{0} \\
+                       & \LHR \lim\limits_{{x} \to {0}}\frac{\sec^2 x}{1}                              \\
+                       & =1.
+                  \end{aligned} $
+        \item $ \displaystyle \lim\limits_{{x} \to {0^+}}\frac{\ln x}{x}=-\infty $ is not an indeterminate form, so we can't use LHR\@. Simply,
+              \[ \lim\limits_{{x} \to {0^+}}\frac{\ln x}{x}=
+                  \biggl(\lim\limits_{{x} \to {0^+}}\frac{1}{x}\biggr)(\lim\limits_{{x} \to {0^+}}\ln x)=(\infty)(-\infty)=-\infty. \]
+    \end{itemize}
+\end{Example}
+\subsection*{Type $ 0\cdot \infty$}
+The trick: divide by the reciprocal of one of them!
+\[ fg=\frac{f}{1/g}. \]
+\begin{Example}{}{}
+    \begin{itemize}
+        \item $\begin{aligned}[t]
+                       & \lim\limits_{{x} \to {0^+}}x\ln x                  &  & \text{type }0\cdot -\infty         \\
+                       & =\lim\limits_{{x} \to {0^+}}\frac{\ln x}{1/x}      &  & \text{type }-\frac{\infty}{\infty} \\
+                       & \LHR \lim\limits_{{x} \to {0^+}}\frac{1/x}{-1/x^2}                                         \\
+                       & =\lim\limits_{{x} \to {0^+}}(-x)                                                           \\
+                       & =0.
+                  \end{aligned}$
+        \item $\begin{aligned}[t]
+                       & \lim\limits_{{x} \to {0^+}}x e^{1/x}                          &  & \text{type }0\cdot \infty         \\
+                       & =\lim\limits_{{x} \to {0^+}}\frac{e^{1/x}}{1/x}               &  & \text{type }\frac{\infty}{\infty} \\
+                       & \LHR\lim\limits_{{x} \to {0^+}}\frac{e^{1/x}(-1/x^2)}{-1/x^2}                                        \\
+                       & =\lim\limits_{{x} \to {0^+}}e^{1/x}                                                                  \\
+                       & =\infty.
+                  \end{aligned}$
+        \item $\begin{aligned}[t]
+                       & \lim\limits_{{x} \to {\infty}}x e^{-x}            &  & \text{type }\infty\cdot 0         \\
+                       & =\lim\limits_{{x} \to {\infty}}\frac{x}{e^{x}}    &  & \text{type }\frac{\infty}{\infty} \\
+                       & \LHR\lim\limits_{{x} \to {\infty}}\frac{1}{e^{x}}                                        \\
+                       & =0.
+                  \end{aligned}$
+
+              Alternative argument: $ x $ grows asymptotically slower than $ e^x $ as $ x\to\infty $.
+    \end{itemize}
+\end{Example}
+\subsection*{Type $ \infty-\infty$}
+Combine the terms into a single term somehow (rationalize, factor, simplify, etc.).
+\begin{Example}{}{}
+    \begin{itemize}
+        \item $ \begin{aligned}[t]
+                       & \lim\limits_{{x} \to {\pi/2^-}}\sec(x)-\tan(x)                         &  & \text{type }\infty-\infty \\
+                       & =\lim\limits_{{x} \to {\pi/2^-}}\frac{1}{\cos x}-\frac{\sin x}{\cos x}                                \\
+                       & =\lim\limits_{{x} \to {\pi/2^-}}\frac{1-\sin x}{\cos x}                &  & \text{type }\frac{0}{0}   \\
+                       & \LHR \lim\limits_{{x} \to {\pi/2^-}}\frac{-\cos x}{-\sin x}                                           \\
+                       & =\frac{0}{1}                                                                                          \\
+                       & =0.
+                  \end{aligned} $
+        \item $\begin{aligned}[t]
+                       & \lim\limits_{{x} \to {\infty}}\ln(x)-\ln(3x+1)      &  & \text{type }\infty-\infty                                      \\
+                       & =\lim\limits_{{x} \to {\infty}}\LN{\frac{x}{3x+1}}                                                                      \\
+                       & =\LN*{\lim\limits_{{x} \to {\infty}}\frac{x}{3x+1}} &  & \text{since $\ln x$ is continuous; type }\frac{\infty}{\infty} \\
+                       & \LHR\LN*{\lim\limits_{{x} \to {\infty}}\frac{1}{3}}                                                                     \\
+                       & =\LN*{\frac{1}{3}}.
+                  \end{aligned}$
+    \end{itemize}
+\end{Example}
+\subsection*{Type $ 1^{\infty} $, $ 0^0 $, $ \infty^0 $}
+In this case, write
+\[ f(x)^{g(x)}=e^{\LN*{f(x)^{g(x)}}}=e^{g(x)\LN*{f(x)}}=\EXP[\Big]{g(x)\LN[\big]{f(x)}}, \]
+then the exponent will be type $ 0\cdot\infty $.
+\begin{Example}{}{}
+    \begin{itemize}
+        \item $ \begin{aligned}[t]
+                       & \lim\limits_{{x} \to {0^+}}x^x            &  & \text{type }0^0                               \\
+                       & =\lim\limits_{{x} \to {0^+}}e^{x\ln x}                                                       \\
+                       & =\EXP*{\lim\limits_{{x} \to {0^+}}x\ln x} &  & \text{we did this earlier; type }0\cdot\infty \\
+                       & =e^0                                                                                         \\
+                       & =1.
+                  \end{aligned} $
+        \item $ \begin{aligned}[t]
+                       & \lim\limits_{{x} \to {\infty}}\biggl(1+\frac{1}{x}\biggr)^{\!x}                           &  & \text{type }1^{\infty}    \\
+                       & =\lim\limits_{{x} \to {\infty}}e^{x\LN*{1+\frac{1}{x}}}                                   &  & \text{type }\infty\cdot 0 \\
+                       & =\EXP*{\lim\limits_{{x} \to {\infty}}x\LN*{1+\frac{1}{x}}}                                                               \\
+                       & =\EXP*{\lim\limits_{{x} \to {\infty}}\frac{\LN*{1+\frac{1}{x}}}{1/x}}                     &  & \text{type }\frac{0}{0}   \\
+                       & \LHR\EXP*{\lim\limits_{{x} \to {\infty}}\frac{1+\frac{1}{x}\cdot \frac{-1}{x^2}}{-1/x^2}}                                \\
+                       & =\EXP*{\lim\limits_{{x} \to {\infty}}\frac{1}{1+1/x}}                                                                    \\
+                       & =e^1                                                                                                                     \\
+                       & =e.
+                  \end{aligned} $
+        \item $ \begin{aligned}[t]
+                       & \lim\limits_{{x} \to {\pi/2^-}}\sec(x)^{\cos(x)}                                                &  & \text{type }\infty^0              \\
+                       & =\lim\limits_{{x} \to {\pi/2^-}}e^{\cos(x)\ln(\sec x)}                                                                                 \\
+                       & =\EXP*{\lim\limits_{{x} \to {\pi/2^-}}\cos(x)\ln(\sec x)}                                       &  & \text{type }0\cdot\infty          \\
+                       & =\EXP*{\lim\limits_{{x} \to {\pi/2^-}}\frac{\ln(\sec x)}{\sec x}}                               &  & \text{type }\frac{\infty}{\infty} \\
+                       & \LHR\EXP*{\lim\limits_{{x} \to {\pi/2^-}}\frac{\frac{1}{\sec x}\sec(x)\tan(x)}{\sec(x)\tan(x)}}                                        \\
+                       & =\EXP*{\lim\limits_{{x} \to {\pi/2^-}}\frac{1}{\sec x}}                                                                                \\
+                       & =e^0                                                                                                                                   \\
+                       & =1.
+                  \end{aligned} $
+    \end{itemize}
+\end{Example}
+So, in total there are 7 indeterminate forms.
+\[ \begin{array}{ll}
+        \emph{indeterminate form} & \emph{method}                                              \\
+        \midrule
+        0/0,\infty/\infty         & \text{apply LHR directly}                                  \\
+        0\cdot \infty             & fg=\frac{f}{1/g}                                           \\
+        \infty-\infty             & \text{combine terms (rationalize, factor, simplify, etc.)} \\
+        1^{\infty},0^0,\infty^0   & fg=\EXP{g\ln(f)}.
+    \end{array} \]

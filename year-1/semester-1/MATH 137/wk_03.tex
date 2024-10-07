@@ -159,9 +159,16 @@ then we can use rule (7) to find the limit!
     \[ L=\frac{5+L}{2}\iff 2L=5+L\iff L=5. \]
 \end{Example}
 \section{Squeeze Theorem}
-\begin{Theorem}{Squeeze Theorem}{}
-    If $ a_n\le b_n\le c_n $ and $ \lim\limits_{{n} \to {\infty}}a_n=L=\lim\limits_{{n} \to {\infty}}c_n $,
-    then $ \lim\limits_{{n} \to {\infty}}b_n=L $.
+\begin{Theorem}{\href{https://proofwiki.org/wiki/Squeeze_Theorem\#Sequences\_of\_Real\_Numbers}{Squeeze Theorem for Sequences of Real Numbers}}{}
+    Let $ \sequence{a_n} $, $ \sequence{b_n} $, and $ \sequence{c_n} $
+    be sequences in $ \R $.\smallskip
+
+    Let $ \lim\limits_{{n} \to {\infty}}a_n=L=\lim\limits_{{n} \to {\infty}}c_n $.\smallskip
+
+    Suppose that
+    \[ \forall n\in\N:a_n\le b_n\le c_n \]
+    Then:
+    \[ \lim\limits_{{n} \to {\infty}}b_n=L. \]
     \tcblower{}
     \textbf{Proof}: Let $ \varepsilon>0 $ be given.
     Since $ a_n\to L $ and $ c_n\to L $, we can find $ N\in\N $
@@ -194,17 +201,25 @@ then we can use rule (7) to find the limit!
 \end{Example}
 \section{Monotone Convergence Theorem}
 First, we need to some terminology.
-\begin{Definition}{}{}
-    Let $ S\subseteq \R $. We say that $ \alpha $ is an \textbf{upper bound}
-    of $ S $ if $ x\le \alpha $ for all $ x\in S $. We call
-    such a set \textbf{bounded above}.
+% https://proofwiki.org/wiki/Definition:Bounded_Above_Set/Real_Numbers
+% https://proofwiki.org/wiki/Definition:Bounded_Below_Set/Real_Numbers
+% https://proofwiki.org/wiki/Definition:Upper_Bound_of_Set/Real_Numbers
+% https://proofwiki.org/wiki/Definition:Lower_Bound_of_Set/Real_Numbers
+% https://proofwiki.org/wiki/Definition:Bounded_Set/Real_Numbers
+\begin{Definition}{\href{https://proofwiki.org/wiki/Definition:Upper\_Bound\_of\_Set/Real\_Numbers}{Upper Bound of Set}}{}
+    Let $ S\subseteq \R $.\smallskip
 
-    Similarly, $ \beta $ is a \textbf{lower bound} if $ x\le \beta $
-    for all $ x\in S $. In this case, $ S $ is \textbf{bounded below}.
+    An \textbf{upper bound for $S$ (in $ \R $)} is an element $ \alpha\in\R $ such that
+    \[ \forall x\in S:x\le \alpha. \]
+    We say that $ S $ is \textbf{bounded above (in $\R$)} if and only if $ S $ admits an upper bound (in $ \R $).\smallskip
 
-    We call $ S $ \textbf{bounded} if it is bounded both above and
-    below. In this case, we could find $ M\in\R $
-    such that $ S\subseteq [-M,M] $.
+    A \textbf{lower bound for $S$ (in $ \R $)} is an element $ \beta\in\R $ such that
+    \[ \forall x\in S:x\ge \beta. \]
+    We say that $ S $ is \textbf{bounded below (in $\R$)} if and only if $ S $ admits a lower bound (in $ \R $).\smallskip
+
+    We say that $ S $ \textbf{bounded (in $ \R $)} if and only if it is bounded below and bounded
+    above (in $ \R $). In this case,
+    \[ \exists M\in\R:\forall x\in S:\abs{x}\le M. \]
 \end{Definition}
 \begin{Example}{}{}
     If $ S=(-1,1) $, then $ 7 $ is an upper bound and $ -12 $
@@ -219,7 +234,7 @@ First, we need to some terminology.
         \item $ \alpha $ is the smallest, that is, if $ \alpha' $ is another
               upper bound, then $ \alpha'\ge \alpha $.
     \end{enumerate}
-    Denote this by $ \alpha=\text{lub}(S) $ or $ \alpha=\sup(S) $.
+    Denote this by $ \alpha=\lub(S) $ or $ \alpha=\sup(S) $.
 
     Similarly, $ \beta $ is the \textbf{greatest lower bound} if
     \begin{enumerate}[(i)]
@@ -227,7 +242,7 @@ First, we need to some terminology.
         \item $ \beta $ is the largest, that is, if $ \beta' $
               is another lower bound, then $ \beta'\le \beta $.
     \end{enumerate}
-    Denote this by $ \beta=\text{glb}(S) $ or $ \beta=\inf(S) $.
+    Denote this by $ \beta=\glb(S) $ or $ \beta=\inf(S) $.
 \end{Definition}
 \begin{Example}{}{}
     If $ S=(-1,1) $, then $ \inf(S)=-1 $ and $ \sup(S)=1 $.
