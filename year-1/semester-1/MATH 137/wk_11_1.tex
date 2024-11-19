@@ -1,3 +1,207 @@
 \chapter{Taylor Polynomials and Taylor's Theorem}
 \section{Introduction to Taylor Polynomials and Approximation}
+Recall the linear approximation of $ f(x) $ at $ x=a $:
+\[ L_a^f(x)=f(a)+f'(a)(x-a). \]
+Idea: use higher-order derivatives to get a better approximation! Let's find
+a polynomial $ T_{n,a}(x) $ that agrees with $ f(x),f'(x),f''(x),\ldots,f^{(n)}(x) $ at $ x=a $,
+say
+\[ T_{n,a}(x)=c_0+c_1(x-a)+c_2(x-a)^2+\cdots+c_n(x-a)^n. \]
+First, $ T_{n,a}(a)=c_0 $, and we want $ T_{n,a}(a)=f(a) $, so
+\[ c_0=f(a). \]
+Next, $ T_{n,a}'(x)=c_1+2c_2(x-a)+\cdots+n c_n(x-a)^{n-1} $, and
+$ T_{n,a}'(a)=c_1 $. But, we want $ T_{n,a}'(a)=f'(a) $, so
+\[ c_1=f'(a). \]
+\[ T_{n,a}''(x)=2c_2+6c_3(x-a)+\cdots+n(n-1)c_n(x-a)^{n-2}, \]
+so $ T_{n,a}''(a)=2c_2 $. But we want $ T_{n,a}''(a)=f''(a) $, so
+\[ 2c_2=f''(a)\implies c_2=\frac{f''(a)}{2}. \]
+Keep going!
+\[ c_3=\frac{f^{(3)}(a)}{6}=\frac{f^{(3)}(a)}{3!}. \]
+In general,
+\[ c_k=\frac{f^{(k)}(a)}{k!},\; 0<k\in\Z. \]
+\begin{Definition}{}{}
+    Assume that $ f $ is $ n $-times differentiable at $ x=a $. The \textbf{$n^{\text{th}}$ degree Taylor polynomial}
+    for $ f $ centred at $ x=a $ is:
+    \[ T_{n,a}(x)
+        =f(a)+f'(a)(x-a)+\frac{f''(a)}{2!}(x-a)^2+\cdots+\frac{f^{(n)}(a)}{n!}(x-a)^{n}
+        =\sum_{k=0}^{n}\frac{f^{(k)}(a)}{k!}(x-a)^{k}. \]
+\end{Definition}
+\begin{Example}{}{}
+    Find $ T_{4,0}(x) $ for $ f(x)=e^{x} $.
+    \tcblower{}
+    \textbf{Solution}:
+    \begin{align*}
+        f(x)       & =e^x\implies f(0)=1,       \\
+        f'(x)      & =e^x\implies f'(0)=1,      \\
+        f''(x)     & =e^x\implies f''(0)=1,     \\
+        f^{(3)}(x) & =e^x\implies f^{(3)}(0)=1, \\
+        f^{(4)}(x) & =e^x\implies f^{(4)}(0)=1. \\
+    \end{align*}
+    So,
+    \[ T_{4,0}(x)=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+\frac{x^4}{4!}. \]
+    In general, the Taylor series expansion at $ x=0 $ is:
+    \[ e^x=\sum_{n=0}^{\infty}\frac{x^n}{n!}. \]
+\end{Example}
+It is clear that the larger $ n $ is, the better $ T_{n,a}(x) $ approximates $ f(x) $.
+\begin{Example}{}{}
+    Consider $ f(x)=\cos x $ (so $ f(0)=1 $), we get
+    \begin{align*}
+        f'(x)      & =-\sin x\implies f'(0)=0,     \\
+        f''(x)     & =-\cos x\implies f''(0)=-1,   \\
+        f^{(3)}(x) & =\sin x\implies f^{(3)}(0)=0, \\
+        f^{(4)}(x) & =\cos x\implies f^{(4)}(0)=1.
+    \end{align*}
+    So, we get $ T_{0,0}(x)=T_{1,0}(x)=1 $ and
+    \[ T_{3,0}(x)=1-\frac{x^2}{2!},\quad T_{4,0}(x)=1-\frac{x^2}{2!}+\frac{x^4}{4!}. \]
+    \begin{Remark}{}{}
+        Since odd derivatives at $ x=0 $, only the next even Taylor polynomial changes. This also has to do with the fact
+        that $ \cos x $ is an even function.
+    \end{Remark}
+    In general, the Taylor series expansion at $ x=0 $ is:
+    \[ \cos x=\sum_{n=0}^{\infty}\frac{(-1)^n x^{2n}}{(2n)!}. \]
+\end{Example}
+\begin{Example}{}{}
+    For $ f(x)=\ln x $, find $ T_{3,1}(x) $.
+    \tcblower{}
+    \textbf{Solution}.
+    \begin{align*}
+        f(x)=\ln x\implies f(1)=0,               \\
+        f'(x)=\frac{1}{x}\implies f'(1)=1,       \\
+        f''(x)=-\frac{1}{x^2}\implies f''(1)=-1, \\
+        f^{(3)}(x)=\frac{2}{x^3}\implies f^{(3)}(1)=2.
+    \end{align*}
+    So,
+    \[ T_{3,1}(x)=0+1(x-1)-\frac{1}{2!}(x-1)^2+\frac{2}{3!}(x-1)^3=(x-1)-\frac{1}{2}(x-1)^2+\frac{1}{3}(x-1)^3. \]
+\end{Example}
 \section{Taylor's Theorem and Errors in Approximations}
+As for linear approximations, we need a formula that allows us to estimate the size of the error
+in using the Taylor polynomial to approximate a function.
+\begin{Definition}{}{}
+    Assume that $ f $ is $ n $-times differentiable at $ x=a $. Let
+    \[ R_{n,a}(x)=f(x)-T_{n,a}(x). \]
+    $ R_{n,a}(x) $ is called the \textbf{$n^{\text{th}}$ degree Taylor remainder function} for $ f(x) $ centred at $ x=a $.
+
+    Then, we define the \textbf{error} in using the Taylor polynomial to approximate $ f $ as
+    \[ \epsilon(x)=\abs{R_{n,a}(x)}. \]
+\end{Definition}
+Now, we can write a formula for the \textbf{remainder}.
+\begin{Theorem}{Taylor's Theorem}{}
+    Assume $ f $ is $ (n+1) $-times differentiable on an interval $ I $ containing $ x=a $. Let $ x\in I $. Then, there exists
+    a point $c$ between $a$ and $x$ such that
+    \[ f(x)-T_{n,a}(x)=R_{n,a}(x)=\frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}. \]
+\end{Theorem}
+\begin{Remark}{Observations of Taylor's Functions}{}
+    \begin{enumerate}[(1)]
+        \item $ T_{1,a}(x)=L_a^f(x) $ and
+              \[ \abs{R_{n,a}(x)}=\abs*{\frac{f''(c)}{2!}}(x-a)^2\le \frac{M}{2}(x-a)^2, \]
+              which is the linear approximation error!
+        \item If $ n=0 $, $ f $ is differentiable on $ I $, and for $ x\in I $, there exists a point $c$ between $a$ and $x$ such that
+              \[ f(x)-T_{0,a}(x)=f(a), \]
+              so it says
+              \[ f(x)-f(a)=f'(c)(x-a)\implies \frac{f(x)-f(a)}{x-a}=f'(c), \]
+              which is the MVT\@! So, Taylor's Theorem is a higher-order version of the MVT\@.
+        \item Again, the theorem doesn't tell us how to find $ c $, but we can find an upper bound on the error,
+              like we did for linear approximations.
+    \end{enumerate}
+\end{Remark}
+\begin{Theorem}{Taylor's Inequality}{}
+    \[ \abs{R_{n,a}(x)}\le \frac{M\abs{x-a}^{n+1}}{(n+1)!}, \]
+    where $ \abs{f^{(n+1)}(c)}\le M $ for all $c$ between $a$ and $x$.
+\end{Theorem}
+\begin{Example}{}{}
+    Let $ f(x)=\sqrt{1+x} $.
+    \begin{enumerate}[(1)]
+        \item Show that $  T_{2,0}(x)=1+\frac{x}{2}-\frac{x^2}{8} $.
+        \item Approximate $ \sqrt{1.1} $ using $ T_{2,0}(x) $.
+        \item Find an upper bound on the error.
+    \end{enumerate}
+    \tcblower{}
+    \textbf{Solution}.
+    \begin{enumerate}[(1)]
+        \item Exercise.
+        \item $ \sqrt{1.1}=f(0,1)\approx T_{2,0}(0,1)=1+\frac{0.1}{2}-\frac{0.01}{8}=1+\frac{1}{20}-\frac{1}{800}=\frac{839}{800} $.
+        \item Note that $ f''(x)=\frac{3}{8(1+x)^{5/2}} $ is decreasing on $ [0,0.1] $, so
+              \[ \abs{f''(x)}\le \frac{3}{8}\text{ for $x\in[0,0.1]$ using $c=0$}, \]
+              so $ M=3/8 $ works. Therefore,
+              \[ \epsilon(x)\le \frac{(3/8)\abs{x}^3}{3!} \]
+              or
+              \[ \epsilon(0.1)\le \frac{3}{8}\frac{0.1^3}{3!}=\frac{1}{16}\frac{1}{1000}=\frac{1}{16000}. \]
+    \end{enumerate}
+    Additional questions:
+    \begin{itemize}
+        \item Is $ T_{2,0}(x) $ an over or underestimate for $ f(x) $ if $ x\ge 0 $?
+        \item We know
+              \[ f(x)-T_{2,0}(x)=\frac{f^{(3)}(c)}{3!}x^3=\frac{3}{8(1+c)^{5/3}}\frac{x^3}{3!}\ge 0 \]
+              for $ x\ge 0\implies c\ge 0 $. So, $ f(x)\ge T_{2,0}(x) $, which means $ T_{2,0}(x) $
+              underestimates $ f(x) $ for $ x\ge 0 $. So, the estimate is a lower bound on the actual value! Therefore,
+              \[ \sqrt{1.1}\in\biggl[\frac{839}{800},\frac{839}{800}+\frac{1}{16000}\biggr]. \]
+    \end{itemize}
+\end{Example}
+\begin{Example}{}{}
+    Let $ f(x)=x^{2/3} $. Find the second-order Taylor polynomial centred at $ x=8 $ and
+    find an upper bound on the error if $ x\in[5,11] $.
+    \tcblower{}
+    \textbf{Solution}. Second-order means two derivatives plus one for the error.
+    \begin{align*}
+        f(x)       & =x^{2/3}\implies f(8)=4,                            \\
+        f'(x)      & =\frac{2}{3}x^{-1/3}\implies f'(8)=\frac{1}{3},     \\
+        f''(x)     & =-\frac{2}{9}x^{-4/3}\implies f''(8)=-\frac{1}{72}, \\
+        f^{(3)}(x) & =\frac{8}{27}x^{-7/3}.
+    \end{align*}
+    So,
+    \[ T_{2,8}(x)=4+\frac{1}{3}(x-8)-\frac{1}{144}(x-8)^2. \]
+    For the error,
+    \[ \epsilon(x)\le \frac{M\abs{x-8}^3}{3!}, \]
+    where $ \abs{f^{(3)}(c)}\le M $ for $ c\in[5,11] $ (same range as $ x $). Note that
+    \[ \abs*{f^{(3)}(c)}=\abs*{\frac{8}{27}c^{-7/3}} \]
+    is clearly decreasing, so use $ c=5 $ to get
+    \[ M=\frac{8}{27}(5)^{-7/3}. \]
+    Also, if $ x\in[5,11] $, $ \abs{x-8}^3\le 3^3=27 $, so
+    \[ \abs{R_{2,8}(x)}\le \frac{8}{27}(5)^{-7/3}\frac{27}{3!}=\frac{4}{3}(5)^{-7/3}. \]
+\end{Example}
+We can make the error bound even more general.
+\begin{Theorem}{Taylor's Approximation Theorem I (TAT I)}{}
+    If $ f^{(k+1)} $ is continuous on an interval $ I $ containing $ x=a $,
+    then there exists a constant $ N>0 $ such that
+    \[ \abs{f(x)-T_{k,a}(x)}\le N\abs{x-a}^{k+1} \]
+    or
+    \[ -N\abs{x-a}^{k+1}\le f(x)-T_{k,a}(x)\le N\abs{x-a}^{k+1}. \]
+    Actually, $ N=\frac{M}{(k+1)!} $ from the inequality.
+\end{Theorem}
+Let's see how to use this to solve limits!
+\begin{Example}{}{}
+    Evaluate $ \displaystyle \lim\limits_{{x} \to {0}}\frac{e^x-1-x}{x^2} $ using TAT I\@.
+    \tcblower{}
+    \textbf{Solution}. First, for $ f(x)=e^x $,
+    \[ T_{3,0}(x)=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}, \]
+    and we use TAT I to get
+    \[ -Nx^4\le e^x-1-x-\frac{x^2}{2!}-\frac{x^3}{3!}\le N x^4 \]
+    where $ 0<N\in\R $ for $ x $ near $ 0 $. Then,
+    \[ -Nx^2\le \frac{e^x-1-x}{x^2}-\frac{1}{2}-\frac{x}{6}\le N x^2.  \]
+    By the Squeeze Theorem, since $ \pm Nx^2\to 0 $ as $ x\to 0 $,
+    \[ \lim\limits_{{x} \to {0}}\biggl[\frac{e^x-1-x}{x^2}-\frac{1}{2}-\frac{x}{6}\biggr]=0. \]
+    So,
+    \[ \lim\limits_{{x} \to {0}}\frac{e^x-1-x}{x^2}=\lim\limits_{{x} \to {0}}\biggl[\frac{1}{2}+\frac{x}{6}\biggr]=\frac{1}{2}. \]
+\end{Example}
+\emph{Hold on tight for the next example}.
+\begin{Example}{}{}
+    Evaluate $ \displaystyle \lim\limits_{{x} \to {0}}\frac{e^{x^4}+\cos (x^2)-2}{x^4} $ using TAT I (twice).
+    \tcblower{}
+    \textbf{Solution}. First, for $ f(u)=e^u $, we know $ T_{1,0}(u)=1+u $. Also, for $ g(u)=\cos(u) $,
+    $ T_{3,0}(x)=1-\frac{u^2}{2!} $. So, there exists $ 0<N_1,N_2\in\R $ such that
+    \[ -N_1 u^2\le e^{u}-1-u\le N_1 u^2, \; u\in(-1,1) \]
+    \[ -N_2 u^4\le \cos(u)-1+\frac{u^2}{2!}\le N_2 u^4,\; u\in(-1,1). \]
+    In the first equation, sub $ u=x^4 $ for $ x\in(-1,1) $ (so $ u\in(-1,1) $ too):
+    \[ -N_1 x^8\le e^{x^4}-1-x^4\le N_1 x^8.\quad(\star) \]
+    In the second equation, sub $ u=x^2 $ for $ x\in(-1,1) $ (so $ u\in(-1,1) $ too):
+    \[ -N_2 x^8\le \cos(x^2)-1+\frac{x^4}{2!}\le N_2 x^8.\quad(\star\star) \]
+    Add $ (\star) $ and $ (\star\star) $:
+    \begin{align*}
+         & \phantom{\implies}-(N_1+N_2)x^8\le e^{x^4}-1-x^4+\cos(x^2)-1+\frac{x^4}{2}\le (N_1+N_2)x^8. \\
+         & \implies -(N_1+N_2)x^8\le e^{x^4}+\cos(x^2)-2-\frac{x^4}{2}\le (N_1+N_2)x^8.                \\
+         & \implies -(N_1+N_2)x^4\le \frac{e^{x^4}+\cos(x^2)-2}{x^4}-\frac{1}{2}\le (N_1+N_2)x^4.
+    \end{align*}
+    Using the Squeeze Theorem, we get
+    \[ \lim\limits_{{x} \to {0}}\biggl[\frac{e^{x^4}+\cos(x^2)-2}{x^4}-\frac{1}{2}\biggr]=0\implies
+        \lim\limits_{{x} \to {0}}\biggl[\frac{e^{x^4}+\cos(x^2)-2}{x^4}\biggr]=\frac{1}{2}. \]
+    \emph{Remark}: You could have also used LHR twice to get the answer.
+\end{Example}
