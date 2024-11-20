@@ -1,1 +1,239 @@
 \section{Big-O}
+This notation is used to reflect relative orders of magnitude.
+\begin{Definition}{\href{https://proofwiki.org/wiki/Definition:Big-O_Notation/Real/Point}{Big-O (Real Analysis, Point)}}{}
+    Let $ f $ and $ g $ be functions
+    defined on a neighbourhood of $ +\infty $
+    in $ \R $.
+
+    The statement:
+    \[ f(x)=\bigo{g(x)}\text{ as }x\to a \]
+    is equivalent to:
+    \[ \exists M\in\R_{\ge 0}:
+        \exists \epsilon\in\R_{>0}:
+        \forall x\in \R:
+        0<\abs{x-a}<\varepsilon\implies \abs{f(x)}\le M\abs{g(x)}.  \]
+\end{Definition}
+We can see that if $ f(x)=\bigo{g(x)} $, then
+$ f $ has order of magnitude less than (or equal to) $ g $
+near $ x=a $.
+\begin{Remark}{}{}
+    We can always insist $ 0<\varepsilon\le 1 $
+    since once we find an $ \varepsilon $ that works,
+    so will any smaller $ \varepsilon $ value.
+\end{Remark}
+\begin{Example}{}{}
+    Suppose $ f(x)=\bigo{x^n} $ for some $ n\in \N $
+    as $ x\to 0 $. Find $ \lim\limits_{{x} \to {0}}f(x) $.
+    \tcblower{}
+    \textbf{Solution}.
+    Since $ \lim\limits_{{x} \to {0}}-M\abs{x^n}=
+        \lim\limits_{{x} \to {0}}M\abs{x^n} $, by the
+    Squeeze Theorem we get
+    \[ \lim\limits_{{x} \to {0}}f(x)=0. \]
+    So, if $ f(x)=\bigo{x^n} $, we get
+    $ \lim\limits_{{x} \to {0}}f(x)=0 $. Denote this as
+    \[ \lim\limits_{{x} \to {0}}\bigo{x^n}=0. \]
+\end{Example}
+The idea is to compare functions though, so let's extend our
+definition.
+\begin{Definition}{}{}
+    Suppose $ f $ and $ g $ are defined on an open interval
+    containing $ x=a $, except possibly at $ x=a $,
+    write
+    \[ f(x)=g(x)+\bigo{h(x)}\text{ as $x\to a$} \]
+    if
+    \[ f(x)-g(x)=\bigo{h(x)}\text{ as $x\to a$}. \]
+    This means $ f(x)\approx g(x) $ near $ x=a $,
+    with error that has magnitude at most $ h(x) $.
+\end{Definition}
+\begin{Example}{}{}
+    We saw earlier than for $ f(x)=\sqrt{1+x} $,
+    if we use $ T_{2,0}(x) $ to approximate it, then
+    \[ \abs{f(x)-T_{2,0}(x)}\le \frac{3}{48}x^3 \]
+    and $ f(x)\ge T_{2,0}(x) $. So
+    \[ \sqrt{1+x}-T_{2,0}(x)=\bigo{x^3} \]
+    or
+    \[ \sqrt{1+x}=T_{2,0}(x)+\bigo{x^3}. \]
+\end{Example}
+We can collect this result as a theorem:
+\begin{Theorem}{Taylor's Approximation Theorem II (TAT II)}{}
+    Let $ r>0 $. If $ f $ is $ (n+1) $-times differentiable
+    on $ [-r,r] $ and $ f^{(n+1)} $ is continuous on $ [-r,r] $,
+    then
+    \[ f(x)=T_{n,0}(x)+\bigo{x^{n+1}}\text{ as $x\to 0$}. \]
+    \tcblower{}
+    \textbf{Proof}: Since $ f^{(n+1)} $
+    is continuous on $ [-r,r] $, the EVT
+    says that it attains its maximum. Let
+    $ M $ be chosen so that
+    \[ \abs{f^{(n+1)}(x)}\le M\text{ for $x\in[-r,r]$}. \]
+    Taylor's Theorem says there exists $ c $
+    between $ x $ and $ 0 $ so that
+    \[ \abs{f(x)-T_{n,0}(x)}=\abs*{\frac{f^{(n+1)}(c)}{(n+1)!}x^{n+1}}
+        \le \frac{M}{(n+1)!}\abs{x^{n+1}}. \]
+    So, $ f(x)-T_{n,0}(x)=\bigo{x^{n+1}} $ as
+    $ x\to 0 $, as desired.
+\end{Theorem}
+Q\@: If $ f(x)=\bigo{x^m} $ and
+$ g(x)=\bigo{x^n} $ as $ x\to 0 $, what
+can we say about $ f+g $? Well, there exists
+$ M_1,M_2>0 $ so that
+\[ \abs{f(x)}\le M_1\abs{x^m}\text{ and }
+    \abs{g(x)}\le M_2\abs{x^n} \]
+for $ x $ near zero. Using the triangle equality, we obtain
+\[ \abs{f(x)+g(x)}\le M_1x^n+M_2x^m\text{ as $x\to 0$}. \]
+Let $ k=\min(n,m) $, then for $ x $ near
+zero ($ x\in[-1,1] $), we get
+\[ x^m\le x^k,x^n\le x^k, \]
+so
+\[ \abs{f(x)+g(x)}\le (M_1+M_2)x^k \]
+or $ f(x)+g(x)=\bigo{x^k} $ for $ k=\min(n,m) $.
+We denote this as $ \bigo{x^n}+\bigo{x^m}=\bigo{x^k} $,
+where $ k=\min(n,m) $.
+Let's collect all the arithmetic properties
+of Big-O.
+\begin{Theorem}{Arithmetic of Big-O}{}
+    Let $ f(x)=\bigo{x^n} $ and $ g(x)=\bigo{x^m} $
+    as $ x\to 0 $ for $ m,n\in\R $.
+    \begin{enumerate}[(1)]
+        \item $ c(\bigo{x^n})=\bigo{x^n} $, i.e.,
+              $ c f(x)=\bigo{x^n} $.
+        \item $ \bigo{x^n}+\bigo{x^m}=\bigo{x^k} $
+              where $ k=\min(n,m) $.
+        \item $ \bigo{x^n}\bigo{x^m}=\bigo{x^{n+m}} $, i.e.,
+              $ f(x)g(x)=\bigo{x^{n+m}} $.
+        \item If $ k\le n $, then $ f(x)=\bigo{x^k} $.
+        \item If $ k\le n $, then $ \frac{1}{x^k}\bigo{x^n}=\bigo{x^{n-k}} $,
+              i.e., $ \frac{f(x)}{x^k}=\bigo{x^{n-k}} $.
+        \item $ f(u^k)=\bigo{u^{kn}} $, i.e., we can
+              sub in $ x=u^k $.
+    \end{enumerate}
+    \tcblower{}
+    \textbf{Proof}: Exercises.
+\end{Theorem}
+\begin{Example}{}{}
+    We know $ \sqrt{1+x}-T_{2,0}(x)=\bigo{x^3} $,
+    but what about
+    \[ \underbrace{\bigl(\sqrt{1+x}-T_{2,0}(x)\bigr)x^5}_{\bigo{x^{3+5}}=\bigo{x^{8}}}
+        +\underbrace{x^{10}}_{\bigo{x^{10}}}? \]
+    Clearly, we get $ \bigo{x^{8}} $ by property 2.
+\end{Example}
+We can also use Big-O notation to help us evaluate limits,
+let's look at some examples.
+\begin{Example}{}{}
+    Evaluate $ \displaystyle \lim\limits_{{x} \to {0}}\frac{e^{x^2}-1-x^2}{3} $
+    using Big-O\@.
+    \tcblower{}
+    \textbf{Solution}. Note that
+    $ T_{1,0}(x)=1+x $ for $ e^x $, so
+    \[ e^x-(1+x)=\bigo{x^2} \]
+    by TAT II\@. So, by arithmetic rules of Big-O (sub $ x=u^2 $),
+    \[ e^{u^2}-(1+u^2)=\bigo{(u^2)^2}=\bigo{u^4}. \]
+    Therefore,
+    \[ \frac{e^{x^2}-1-x^2}{x^3}=\frac{\bigo{x^4}}{x^3}=\bigo{x}, \]
+    and so
+    \[ \lim\limits_{{x} \to {0}}\frac{e^{x^2}-1-x^2}{x^3}=
+        \lim\limits_{{x} \to {0}}\bigo{x}=0. \]
+\end{Example}
+\begin{Example}{}{}
+    Evaluate $ \displaystyle \frac{(e^x-1)[\cos(x)-1]x^3}{(e^{x^2}-1)\sin(x^2)\sin^2(x)} $
+    using Big-O\@.
+    \tcblower{}
+    \textbf{Solution}. As an exercise, first find/show:
+    \begin{align*}
+        e^x    & =1+x+\bigo{x^2},             \\
+        \cos x & =1-\frac{x^2}{2}+\bigo{x^4}, \\
+        \sin x & =x+\bigo{x^3}.
+    \end{align*}
+    Then, we get
+    \[ \sin^2(x)=(x+\bigo{x^3})^2=x^2+2x\bigo{x^3}+\bigo{x^3}^2
+        =x^2+\bigo{x^4}+\bigo{x^6}=x^2+\bigo{x^4}. \]
+    \begin{align*}
+        (e^x-1)[\cos(x)-1]x^3
+         & =(x+\bigo{x^2})(-\tfrac{x^2}{2}+\bigo{x^4})x^3         \\
+         & =(-\tfrac{x^3}{2}+\bigo{x^4}+\bigo{x^5}+\bigo{x^6})x^3 \\
+         & =-\tfrac{x^6}{2}+\bigo{x^7}+\bigo{x^8}+\bigo{x^9}      \\
+         & =-\tfrac{x^6}{2}+\bigo{x^7}.
+    \end{align*}
+    Next,
+    \begin{align*}
+        (e^{x^2}-1)\sin(x^2)\sin^2(x)                                 \\
+         & =(x^2+\bigo{x^4})(x^2+\bigo{x^6})(x^2+\bigo{x^4})          \\
+         & =(x^4+\bigo{x^6}+\bigo{x^8}+\bigo{x^{10}})(x^2+\bigo{x^4}) \\
+         & =(x^4+\bigo{x^6})(x^2+\bigo{x^4})                          \\
+         & =x^6+\bigo{x^8}+\bigo{x^8}+\bigo{x^{10}}                   \\
+         & =x^6+\bigo{x^8}.
+    \end{align*}
+    Putting it together,
+    \begin{align*}
+        \lim\limits_{{x} \to {0}}
+        \frac{(e^x-1)[\cos(x)-1]x^3}{(e^{x^2}-1)\sin(x^2)\sin^2(x)}
+         & =\lim\limits_{{x} \to {0}}\frac{-\tfrac{x^6}{2}+\bigo{x^7}}{x^6+\bigo{x^8}} \\
+         & =\lim\limits_{{x} \to {0}}\frac{-\tfrac{1}{2}+\bigo{x}}{1+\bigo{x^2}}       \\
+         & =\frac{-\tfrac{1}{2}}{1}                                                    \\
+         & =-\frac{1}{2}.
+    \end{align*}
+\end{Example}
+\subsection*{Characterization of Taylor Polynomials}
+Consider $ \cos(x^2)-1 $. We know
+\[ \cos(x)-1=-\frac{x^2}{2}+\bigo{x^4}
+    \implies \cos(x^2)-1=-\frac{x^4}{2}+\bigo{x^8}. \]
+However, we know
+\[ \cos(x^2)-1=T_{7,0}(x)+\bigo{x^8}. \]
+So, is $ T_{7,0}(x)=-\frac{x^4}{2} $? Yes!
+Let's examine the theorem.
+\begin{Theorem}{Characterization of Taylor Polynomials}{}
+    Let $ r>0 $, $f$ be $ (n+1) $-times differentiable
+    on $ [-r,r] $, and $ f^{(n+1)} $ be continuous
+    on $ [-r,r] $. If $ p $
+    is a polynomial of degree at most $ n $
+    such that $ f(x)=p(x)+\bigo{x^{n+1}} $, then
+    \[ p(x)=T_{n,0}(x). \]
+    \tcblower{}
+    \textbf{Proof}: First, we need the following fact:
+    \begin{itemize}
+        \item If $ p $ is a polynomial of degree
+              at most $ n $ and $ p(x)=\bigo{x^{n+1}} $,
+              then $ p(x)=0 $ for all $ x $.
+
+              \emph{The proof is an exercise and uses induction}.
+    \end{itemize}
+    By assumption,
+    \[ f(x)-p(x)=\bigo{x^{n+1}}. \]
+    Using TAT II, we have
+    \[ f(x)-T_{n,0}(x)=\bigo{x^{n+1}}. \]
+    So,
+    \[ p(x)-T_{n,0}(x)=[f(x)-T_{n,0}(x)]-[f(x)-p(x)]
+        =\bigo{x^{n+1}}+\bigo{x^{n+1}}=\bigo{x^{n+1}}. \]
+    But $ p(x)-T_{n,0}(x) $
+    is a polynomial of degree at most $ n $,
+    so by the fact above, for all $ x $ we have
+    \[ p(x)-T_{n,0}(x)=0. \]
+    Therefore, $ p(x)=T_{n,0}(x) $.
+\end{Theorem}
+\begin{Example}{}{}
+    Previously, we calculated
+    \[ (e^x-1)[\cos(x)-1]x^3=-\frac{x^6}{2}+\bigo{x^7}, \]
+    so for this function we have
+    \[ T_{6,0}(x)=-\frac{x^6}{2}. \]
+    The derivatives would be terrible to take in practice.
+    \begin{itemize}
+        \item Q\@: What is $ f^{(4)}(0) $, $ f^{(5)}(0) $
+              and $ f^{(6)}(0) $?
+        \item A\@: We know that
+              \begin{align*}
+                  T_{6,0}(x)=
+                  f(0)+f'(0)+
+                  \frac{f''(0)}{2!}x^2+
+                  \frac{f^{(3)}(0)}{3!}x^3+
+                  \frac{f^{(4)}(0)}{4!}x^4+
+                  \frac{f^{(5)}(0)}{5!}x^5+
+                  \frac{f^{(6)}(0)}{6!}x^6.
+              \end{align*}
+              Matching coefficients to
+              $ T_{6,0}(x)=-\frac{x^6}{2} $, we get
+              \[ f^{(4)}(0)=0,\quad f^{(5)}(0)=0,\quad
+                  \frac{f^{(6)}(0)}{6!}=-\frac{1}{2}\implies
+                  f^{(6)}(0)=-\frac{6!}{2}=-360. \]
+    \end{itemize}
+\end{Example}
