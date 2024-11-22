@@ -377,20 +377,31 @@ This is the area under $ f $ \emph{minus} the area ``under'' (between $ g $ and 
 $ x $-axis) $ g $.
 
 Using the same ideas as before, we divide the region into infinitely many infinitely thin
-rectangles (each with width $ dx\approx \Delta x $) and integrate!
+rectangles (each with width $ \odif{x}\approx \Delta x $) and integrate!
 
-So, for $ f\geqslant g $, the area bounded by $ f $ and $ g $ from
-$ x=a $ to $ x=b $ is
-\[ \int_{a}^{b} f(x)-g(x)\, d{x} \]
+Therefore, if $ f(x)\ge g(x) $ for all $ x\in[a,b] $, then the area bounded by
+$ f(x) $ and $ g(x) $ from $ x=a $ to $ x=b $ is
+\[ \int_{a}^{b} f(x)-g(x)\odif{x}. \]
 
 \begin{Example}{}{}
     Find the area between $ f(x)=x^2 $ and $ g(x)=x $ from $ x=1 $ to $ x=3 $.
 
-    \textbf{Solution.} Since $ x^2\geqslant x $ for $ x\in\interval{1}{3} $, we get
-    \[ \text{Area}=\int_{1}^{3} x^2-x\, d{x} =
-        \left[ \frac{x^3}{3} -\frac{x^2}{2} \right]_1^3
-        =\left( \frac{27}{3} -\frac{9}{2}  \right)-\left( \frac{1}{3}-\frac{1}{2}  \right)
-        =\frac{14}{3} \]
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[ylabel = $y$, xlabel = $x$, x post scale=1.4]
+                \addplot[blue, domain=0:3.2, name path=F] {x^2} node [pos = 0.9, left] {$y=x^2$};
+                \addplot[red, domain=0:3.2, name path=G] {x} node [pos = 0.7, below] {$y=x$};
+                \draw[-] (1,5) -- (1,0) node[below] {$x=1$};
+                \draw[-] (3,9) -- (3,0) node[below] {$x=3$};
+                \addplot[fill=red!10] fill between [of=F and G, soft clip={domain=1:3}];
+                \node[below] at (2.5,4.5) {Area};
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+
+    \textbf{Solution}. Note that $ x^2\ge x $ for $ x\in[1,3] $, so we get
+    \[ \text{Area}
+        =\int_{1}^{3}x^2-x\odif{x}=\frac{14}{3}. \]
 \end{Example}
 
 \begin{Remark}{}{}
@@ -401,49 +412,66 @@ $ x=a $ to $ x=b $ is
 \end{Remark}
 
 \underline{Actual Formula}: Area between $ f $ and $ g $ from $ x=a $ to $ x=b $ is
-\[ \int_{a}^{b} \abs{f(x)-g(x)}\, d{x}  \]
+\[ \int_{a}^{b} \abs{f(x)-g(x)}\odif{x}.  \]
 
 So, we should split up the interval $ \interval{a}{b} $ to eliminate
 the absolute value.
 
-Remember, $ \displaystyle \int_{a}^{b} \text{``upper''}-\text{``lower''}\, d{x} $.
+Remember, $ \displaystyle \int_{a}^{b} \text{``upper''}-\text{``lower''}\odif{x} $.
 
 \begin{Example}{}{}
     Find the area enclosed by $ f(x)=1-x^2 $ and $ g(x)=x^2 $.
 
-    \textbf{Solution.} First, we need to find the intersection points:
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[ylabel = $y$, xlabel = $x$]
+                \addplot[blue, domain=-1:1, name path=F] {1-x^2} node [pos = 0.5, above] {$y=1-x^2$};
+                \addplot[red, domain=-1:1, name path=G] {x^2} node [pos = 0.5, below] {$y=x^2$};
+                \draw[-] ($ ({1/sqrt(2)}, 1) $) -- ($ ({1/sqrt(2)}, 0) $) node[above] {$x=\frac{1}{\sqrt{2}}$};
+                \draw[-] ($ ({-1/sqrt(2)}, 1) $) -- ($ ({-1/sqrt(2)}, 0) $) node[above] {$x=-\frac{1}{\sqrt{2}}$};
+                \addplot[fill=red!10] fill between [of=F and G, soft clip={domain=-0.7071:0.7071}];
+                \node[below] at (0,0.5) {Area};
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+
+    \textbf{Solution}. First, we need to find the intersection points:
     $ \displaystyle 1-x^2=x^2\iff 1=2x^2\iff x=\pm \frac{1}{\sqrt{2}} $.
 
-    If $ \displaystyle  x\in\left[ -\frac{1}{\sqrt{2}},\frac{1}{\sqrt{2}} \right] $, then $ 1-x^2\geqslant x^2 $,
-    so we get:
-    \begin{align*}
-        \text{Area} & =
-        \int_{-\sfrac{1}{\sqrt{2}}}^{\sfrac{1}{\sqrt{2}}}(1-x^2)-x^2 \, d{x}                                \\
-                    & =\int_{-\sfrac{1}{\sqrt{2}}}^{\sfrac{1}{\sqrt{2}}}1-2x^2 \, d{x}                      \\
-                    & =\left[ x-\frac{2}{3} x^3 \right]_{-\sfrac{1}{\sqrt{2}}}^{\sfrac{1}{\sqrt{2}}}        \\
-                    & =\left( \frac{1}{\sqrt{2}}-\frac{2}{3} \left( \frac{1}{\sqrt{2}}  \right)^3  \right)-
-        \left( -\frac{1}{\sqrt{2}}-\frac{2}{3} \left( -\frac{1}{\sqrt{2}}  \right)^3  \right)               \\
-                    & =\frac{2}{\sqrt{2}}-\frac{4}{3} \left( \frac{1}{\sqrt{2}}  \right)^3                  \\
-                    & =\frac{2}{\sqrt{2}}-\frac{2}{3\sqrt{2}}                                               \\
-                    & =\frac{4}{3\sqrt{2}}
-    \end{align*}
+    Note that $ 1-x^2\ge x^2 $ for $ \displaystyle  x\in\biggl[-\frac{1}{\sqrt{2}},\frac{1}{\sqrt{2}}\biggr] $,
+    so we get
+    \[ \text{Area}=\int_{-1/\sqrt{2}}^{1/\sqrt{2}}(1-x^2)-(x^2)\odif{x}=\frac{2\sqrt{2}}{3}. \]
 \end{Example}
 
-\begin{Example}{}{}
+\begin{Example}{\emph{This example number reminds me of $ \pi $, but not quite $ \pi $.}}{}
     Find the area between $ f(x)=\sin(x) $ and $ g(x)=\cos(x) $ from $ x=0 $ to $ x=\pi $.
 
-    \textbf{Solution.} From $ x=0 $ to $ x=\sfrac{\pi}{4} $: $ \cos(x)\geqslant \sin(x) $.
-    From $ \sfrac{\pi}{4} $ to $ x=\pi $: $ \sin(x)\geqslant \cos(x) $. So, the area is:
-    \begin{align*}
-        A
-         & =\int_{0}^{\sfrac{\pi}{4}} \cos(x)-\sin(x)\, d{x} +
-        \int_{\sfrac{\pi}{4} }^{\pi} \sin(x)-\cos(x)\, d{x}                                                  \\
-         & =\bigl[\sin(x)+\cos(x)\bigr]_0^{\sfrac{\pi}{4}}+\bigl[-\cos(x)-\sin(x)\bigr]_{\sfrac{\pi}{4}}^\pi \\
-         & =\sin\left( \frac{\pi}{4} \right)+\cos\left( \frac{\pi}{4}  \right)-\sin(0)-\cos(0)
-        -\cos(\pi)-\sin(\pi)+\cos\left( \frac{\pi}{4}  \right)+\sin\left( \frac{\pi}{4}  \right)             \\
-         & =\frac{\sqrt{2}}{2} +\frac{\sqrt{2}}{2}-1+1+\frac{\sqrt{2}}{2}+\frac{\sqrt{2}}{2}                 \\
-         & =2\sqrt{2}
-    \end{align*}
+
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[ylabel = $y$, xlabel = $x$, x post scale=1.4,
+                    xtick={0,1.57,3.14},
+                    xticklabels={$0$, $\frac{\pi}{2}$,$\pi$}]
+                \addplot[blue, domain=0:pi, name path=F] {sin(deg(x))} node [pos = 0.5, above] {$y=\sin x$};
+                \addplot[red, domain=0:pi, name path=G] {cos(deg(x))} node [pos = 0.5, below left] {$y=\cos x$};
+                \addplot[fill=red!10] fill between [of=F and G, soft clip={domain=0:pi}];
+                \node[below] at (0.25,0.75) {$A_1$};
+                \node[below] at (2,0.5) {$A_2$};
+                \draw[-] (0,1) -- (0,-1) node[below] {$x=0$};
+                \draw[-] (pi,1) -- (pi,-1) node[below] {$x=\pi$};
+                \draw[-] (pi/4,1) -- (pi/4,-1) node[below] {$x=\pi/4$};
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+
+    \textbf{Solution}. Note that
+    $ \cos x\ge \sin x $ for $ x\in[0,\pi/4] $ and
+    $ \sin x\ge \cos x $ for $ x\in[\pi/4,\pi] $, so we get
+    \[ \text{Area}
+        =A_1+A_2\\
+        =\int_{0}^{\pi/4}\cos x-\sin x\odif{x}+\int_{\pi/4}^{\pi}\sin x-\cos x\odif{x}
+        =2\sqrt{2}. \]
+
 \end{Example}
 
 We can use the same ideas to compute areas when $ x $ is a function of $ y $, except we use
@@ -453,14 +481,24 @@ We can use the same ideas to compute areas when $ x $ is a function of $ y $, ex
     Find the area between $ x=y^2+1 $ and $ y=x $ from $ y=0 $ to $ y=2 $.
 
     \begin{center}
-        \includegraphics[width=0.5\textwidth]{diagram.pdf}
+        \begin{tikzpicture}
+            \begin{axis}[ylabel = $y$, xlabel = $x$, x post scale=1.4]
+                \addplot[blue, domain=1:5, name path=F] {sqrt(x-1)} node [pos = 0.8, below] {$x=y^2+1$};
+                \addplot[blue, domain=1:5] {-sqrt(x-1)};
+                \addplot[red, domain=0:2, name path=G] {x} node [pos = 0.5, left] {$y=x$};
+                \addplot[black, domain=0:5] {0} node [pos = 0, below] {$y=0$};
+                \addplot[black, domain=0:5] {2} node [pos = 0, above] {$y=2$};
+                \addplot[fill=red!10] fill between [of=F and G, soft clip={domain=0:5}];
+                \node[below] at (2.5,1.75) {Area};
+            \end{axis}
+        \end{tikzpicture}
     \end{center}
 
-    \textbf{Solution.} For $ y\in\interval{0}{2} $: $ y^2+1\geqslant y $, so:
-    \begin{align*}
-        A & =\int_{0}^{2} y^2+1-y\, d{y}                       \\
-          & =\left[ \frac{y^3}{3} +y-\frac{y^2}{2} \right]_0^2 \\
-          & =\frac{8}{3} +2-2                                  \\
-          & =\frac{8}{3}
-    \end{align*}
+    \textbf{Solution 1}. Note that $ y^2+1\ge y $ for $ y\in[0,2] $, so
+    \[\text{Area}
+        =\int_{0}^{2}(y^2+1)-(y)\odif{y}
+        =\frac{8}{3}. \]
+    \textbf{Solution 2}. If we wanted to work with functions of $ x $ instead,
+    we could equivalently compute
+    \[ \text{Area}=\int_{0}^{1}x\odif{x}+\int_{1}^{2}x-\sqrt{x-1}\odif{x}+\int_{2}^{5}2-\sqrt{x-1}\odif{x}=\frac{8}{3}. \]
 \end{Example}

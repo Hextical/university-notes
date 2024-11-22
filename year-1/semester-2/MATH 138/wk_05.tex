@@ -104,7 +104,17 @@ Note that you don't need to draw the full 3-D image, just one area slice is enou
     Rotate the area between $ y=\sqrt{x} $ and $ y=x^2 $ about the line $ y=1 $.
 
     \begin{center}
-        \includegraphics[width=0.6\textwidth]{diagram 3.pdf}
+        \begin{tikzpicture}
+            \begin{axis}[ylabel = $y$, xlabel = $x$]
+                \filldraw[red!20] (0.3,1) circle [x radius=0.2, y radius=0.9];
+                \filldraw[white] (0.3,1) circle [x radius=0.1, y radius=0.45];
+                \addplot[blue, domain=0:1.25, name path=F] {sqrt(\x)} node [pos = 1, above right] {$y=\sqrt{x}$};
+                \addplot[red, domain=0:1.25, name path=G] {x^2} node [pos = 0.9, above right] {$y=x^2$};
+                \addplot[black, domain=0:1.5] {1};
+                \draw[purple, very thick, dotted] (0.3,0.3^2) -- (0.3,1);
+                \draw[green, very thick, dotted] (0.3,0.5477) -- (0.3,1);
+            \end{axis}
+        \end{tikzpicture}
     \end{center}
 
     \textbf{Solution.} The cross-section is a washer with $ \color[rgb]{0.5,0,0.5}r_{\text{out}}=1-x^2 $ and
