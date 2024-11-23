@@ -81,12 +81,22 @@ First, let's recall the area formulas:
     from $ x=1 $ to $ x=5 $.
 
     \begin{center}
-        \includegraphics[width=0.45\textwidth]{diagram 21.pdf}
-        \includegraphics[width=0.45\textwidth]{diagram 22.pdf}
+        \begin{tikzpicture}
+            \begin{axis}[ylabel = $y$, xlabel = $x$, x post scale=1.4]
+                \filldraw[red!20] (5,0) circle [x radius=0.25, y radius=2];
+                \filldraw[red!20] (2.5,0) circle [x radius=0.25, y radius=1.2];
+                \addplot[blue, domain=1:6, name path=F] {sqrt(x-1)} node [pos = 0.5, above left] {$y=\sqrt{x-1}$};
+                \addplot[blue, domain=1:6] {-sqrt(x-1)};
+                \addplot[black, domain=0:6] {0} node [pos = 0.1, below] {\tiny{$x$-axis ($y=0$)}};
+                \draw[-] (0,-2) -- (0,2) node[above] {$x=0$};
+                \draw[-] (5,-2) -- (5,2) node[above] {$x=5$};
+                \node at (2.5,0.5) {\scriptsize $A(x)$};
+            \end{axis}
+        \end{tikzpicture}
     \end{center}
 
     \textbf{Solution.} The cross-section is a disk with radius $ \sqrt{x-1} $. So
-    \[ A(x)=\pi\left( \sqrt{x-1} \right)^2=\pi(x-1) \]
+    \[ A(x)=\pi( \sqrt{x-1} )^2=\pi(x-1) \]
     and
     \begin{align*}
         \text{Volume}
@@ -108,17 +118,17 @@ Note that you don't need to draw the full 3-D image, just one area slice is enou
             \begin{axis}[ylabel = $y$, xlabel = $x$]
                 \filldraw[red!20] (0.3,1) circle [x radius=0.2, y radius=0.9];
                 \filldraw[white] (0.3,1) circle [x radius=0.1, y radius=0.45];
-                \addplot[blue, domain=0:1.25, name path=F] {sqrt(\x)} node [pos = 1, above right] {$y=\sqrt{x}$};
-                \addplot[red, domain=0:1.25, name path=G] {x^2} node [pos = 0.9, above right] {$y=x^2$};
+                \addplot[blue, domain=0:1.25, name path=F] {sqrt(\x)} node [pos = 1, right] {$y=\sqrt{x}$};
+                \addplot[red, domain=0:1.25, name path=G] {x^2} node [pos = 1, below right] {$y=x^2$};
                 \addplot[black, domain=0:1.5] {1};
-                \draw[purple, very thick, dotted] (0.3,0.3^2) -- (0.3,1);
-                \draw[green, very thick, dotted] (0.3,0.5477) -- (0.3,1);
+                \draw[Purple, very thick] (0.3,0.3^2) -- (0.3,1);
+                \draw[ForestGreen, very thick] (0.28,0.5477) -- (0.28,1);
             \end{axis}
         \end{tikzpicture}
     \end{center}
 
-    \textbf{Solution.} The cross-section is a washer with $ \color[rgb]{0.5,0,0.5}r_{\text{out}}=1-x^2 $ and
-    $ \color[rgb]{0,0.5,0} r_{\text{in}}=1-\sqrt{x} $. So,
+    \textbf{Solution.} The cross-section is a washer with $ \textcolor{Purple}{r_{\text{out}}=1-x^2} $ and
+    $ \textcolor{ForestGreen}{r_{\text{in}}=1-\sqrt{x}} $. So,
     \begin{align*}
         A(x)
          & =\pi(r_{\text{out}})^2-\pi(r_\text{in})^2   \\
@@ -189,15 +199,28 @@ So area is $ 2\pi rh $. So, we only need to determine $ r $ and $ h $!
 
 Back to the difficult example:
 \begin{Example}{}{}
-    Rotate the region below $ y=2x^2-x^3 $ about the $ y $-axis from $ x=0 $ to $ x=2 $.
+    Rotate the region below $ y=2x^2-x^3 $ about the $ y $-axis from $ x=0 $ to $ x=2 $. Find the volume.
     \begin{center}
-        \includegraphics[width=0.6\textwidth]{diagram 7.pdf}
+        \begin{tikzpicture}
+            \begin{axis}[ylabel = $y$, xlabel = $x$]
+                \addplot[blue, domain=-0.5:2.25, name path=F] {2*x^2-x^3} node [pos = 0.45, above right] {$y=2x^2-x^3$};
+                \addplot[blue, domain=-0.5:2.25, name path=G] {0} node [pos = 0.5, below] {$y=0$};
+                \addplot[fill=red!10] fill between [of=F and G, soft clip={domain=0:2}];
+                \draw[-] (0,1) -- (0,-0.75) node[below] {$x=0$};
+                \draw[-] (2,1) -- (2,-0.75) node[below left] {$x=2$};
+                \draw[ForestGreen, very thick] (0,0.703125) -- (0.75,0.703125);
+                \draw[Purple, very thick] (0.75,0) -- (0.75,0.703125);
+            \end{axis}
+        \end{tikzpicture}
     \end{center}
-    \textbf{Solution.} The area is a cylindrical shell with radius $ r=x $ and height
-    $ h=2x^2-x^3 $. So,
-    \[ A(x)=2\pi x\left( 2x^2-x^3 \right) \]
-    and
-    \[ \text{Volume}=\int_{0}^{2}2\pi x\left( 2x^2-x^3 \right)\, d{x} \]
+    \textbf{Solution.}
+    \begin{itemize}
+        \item Intersection points: $ 2x^2-x^3=0\implies x=0,2 $.
+        \item \textcolor{ForestGreen}{$ r=x $}.
+        \item \textcolor{Purple}{$ h=2x^2-x^3-0=2x^2-x^3 $}.
+    \end{itemize}
+    Hence, the area is $ A(x)=2\pi x(2x^2-x^3) $. Therefore, the volume is
+    \[ V=\int_{0}^{2}2\pi x(2x^2-x^3)\odif{x}=\frac{16\pi}{5}. \]
 \end{Example}
 
 \begin{Example}{}{}
@@ -205,40 +228,52 @@ Back to the difficult example:
     \begin{enumerate}[label=(\roman*)]
         \item Rotate the region between $ y=x^2 $ and $ y=6x-x^2 $
               about the $ y $-axis.
-
-
-
-              \textbf{Solution.} Intersection points:
-              $ x^2=6x-2x^2\implies x=0,2 $
+              \begin{center}
+                  \begin{tikzpicture}
+                      \begin{axis}[ylabel = $y$, xlabel = $x$]
+                          \addplot[blue, domain=-0.5:3, name path=F] {x^2} node [pos = 0.5, below right] {$y=x^2$};
+                          \addplot[red, domain=-0.5:3, name path=G] {6*x - x^2} node [pos = 0.8, above left] {$y=6x-x^2$};
+                          \addplot[fill=red!10] fill between [of=F and G, soft clip={domain=0:3}];
+                          \draw[-] (0,10) -- (0,-2) node[below] {$x=0$};
+                          \draw[Purple, very thick] (1,1) -- (1,5);
+                          \draw[ForestGreen, very thick] (1,1) -- (0,1);
+                      \end{axis}
+                  \end{tikzpicture}
+              \end{center}
+              \textbf{Solution.}
               \begin{itemize}
-                  \item $ r=x $
-                  \item $ h=6x-2x^2-x^2=6x-3x^2 $
+                  \item Intersection points: $ x^2=6x-2x^2\implies x=0,2 $.
+                  \item \textcolor{ForestGreen}{$ r=x $}.
+                  \item \textcolor{Purple}{$ h=6x-2x^2-x^2=6x-3x^2 $}.
               \end{itemize}
-              \[ A(x)=2\pi x\left( 6x-3x^2 \right) \]
-              \begin{align*}
-                  V
-                   & =\int_{0}^{2} 2\pi x\left( 6x-3x^2 \right)\, d{x} \\
-                   & =2\pi \int_{0}^{2} 6x^2-3x^3\, d{x}               \\
-                   & =2\pi\left[ 2x^3-\frac{3}{4} x^4 \right]_0^2      \\
-                   & =2\pi\left( 16-12 \right)                         \\
-                   & =8\pi
-              \end{align*}
+              Hence, the area is $ A(x)=2\pi x(6x-3x^2) $. Therefore, the volume is
+              \[ V
+                  =\int_{0}^{2} 2\pi x(6x-3x^2)\odif{x} \\
+                  =8\pi.  \]
         \item Rotate the region bounded by $ y=4x-x^3 $ and $ y=3 $ about
-              $ x= 1 $.
-
-              \textbf{Solution.} Intersection points:
-              $ 4x-x^2=3\implies x=1,3 $
+              $ x=1 $.
+              \begin{center}
+                  \begin{tikzpicture}
+                      \begin{axis}[ylabel = $y$, xlabel = $x$]
+                          \addplot[blue, domain=0.5:4, name path=F] {3} node [pos = 1, below] {$y=3$};
+                          \addplot[red, domain=0.5:4, name path=G] {4*x - x^2} node [pos = 0.8, below left] {$y=4x-x^3$};
+                          \addplot[fill=red!10] fill between [of=F and G, soft clip={domain=1:3}];
+                          \draw[-] (1,0) -- (1,3.75) node[above] {$x=1$};
+                          \draw[Purple, very thick] (1.5,3) -- (1.5,3.75);
+                          \draw[ForestGreen, very thick] (1,3) -- (1.5,3);
+                      \end{axis}
+                  \end{tikzpicture}
+              \end{center}
+              \textbf{Solution.}
               \begin{itemize}
-                  \item $ r=x-1 $
-                  \item $ h=4x-x^3-3 $
+                  \item Intersection points: $ 4x-x^2=3\implies x=1,3 $.
+                  \item \textcolor{ForestGreen}{$ r=x-1 $}.
+                  \item \textcolor{Purple}{$ h=4x-x^3-3 $}.
               \end{itemize}
-              \[ A(x)=2\pi(x-1)(4x-x^2-3) \]
-              \begin{align*}
-                  V
-                   & =\int_{1}^{3}2\pi(x-1)(4x-x^2-3) \, d{x} \\
-                   & =\text{exercise}                         \\
-                   & =\frac{8\pi}{3}
-              \end{align*}
+              Hence, the area is $ A(x)=2\pi(x-1)(4x-x^2-3) $. Therefore, the volume is
+              \[ V
+                  =\int_{1}^{3}2\pi(x-1)(4x-x^2-3)\odif{x}
+                  =\frac{8\pi}{3}. \]
     \end{enumerate}
 \end{Example}
 
@@ -247,10 +282,10 @@ We will now look at some more practice examples, but first a handy table:
 \begin{table}[H]
     \centering
     \begin{tabularx}{0.7\linewidth}{@{}YYY@{}}
-                        & Functions of $ x $ & Functions of $ y $ \\
+        What are you rotating the function around? & Functions of $ x $ & Functions of $ y $ \\
         \midrule
-        Vertical line   & Cylindrical shells & Washers/disks      \\
-        Horizontal line & Washers/disks      & Cylindrical shells
+        Vertical line                              & Cylindrical shells & Washers/disks      \\
+        Horizontal line                            & Washers/disks      & Cylindrical shells
     \end{tabularx}
 \end{table}
 
@@ -262,39 +297,66 @@ We will now look at some more practice examples, but first a handy table:
         \item Rotate the region bounded by $ xy=1 $, $ x=0 $, $ y=1 $, $ y=3 $,
               around the $ x $-axis.
 
+              \begin{center}
+                  \begin{tikzpicture}
+                      \begin{axis}[ylabel = $y$, xlabel = $x$]
+                          \addplot[blue, domain=0.28:1.5] {1/x} node [pos = 1, below] {$xy=1$};
+                          \addplot[red, domain=0:1.5] {1} node [pos = 0.5, below] {$y=1$};
+                          \addplot[red, domain=0:1.5] {3} node [pos = 0.5, below left] {$y=3$};
+                          \addplot[black, domain=0:1.5] {0};
+                          \draw[-] (0,0.75) -- (0,3.5) node[above] {$x=0$};
+                          \draw[ForestGreen, very thick] (0.2,0) -- (0.2,2);
+                          \draw[Purple, very thick] (0,2) -- (0.5,2);
+                      \end{axis}
+                  \end{tikzpicture}
+              \end{center}
+
               \textbf{Solution 1.} Cylindrical shell:
               \begin{itemize}
-                  \item $ r=y $
-                  \item $ h=\sfrac{1}{y} $
+                  \item Intersection points: $ x=1,3 $.
+                  \item \textcolor{ForestGreen}{$ r=y $}.
+                  \item \textcolor{Purple}{$ h=1/y $}.
               \end{itemize}
-              \[ A(y)=2\pi y\left( \frac{1}{y}  \right)=2\pi \]
-              \[ V=\int_{1}^{3} 2\pi\, d{y}=4\pi \]
+              Hence, the area is $ A(x)=2\pi y(1/y)=2\pi $. Therefore, the volume is
+              \[ V=\int_{1}^{3} 2\pi\odif{y}=4\pi. \]
               \textbf{Solution 2.} For fun, can we do it using washers/disks?
 
               A\@: Yes! Just work with $ x $ and not $ y $.
               \begin{itemize}
                   \item $ \displaystyle  r_{\text{out}}=\begin{cases}
-                                3            & 0\leqslant x\leqslant \sfrac{1}{3}   \\
-                                \sfrac{1}{x} & \sfrac{1}{3} \leqslant x \leqslant 1
+                                3   & 0\leqslant x\leqslant 1/3   \\
+                                1/x & 1/3 \leqslant x \leqslant 1
                             \end{cases} $
-                  \item $ r_{\text{in}}=1 $
+                  \item $ r_{\text{in}}=1 $,
               \end{itemize}
-              \begin{align*}
-                  V
-                   & =\int_{0}^{\sfrac{1}{3}} \pi(3)^2-\pi(1)^2\, d{x}
-                  +\int_{\sfrac{1}{3}}^{1} \pi\left( \frac{1}{x} \right)^2-\pi(1)^2\, d{x}
-              \end{align*}
+              Therefore, the volume is
+              \[ V=\pi\int_{0}^{1/3} 3^2-1^2\odif{x}
+                  +\pi\int_{1/3}^{1} 1/x^2-1^2\odif{x}=4\pi. \]
               This method was more difficult, because $ r_{\text{out}} $ changes, but it is still valid!
 
         \item Region bounded by $ x=(y-1)^2 $, $ x=y+1 $, about $ x=-1 $.
-
-              \textbf{Solution.} Points of intersection:
-              \[ (y-1)^2=y+1\implies y=0,3 \]
+              \begin{center}
+                  \begin{tikzpicture}
+                      \begin{axis}[ylabel = $y$, xlabel = $x$]
+                          \filldraw[red!20] (-1,0.75) circle [x radius=2.7, y radius=0.8];
+                          \filldraw[white] (-1,0.75) circle [x radius=1.05, y radius=0.4];
+                          \addplot[blue, domain=0:4.25] {sqrt(\x)+1} node [pos = 0.6, above left] {$x=(y-1)^2$};
+                          \addplot[blue, domain=0:4.25] {-sqrt(\x)+1};
+                          \addplot[red, domain=-3.7:4.25] {x-1} node [pos = 0.1, below right] {$x=y+1$};
+                          \addplot[ForestGreen, domain=-1:0.0625, very thick] {0.75}; % inner green
+                          \addplot[Purple, domain=-1:1.8, very thick] {0.8}; % outer purple
+                          \draw[-] (-1,-2) -- (-1,3) node[above] {$x=-1$};
+                      \end{axis}
+                  \end{tikzpicture}
+              \end{center}
+              \textbf{Solution.}
               \begin{itemize}
-                  \item $ r_{\text{out}}=y+1-(-1)=y+2 $
-                  \item $ r_{\text{in}}=(y-1)^2-(-1)=(y-1)^2+1 $
+                  \item Intersection points $ (y-1)^2=y+1\implies y=0,3 $.
+                  \item \textcolor{Purple}{$ r_{\text{out}}=y+1-(-1)=y+2 $}.
+                  \item \textcolor{ForestGreen}{$ r_{\text{in}}=(y-1)^2-(-1)=(y-1)^2+1 $}.
               \end{itemize}
-              \[ V=\pi \int_{0}^{3} (y+2)^2-\left[ (y-1)^2+1 \right]^2\, d{y}  \]
+              Therefore, the volume is
+              \[ V=\pi \int_{0}^{3} (y+2)^2-\bigl[ (y-1)^2+1 \bigr]^2\odif{y}. \]
     \end{enumerate}
 \end{Example}
 

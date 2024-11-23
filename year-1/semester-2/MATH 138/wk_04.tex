@@ -389,9 +389,9 @@ $ f(x) $ and $ g(x) $ from $ x=a $ to $ x=b $ is
     \begin{center}
         \begin{tikzpicture}
             \begin{axis}[ylabel = $y$, xlabel = $x$, x post scale=1.4]
-                \addplot[blue, domain=0:3.2, name path=F] {x^2} node [pos = 0.9, left] {$y=x^2$};
-                \addplot[red, domain=0:3.2, name path=G] {x} node [pos = 0.7, below] {$y=x$};
-                \draw[-] (1,5) -- (1,0) node[below] {$x=1$};
+                \addplot[blue, domain=0:3.2, name path=F] {x^2} node [pos = 0.9, above left] {$y=x^2$};
+                \addplot[red, domain=0:3.2, name path=G] {x} node [pos = 0.7, below right] {$y=x$};
+                \draw[-] (1,9) -- (1,0) node[below] {$x=1$};
                 \draw[-] (3,9) -- (3,0) node[below] {$x=3$};
                 \addplot[fill=red!10] fill between [of=F and G, soft clip={domain=1:3}];
                 \node[below] at (2.5,4.5) {Area};
@@ -425,10 +425,10 @@ Remember, $ \displaystyle \int_{a}^{b} \text{``upper''}-\text{``lower''}\odif{x}
     \begin{center}
         \begin{tikzpicture}
             \begin{axis}[ylabel = $y$, xlabel = $x$]
-                \addplot[blue, domain=-1:1, name path=F] {1-x^2} node [pos = 0.5, above] {$y=1-x^2$};
-                \addplot[red, domain=-1:1, name path=G] {x^2} node [pos = 0.5, below] {$y=x^2$};
-                \draw[-] ($ ({1/sqrt(2)}, 1) $) -- ($ ({1/sqrt(2)}, 0) $) node[above] {$x=\frac{1}{\sqrt{2}}$};
-                \draw[-] ($ ({-1/sqrt(2)}, 1) $) -- ($ ({-1/sqrt(2)}, 0) $) node[above] {$x=-\frac{1}{\sqrt{2}}$};
+                \addplot[blue, domain=-1.25:1.25, name path=F] {1-x^2} node [pos = 0.5, above] {$y=1-x^2$};
+                \addplot[red, domain=-1.25:1.25, name path=G] {x^2} node [pos = 0.5, below] {$y=x^2$};
+                \draw[-] ($ ({1/sqrt(2)}, 1) $) -- ($ ({1/sqrt(2)}, 0) $) node[below] {$x=\frac{1}{\sqrt{2}}$};
+                \draw[-] ($ ({-1/sqrt(2)}, 1) $) -- ($ ({-1/sqrt(2)}, 0) $) node[below] {$x=-\frac{1}{\sqrt{2}}$};
                 \addplot[fill=red!10] fill between [of=F and G, soft clip={domain=-0.7071:0.7071}];
                 \node[below] at (0,0.5) {Area};
             \end{axis}
@@ -452,7 +452,7 @@ Remember, $ \displaystyle \int_{a}^{b} \text{``upper''}-\text{``lower''}\odif{x}
             \begin{axis}[ylabel = $y$, xlabel = $x$, x post scale=1.4,
                     xtick={0,1.57,3.14},
                     xticklabels={$0$, $\frac{\pi}{2}$,$\pi$}]
-                \addplot[blue, domain=0:pi, name path=F] {sin(deg(x))} node [pos = 0.5, above] {$y=\sin x$};
+                \addplot[blue, domain=0:pi, name path=F] {sin(deg(x))} node [pos = 0.7, above right] {$y=\sin x$};
                 \addplot[red, domain=0:pi, name path=G] {cos(deg(x))} node [pos = 0.5, below left] {$y=\cos x$};
                 \addplot[fill=red!10] fill between [of=F and G, soft clip={domain=0:pi}];
                 \node[below] at (0.25,0.75) {$A_1$};
@@ -483,11 +483,11 @@ We can use the same ideas to compute areas when $ x $ is a function of $ y $, ex
     \begin{center}
         \begin{tikzpicture}
             \begin{axis}[ylabel = $y$, xlabel = $x$, x post scale=1.4]
-                \addplot[blue, domain=1:5, name path=F] {sqrt(x-1)} node [pos = 0.8, below] {$x=y^2+1$};
-                \addplot[blue, domain=1:5] {-sqrt(x-1)};
-                \addplot[red, domain=0:2, name path=G] {x} node [pos = 0.5, left] {$y=x$};
-                \addplot[black, domain=0:5] {0} node [pos = 0, below] {$y=0$};
-                \addplot[black, domain=0:5] {2} node [pos = 0, above] {$y=2$};
+                \addplot[blue, domain=1:5.5, name path=F] {sqrt(x-1)} node [pos = 0.8, below right] {$x=y^2+1$};
+                \addplot[blue, domain=1:5.5] {-sqrt(x-1)};
+                \addplot[red, domain=0:2, name path=G] {x} node [pos = 0.5, above left] {$y=x$};
+                \addplot[black, domain=0:5.5] {0} node [pos = 0, below] {$y=0$};
+                \addplot[black, domain=0:5.5] {2} node [pos = 0, above] {$y=2$};
                 \addplot[fill=red!10] fill between [of=F and G, soft clip={domain=0:5}];
                 \node[below] at (2.5,1.75) {Area};
             \end{axis}
