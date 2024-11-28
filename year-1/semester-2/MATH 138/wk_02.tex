@@ -8,7 +8,7 @@ We start with integral functions: let $ f $ be
 continuous on $ \interval{a}{b} $.
 
 Define
-$ \displaystyle G(x)=\int_{a}^{x} f(t)\, d{t} $
+$ \displaystyle G(x)=\int_{a}^{x} f(t)\odif{t} $
 for $ x\in\interval{a}{b} $.
 
 What is $ G(x) $? It's the function that returns the signed
@@ -20,7 +20,7 @@ area under $ f $ from $ a $ to $ x $.
     \textbf{Solution.}
     \[
         G(x)
-        =\int_{0}^{x} t\, d{t}
+        =\int_{0}^{x} t\odif{t}
         =\frac{1}{2}(\text{base})(\text{height})
         =\frac{1}{2}(x)(x)
         =\frac{x^2}{2}
@@ -31,14 +31,14 @@ area under $ f $ from $ a $ to $ x $.
 \begin{Theorem}{Fundamental Theorem of Calculus I (FTC I)}{FTC_I}
     If $ f $ is continuous on an open interval $ I $ containing
     $ x=a $, and if
-    \[ G(x)=\int_{a}^{x} f(t)\, d{t}  \]
+    \[ G(x)=\int_{a}^{x} f(t)\odif{t}  \]
     Then $ G $ is differentiable for all $ x\in I $ and
     $ G^\prime(x)=f(x) $; that is,
-    $ \displaystyle \frac{d}{dx}\int_{a}^{x} f(t)\, d{t}=f(x) $.
+    $ \displaystyle \odv{}{x}\int_{a}^{x} f(t)\odif{t}=f(x) $.
 \end{Theorem}
 
 \begin{Proof}{\ref{thm:FTC_I}}{}
-    Let $ f $ be continuous on $ I $, $ \displaystyle G(x)=\int_{a}^{x} f(t)\, d{t} $,
+    Let $ f $ be continuous on $ I $, $ \displaystyle G(x)=\int_{a}^{x} f(t)\odif{t} $,
     and fix $ x_0\in I $.
 
     Let $ \varepsilon>0 $ be given. Since $ f $ is continuous at $ x_0 $,
@@ -47,14 +47,14 @@ area under $ f $ from $ a $ to $ x $.
     Let $ 0<\abs{x-x_0}<\delta $. Then,
     \begin{align*}
         \frac{G(x)-G(x_0)}{x-x_0}
-         & =\frac{\displaystyle\int_{a}^{x} f(t)\, d{t} -\int_{a}^{x_0} f(t)\, d{t} }
-        {x-x_0}                                                                        \\
-         & =\frac{\displaystyle\int_{a}^{x_0} f(t)\, d{t} +\int_{x_0}^{x} f(t)\, d{t}-
-        \int_{a}^{x_0} f(t)\, d{t} }{x-x_0}                                            \\
-         & =\frac{1}{x-x_0} \int_{x_0}^{x} f(t)\, d{t}
+         & =\frac{\displaystyle\int_{a}^{x} f(t)\odif{t} -\int_{a}^{x_0} f(t)\odif{t} }
+        {x-x_0}                                                                          \\
+         & =\frac{\displaystyle\int_{a}^{x_0} f(t)\odif{t} +\int_{x_0}^{x} f(t)\odif{t}-
+        \int_{a}^{x_0} f(t)\odif{t} }{x-x_0}                                             \\
+         & =\frac{1}{x-x_0} \int_{x_0}^{x} f(t)\odif{t}
     \end{align*}
     The AVT says there exists $ c $ between $ x $ and $ x_0 $ such that
-    \[ f(c)=\frac{1}{x-x_0} \int_{x_0}^{x} f(t)\, d{t}  \]
+    \[ f(c)=\frac{1}{x-x_0} \int_{x_0}^{x} f(t)\odif{t}  \]
     Since $ 0<\abs{x-x_0}<\delta $, we get $ 0<\abs{c-x_0}<\delta $ too,
     so
     \[
@@ -65,22 +65,22 @@ area under $ f $ from $ a $ to $ x $.
 \end{Proof}
 
 \begin{Example}{}{}
-    Compute $ \displaystyle \frac{d}{dx}\int_{5}^{x} \sin(t^2)\, d{t} $
+    Compute $ \displaystyle \odv{}{x}\int_{5}^{x} \sin(t^2)\odif{t} $
 
     \textbf{Solution.}
-    $ \displaystyle \frac{d}{dx}\int_{5}^{x} \sin(t^2)\, d{t}=\sin(x^2) $
+    $ \displaystyle \odv{}{x}\int_{5}^{x} \sin(t^2)\odif{t}=\sin(x^2) $
     since $ f(t)=\sin(t^2) $ is continuous, by FTC I.
 \end{Example}
 
 \begin{Example}{}{}
     Compute
-    $ \displaystyle \frac{d}{dx}\int_{5}^{x^2} \sin(t^2)\, d{t} $.
+    $ \displaystyle \odv{}{x}\int_{5}^{x^2} \sin(t^2)\odif{t} $.
 
-    \textbf{Solution.} Let $ \displaystyle G(x)=\int_{5}^{x} \sin(t^2)\, d{t} $,
-    then $ G(x^2)=\displaystyle \int_{5}^{x^2} \sin(t^2)\, d{t} $. So,
+    \textbf{Solution.} Let $ \displaystyle G(x)=\int_{5}^{x} \sin(t^2)\odif{t} $,
+    then $ G(x^2)=\displaystyle \int_{5}^{x^2} \sin(t^2)\odif{t} $. So,
     \[
-        \frac{d}{dx} \int_{5}^{x^2} \sin(t^2)\, d{t}
-        =\frac{d}{dx} \left[ G(x^2) \right]
+        \odv{}{x} \int_{5}^{x^2} \sin(t^2)\odif{t}
+        =\odv{}{x} \left[ G(x^2) \right]
         =G^\prime(x^2) (2x)
         =f(x^2)(2x)
         =\sin(x^4) (2x)
@@ -112,8 +112,8 @@ quickly recap what we know about antidifferentiation.
 
 \begin{Definition}{Indefinite integral}{}
     The collection of all antiderivatives of $ f(x) $ is denoted
-    by $ \displaystyle\int f(x)\, d{x} $ and
-    \[ \int f(x)\, d{x} =F(x)+C \]
+    by $ \displaystyle\int f(x)\odif{x} $ and
+    \[ \int f(x)\odif{x} =F(x)+C \]
     where $ C\in\mathbb{R} $ and $ F $ is any antiderivative.
     This is called the \textbf{indefinite integral}.
 \end{Definition}
@@ -125,17 +125,17 @@ quickly recap what we know about antidifferentiation.
 
 Here are a bunch of antiderivatives:
 \begin{itemize}
-    \item $ \displaystyle \int x^n\, d{x}=\frac{x^{n+1}}{n+1}+C $ if $ n\neq -1 $
-    \item $ \displaystyle \int \frac{1}{x}\, d{x}=\ln\abs{x}+C $
-    \item $ \displaystyle \int e^x\,d{x}=e^x+C $
-    \item $ \displaystyle \int \sin(x)\,d{x}=-\cos(x)+C $
-    \item $ \displaystyle \int \cos(x)\,d{x}=\sin(x)+C $
-    \item $ \displaystyle \int \sec^2(x)\,d{x}=\tan(x)+C $
-    \item $ \displaystyle \int \frac{1}{1+x^2}\,d{x}=\arctan(x)+C $
-    \item $ \displaystyle \int \frac{1}{\sqrt{1-x^2}}\,d{x}=\arcsin(x)+C $
-    \item $ \displaystyle \int -\frac{1}{\sqrt{1-x^2}}\, d{x}=\arccos(x)+C $
-    \item $ \displaystyle \int \sec(x)\tan(x)\,d{x}=\sec(x)+C $
-    \item $ \displaystyle \int a^x\,d{x}=\frac{a^x}{\ln(a)}+C $ for $ a>0 $
+    \item $ \displaystyle \int x^n\odif{x}=\frac{x^{n+1}}{n+1}+C $ if $ n\neq -1 $
+    \item $ \displaystyle \int \frac{1}{x}\odif{x}=\ln\abs{x}+C $
+    \item $ \displaystyle \int e^x\odif{x}=e^x+C $
+    \item $ \displaystyle \int \sin(x)\odif{x}=-\cos(x)+C $
+    \item $ \displaystyle \int \cos(x)\odif{x}=\sin(x)+C $
+    \item $ \displaystyle \int \sec^2(x)\odif{x}=\tan(x)+C $
+    \item $ \displaystyle \int \frac{1}{1+x^2}\odif{x}=\arctan(x)+C $
+    \item $ \displaystyle \int \frac{1}{\sqrt{1-x^2}}\odif{x}=\arcsin(x)+C $
+    \item $ \displaystyle \int -\frac{1}{\sqrt{1-x^2}}\odif{x}=\arccos(x)+C $
+    \item $ \displaystyle \int \sec(x)\tan(x)\odif{x}=\sec(x)+C $
+    \item $ \displaystyle \int a^x\odif{x}=\frac{a^x}{\ln(a)}+C $ for $ a>0 $
 \end{itemize}
 
 By~\ref{thm:FTC_I}, we know every continuous function has an antiderivative,
@@ -145,13 +145,13 @@ Well\textellipsis{}
 \begin{Theorem}{Fundamental Theorem of Calculus II (FTC II)}{FTC_II}
     If $ f $ is continuous on $ \interval{a}{b} $ and $ F $
     is any antiderivative of $ f $, then
-    \[ \int_{a}^{b} f(x)\, d{x} =F(b)-F(a)
+    \[ \int_{a}^{b} f(x)\odif{x} =F(b)-F(a)
         =\bigl[F(x)\bigr]_{a}^b \]
 \end{Theorem}
 
 \begin{Proof}{\ref{thm:FTC_II}}{}
     Let $ F $ be any antiderivative of $ f $ and define
-    $ \displaystyle G(x)=\int_{a}^{x} f(t)\, d{t} $.
+    $ \displaystyle G(x)=\int_{a}^{x} f(t)\odif{t} $.
 
     By~\ref{thm:FTC_I}, we know $ G^\prime(x)=f(x) $ as well, so by the
     Antiderivative Theorem, $ G(x)=F(x)+C $ for some $ C\in\mathbb{R} $.
@@ -160,7 +160,7 @@ Well\textellipsis{}
     \[ G(b)-G(a)=[F(b)+C]-[F(a)+C]=F(b)-F(a) \]
     Also,
     \begin{align*}
-        \int_{a}^{b} f(t)\, d{t}
+        \int_{a}^{b} f(t)\odif{t}
          & =G(b)                                    \\
          & =G(b)-G(a) & \quad & \text{since }G(a)=0 \\
          & =F(b)-F(a)
@@ -171,21 +171,21 @@ Now, we can evaluate definite integrals \emph{without} Riemann sums!
 
 \begin{Example}{}{}
     \begin{enumerate}[label=(\roman*)]
-        \item Compute $ \displaystyle \int_{1}^{3} x^2+x\, d{x} $.
+        \item Compute $ \displaystyle \int_{1}^{3} x^2+x\odif{x} $.
 
               \textbf{Solution.}
               \[
-                  \int_{1}^{3} x^2+x\, d{x}
+                  \int_{1}^{3} x^2+x\odif{x}
                   =\left[\frac{x^3}{3}+\frac{x^2}{2}\right]_{1}^3
                   = \left( \frac{3^3}{3} +\frac{3^2}{2} \right)-\left( \frac{1}{3}+\frac{1}{2} \right)
                   =\frac{27}{2} -\frac{5}{6}
                   =\frac{38}{3}
               \]
-        \item Compute $ \displaystyle  \int_{0}^{2\pi} \sin(x)\, d{x} $.
+        \item Compute $ \displaystyle  \int_{0}^{2\pi} \sin(x)\odif{x} $.
 
               \textbf{Solution.}
               \[
-                  \int_{0}^{2\pi} \sin(x)\, d{x}
+                  \int_{0}^{2\pi} \sin(x)\odif{x}
                   =\bigl[-\cos(x)\bigr]_0^{2\pi}
                   =-\cos(2\pi)+\cos(0)
                   =1+1
@@ -193,12 +193,12 @@ Now, we can evaluate definite integrals \emph{without} Riemann sums!
               \]
               This makes sense since the signed area is zero.
         \item Compute $
-                  \displaystyle \int_{2}^{8} \frac{x^2+2x+1}{x} \, d{x} $.
+                  \displaystyle \int_{2}^{8} \frac{x^2+2x+1}{x} \odif{x} $.
 
               \textbf{Solution.}
               \begin{align*}
-                  \int_{2}^{8} \frac{x^2+2x+1}{x} \, d{x}
-                   & =\int_{2}^{8} x+2+\frac{1}{x}\, d{x}              \\
+                  \int_{2}^{8} \frac{x^2+2x+1}{x} \odif{x}
+                   & =\int_{2}^{8} x+2+\frac{1}{x}\odif{x}             \\
                    & =\left[\frac{x^2}{2} +2x+\ln\abs{x} \right]_{2}^8 \\
                    & =[32+16+\ln(8)]-[2+4+\ln(2)]                      \\
                    & =42+\ln(8)-\ln(2)                                 \\
@@ -215,28 +215,28 @@ But first, let's look at the extended version of FTC I\@:
 
 \begin{Corollary}{Extended Version of the Fundamental Theorem of Calculus}{ftc_ext}
     If $ f $ is continuous, and $ g, h $ are both differentiable, then
-    \[ \frac{d}{dx}\Bigr[\int_{g(x)}^{h(x)} f(t)\, d{t} \Bigl]
+    \[ \odv{}{x}\Bigr[\int_{g(x)}^{h(x)} f(t)\odif{t} \Bigl]
         =f(h(x))h^\prime(x)-f(g(x))g^\prime(x) \]
     (also called the Leibniz Formula).
 \end{Corollary}
 
 \begin{Proof}{\ref{cor:ftc_ext}}{}
     Let $ F $ be an antiderivative of $ f $, then by FTC II\@:
-    \[ \int_{g(x)}^{h(x)} f(t)\, d{t}=F(h(x))-F(g(x)) \]
+    \[ \int_{g(x)}^{h(x)} f(t)\odif{t}=F(h(x))-F(g(x)) \]
     for each $ x $. So,
     \begin{align*}
-        \frac{d}{dx}\Bigr[\int_{g(x)}^{h(x)} f(t)\, d{t} \Bigl]
-         & =\frac{d}{dx}\bigl[F(h(x))-F(g(x))\bigr]             \\
+        \odv{}{x}\Bigr[\int_{g(x)}^{h(x)} f(t)\odif{t} \Bigl]
+         & =\odv{}{x}\bigl[F(h(x))-F(g(x))\bigr]                \\
          & =F^\prime(h(x))h^\prime(x)-F^\prime(g(x))g^\prime(x) \\
          & =f(h(x))h^\prime(x)-f(g(x))g^\prime(x)
     \end{align*}
 \end{Proof}
 
 \begin{Example}{}{}
-    Compute $ \displaystyle \frac{d}{dx}\int_{5x}^{\ln(x)} \cos(t^2-3t)\, d{t} $.
+    Compute $ \displaystyle \odv{}{x}\int_{5x}^{\ln(x)} \cos(t^2-3t)\odif{t} $.
 
     \textbf{Solution.}
-    \[ \frac{d}{dx}\int_{5x}^{\ln(x)} \cos(t^2-3t)\, d{t}
+    \[ \odv{}{x}\int_{5x}^{\ln(x)} \cos(t^2-3t)\odif{t}
         =\cos\bigl[\ln(x)^2-3\ln(x)\bigr]\left(\frac{1}{x}\right)-\cos(25x^2-15x)(5) \]
 \end{Example}
 
@@ -245,7 +245,7 @@ The first integration technique we will examine is the reverse chain rule:
 Change of Variable, also called Substitution.
 
 The rule is:
-$ \displaystyle \int f(g(x))g^\prime(x)\, d{x}=\int f(u)\, d{u}  $;
+$ \displaystyle \int f(g(x))g^\prime(x)\odif{x}=\int f(u)\odif{u}  $;
 that is, we ``substitute'' $ u=g(x) $.
 
 \begin{Proof}{Change of Variable (Sketch)}{}
@@ -258,16 +258,16 @@ that is, we ``substitute'' $ u=g(x) $.
 
     Therefore,
     \begin{align*}
-        \int f(g(x))g^\prime(x)d{x}\,
-         & =h(g(x))+C        &  & \text{for some }c\in\mathbb{R} \\
-         & =h(u)+C           &  & \text{where $u=g(x) $}         \\
-         & =\int f(u)\, d{u} &  & \text{where $u=g(x)$}
+        \int f(g(x))g^\prime(x)\odif{x}
+         & =h(g(x))+C         &  & \text{for some }c\in\mathbb{R} \\
+         & =h(u)+C            &  & \text{where $u=g(x) $}         \\
+         & =\int f(u)\odif{u} &  & \text{where $u=g(x)$}
     \end{align*}
-    So, if $ u=g(x) $, then $ du=g^\prime(x)\,dx $.
+    So, if $ u=g(x) $, then $ \odif{u}=g^\prime(x)\odif{x} $.
 \end{Proof}
 
-General strategy: let $ u=\ldots $, $ du=\ldots\,dx $, then solve for
-$ dx $, substitute in $ u $ and $ dx $, try to transform the integral into one
+General strategy: let $ u=\ldots $, $ \odif{u}=\ldots\odif{x} $, then solve for
+$ \odif{x} $, substitute in $ u $ and $ \odif{x} $, try to transform the integral into one
 in terms of only $ u $.
 
 \textbf{Good choices for} $ u $:
@@ -280,57 +280,57 @@ in terms of only $ u $.
 
 \begin{Example}{}{}
     \begin{enumerate}[label=(\roman*)]
-        \item Compute $ \displaystyle  \int \frac{\ln(x)}{x} \, d{x} $.
+        \item Compute $ \displaystyle  \int \frac{\ln(x)}{x} \odif{x} $.
 
               \textbf{Solution.}
               \begin{align*}
-                  \int \frac{\ln(x)}{x} \, d{x}
-                   & =\int \frac{u}{x} (x)\, d{u} &  & u=\ln(x)\iff du=\frac{1}{x}\, dx \\
-                   & =\int u\, d{u}                                                     \\
-                   & =\frac{u^2}{2} +C                                                  \\
+                  \int \frac{\ln(x)}{x} \odif{x}
+                   & =\int \frac{u}{x} (x)\odif{u} &  & u=\ln(x)\iff \odif{u}=\frac{1}{x}\odif{x} \\
+                   & =\int u\odif{u}                                                              \\
+                   & =\frac{u^2}{2} +C                                                            \\
                    & =\frac{[\ln(x)]^2}{2} +C
               \end{align*}
-        \item Compute $ \displaystyle \int \frac{\cos(\sqrt{x})}{\sqrt{x}} \, d{x} $.
+        \item Compute $ \displaystyle \int \frac{\cos(\sqrt{x})}{\sqrt{x}} \odif{x} $.
 
               \textbf{Solution.}
               \begin{align*}
-                  \int \frac{\cos(\sqrt{x})}{\sqrt{x}} \, d{x}
-                   & = \int \frac{\cos(u)}{u}(2u) \, d{u} &  & u=\sqrt{x}\iff du=\frac{1}{2\sqrt{x}}\, dx \\
-                   & =2 \int \cos(u)\, d{u}                                                               \\
-                   & =2\sin(u)+C                                                                          \\
+                  \int \frac{\cos(\sqrt{x})}{\sqrt{x}} \odif{x}
+                   & = \int \frac{\cos(u)}{u}(2u) \odif{u} &  & u=\sqrt{x}\iff \odif{u}=\frac{1}{2\sqrt{x}}\odif{x} \\
+                   & =2 \int \cos(u)\odif{u}                                                                        \\
+                   & =2\sin(u)+C                                                                                    \\
                    & =2\sin(\sqrt{x})+C
               \end{align*}
         \item Compute
-              $ \displaystyle \int \frac{x^2}{\sqrt{x+1}} \, d{x} $.
+              $ \displaystyle \int \frac{x^2}{\sqrt{x+1}} \odif{x} $.
               Don't forget to eliminate all the $ x $'s!
 
               \textbf{Solution.}
               \begin{align*}
-                  \int \frac{x^2}{\sqrt{x+1}} \, d{x}
-                   & =\int \frac{(u-1)^2}{\sqrt{u}} \, d{u}                                                     &  & u=x+1\iff du=dx \\
-                   & =\int \frac{u^2-2u+1}{\sqrt{u}} \, d{u}                                                                         \\
-                   & =\int u^{\sfrac{3}{2}}-2u^{\sfrac{1}{2}}+u^{-\sfrac{1}{2}}\, d{u}                                               \\
-                   & =\frac{2}{5} u^{\sfrac{5}{2} }-\frac{4}{3}u^{\sfrac{3}{2}}+2u^{\sfrac{1}{2}}+C                                  \\
+                  \int \frac{x^2}{\sqrt{x+1}} \odif{x}
+                   & =\int \frac{(u-1)^2}{\sqrt{u}} \odif{u}                                                    &  & u=x+1\iff \odif{u}=\odif{x} \\
+                   & =\int \frac{u^2-2u+1}{\sqrt{u}} \odif{u}                                                                                    \\
+                   & =\int u^{\sfrac{3}{2}}-2u^{\sfrac{1}{2}}+u^{-\sfrac{1}{2}}\odif{u}                                                          \\
+                   & =\frac{2}{5} u^{\sfrac{5}{2} }-\frac{4}{3}u^{\sfrac{3}{2}}+2u^{\sfrac{1}{2}}+C                                              \\
                    & =\frac{2}{5} (x+1)^{\sfrac{5}{2} }-\frac{4}{3}(x+1)^{\sfrac{3}{2}}+2(x+1)^{\sfrac{1}{2}}+C
               \end{align*}
         \item Compute
-              $ \displaystyle \int \sin^6(x)\cos(x)\, d{x} $.
+              $ \displaystyle \int \sin^6(x)\cos(x)\odif{x} $.
 
               \textbf{Solution.}
               \begin{align*}
-                  \int \sin^6(x)\cos(x)\, d{x}
-                   & =\int u^6\, d{u}        &  & u=\sin(x)\iff du=\cos(x)\,dx \\
-                   & =\frac{u^7}{7}+C                                          \\
+                  \int \sin^6(x)\cos(x)\odif{x}
+                   & =\int u^6\odif{u}       &  & u=\sin(x)\iff \odif{u}=\cos(x)\odif{x} \\
+                   & =\frac{u^7}{7}+C                                                    \\
                    & =\frac{\sin^7(x)}{7} +C
               \end{align*}
-        \item Compute $ \displaystyle  \int x e^{5x^2}\, d{x} $.
+        \item Compute $ \displaystyle  \int x e^{5x^2}\odif{x} $.
 
               \textbf{Solution.}
               \begin{align*}
-                  \int x e^{5x^2}\, d{x}
-                   & =\int \frac{xe^u}{10x} \, d{u} &  & u=5x^2\iff du=10x\,dx \\
-                   & =\frac{1}{10} \int e^u\, d{u}                             \\
-                   & =\frac{e^u}{10} +C                                        \\
+                  \int x e^{5x^2}\odif{x}
+                   & =\int \frac{xe^u}{10x} \odif{u} &  & u=5x^2\iff \odif{u}=10x\odif{x} \\
+                   & =\frac{1}{10} \int e^u\odif{u}                                       \\
+                   & =\frac{e^u}{10} +C                                                   \\
                    & =\frac{e^{5x^2}}{10} +C
               \end{align*}
     \end{enumerate}
@@ -344,8 +344,8 @@ A\@: We should change them as well!
 \begin{Theorem}{Change of Variable}{ch_of_var}
     If $ g^\prime(x) $ is continuous on $ \interval{a}{b} $ and $ f(x) $
     is continuous between $ g(a) $ and $ g(b) $, then
-    \[ \int_{x=a}^{x=b} f(g(x))g^\prime(x)\, d{x} =
-        \int_{u=g(a)}^{u=g(b)} f(u)\, d{u}  \]
+    \[ \int_{x=a}^{x=b} f(g(x))g^\prime(x)\odif{x} =
+        \int_{u=g(a)}^{u=g(b)} f(u)\odif{u}  \]
 \end{Theorem}
 
 \begin{Proof}{\ref{thm:ch_of_var}}{}
@@ -353,35 +353,35 @@ A\@: We should change them as well!
     is an antiderivative of $ f(g(x))g^\prime(x) $.
 
     By FTC II,
-    $ \displaystyle\int_{a}^{b} f(g(x))g^\prime(x)\, d{x} =h(g(b))-h(g(a)) $.
+    $ \displaystyle\int_{a}^{b} f(g(x))g^\prime(x)\odif{x} =h(g(b))-h(g(a)) $.
 
     But also,
-    $ \displaystyle\int_{g(a)}^{g(b)} f(u)\, d{u} =h(g(b))-h(g(a)) $,
+    $ \displaystyle\int_{g(a)}^{g(b)} f(u)\odif{u} =h(g(b))-h(g(a)) $,
     so we get
-    $ \displaystyle\int_{a}^{b} f(g(x))g^\prime(x)\, d{x} =\int_{g(a)}^{g(b)} f(u)\, d{u} $.
+    $ \displaystyle\int_{a}^{b} f(g(x))g^\prime(x)\odif{x} =\int_{g(a)}^{g(b)} f(u)\odif{u} $.
 \end{Proof}
 
 \begin{Example}{}{}
     \begin{enumerate}[label=(\roman*)]
-        \item Compute $ \displaystyle  \int_{0}^{1} e^x\cos(e^x)\, d{x} $.
+        \item Compute $ \displaystyle  \int_{0}^{1} e^x\cos(e^x)\odif{x} $.
 
               \textbf{Solution.}
               \begin{align*}
-                  \int_{0}^{1} e^x\cos(e^x)\, d{x}
-                   & =\int_{1}^{e}\frac{u\cos(u)}{u} \, d{u} &  & u=e^x\iff du=e^x\,dx \\
-                   & =\int_{1}^{e} \cos(u)\, d{u}                                      \\
-                   & =\bigl[\sin(u)\bigr]_{1}^e                                        \\
+                  \int_{0}^{1} e^x\cos(e^x)\odif{x}
+                   & =\int_{1}^{e}\frac{u\cos(u)}{u} \odif{u} &  & u=e^x\iff \odif{u}=e^x\odif{x} \\
+                   & =\int_{1}^{e} \cos(u)\odif{u}                                                \\
+                   & =\bigl[\sin(u)\bigr]_{1}^e                                                   \\
                    & =\sin(e)-\sin(1)
               \end{align*}
-        \item Compute $ \displaystyle \int_{0}^{1} \frac{x^3}{1+x^4} \, d{x} $.
+        \item Compute $ \displaystyle \int_{0}^{1} \frac{x^3}{1+x^4} \odif{x} $.
 
               \textbf{Solution.}
               \begin{align*}
-                  \int_{0}^{1} \frac{x^3}{1+x^4} \, d{x}
-                   & =\int_{1}^{2} \frac{x^3}{u\cdot4x^3}\, d{u}   &  & u=1+x^4\iff du=4x^3\,dx \\
-                   & =\frac{1}{4} \int_{1}^{2} \frac{1}{u} \, d{u}                              \\
-                   & =\left[ \frac{\ln\abs{u}}{4}  \right]_{1}^2                                \\
-                   & =\frac{\ln(2)}{4} -\frac{\ln(1)}{4}                                        \\
+                  \int_{0}^{1} \frac{x^3}{1+x^4} \odif{x}
+                   & =\int_{1}^{2} \frac{x^3}{u\cdot4x^3}\odif{u}   &  & u=1+x^4\iff \odif{u}=4x^3\odif{x} \\
+                   & =\frac{1}{4} \int_{1}^{2} \frac{1}{u} \odif{u}                                        \\
+                   & =\left[ \frac{\ln\abs{u}}{4}  \right]_{1}^2                                           \\
+                   & =\frac{\ln(2)}{4} -\frac{\ln(1)}{4}                                                   \\
                    & =\frac{\ln(2)}{4}
               \end{align*}
     \end{enumerate}
@@ -395,14 +395,14 @@ A\@: We should change them as well!
 
 \begin{Example}{Tricky Change of Variable}{tricky_change_of_var}
     \begin{align*}
-        \int \sec(x)\, d{x}
-         & =\int \sec(x)\frac{\sec(x)+\tan(x)}{\sec(x)+\tan(x)}\, d{x}    \\
-         & =\int \frac{\sec^2(x)+\sec(x)\tan(x)}{\sec(x)+\tan(x)} \, d{x} \\
-         & =\int \frac{1}{u}\, d{u}                                       \\
-         & =\ln\abs{u}+C                                                  \\
+        \int \sec(x)\odif{x}
+         & =\int \sec(x)\frac{\sec(x)+\tan(x)}{\sec(x)+\tan(x)}\odif{x}    \\
+         & =\int \frac{\sec^2(x)+\sec(x)\tan(x)}{\sec(x)+\tan(x)} \odif{x} \\
+         & =\int \frac{1}{u}\odif{u}                                       \\
+         & =\ln\abs{u}+C                                                   \\
          & =\ln\abs{\sec(x)+\tan(x)}+C
     \end{align*}
-    We made the substitution $ u=\sec(x)+\tan(x)\iff du=\sec(x)\tan(x)+\sec^2(x)\,dx $.
+    We made the substitution $ u=\sec(x)+\tan(x)\iff \odif{u}=\sec(x)\tan(x)+\sec^2(x)\odif{x} $.
 \end{Example}
 
 \begin{Remark}{}{}
@@ -412,5 +412,5 @@ A\@: We should change them as well!
 
 \begin{Exercise}{}{}
     Compute:
-    $ \displaystyle\int \tan(x)\, d{x} $, $ \displaystyle\int \cot(x)\, d{x} $.
+    $ \displaystyle\int \tan(x)\odif{x} $, $ \displaystyle\int \cot(x)\odif{x} $.
 \end{Exercise}

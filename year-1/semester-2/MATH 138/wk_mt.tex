@@ -6,34 +6,34 @@ That is, we can solve for $ y^\prime $.
 
 \begin{Definition}{Separable}{}
     A \textbf{separable} ODE is a first-order ODE that can be written as
-    $ \displaystyle  \frac{dy}{dx} =g(y)h(x) $;
+    $ \displaystyle  \odv{y}{x} =g(y)h(x) $;
     that is, we can factor the RHS into a product of functions, one containing
     only $ x $'s and one containing only $ y $'s.
 \end{Definition}
 To solve a separable ODE, move $ g(y) $ to the LHS and integrate both sides with respect
 to $ x $.
 \begin{align*}
-    \frac{dy}{dx} =g(y)h(x)
-     & \implies \frac{1}{g(y)}\frac{dy}{dx} =h(x)                          \\
-     & \implies \int \frac{1}{g(y)}\frac{dy}{dx} \, d{x} =\int h(x)\, d{x} \\
-     & \implies \int \frac{1}{g(y)} \, d{y} =\int h(x)\, d{x}              \\
+    \odv{y}{x} =g(y)h(x)
+     & \implies \frac{1}{g(y)}\odv{y}{x} =h(x)                            \\
+     & \implies \int \frac{1}{g(y)}\odv{y}{x} \odif{x} =\int h(x)\odif{x} \\
+     & \implies \int \frac{1}{g(y)} \odif{y} =\int h(x)\odif{x}           \\
 \end{align*}
 Now, integrate each side!
 \begin{Remark}{}{}
     What is going on in the last step? A substitution! Say $ y=f(x) $,
-    then $ dy=f^\prime(x)\,dx $. Therefore, the LHS is:
-    \[ \int \frac{1}{g(f(x))} f^\prime(x)\, d{x} =\int \frac{1}{g(y)} \, d{y} \]
+    then $ \odif{y}=f^\prime(x)\odif{x} $. Therefore, the LHS is:
+    \[ \int \frac{1}{g(f(x))} f^\prime(x)\odif{x} =\int \frac{1}{g(y)} \odif{y} \]
 \end{Remark}
 
 \begin{Example}{}{}
     Solve
-    $ \displaystyle \frac{dy}{dx} =\frac{x}{y} $,
+    $ \displaystyle \odv{y}{x} =\frac{x}{y} $,
     find the general solution.
 
     \textbf{Solution.}
     \[
-        \frac{dy}{dx} =\frac{x}{y}
-        \implies \int y\, d{y} =\int x\, d{x}
+        \odv{y}{x} =\frac{x}{y}
+        \implies \int y\odif{y} =\int x\odif{x}
         \implies \frac{y^2}{2} =\frac{x^2}{2}+C
     \]
     Solve for $ y $ if possible: $ y=\pm\sqrt{x^2+2C} $ or $ y=\pm\sqrt{x^2+C_1} $.
@@ -41,11 +41,11 @@ Now, integrate each side!
 
 \begin{Example}{}{}
     Find the particular solution to the IVP
-    $ \displaystyle  \frac{dy}{dx} =\frac{3x^2+4x+2}{2y-2} $
+    $ \displaystyle  \odv{y}{x}=\frac{3x^2+4x+2}{2y-2} $
     with $ y(0)=-1 $.
 
     \textbf{Solution.}
-    \[ \int 2y-2\, d{y} =\int 3x^2+4x+2\, d{x} \implies y^2-2y=x^3+2x^2+2x+C \]
+    \[ \int 2y-2\odif{y} =\int 3x^2+4x+2\odif{x} \implies y^2-2y=x^3+2x^2+2x+C \]
     Next, get $ C $ by using $ y(0)=-1 $.
     \[ (-1)^2-2(-1)=0+0+0+C\implies C=3 \]
     So, $ y^2-2y=x^3+2x^2+2x+3 $. We can solve for $ y $ if we complete the square
@@ -66,15 +66,15 @@ Now, integrate each side!
 
 \begin{Example}{}{}
     Find the general solution to
-    $ \displaystyle  \frac{dy}{dx}=\frac{y\cos(x)}{1+2y^2} $.
+    $ \displaystyle \odv{y}{x}=\frac{y\cos(x)}{1+2y^2} $.
 
     \textbf{Solution.} We get
-    $ \displaystyle  \int \frac{1+2y^2}{y} \, d{y} =\int \cos(x)\, d{x} $
+    $ \displaystyle  \int \frac{1+2y^2}{y} \odif{y} =\int \cos(x)\odif{x} $
     if $ y\not\equiv 0 $ ``not identically'' meaning not the constant function $ 0 $.
-    \[ \int \frac{1}{y} +2y\, d{y} =\sin(x)+C\implies \ln(y)+y^2=\sin(x)+C \]
+    \[ \int \frac{1}{y} +2y\odif{y} =\sin(x)+C\implies \ln(y)+y^2=\sin(x)+C \]
     (can't solve for $ y $).
 
-    But what if $ y\equiv 0 $? Then, $ \displaystyle \frac{dy}{dx} =0 $, and the ODE becomes
+    But what if $ y\equiv 0 $? Then, $ \displaystyle\odv{y}{x} =0 $, and the ODE becomes
     $ 0=0 $ which is true for all $ x $! So, $ y\equiv 0 $ is also a solution.
 
     Therefore, the general solution is
@@ -85,11 +85,11 @@ Now, integrate each side!
 
 \begin{Example}{}{}
     Find a particular solution for the IVP
-    $ \displaystyle  \frac{dy}{dx} =xy $
+    $ \displaystyle\odv{y}{x} =xy $
     with $ y(0)=1 $.
 
     \textbf{Solution.} We get
-    $ \displaystyle  \int \frac{1}{y} \, d{y} =\int x\, d{x} $
+    $ \displaystyle  \int \frac{1}{y} \odif{y} =\int x\odif{x} $
     if $ y\not\equiv 0 $, but note that $ y(0)=1 $, so $ y\not\equiv 0 $!
     \begin{align*}
         \ln\abs{y} & =\frac{x^2}{2} +C                                                    \\
@@ -106,20 +106,20 @@ Common substitutions: $ V=y+x $, $ V=\sfrac{y}{x} $, $ V=y^\prime $, etc.
 
 \begin{Example}{}{}
     Solve
-    $ \frac{dy}{dx} =(x+y)^2-1 $
+    $ \odv{y}{x} =(x+y)^2-1 $
 
     \textbf{Solution.} This ODE is not separable, but let $ V=x+y $, so
     $ V^\prime=1+y^\prime $ or $ y^\prime=V^\prime-1 $. So,
     \[ V^\prime-1=V^2-1\implies V^\prime=V^2 \]
     Now it's separable! Therefore,
-    \[ \int \frac{1}{V^2} \, d{V} =\int \, d{x} \]
+    \[ \int \frac{1}{V^2}\odif{V} =\int \odif{x} \]
     if $ V\not\equiv 0 $.
     \[ -\frac{1}{V} =x+C\implies V=-\frac{1}{x+C} \]
     but $ V=x+y $, so
     \[ x+y=-\frac{1}{x+C} \]
     so we get
     \[ y=-x-\frac{1}{x+C} \]
-    What if $ V\equiv 0 $? Then $ y=-x $, and $ \dfrac{dy}{dx}=-1, $ the ODE becomes
+    What if $ V\equiv 0 $? Then $ y=-x $, and $ \odv{y}{x}=-1, $ the ODE becomes
     $ -1=-1 $ which is true for all $ x $! So, $ y=-x $ is another solution. Thus,
     \[ y=-x\text{ or }y=-x-\frac{1}{x+C} \]
 \end{Example}
@@ -135,7 +135,7 @@ Let $ X(t)= $ the amount of salt in the tank at time $ t $.
 
 Then,
 \begin{align*}
-    \frac{dx}{dt}
+    \odv{x}{t}
      & =(\text{rate in})-(\text{rate out})                                         \\
      & =(10\text{ L/min})(0.3\text{kg/L})-(\text{conc.\ in tank})(10\text{ L/min}) \\
 \end{align*}
@@ -147,11 +147,11 @@ Therefore,
 \end{align*}
 So,
 \begin{align*}
-    \frac{dx}{dt}
+    \odv{x}{t}
      & =3-\frac{x}{100}                       \\
      & =\frac{300-x}{100} & \text{separable!} \\
 \end{align*}
-\[ \int \frac{1}{300-x} \, d{x}=\int \frac{1}{100} \, d{t} \implies -\ln\abs{300-x}=\frac{t}{100} +C \]
+\[ \int \frac{1}{300-x} \odif{x}=\int \frac{1}{100} \odif{t} \implies -\ln\abs{300-x}=\frac{t}{100} +C \]
 What is $ X(0) $? Starts at 1000 L at 0.1 kg/L, so $ X(0) $ = 100 kg.
 
 Find $ C $: \[ -\ln\abs{300-100}=C\implies C=-\ln(200) \]
@@ -170,15 +170,15 @@ where $ A(x)\not\equiv 0 $. Or, dividing by $ A(x) $, we can write it as:
 \[ y^\prime+P(x)y=Q(x) \]
 \begin{Example}{Preliminary Example}{}
     Solve
-    $ \frac{dy}{dx} +\frac{1}{x} y=1 $.
+    $ \odv{y}{x} +\frac{1}{x} y=1 $.
 
     \textbf{Solution.}
     The trick is: multiply by $ x $!
-    \[ x \frac{dy}{dx} +y=x \]
+    \[ x \odv{y}{x} +y=x \]
     Notice that now the LHS is the derivative of $ xy $. So,
-    \[ \frac{d}{dx} (xy)=x \]
+    \[ \odv{}{x} (xy)=x \]
     Now, integrate both sides!
-    \[ xy=\int x\, d{x}=\frac{x^2}{2} +C \]
+    \[ xy=\int x\odif{x}=\frac{x^2}{2} +C \]
     Thus,
     \[ y=\frac{x}{2} +\frac{C}{x} \]
 \end{Example}
@@ -189,23 +189,23 @@ Then, we just need to integrate both sides and solve for $ y $.
 Let's find the useful function:
 
 Say the ODE is
-\[ \frac{dy}{dx} +P(x)y=Q(x) \]
+\[ \odv{y}{x} +P(x)y=Q(x) \]
 and the desired function is $ \mu(x) $. Multiplying, we get
-\[ \mu(x)\frac{dy}{dx} +\mu(x)P(x)y=\mu(x)Q(x) \]
+\[ \mu(x)\odv{y}{x} +\mu(x)P(x)y=\mu(x)Q(x) \]
 We \textbf{want} the LHS to be
-\[ \frac{d}{dx} \left[ \mu(x)y \right]=\mu^\prime(x)y+\mu(x)\frac{dy}{dx}  \]
+\[ \odv{}{x} \left[ \mu(x)y \right]=\mu^\prime(x)y+\mu(x)\odv{y}{x}  \]
 Solving, we get:
 \begin{align*}
-     & \mu(x)\frac{dy}{dx} +\mu(x)P(x)y=\mu(x)\frac{dy}{dx}+\mu^\prime(x)y                                 \\
-     & \implies \mu(x)P(x)y=\mu^\prime(x)y                                 & \text{should hold for all } y \\
+     & \mu(x)\odv{y}{x} +\mu(x)P(x)y=\mu(x)\odv{y}{x}+\mu^\prime(x)y                                 \\
+     & \implies \mu(x)P(x)y=\mu^\prime(x)y                           & \text{should hold for all } y \\
      & \implies \mu(x)P(x)=\mu^\prime(x)
 \end{align*}
 or
-$ \displaystyle  \mu(x)P(x)=\frac{d\mu}{dx}  $
+$ \displaystyle  \mu(x)P(x)=\odv{\mu}{x}  $
 which is separable!
-\[ \int \frac{1}{\mu} \, d{\mu} =\int P(x)\, d{x}\implies \ln\abs{\mu}=\int P(x)\, d{x} \]
+\[ \int \frac{1}{\mu}\odif{\mu} =\int P(x)\odif{x}\implies \ln\abs{\mu}=\int P(x)\odif{x} \]
 Thus, the final form is
-\[ \boxed{\mu=e^{\int P(x)\, d{x}}} \]
+\[ \boxed{\mu=e^{\int P(x)\odif{x}}} \]
 \begin{Remark}{}{}
     We can ignore the ``$ +C $'' and absolute values since we only need to find one $ \mu $
     that works, not all of them.
@@ -213,28 +213,28 @@ Thus, the final form is
 So, we get an algorithm to solve a linear first-order ODE\@:
 \begin{enumerate}[label=(\Roman*)]
     \item Write it in the form
-          \[ \frac{dy}{dx}=P(x)y=Q(x) \]
+          \[ \odv{y}{x}=P(x)y=Q(x) \]
     \item Find
-          \[ \mu(x)=e^{\int P(x)\, d{x}} \]
+          \[ \mu(x)=e^{\int P(x)\odif{x}} \]
     \item Multiply the ODE by $ \mu $, collapse LHS into a product rule.
     \item Integrate both sides (add $ +C $) and solve for $ y $.
 \end{enumerate}
 
 \begin{Example}{}{}
     Solve
-    $ \displaystyle  \frac{dy}{dx} +2xy=x $.
+    $ \displaystyle  \odv{y}{x} +2xy=x $.
 
     \textbf{Solution.}
-    \[ \mu(x)=e^{\int P(x)\, d{x}}=e^{\int 2x\, d{x}}=e^{x^2} \]
+    \[ \mu(x)=e^{\int P(x)\odif{x}}=e^{\int 2x\odif{x}}=e^{x^2} \]
     Multiply by $ e^{x^2} $:
-    \[ e^{x^2}\frac{dy}{dx} +2xe^{x^2}y=xe^{x^2} \]
-    \[ \implies \frac{d}{dx} \left[ e^{x^2}y \right]=xe^{x^2} \]
+    \[ e^{x^2}\odv{y}{x} +2xe^{x^2}y=xe^{x^2} \]
+    \[ \implies \odv{}{x} \left[ e^{x^2}y \right]=xe^{x^2} \]
     Integrate:
     \begin{align*}
         e^{x^2}y
-         & =\int x e^{x^2}\, d{x}       & u=x^2\iff du=2x\,dx \\
-         & =\frac{1}{2} \int e^u\, d{u}                       \\
-         & =\frac{1}{2} e^{u}+C                               \\
+         & =\int x e^{x^2}\odif{x}       & u=x^2\iff \odif{u}=2x\odif{x} \\
+         & =\frac{1}{2} \int e^u\odif{u}                                 \\
+         & =\frac{1}{2} e^{u}+C                                          \\
          & =\frac{1}{2}e^{x^2}+C
     \end{align*}
     So,
@@ -243,22 +243,22 @@ So, we get an algorithm to solve a linear first-order ODE\@:
 
 \begin{Example}{}{}
     Find a particular solution to
-    $ \displaystyle  x^2 \frac{dy}{dx} +2xy=1 $
+    $ \displaystyle  x^2 \odv{y}{x} +2xy=1 $
     with $ y(1)=0 $.
 
     \textbf{Solution.} It's not in the correct form! First, divide by $ x^2 $:
-    \[ \frac{dy}{dx} +\frac{2}{x} y=\frac{1}{x^2}  \]
+    \[ \odv{y}{x} +\frac{2}{x} y=\frac{1}{x^2}  \]
     Now,
     \begin{align*}
         \mu(x)
-         & =e^{\int \sfrac{2}{x} \, d{x} } \\
-         & =e^{2\ln\abs{x}}                \\
-         & =e^{\ln(x)^2}                   \\
+         & =e^{\int \sfrac{2}{x} \odif{x} } \\
+         & =e^{2\ln\abs{x}}                 \\
+         & =e^{\ln(x)^2}                    \\
          & =x^2
     \end{align*}
     So multiply by $ x^2 $, therefore our original ODE was actually what we wanted! Cool!
-    \[ x^2 \frac{dy}{dx} +2xy=1
-        \implies\frac{d}{dx} \left[ x^2y \right]=1 \]
+    \[ x^2\odv{y}{x} +2xy=1
+        \implies\odv{}{x} \left[ x^2y \right]=1 \]
     Integrating gives
     \begin{align*}
         x^2 y=x+C \\
@@ -270,28 +270,28 @@ So, we get an algorithm to solve a linear first-order ODE\@:
 
 \begin{Remark}{}{}
     There is a formula you can use as well! The solution to
-    \[ \frac{dy}{dx}+P(x)y=Q(x) \]
+    \[ \odv{y}{x}+P(x)y=Q(x) \]
     is
-    \[ \boxed{y=\frac{1}{\mu(x)}\Bigl[\int \mu(x)Q(x)\, d{x} \Bigr]}  \]
+    \[ \boxed{y=\frac{1}{\mu(x)}\Bigl[\int \mu(x)Q(x)\odif{x} \Bigr]}  \]
     where
-    \[ \mu(x)=e^{\int P(x)\, d{x}} \]
+    \[ \mu(x)=e^{\int P(x)\odif{x}} \]
 \end{Remark}
 
 \begin{Example}{}{}
-    Solve $ \displaystyle  x \frac{dy}{dx} +2xe^x y=xe^x $.
+    Solve $ \displaystyle  x \odv{y}{x} +2xe^x y=xe^x $.
 
     \textbf{Solution.}
     First, divide by $ x $:
-    \[ \frac{dy}{dx}+2e^x y=e^x \]
-    \[ \mu(x)=e^{\int 2e^x\, d{x}}=e^{2e^x} \]
+    \[ \odv{y}{x}+2e^x y=e^x \]
+    \[ \mu(x)=e^{\int 2e^x\odif{x}}=e^{2e^x} \]
     Now, using the formula:
     \begin{align*}
         y
-         & =\frac{1}{\mu(x)}\int \mu(x)Q(x)\, d{x}                 \\
-         & =\frac{1}{e^{2e^x}}\Bigl[\int e^{2e^x}e^x\, d{x} \Bigr] \\
-         & =\frac{1}{e^{2e^x}} \left(e^{2u}\right)                 \\
-         & =\frac{1}{e^{2e^x}}\left( \frac{e^{2u}}{2} +C \right)   \\
-         & =\frac{1}{e^{2e^x}}\left( \frac{e^{2e^x}}{2} +C \right) \\
+         & =\frac{1}{\mu(x)}\int \mu(x)Q(x)\odif{x}                 \\
+         & =\frac{1}{e^{2e^x}}\Bigl[\int e^{2e^x}e^x\odif{x} \Bigr] \\
+         & =\frac{1}{e^{2e^x}} \left(e^{2u}\right)                  \\
+         & =\frac{1}{e^{2e^x}}\left( \frac{e^{2u}}{2} +C \right)    \\
+         & =\frac{1}{e^{2e^x}}\left( \frac{e^{2e^x}}{2} +C \right)  \\
          & =\frac{1}{2} +\frac{C}{e^{2e^x}}
     \end{align*}
 \end{Example}
@@ -315,10 +315,10 @@ The law states that an object's temperature changes at a rate that is proportion
 to the difference between the temperature of
 the object and the ambient temperature; that is, the temperature of the room,
 $ T_{\text{room}} $. The formula is:
-\[ \frac{dT}{dt}=-K\left( T-T_{\text{room}} \right)  \]
+\[ \odv{T}{t}=-K\left( T-T_{\text{room}} \right)  \]
 where
 \begin{itemize}
-    \item $ \sfrac{dT}{dt} = $ rate of change of temperature
+    \item $ \odv{T}{t} = $ rate of change of temperature
     \item $ -K =$ a constant
     \item $ T= $ temperature at time $ t $
     \item $ T_{\text{room}}= $ temperature of surroundings (constant)
@@ -326,9 +326,9 @@ where
 Q\@: Why is the constant negative?
 
 A\@: If $ T>T_{\text{room}} $, we would expect the object to be \underline{cooling},
-so $ \sfrac{dT}{dt} <0 $. This means the coefficient needs to be negative since
+so $ \odv{T}{t} <0 $. This means the coefficient needs to be negative since
 $ T-T_{\text{room}}>0 $. On the other hand, if $ T<T_{\text{room}} $,
-then the object is heating up, so $ \sfrac{dT}{dt}>0 $, but
+then the object is heating up, so $ \odv{T}{t}>0 $, but
 $ T-T_{\text{room}}<0 $, so again we need a negative constant.
 
 \begin{Exercise}{}{}
@@ -342,7 +342,7 @@ as expected.
 
 \begin{Example}{}{}
     For
-    $ \displaystyle  \frac{dT}{dt}=-K(T-25)  $,
+    $ \displaystyle  \odv{T}{t}=-K(T-25)  $,
     if the object was initially at $ 0^\circ C $, and after
     10 minutes it was at $ 5^\circ C $, solve the ODE\@.
 
@@ -373,11 +373,11 @@ The two models we will examine are:
 \textbf{Natural Growth}: It makes sense to assume that
 population grows at a rate proportional to the size of the population.
 So, if $ P= $ population, and $ t= $ time, then
-\[ \frac{dP}{dt}=kP  \]
+\[ \odv{P}{t}=kP  \]
 where $ k= $ constant, roughly equal to $ \text{birth rate}-\text{death rate} $.
 
 It's separable! If $ p\not\equiv 0 $:
-\[ \int \frac{1}{P} \, d{P}=\int k\, d{t}  \]
+\[ \int \frac{1}{P}\odif{P}=\int k\odif{t}  \]
 \begin{align*}
      & \implies \ln\abs{P}=kt+C    \\
      & \implies \abs{P}=e^C e^{kt} \\
@@ -386,7 +386,7 @@ It's separable! If $ p\not\equiv 0 $:
 Say $ \pm e^C =A\in\mathbb{R} $, then
 \[ P=Ae^{kt} \]
 Note that $ P(0)=Ae^0=A $, so $ A=\text{initial population} $. So,
-the solution to the IVP $ \sfrac{dP}{dt} =kP $ with $ P(0)=P_0 $ is
+the solution to the IVP $ \odv{P}{t} =kP $ with $ P(0)=P_0 $ is
 \[ P=P_0 e^{kt} \]
 
 Is natural growth a good model? Say we have 1000 bacteria in a Petri
@@ -407,33 +407,33 @@ Denote the carrying capacity by $ M $.
 
 \begin{Definition}{}{}
     The \textbf{logistical differential equation} is
-    \[ \frac{dP}{dt}=kP\left( 1-\frac{P}{M}  \right) \]
+    \[ \odv{P}{t}=kP\left( 1-\frac{P}{M}  \right) \]
     where $ k =$ same constant as in natural growth.
 \end{Definition}
 \begin{Remark}{}{}
     Sometimes written
-    \[ \frac{dP}{dt}=kP(M-P)  \]
+    \[ \odv{P}{t}=kP(M-P)  \]
     but $ K $ is different here.
 \end{Remark}
 
 Let's examine some cases:
 \begin{enumerate}[label=(\Roman*)]
-    \item If $ P\ll M $, then $ 1-\sfrac{P}{M}\approx 1 $, so $ \sfrac{dP}{dt} \approx kP $
+    \item If $ P\ll M $, then $ 1-\sfrac{P}{M}\approx 1 $, so $ \odv{P}{t} \approx kP $
           (natural growth!)
-    \item If $ P\approx M $, then $ 1-\sfrac{P}{M}\approx 0 $, so $ \sfrac{dP}{dt}\approx 0 $,
+    \item If $ P\approx M $, then $ 1-\sfrac{P}{M}\approx 0 $, so $ \odv{P}{t}\approx 0 $,
           which makes sense as population has reached its limit.
-    \item If $ P>M $, then $ \sfrac{dP}{dt} <0 $, as expected. (The population
+    \item If $ P>M $, then $ \odv{P}{t} <0 $, as expected. (The population
           shrinks as there are not enough resources).
 \end{enumerate}
 So, this equation appears to be a good model! Let's solve it:
-\[ \frac{dP}{dt} =kP\left(1-\frac{P}{M}\right) \]
+\[ \odv{P}{t} =kP\left(1-\frac{P}{M}\right) \]
 with $ P(0)=P_0 $. It's separable!
-\[ \int \frac{1}{P(1-\sfrac{P}{M})} \, d{P}=\int k\, d{t} =kt+C \]
+\[ \int \frac{1}{P(1-\sfrac{P}{M})}\odif{P}=\int k\odif{t} =kt+C \]
 Use partial fractions! Notice
 \[ \frac{1}{P(1-\sfrac{P}{M})}=\frac{M}{P(M-P)} =\frac{1}{P} +\frac{1}{M-P} \]
 So we get
 \begin{align*}
-     & \int \frac{1}{P} +\frac{1}{M-P} \, d{P}  =kt+C                                                   \\
+     & \int \frac{1}{P} +\frac{1}{M-P}\odif{P}  =kt+C                                                   \\
      & \implies  \ln\abs{P}-\ln\abs{M-P}            =kt+C                                               \\
      & \implies  \ln\abs*{\frac{P}{M-P}}        =kt+C                                                   \\
      & \implies \ln\abs*{\frac{M-P}{P}}         =-kt-C                                                  \\
@@ -444,7 +444,7 @@ So we get
 \end{align*}
 Next, use $ P(0)=P_0 $ to get $ A $:
 \[ P_0=\frac{M}{1+A}\implies 1+A=\frac{M}{P_0}\implies A=\frac{M-P_0}{P_0}  \]
-So, the solution to $ \dfrac{dP}{dt}=kP\left( 1-\dfrac{P}{M} \right) $, $ P(0)=P_0 $
+So, the solution to $ \odv{dP}{dt}=kP\left( 1-\dfrac{P}{M} \right) $, $ P(0)=P_0 $
 is
 \[ \boxed{P=\frac{M}{1+Ae^{-kt}}}  \]
 where $ \boxed{A=\dfrac{M-P_0}{P_0}} $.
@@ -456,7 +456,7 @@ where $ \boxed{A=\dfrac{M-P_0}{P_0}} $.
     Assuming logistic growth, find $ P(t) $.
 
     \textbf{Solution.}
-    \[ \frac{dP}{dt}=kP\left(1-\frac{P}{1500}\right)  \]
+    \[ \odv{P}{t}=kP\left(1-\frac{P}{1500}\right)  \]
     $ P(0)=100 $, and $ P(1)=150 $. So,
     \[ P=\frac{1500}{1+Ae^{-kt}}  \]
     with $ A=\sfrac{(1500-100)}{100}=14  $. So,
@@ -479,9 +479,9 @@ where $ \boxed{A=\dfrac{M-P_0}{P_0}} $.
 \underline{For Fun}: There are other models too:
 \begin{enumerate}[label=(\Roman*)]
     \item Taking harvesting/hunting into account:
-          \[ \frac{dP}{dt}=kP\left( 1-\frac{P}{M} \right)-C \]
+          \[ \odv{P}{t}=kP\left( 1-\frac{P}{M} \right)-C \]
           where $ C $ is the harvesting constant.
     \item If a population is \textbf{too sparse}, they may go extinct:
-          \[ \frac{dP}{dt}=kP\left( 1-\frac{P}{M} \right)\left( 1-\frac{N}{P}  \right)  \]
+          \[ \odv{P}{t}=kP\left( 1-\frac{P}{M} \right)\left( 1-\frac{N}{P}  \right)  \]
           where $ N= $ minimum population to prevent extinction.
 \end{enumerate}

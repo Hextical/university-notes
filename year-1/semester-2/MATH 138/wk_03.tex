@@ -5,13 +5,16 @@ simplify an integral!
 
 There are three situations where this is useful: say $ \alpha\in\mathbb{R} $.
 
-\begin{tabularx}{0.9\linewidth}{@{}YYY@{}}
-    If you see:        & Try substituting:   & Range for $ \theta $                                                         \\
-    \midrule
-    $ \sqrt{a^2-x^2} $ & $ x=a\sin(\theta) $ & $ \theta\in\interval[open]{-\sfrac{\pi}{2}}{\sfrac{\pi}{2}} $                \\
-    $ \sqrt{a^2+x^2} $ & $ x=a\tan(\theta) $ & $ \theta\in\interval[open]{-\sfrac{\pi}{2}}{\sfrac{\pi}{2}} $                \\
-    $ \sqrt{x^2-a^2} $ & $ x=a\sec(\theta) $ & $ \theta\in\interval{0}{\sfrac{\pi}{2}}\cup\interval{\pi}{\sfrac{3\pi}{2}} $
-\end{tabularx}
+\begin{table}[!htbp]
+    \centering
+    \begin{tabular}{ccc}
+        If you see:        & Try substituting:   & Range for $ \theta $                                                         \\
+        \midrule
+        $ \sqrt{a^2-x^2} $ & $ x=a\sin(\theta) $ & $ \theta\in\interval[open]{-\sfrac{\pi}{2}}{\sfrac{\pi}{2}} $                \\
+        $ \sqrt{a^2+x^2} $ & $ x=a\tan(\theta) $ & $ \theta\in\interval[open]{-\sfrac{\pi}{2}}{\sfrac{\pi}{2}} $                \\
+        $ \sqrt{x^2-a^2} $ & $ x=a\sec(\theta) $ & $ \theta\in\interval{0}{\sfrac{\pi}{2}}\cup\interval{\pi}{\sfrac{3\pi}{2}} $
+    \end{tabular}
+\end{table}
 
 \begin{Remark}{}{}
     \begin{itemize}
@@ -26,18 +29,18 @@ There are three situations where this is useful: say $ \alpha\in\mathbb{R} $.
 \end{Remark}
 
 \begin{Example}{}{}
-    Compute $ \displaystyle   \int \frac{1}{\sqrt{x^2+4}} \, d{x} $.
+    Compute $ \displaystyle   \int \frac{1}{\sqrt{x^2+4}} \odif{x} $.
 
     \textbf{Solution.}
     \begin{align*}
-        \int \frac{1}{\sqrt{x^2+4}} \, d{x}
-         & =\int \frac{1}{\sqrt{4\tan^2(\theta)+4}} \left(2\sec^2(\theta)\right) \, d{\theta}
-         &                                                                                    & x=2\tan(\theta)\iff dx=2\sec^2(\theta)\,d\theta                               \\
-         & =\int \frac{\sec^2(\theta)}{\sqrt{\tan^2(\theta)+1}} \, d{\theta}                                                                                                  \\
-         & =\int \frac{\sec^2(\theta)}{\sqrt{\sec^2(\theta)}} \, d{\theta}                                                                                                    \\
-         & =\int \frac{\sec^2(\theta)}{\abs{\sec(\theta)}} \, d{\theta}                                                                                                       \\
-         & =\int \sec(\theta)\, d{\theta}                                                     &                                                 & \text{since }\sec(\theta)>0 \\
-         & =\ln\abs{\sec{\theta}+\tan(\theta)}+C                                              &                                                                               \\
+        \int \frac{1}{\sqrt{x^2+4}} \odif{x}
+         & =\int \frac{1}{\sqrt{4\tan^2(\theta)+4}} \left(2\sec^2(\theta)\right) \odif{\theta}
+         &                                                                                     & x=2\tan(\theta)\iff \odif{x}=2\sec^2(\theta)\odif{\theta}                               \\
+         & =\int \frac{\sec^2(\theta)}{\sqrt{\tan^2(\theta)+1}} \odif{\theta}                                                                                                            \\
+         & =\int \frac{\sec^2(\theta)}{\sqrt{\sec^2(\theta)}} \odif{\theta}                                                                                                              \\
+         & =\int \frac{\sec^2(\theta)}{\abs{\sec(\theta)}} \odif{\theta}                                                                                                                 \\
+         & =\int \sec(\theta)\odif{\theta}                                                     &                                                           & \text{since }\sec(\theta)>0 \\
+         & =\ln\abs{\sec{\theta}+\tan(\theta)}+C                                               &                                                                                         \\
          & =\ln\abs*{\frac{\sqrt{x^2+4}}{2}+\frac{x}{2}}+C
     \end{align*}
     where we substituted $
@@ -52,20 +55,20 @@ There are three situations where this is useful: say $ \alpha\in\mathbb{R} $.
 
 \begin{Example}{}{}
     \begin{enumerate}[label=(\roman*)]
-        \item Compute $ \displaystyle \int \frac{\sqrt{9-4x^2}}{x^2} \, d{x} $.
+        \item Compute $ \displaystyle \int \frac{\sqrt{9-4x^2}}{x^2} \odif{x} $.
 
               \textbf{Solution.}
               \begin{align*}
-                  \int \frac{\sqrt{9-4x^2}}{x^2} \, d{x}
-                   & =2 \int \frac{\sqrt{\sfrac{9}{4}-x^2}}{x^2} \, d{x}                                                                                                                                                                    \\
-                   & =2 \int \frac{\sqrt{\sfrac{9}{4}-\sfrac{9}{4}\sin^2(\theta)}\left( \sfrac{3}{2}\cos(\theta) \right)}{\sfrac{9}{4}\sin^2(\theta)} \, d{\theta} &  & x=\sfrac{3}{2}\sin(\theta)\iff dx=\sfrac{3}{2}\cos(\theta)\,d\theta \\
+                  \int \frac{\sqrt{9-4x^2}}{x^2} \odif{x}
+                   & =2 \int \frac{\sqrt{\sfrac{9}{4}-x^2}}{x^2} \odif{x}                                                                                                                                                                              \\
+                   & =2 \int \frac{\sqrt{\sfrac{9}{4}-\sfrac{9}{4}\sin^2(\theta)}\left( \sfrac{3}{2}\cos(\theta) \right)}{\sfrac{9}{4}\sin^2(\theta)} \odif{\theta} &  & x=\sfrac{3}{2}\sin(\theta)\iff \odif{x}=\sfrac{3}{2}\cos(\theta)\odif{\theta} \\
                    & =2 \frac{3}{2} \cdot \frac{3}{2} \cdot \frac{4}{9}
-                  \int \frac{\sqrt{1-\sin^2(\theta)}\cos(\theta)}{\sin^2(\theta)} \, d{\theta}                                                                                                                                              \\
-                   & =2 \int \frac{\abs{\cos(\theta)}\cos(\theta)}{\sin^2(\theta)} \, d{\theta}                                                                                                                                             \\
-                   & =2 \int \frac{\cos^2(\theta)}{\sin^2(\theta)} \, d{\theta}                                                                                    &  & \text{since }\cos(\theta)>0                                         \\
-                   & =2 \int \cot^2(\theta)\, d{\theta}                                                                                                                                                                                     \\
-                   & =2 \int \csc^2(\theta)-1\, d{\theta}                                                                                                                                                                                   \\
-                   & =2[-\cot(\theta)-\theta]+C                                                                                                                                                                                             \\
+                  \int \frac{\sqrt{1-\sin^2(\theta)}\cos(\theta)}{\sin^2(\theta)} \odif{\theta}                                                                                                                                                        \\
+                   & =2 \int \frac{\abs{\cos(\theta)}\cos(\theta)}{\sin^2(\theta)} \odif{\theta}                                                                                                                                                       \\
+                   & =2 \int \frac{\cos^2(\theta)}{\sin^2(\theta)} \odif{\theta}                                                                                    &  & \text{since }\cos(\theta)>0                                                   \\
+                   & =2 \int \cot^2(\theta)\odif{\theta}                                                                                                                                                                                               \\
+                   & =2 \int \csc^2(\theta)-1\odif{\theta}                                                                                                                                                                                             \\
+                   & =2[-\cot(\theta)-\theta]+C                                                                                                                                                                                                        \\
                    & =2\left[ -\frac{\sqrt{9-4x^2}}{2x}-\arcsin\left( \frac{2x}{3} \right) \right]+C
               \end{align*}
               Where we substituted $ \displaystyle
@@ -73,46 +76,46 @@ There are three situations where this is useful: say $ \alpha\in\mathbb{R} $.
                   \theta=\arcsin\left( \frac{2x}{3} \right) $ and $
                   \displaystyle \cot(\theta)=
                   \frac{\sqrt{9-4x^2}}{2x} $ in the last step.
-        \item Compute $ \displaystyle \int \frac{1}{x^2\sqrt{x^2-4}} \, d{x} $.
+        \item Compute $ \displaystyle \int \frac{1}{x^2\sqrt{x^2-4}} \odif{x} $.
 
               \textbf{Solution.}
               \begin{align*}
-                  \int \frac{1}{x^2\sqrt{x^2-4}} \, d{x}
-                   & =\int \frac{2\sec(\theta)\tan(\theta)}{4\sec^2(\theta)\sqrt{4\sec^2(\theta)-4}} \, d{\theta} &  & x=2\sec(\theta)\iff dx=2\sec(\theta)\tan(\theta)\,d\theta \\
-                   & =\frac{1}{4} \int \frac{\tan(\theta)}{\sec(\theta)\sqrt{\sec^2(\theta)-1}}\, d{\theta}                                                                      \\
-                   & =\frac{1}{4} \int \frac{\tan(\theta)}{\sec(\theta)\tan(\theta)} \, d{\theta}                                                                                \\
-                   & =\frac{1}{4} \int \frac{\tan(\theta)}{\sec(\theta)+\tan(\theta)} \, d{\theta}                                                                               \\
-                   & =\frac{1}{4} \int \frac{1}{\sec(\theta)} \, d{\theta}                                                                                                       \\
-                   & =\frac{1}{4} \int \cos(\theta)\, d{\theta}                                                                                                                  \\
-                   & =\frac{\sin(\theta)}{4} +C                                                                                                                                  \\
+                  \int \frac{1}{x^2\sqrt{x^2-4}} \odif{x}
+                   & =\int \frac{2\sec(\theta)\tan(\theta)}{4\sec^2(\theta)\sqrt{4\sec^2(\theta)-4}} \odif{\theta} &  & x=2\sec(\theta)\iff \odif{x}=2\sec(\theta)\tan(\theta)\odif{\theta} \\
+                   & =\frac{1}{4} \int \frac{\tan(\theta)}{\sec(\theta)\sqrt{\sec^2(\theta)-1}}\odif{\theta}                                                                                \\
+                   & =\frac{1}{4} \int \frac{\tan(\theta)}{\sec(\theta)\tan(\theta)} \odif{\theta}                                                                                          \\
+                   & =\frac{1}{4} \int \frac{\tan(\theta)}{\sec(\theta)+\tan(\theta)} \odif{\theta}                                                                                         \\
+                   & =\frac{1}{4} \int \frac{1}{\sec(\theta)} \odif{\theta}                                                                                                                 \\
+                   & =\frac{1}{4} \int \cos(\theta)\odif{\theta}                                                                                                                            \\
+                   & =\frac{\sin(\theta)}{4} +C                                                                                                                                             \\
                    & =\frac{\sqrt{x^2-4}}{4x} +C
               \end{align*}
               Where we substituted $ \displaystyle x=2\sec(\theta)\implies \sin(\theta)=\frac{\sqrt{x^2-4}}{x} $
               in the last step.
-        \item Compute $ \displaystyle \int x\sqrt{x^2-9}\, d{x} $.
+        \item Compute $ \displaystyle \int x\sqrt{x^2-9}\odif{x} $.
 
               \textbf{Solution.}
               \begin{align*}
-                  \int x\sqrt{x^2-9}\, d{x}
-                   & =\int \frac{x\sqrt{u}}{2x} \, d{u}                         &  & u=x^2-9\iff du=2x\,dx \\
-                   & =\frac{1}{2} \int \sqrt{u}\, d{u}                                                     \\
-                   & =\frac{1}{2} \left( \frac{2}{3} \right) u^{\sfrac{3}{2}}+C                            \\
+                  \int x\sqrt{x^2-9}\odif{x}
+                   & =\int \frac{x\sqrt{u}}{2x} \odif{u}                        &  & u=x^2-9\iff \odif{u}=2x\odif{x} \\
+                   & =\frac{1}{2} \int \sqrt{u}\odif{u}                                                              \\
+                   & =\frac{1}{2} \left( \frac{2}{3} \right) u^{\sfrac{3}{2}}+C                                      \\
                    & =\frac{1}{3}\left( x^2-9 \right)^{\sfrac{3}{2}}+C
               \end{align*}
-        \item Compute $ \displaystyle  \int_{0}^{3} \frac{x}{(1+x^2)^2} \, d{x} $.
+        \item Compute $ \displaystyle  \int_{0}^{3} \frac{x}{(1+x^2)^2} \odif{x} $.
 
               \textbf{Solution.}
               \begin{align*}
-                  \int_{0}^{\sqrt{3}} \frac{x}{(1+x^2)^2} \, d{x}
+                  \int_{0}^{\sqrt{3}} \frac{x}{(1+x^2)^2} \odif{x}
                    & =\int_{0}^{\sfrac{\pi}{3}}
-                  \frac{\tan(\theta)\sec^2(\theta)}{\left[ 1+\tan^2(\theta) \right]^2} \, d{\theta}
-                   &                                                                                                        & x=\tan(\theta)\iff dx=\sec^2(\theta)\,d\theta                                               \\
-                   & =\int_{0}^{\sfrac{\pi}{3}} \frac{\tan(\theta)\sec^2(\theta)}{\sec^4(\theta)} \, d{\theta}                                                                                                            \\
-                   & =\int_{0}^{\sfrac{\pi}{3}} \frac{\tan(\theta)}{\sec^2(\theta)} \, d{\theta}                                                                                                                          \\
-                   & =\int_{0}^{\sfrac{\pi}{3}} \frac{\sin(\theta)}{\cos(\theta)} \left( \cos^2(\theta) \right)\, d{\theta}                                                                                               \\
-                   & =\int_{0}^{\sfrac{\pi}{3}}\sin(\theta)\cos(\theta)\, d{\theta}                                         &                                               & u=\sin(\theta)\iff du=\cos(\theta)\,d\theta \\
-                   & =\int_{0}^{\sfrac{\sqrt{3}}{2}} u\, d{u}                                                                                                                                                             \\
-                   & =\left[\frac{u^2}{2} \right]^{\sfrac{\sqrt{3}}{2}}_0                                                                                                                                                 \\
+                  \frac{\tan(\theta)\sec^2(\theta)}{\left[ 1+\tan^2(\theta) \right]^2} \odif{\theta}
+                   &                                                                                                         & x=\tan(\theta)\iff \odif{x}=\sec^2(\theta)\odif{\theta}                                                         \\
+                   & =\int_{0}^{\sfrac{\pi}{3}} \frac{\tan(\theta)\sec^2(\theta)}{\sec^4(\theta)} \odif{\theta}                                                                                                                                \\
+                   & =\int_{0}^{\sfrac{\pi}{3}} \frac{\tan(\theta)}{\sec^2(\theta)} \odif{\theta}                                                                                                                                              \\
+                   & =\int_{0}^{\sfrac{\pi}{3}} \frac{\sin(\theta)}{\cos(\theta)} \left( \cos^2(\theta) \right)\odif{\theta}                                                                                                                   \\
+                   & =\int_{0}^{\sfrac{\pi}{3}}\sin(\theta)\cos(\theta)\odif{\theta}                                         &                                                         & u=\sin(\theta)\iff \odif{u}=\cos(\theta)\odif{\theta} \\
+                   & =\int_{0}^{\sfrac{\sqrt{3}}{2}} u\odif{u}                                                                                                                                                                                 \\
+                   & =\left[\frac{u^2}{2} \right]^{\sfrac{\sqrt{3}}{2}}_0                                                                                                                                                                      \\
                    & =\frac{3}{4}
               \end{align*}
     \end{enumerate}
@@ -124,19 +127,19 @@ There are three situations where this is useful: say $ \alpha\in\mathbb{R} $.
     Show that $ 3-2x-x^2=4-(x+1)^2 $ by completing the square.
 \end{Exercise}
 \begin{Example}{}{}
-    Compute $ \displaystyle \int \frac{x}{(3-2x-x^2)^{\sfrac{3}{2}}} \, d{x} $.
+    Compute $ \displaystyle \int \frac{x}{(3-2x-x^2)^{\sfrac{3}{2}}} \odif{x} $.
 
     \textbf{Solution.}
-    Substitution: $ x+1=2\sin(\theta)\iff dx=2\cos(\theta)\,d\theta $.
+    Substitution: $ x+1=2\sin(\theta)\iff \odif{x}=2\cos(\theta)\odif{\theta} $.
     \begin{align*}
-        \int \frac{x}{(3-2x-x^2)^{\sfrac{3}{2}}} \, d{x}
-         & =\int \frac{x}{\left[ 4-(x+1)^2 \right]^{\sfrac{3}{2}}} \, d{x}                                                                \\
-         & =\int \frac{[2\sin(\theta)-1] (2\cos(\theta))}{\left[4-4\sin^2(\theta)\right]^{\sfrac{3}{2}}} \, d{\theta}                     \\
-         & =\frac{1}{4} \int \frac{[2\sin(\theta)-1]\left(\cos(\theta)\right)}{\left[ \cos^2(\theta) \right]^{\sfrac{3}{2}}} \, d{\theta} \\
-         & = \frac{1}{4} \int \frac{2\sin(\theta)-1}{\cos^2(\theta)} \, d{\theta}                                                         \\
-         & =\frac{1}{4} \int \frac{2\sin(\theta)}{\cos^2(\theta)}-\frac{1}{\cos^2(\theta)} \, d{\theta}                                   \\
-         & =\frac{1}{4} \int 2\tan(\theta)\sec(\theta)-\sec^2(\theta)\, d{\theta}                                                         \\
-         & =\frac{1}{4} \left[ 2\sec(\theta)-\tan(\theta) \right]+C                                                                       \\
+        \int \frac{x}{(3-2x-x^2)^{\sfrac{3}{2}}} \odif{x}
+         & =\int \frac{x}{\left[ 4-(x+1)^2 \right]^{\sfrac{3}{2}}} \odif{x}                                                                \\
+         & =\int \frac{[2\sin(\theta)-1] (2\cos(\theta))}{\left[4-4\sin^2(\theta)\right]^{\sfrac{3}{2}}} \odif{\theta}                     \\
+         & =\frac{1}{4} \int \frac{[2\sin(\theta)-1]\left(\cos(\theta)\right)}{\left[ \cos^2(\theta) \right]^{\sfrac{3}{2}}} \odif{\theta} \\
+         & = \frac{1}{4} \int \frac{2\sin(\theta)-1}{\cos^2(\theta)} \odif{\theta}                                                         \\
+         & =\frac{1}{4} \int \frac{2\sin(\theta)}{\cos^2(\theta)}-\frac{1}{\cos^2(\theta)} \odif{\theta}                                   \\
+         & =\frac{1}{4} \int 2\tan(\theta)\sec(\theta)-\sec^2(\theta)\odif{\theta}                                                         \\
+         & =\frac{1}{4} \left[ 2\sec(\theta)-\tan(\theta) \right]+C                                                                        \\
          & =\frac{1}{4} \left[ \frac{4}{\sqrt{4-(x+1)^2}}-\frac{(x+1)}{\sqrt{4-(x+1)^2}} \right]+C
     \end{align*}
     Where we substituted $ \displaystyle
@@ -148,18 +151,18 @@ There are three situations where this is useful: say $ \alpha\in\mathbb{R} $.
 
 \section{Integration by Parts}
 Let $ u $ and $ v $ be functions of $ x $. From the product rule, we know
-\[ \frac{d}{dx}[uv]=u \frac{dv}{dx}+v \frac{du}{dx} \]
+\[ \odv{}{x}[uv]=u \odv{v}{x}+v \odv{u}{x} \]
 Integrating both sides gives:
-\[ \int \frac{d}{dx} [uv]\, d{x}=\int u \frac{dv}{dx} \, d{x}+
-    \int v \frac{du}{dx} \, d{x}   \]
-Omit $ dx $'s to make
-\[ uv=\int u\, {dv} -\int v\, d{u} \]
+\[ \int \odv{}{x} [uv]\odif{x}=\int u \odv{v}{x} \odif{x}+
+    \int v \odv{u}{x} \odif{x}   \]
+Omit $ \odif{x} $'s to make
+\[ uv=\int u\odif{v} -\int v\odif{u} \]
 So, we get:
-\[ \boxed{\int u\, d{v} =uv-\int v\, d{u}} \]
+\[ \boxed{\int u\odif{v} =uv-\int v\odif{u}} \]
 Strategy: When integrating the product of two functions, pick one to
-integrate (call it $ dv $), and one to differentiate (call it $ u $).
+integrate (call it $ \odif{v} $), and one to differentiate (call it $ u $).
 \begin{itemize}
-    \item Pick $ dv $ to be the most difficult function you know how to integrate.
+    \item Pick $ \odif{v} $ to be the most difficult function you know how to integrate.
     \item Pick $ u $ so that it gets simpler when differentiated.
 \end{itemize}
 Or, use ILATE\@: Pick $ u= $ the first function in the list:
@@ -173,98 +176,98 @@ Or, use ILATE\@: Pick $ u= $ the first function in the list:
 
 \begin{Example}{}{}
     \begin{enumerate}[label=(\roman*)]
-        \item Compute $ \displaystyle \int x^2\ln(x)\, d{x}  $.
+        \item Compute $ \displaystyle \int x^2\ln(x)\odif{x}  $.
 
-              \textbf{Solution.} Let $ u=\ln(x) $ and $ dv=x^2\,dx $, so we have
-              $ du=\dfrac{1}{x} \,dx $ and $ v=\dfrac{x^3}{3} $.
+              \textbf{Solution.} Let $ u=\ln(x) $ and $ \odif{v}=x^2\odif{x} $, so we have
+              $ \odif{u}=\dfrac{1}{x} \odif{x} $ and $ v=\dfrac{x^3}{3} $.
               \begin{align*}
-                  \int x^2\ln(x)\, d{x}
-                   & =\frac{x^3}{3} \ln(x)-\int \frac{x^3}{3} \left( \frac{1}{x} \right) \, d{x} \\
-                   & =\frac{x^3}{3} \ln(x)-\int \frac{x^2}{3}\, d{x}                             \\
+                  \int x^2\ln(x)\odif{x}
+                   & =\frac{x^3}{3} \ln(x)-\int \frac{x^3}{3} \left( \frac{1}{x} \right) \odif{x} \\
+                   & =\frac{x^3}{3} \ln(x)-\int \frac{x^2}{3}\odif{x}                             \\
                    & =\frac{x^3}{3} \ln(x)-\frac{x^3}{9} +C
               \end{align*}
-        \item Compute $ \displaystyle \int x e^x\, d{x} $.
+        \item Compute $ \displaystyle \int x e^x\odif{x} $.
 
-              \textbf{Solution.} Let $ u=x $ and $ dv=e^x\,dx $, so we have $ du=dx $ and $ v=e^x $.
+              \textbf{Solution.} Let $ u=x $ and $ \odif{v}=e^x\odif{x} $, so we have $ \odif{u}=\odif{x} $ and $ v=e^x $.
               \[
-                  \int x e^x\, d{x}
-                  =x e^x-\int e^x\, d{x}
+                  \int x e^x\odif{x}
+                  =x e^x-\int e^x\odif{x}
                   =x e^x-e^x+C
               \]
-        \item Compute $ \displaystyle \int_{0}^{\pi} x\cos(x)\, d{x} $.
+        \item Compute $ \displaystyle \int_{0}^{\pi} x\cos(x)\odif{x} $.
 
-              \textbf{Solution.} Let $ u=x $ and $ dv=\cos(x)dx $, so we have $ du=dx $ and $ v=\sin(x) $.
+              \textbf{Solution.} Let $ u=x $ and $ \odif{v}=\cos(x)\odif{x} $, so we have $ \odif{u}=\odif{x} $ and $ v=\sin(x) $.
               \[
-                  \int_{0}^{\pi} x\cos(x)\, d{x}
-                  =\bigl[x\sin(x)\bigr]^{\pi}_{0}-\int_{0}^{\pi} \sin(x)\, d{x}
+                  \int_{0}^{\pi} x\cos(x)\odif{x}
+                  =\bigl[x\sin(x)\bigr]^{\pi}_{0}-\int_{0}^{\pi} \sin(x)\odif{x}
                   =\bigl[\cos(x)\bigr]^{\pi}_{0}
                   =\cos(\pi)-\cos(0)
                   =-1-1
                   =-2
               \]
-        \item Compute $ \displaystyle \int \ln(x)\, d{x} $.
+        \item Compute $ \displaystyle \int \ln(x)\odif{x} $.
 
               \textbf{Solution.} Sometimes, we don't want to integrate any part! Let $ u=\ln(x) $
-              and $ dv=dx $, so we have $ du=\dfrac{1}{x}\,dx $ and $ v=x $.
+              and $ \odif{v}=\odif{x} $, so we have $ \odif{u}=\dfrac{1}{x}\odif{x} $ and $ v=x $.
               \[
-                  \int \ln(x)\, d{x}
-                  =x\ln(x)-\int \frac{x}{x} \, d{x}
+                  \int \ln(x)\odif{x}
+                  =x\ln(x)-\int \frac{x}{x} \odif{x}
                   =x\ln(x)-x+C
               \]
-              This method also works for $ \int \arctan(x)\, d{x} $ and
-              $ \int \arccos(x)\, d{x} $, etc.
-        \item Compute $ \displaystyle  \int x^2\cos(x)\, d{x} $.
+              This method also works for $ \int \arctan(x)\odif{x} $ and
+              $ \int \arccos(x)\odif{x} $, etc.
+        \item Compute $ \displaystyle  \int x^2\cos(x)\odif{x} $.
 
-              \textbf{Solution.} We may need to apply it more than once! Let $ u=x^2 $ and $ dv=\cos(x)\,dx $,
-              so we have $ du=2x\,dx $ and $ v=\sin(x) $.
+              \textbf{Solution.} We may need to apply it more than once! Let $ u=x^2 $ and $ \odif{v}=\cos(x)\odif{x} $,
+              so we have $ \odif{u}=2x\odif{x} $ and $ v=\sin(x) $.
               \[
-                  \int x^2\cos(x)\, d{x}
-                  =x^2\sin(x)-\int 2x\sin(x)\, d{x}
+                  \int x^2\cos(x)\odif{x}
+                  =x^2\sin(x)-\int 2x\sin(x)\odif{x}
               \]
-              Let $ u=2x $ and $ dv=\sin(x)\,dx $, so we have $ du=2\,dx $ and $ v=-\cos(x) $.
+              Let $ u=2x $ and $ \odif{v}=\sin(x)\odif{x} $, so we have $ \odif{u}=2\odif{x} $ and $ v=-\cos(x) $.
               \begin{align*}
-                   & =x^2\sin(x)-\left[-2x\cos(x)-\int -2\cos(x)\, d{x} \right] \\
-                   & =x^2\sin(x)+2x\cos(x)-\int 2\cos(x)\, d{x}                 \\
+                   & =x^2\sin(x)-\left[-2x\cos(x)-\int -2\cos(x)\odif{x} \right] \\
+                   & =x^2\sin(x)+2x\cos(x)-\int 2\cos(x)\odif{x}                 \\
                    & =x^2\sin(x)+2x\cos(x)-2\sin(x)+C
               \end{align*}
-        \item Compute $ \displaystyle \int e^x\cos(x)\, d{x} $.
+        \item Compute $ \displaystyle \int e^x\cos(x)\odif{x} $.
 
               \textbf{Solution.} And sometimes, we don't integrate at all! Let $ u=\cos(x) $
-              and $ dv=e^x\,dx $, so we have $ du=-\sin(x)\,dx $ and $ v=e^x $.
+              and $ \odif{v}=e^x\odif{x} $, so we have $ \odif{u}=-\sin(x)\odif{x} $ and $ v=e^x $.
               \[
-                  I =\int e^x\cos(x)\, d{x}
-                  =e^x\cos(x)+\int e^x\sin(x)\, d{x}
+                  I =\int e^x\cos(x)\odif{x}
+                  =e^x\cos(x)+\int e^x\sin(x)\odif{x}
               \]
-              Let $ u=\sin(x) $ and $ dv=e^x\,dx $, so we have $ du=\cos(x)\,dx $ and $ v=e^x $.
+              Let $ u=\sin(x) $ and $ \odif{v}=e^x\odif{x} $, so we have $ \odif{u}=\cos(x)\odif{x} $ and $ v=e^x $.
               \[
-                  I=e^x\cos(x)+e^x\sin(x)-\int e^x\cos(x)\, d{x}
+                  I=e^x\cos(x)+e^x\sin(x)-\int e^x\cos(x)\odif{x}
                   =e^x\cos(x)+e^x\sin(x)-I
               \]
               So, $ 2I=e^x\cos(x)+e^x\sin(x) $, therefore
               \[ I=\frac{e^x\cos(x)+e^x\sin(x)}{2} +C \]
               Neat!
-        \item Compute $ \displaystyle \int x^3\cos(x^2)\, d{x} $.
+        \item Compute $ \displaystyle \int x^3\cos(x^2)\odif{x} $.
 
               \textbf{Solution.} Sometimes, a combination of methods is needed.
               \begin{align*}
-                  \int x^3\cos(x^2)\, d{x}
-                   & =\int x^2\cos(u)\frac{1}{2x} \, d{u} &  & u=x^2\iff du=2x\,dx \\
-                   & =\frac{1}{2} \int x^2\cos(u)\, d{u}                           \\
-                   & =\frac{1}{2} \int u\cos(u)\, d{u}                             \\
+                  \int x^3\cos(x^2)\odif{x}
+                   & =\int x^2\cos(u)\frac{1}{2x} \odif{u} &  & u=x^2\iff \odif{u}=2x\odif{x} \\
+                   & =\frac{1}{2} \int x^2\cos(u)\odif{u}                                     \\
+                   & =\frac{1}{2} \int u\cos(u)\odif{u}                                       \\
               \end{align*}
               Now, do integration by parts with some unfortunate (but fine) letter
-              choices! Let $ u=u $ and $ dv=\cos(u)\,du $, so we have $ du=du $
+              choices! Let $ u=u $ and $ \odif{v}=\cos(u)\,\odif{u} $, so we have $ \odif{u}=\odif{u} $
               and $ v=\sin(u) $.
               \begin{align*}
-                   & =\frac{1}{2} u\sin(u)-\frac{1}{2} \int \sin(u)\, d{u} \\
-                   & =\frac{1}{2} u\sin(u)+\frac{1}{2} \cos(u)+C           \\
+                   & =\frac{1}{2} u\sin(u)-\frac{1}{2} \int \sin(u)\odif{u} \\
+                   & =\frac{1}{2} u\sin(u)+\frac{1}{2} \cos(u)+C            \\
                    & =\frac{1}{2} x^2\sin(x^2)+\frac{1}{2} \cos(x^2)+C
               \end{align*}
     \end{enumerate}
 \end{Example}
 
 \section{Partial Fractions}
-Partial fractions are useful for evaluating $ \displaystyle \int \frac{p(x)}{q(x)} \, d{x} $
+Partial fractions are useful for evaluating $ \displaystyle \int \frac{p(x)}{q(x)} \odif{x} $
 where $ p $ and $ q $ are polynomials.
 
 Overall idea: break a difficult integrand into many easy ones!
@@ -274,8 +277,9 @@ Overall idea: break a difficult integrand into many easy ones!
 \end{Remark}
 
 \begin{table}[!htbp]
+    \centering
     \caption{How to Break up Fractions: The Rules}
-    \begin{tabularx}{\linewidth}{@{}YY@{}}
+    \begin{tabular}{cc}
         \toprule
         If the denominator has:                      & Then we write:                      \\
         \midrule
@@ -283,7 +287,7 @@ Overall idea: break a difficult integrand into many easy ones!
         (II) A repeated linear factor                & One constant per power              \\
         (III) Distinct irreducible quadratic factors & One \textbf{linear term} per factor \\
         (IV) Repeated irreducible quadratic factors  & One linear term per power
-    \end{tabularx}
+    \end{tabular}
 \end{table}
 
 \begin{Example}{Decomposition Practice}{}
@@ -302,12 +306,12 @@ Overall idea: break a difficult integrand into many easy ones!
 
 \begin{Remark}{What integrals could we be left with after partial fractions?}{}
 
-    \underline{Case 1}: $ \displaystyle \int \frac{A}{ax+b} \, d{x} =\frac{A}{a}\ln\abs{ax+b}+C $
+    \underline{Case 1}: $ \displaystyle \int \frac{A}{ax+b} \odif{x} =\frac{A}{a}\ln\abs{ax+b}+C $
 
-    \underline{Case 2}: $ \displaystyle \int \frac{A}{(ax+b)^n} \, d{x} =\left( \frac{A}{a} \right) \frac{(ax+b)^{-n+1}}{-n+1} $
+    \underline{Case 2}: $ \displaystyle \int \frac{A}{(ax+b)^n} \odif{x} =\left( \frac{A}{a} \right) \frac{(ax+b)^{-n+1}}{-n+1} $
     where $ n\neq 0,1 $.
 
-    \underline{Case 3}: $ \displaystyle \frac{Ax+B}{ax^2+bx+c} =\int \frac{Ax}{ax^2+bx+c} +\frac{B}{ax^2+bx+c} \, d{x}  $
+    \underline{Case 3}: $ \displaystyle \frac{Ax+B}{ax^2+bx+c} =\int \frac{Ax}{ax^2+bx+c} +\frac{B}{ax^2+bx+c} \odif{x}  $
 
     \underline{Case 4}: $ \displaystyle \frac{Ax+B}{\left( ax^2+bx+c \right)^n} $
 
@@ -317,7 +321,7 @@ Overall idea: break a difficult integrand into many easy ones!
 
 \begin{Example}{Partial Fractions (Easy)}{}
     Using partial fractions, compute
-    $ \displaystyle \int \frac{x}{x^2-4x-5} \, d{x} $.
+    $ \displaystyle \int \frac{x}{x^2-4x-5} \odif{x} $.
 
     \textbf{Solution.}
     First, we break it up with partial fractions.
@@ -344,14 +348,14 @@ Overall idea: break a difficult integrand into many easy ones!
     \[ \frac{x}{(x+1)(x-5)}=\frac{\sfrac{1}{6}}{x+1}+\frac{\sfrac{5}{6}}{x-5}  \]
     So,
     \[
-        \int \frac{x}{x^2-4x-5}\, d{x}
-        =\frac{1}{6} \int \frac{1}{x+1}\, d{x} +\frac{5}{6} \int \frac{1}{x-5} \, d{x}
+        \int \frac{x}{x^2-4x-5}\odif{x}
+        =\frac{1}{6} \int \frac{1}{x+1}\odif{x} +\frac{5}{6} \int \frac{1}{x-5} \odif{x}
         =\frac{1}{6} \ln\abs{x+1}+\frac{5}{6} \ln\abs{x-5}+C
     \]
 \end{Example}
 
 \begin{Example}{Partial Fractions (Slightly Difficult)}{}
-    Using partial fractions, compute $ \displaystyle \int \frac{x+3}{x^4+9x^2} \, d{x} $.
+    Using partial fractions, compute $ \displaystyle \int \frac{x+3}{x^4+9x^2} \odif{x} $.
 
     \textbf{Solution.}
     First, we break it up with partial fractions.
@@ -366,19 +370,19 @@ Overall idea: break a difficult integrand into many easy ones!
     $ A=\sfrac{1}{9} $, $ B=\sfrac{1}{3} $, $ C=-\sfrac{1}{9} $,
     and $ D=-\sfrac{1}{3} $. So,
     \begin{align*}
-        \int \frac{x+3}{x^4+9x^2} \, d{x}
-         & =\frac{1}{9} \int \frac{1}{x} \, d{x} +\frac{1}{3} \int \frac{1}{x^2} \, d{x}
-        -\frac{1}{9} \int \frac{x}{x^2+9} \, d{x} -\frac{1}{3} \int \frac{1}{x^2+9} \, d{x} \\
-         & =\frac{1}{9}\ln\abs{x}-\frac{1}{3x}-\frac{1}{9} \int \frac{x}{x^2+9}\, d{x}
-        -\frac{1}{3} \left[ \frac{1}{3}\arctan\left( \frac{x}{3}  \right) \right]           \\
+        \int \frac{x+3}{x^4+9x^2} \odif{x}
+         & =\frac{1}{9} \int \frac{1}{x} \odif{x} +\frac{1}{3} \int \frac{1}{x^2} \odif{x}
+        -\frac{1}{9} \int \frac{x}{x^2+9} \odif{x} -\frac{1}{3} \int \frac{1}{x^2+9} \odif{x} \\
+         & =\frac{1}{9}\ln\abs{x}-\frac{1}{3x}-\frac{1}{9} \int \frac{x}{x^2+9}\odif{x}
+        -\frac{1}{3} \left[ \frac{1}{3}\arctan\left( \frac{x}{3}  \right) \right]             \\
     \end{align*}
-    where we computed $ \displaystyle \int \frac{1}{x^2+9}\,d{x} $ with~\ref{remark:arctan_identity}.
+    where we computed $ \displaystyle \int \frac{1}{x^2+9}\odif{x} $ with~\ref{remark:arctan_identity}.
 
-    For $ \displaystyle \int \frac{x}{x^2+9} \, d{x}  $, use a substitution: $ u=x^2+9\iff du=2x\,dx $.
+    For $ \displaystyle \int \frac{x}{x^2+9} \odif{x}  $, use a substitution: $ u=x^2+9\iff \odif{u}=2x\odif{x} $.
     \[
-        \int \frac{x}{x^2+9} \, d{x}
-        =\int \frac{x}{u} \frac{1}{2x} \, d{u}
-        =\frac{1}{2} \int \frac{1}{u} \, d{u}
+        \int \frac{x}{x^2+9} \odif{x}
+        =\int \frac{x}{u} \frac{1}{2x} \odif{u}
+        =\frac{1}{2} \int \frac{1}{u} \odif{u}
         =\frac{\ln\abs{u}}{2} +C
         =\frac{\ln\abs*{x^2+9}}{2} +C
     \]
@@ -388,19 +392,19 @@ Overall idea: break a difficult integrand into many easy ones!
 \end{Example}
 
 \begin{Remark}{Useful Identity}{arctan_identity}
-    \[ \int \frac{1}{x^2+k^2} \, d{x}=\frac{1}{k} \arctan\left( \frac{x}{k}  \right)+C  \]
+    \[ \int \frac{1}{x^2+k^2} \odif{x}=\frac{1}{k} \arctan\left( \frac{x}{k}  \right)+C  \]
 \end{Remark}
 
 \begin{Example}{Partial Fractions (Long Division)}{}
-    Compute $ \displaystyle \int \frac{x^3-2x}{x^2+3x+2} \, d{x} $.
+    Compute $ \displaystyle \int \frac{x^3-2x}{x^2+3x+2} \odif{x} $.
 
     \textbf{Solution.}
     Using long division, we get
-    \[ \int x-3+\frac{5x+6}{x^2+3x+2} \, d{x}  \]
+    \[ \int x-3+\frac{5x+6}{x^2+3x+2} \odif{x}  \]
     Now,
     \[ \frac{5x+6}{x^2+3x+2} =\frac{5x+6}{(x+1)(x+2)} =\frac{A}{x+1} +\frac{B}{x+2} \]
     Therefore, $ 5x+6=A(x+2)+B(x+1) = x(A+B)+(2A+B)$. By inspection,
     we get $ B=4 $ and $ A=1 $. Thus, the integral is:
-    \[ \int x-3+\frac{1}{x+1} +\frac{4}{x+2} \, d{x} =\frac{x^2}{2} -3x+\ln\abs{x+1}
+    \[ \int x-3+\frac{1}{x+1} +\frac{4}{x+2} \odif{x} =\frac{x^2}{2} -3x+\ln\abs{x+1}
         +4\ln\abs{x+2}+C \]
 \end{Example}

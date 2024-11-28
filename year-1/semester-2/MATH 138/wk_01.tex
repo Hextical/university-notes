@@ -7,15 +7,16 @@ We know we can approximate the area using rectangles (or other geometric shapes)
 we want the \emph{exact} area. For this, we will need \emph{Riemann sums}.
 
 \begin{Definition}{Partition}{partition}
-    A \textbf{partition}, $P$, for the interval $ \interval{a}{b} $ is a finite
-    sequence of increasing numbers of the form
-    \[ a=t_0<t_1<t_2\cdots<t_{n-1}<t_n=b \]
-    This partition subdivides the interval $ \interval{a}{b} $ into $ n $ subintervals:
-    \[ \interval{t_0}{t_1},\ldots,\interval{t_{n-1}}{t_n} \]
+    Let $ [a,b] $ be a closed interval of the set $ \mathbb{R} $ of real numbers.\smallskip
+
+    Let $ t_0,t_1,t_2,\ldots,t_{n-1},t_n $ be points of $ \mathbb{R} $ such that:
+    \[ a=t_0<t_1<t_2<\cdots<t_{n-1}<t_n=b. \]
+    Then $ \set{t_0,t_1,t_2,\ldots,t_{n-1},t_n} $ form a (finite) \textbf{partition (subdivision)}
+    of $ [a,b] $.
 \end{Definition}
 
 \begin{Remark}{}{}
-    These subintervals may \emph{not} all have the same length.
+    These subdivisions may \emph{not} all have the same length.
 \end{Remark}
 
 \begin{Definition}{Length}{length}
@@ -29,11 +30,18 @@ we want the \emph{exact} area. For this, we will need \emph{Riemann sums}.
 \end{Definition}
 
 \begin{Definition}{Riemann sum}{riemann_Sum}
-    Given a bounded function $ f $ on $ \interval{a}{b} $,
-    a partition $ P $ of $ \interval{a}{b} $, and a set
-    $ \set{c_1,\dots,c_n} $, where $ c_i\in\interval{t_{i-1}}{t_i} $, then a
-    \textbf{Riemann sum} for $ f $ with respect to $ P $ is
-    \[ S=\sum\limits_{i=1}^{n} f(c_i)\Delta t_i \]
+    Let $ f $ be a real function defined on the closed interval $ \mathbb{I}=[a,b] $.\smallskip
+
+    Let $ \Delta $ be a subdivision of $ \mathbb{I} $.\smallskip
+
+    For $ 1\le i\le n $:
+    \begin{itemize}[]
+        \item let $ \Delta t_i=t_i-t_{i-1} $,
+        \item let $ c_i\in[t_{i-1},t_i] $.
+    \end{itemize}
+    The summation:
+    \[ S_n=\sum\limits_{i=1}^{n} f(c_i)\Delta t_i \]
+    is called a \textbf{Riemann sum} of $ f $ for the subdivision $ \Delta $.
 \end{Definition}
 
 Again, we want the \emph{exact} area, and for that we will need to use infinitely
@@ -50,7 +58,7 @@ and that the area we get doesn't depend on the choice of Riemann sum.
 
     In this case, we call $ I $ the \textbf{integral of $ f $} over $ \interval{a}{b} $
     and denote it by
-    \[ \int_{a}^{b} f(x)\, dx \]
+    \[ \int_{a}^{b} f(x)\odif{x} \]
     where $ a,b $ are the bounds of integration, $ f(x) $ is the integrand, $ x $ is the
     variable of integration. The complete object is called a definite integral.
 
@@ -61,29 +69,14 @@ and that the area we get doesn't depend on the choice of Riemann sum.
     The variable of integration is a \emph{dummy variable} since we can change it into
     whatever we want, and it won't change the value of the integral; that is,
     \[
-        \int_{a}^{b} f(x)\,dx =
-        \int_{a}^{b} f(t) \,d{t}=
-        \int_{a}^{b} f(\cdot)\, d{\cdot}
+        \int_{a}^{b} f(x)\odif{x} =
+        \int_{a}^{b} f(t)\odif{t}=
+        \int_{a}^{b} f(\cdot)\odif{\cdot}
     \]
 \end{Remark}
 
 This looks \emph{horrible} to compute in practice (and it is). The good news is if
 $ f $ is continuous, it's not so bad! (still bad though)
-
-\begin{Theorem}{Integrability Theorem for Continuous Functions}{integrability_thm}
-    Let $ f $ be continuous on $ \interval{a}{b} $.
-    Then $ f $ is integrable on $ \interval{a}{b} $.
-\end{Theorem}
-
-\begin{Proof}{\ref{thm:integrability_thm}}{}
-    Beyond the scope of this course.
-\end{Proof}
-
-This is fantastic! This means that we can \emph{choose} any collection of Riemann sums
-we want when computing the integral of a continuous function!
-
-Let's examine a ``nice'' choice: one where the partition is regular and where we just
-pick the $ c_i $'s to be the right-hand endpoints!
 
 \begin{Definition}{Regular $n$-partition}{regular_partition}
     For the interval $ \interval{a}{b} $, the \textbf{regular $ n $-partition}
@@ -94,33 +87,47 @@ pick the $ c_i $'s to be the right-hand endpoints!
 
 \begin{Definition}{Regular right-hand Riemann sum}{right_hand_reimann}
     Using this, we define the \textbf{regular right-hand Riemann sum} by taking $ c_i=t_i $ for
-    all $ i $:
-    \[ S_n=\sum\limits_{i=1}^{n} f(t_i)\Delta t=\sum\limits_{i=1}^{n} f(t_i)\left(\frac{b-a}{n}\right) \]
+    all $ i\in[1,n] $:
+    \[ R_n
+        =\sum\limits_{i=1}^{n} f(t_i)\Delta t
+        =\sum\limits_{i=1}^{n} f(t_i)\left(\frac{b-a}{n}\right)
+        =\sum\limits_{i=1}^{n} f\Biggl(a+i\biggl(\frac{b-a}{n}\biggr)\Biggr)\biggl(\frac{b-a}{n}\biggr) \]
 \end{Definition}
 
-\begin{Remark}{}{}
-    We can also define the regular left-hand Riemann sum.
-\end{Remark}
+\begin{Definition}{Regular left-hand Riemann sum}{left_hand_reimann}
+    Using this, we define the \textbf{regular left-hand Riemann sum} by taking $ c_i=t_{i-1} $ for
+    all $ i\in[1,n] $:
+    \[ L_n
+        =\sum\limits_{i=1}^{n} f(t_{i-1})\Delta t
+        =\sum\limits_{i=1}^{n} f(t_{i-1})\left(\frac{b-a}{n}\right)
+        =\sum\limits_{i=1}^{n} f\Biggl(a+(i-1)\biggl(\frac{b-a}{n}\biggr)\Biggr)\biggl(\frac{b-a}{n}\biggr) \]
+\end{Definition}
 
-Now, we can write a nicer formula for integrating continuous functions!
-
-If $ f $ is continuous, then
-\[ \boxed{\int_{a}^{b} f(x)\, d{x} =
-        \lim\limits_{{n} \to {\infty}} \sum\limits_{i=1}^{n} f(t_i)\left(\frac{b-a}{n}\right)} \]
+\begin{Theorem}{Integrability Theorem for Continuous Functions}{integrability_thm}
+    Let $ f $ be continuous on $ \interval{a}{b} $ where $ a<b $. Then $ f $ is integrable on $ \interval{a}{b} $.
+    Moreover,
+    \[ \int_{a}^{b}f(t)\odif{t}=\lim\limits_{{n} \to {\infty}}S_n, \]
+    where
+    \[ S_n=\sum_{i=1}^{n}f(c_i)\Delta t_i \]
+    is any Riemann sum associated with the regular $ n $-partitions. In particular,
+    \[ \int_{a}^{b}f(t)\odif{t}=\lim\limits_{{n} \to {\infty}}R_n= \lim\limits_{{n} \to {\infty}}\sum_{i=1}^{n}f(t_i)\frac{b-a}{n} \]
+    and
+    \[ \int_{a}^{b}f(t)\odif{t}=\lim\limits_{{n} \to {\infty}}L_n=\lim\limits_{{n} \to {\infty}}\sum_{i=1}^{n}f(t_{i-1})\frac{b-a}{n}. \]
+\end{Theorem}
 
 \begin{Example}{}{}
     Evaluate
-    $ \displaystyle\int_{0}^{4} x+x^3\, d{x} $.
+    $ \displaystyle\int_{0}^{4} x+x^3\odif{x} $.
 
     \textbf{Solution.}
-    Since $ f(x)=x+x^3 $ is continuous, we can use the above formula.
+    Since $ f(x)=x+x^3 $ is continuous, we can use the above formula with the regular right-hand Riemann sum
+    on $ [a,b] $, where $ a=0 $ and $ b=4 $.
 
-    In our case: $ \dfrac{b-a}{n} = \dfrac{4}{n} $, and $ t_i = 0+\dfrac{4i}{n} = \dfrac{4i}{n} $.
-
+    In our case: $ \Delta t=\dfrac{b-a}{n} = \dfrac{4}{n} $, and $ t_i =t_0+i\Delta t=0+i\dfrac{4}{n} = \dfrac{4i}{n} $.
     So, $ f(t_i) = \dfrac{4i}{n} + \dfrac{64i^3}{n^3} $.
     Then, we get:
     \begin{align}
-        \int_{0}^{4} x+x^3\, d{x}
+        \int_{0}^{4} x+x^3\odif{x}
          & = \lim\limits_{{n} \to {\infty}} \sum\limits_{i=1}^{n}
         \left( \frac{4i}{n} +\frac{64i^3}{n^3} \right)\left( \frac{4}{n} \right)                  \\
          & = \lim\limits_{{n} \to {\infty}} \frac{16}{n^2} \sum\limits_{i=1}^{n} i +
@@ -131,7 +138,7 @@ If $ f $ is continuous, then
          & = 8+64                                                                                 \\
          & =72
     \end{align}
-    where from~\ref{1.2_reimann} to~\ref{1.3_reimann} we used both of the following:
+    where from~\eqref{1.2_reimann} to~\eqref{1.3_reimann} we used both of the following:
     \[ \sum\limits_{i=1}^{n} i=\frac{n(n+1)}{2} \text{ and }
         \sum\limits_{i=1}^{n} i^3=\frac{n^2(n+1)^2}{4} \]
 \end{Example}
@@ -149,21 +156,21 @@ Since a definite integral is the limit of a sequence, many limit laws also hold!
     Assume that $ f $ and $ g $ are integrable on the interval $ \interval{a}{b} $. Then:
     \begin{enumerate}[label=(\arabic*)]
         \item\label{property_integral_1} For any $ c\in\mathbb{R} $,
-              $ \displaystyle\int_{a}^{b} cf(x)\, d{x} = c \int_{a}^{b} f(x)\, d{x} $.
+              $ \displaystyle\int_{a}^{b} cf(x)\odif{x} = c \int_{a}^{b} f(x)\odif{x} $.
         \item\label{property_integral_2}
-              $ \displaystyle \int_{a}^{b} (f+g)(x)\, d{x} = \int_{a}^{b} f(x)\, d{x} +
-                  \int_{a}^{b} g(x)\, d{x} $.
+              $ \displaystyle \int_{a}^{b} (f+g)(x)\odif{x} = \int_{a}^{b} f(x)\odif{x} +
+                  \int_{a}^{b} g(x)\odif{x} $.
         \item\label{property_integral_3} If $ m\le f(x)\le M $ for all $ x\in\interval{a}{b} $,
               then
-              $ \displaystyle m(b-a)\le \int_{a}^{b} f(x)\, d{x} \le M(b-a) $.
+              $ \displaystyle m(b-a)\le \int_{a}^{b} f(x)\odif{x} \le M(b-a) $.
         \item\label{property_integral_4} If $ 0\le f(x) $ for all $ x\in\interval{a}{b} $, then
-              $ \displaystyle 0\le \int_{a}^{b} f(x)\, d{x} $.
+              $ \displaystyle 0\le \int_{a}^{b} f(x)\odif{x} $.
         \item\label{property_integral_5} If $ f(x)\le g(x) $ for all $ x\in\interval{a}{b} $, then
-              $ \displaystyle \int_{a}^{b} f(x)\, d{x} \le \int_{a}^{b} g(x)\, d{x} $.
+              $ \displaystyle \int_{a}^{b} f(x)\odif{x} \le \int_{a}^{b} g(x)\odif{x} $.
         \item\label{property_integral_6} The function
               $ \abs{f} $ is integrable on $ \interval{a}{b} $ and
-              $ \displaystyle \abs[\bigg]{\int_{a}^{b} f(x)\, d{x}}
-                  \le \int_{a}^{b} \abs{f(x)}\, d{x} $.
+              $ \displaystyle \abs[\bigg]{\int_{a}^{b} f(x)\odif{x}}
+                  \le \int_{a}^{b} \abs{f(x)}\odif{x} $.
     \end{enumerate}
 \end{Theorem}
 
@@ -188,21 +195,21 @@ Since a definite integral is the limit of a sequence, many limit laws also hold!
     \[ m(b-a)=\sum\limits_{i=1}^{n} m\Delta t\le \sum\limits_{i=1}^{n} f(t_i)\Delta t
         \le \sum\limits_{i=1}^{n} M\Delta t=M(b-a) \]
     So, taking limits gives
-    \[ m(b-a)\le \int_{a}^{b} f(x)\,d{x} \le M(b-a) \]
+    \[ m(b-a)\le \int_{a}^{b} f(x)\odif{x} \le M(b-a) \]
 \end{Proof}
 
 \begin{Definition}{More properties}{more_properties}
     \begin{enumerate}[label=(\Roman*)]
         \item If $ f(a) $ is defined, then
-              $ \displaystyle\int_{a}^{a} f(x)\, d{x} =0 $
+              $ \displaystyle\int_{a}^{a} f(x)\odif{x} =0 $
         \item If $ f $ is integrable on $ \interval{a}{b} $, then
-              $ \displaystyle\int_{a}^{b} f(x)\, d{x}=-\int_{b}^{a} f(x)\, d{x} $
+              $ \displaystyle\int_{a}^{b} f(x)\odif{x}=-\int_{b}^{a} f(x)\odif{x} $
     \end{enumerate}
 \end{Definition}
 
 \begin{Theorem}{}{extra_integ_property}
     If $ f $ is integrable on an interval $ I $ containing $ a,b $, and $ c $, then
-    \[ \int_{a}^{b} f(x)\, d{x}=\int_{a}^{c} f(x)\, d{x}+\int_{c}^{b} f(x)\, d{x} \]
+    \[ \int_{a}^{b} f(x)\odif{x}=\int_{a}^{c} f(x)\odif{x}+\int_{c}^{b} f(x)\odif{x} \]
 \end{Theorem}
 
 \begin{Proof}{\ref{thm:extra_integ_property}}{}
@@ -214,20 +221,19 @@ Since a definite integral is the limit of a sequence, many limit laws also hold!
 \end{Remark}
 
 \subsection*{Geometric Interpretation of the Integral}
-So far, we have only examined positive functions, but we should note that $ \int_{a}^{b} f(x)\,dx $
+So far, we have only examined positive functions, but we should note that $ \int_{a}^{b} f(x)\odif{x} $
 returns the \emph{signed} area between $ f $ and the $ x $-axis. That is, if $ f(x)\le 0 $, then
-$ \int_{a}^{b} f(x)\,dx\le 0 $ too.
+$ \int_{a}^{b} f(x)\odif{x}\le 0 $ too.
 
-So, in general, $ \int_{a}^{b} f(x)\,dx $ is the area under $ f $ that
+So, in general, $ \int_{a}^{b} f(x)\odif{x} $ is the area under $ f $ that
 lies above the $ x $-axis \emph{minus} the area above the graph of
 $ f $ that lies below the $ x $-axis.
 
 \begin{Example}{}{}
-    \[ \int_{-1}^{1}x\,dx=R_2-R_1 \]
+    \[ \int_{-1}^{1}x\odif{x}=R_2-R_1 \]
     but $ R_2=R_2 $, so
-    \[ \int_{-1}^{1}x\,dx=0 \]
-    \begin{figure}[H]
-        \centering
+    \[ \int_{-1}^{1}x\odif{x}=0 \]
+    \begin{center}
         \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
         \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
@@ -247,7 +253,7 @@ $ f $ that lies below the $ x $-axis.
             % Text Node
             \draw (317.83,116.73) node [anchor=north west][inner sep=0.75pt]    {$R_{2}$};
         \end{tikzpicture}
-    \end{figure}
+    \end{center}
 \end{Example}
 
 \begin{Remark}{}{}
@@ -260,7 +266,7 @@ $ f $ that lies below the $ x $-axis.
 \begin{Definition}{Average value}{avg_value}
     If $ f $ is continuous on $ \interval{a}{b} $, the \textbf{average value} of $ f $
     on $ \interval{a}{b} $ is defined as
-    $ \displaystyle \frac{1}{b-a} \int_{a}^{b} f(x)\,dx $.
+    $ \displaystyle \frac{1}{b-a} \int_{a}^{b} f(x)\odif{x} $.
 \end{Definition}
 
 \subsection*{Geometric Interpretation}
@@ -271,30 +277,30 @@ $ f $ that lies below the $ x $-axis.
 
     Also, we know
     \begin{align*}
-        m(b-a)\le \int_{a}^{b} f(x)\, d{x} \le M(b-a)
-         & \implies m\le \frac{1}{b-a} \int_{a}^{b} f(x)\, d{x} \le M       \\
-         & \iff f(c_1)\le \frac{1}{b-a} \int_{a}^{b} f(x)\, d{x} \le f(c_2) \\
+        m(b-a)\le \int_{a}^{b} f(x)\odif{x} \le M(b-a)
+         & \implies m\le \frac{1}{b-a} \int_{a}^{b} f(x)\odif{x} \le M       \\
+         & \iff f(c_1)\le \frac{1}{b-a} \int_{a}^{b} f(x)\odif{x} \le f(c_2) \\
     \end{align*}
     IVT says there exists $ c $ between $ c_1 $ and $ c_2 $, so that
-    \[ f(c)=\frac{1}{b-a} \int_{a}^{b} f(x)\, d{x} \]
+    \[ f(c)=\frac{1}{b-a} \int_{a}^{b} f(x)\odif{x} \]
 \end{Proof}
 
 \begin{Theorem}{Average Value Theorem (AVT)}{avt}
     Assume $ f $ is continuous on $ \interval{a}{b} $.
     There exists $ c\in\interval{a}{b} $ such that
-    $ \displaystyle f(c)=\frac{1}{b-a} \int_{a}^{b} f(x) d{x} $.
+    $ \displaystyle f(c)=\frac{1}{b-a} \int_{a}^{b} f(x)\odif{x} $.
 \end{Theorem}
 
 \begin{Remark}{}{}
     Note that this theorem holds even if $ b<a $ since
     \begin{align*}
-        f(c) & =\frac{1}{a-b} \int_{b}^{a}\, f(x)dx                  \\
-             & =\frac{1}{a-b}\biggl(-\int_{a}^{b} f(x)\, d{x}\biggr) \\
-             & =\frac{1}{b-a} \int_{a}^{b} f(x)\, d{x}
+        f(c) & =\frac{1}{a-b} \int_{b}^{a} f(x)\odif{x}               \\
+             & =\frac{1}{a-b}\biggl(-\int_{a}^{b} f(x)\odif{x}\biggr) \\
+             & =\frac{1}{b-a} \int_{a}^{b} f(x)\odif{x}
     \end{align*}
 \end{Remark}
 
-The big problem we face now is that evaluating $ \int_{a}^{b} f(x)\, d{x} $ is
+The big problem we face now is that evaluating $ \int_{a}^{b} f(x)\odif{x} $ is
 monstrously difficult for all but the simplest of functions.
 
 IF ONLY THERE WAS A BETTER WAY\@!
