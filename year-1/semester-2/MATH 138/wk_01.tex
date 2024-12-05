@@ -231,27 +231,19 @@ $ f $ that lies below the $ x $-axis.
 
 \begin{Example}{}{}
     \[ \int_{-1}^{1}x\odif{x}=R_2-R_1 \]
-    but $ R_2=R_2 $, so
+    but $ R_1=R_2 $, so
     \[ \int_{-1}^{1}x\odif{x}=0 \]
     \begin{center}
-        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
-
-        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-            %Shape: Grid [id:dp8044758903954956] 
-            \draw  [draw opacity=0] (252.83,80.33) -- (373.67,80.33) -- (373.67,201.33) -- (252.83,201.33) -- cycle ; \draw  [color={rgb, 255:red, 168; green, 168; blue, 168 }  ,draw opacity=1 ] (252.83,80.33) -- (252.83,201.33)(282.83,80.33) -- (282.83,201.33)(312.83,80.33) -- (312.83,201.33)(342.83,80.33) -- (342.83,201.33)(372.83,80.33) -- (372.83,201.33) ; \draw  [color={rgb, 255:red, 168; green, 168; blue, 168 }  ,draw opacity=1 ] (252.83,80.33) -- (373.67,80.33)(252.83,110.33) -- (373.67,110.33)(252.83,140.33) -- (373.67,140.33)(252.83,170.33) -- (373.67,170.33)(252.83,200.33) -- (373.67,200.33) ; \draw  [color={rgb, 255:red, 168; green, 168; blue, 168 }  ,draw opacity=1 ]  ;
-            %Shape: Right Triangle [id:dp6090851976145147] 
-            \draw   (313,80.67) -- (373,140.33) -- (313,140.33) -- cycle ;
-            %Shape: Right Triangle [id:dp2511359111159521] 
-            \draw   (312.83,200.33) -- (252.83,140.5) -- (312.83,140.5) -- cycle ;
-
-            % Text Node
-            \draw (375,143.73) node [anchor=north west][inner sep=0.75pt]    {$1$};
-            % Text Node
-            \draw (231,143.4) node [anchor=north west][inner sep=0.75pt]    {$-1$};
-            % Text Node
-            \draw (287.83,146.73) node [anchor=north west][inner sep=0.75pt]    {$R_{1}$};
-            % Text Node
-            \draw (317.83,116.73) node [anchor=north west][inner sep=0.75pt]    {$R_{2}$};
+        \begin{tikzpicture}
+            \begin{axis}[ylabel = $y$, xlabel = $x$, x post scale=1]
+                \addplot[blue, domain=-1:1, name path=F] {x} node [pos = 0.9, above left] {$y=x$};
+                \addplot[blue, domain=-1:1, name path=G] {0};
+                \addplot[fill=red!10] fill between [of=F and G, soft clip={domain=-1:1}];
+                \draw[-] (-1,-1) -- (-1,0);
+                \draw[-] (1,0) -- (1,1);
+                \node at (0.75,0.45) { $R_2$};
+                \node at (-0.75,-0.3) {$R_1$};
+            \end{axis}
         \end{tikzpicture}
     \end{center}
 \end{Example}

@@ -1,9 +1,43 @@
 \section{Sequences and Their Limits}
 \subsection{Introduction to Subsequences}
-\begin{Definition}{}{}
-    An infinite sequence of numbers is a list of numbers in a definite order, e.g.,
-    \[ a_1,a_2,a_3,a_4,\ldots,a_n,\; a_i\in\R. \]
-    \underline{Notation}: $ \Set{a_1,a_2,\ldots,a_n} $ or $ \sequence{a_n}_{n=1}^{\infty} $ or $ \sequence{a_n} $.
+\begin{Definition}{\href{https://proofwiki.org/wiki/Definition:Mapping\#Definition_1}{Mapping}}{}
+    A \textbf{mapping} from $ S $ to $ T $ is a binary relation
+    on $ S\times T $ which associates each element of $ S $ with exactly one element of $ T $.
+\end{Definition}
+\begin{Definition}{
+        \href{https://proofwiki.org/wiki/Definition:Domain_(Relation_Theory)/Mapping}{Domain},
+        \href{https://proofwiki.org/wiki/Definition:Codomain_(Relation_Theory)/Mapping}{Codomain}
+    }{}
+    Let $ S $ and $ T $ be sets.\smallskip
+
+    Let $ f\colon S\to T $ be a mapping.\bigskip
+
+    The \textbf{domain} of $ f $ is $ S $, and can be denoted $ \Dom(f) $.\smallskip
+
+    The \textbf{codomain} of $ f $ is $ T $, and can be denoted $ \Cdm(f) $
+\end{Definition}
+\begin{Definition}{\href{https://proofwiki.org/wiki/Definition:Subset}{Subset}}{}
+    Let $ S $ and $ T $ be sets.\bigskip
+
+    $ S $ is a \textbf{subset} of $ T $ if and only if all the elements of $ S $ are also elements of $ T $.\smallskip
+
+    This is denoted:
+    \[ S\subseteq T. \]
+    That is:
+    \[ S\subseteq T\iff \forall x:(x\in S\implies x\in T). \]
+\end{Definition}
+\begin{Definition}{\href{https://proofwiki.org/wiki/Definition:Sequence\#Formal_Definition}{Sequence (Formal Definition)}}{}
+    A \textbf{sequence} is a mapping whose domain is a subset of the set of natural numbers $ \N $.
+\end{Definition}
+\begin{Definition}{\href{https://proofwiki.org/wiki/Definition:Real_Sequence}{Real Sequence}}{}
+    A \textbf{real sequence} is a sequence (usually infinite) whose codomain is $ \R $.
+    \tcblower{}
+    \underline{Notation}: The notation for a real sequence is conventionally of the form
+    $ \sequence{a_n} $, where it is understood that:
+    \begin{itemize}
+        \item the domain of $ \sequence{a_n} $ is the natural numbers: either $ \Set{0,1,2,3,\ldots} $ or $ \Set{1,2,3,\ldots} $;
+        \item the codomain of $ \sequence{a_n} $ is the set of real numbers $ \R $.
+    \end{itemize}
 \end{Definition}
 Sequences can be defined explicitly (in terms of $ n $) or recursively (in terms of previous terms).
 \begin{Example}{Explicit Sequences}{}
@@ -42,11 +76,18 @@ We may want to build new sequences out of old ones or only discuss what happens 
     This is called a subsequence.
 \end{Example}
 \subsection{Subsequences and Tails}
-\begin{Definition}{Subsequence}{}
-    If $ \sequence{a_n} $ is a sequence and $ {n_1,n_2,\ldots} $ is a sequence of natural numbers, where
-    $ n_1<n_2<n_3<\cdots $, then the sequence
-    \[ \Set{a_{n_1},a_{n_2},\ldots}=\sequence{a_{n_k}} \]
-    is a \textbf{subsequence} of $ \sequence{a_n} $.
+\begin{Definition}{\href{https://proofwiki.org/wiki/Definition:Strictly_Increasing/Sequence}{Strictly Increasing (Sequence)}}{}
+    Let $ \sequence{a_n} $ be a real sequence.\bigskip
+
+    Then $ \sequence{a_n} $ is \textbf{strictly increasing} if and only if:
+    \[ \forall n\in\N:a_n<a_{n+1}. \]
+\end{Definition}
+\begin{Definition}{\href{https://proofwiki.org/wiki/Definition:Subsequence}{Subsequence}}{}
+    Let $ \sequence{a_n} $ be a sequence in a set $ S $.\smallskip
+
+    Let $ \sequence{n_k} $ be a strictly increasing sequence in $ \N $.\bigskip
+
+    Then the composition $ \sequence{a_{n_k}} $ is called a \textbf{subsequence} of $ \sequence{a_n} $.
 \end{Definition}
 One particular subsequence is $ \Set{a_k,a_{k+1},a_{k+2}} $ for some $ k\in\N $.
 This is called the tail of $ \sequence{a_n} $ with cut-off $ k $.
@@ -66,17 +107,15 @@ is \underline{the} limit! What makes it different? Well, the sequence gets infin
 unlike the other numbers! Let's try to define this again: ``the limit of $ \sequence{a_n} $ is $ L $
 if, as $ n $ gets infinitely large, $ a_n $ gets infinitely close to $ L $.'' This is much better!
 But how can we formalize the idea of ``infinitely close?''
-\begin{Definition}{Formal Definition of the Limit of a Sequence I}{}
-    Let $ \sequence{a_n} $ be a sequence in $ \R $. For $ L\in\R $, we say that the sequence $ \sequence{a_n} $ \textbf{converges} to $ L $
-    (or that the \textbf{limit} of $ \sequence{a_n} $ is equal to $ L $), and we write $ a_n\to L $ (as $ n\to\infty $), or we write
-    $ \lim\limits_{{n} \to {\infty}}a_k=L $, when
-    \[ \forall \varepsilon\in\R_{>0}: \exists N\in \R_{>0}:\forall n\in\N:n\ge N\implies \abs{a_n-L}<\varepsilon. \]
-    We say that the sequence $ \sequence{a_n} $ \textbf{diverges to infinity}
-    (in $ \R $) when there exists $ L\in \R $ such that $ \sequence{a_n} $ converges to $ L $.
-    We say that the sequence \textbf{diverges} (in $ \R $) when it does not converge (to any $ L\in\R $).
+\begin{Definition}{\href{https://proofwiki.org/wiki/Definition:Convergent_Sequence/Real_Numbers}{Convergent Sequence}}{}
+    Let $ \sequence{a_n} $ be a real sequence.\bigskip
+
+    Then the sequence $ \sequence{a_n} $ \textbf{converges to the limit} $ L\in\R$ if and only if:
+    \[ \forall \varepsilon\in\R_{>0}: \exists N\in \R_{>0}:\forall n\in\N:n\ge N\implies \abs{a_n-L}<\varepsilon \]
+    and we write $ L=\lim\limits_{{n} \to {\infty}}a_n $.
 \end{Definition}
 \begin{Example}{}{}
-    Consider $ a_n=\frac{1}{n^2} $. We'd guess that the limit is $ 0 $. Say $ \varepsilon=\frac{1}{100} $, can we find a large enough $ n\in N $
+    Consider $ a_n=\frac{1}{n^2} $. We'd guess that the limit is $ 0 $. Say $ \varepsilon=\frac{1}{100} $, can we find a large enough $ N\in \N $
     so that $ \abs*{\frac{1}{n^2}-0}<\frac{1}{100}  $ if $ n\ge N $? Well, we need
     \[ \abs*{\frac{1}{n^2}-0}<\frac{1}{100}\implies \frac{1}{n^2}<\frac{1}{100}\implies n^2>100, \]
     so $ n>10 $. Let $ N=11 $, then if $ n\ge N $, we get
@@ -159,30 +198,30 @@ $ L $ also contains a tail of $ \sequence{a_n} $. Let's collect all of these alt
     lie inside $ (L-1/2,L+1/2) $. So, $ \sequence{(-1)^n} $ diverges.
 \end{Example}
 A similar argument can be used to prove limits are unique.
-\begin{Theorem}{}{}
-    Let $ \sequence{a_n} $ be a sequence in $ \R $. If $ \sequence{a_n} $ has a limit (finite or infinite), then the limit is unique.
-    \tcblower{}
-    \textbf{Proof}: Suppose for a contradiction that $ L $ and $ M $
-    are both limits of $ \sequence{a_n} $ and $ L\ne M $ and WLOG that $ L<M $. Consider two intervals:
-    \[ (L-1,\tfrac{L+M}{2})\ni L,\quad (\tfrac{L+M}{2},M+1)\ni M. \]
-    This means, by definition, only finitely many terms of the sequence are not in the first interval and only finitely
-    many terms are not in the second interval. But the sequence has infinitely many terms! So, at least one term is in both intervals
-    which is impossible. This is a contradiction, so $ L=M $.
+\begin{Theorem}{\href{https://proofwiki.org/wiki/Convergent_Real_Sequence_has_Unique_Limit}{Convergent Real Sequence has Unique Limit}}{}
+    Let $ \sequence{a_n} $ be a sequence in $ \R $.\bigskip
 
-    \underline{Note}: This does not cover the cases where the limit is infinite.
+    Then $ \sequence{a_n} $ can have at most one limit.
+    \tcblower{}
+    Click on the title's link for a quality proof.
 \end{Theorem}
 \begin{Remark}{A Remark on Possible Limits}{}
     If $ a_n\ge 0 $ for all $ n $, then $ \sequence{a_n} $ can't converge to a negative number! If it did, say to $ L<0 $,
     then the interval $ (L-1,0) $ would contain $ L $ but no terms of the sequence.
 \end{Remark}
-\begin{Theorem}{}{}
-    If $ a_n\ge 0 $ for all $ n $ and $ \lim\limits_{{n} \to {\infty}}a_n=L $, then $ L\ge 0 $.
-    More generally, if $ \alpha\le a_n\le \beta $ for all $ n $ and $ \lim\limits_{{n} \to {\infty}}a_n=L $,
-    then $ \alpha\le L\le \beta $.
+\begin{Theorem}{\href{https://proofwiki.org/wiki/Limit_of_Bounded_Convergent_Sequence_is_Bounded}{Limit of Bounded Convergent Sequence is Bounded}}{}
+    Let $ \sequence{x_n} $, $ \sequence{a_n} $, and $ \sequence{b_n} $ be convergent real sequences.\smallskip
+
+    Let $ \sequence{x_n} $, $ \sequence{a_n} $, and $ \sequence{b_n} $ converge to $ x,a,b\in\R $, respectively.\bigskip
+
+    Suppose that:
+    \[ \exists N\in\N:n\ge N\implies a_n\le x_n\le b_n. \]
+    Then:
+    \[ a\le x\le b. \]
 \end{Theorem}
 \begin{itemize}
-    \item Q\@: If $ a_n>0 $ for all $ n $ and $ \lim\limits_{{n} \to {\infty}}a_n=L $ is $ L>0 $?
-    \item A\@: Not necessarily! Consider $ a_n=\frac{1}{n}>0 $, but $ L=0 $.
+    \item Q\@: If $ x_n>0 $ for all $ n $ and $ \lim\limits_{{n} \to {\infty}}x_n=x $ is $ x>0 $?
+    \item A\@: Not necessarily! Consider $ x_n=\frac{1}{n}>0 $, but $ x=0 $.
 \end{itemize}
 \subsection{Divergence to Infinity}
 Consider $ a_n=n $. It is clear that the sequence is getting larger without bound, so $ \lim\limits_{{n} \to {\infty}}a_n $

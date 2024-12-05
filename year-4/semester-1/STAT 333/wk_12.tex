@@ -14,7 +14,7 @@ rate is allowed to vary as a function of time.
         \item $ \Prob[\big]{N(t+h)-N(t)\ge 2}=\order{h} $.
     \end{enumerate}
 \end{Regular}
-Many applications that generate random points in time are modelled more realistically with
+Many applications that generate random points in time are modelled more realistically with\\
 non-homogeneous processes. For instance:
 \begin{itemize}
     \item The rate of customers entering a supermarket is not the same during the entire day.
@@ -49,16 +49,16 @@ For $ s_1,s_2\ge 0 $, the following theorem specifies the distribution of $ N(s_
         \odv*{\phi_u(s_1,t)}{t}
                                                              & =\lambda(s_1+t)(e^u-1)\phi_u(s_1,t)\text{ let $s_2=t$} \\
         \frac{\odv*{\phi_u(s_1,t)}{t}}{\phi_u(s_1,t)}        & =\lambda(s_1+t)(e^u-1)                                 \\
-        \odv*{\ln[\big]{\phi_u(s_1,t)}}{t}                   & =\lambda(s_1+t)(e^u-1)                                 \\
-        \odif{\ln[\big]{\phi_u(s_1,t)}}                      & =\lambda(s_1+t)(e^u-1)\odif{t}                         \\
-        \int_{0}^{s_2}\odif{\ln[\big]{\phi_u(s_1,t)}}        & =\int_{0}^{s_2}\lambda(s_1+t)(e^u-1)\odif{t}           \\
-        \biggl[\ln[\big]{\phi_u(s_1,t)}\biggr]_{t=0}^{t=s_2} & =(e^u-1)\int_{0}^{s_2}\lambda(s_1+t)(e^u-1)\odif{t}    \\
-        \ln[\big]{\phi_u(s_1,s_2)}-\ln[\big]{\phi_u(s_1,0)}  & =(e^u-1)\int_{s_1}^{s_1+s_2}\lambda(\tau)\odif{\tau}.
+        \odv*{\LN[\big]{\phi_u(s_1,t)}}{t}                   & =\lambda(s_1+t)(e^u-1)                                 \\
+        \odif{\LN[\big]{\phi_u(s_1,t)}}                      & =\lambda(s_1+t)(e^u-1)\odif{t}                         \\
+        \int_{0}^{s_2}\odif{\LN[\big]{\phi_u(s_1,t)}}        & =\int_{0}^{s_2}\lambda(s_1+t)(e^u-1)\odif{t}           \\
+        \biggl[\LN[\big]{\phi_u(s_1,t)}\biggr]_{t=0}^{t=s_2} & =(e^u-1)\int_{0}^{s_2}\lambda(s_1+t)(e^u-1)\odif{t}    \\
+        \LN[\big]{\phi_u(s_1,s_2)}-\LN[\big]{\phi_u(s_1,0)}  & =(e^u-1)\int_{s_1}^{s_1+s_2}\lambda(\tau)\odif{\tau}.
     \end{align*}
     However,
     \[ \phi_u(s_1,0)=\E[\Big]{e^{u\bigl(N(s_1)-N(s_1)\bigr)}}=\E{e^{u\cdot 0}}=\E{e^0}=1. \]
     \begin{align*}
-        \ln[\big]{\phi_u(s_1,s_2)} & =(e^u-1)\int_{s_1}^{s_1+s_2}\lambda(\tau)\odif{\tau}                        \\
+        \LN[\big]{\phi_u(s_1,s_2)} & =(e^u-1)\int_{s_1}^{s_1+s_2}\lambda(\tau)\odif{\tau}                        \\
         \phi_u(s_1,s_2)            & =e^{(e^u-1)\int_{s_1}^{s_1+s_2}\lambda(\tau)\odif{\tau}},\; u\in\mathbb{R}.
     \end{align*}
     Since
@@ -234,30 +234,30 @@ This gives rise to the following definition.
     \textbf{Example 4.8}. Claims received by an insurance company occur according to a Poisson process
     at a rate of $30$ claims per year. Individual claim amounts, which are assumed to be
     independent, are known to be either $\$1000$, $\$2000$, or $\$3000$. Company records indicate that
-    one year ago, the average total amount paid out was $\$56000$ and that the standard deviation
-    of the total amount paid out was $\$11000$. Based on this information, how likely was it that an
-    individual claim of $\$3000$ took place last year?
-    \tcblower{}
-    \textbf{Solution}: Let $ N(t) $ represent the number of claims received by the company
-    by time $ t $ (measured in years), which is known to have a $ \POI{30t} $
-    distribution in the past year. In addition, let $ Y_i $, $ i\in\mathbb{Z}^+ $,
-    be the size of the $ i\textsuperscript{th} $ individual claim amount (measured in thousands of dollars),
-    having pmf of the form
-    \[ \Prob{Y_i=y}=\begin{cases}
-            \alpha,         & \text{if $y=1$}, \\
-            \beta,          & \text{if $y=2$}, \\
-            1-\alpha-\beta, & \text{if $y=3$}.
-        \end{cases} \]
-    Therefore, $ X(t)=\sum_{i=1}^{N(t)}Y_i $ represents the total amount paid out (measured in thousands of dollars) by time $ t $.
-    We have:
-    \[ \E[\big]{X(1)}=30\E{Y_1}=56\implies \E{Y_1}=\frac{56}{30}=\frac{28}{15}. \]
-    That is,
-    \[ \alpha+2\beta+3(1-\alpha-\beta)=\frac{28}{15}\implies 30\alpha+15\beta=17.\label{eq4.14}\tag*{(4.14)} \]
-    Furthermore,
-    \[ \Var[\big]{X(1)}=(30)\E{Y_1^2}=11^2\implies \E{Y_1^2}=\frac{121}{30}. \]
-    That is,
-    \[ \alpha+4\beta+9(1-\alpha-\beta)=\frac{121}{30}\implies 240\alpha+150\beta=149.\label{eq4.15}\tag*{(4.15)} \]
-    The above equations~\ref{eq4.14} and~\ref{eq4.15} are linear, and can be solved to find $ \alpha $ and $ \beta $ as follows:
+        one year ago, the average total amount paid out was $\$56000$ and that the standard deviation
+        of the total amount paid out was $\$11000$. Based on this information, how likely was it that an
+        individual claim of $\$3000$ took place last year?
+        \tcblower{}
+        \textbf{Solution}: Let $ N(t) $ represent the number of claims received by the company
+        by time $ t $ (measured in years), which is known to have a $ \POI{30t} $
+        distribution in the past year. In addition, let $ Y_i $, $ i\in\mathbb{Z}^+ $,
+        be the size of the $ i\textsuperscript{th} $ individual claim amount (measured in thousands of dollars),
+        having pmf of the form
+        \[ \Prob{Y_i=y}=\begin{cases}
+                \alpha,         & \text{if $y=1$}, \\
+                \beta,          & \text{if $y=2$}, \\
+                1-\alpha-\beta, & \text{if $y=3$}.
+            \end{cases} \]
+        Therefore, $ X(t)=\sum_{i=1}^{N(t)}Y_i $ represents the total amount paid out (measured in thousands of dollars) by time $ t $.
+        We have:
+        \[ \E[\big]{X(1)}=30\E{Y_1}=56\implies \E{Y_1}=\frac{56}{30}=\frac{28}{15}. \]
+        That is,
+        \[ \alpha+2\beta+3(1-\alpha-\beta)=\frac{28}{15}\implies 30\alpha+15\beta=17.\label{eq4.14}\tag*{(4.14)} \]
+        Furthermore,
+        \[ \Var[\big]{X(1)}=(30)\E{Y_1^2}=11^2\implies \E{Y_1^2}=\frac{121}{30}. \]
+        That is,
+        \[ \alpha+4\beta+9(1-\alpha-\beta)=\frac{121}{30}\implies 240\alpha+150\beta=149.\label{eq4.15}\tag*{(4.15)} \]
+        The above equations~\ref{eq4.14} and~\ref{eq4.15} are linear, and can be solved to find $ \alpha $ and $ \beta $ as follows:
     \[ 10\times\ref{eq4.14}-\ref{eq4.15}\implies 60\alpha=21\implies \alpha=\frac{7}{20}.\label{eq4.16}\tag*{(4.16)} \]
     Plugging~\ref{eq4.16} into~\ref{eq4.14} leads to
     \[ 30\times \frac{7}{20}+15\beta=7\implies \beta=\frac{13}{30}. \]

@@ -85,14 +85,14 @@ preferred) way to calculate $ \Var{X_1\given X_2=x_2} $.
     \textbf{Solution}: Note that for problems of this nature, it often helps to create a table summarizing the information:
     \begin{center}
         \begin{NiceTabular}{cc|ccc|c}
-            &\Block{1-5}{$ x_2 $}                                                                                                                        \\%chktex 8
-            & $ p(x_1,x_2) $        & $ 0 $                      & $ 1 $                      & $ 2 $                      &$ p_1(x_1) $ \\
+                                 & \Block{1-5}{$ x_2 $}                                                \\%chktex 8
+                                 & $ p(x_1,x_2) $       & $ 0 $   & $ 1 $    & $ 2 $    & $ p_1(x_1) $ \\
             \cmidrule{2-6}
-            \Block{3-1}{$ x_1 $}           & $ 0 $                       & $ 0 $                      & $ 2/15 $                   & $ 0 $                      & $ 2/15 $                            \\%chktex 8
-            & $ 1 $                       & $ 1/5 $                    & $ 2/5 $                    & $ 1/15 $                   & $ 2/3 $                            \\
-            & $ 2 $                       & $ 1/5 $                    & $ 0 $                      & $ 0 $                      & $ 1/5 $                            \\
+            \Block{3-1}{$ x_1 $} & $ 0 $                & $ 0 $   & $ 2/15 $ & $ 0 $    & $ 2/15 $     \\%chktex 8
+                                 & $ 1 $                & $ 1/5 $ & $ 2/5 $  & $ 1/15 $ & $ 2/3 $      \\
+                                 & $ 2 $                & $ 1/5 $ & $ 0 $    & $ 0 $    & $ 1/5 $      \\
             \cmidrule{2-6}
-            & $ p_2(x_2) $   & $ 2/5 $   & $ 8/15 $ & $ 1/15 $ & $ 1 $
+                                 & $ p_2(x_2) $         & $ 2/5 $ & $ 8/15 $ & $ 1/15 $ & $ 1 $
         \end{NiceTabular}
     \end{center}
     Then,
@@ -104,7 +104,7 @@ preferred) way to calculate $ \Var{X_1\given X_2=x_2} $.
     represented as follows:
     \begin{center}
         \begin{NiceTabular}{c|cc}
-            $ x_1 $ & $ 0 $ & $ 1 $\\
+            $ x_1 $                    & $ 0 $   & $ 1 $   \\
             \midrule
             $ p_{1\mid 2}(x_1\mid 1) $ & $ 1/4 $ & $ 3/4 $
         \end{NiceTabular}
@@ -128,7 +128,7 @@ preferred) way to calculate $ \Var{X_1\given X_2=x_2} $.
     \end{align*}
     provided that $ 0\le x_1\le n_1 $, and $ 0\le m-x_1\le n_2 $ (i.e., $ m-n_2\le x\le m $). Simplifying,
     \[p_{X_1\mid Y}(x_1\mid m)=\frac{\binom{n_1}{x_1}\binom{n_2}{m-x_1}}{\binom{n_1+n_2}{m}},\]
-    for $ x_1=\max{0,m-n_2},\ldots,\min{n_1,m} $.
+    for $ x_1=\MAX{0,m-n_2},\ldots,\MIN{n_1,m} $.
 \end{Example}
 \underline{Remark}: Looking at the conditional pmf we just obtained, we recognize that $ X_1\mid(X_1+X_2=m)\sim \HG{n_1+n_2,n_1,m} $.
 The result that $ X_1\mid(X_1+X_2=m) $ has a hypergeometric distribution should not be all that surprising. Consider the sequence of $ n_1+n_2 $
@@ -374,7 +374,7 @@ $ \Set{a\le X\le b} $ over a ``slice,'' $ Y=y $, of the (joint) region of suppor
     jointly continuous case (as we are effectively replacing summation with integration).
 \end{Regular}
 \begin{Example}
-    \textbf{Example 2.6}. (\emph{continued}) Calculate $ \Var{X\given Y=y} $ where $ 0<y<1 $ and the joint pdf of
+    \textbf{Example 2.6}.\ (\emph{continued}) Calculate $ \Var{X\given Y=y} $ where $ 0<y<1 $ and the joint pdf of
     $ X $ and $ Y $ is given by
     \[ f(x,y)=\begin{dcases}
             \frac{12}{5}x(2-x-5), & \text{if $ 0<x<1 $ and $ 0<y<1 $,} \\
@@ -430,7 +430,7 @@ $ \Set{a\le X\le b} $ over a ``slice,'' $ Y=y $, of the (joint) region of suppor
     \[ \sum_y p(y\mid x)=1\implies f_X(x)=\sum_y f(x\mid y)p_Y(y). \]
 \end{Regular}
 \begin{Example}
-    \textbf{Example 2.7}. Suppose that $ X \sim \U{0,1} $ and $ Y\mid(X=x)\sim \BERN{x} $. Find the conditional distribution of $ X\mid(Y=y) $.
+    \textbf{Example 2.7}. Suppose that $ X \sim \Uniform{0,1} $ and $ Y\mid(X=x)\sim \BERN{x} $. Find the conditional distribution of $ X\mid(Y=y) $.
     \tcblower{}
     \textbf{Solution}: We wish to find the conditional pdf of $ X\mid (Y=y) $ given by
     \[ f(x\mid y)=\frac{p(y\mid x)f_X(x)}{p_Y(y)} \]
