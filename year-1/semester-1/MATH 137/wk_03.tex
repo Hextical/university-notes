@@ -2,34 +2,50 @@
 If we can avoid using the definition to find a limit, we should.
 There are certain rules we can follow to compute lots of sequence limits.
 Let's see them now!
-\begin{Theorem}{}{}
+\begin{Theorem}{\href{https://proofwiki.org/wiki/Divergent_Real_Sequence_to_Positive_Infinity/Examples/n\%5Ealpha}{$ n^{\alpha} $}}{}
     \begin{enumerate}[(1)]
-        \item $ \alpha>0\implies \lim\limits_{{n} \to {\infty}}n^\alpha=\infty $.
-        \item $ \alpha<0\implies \lim\limits_{{n} \to {\infty}}n^\alpha=0 $.
+        \item $ \forall \alpha\in\R_{>0}:\lim\limits_{{n} \to {\infty}}n^\alpha=\infty $.
+        \item $ \forall \alpha\in\R_{<0}:\lim\limits_{{n} \to {\infty}}n^\alpha=0 $.
+        \item $ \lim\limits_{{n} \to {\infty}}n^0=1 $.
     \end{enumerate}
 \end{Theorem}
-\begin{Theorem}{Arithmetic Rules for Limits of Sequences}{}
-    Let $ \Set{a_n} $ and $ \Set{b_n} $ be sequences in $ \R $ and let $ c\in\R $.
-    Suppose that $ \Set{a_n} $ and $ \Set{b_n} $ both converge with $ a_n\to L $ and $ b_n\to M $. Then
+\begin{Theorem}{\href{https://proofwiki.org/wiki/Combination\_Theorem\_for\_Sequences\#Real\_Sequences}{Combination Theorem for Sequences}}{comb_thm_seq}
+    Let $ \sequence{x_n} $ and $ \sequence{y_n} $ be sequences in $ \R $.\smallskip
+
+    Let $ \sequence{x_n} $ and $ \sequence{y_n} $ be convergent to the following limits:
+    \begin{align*}
+        \lim\limits_{{n} \to {\infty}}x_n & =L, \\
+        \lim\limits_{{n} \to {\infty}}y_n & =M.
+    \end{align*}
+    Let $ \lambda,\mu\in\R $.\bigskip
+
+    Then the following results hold:
     \begin{enumerate}[(1)]
-        \item if $ a_n=C $ for all $ n $, then $ C=L $,
-        \item $ \lim\limits_{{n} \to {\infty}}c a_n=cL $,
-        \item $ \lim\limits_{{n} \to {\infty}}(a_n+b_n)=L+M $,
-        \item $ \lim\limits_{{n} \to {\infty}}(a_n-b_n)=L-M $,
-        \item $ \lim\limits_{{n} \to {\infty}}a_n b_n=LM $,
-        \item if $ M\ne 0 $, $ \lim\limits_{{n} \to {\infty}}\frac{a_n}{b_n}=\frac{L}{M} $,
-        \item for all $ k\in \N $, $ \lim\limits_{{n} \to {\infty}}a_{n+k}=L $.
+        \item \textbf{Sum Rule}.
+              \[ \lim\limits_{{n} \to {\infty}}(x_n+y_n)=L+M. \]
+        \item \textbf{Difference Rule}.
+              \[ \lim\limits_{{n} \to {\infty}}(x_n-y_n)=L-M \]
+        \item \textbf{Multiple Rule}.
+              \[ \lim\limits_{{n} \to {\infty}}(\lambda x_n)=\lambda L. \]
+        \item \textbf{Combined Sum Rule}.
+              \[ \lim\limits_{{n} \to {\infty}}(\lambda x_n+\mu y_n)=\lambda L+\mu M. \]
+        \item \textbf{Product Rule}.
+              \[ \lim\limits_{{n} \to {\infty}}(x_n y_n)=LM. \]
+        \item \textbf{Quotient Rule}.
+              \[ \lim\limits_{{n} \to {\infty}}\frac{x_n}{y_n}=\frac{L}{M}\text{ provided that $ M\ne 0. $} \]
+        \item $ \forall k\in\N:\lim\limits_{{n} \to {\infty}}x_{n+k}=L $.
+        \item $ \forall n:x_n=C\implies C=L $.
     \end{enumerate}
     \tcblower{}
-    \textbf{Proof}: Exercises, but let's prove (3) as an example.
-    Let $ \varepsilon>0 $ be given. Since $ \lim\limits_{{n} \to {\infty}}a_n=L $,
+    \textbf{Proof}: Exercises, but let's prove (1) as an example.
+    Let $ \varepsilon>0 $ be given. Since $ \lim\limits_{{n} \to {\infty}}x_n=L $,
     we can find $ N_1\in \N $ so that if $ n\ge N_1 $,
-    we get $ \abs{a_n-L}<\varepsilon/2 $. Also,
-    since $ \lim\limits_{{n} \to {\infty}}b_n=M $, we can find $ N_2\in \N $
-    so that if $ n\ge N_2 $, we have $ \abs{b_n-M}<\varepsilon/2 $.
+    we get $ \abs{x_n-L}<\varepsilon/2 $. Also,
+    since $ \lim\limits_{{n} \to {\infty}}y_n=M $, we can find $ N_2\in \N $
+    so that if $ n\ge N_2 $, we have $ \abs{y_n-M}<\varepsilon/2 $.
     Now, let $ N=\max(N_1,N_2) $. Then, if $ n\ge N $
     we get
-    \[ \abs{(a_n+b_n)-(L+M)}\le \abs{a_n-L}+\abs{b_n-M}<\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon, \]
+    \[ \abs{(x_n+y_n)-(L+M)}\le \abs{x_n-L}+\abs{y_n-M}<\frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon, \]
     where we used the triangle inequality in the first inequality.
 \end{Theorem}
 \begin{Remark}{}{}
@@ -60,7 +76,7 @@ Let's see them now!
     Just make sure you show your work!
 \end{Remark}
 \begin{Example}{}{}
-    What if in property (5), $ M=0 $? Anything can happen!
+    What if in~\Cref{thm:comb_thm_seq} (6), we had $ M=0 $? Anything can happen!
     \begin{itemize}
         \item $ \displaystyle \lim\limits_{{n} \to {\infty}}\frac{1/n}{1/n}=1 $
               even though $ 1/n\to 0 $.
@@ -171,10 +187,7 @@ then we can use rule (7) to find the limit!
 
     Let $ \lim\limits_{{n} \to {\infty}}a_n=L=\lim\limits_{{n} \to {\infty}}c_n $.\smallskip
 
-    Suppose that
-    \[ \forall n\in\N:a_n\le b_n\le c_n \]
-    Then:
-    \[ \lim\limits_{{n} \to {\infty}}b_n=L. \]
+    \[ \forall n\in\N:a_n\le b_n\le c_n \implies \lim\limits_{{n} \to {\infty}}b_n=L. \]
     \tcblower{}
     \textbf{Proof}: Let $ \varepsilon>0 $ be given.
     Since $ a_n\to L $ and $ c_n\to L $, we can find $ N\in\N $
@@ -212,19 +225,23 @@ First, we need to some terminology.
 % https://proofwiki.org/wiki/Definition:Upper_Bound_of_Set/Real_Numbers
 % https://proofwiki.org/wiki/Definition:Lower_Bound_of_Set/Real_Numbers
 % https://proofwiki.org/wiki/Definition:Bounded_Set/Real_Numbers
-\begin{Definition}{\href{https://proofwiki.org/wiki/Definition:Upper\_Bound\_of\_Set/Real\_Numbers}{Upper Bound of Set}}{}
+\begin{Definition}{
+        \href{https://proofwiki.org/wiki/Definition:Upper_Bound_of_Set/Real_Numbers}{Upper Bound},
+        \href{https://proofwiki.org/wiki/Definition:Lower_Bound_of_Set/Real_Numbers}{Lower Bound},
+        \href{https://proofwiki.org/wiki/Definition:Bounded_Below_Set/Real_Numbers\#Definition}{Bounded Below},
+        \href{https://proofwiki.org/wiki/Definition:Bounded_Set/Real_Numbers}{Bounded Set}}
+    {}
     Let $ S\subseteq \R $.\smallskip
 
-    An \textbf{upper bound for $S$ (in $ \R $)} is an element $ \alpha\in\R $ such that
-    \[ \forall x\in S:x\le \alpha. \]
-    We say that $ S $ is \textbf{bounded above (in $\R$)} if and only if $ S $ admits an upper bound (in $ \R $).\smallskip
-
-    A \textbf{lower bound for $S$ (in $ \R $)} is an element $ \beta\in\R $ such that
-    \[ \forall x\in S:x\ge \beta. \]
-    We say that $ S $ is \textbf{bounded below (in $\R$)} if and only if $ S $ admits a lower bound (in $ \R $).\smallskip
-
-    We say that $ S $ \textbf{bounded (in $ \R $)} if and only if it is bounded below and bounded
-    above (in $ \R $). In this case,
+    \begin{itemize}
+        \item We say that $ S $ is \textbf{bounded above} if and only if $ S $ admits an upper bound (say, $ \alpha $).
+              In this case,
+              \[ \exists \alpha\in\R:\forall x\in S:x\le \alpha. \]
+        \item We say that $ S $ is \textbf{bounded below} if and only if $ S $ admits a lower bound (say, $ \beta $).
+              In this case,
+              \[ \exists \beta\in\R:\forall x\in S:x\ge \beta. \]
+    \end{itemize}
+    We say that $ S $ \textbf{bounded} if and only if it admits an upper and lower bound (say, $ M $). In this case,
     \[ \exists M\in\R:\forall x\in S:\abs{x}\le M. \]
 \end{Definition}
 \begin{Example}{}{}
@@ -232,86 +249,86 @@ First, we need to some terminology.
     is a lower bound, so $ S $ is bounded. Another example
     is $ S\subseteq[-5,5] $.
 \end{Example}
-\begin{Definition}{}{}
-    Let $ S\subseteq \R $. $ \alpha $ is called the \textbf{least upper bound}
-    of $ S $ if:
-    \begin{enumerate}[(i)]
-        \item $ \alpha $ is an upper bound, and
-        \item $ \alpha $ is the smallest, that is, if $ \alpha' $ is another
-              upper bound, then $ \alpha'\ge \alpha $.
-    \end{enumerate}
-    Denote this by $ \alpha=\lub(S) $ or $ \alpha=\sup(S) $.
+\begin{Definition}{
+        \href{https://proofwiki.org/wiki/Definition:Supremum_of_Set/Real_Numbers}{Supremum},
+        \href{https://proofwiki.org/wiki/Definition:Infimum_of_Set/Real_Numbers}{Infimum}}{}
+    Let $ S\subseteq \R $.\smallskip
 
-    Similarly, $ \beta $ is the \textbf{greatest lower bound} if
+    $ \alpha\in\R $ is called the \textbf{supremum} (\textbf{least upper bound})
+    of $ S $ if and only if:
     \begin{enumerate}[(i)]
-        \item $ \beta $ is a lower bound, and
-        \item $ \beta $ is the largest, that is, if $ \beta' $
-              is another lower bound, then $ \beta'\le \beta $.
+        \item $ \alpha $ is an upper bound of $ S $, and
+        \item $ \alpha\le \alpha' $ for all upper bounds of $ S $.
     \end{enumerate}
-    Denote this by $ \beta=\glb(S) $ or $ \beta=\inf(S) $.
+    The supremum of $ S $ is denoted $ \sup(S) $.\bigskip
+
+    $ \beta\in\R $ is called the \textbf{infimum} (\textbf{greatest lower bound}) if
+    \begin{enumerate}[(i)]
+        \item $ \beta $ is a lower bound of $ S $, and
+        \item $ \beta\ge \beta' $ for all lower bounds of $ S $.
+    \end{enumerate}
+    The infimum of $ S $ is denoted $ \inf(S) $.
 \end{Definition}
-\begin{Example}{}{}
-    If $ S=(-1,1) $, then $ \inf(S)=-1 $ and $ \sup(S)=1 $.
-\end{Example}
 \begin{Remark}{}{}
-    The $ \inf(S) $ and $ \sup(S) $ may or may not be in $ S $.
-    One of the properties (axioms) of $ \R $ guarantees the existence
-    of $ \inf $ and $ \sup $. If $ S\subseteq \R $
-    is non-empty and bounded above (below), then $ S $ has
-    $ \sup $ ($ \inf $).
+    The supremum is also denoted by $ \lub(S) $.\bigskip
+
+    The infimum is also denoted by $ \glb(S) $.
 \end{Remark}
+\begin{Example}{}{}
+    If $ S=\Set{x\in\R:-1\le x\le 1} $, then $ \inf(S)=-1 $ and $ \sup(S)=1 $.
+\end{Example}
 \begin{Definition}{}{}
-    We say that a sequence $ \seq $ is:
+    We say that a sequence $ \sequence{a_n} $ is:
     \begin{itemize}
         \item \textbf{increasing} if $ a_n<a_{n+1} $,
         \item \textbf{non-decreasing} if $ a_n\le a_{n+1} $,
         \item \textbf{decreasing} if $ a_n>a_{n+1} $,
         \item \textbf{non-increasing} if $ a_n\ge a_{n+1} $,
-        \item \textbf{monotonic} if $ \seq $ is either
+        \item \textbf{monotonic} if $ \sequence{a_n} $ is either
               non-decreasing or non-increasing.
     \end{itemize}
 \end{Definition}
 Now, we can state the theorem!
 \begin{Theorem}{Monotone Convergence Theorem (MCT)}{}
-    Let $ \seq $ be a non-decreasing (non-increasing) sequence.
+    Let $ \sequence{a_n} $ be a non-decreasing (non-increasing) sequence.
     \begin{enumerate}[(1)]
-        \item If $ \seq $ is bounded above (below), then $ \seq $
-              converges to $ L=\lub(\seq) $ ($ L=\glb(\seq) $).
-        \item If $ \seq $ is not bounded above (below),
-              then $ \seq $ diverges to $ \infty $ ($ -\infty $).
+        \item If $ \sequence{a_n} $ is bounded above (below), then $ \sequence{a_n} $
+              converges to $ L=\lub(\sequence{a_n}) $ ($ L=\glb(\sequence{a_n}) $).
+        \item If $ \sequence{a_n} $ is not bounded above (below),
+              then $ \sequence{a_n} $ diverges to $ \infty $ ($ -\infty $).
     \end{enumerate}
     \tcblower{}
     \textbf{Proof}: We will prove the non-decreasing/bounded above case,
-    the other case is similar. Suppose $ \seq $ is non-decreasing.
+    the other case is similar. Suppose $ \sequence{a_n} $ is non-decreasing.
     \begin{enumerate}[(1)]
-        \item Suppose $ \seq $ is bounded above and let $ L=\lub(\seq) $.
+        \item Suppose $ \sequence{a_n} $ is bounded above and let $ L=\lub(\sequence{a_n}) $.
               Let $ \varepsilon>0 $ be given. Then, $ L-\varepsilon<L $,
               which means that $ L-\varepsilon $ is \underline{not}
-              an upper bound of $ \seq $ ($ L $ is the \underline{least}
+              an upper bound of $ \sequence{a_n} $ ($ L $ is the \underline{least}
               upper bound). So, there exists $ N\in\N $ so that $ L-\varepsilon<a_N $.
               Then, if $ n\ge N $, we have $ L-\varepsilon<a_N\le a_n $
               since the sequence is non-decreasing. Therefore,
               for $ n\ge N $, $ L-\varepsilon<a_n\le L<L+\varepsilon $,
-              so the tail of $ \seq $ is in $ (L-\varepsilon,L+\varepsilon) $,
+              so the tail of $ \sequence{a_n} $ is in $ (L-\varepsilon,L+\varepsilon) $,
               which means $ \lim\limits_{{n} \to {\infty}}a_n=L $.
-        \item Suppose $ \seq $ is not bounded above. Let $ M\in\R $
+        \item Suppose $ \sequence{a_n} $ is not bounded above. Let $ M\in\R $
               be given. We can find $ N\in\N $ so that $ M<a_N $. Then, if
-              $ n\ge N $, we have $ M<a_N<a_n $ ($ \seq $ is non-decreasing).
+              $ n\ge N $, we have $ M<a_N<a_n $ ($ \sequence{a_n} $ is non-decreasing).
               This shows $ \lim\limits_{{n} \to {\infty}}a_n=\infty $.
     \end{enumerate}
 \end{Theorem}
 \subsubsection{Introduction to Mathematical Induction}
-Before we can use the MCT, we need to develop one proof technique:
-Mathematical Induction (MATH 135 will explore it further).
-Induction is a proof technique that allows us to prove an infinite
-number of statements. Say we have statements $ P_1,P_2,P_3,\ldots,P_n,\ldots $
-for $ n\in \N $. If we can:
-\begin{enumerate}[(1)]
-    \item Prove $ P_1 $ is true (base case).
-    \item Prove: if $ P_k $ is true for some $ k $ (inductive hypothesis),
-          then $ P_{k+1} $ is true (inductive step).
-\end{enumerate}
-Then, we can conclude that $ P_n $ is true for all $ n\in\N $. Think of dominoes!
+\begin{Theorem}{\href{https://proofwiki.org/wiki/Principle_of_Mathematical_Induction}{Principle of Mathematical Induction}}{}
+    Let $ P(n) $ be a propositional function depending on $ n\in\N $.\smallskip
+
+    Suppose that:
+    \begin{enumerate}[(1)]
+        \item $ P(1) $ is true
+        \item $ \forall k\in\N:(P(k)\implies P(k+1)) $
+    \end{enumerate}
+    Then:
+    \[ \text{$ P(n) $ is true for all $ n\in\N $}. \]
+\end{Theorem}
 
 We will use the MCT and induction to find the limits of recursive sequences.
 To do this, we follow these steps:
@@ -357,8 +374,8 @@ that the sequence converges.
               \end{itemize}
               Therefore, $ a_n\le 5 $ for all $ n\in\N $ by induction,
               so the sequence is bounded above.
-        \item Since $ \seq $ is bounded above and non-decreasing,
-              we know $ \seq $ converges by MCT\@.
+        \item Since $ \sequence{a_n} $ is bounded above and non-decreasing,
+              we know $ \sequence{a_n} $ converges by MCT\@.
         \item Now, we know a limit exists, say $ L=\lim\limits_{{n} \to {\infty}}a_n $.
               Then,
               \[ L=\lim\limits_{{n} \to {\infty}}a_n=\lim\limits_{{n} \to {\infty}}a_{n+1}
@@ -396,7 +413,7 @@ that the sequence converges.
               \[ L=\lim\limits_{{n} \to {\infty}}a_{n+1}=\lim\limits_{{n} \to {\infty}}\sqrt{7+a_n}=\sqrt{7+L}; \]
               see A2Q6 for the last equality. So,
               \[ L=\sqrt{7+L}\implies L^2=7+L\implies L^2-L-7=0\implies L=\frac{1\pm \sqrt{29}}{2}. \]
-              However, we know $ L=\lub(\seq) $ and $ a_1=2 $. So, $ L\ne \frac{1-\sqrt{29}}{2} $
+              However, we know $ L=\lub(\sequence{a_n}) $ and $ a_1=2 $. So, $ L\ne \frac{1-\sqrt{29}}{2} $
               since $ \frac{1-\sqrt{29}}{2}<2 $, that is, it isn't even an upper bound. Hence,
               \[ L=\frac{1+\sqrt{29}}{2}. \]
     \end{enumerate}

@@ -19,15 +19,12 @@
 \begin{Definition}{\href{https://proofwiki.org/wiki/Definition:Subset}{Subset}}{}
     Let $ S $ and $ T $ be sets.\bigskip
 
-    $ S $ is a \textbf{subset} of $ T $ if and only if all the elements of $ S $ are also elements of $ T $.\smallskip
-
-    This is denoted:
-    \[ S\subseteq T. \]
-    That is:
+    $ S $ is a \textbf{subset} of $ T $ if and only if all the elements of $ S $ are also elements of $ T $.
     \[ S\subseteq T\iff \forall x:(x\in S\implies x\in T). \]
 \end{Definition}
 \begin{Definition}{\href{https://proofwiki.org/wiki/Definition:Sequence\#Formal_Definition}{Sequence (Formal Definition)}}{}
-    A \textbf{sequence} is a mapping whose domain is a subset of the set of natural numbers $ \N $.
+    A \textbf{sequence} is a mapping whose domain is a subset of the set of natural numbers $ \N $. For the rest of these notes,
+    $ \N=\Set{1,2,\ldots} $.
 \end{Definition}
 \begin{Definition}{\href{https://proofwiki.org/wiki/Definition:Real_Sequence}{Real Sequence}}{}
     A \textbf{real sequence} is a sequence (usually infinite) whose codomain is $ \R $.
@@ -35,29 +32,30 @@
     \underline{Notation}: The notation for a real sequence is conventionally of the form
     $ \sequence{a_n} $, where it is understood that:
     \begin{itemize}
-        \item the domain of $ \sequence{a_n} $ is the natural numbers: either $ \Set{0,1,2,3,\ldots} $ or $ \Set{1,2,3,\ldots} $;
-        \item the codomain of $ \sequence{a_n} $ is the set of real numbers $ \R $.
+        \item the domain of $ \sequence{a_n} $ is $ \N $;
+        \item the codomain of $ \sequence{a_n} $ is $ \R $.
     \end{itemize}
+    We could think of a sequence as a function $ f\colon \N\to\R $, writing $ f(n)=a_n $.
 \end{Definition}
 Sequences can be defined explicitly (in terms of $ n $) or recursively (in terms of previous terms).
-\begin{Example}{Explicit Sequences}{}
+\begin{Example}{Real Sequence}{}
     \begin{itemize}
-        \item $ \Set*{\frac{1}{n+1}}_{n=1}^{\infty} $: $ 1/2,1/3,1/4,1/5,\ldots $.
-        \item $ \Set{\sqrt{n+2}}_{n=2}^{\infty} $: $ \sqrt{4},\sqrt{5},\sqrt{6},\ldots $.
-        \item $ \Set{(-1)^n}_{n=1}^\infty $: $ -1,1,-1,1,\ldots $.
+        \item The first few terms of the real sequence $ \sequence{\frac{1}{n+1}} $ are $ 1/2,1/3,1/4,1/5,\ldots $.
+        \item The first few terms of the real sequence $ \sequence{\sqrt{n+2}}_{n\ge 2} $ are $ \sqrt{4},\sqrt{5},\sqrt{6},\ldots $.
+        \item The first few terms of the real sequence $ \sequence{(-1)^n} $ are $ -1,+1,-1,+1,\ldots $.
     \end{itemize}
 \end{Example}
 \subsection{Recursively Defined Sequences}
-\begin{Example}{Recursive Sequences}{}
+\begin{Definition}{\href{https://proofwiki.org/wiki/Definition:Recursive_Sequence\#Definition}{Recursive Sequence}}{}
+    A \textbf{recursive sequence} is a sequence where each term is defined from earlier terms in the sequence.
+\end{Definition}
+\begin{Example}{Recursive Sequence}{}
     \begin{itemize}
-        \item $ a_1=1 $, $ a_{n+1}=\sqrt{1+a_n} $, so $ a_1=1 $, $ a_2=\sqrt{2} $, $ a_3=\sqrt{1+\sqrt{2}} $, and so on for $ n\ge 1 $.
-        \item Fibonacci's sequence: $ a_1=1 $, $ a_2=1 $, $ a_{n+2}=a_{n+1}+a_n $ for $ n\ge 1 $, i.e.,
+        \item $ a_1=1 $, $ a_{n+1}=\sqrt{1+a_n} $, so $ a_1=1 $, $ a_2=\sqrt{2} $, $ a_3=\sqrt{1+\sqrt{2}} $, and so on for $ n\in\N $.
+        \item Fibonacci's sequence: $ a_1=1 $, $ a_2=1 $, $ a_{n+2}=a_{n+1}+a_n $ for $ n\in \N $, i.e.,
               $ 1,1,2,3,5,8,13,\ldots $.
     \end{itemize}
 \end{Example}
-We can plot sequences on a number line, or we could think of a sequence as a function $ f\colon \N\to\R $, writing $ f(n)=a_n $, e.g.,
-for $ a_n=1/2 $ we would write $ f(n)=1/2 $.
-
 \underline{Why study sequences?}
 \begin{itemize}
     \item Lots of continuous processes can be modelled with discrete data, as we will see.
@@ -66,17 +64,16 @@ for $ a_n=1/2 $ we would write $ f(n)=1/2 $.
 \end{itemize}
 Our goal now will be to determine how to find the limit of a sequence, that is, find what the value of the terms of the sequence
 are approaching (if it exists).
-
+\subsection{Subsequences and Tails}
 We may want to build new sequences out of old ones or only discuss what happens to a sequence eventually, that is, after a certain index.
 \begin{Example}{}{}
-    For $ \Set{\frac{1}{n}}_{n=1}^{\infty} $, if we consider only the odd terms, we get $ 1,1/3,1/5 $, or the $ k\textsuperscript{th} $
+    For $ \sequence{\frac{1}{n}} $, if we consider only the odd terms, we get $ 1,1/3,1/5 $, or the $ k\textsuperscript{th} $
     term is
     \[ \frac{1}{2k-1} \]
     for $ k\in\N $.
     This is called a subsequence.
 \end{Example}
-\subsection{Subsequences and Tails}
-\begin{Definition}{\href{https://proofwiki.org/wiki/Definition:Strictly_Increasing/Sequence}{Strictly Increasing (Sequence)}}{}
+\begin{Definition}{\href{https://proofwiki.org/wiki/Definition:Strictly_Increasing/Sequence/Real_Sequence\#Definition}{Strictly Increasing (Sequence)}}{}
     Let $ \sequence{a_n} $ be a real sequence.\bigskip
 
     Then $ \sequence{a_n} $ is \textbf{strictly increasing} if and only if:
@@ -89,64 +86,54 @@ We may want to build new sequences out of old ones or only discuss what happens 
 
     Then the composition $ \sequence{a_{n_k}} $ is called a \textbf{subsequence} of $ \sequence{a_n} $.
 \end{Definition}
-One particular subsequence is $ \Set{a_k,a_{k+1},a_{k+2}} $ for some $ k\in\N $.
-This is called the tail of $ \sequence{a_n} $ with cut-off $ k $.
-
+\begin{Example}{Subsequence}{}
+    One particular subsequence is $ \sequence{a_k,a_{k+1},a_{k+2}} $ for some $ k\in\N $.
+    This is called the tail of $ \sequence{a_n} $ with cut-off $ k $.
+\end{Example}
 \subsection{Limits of Sequences}
 We are going to see lots of different limits this term, but we will start with sequences.
 \begin{Example}{}{}
     $ \sequence{\frac{1}{n}} $ seems like it converges to $ 0 $, or that $ 0 $ is the limit of the sequence.
     We saw this when we plotted the sequence. We will eventually want a formal definition, but let's start intuitively.
 \end{Example}
-Given a sequence $ \sequence{a_n} $, what does it mean to say that $ \sequence{a_n} $ converges to $ L $
-as $ n $ goes to infinity?
-
-What about ``as $ n $ gets larger, $ a_n $ gets closer to $ L $?'' Unfortunately, this isn't a good definition. For example, as $ n $
-gets larger $ \frac{1}{n} $ gets closer to $ 0 $, but it also gets closer to $ -1 $, $ -2 $, and so on. But, $ 0 $
-is \underline{the} limit! What makes it different? Well, the sequence gets infinitely close to $ 0 $,
-unlike the other numbers! Let's try to define this again: ``the limit of $ \sequence{a_n} $ is $ L $
-if, as $ n $ gets infinitely large, $ a_n $ gets infinitely close to $ L $.'' This is much better!
-But how can we formalize the idea of ``infinitely close?''
-\begin{Definition}{\href{https://proofwiki.org/wiki/Definition:Convergent_Sequence/Real_Numbers}{Convergent Sequence}}{}
+\begin{Definition}{\href{https://proofwiki.org/wiki/Definition:Convergent_Sequence/Real_Numbers}{Convergent (Real) Sequence}}{conv_seq}
     Let $ \sequence{a_n} $ be a real sequence.\bigskip
 
-    Then the sequence $ \sequence{a_n} $ \textbf{converges to the limit} $ L\in\R$ if and only if:
-    \[ \forall \varepsilon\in\R_{>0}: \exists N\in \R_{>0}:\forall n\in\N:n\ge N\implies \abs{a_n-L}<\varepsilon \]
-    and we write $ L=\lim\limits_{{n} \to {\infty}}a_n $.
+    $ \sequence{a_n} $ \textbf{converges} to $ L\in\R$ if and only if:
+    \[ \exists L\in\R:\forall \varepsilon\in\R_{>0}: \exists N\in \R_{>0}:\forall n\in\N:(n\ge N\implies \abs{a_n-L}<\varepsilon) \]
+    In this case, we write $ \lim\limits_{{n} \to {\infty}}a_n=L $.
 \end{Definition}
+\begin{Remark}{}{}
+    The negation of~\Cref{def:conv_seq} would be the following.\smallskip
+
+    \[ \forall L\in\R:\exists \varepsilon\in\R_{>0}: \forall N\in \R_{>0}:\exists n\in\N:(n\ge N \land \abs{a_n-L}\ge \varepsilon) \]
+    In this case, we write $ \lim\limits_{{n} \to {\infty}}a_n\ne L $.
+\end{Remark}
+\begin{Remark}{\href{https://proofwiki.org/wiki/Definition:Convergent_Sequence/Note_on_Domain_of_N}{Note on Domain of $ N $}}{}
+    Some sources insist that $ N\in\N $, but this is not strictly necessary and can make proofs more cumbersome.
+\end{Remark}
 \begin{Example}{}{}
-    Consider $ a_n=\frac{1}{n^2} $. We'd guess that the limit is $ 0 $. Say $ \varepsilon=\frac{1}{100} $, can we find a large enough $ N\in \N $
-    so that $ \abs*{\frac{1}{n^2}-0}<\frac{1}{100}  $ if $ n\ge N $? Well, we need
-    \[ \abs*{\frac{1}{n^2}-0}<\frac{1}{100}\implies \frac{1}{n^2}<\frac{1}{100}\implies n^2>100, \]
-    so $ n>10 $. Let $ N=11 $, then if $ n\ge N $, we get
-    $ \abs*{\frac{1}{n^2}-0}<\frac{1}{100} $. But wait! We aren't done yet! The definition says we need to prove it for any $ \varepsilon>0 $,
-    but we only proved it for $ \varepsilon=\frac{1}{100} $. Let's adapt the proof to work for any $ \varepsilon>0 $.
+    Prove that $ \displaystyle \lim\limits_{{n} \to {\infty}}\frac{1}{n^2}=0 $.
+    \tcblower{}
+    \textbf{Proof}: Let $ \varepsilon>0 $ be arbitrary, and pick $ N>\frac{1}{\sqrt{\varepsilon}} $. If $ n\ge N $,
+    we get
+    \[ \abs*{\frac{1}{n^2}-0}=\frac{1}{n^2}\le \frac{1}{N^2}<\frac{1}{(1/\sqrt{\varepsilon})^2}=\frac{1}{1/\varepsilon}=\varepsilon \]
+    as desired.
 \end{Example}
-\underline{Proof that $ \lim\limits_{{n} \to {\infty}}\frac{1}{n^2}=0 $}.
-Let $ \varepsilon>0 $ be given. Let $ N>\frac{1}{\sqrt{\varepsilon}} $ for $ N\in \N $. Then, if $ n\ge N $,
-we get
-\[ \abs*{\frac{1}{n^2}-0}=\frac{1}{n^2}\le \frac{1}{N^2}<\frac{1}{(1/\sqrt{\varepsilon})^2}=\frac{1}{1/\varepsilon}=\varepsilon \]
-as desired.
-
-The point is: we have to give a method for choosing $ N $ that works for \underline{any} $ \varepsilon>0 $. Also, the logical order of the
-proof is important, so let's do some more examples.
-
 \begin{Example}{}{}
     Prove that $ \displaystyle \lim\limits_{{n} \to {\infty}}\frac{n}{2n+3}=\frac{1}{2} $.
     \tcblower{}
-    \textbf{Proof}: Let $ \varepsilon>0 $ be given. Let $ N>\frac{1}{4}\bigl(\frac{3}{\varepsilon}-6\bigr) $ for $ N\in\N $.
-    Then, if $ n\ge N $, we get:
-    \[ \abs{a_n-L}=\abs*{\frac{n}{2n+3}-\frac{1}{2}}=\frac{3}{4n+6}\le \frac{3}{4N+6}<\frac{3}{4\bigl(\frac{1}{4}(\frac{3}{\varepsilon}-6)\bigr)+6}=\varepsilon \]
-    as desired.
-
+    \textbf{Proof}: Let $ \varepsilon>0 $ be arbitrary, and pick $ N>\frac{1}{4}\bigl(\frac{3}{\varepsilon}-6\bigr) $.
+    If $ n\ge N $, we get:
+    \[ \abs{a_n-L}=\abs*{\frac{n}{2n+3}-\frac{1}{2}}=\frac{3}{4n+6}\le \frac{3}{4N+6}<\frac{3}{4\bigl(\frac{1}{4}(\frac{3}{\varepsilon}-6)\bigr)+6}=\varepsilon. \]
     \underline{Aside}: We want
     \[ \frac{3}{4n+6}<\varepsilon\iff \frac{3}{\varepsilon}<4n+6\iff \frac{3}{\varepsilon}-6<4n\iff \frac{1}{4}\biggl(\frac{3}{\varepsilon}-6\biggr)<n. \]
 \end{Example}
 \begin{Example}{}{}
     Prove that $ \displaystyle \lim\limits_{{n} \to {\infty}}\frac{n^2}{3n^2+7n}=\frac{1}{3} $.
     \tcblower{}
-    \textbf{Proof}: Let $ \varepsilon>0 $ be given. Let $ N>\frac{7}{9\varepsilon} $ for $ N\in\N $.
-    Then, if $ n\ge N $, we get:
+    \textbf{Proof}: Let $ \varepsilon>0 $ be arbitrary, and pick $ N>\frac{7}{9\varepsilon} $.
+    If $ n\ge N $, we get:
     \[ \abs*{a_n-L}=\abs*{\frac{n^2}{3n^2+7n}-\frac{1}{3}}=\frac{7n}{9n^2+21n}\le \frac{7n}{9n^2}=\frac{7}{9n}\le \frac{7}{9(\frac{7}{9\varepsilon})}=\varepsilon. \]
     \underline{Aside}: We want
     \[ \frac{7}{9n}<\varepsilon\iff \frac{7}{9\varepsilon}<n. \]
@@ -157,15 +144,15 @@ proof is important, so let's do some more examples.
         \item Never assume $ \abs{a_n-L}<\varepsilon $, make sure you only do work in an aside with that inequality since it is what you
               are proving.
         \item In practice, unless you are asked to, do not use this formal definition. We will now try to develop better methods for finding limits.
+        \item One can think of~\Cref{def:conv_seq} as a nested logical statement, hence the order is (mostly) important.
     \end{itemize}
 \end{Remark}
 \subsection*{Equivalent Definitions of the Limit}
-When proving $ \lim\limits_{{n} \to {\infty}}a_n=L $, we are given $ \varepsilon>0 $, and we try to find $ N\in\N $
-so that if $ n\ge N $, then $ \abs{a_n-L}<\varepsilon $. But, this is the same as saying
-$ a_n\in (L-\varepsilon,L+\varepsilon) $. Also, the collection of $ \sequence{a_n} $ for which
+Note that in~\Cref{def:conv_seq}, $ \abs{a_n-L}<\varepsilon \iff a_n\in(L-\varepsilon,L+\varepsilon) $.
+The collection of $ \sequence{a_n} $ for which
 $ n\ge N $ is the tail of the sequence with cut-off $ N $. So, here's another definition.
 \begin{Definition}{}{}
-    $ \lim\limits_{{n} \to {\infty}}a_n=L $ if for any $ \varepsilon>0 $, the interval
+    $ \lim\limits_{{n} \to {\infty}}a_n=L \iff \forall \varepsilon\in\R_{>0} $ the interval
     $ (L-\varepsilon,L+\varepsilon) $ contains a tail of the sequence $ \sequence{a_n} $.
 \end{Definition}
 Let's push it further! Since the above is true for any $ \varepsilon>0 $, if we pick any
@@ -214,36 +201,31 @@ A similar argument can be used to prove limits are unique.
 
     Let $ \sequence{x_n} $, $ \sequence{a_n} $, and $ \sequence{b_n} $ converge to $ x,a,b\in\R $, respectively.\bigskip
 
-    Suppose that:
-    \[ \exists N\in\N:n\ge N\implies a_n\le x_n\le b_n. \]
-    Then:
-    \[ a\le x\le b. \]
+    \[ \exists N\in\N:\forall n\in\N:(n\ge N\implies a_n\le x_n\le b_n)
+        \implies a\le x\le b. \]
 \end{Theorem}
 \begin{itemize}
     \item Q\@: If $ x_n>0 $ for all $ n $ and $ \lim\limits_{{n} \to {\infty}}x_n=x $ is $ x>0 $?
     \item A\@: Not necessarily! Consider $ x_n=\frac{1}{n}>0 $, but $ x=0 $.
 \end{itemize}
 \subsection{Divergence to Infinity}
-Consider $ a_n=n $. It is clear that the sequence is getting larger without bound, so $ \lim\limits_{{n} \to {\infty}}a_n $
-does not exist. That is, $ \sequence{a_n} $ diverges. But we can say more! Since it does not get infinitely large,
-we can make a definition to capture this.
-\begin{Definition}{}{}
-    \begin{itemize}
-        \item We say that $ \sequence{a_n} $ \textbf{diverges to $ \infty $}, or that the limit of $ \sequence{a_n} $ is equal to \textbf{infinity}, and we write
-              $ a_n\to \infty $ (as $ n\to\infty $), or we write $ \lim\limits_{{n} \to {\infty}}a_n=\infty $, when
-              \[ \forall M\in\R_{>0}\; \exists N\in\N\;\forall n\in \N\; \bigl(n\ge N\implies a_n>M\bigr). \]
-              Equivalently, any interval of the form $ (M,\infty) $ contains a tail of $ \sequence{a_n} $.
-        \item We say that $ \sequence{a_n} $ \textbf{diverges to $ -\infty $}, or that the limit of $ \sequence{a_n} $ is equal to
-              \textbf{negative infinity}, and we write
-              $ a_n\to -\infty $ (as $ n\to\infty $), or we write $ \lim\limits_{{n} \to {\infty}}a_n=-\infty $, when
-              \[ \forall M\in\R_{<0}\; \exists N\in\N\;\forall n\in \N\; \bigl(n\ge N\implies a_n<M\bigr). \]
-              Equivalently, any interval of the form $ (-\infty,M) $ contains a tail of $ \sequence{a_n} $.
-    \end{itemize}
+Consider $ \sequence{a_n}=\sequence{n} $. It is clear that the sequence is getting larger without bound, so $ \lim\limits_{{n} \to {\infty}}a_n $
+does not exist, i.e., $ \sequence{a_n} $ diverges.
+\begin{Definition}{\href{https://proofwiki.org/wiki/Definition:Unbounded_Divergent_Sequence\#Definition}{Divergent Sequence}}{}
+    Let $ \sequence{a_n} $ be a real sequence.\bigskip
+
+    $ \sequence{a_n} $ \textbf{diverges to} $ \infty $ if and only if:
+    \[ \forall M\in\R_{>0}: \exists N\in \R_{>0}:\forall n\in\N:(n\ge N\implies a_n>M) \]
+    In this case, we write $ \lim\limits_{{n} \to {\infty}}a_n=\infty $.\smallskip
+
+    $ \sequence{a_n} $ \textbf{diverges to} $ -\infty $ if and only if:
+    \[ \forall M\in\R_{<0}: \exists N\in \R_{>0}:\forall n\in\N:(n\ge N\implies a_n<M) \]
+    In this case, we write $ \lim\limits_{{n} \to {\infty}}a_n=-\infty $.
 \end{Definition}
 \begin{Example}{}{}
     Show $ \lim\limits_{{n} \to {\infty}}(1-n)=-\infty $.
     \tcblower{}
-    \textbf{Proof}: Let $ M<0 $ be given, pick $ N>1-M $ for $ N\in\N $. Then, if $ n\ge N $, we have
+    \textbf{Proof}: Let $ M<0 $ be arbitrary, and pick $ N>1-M $. If $ n\ge N $, we have
     \[ a_n=1-n\le 1-N<1-(1-M)=M. \]
-    \underline{Aside}: Want $ 1-n<M\iff 1-M<n $.
+    \underline{Aside}: We want $ 1-n<M\iff 1-M<n $.
 \end{Example}
